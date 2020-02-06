@@ -1,6 +1,6 @@
 {
  "install_apps": ["alfred", "brew", "git", "iterm3", "rc_files", "spectacle", "wallpapers", "aws-vault"],
- "rc_URL": "https://github.com/jessebot/Coding-Playground/trunk/rc_files",
+ "rc_URL": "https://github.com/jessebot/Coding-Playground/tree/master/config_files",
  "brew_apps": ["aws-vault", "awscli", "ag", "terraform", "git", "git-flow","colordiff", "docker", "jq", "git-flow", "wget", "tree", "openssl"],
  "brew_cask_apps": ["iterm2", "spectacle", "aws-vault", "awscli"],
  "wallpaper_URL": "https://jessebot.io/images/wallpapers/background1.png",

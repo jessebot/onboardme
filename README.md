@@ -9,3 +9,5 @@ O_O[jesse.hitch.09:56 AM]$ grep TODO onboardme.py
     #TODO: remove hardcoding
             # TODO: process brew files
             # TODO: Personal settings
+
+# TODO: KEYBOARD MAPPINGS: CAPS TO CONTROL
