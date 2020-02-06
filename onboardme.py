@@ -85,6 +85,11 @@ def main():
                 print("\nInstalling Brew...")
                 cmd = '/usr/bin/ruby -e "$(curl -fsSL {0})"'.format(BREW_URL)
                 os.system(cmd)
+            print("Installing brew apps...")
+            for brew_app in list_of_installs['brew_apps']:
+                os.system("brew install " + brew_app)
+            for brew_cask_app in list_of_installs['brew_cask_apps']:
+                os.system("brew cask install " + brew_cask_app)
         elif app == "iterm2":
             # TODO: Personal settings
             print("\nBrew installing iterm2...")
