@@ -11,7 +11,7 @@ import wget
 from zipfile import ZipFile
 
 # TODO: get better URLs like 'latest' or something for these hardcoded globals
-ALFRED_URL = "https://cachefly.alfredapp.com/Alfred_4.0.3_1092.dmg"
+ALFRED_URL = "https://cachefly.alfredapp.com/Alfred_4.0.8_1135.dmg"
 BREW_URL = 'https://raw.githubusercontent.com/Homebrew/install/master/install'
 SPECTACLE_URL = "https://s3.amazonaws.com/spectacle/downloads/Spectacle+1.2.zip"
 # TODO: add option for custom install dir
@@ -27,6 +27,19 @@ def download(url):
     except Exception as e:
         print("download bad: ", e)
     return dl_file
+
+
+def is_installed(command_to_invoke):
+    """
+    just checks if a program already exists by trying to call it
+    Takes command_to_invoke str var
+    Returns true if command runs successfully
+    """
+    exit_code = os.system(command_to_invoke)
+    if exit_code != 0:
+        return False
+    return True
+    
 
 
 def main():
@@ -57,15 +70,26 @@ def main():
 
     for app in list_of_installs['install_apps']:
         if app == "alfred":
-            print("\nDownloading Alfred...")
-            package = "open " + download(ALFRED_URL)
-            print("\nInstalling Alfred...")
-            subprocess = subproc(package, "Error with the alfred install")
+            if is_installed("ls /Applications/Alfred*"):
+                print("\nAlfred is already installed :D")
+            else:
+                print("\nDownloading Alfred...")
+                package = "open " + download(ALFRED_URL)
+                print("\nInstalling Alfred...")
+                subprocess = subproc(package, "Error with the alfred install")
         elif app == "brew":
             # TODO: process brew files
-            print("\nInstalling Brew...")
-            cmd = '/usr/bin/ruby -e "$(curl -fsSL {0})"'.format(BREW_URL)
-            os.system(cmd)
+            if is_installed("brew help"):
+                print("\nBrew is already installed :D")
+            else:
+                print("\nInstalling Brew...")
+                cmd = '/usr/bin/ruby -e "$(curl -fsSL {0})"'.format(BREW_URL)
+                os.system(cmd)
+            print("Installing brew apps...")
+            for brew_app in list_of_installs['brew_apps']:
+                os.system("brew install " + brew_app)
+            for brew_cask_app in list_of_installs['brew_cask_apps']:
+                os.system("brew cask install " + brew_cask_app)
         elif app == "iterm2":
             # TODO: Personal settings
             print("\nBrew installing iterm2...")
