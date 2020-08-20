@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Generic onboarding script for mac osx
 # jessebot@linux.com
 import argparse
@@ -101,32 +101,8 @@ def main():
             subprocess = subproc(cmd, "\nerror with the spectacle install")
         elif app == "rc_files":
             print("\nDownloading rc files via git...")
-            # I know, I know, but like... git isn't installed everywhere, fam
-            git_URL = list_of_installs["rc_URL"]
-            cmd = "svn checkout " + git_URL
-            subprocess = subproc(cmd, "\nerror with the rc files download...")
-            dot_files_dir = git_URL.split('/')[-1]
-            for root, dirs, files in os.walk(dot_files_dir, topdown=False):
-                for name in files:
-                    os.rename(os.path.join(root, name),
-                            os.path.join(HOME_DIR, name))
-                for name in dirs:
-                    # hacky
-                    if name != ".svn":
-                        os.rename(os.path.join(root, name),
-                                os.path.join(HOME_DIR, name))
-            shutil.rmtree("./" + dot_files_dir)
         elif app == "wallpapers":
             print("Downloading wallpapers...")
-            # create a special directory for this
-            pic_dir = HOME_DIR + "/Pictures/wallpapers"
-            os.mkdir(pic_dir) 
-            URL = list_of_installs["URL"]
-            package = download(URL, pic_dir)
-            package_name = package.split('/')[::-1]
-            destination = "." + "/".join([HOME_DIR, "Pictures/wallpapers",
-                                          package_name])
-            os.rename(package, destination)
 
 
 def process_json(config_file):
