@@ -1,16 +1,18 @@
 # onboardme
 I have enough productivity tools and special configs for various programs that I actually need a repo for it at this point
 
-# TODO: alfred: get better URLs like 'latest' or something for these hardcoded globals
-# TODO: add option for custom install dir
-    # TODO: add functioning arg parser
-    # TODO: add option for custom install dir
-    #TODO: remove hardcoding
-            # TODO: process brew files like someone who gets sleep at night
-            # TODO: Personal settings for iterm/alfred
+# TODO: 
+* alfred: get better URLs like 'latest' or something for these hardcoded globals
+* add functioning arg parser
+* process brew files from.... brew... file?
+* Personal settings for iterm/alfred
+* KEYBOARD MAPPINGS: CAPS TO CONTROL
 
-# TODO: KEYBOARD MAPPINGS: CAPS TO CONTROL
+# How To
+*Install the Required Python packages*
+`pip3 install -r requirements.txt`
 
-# actually explain how to use the script in the readme....
+*Run the script*
+`./onboardme.py`
 
-# figure out why my svn no work... it was so hopeful...
+You did it!
