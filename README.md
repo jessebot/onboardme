@@ -3,10 +3,16 @@ I have enough productivity tools and special configs for various programs that I
 
 # TODO: 
 * alfred: get better URLs like 'latest' or something for these hardcoded globals
-* add option for custom install dir
 * add functioning arg parser
-* process brew files like someone who gets sleep at night
+* process brew files from.... brew... file?
 * Personal settings for iterm/alfred
 * KEYBOARD MAPPINGS: CAPS TO CONTROL
-* actually explain how to use the script in the readme....
-* figure out why my svn no work... it was so hopeful...
+
+# How To
+*Install the Required Python packages*
+`pip3 install -r requirements.txt`
+
+*Run the script*
+`./onboardme.py`
+
+You did it!
