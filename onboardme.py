@@ -11,7 +11,7 @@ import wget
 from zipfile import ZipFile
 
 # TODO: get better URLs like 'latest' or something for these hardcoded globals
-ALFRED_URL = "https://cachefly.alfredapp.com/Alfred_4.0.8_1135.dmg"
+ALFRED_URL = "https://cachefly.alfredapp.com/Alfred_4.3.4_1229.dmg"
 BREW_URL = 'https://raw.githubusercontent.com/Homebrew/install/master/install'
 SPECTACLE_URL = "https://s3.amazonaws.com/spectacle/downloads/Spectacle+1.2.zip"
 # TODO: add option for custom install dir
@@ -26,6 +26,7 @@ def download(url):
         dl_file = wget.download(url, HOME_DIR)
     except Exception as e:
         print("download bad: ", e)
+        return
     return dl_file
 
 
@@ -89,7 +90,7 @@ def main():
             for brew_app in list_of_installs['brew_apps']:
                 os.system("brew install " + brew_app)
             for brew_cask_app in list_of_installs['brew_cask_apps']:
-                os.system("brew cask install " + brew_cask_app)
+                os.system("brew install --cask" + brew_cask_app)
         elif app == "iterm2":
             # TODO: Personal settings
             print("\nBrew installing iterm2...")
