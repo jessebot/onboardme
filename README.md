@@ -16,3 +16,6 @@ I have enough productivity tools and special configs for various programs that I
 `./onboardme.py`
 
 You did it!
+
+Here, have some free custom, kinda bad, wallpapers from my Google Pixel 1 <3
+https://photos.app.goo.gl/mGjmG4o6JB9xxK7BA
