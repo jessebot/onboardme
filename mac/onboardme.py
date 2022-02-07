@@ -101,7 +101,8 @@ def main():
             cmd = "brew cask install spectacle"
             subprocess = subproc(cmd, "\nerror with the spectacle install")
         elif app == "rc_files":
-            print("\nDownloading rc files via git...")
+            print("\nCopying default rc files from above directory...")
+            cmd = "cp ../rc_files/*/.* ~"
         elif app == "wallpapers":
             print("Downloading wallpapers...")
 

@@ -30,6 +30,25 @@ def main():
     subprocess = subproc(apt_install, "Error with package installs :shrug:")
 
 
+def install_rc_files():
+    """
+    Copies over default rc files for vim, zsh, and bash
+    """
+    rc_files = ['vim','zsh','bash']
+    for rc_file in rc_files:
+        # TODO: iterate through directory and don't for .vim dir
+        shutil.copytree('../rc_files/{rc_file}/')
+    return
+
+
+def run_package_managers():
+    """
+    run apt, flatpak, snap because apparently we need 3 to get this running
+    """
+    # TODO: write the function
+    return
+
+
 def subproc(cmd, help="Something went wrong!"):
     """
     Takes a commmand to run in BASH, as well as optional
