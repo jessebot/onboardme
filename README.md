@@ -11,13 +11,18 @@ Totally manual and awful. There is a config file with all the packages from 3 pa
 
 ### TODO
 * add functioning arg parser
-* ansible? 🤔
-* KEYBOARD MAPPINGS: CAPS TO CONTROL
-* Move the panel on the side and add panelettes or whatever they're called
-* Setup script to automatically back up into configurable repo (default to this repo):
-  * rss feeds OPML
+  * OS selection [mac, mint] 
+* ansible? 🤔 ...in docker?
+* KEYBOARD MAPPINGS: CAPSLOCK TO CONTROL
+* Move the panel to the side, and add panelettes or whatever they're called
+* Setup script to automatically backup into configurable repo (default to this repo):
+  * RSS feeds OPML
   * YouTube subscriptions OPML
-* 
+  * Shell/editor rc files
+    * Ask before doing this!
+* Add chat software
+* Add NextCloud stuff
+* Add email config
 * Overview of current configs maintained by this script?
 
 #### Note
