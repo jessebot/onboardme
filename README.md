@@ -31,8 +31,7 @@ Theorectically, most of the config and setup for mint, also works for Ubuntu and
 *Run the script*
 `./onboardme.py`
 
-**You did it! :D **
-Here, have some [free wallpapers](https://photos.app.goo.gl/mGjmG4o6JB9xxK7BA) from my old Google Pixel <3
+*You did it! :D* Here, have some [free wallpapers](https://photos.app.goo.gl/mGjmG4o6JB9xxK7BA) from my old Google Pixel <3
 
 ### TODO
 * alfred
