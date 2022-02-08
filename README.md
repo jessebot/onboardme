@@ -13,6 +13,8 @@ Totally manual and awful. There is a config file with all the packages from 3 pa
 * add functioning arg parser
   * OS selection [mac, mint] 
 * ansible? 🤔 ...in docker?
+  * start with just like package manager managed packages
+    * easier to have later offering of "deplay this config to other machines"
 * KEYBOARD MAPPINGS: CAPSLOCK TO CONTROL
 * Move the panel to the side, and add panelettes or whatever they're called
 * Setup script to automatically backup into configurable repo (default to this repo):
@@ -21,9 +23,12 @@ Totally manual and awful. There is a config file with all the packages from 3 pa
   * Shell/editor rc files
     * Ask before doing this!
 * Add chat software
-* Add NextCloud stuff
+* Add NextCloud stuff - at least try News, Recipes, and Talk
 * Add email config
 * Overview of current configs maintained by this script?
+* Add go lines before k8s/docker/kind stuff
+* Check for external apt repos that may need adding
+* Alfred replacement
 
 #### Note
 Theorectically, most of the config and setup for mint, also works for Ubuntu and other debian based systems, but YMMV.
