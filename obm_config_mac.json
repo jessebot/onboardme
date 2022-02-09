@@ -1,0 +1,8 @@
+{
+ "install_apps": ["alfred", "brew", "iterm3", "rc_files", "spectacle", "wallpapers"],
+ "rc_URL": "https://github.com/jessebot/Coding-Playground/tree/master/config_files",
+ "brew_apps": ["awscli", "ag", "terraform", "git-flow", "colordiff", "docker", "jq", "wget", "tree", "openssl", "kubectl", "npm", "kops", "helm", "fluxctl"],
+ "brew_cask_apps": ["iterm2", "spectacle", "aws-vault", "docker"],
+ "wallpaper_URL": "https://jessebot.io/images/wallpapers/summikkogurashi_1.png",
+ "python_libs": [""]
+}

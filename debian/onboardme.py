@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Generic onboarding script for mac osx
+# Generic onboarding script for mac osx and debian
 # jessebot@linux.com
 import argparse
 import json
