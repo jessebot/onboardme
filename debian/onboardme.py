@@ -35,6 +35,7 @@ def install_rc_files():
     Copies over default rc files for vim, zsh, and bash
     """
     rc_files = ['vim','zsh','bash']
+    vim_plugin_manager = "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim"
     for rc_file in rc_files:
         # TODO: iterate through directory and don't for .vim dir
         shutil.copytree('../rc_files/{rc_file}/')

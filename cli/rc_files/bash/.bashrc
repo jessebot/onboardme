@@ -8,6 +8,8 @@ esac
 ## default editor
 export EDITOR=”vim”
 
+GOROOT=$HOME
+
 ################# HISTORY ####################
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -130,11 +132,8 @@ export NVM_DIR="$HOME/.nvm"
 # terraform bash completion
 complete -C /usr/local/bin/terraform terraform
 
-# pathing
-export GOROOT=/usr/local/opt/go/libexec
-export GOPATH=/Users/`whoami`/go
-export PATH=$HOME/bin:$PATH
-
+# go
+export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
 
 # include external .bashrc_$application if it exists
 if [ -f $HOME/.bashrc_k8s ]; then
