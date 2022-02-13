@@ -69,16 +69,16 @@ xterm*|rxvt*)
     ;;
 esac
 
-# enable color support of ls
-alias ll='ls -halG'
-alias ls='ls -haG'
-# save on colordiff typing
+# ls - human readable file sizes, show hidden files, enable colors
+alias ls='ls -ha --color'
+alias ll='ls -hal --color'
+# colordiff - diff, but with colors for accessibility
 alias diff='colordiff -uw'
-# grep
+# grep - always use colors
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
-# typos 
+# typos <3
 alias grpe='grep'
 alias gerp='grep'
 alias celar='clear'
@@ -88,6 +88,7 @@ alias vi='vim'
 alias tracert='traceroute'
 # git speed up
 alias gc='git commit -m'
+# take that ghostscript
 alias gs='git status'
 alias gd='git diff'
 alias ga='git add .'
@@ -101,7 +102,8 @@ function b64 {
 function b64d {
     echo -n $1 | base64 --decode
 }
-# allow for searching of all repos
+
+# allow for searching of all repos with ag
 function agr {
     if [ $2 = "y"]; then
         for $repo in $(ls -1 $REPOS); do
@@ -111,9 +113,6 @@ function agr {
 
     ag $1 $REPOS
 }
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
