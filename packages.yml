@@ -1,0 +1,80 @@
+brew:
+  cask:
+    - lulu
+    - spectacle
+    - item2
+    - aws-vault
+  packages:
+    - awscli
+    - ag
+    - terraform
+    - tfenv
+    - git-flow
+    - colordiff
+    - docker
+    - jq
+    - tree
+    - wget
+    - openssl
+    - kubectl
+    - npm
+    - kops
+    - helm
+    - fluxctl
+
+# can't be installed through normal package managers anywhere
+mac_special:
+  - brew
+  - alfred
+  - spectacle
+  - go
+
+python:
+  - nothing yet.....
+
+go:
+  - kubernetes
+  - kind
+
+snap:
+  - multipass
+  - fluent-reader --candidate
+
+flatpak:
+  - freetube
+  - keepassx
+
+apt:
+  repos:
+    - ppa:mattrose/terminator
+  packages:
+    - curl
+    - git
+    - vim
+    - python3-distutils
+    - python3-pip
+    - docker.io
+    - docker-ce
+    - docker-ce-cli
+    - kubectl
+    - openssl
+    - wget
+    - sysstat
+    - sl
+    - silversearcher-ag
+    - tree
+    - colordiff
+    - figlet
+    - cowsay
+    - steam
+    - terminator
+    - vlc
+    - libpam-yubico
+    - ubuntu-driver-460
+    - finger
+    - ssh
+    - nextcloud-desktop
+    - screen
+    - youtube-dl
+    - go
+    - albert
