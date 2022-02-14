@@ -2,8 +2,9 @@ brew:
   cask:
     - lulu
     - spectacle
-    - item2
+    - item3
     - aws-vault
+    - docker
   packages:
     - awscli
     - ag
@@ -21,6 +22,7 @@ brew:
     - kops
     - helm
     - fluxctl
+    - tree
 
 # can't be installed through normal package managers anywhere
 mac_special:
@@ -78,3 +80,6 @@ apt:
     - youtube-dl
     - go
     - albert
+
+vundle:
+  - https://github.com/hashivim/vim-terraform.git
