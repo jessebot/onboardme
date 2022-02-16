@@ -23,6 +23,8 @@ brew:
     - helm
     - fluxctl
     - tree
+    - pandoc
+    - lynx
 
 # can't be installed through normal package managers anywhere
 mac_special:
@@ -80,6 +82,8 @@ apt:
     - youtube-dl
     - go
     - albert
+    - pandoc
+    - lynx
 
 vundle:
   - https://github.com/hashivim/vim-terraform.git

@@ -1,6 +1,7 @@
 # Random Notes
 
 - [How does the vim write with sudo trick work?](https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
+- Pretty view markdown: `pandoc README.md | lynx -stdin`
 
 ## Firewall notes
 - [How to control internet access for each program?](https://askubuntu.com/questions/45072/how-to-control-internet-access-for-each-program)
