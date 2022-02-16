@@ -142,7 +142,7 @@ inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <s-tab> <c-n>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" ARROW KEYS ARE UNACCEPTABLE
+" ARROW KEYS ARE UNACCEPTABLE :P
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <Left> <Nop>
 map <Right> <Nop>
@@ -379,3 +379,9 @@ command! OpenChangedFiles :call OpenChangedFiles()
 " Insert the current time
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 command! InsertTime :normal a<c-r>=strftime('%F %H:%M:%S.0 %z')<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Sudo vim trick with less key strokes - allow saving of files as sudo when I
+" forgot to start vim using sudo
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+cmap w!! w !sudo tee > /dev/null %
