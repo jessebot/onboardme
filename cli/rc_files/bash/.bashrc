@@ -134,6 +134,9 @@ complete -C /usr/local/bin/terraform terraform
 # go
 export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
 
+# brew on linux
+export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
+
 # include external .bashrc_$application if it exists
 if [ -f $HOME/.bashrc_k8s ]; then
     . $HOME/.bashrc_k8s
