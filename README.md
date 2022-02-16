@@ -30,6 +30,7 @@ Totally manual and awful. There is a config file with all the packages from 3 pa
 * Check for external apt repos that may need adding
 * Alfred replacement
 * add iptables configs
+* add rc file symlinks to this repo directory
 
 #### Note
 Theorectically, most of the config and setup for mint, also works for Ubuntu and other debian based systems, but YMMV.
