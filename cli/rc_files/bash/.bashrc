@@ -6,7 +6,7 @@ case $- in
 esac
 
 ## default editor
-export EDITOR=”vim”
+export EDITOR=vim
 
 GOROOT=$HOME
 
