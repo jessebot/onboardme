@@ -29,13 +29,13 @@ Script: [review_requests-delete.sieve](review_requests-delete.sieve)
 
 ## Food
 ### Eating Out (Delivery, Takeout) Reciepts
-Script: [food-eating_out_receipts-move.sieve](food-eating_out_receipts-move.sieve)
+Script: [eating_out_receipts-move.sieve](food/eating_out_receipts-move.sieve)
 |       Sites               |                   Move/Label              	|
 |:-------------------------	|:---------------------------------------------:|
 | Thuisbezorgd, Deliveroo 	| Moves to folder, `Purchases/Food/Eating Out`. |
 
 ### Online Grocery Order Reciepts
-Script: [food-grocery_receipts-move.sieve](food-grocery_receipts-move.sieve)
+Script: [grocery_receipts-move.sieve](food/grocery_receipts-move.sieve)
 |       Sites               |                   Move/Label                 	|
 |:-------------------------	|:---------------------------------------------:|
 | Jumbo, denotenshop.nl   	| Moves to folder, `Purchases/Food/Groceries`.  |
