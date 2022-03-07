@@ -1,9 +1,12 @@
-Project incredibly under construction in main, because there is so much rot and tech debt. Open an issue if something doesn't make sense, and I'll help you out 💙
+Project incredibly under construction in main, because there is so much rot and tech debt. Open an issue if something doesn't make sense, and we'll help you out 💙
 
 # OnBoardMe to [mac, mint]
-I have enough productivity tools and special configs for various programs (for both Mac and Linux) that I actually need a repo for them. Example: I need to manage like 4 OS level package managers, at least 🤦
+We have enough productivity tools and special configs for various programs (for both Mac and Linux) that we actually need a repo for them. Example: We need to manage like 4 OS level package managers, at least 🤦
 
 The state of personal development software is not grand, so back to the basics of IT, we start from like 10 years of basic shell/Python scripts, and chain them together using ansible.
+
+#### Quick Note on FOSS, Ethics, and Surviellance
+Here at this humble OnBoardMe repo, we try really hard to do the right thing. We're doing our best to get off of the giants like Google, Microsoft, Apple, Amazon, Samsung, etc... but we've still got a long way to go! Check back here for alternatives as we go on the journey ourselves! We'll link back to any orgs or projects we learn about as we verify them :)
 
 ## Mint
 Under construction, but the idea is that we keep the best of both worlds, and just have one script to support both OSes. And even better, it's run via like ansible and dockerized. The basic dev machine goal :blue_heart:
