@@ -1,3 +1,4 @@
+# Delivery Updates - Label/Delete
 require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric", "spamtest"];
 require ["fileinto", "imap4flags"];
 

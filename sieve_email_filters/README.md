@@ -6,11 +6,22 @@ Anyway, here you'll find some basic filters to categorize the mundane adult stuf
 ## Current Filters
 
 ### Delivery Updates
+#### Action
 Applies label `Delivery Updates` and moves to Trash.
 
+#### Applicable Categories and Websites
 Currently covers the following domains:
 * Food: Thuisbezorgd, Deliveroo
 * Misc: bol.com
+
+### Product/Service and Reviews/Stamps
+#### Action
+Applies label `Review Requests` and moves to Trash.
+
+#### Applicable Categories and Websites
+Currently covers the following domains:
+* Food: Thuisbezorgd, Deliveroo
+* Misc: bol.com, fruugo.com
 
 # But What is Sieve though?
 TLDR; Sieve is a programming language used to filter emails.
