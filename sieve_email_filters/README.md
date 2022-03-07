@@ -5,22 +5,81 @@ Anyway, here you'll find some basic filters to categorize the mundane adult stuf
 
 I live in the Netherlands, so some of the filters contain dutch domains and phrases.
 
-#### But What is Sieve though?
-TLDR; Sieve is a programming language used to filter emails.
-You can read more about it on [Wikipedia](https://en.wikipedia.org/wiki/Sieve_(mail_filtering_language)) and Proton's support page has a pretty good breakdown [here](https://protonmail.com/support/knowledge-base/sieve-advanced-custom-filters/).
-
-
 ## Current Categorical Filters
 
-### Delivery Updates
-Script: [delivery_updates-label_delete](delivery_updates-label_delete)
-|                          Sites                         	|                      Move/Label                     	    |
-|:------------------------------------------------------	|:-------------------------------------------------------:	|
-| **Food**: Thuisbezorgd, Deliveroo<br>**Misc**: bol.com 	| Labels `Delivery Updates` **and** Moves to Trash.       	|
+List of filters
+
+1. Delivery Updates
+
+    Applies label `Delivery Updates` and moves to Trash.
+
+    [delivery_updates-label_delete](delivery_updates-label_delete.sieve)
+
+    - Applicable Websites:
+
+        > Currently covers the following domains:
+        >
+        >    * Food: Thuisbezorgd, Deliveroo
+        >    * Misc: bol.com
+
+</br>
+
+2. Review Requests and Stampcard updates
+
+    Applies label `Review Requests` and moves to Trash.
+
+    [review_requests-delete](review_requests-delete.sieve)
+
+    - Applicable Websites
+        
+        > Currently covers the following domains:
+        >
+        >   * Food: Thuisbezorgd, Deliveroo
+        >   * Misc: bol.com, fruugo.com
+
+</br>
+
+3. Sort Appointments
+
+    Attempts to find emials with appointmnt information and move them to an `Appointments` folder.
+
+    [sort_appointments](sort_appointmwnts.sieve)
+
+<br>
+
+4. Sort Job Spam
+
+    Attempts to find auto-generated job recruitment emails and move them to the `Spam` folder.
+
+    [sort_job_spam](sort_job_spam.sieve)
+
+    <br>
+
+5. Sort Appointments
+
+    Forwards credible job opportunities to a `Job Mail` folder.
+
+    [sort_jobs_to_folder](sort_jobs_to_folder.sieve)
+
+    <br>
+
+6. Sort Providers
+
+    Forwards emails from trusted/important companies/services to a `Providers` folder.
+    
+    [sort_providers_to_folder](sort_jobs_to_folder.sieve)
+
+7. Sort Appointments
+
+    Forwards credible job opportunities to a `Job Mail` folder.
+    
+    [sort_jobs_to_folder](sort_jobs_to_folder.sieve)
 
 
-### Review Requests and Stampcard updates
-Script: [review_requests-delete](review_requests-delete)
-|                          Sites                                    	|                      Move/Label                         	|
-|:------------------------------------------------------------------	|:------------------------------------------------:	        |
-| **Food**: Thuisbezorgd, Deliveroo<br>**Misc**: bol.com, fruugo.com 	| Labels `Review Requests` **and** Moves to Trash.        	|
+
+
+
+# But What is Sieve though?
+TLDR; Sieve is a programming language used to filter emails.
+
+You can read more about it on [Wikipedia](https://en.wikipedia.org/wiki/Sieve_(mail_filtering_language)) and Proton's support page has a pretty good breakdown [here](https://protonmail.com/support/knowledge-base/sieve-advanced-custom-filters/)
