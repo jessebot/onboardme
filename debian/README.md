@@ -1,32 +1,29 @@
-# Package Managers
+Current attempts at getting the Debian portions of the onboardme script working, and then merging them both. Trying to gather thoughts generally here for first pass.
 
-This is ridiculous.
+## Package Managers
+This is ridiculous, but we're using: `apt`, `snap`, `flatpak`, as well as `pip`, and...
 
-## apt
-Packages in `apt_packages`
+# Current Ecoscape of Personal Tech
 
-## snap
-Packages in `snap_packages`
-
-## flatpak
-Packages in `flatpak_packages`
-
-# News
+### News
 - RSS client: Fluent Reader
 
-# mac osx replacements
+## Apple/Mac replacements
 - `albert` instead of alfred
 *albert fails to install via apt or dpkg, but works via the linux mint software manager :shrug:*
 
-# Google Replacements
+## Google Replacements
+
+### Email
+- ProtonMail and Bridge for Linux
 
 ### Generic Storage
-- NextCloud for Google photos/drive
+- NextCloud for Google photos/drive (In the works)
 
 ### Youtube
 - FreeTube
+- PeerTube (Currently just using this via web URLs and not hosting my own)
 
 ### Search
-- startpage for anonymous google search
-- duckduckgo for alternative google search
-
+- Startpage for anonymous google search
+- Duckduckgo for alternative Google search
