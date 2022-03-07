@@ -39,3 +39,8 @@ Script: [food-grocery_receipts-move](food-grocery_receipts-move)
 |       Sites               |                   Move/Label                 	|
 |:-------------------------	|:---------------------------------------------:|
 | Jumbo, denotenshop.nl   	| Moves to folder, `Purchases/Food/Groceries`.  |
+
+### bol.com Receipts
+Script: [bol_com_receipts-move](bol_com_receipts-move)
+Moves to folder, `Purchases/bol.com`
+>>>>>>> 1d41620 (adding bol.com specific stuff)
