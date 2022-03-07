@@ -13,14 +13,14 @@ You can read more about it on [Wikipedia](https://en.wikipedia.org/wiki/Sieve_(m
 ## Current Categorical Filters
 
 ### Delivery Updates
-[delivery_updates-label_delete](delivery_updates-label_delete)
+Script: [delivery_updates-label_delete]
 |                          Sites                         	|                      Move/Label                     	    |
-|:------------------------------------------------------:	|:-------------------------------------------------------:	|
-| **Food**: Thuisbezorgd, Deliveroo<br>**Misc**: bol.com 	| Labels `Delivery Updates`<br>**and**<br>Moves to Trash. 	|
+|:------------------------------------------------------	|:-------------------------------------------------------:	|
+| **Food**: Thuisbezorgd, Deliveroo<br>**Misc**: bol.com 	| Labels `Delivery Updates` **and** Moves to Trash.       	|
 
 
 ### Review Requests and Stampcard updates
-[review_requests-delete](review_requests-delete)
+Script: [review_requests-delete]
 |                          Sites                                    	|                      Move/Label                         	|
-|:-----------------------------------------------------------------:	|:-------------------------------------------------------:	|
-| **Food**: Thuisbezorgd, Deliveroo<br>**Misc**: bol.com, fruugo.com 	| Labels `Review Requests`<br>**and**<br>Moves to Trash.  	|
+|:------------------------------------------------------------------	|:------------------------------------------------:	        |
+| **Food**: Thuisbezorgd, Deliveroo<br>**Misc**: bol.com, fruugo.com 	| Labels `Review Requests` **and** Moves to Trash.        	|
