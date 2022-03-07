@@ -5,23 +5,24 @@ Anyway, here you'll find some basic filters to categorize the mundane adult stuf
 
 I live in the Netherlands, so some of the filters contain dutch domains and phrases.
 
-## Current Filters
+## Current Categorical Filters
 
 ### Delivery Updates
 [delivery_updates-label_delete](delivery_updates-label_delete)
 #### Action
 Applies label `Delivery Updates` and moves to Trash.
 
-#### Applicable Categories and Websites
+#### Applicable Websites
 Currently covers the following domains:
 * Food: Thuisbezorgd, Deliveroo
 * Misc: bol.com
 
 ### Review Requests and Stampcard updates
+[review_requests-delete](review_requests-delete)
 #### Action
 Applies label `Review Requests` and moves to Trash.
 
-#### Applicable Categories and Websites
+#### Applicable Websites
 Currently covers the following domains:
 * Food: Thuisbezorgd, Deliveroo
 * Misc: bol.com, fruugo.com
