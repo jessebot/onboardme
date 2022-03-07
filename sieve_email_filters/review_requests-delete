@@ -1,4 +1,3 @@
-# Product/Service Review Requests/Stamp Card updates - Delete
 require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric", "spamtest"];
 require ["fileinto", "imap4flags"];
 
@@ -7,6 +6,7 @@ if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value 
     return;
 }
 
+# Product/Service Review Requests/Stamp Card updates - Mark: Read, Move: Trash
 /**
  * @type and
  * @comparator contains
