@@ -36,4 +36,4 @@ Script: [food-eating_out_receipts-move](food-eating_out_receipts-move)
 Script: [food-grocery_receipts-move](food-grocery_receipts-move)
 |       Sites               |                   Move/Label                 	|
 |:-------------------------	|:---------------------------------------------:|
-| Jumbo, Notenshop.nl   	| Moves to folder, `Purchases/Food/Groceries`.  |
+| Jumbo, denotenshop.nl   	| Moves to folder, `Purchases/Food/Groceries`.  |
