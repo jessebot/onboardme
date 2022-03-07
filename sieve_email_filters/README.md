@@ -15,31 +15,31 @@ You can read more about it on [Wikipedia](https://en.wikipedia.org/wiki/Sieve_(m
 **NOTE**: *Unless otherwise noted, all these filters will mark every email as read.*
 
 ## Delivery Updates
-Script: [delivery_updates-label_delete](delivery_updates-label_delete)
+Script: [delivery_updates-label_delete.sieve](delivery_updates-label_delete.sieve)
 |                          Sites                         	|                      Move/Label                     	    |
 |:------------------------------------------------------	|:-------------------------------------------------------:	|
 | **Food**: Thuisbezorgd, Deliveroo<br>**Misc**: bol.com 	| Labels `Delivery Updates` **and** Moves to `Trash`.       |
 
 
 ## Review Requests and Stampcard updates
-Script: [review_requests-delete](review_requests-delete)
+Script: [review_requests-delete.sieve](review_requests-delete.sieve)
 |                          Sites                                    	|                      Move/Label                	|
 |:------------------------------------------------------------------	|:------------------------------------------------:	|
 | **Food**: Thuisbezorgd, Deliveroo<br>**Misc**: bol.com, fruugo.com 	| Labels `Review Requests` **and** Moves to `Trash`.|
 
 ## Food
 ### Eating Out (Delivery, Takeout) Reciepts
-Script: [food-eating_out_receipts-move](food-eating_out_receipts-move)
+Script: [food-eating_out_receipts-move.sieve](food-eating_out_receipts-move.sieve)
 |       Sites               |                   Move/Label              	|
 |:-------------------------	|:---------------------------------------------:|
 | Thuisbezorgd, Deliveroo 	| Moves to folder, `Purchases/Food/Eating Out`. |
 
 ### Online Grocery Order Reciepts
-Script: [food-grocery_receipts-move](food-grocery_receipts-move)
+Script: [food-grocery_receipts-move.sieve](food-grocery_receipts-move.sieve)
 |       Sites               |                   Move/Label                 	|
 |:-------------------------	|:---------------------------------------------:|
 | Jumbo, denotenshop.nl   	| Moves to folder, `Purchases/Food/Groceries`.  |
 
 ### bol.com Receipts
-Script: [bol_com_receipts-move](bol_com_receipts-move)
+Script: [bol_com_receipts-move.sieve](bol_com_receipts-move.sieve)
 Moves to folder, `Purchases/bol.com`
