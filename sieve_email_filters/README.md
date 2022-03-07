@@ -5,29 +5,29 @@ Anyway, here you'll find some basic filters to categorize the mundane adult stuf
 
 I live in the Netherlands, so some of the filters contain dutch domains and phrases.
 
-## Current Categorical Filters
+#### But What is Sieve though?
+TLDR; Sieve is a programming language used to filter emails.
+You can read more about it on [Wikipedia](https://en.wikipedia.org/wiki/Sieve_(mail_filtering_language)) and Proton's support page has a pretty good breakdown [here](https://protonmail.com/support/knowledge-base/sieve-advanced-custom-filters/)
 
-### Delivery Updates
+
+# Current Categorical Filters
+
+## Delivery Updates
 [delivery_updates-label_delete](delivery_updates-label_delete)
-#### Action
-Applies label `Delivery Updates` and moves to Trash.
+### Action
+Applies label `Delivery Updates` **and** moves to Trash.
 
-#### Applicable Websites
+### Applicable Websites
 Currently covers the following domains:
 * Food: Thuisbezorgd, Deliveroo
 * Misc: bol.com
 
-### Review Requests and Stampcard updates
+## Review Requests and Stampcard updates
 [review_requests-delete](review_requests-delete)
 #### Action
-Applies label `Review Requests` and moves to Trash.
+Applies label `Review Requests` **and** moves to Trash.
 
-#### Applicable Websites
+### Applicable Websites
 Currently covers the following domains:
 * Food: Thuisbezorgd, Deliveroo
 * Misc: bol.com, fruugo.com
-
-# But What is Sieve though?
-TLDR; Sieve is a programming language used to filter emails.
-
-You can read more about it on [Wikipedia](https://en.wikipedia.org/wiki/Sieve_(mail_filtering_language)) and Proton's support page has a pretty good breakdown [here](https://protonmail.com/support/knowledge-base/sieve-advanced-custom-filters/)
