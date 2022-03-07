@@ -1,4 +1,3 @@
-# Delivery Updates - Label/Delete
 require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric", "spamtest"];
 require ["fileinto", "imap4flags"];
 
@@ -7,6 +6,7 @@ if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value 
     return;
 }
 
+# Delivery Updates - Label: Delivery Updates / Mark: Read / Move: Trash
 /**
  * @type and
  * @comparator contains
