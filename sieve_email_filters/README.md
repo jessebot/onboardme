@@ -5,12 +5,12 @@ Anyway, here you'll find some basic filters to categorize the mundane adult stuf
 
 I live in the Netherlands, so some of the filters contain dutch domains and phrases.
 
-#### But What is Sieve though?
+# But What is Sieve though?
 TLDR; Sieve is a programming language used to filter emails.
-You can read more about it on [Wikipedia](https://en.wikipedia.org/wiki/Sieve_(mail_filtering_language)) and Proton's support page has a pretty good breakdown [here](https://protonmail.com/support/knowledge-base/sieve-advanced-custom-filters/).
 
+You can read more about it on [Wikipedia](https://en.wikipedia.org/wiki/Sieve_(mail_filtering_language)) and Proton's support page has a pretty good breakdown [here](https://protonmail.com/support/knowledge-base/sieve-advanced-custom-filters/)
 
-# Current Categorical Filters
+# Current (Jesse) Categorical Filters
 
 **NOTE**: *Unless otherwise noted, all these filters will mark every email as read.*
 
@@ -43,3 +43,42 @@ Script: [food-grocery_receipts-move.sieve](food-grocery_receipts-move.sieve)
 ### bol.com Receipts
 Script: [bol_com_receipts-move.sieve](bol_com_receipts-move.sieve)
 Moves to folder, `Purchases/bol.com`
+
+
+# Current Max added Categorical Filters :D
+
+1. Sort Appointments
+
+    Attempts to find emials with appointmnt information and move them to an `Appointments` folder.
+
+    [sort_appointments](sort_appointmwnts.sieve)
+
+<br>
+
+2. Sort Job Spam
+
+    Attempts to find auto-generated job recruitment emails and move them to the `Spam` folder.
+
+    [sort_job_spam](sort_job_spam.sieve)
+
+    <br>
+
+3. Sort Appointments
+
+    Forwards credible job opportunities to a `Job Mail` folder.
+
+    [sort_jobs_to_folder](sort_jobs_to_folder.sieve)
+
+    <br>
+
+4. Sort Providers
+
+    Forwards emails from trusted/important companies/services to a `Providers` folder.
+    
+    [sort_providers_to_folder](sort_jobs_to_folder.sieve)
+
+5. Sort Appointments
+
+    Forwards credible job opportunities to a `Job Mail` folder.
+    
+    [sort_jobs_to_folder](sort_jobs_to_folder.sieve)
