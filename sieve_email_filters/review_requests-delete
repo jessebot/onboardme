@@ -1,4 +1,4 @@
-# Product/Service and Reviews/Stamps - Delete
+# Product/Service Review Requests/Stamp Card updates - Delete
 require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric", "spamtest"];
 require ["fileinto", "imap4flags"];
 

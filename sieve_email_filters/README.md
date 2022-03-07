@@ -1,11 +1,14 @@
 # Sieve Filter Scripts
 I can't believe I didn't just standardize these so I can burn emails at will. Live and learn.
 
-Anyway, here you'll find some basic filters to categorize the mundane adult stuff when you move to a new email provider, or start your own :)
+Anyway, here you'll find some basic filters to categorize the mundane adult stuff when you move to a new email provider or start hosting your own :)
+
+I live in the Netherlands, so some of the filters contain dutch domains and phrases.
 
 ## Current Filters
 
 ### Delivery Updates
+[delivery_updates-label_delete](delivery_updates-label_delete)
 #### Action
 Applies label `Delivery Updates` and moves to Trash.
 
@@ -14,7 +17,7 @@ Currently covers the following domains:
 * Food: Thuisbezorgd, Deliveroo
 * Misc: bol.com
 
-### Product/Service and Reviews/Stamps
+### Review Requests and Stampcard updates
 #### Action
 Applies label `Review Requests` and moves to Trash.
 
