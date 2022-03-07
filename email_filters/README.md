@@ -53,23 +53,23 @@ Script: [sort_appointments](sort_appointmwnts.sieve)
 |:-------------	|:---------------------------------:|
 | someguys  	| Moves to folder, `Appointments`.  |
 
-### Jobs
+## Jobs
 
-## Spam
+## Jobs Spam
 Script: [sort_job_spam](jobs/sort_job_spam.sieve)
 Attempts to find auto-generated job recruitment emails and move them to the `Spam` folder.
 |       Sites   |       Move/Label  |
 |:-------------	|:-----------------:|
 | someguys  	| Moves to `Spam`.  |
 
-## Jobs Folder thing
+## Jobs Folder thing?
 Script: [sort_jobs_to_folder](jobs/sort_jobs_to_folder.sieve)
 Forwards credible job opportunities to a `Job Mail` folder. Change to Jobs/Recruitment/Credible ? :shrug:
 |       Sites   |       Move/Label        |
 |:-------------	|:-----------------------:|
 | someenbies  	| Moves to `Recruiters`.  |
 
-## Sort Providers??
+## Sort Providers?? ... also jobs hting?
 Script: [sort_providers_to_folder](jobs/sort_jobs_to_folder.sieve) ??
 Forwards emails from trusted/important companies/services to a `Providers` folder. ?? how is this different from above? :thinking:
 |       Sites   |       Move/Label        |
