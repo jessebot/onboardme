@@ -7,7 +7,7 @@ I live in the Netherlands, so some of the filters contain dutch domains and phra
 
 #### But What is Sieve though?
 TLDR; Sieve is a programming language used to filter emails.
-You can read more about it on [Wikipedia](https://en.wikipedia.org/wiki/Sieve_(mail_filtering_language)) and Proton's support page has a pretty good breakdown [here](https://protonmail.com/support/knowledge-base/sieve-advanced-custom-filters/)
+You can read more about it on [Wikipedia](https://en.wikipedia.org/wiki/Sieve_(mail_filtering_language)) and Proton's support page has a pretty good breakdown [here](https://protonmail.com/support/knowledge-base/sieve-advanced-custom-filters/).
 
 
 # Current Categorical Filters
