@@ -47,9 +47,7 @@ Totally manual and awful. There is a config file with all the packages from 3 pa
 * add rc file symlinks to this repo directory
 * Alfred
  * Find FOSS replacement?
- * If no replacement: get better URLs like 'latest', not pinned version
-   * hey @emax, do you have a PR for this already?
-  * Personal settings for iterm/alfred
+ * Personal settings for alfred
 
 ### TODO: Max
 * ansiblify the packages in `packages.yml`
