@@ -5,12 +5,12 @@ Anyway, here you'll find some basic filters to categorize the mundane adult stuf
 
 I live in the Netherlands, so some of the filters contain dutch domains and phrases.
 
-# But What is Sieve though?
+### But What is Sieve though?
 TLDR; Sieve is a programming language used to filter emails.
 
 You can read more about it on [Wikipedia](https://en.wikipedia.org/wiki/Sieve_(mail_filtering_language)) and Proton's support page has a pretty good breakdown [here](https://protonmail.com/support/knowledge-base/sieve-advanced-custom-filters/)
 
-# Current (Jesse) Categorical Filters
+# Current Categorical Filters
 
 **NOTE**: *Unless otherwise noted, all these filters will mark every email as read.*
 
