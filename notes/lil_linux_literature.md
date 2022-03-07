@@ -25,15 +25,18 @@ ufw deny discord
 ## K8s stuff
 
 ### KIND - because easy local testing on linux
+
 ```bash
 # creating a quick small cluster (unnamed, defaults to name: kind)
 sudo kind create cluster
 
 # adding newly created KIND kubeconfig
 sudo kind get kubeconfig > ~/.kube/kubeconfig
-
+```
 
 ### vm stuff
+*note: multipass ended up giving me problems, so I just kept on truckin with KIND for right now.*
+
 ```bash
 # launches a vm with 2 vCPU, 32G disk, name of node: k8s-worker-1, Ubuntu Image verion 20.04
 multipass launch -c 2 -d 32G -m 2G -n k8s-wkr-1 20.04
