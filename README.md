@@ -1,4 +1,4 @@
-Project incredibly under construction in main, because there is so much rot and tech debt. Open an issue if something doesn't make sense, and we'll help you out 💙
+Project in pre-alpha state, and incredibly **Under Construction** in the `main` branch, because there is so much rot and tech debt. Open an issue if something doesn't make sense, and we'll help you out 💙
 
 # OnBoardMe to [mac, mint]
 We have enough productivity tools and special configs for various programs (for both Mac and Linux) that we actually need a repo for them. Example: We need to manage like 4 OS level package managers, at least 🤦
@@ -18,6 +18,16 @@ We are currently using the philosophy of [Terminology, Power, and Exclusionary L
 
 ### Humane Tech Lists
 We've had good luck with [Awesome Humane Tech](https://github.com/humanetech-community/awesome-humane-tech) for guides and checking out alternatives to tech from the Giants you previously used.
+
+## Current Installation (Under Construction)
+### Mac
+*Install the Required Python packages*
+`pip3 install -r requirements.txt`
+
+*Run the script*
+`./onboardme_mac.py`
+
+*You did it!* 🥳 Here, have some [free wallpapers](https://photos.app.goo.gl/mGjmG4o6JB9xxK7BA) from my old Google Pixel <3
 
 ## Mint
 Under construction, but the idea is that we keep the best of both worlds, and just have one script to support both OSes. And even better, it's run via like ansible and dockerized. The basic dev machine goal :blue_heart:
@@ -44,25 +54,13 @@ Totally manual and awful. There is a config file with all the packages from 3 pa
 * Check for external apt repos that may need adding
 * add rc file symlinks to this repo directory
 * Which email clients to support? MUTT? ThunderGuy?
+
+### TODO: Max
+* ansiblify the packages in `packages.yml`
+* maybe add configs for fun terminal project with CSS in terminals?
 * Alfred
   * Find FOSS replacement?
   * Personal settings for alfred
 
-### TODO: Max
-* ansiblify the packages in `packages.yml`
-
 #### Note
 Theorectically, most of the config and setup for Mint, also works for Ubuntu and other Debian based distros, but YMMV.
-
-## Mac
-### Installation
-*Install the Required Python packages*
-`pip3 install -r requirements.txt`
-
-*Run the script*
-`./onboardme_mac.py`
-
-*You did it!* 🥳 Here, have some [free wallpapers](https://photos.app.goo.gl/mGjmG4o6JB9xxK7BA) from my old Google Pixel <3
-
-### TODO
-
