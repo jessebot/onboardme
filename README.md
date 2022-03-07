@@ -5,8 +5,16 @@ We have enough productivity tools and special configs for various programs (for 
 
 The state of personal development software is not grand, so back to the basics of IT, we start from like 10 years of basic shell/Python scripts, and chain them together using ansible.
 
-### Quick Note on FOSS, Ethics, and Surviellance
+### Notes on FOSS and Ethics
 Here at this humble OnBoardMe repo, we try really hard to do the right thing. We're doing our best to get off of the giants like Google, Microsoft, Apple, Amazon, Samsung, etc... but we've still got a long way to go! Check back here for alternatives as we go on the journey ourselves! We'll link back to any orgs or projects we learn about, but free to open an issue with anything else we should link back to. :)
+
+Living ethically under late stage capitalism is not easy, but we believe generally that software should be:
+
+### Free and Open Source Software (FOSS)
+We believe in free software, and we do our best to use and support actually free and open source software. If you don't know what we mean, please check out this [GNU article on Free SoftWare](https://www.gnu.org/philosophy/free-sw.en.html).
+
+### Language
+We are currently using the philosophy of [Terminology, Power, and Exclusionary Language in Internet-Drafts and RFCs draft](https://datatracker.ietf.org/doc/html/draft-knodel-terminology-09) and at the time of writing, this draft is currently on verison 09.
 
 ## Mint
 Under construction, but the idea is that we keep the best of both worlds, and just have one script to support both OSes. And even better, it's run via like ansible and dockerized. The basic dev machine goal :blue_heart:
@@ -16,15 +24,14 @@ Totally manual and awful. There is a config file with all the packages from 3 pa
 
 ### TODO
 * add functioning arg parser
-  * OS selection [mac, mint] 
-* ansible? 🤔 ...in docker?
-  * start with just like package manager managed packages
-    * easier to have later offering of "deplay this config to other machines"
-* KEYBOARD MAPPINGS: CAPSLOCK TO CONTROL
+  * OS selection [Mac, Mint]
+   * Coming Soon: Android, SDR notes
+   * Coming Later: SmartWatch OS 
+* KEYBOARD MAPPINGS: CAPSLOCK TO CONTROL - need for both debian (gnome/xfce menu mappings?) and mac osx
 * Move the panel to the side, and add panelettes or whatever they're called
-* Setup script to automatically backup into configurable repo (default to this repo):
+* Setup crontab (or whatever you do on a mac) script to automatically backup into configurable repo (default to this repo):
   * RSS feeds OPML
-  * YouTube subscriptions OPML
+  * FreeTube/NewPipe subscriptions OPML
   * Shell/editor rc files
     * Ask before doing this!
 * Add chat software
@@ -34,11 +41,18 @@ Totally manual and awful. There is a config file with all the packages from 3 pa
 * Add go lines before k8s/docker/kind stuff
 * Check for external apt repos that may need adding
 * Alfred replacement
-* add iptables configs
 * add rc file symlinks to this repo directory
+* Alfred
+ * Find FOSS replacement?
+ * If no replacement: get better URLs like 'latest', not pinned version
+   * hey @emax, do you have a PR for this already?
+  * Personal settings for iterm/alfred
+
+### TODO: Max
+* ansiblify the packages in `packages.yml`
 
 #### Note
-Theorectically, most of the config and setup for mint, also works for Ubuntu and other debian based systems, but YMMV.
+Theorectically, most of the config and setup for Mint, also works for Ubuntu and other Debian based distros, but YMMV.
 
 ## Mac
 ### Installation
@@ -46,12 +60,9 @@ Theorectically, most of the config and setup for mint, also works for Ubuntu and
 `pip3 install -r requirements.txt`
 
 *Run the script*
-`./onboardme.py`
+`./onboardme_mac.py`
 
-*You did it! :D* Here, have some [free wallpapers](https://photos.app.goo.gl/mGjmG4o6JB9xxK7BA) from my old Google Pixel <3
+*You did it!* 🥳 Here, have some [free wallpapers](https://photos.app.goo.gl/mGjmG4o6JB9xxK7BA) from my old Google Pixel <3
 
 ### TODO
-* alfred
-  * get better URLs like 'latest', not pinned version
-  * Personal settings for iterm/alfred
-* process files from.... brew... file?
+
