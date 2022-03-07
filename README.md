@@ -16,6 +16,9 @@ We believe in free software, and we do our best to use and support actually free
 ### Language
 We are currently using the philosophy of [Terminology, Power, and Exclusionary Language in Internet-Drafts and RFCs draft](https://datatracker.ietf.org/doc/html/draft-knodel-terminology-09) and at the time of writing, this draft is currently on verison 09.
 
+### Humane Tech Lists
+We've had good luck with [Awesome Humane Tech](https://github.com/humanetech-community/awesome-humane-tech) for guides and checking out alternatives to tech from the Giants you previously used.
+
 ## Mint
 Under construction, but the idea is that we keep the best of both worlds, and just have one script to support both OSes. And even better, it's run via like ansible and dockerized. The basic dev machine goal :blue_heart:
 
