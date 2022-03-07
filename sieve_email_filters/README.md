@@ -10,24 +10,17 @@ TLDR; Sieve is a programming language used to filter emails.
 You can read more about it on [Wikipedia](https://en.wikipedia.org/wiki/Sieve_(mail_filtering_language)) and Proton's support page has a pretty good breakdown [here](https://protonmail.com/support/knowledge-base/sieve-advanced-custom-filters/).
 
 
-# Current Categorical Filters
+## Current Categorical Filters
 
-## Delivery Updates
+### Delivery Updates
 [delivery_updates-label_delete](delivery_updates-label_delete)
-### Action
-Applies label `Delivery Updates` **and** moves to Trash.
+|                          Sites                         	|                      Move/Label                     	    |
+|:------------------------------------------------------:	|:-------------------------------------------------------:	|
+| **Food**: Thuisbezorgd, Deliveroo<br>**Misc**: bol.com 	| Labels `Delivery Updates`<br>**and**<br>Moves to Trash. 	|
 
-### Applicable Websites
-Currently covers the following domains:
-* Food: Thuisbezorgd, Deliveroo
-* Misc: bol.com
 
-## Review Requests and Stampcard updates
+### Review Requests and Stampcard updates
 [review_requests-delete](review_requests-delete)
-#### Action
-Applies label `Review Requests` **and** moves to Trash.
-
-### Applicable Websites
-Currently covers the following domains:
-* Food: Thuisbezorgd, Deliveroo
-* Misc: bol.com, fruugo.com
+|                          Sites                                    	|                      Move/Label                         	|
+|:-----------------------------------------------------------------:	|:-------------------------------------------------------:	|
+| **Food**: Thuisbezorgd, Deliveroo<br>**Misc**: bol.com, fruugo.com 	| Labels `Review Requests`<br>**and**<br>Moves to Trash.  	|
