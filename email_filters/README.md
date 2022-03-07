@@ -50,7 +50,7 @@ Moves to folder, `Purchases/bol.com`
 # Current (Max added) Categorical Filters :D
 
 ## Appointments
-Script: [sort_appointments](sort_appointmwnts.sieve)
+Script: [sort_appointments](sort_appointments.sieve)
 |       Sites   |            Move/Label             |
 |:-------------	|:---------------------------------:|
 | someguys  	| Moves to folder, `Appointments`.  |
