@@ -1,3 +1,5 @@
+Project incredibly under construction in main, because there is so much rot and tech debt. Open an issue if something doesn't make sense, and I'll help you out 💙
+
 # OnBoardMe to [mac, mint]
 I have enough productivity tools and special configs for various programs (for both Mac and Linux) that I actually need a repo for them. Example: I need to manage like 4 OS level package managers, at least 🤦
 
