@@ -39,15 +39,14 @@ Totally manual and awful. There is a config file with all the packages from 3 pa
     * Ask before doing this!
 * Add chat software
 * Add NextCloud stuff - at least try News, Recipes, and Talk
-* Add email config
 * Overview of current configs maintained by this script?
 * Add go lines before k8s/docker/kind stuff
 * Check for external apt repos that may need adding
-* Alfred replacement
 * add rc file symlinks to this repo directory
+* Which email clients to support? MUTT? ThunderGuy?
 * Alfred
- * Find FOSS replacement?
- * Personal settings for alfred
+  * Find FOSS replacement?
+  * Personal settings for alfred
 
 ### TODO: Max
 * ansiblify the packages in `packages.yml`
