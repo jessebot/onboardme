@@ -12,6 +12,8 @@ You can read more about it on [Wikipedia](https://en.wikipedia.org/wiki/Sieve_(m
 
 # Current Categorical Filters
 
+**NOTE**: *Unless otherwise noted, all these filters will mark every email as read.
+
 ## Delivery Updates
 Script: [delivery_updates-label_delete](delivery_updates-label_delete)
 |                          Sites                         	|                      Move/Label                     	    |
