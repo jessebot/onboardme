@@ -11,9 +11,10 @@ if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value 
  * @type and
  * @comparator contains
  */
-if allof (header :comparator "i;unicode-casemap" :contains "Subject" ["is shipped", "Shipping Confirmation", "klaar voor verzending", "bestelling ontvangen", "is in transit", "over uw zending", "packing your order", "bezorgd", "verzonden", "out for delivery", "delivered", "ingepakt", "onderweg", "geleverd"]) {
+if allof (header :comparator "i;unicode-casemap" :contains "Subject" ["is shipped", "Shipping Confirmation", "klaar voor verzending", "bestelling ontvangen", "is in transit", "over uw zending", "packing your order", "bezorgd", "verzonden", "out for delivery", "delivered", "ingepakt", "onderweg", "geleverd", "has been delivered", "shipment is scheduled", "shipment was tendered", "package delivery has been updated"]) {
     fileinto "trash";
     fileinto "Delivery Updates";
     addflag "\\Seen";
     keep;
 }
+
