@@ -11,7 +11,8 @@ if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value 
  * @comparator contains
  * @comparator contains
  */
-if allof (header :comparator "i;unicode-casemap" :contains "Subject" ["Bedankt voor je bestelling bij", "Thank you for your order", "Your order's in the kitchen", "Bevestiging van uw bestelling bij Full Moon Garden"], address :all :comparator "i;unicode-casemap" :contains "From" ["no-reply@thuisbezorgd.nl", "noreply@t.deliveroo.com", "noreply@sitedish.nl"]) {
+if allof (header :comparator "i;unicode-casemap" :contains "Subject" ["Bedankt voor je bestelling bij", "Thank you for your order", "Your order's in the kitchen", "Bevestiging van uw bestelling bij Full Moon Garden"], address :all :comparator "i;unicode-casemap" :contains "From" ["no-reply@thuisbezorgd.nl", "noreply@t.deliveroo.com", "noreply@sitedish.nl", "thuisbezorgd.nl"]) {
+    fileinto "Purchases/Food/Eating Out";
     addflag "\\Seen";
     keep;
 }
