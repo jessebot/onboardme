@@ -6,14 +6,13 @@ if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value 
     return;
 }
 
-# Food - Grocery Reciepts from all online purchases - Mark: Read / Move to: Purchases/Food/Groceries
 /**
  * @type and
  * @comparator contains
  * @comparator contains
  */
 if allof (header :comparator "i;unicode-casemap" :contains "Subject" ["digitale bon", "Factuur voor uw De Notenshop bestelling", "Uw De Notenshop bestelbevestiging"], address :all :comparator "i;unicode-casemap" :contains "From" ["jumbo@service.jumbo.com", "info@denotenshop.nl"]) {
-    fileinto "Purchases/Food/Groceries";
+    fileinto "Food/Groceries";
     addflag "\\Seen";
     keep;
 }
