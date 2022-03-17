@@ -6,7 +6,6 @@ if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value 
     return;
 }
 
-# Bol.com receipts - Mark: Read / Move to: Purchases/bol.com
 /**
  * @type and
  * @comparator contains
