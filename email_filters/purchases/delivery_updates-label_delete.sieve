@@ -6,7 +6,6 @@ if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value 
     return;
 }
 
-# Delivery Updates - Label: Delivery Updates / Mark: Read / Move: Trash
 /**
  * @type and
  * @comparator contains
@@ -17,4 +16,3 @@ if allof (header :comparator "i;unicode-casemap" :contains "Subject" ["is shippe
     addflag "\\Seen";
     keep;
 }
-
