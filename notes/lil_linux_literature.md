@@ -23,6 +23,9 @@ sudo apt update
 
 Then, and ONLY THEN can you run: `sudo apt install winehq-staging`
 
+### Xbox controller for Debian drivers
+https://launchpad.net/~grumbel/+archive/ubuntu/ppa
+
 ### Misc
 ROMS megathread: [https://r-roms.github.io/](https://r-roms.github.io/)
 
