@@ -2,7 +2,9 @@
 
 ## Gaming on Linux
 
-If you're on Debian, you want the instruction on [winehq.com](https://wiki.winehq.org/Debian) which are basically:
+### Wine
+If you're on Debian, you want the instructions on [winehq.com](https://wiki.winehq.org/Debian) which are basically:
+
 
 ```bash
 # Enable 32 bit packages (if you haven't already): 
@@ -21,9 +23,12 @@ sudo apt update
 
 Then, and ONLY THEN can you run: `sudo apt install winehq-staging`
 
+### Misc
+ROMS megathread: [https://r-roms.github.io/](https://r-roms.github.io/)
+
 Also, in my travels I found these:
 - [PlayOnLinux](https://www.playonlinux.com/)
-- [u/Snoo-78612's guide on Reddit](https://www.reddit.com/r/VivaPinata/comments/jke4er/viva_pinata_gnulinux_installation_guide/)
+- [u/Snoo-78612's guide to VivaPinata on Reddit](https://www.reddit.com/r/VivaPinata/comments/jke4er/viva_pinata_gnulinux_installation_guide/)
 
 ## apt notes
 
