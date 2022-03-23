@@ -21,6 +21,10 @@ sudo apt update
 
 Then, and ONLY THEN can you run: `sudo apt install winehq-staging`
 
+Also, in my travels I found these:
+- [PlayOnLinux](https://www.playonlinux.com/)
+- [u/Snoo-78612's guide on Reddit](https://www.reddit.com/r/VivaPinata/comments/jke4er/viva_pinata_gnulinux_installation_guide/)
+
 ## apt notes
 
 Thanks to Vaibhav for their solution [here](https://vskulkarni.wordpress.com/2011/10/07/gpg-error-httpppa-launchpad-net/) for when you get this error:
