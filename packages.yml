@@ -84,6 +84,8 @@ apt:
     - albert
     - pandoc
     - lynx
+    - lutris
+    - winehq-staging
 
 vundle:
   - https://github.com/hashivim/vim-terraform.git
