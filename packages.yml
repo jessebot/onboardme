@@ -84,6 +84,10 @@ apt:
     - albert
     - pandoc
     - lynx
+    - gnome-software-plugin-flatpak
+
+apt-gaming:
+    -
     - lutris
     - winehq-staging
 
