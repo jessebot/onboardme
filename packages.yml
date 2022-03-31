@@ -84,7 +84,10 @@ apt:
     - albert
     - pandoc
     - lynx
+    # to use web links and the gui to install flatpak and not use cli
     - gnome-software-plugin-flatpak
+    # to formate disks to exFAT, because FAT is too thin for modern windows 10 ISOs
+    - exfat-utils
 
 apt-gaming:
     -
