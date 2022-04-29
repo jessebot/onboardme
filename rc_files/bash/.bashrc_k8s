@@ -56,3 +56,6 @@ function khelp {
 function kns() {
     kubectl config set-context $(kubectl config current-context) --namespace=$1
 }
+
+# kind section
+export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin/kind

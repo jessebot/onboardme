@@ -41,11 +41,11 @@ special:
 python:
   - nothing yet.....
 
-go:
+go: maybe not needed, todo: add go installation instructions
   - kubernetes
 
 snap:
-  - multipass
+  - multipass (maybe not needed if we qemu any harder)
   - fluent-reader --candidate
 
 flatpak:
@@ -61,10 +61,11 @@ apt:
     - vim
     - python3-distutils
     - python3-pip
+    # containers (note, need to add user to docker group and reboot)
+    - docker
     - docker.io
     - docker-ce
-    - docker-ce-cli
-    - kubectl
+    # - docker-ce-cli ???
     - openssl
     - wget
     - sysstat
@@ -93,10 +94,31 @@ apt:
     # to formate disks to exFAT, because FAT is too thin for modern windows 10 ISOs
     - exfat-utils
 
+# gaming on linux specifc
 apt-gaming:
-    -
     - lutris
     - winehq-staging
 
+# this is for vim
 vundle:
   - https://github.com/hashivim/vim-terraform.git
+
+# special for all
+  brew:
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# linux special
+  helm:
+    curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
+    sudo apt-get install apt-transport-https --yes
+    echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+    sudo apt-get update
+    sudo apt-get install helm
+  go:
+    wget https://go.dev/dl/go1.18.1.linux-amd64.tar.gz
+    rm -rf /usr/local/go && tar -C /usr/local -xzf go1.18.1.linux-amd64.tar.gz
+    export PATH=$PATH:/usr/local/go/bin
+  kubectl:
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
