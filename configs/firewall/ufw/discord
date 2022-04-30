@@ -1,0 +1,4 @@
+[Discord]
+title=Discord
+description=Discord - Microsoft company https://discord.com/
+ports=6463,38774,51794,443/tcp
