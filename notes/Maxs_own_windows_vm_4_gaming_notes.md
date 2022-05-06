@@ -248,23 +248,60 @@ What we're gonna change it to:
 
 
 # with vnc
-qemu-system-x86_64 \
-  -drive id=disk0,if=virtio,cache=none,format=raw,file=Win10-AlternateInstall.img \
-  -drive file=Win10_21H2_EnglishInternational_x64.iso,index=1,media=cdrom \
-  -boot c \
-  -machine type=q35,accel=kvm \
-  -cpu host,kvm="off" \
-  -smp sockets=1,cores=2,threads=2 \
-  -m 8G \
-  -vga none -nographic -serial none -parallel none \
-  -device vfio-pci,host=01:00.0,multifunction=on \
-  -device vfio-pci,host=01:00.1 \
-  -device virtio-net,netdev=vmnic \
-  -netdev user,id=vmnic \
-  -net nic,model=e1000 \
-  -net user \
-  -vnc 127.0.0.1:2
-  
+
+```zsh
+
+sudo apt install qemu-kvm libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon libosinfo-bin xorg virt-manager virt-viewer
+
+sudo systemctl enable --now libvirtd
+
+
+/etc/libvirt/qemu.conf:
+
+vnc_listen = "0.0.0.0"
+vnc_password = your-password
+
+
+/etc/libvirt/libvirtd.conf
+
+listen_tcp = 1
+
+service libvirtd restart
+
+
+export VM_NAME="testvm"
+export OS_TYPE="Linux"
+export OS_VARIANT="ubuntu22.04"
+export DISK_NAME="boot.img"
+export DISK_SIZE="20G"
+export ISO_FILE="ubuntu-22.04-desktop-amd64.iso"
+export MEMORY="2G"
+export PHYSICAL_CORES="2"
+export VGA="cirrus"
+
+qemu-img create -f qcow2 "$DISK_NAME" "$DISK_SIZE"
+
+sudo qemu-system-x86_64 -enable-kvm \
+        -cpu host \
+        -cdrom "$ISO_FILE" \
+        -drive file="$DISK_NAME",format=qcow2 \
+        -m "$MEMORY" \
+        -name "$VM_NAME" \
+        -vnc localhost:10.0
+
+sudo virt-install --name yourVM \
+  --memory 2048 \
+  --vcpus 2 \
+  --disk size=20 \
+  --cdrom /home/user/Downloads/ubuntu-17.10.1-desktop-amd64.iso
+  --graphics vnc,listen=0.0.0.0 \
+  --noautoconsole
+
+ssh -v -L 5900:127.0.0.1:5900 -N -f 192.168.1.100
+
+
+```
+
 To get to bios, this worked, and spits you into a shell, which you then hit exit on and select boot manager.
   
 sudo qemu-system-x86_64 \
