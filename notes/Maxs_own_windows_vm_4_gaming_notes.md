@@ -345,3 +345,21 @@ sudo qemu-system-x86_64 \
    -net nic,model=e1000 \
    -net user \
    -bios /usr/share/qemu/OVMF.fd
+
+qemu-system-x86_64 \
+  -drive id=disk0,if=virtio,cache=none,format=raw,file=Win10-AlternateInstall.img \
+  -drive file=Win10_21H2_EnglishInternational_x64.iso,index=1,media=cdrom \
+  -boot c \
+  -machine type=q35,accel=kvm \
+  -cpu host,kvm="off" \
+  -smp sockets=1,cores=2,threads=2 \
+  -m 8G \
+  -vga none -nographic -serial none -parallel none \
+  -device vfio-pci,host=01:00.0,multifunction=on \
+  -device vfio-pci,host=01:00.1 \
+  -device virtio-net,netdev=vmnic \
+  -netdev user,id=vmnic \
+  -net nic,model=e1000 \
+  -net user \
+  -vnc 127.0.0.1:2
+
