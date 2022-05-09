@@ -240,6 +240,10 @@ def download_file(url, name, path):
     q.join()
 
 def create_ssh_keys():
+    """
+    Creates the ephemeral ssh keys we will need to launch and manage the VMs
+    this function will probably get replaced by an ansible role soon.
+    """
     from cryptography.hazmat.primitives import serialization as crypto_serialization
     from cryptography.hazmat.primitives.asymmetric import rsa
     from cryptography.hazmat.backends import default_backend as crypto_default_backend
