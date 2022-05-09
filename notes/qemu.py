@@ -5,23 +5,15 @@ properly take over an environment and provide a homogenous base
 from which to run/deploy IaC.
 """
 
-from decimal import ROUND_UP
-import json
-import yaml
-from yaml.loader import SafeLoader
+import json, yaml, shutil, os, requests, sys, time, io, math, pathlib
 import logging as log
 from logging import debug
-import shutil
-import os
-import requests
-import sys
-import time
-import io
-import math 
 from queue import Queue
 from threading import Thread
+from yaml.loader import SafeLoader
 
-vm_config_path = "/Users/max/Desktop/Repos/ark8de/ansible/vm.yaml"
+
+vm_config_path = "/Users/max/Desktop/Repos/Onboardme/notes/vm.yaml"
 
 log_level = log.INFO
 program_log = log.getLogger(f"qemu-py")
@@ -69,29 +61,37 @@ def make_dir(path: str, clear: bool = False, debug: bool = False,
             program_log.error(f"Unable to create dir at {path}")
             if debug:
                 name = input("Any key to continue")
-    else:
-    # if the directory DOES exist, notify that we will be removing and
-    # overwriting it
-        if not clear:
+
+    # if the directory DOES exist, and clear=True, notify that we
+    # will be removing and overwriting it
+    if os.path.isdir(path):
+        if clear == True:
             program_log.info(f'Deleting directory: {path}')
             program_log.info('clearing...')
-        try:
-            shutil.rmtree(path)
-            os.makedirs(path)
-        except Exception as e:
-            program_log.error(f"Oof", print(e.__class__), "occurred")
-            program_log.error(f"failed to clear directory: {path}")
-            if debug:
-                name = input("Any key to continue")
+            
+            try:
+                shutil.rmtree(path)
+                os.makedirs(path)
+            except Exception as e:
+                program_log.error(f"Oof", print(e.__class__), "occurred")
+                program_log.error(f"failed to clear directory: {path}")
+                if debug:
+                    name = input("Any key to continue")
+    # otherwise skip
+    if not clear:
+        program_log.info(f'Directory {path} already exists.')
 
 def convert_size(size_bytes):
-   if size_bytes == 0:
-       return "0B"
-   size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
-   i = int(math.floor(math.log(size_bytes, 1024)))
-   p = math.pow(1024, i)
-   s = round(size_bytes / p, 2)
-   return "%s %s" % (s, size_name[i])
+    """
+    Convert bytes to readable formats
+    """
+    if size_bytes == 0:
+        return "0B"
+    size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+    i = int(math.floor(math.log(size_bytes, 1024)))
+    p = math.pow(1024, i)
+    s = round(size_bytes / p, 2)
+    return "%s %s" % (s, size_name[i])
 
 def download_file_worker():
     """
@@ -135,18 +135,35 @@ def download_file_worker():
         job = q.get()
         url = job[0]
         name = job[1]
+        path = job[2]
+        working_dir = pathlib.Path().resolve()
+        download_file_path = pathlib.Path(f"{working_dir}/{path}/{name}")
+        skippable = True
 
         # get the size of the file from the header and compare it
         # to the file size on disk (if it exists)
         remote_file_info = requests.head(url)
-        total_bytes = int(remote_file_info.headers['Content-Length'])
-        convered_Size = convert_size(int(total_bytes))
+        total_bytes = 0
+        
+        try:
+            total_bytes = int(remote_file_info.headers['Content-Length'])
+            convered_Size = convert_size(int(total_bytes))
+        except Exception as e:
+            program_log.error(f"Oof, looks like a {e.__class__}.")
+            program_log.error(f"Status Code: {remote_file_info.status_code}")
+            program_log.error(f"Headers: {remote_file_info.headers}")
+            q.task_done()
+            sys.exit()
+
+
         downloaded_bytes = 0
 
-        # compare file sizes to see if we can skip downloading
-        if os.path.isfile(name):
-            program_log.info(f"file: {name} already exists on disk...")
-            downloaded_bytes = int(os.path.getsize(name))
+        # Check if file exists
+        if os.path.exists(f"{download_file_path}"):
+            program_log.info(f"file: {download_file_path} already exists on disk...")
+            downloaded_bytes = int(os.path.getsize(download_file_path))
+
+            # Check if existing file needs to be updated
             if downloaded_bytes == total_bytes:
                 program_log.info(f"file is the same bytesize as {url}, skipping downloading")
                 q.task_done()
@@ -155,6 +172,7 @@ def download_file_worker():
                 program_log.info(f"file is not the same bytesize as {url}, not skippable")
                 skippable = False
         else:
+            program_log.info(f"{download_file_path} not present.")
             skippable = False
 
 
@@ -164,7 +182,7 @@ def download_file_worker():
             response = requests.get(f"{url}", stream=True)
 
             # download file
-            with open(name, 'wb') as file:
+            with open(download_file_path, 'wb') as file:
                 frames_rendered = 0
 
                 # cache the start time of the job
@@ -188,7 +206,7 @@ def download_file_worker():
                         if this_frame > frames_rendered:
 
                             # metrics
-                            downloaded_bytes = int(os.path.getsize(name))
+                            downloaded_bytes = int(os.path.getsize(download_file_path))
                             progress = math.ceil((downloaded_bytes / total_bytes) * 100)
                             speed = math.trunc((downloaded_bytes // time_elapsed) / 100000)
 
@@ -204,31 +222,62 @@ def download_file_worker():
                             # record that we finished the frame
                             frames_rendered = this_frame
             q.task_done()
+        else:
+            q.task_done()
+            sys.exit()
 
-def download_file(url, name):
+def download_file(url, name, path):
     """
     Downloads a file in a new thread
     based on https://towardsdatascience.com/multithreading-multiprocessing-python-180d0975ab29
     """
     global q
     q = Queue()
-    q.put([url, name])
+    q.put([url, name, path])
     worker = Thread(target=download_file_worker)
     worker.daemon = True
     worker.start()
     q.join()
 
-# load the yaml config file
-vm_config = read_yaml_file(vm_config_path)
-print(vm_config)
+def create_ssh_keys():
+    from cryptography.hazmat.primitives import serialization as crypto_serialization
+    from cryptography.hazmat.primitives.asymmetric import rsa
+    from cryptography.hazmat.backends import default_backend as crypto_default_backend
 
-# create a directory to hold the VM assets
-make_dir(vm_config['VM']['vm_name'], False, True)
+    program_log.info(f"Generating key files...")
+    key = rsa.generate_private_key(
+        backend=crypto_default_backend(),
+        public_exponent=65537,
+        key_size=2048
+    )
 
-# download a cloud image
-# build the download url from base url, codename, image name, and filetype
-# Name and Type
-name = f"{vm_config['VM']['cloud_image_name']}"
-url = f"{vm_config['VM']['cloud_image_url']}/{name}"
+    private_key = key.private_bytes(
+        crypto_serialization.Encoding.PEM,
+        crypto_serialization.PrivateFormat.PKCS8,
+        crypto_serialization.NoEncryption()
+    )
 
-download_file(url, name)
+    public_key = key.public_key().public_bytes(
+        crypto_serialization.Encoding.OpenSSH,
+        crypto_serialization.PublicFormat.OpenSSH
+    )
+
+def main():
+    """
+    main logic looop 
+    """
+    # load the yaml config file
+    vm_config = read_yaml_file(vm_config_path)
+    program_log.debug(f"loaded vm_config: {vm_config}")
+
+    # create a directory to hold the VM assets
+    make_dir(vm_config['VM']['vm_name'], clear=False)
+
+    # download a cloud image
+    name = f"{vm_config['VM']['cloud_image_name']}"
+    path = f"{vm_config['VM']['vm_name']}"
+    url = f"{vm_config['VM']['cloud_image_url']}/{name}"
+    download_file(url, name, path)
+
+main()
+create_ssh_keys()

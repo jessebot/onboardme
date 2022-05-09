@@ -83,7 +83,7 @@ ssh-keygen -C "$VM_USER" \
 VM_KEY_FILE=$(find "$(cd ..; pwd)" -name $VM_USER)
 VM_KEY=$(cat "$VM_KEY_FILE".pub)
 
-# should be a template file
+# should be a template file/config file
 cat > user-data <<EOF
 #cloud-config
 #vim:syntax=yaml
@@ -131,14 +131,7 @@ tmux attach-session -t "${VM_NAME}_session"
 #  -i testvm/"{VM_USER}" -vvvv \
 #  -p "$VM_SSH_PORT" "$VM_USER"@"$HOST_ADDRESS"
 
-#ssh -i "$VM_KEY_FILE" \
-#  -p 2222 "$VM_USER"@localhost
 
-# TODO 
-# create an iso image https://quantum-integration.org/posts/install-cloud-guest-with-virt-install-and-cloud-init-configuration.html
-#qemu-img create -f qcow2 -o \
-#    backing_file=./master/centos-7-cloud.qcow2 \
-#    example.qcow2
 
 # luanch the VM to install from ISO to Disk
 #sudo qemu-system-x86_64 -enable-kvm \
@@ -167,7 +160,6 @@ tmux attach-session -t "${VM_NAME}_session"
 #  nmap -p 1234 localhost
 #
 #  VNC tunnel https://gist.github.com/chriszarate/bc34b7378d309f6c3af5
-#
 #
 #  ssh -o "StrictHostKeyChecking no" \
 #    -N -L 5001:"$HOST_ADDRESS":5900 \

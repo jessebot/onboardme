@@ -7,7 +7,7 @@ VM:
   disk_name: boot.img
   disk_size: 20G
   iso_file_name: ubuntu-22.04-live-server-amd64.iso
-  iso_file_url: 
+  iso_file_url: ' '
   cloud_image_name: 'jammy-server-cloudimg-amd64.img'
   cloud_image_url: 'https://cloud-images.ubuntu.com/jammy/current'
   memory: 4G
