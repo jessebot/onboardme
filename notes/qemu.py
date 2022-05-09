@@ -5,6 +5,7 @@ properly take over an environment and provide a homogenous base
 from which to run/deploy IaC.
 """
 
+from decimal import ROUND_UP
 import json
 import yaml
 from yaml.loader import SafeLoader
@@ -17,6 +18,8 @@ import sys
 import time
 import io
 import math 
+from queue import Queue
+from threading import Thread
 
 vm_config_path = "/Users/max/Desktop/Repos/ark8de/ansible/vm.yaml"
 
@@ -90,59 +93,130 @@ def convert_size(size_bytes):
    s = round(size_bytes / p, 2)
    return "%s %s" % (s, size_name[i])
 
-def download_file(url: str, output_name: str):
+def download_file_worker():
     """
     Downloads a file and shows a simple progress bar. 
     Sets a frame_length to throttle resource consumption.
     Allows changing the bar length and fill chatacter
+
     furmulas are:
-       Filled bar percentage: bar_length * downloaded_bytes / total_bytes
-       Download progress: (downloaded_bytes/total_bytes) * 100
-       Download speed: (downloaded_bytes // time_elapsed) / 100000
-       Character to fill the bar: 
+        Filled bar percentage: bar_length * downloaded_bytes / total_bytes
+        Download progress: (downloaded_bytes/total_bytes) * 100
+        Download speed: (downloaded_bytes // time_elapsed) / 100000
+        Character to fill the bar: 
             left: '*' * bar_fill
             right: ' ' * (bar_length - bar_fill)
+        
+        Frame Length: Seconds between frame renders
+        Time: Elapsed: current_time  - start_time
+        Current Frame: time_elapsed / frame_length
+
+    Optimization Notes:
+        1. Smaller chunk sizes trigger more IO operations on
+           faster connections and thus increase CPU consumption
+        2. Smaller frame times (under .3) have a non-negligible 
+           impact on performance
     """
-    with io.BytesIO() as f:
-        program_log.info(f"Downloading {output_name}...")
-        
-        response = requests.get(f"{url}", stream=True)
-        total_bytes = response.headers.get('content-length')
-        
-        # make the file size human readable
+    # bytes to download before serializing
+    chunk_size = 16384
+
+    # Time between frames in seconds
+    frame_length = .5
+    
+    # Total horizontal length of the progress bar
+    bar_length = 25
+
+    # Character that fills the progress bar
+    fill_character = "="
+    empty_character = " "
+
+    while True:
+        # Get a job object from the queue and assign the name and url
+        job = q.get()
+        url = job[0]
+        name = job[1]
+
+        # get the size of the file from the header and compare it
+        # to the file size on disk (if it exists)
+        remote_file_info = requests.head(url)
+        total_bytes = int(remote_file_info.headers['Content-Length'])
         convered_Size = convert_size(int(total_bytes))
         downloaded_bytes = 0
-        chunk_size = 4096
 
-        # Total horizontal length of the progress bar
-        bar_length = 20
-        
-        # ms between frames
-        frame_length = .05
-        frames_rendered = 0
-        
-        start = time.time()
-        timer = 0
-        
-        if total_bytes is None: # no content length header
-            f.write(response.content)
+        # compare file sizes to see if we can skip downloading
+        if os.path.isfile(name):
+            program_log.info(f"file: {name} already exists on disk...")
+            downloaded_bytes = int(os.path.getsize(name))
+            if downloaded_bytes == total_bytes:
+                program_log.info(f"file is the same bytesize as {url}, skipping downloading")
+                q.task_done()
+                sys.exit()
+            else:
+                program_log.info(f"file is not the same bytesize as {url}, not skippable")
+                skippable = False
         else:
-            total_bytes = int(total_bytes)
-            for chunk in response.iter_content(chunk_size):
-                downloaded_bytes += len(chunk)
-                time_elapsed = time.time()  - start
-                timer += time_elapsed
-                f.write(chunk)
-                this_frame = round(time_elapsed/frame_length)
-                if this_frame > frames_rendered:
-                    progress = round((downloaded_bytes/total_bytes) * 100, 2)
-                    bar_fill = int(bar_length * downloaded_bytes / int(total_bytes))
-                    speed = (downloaded_bytes // time_elapsed) / 100000
-                    bar_left = '*' * bar_fill
-                    bar_right = ' ' * (bar_length - bar_fill)
-                    sys.stdout.write(f"\r[{bar_left}{bar_right}] {progress}% of {convered_Size} @ {round(speed, 2)}Mbps")
-                    sys.stdout.flush()
-                    frames_rendered = this_frame
+            skippable = False
+
+
+        # finally start the download
+        if skippable == False:
+            program_log.info(f"Downloading {name}")
+            response = requests.get(f"{url}", stream=True)
+
+            # download file
+            with open(name, 'wb') as file:
+                frames_rendered = 0
+
+                # cache the start time of the job
+                start = time.time()
+
+                # Begin the download
+                if total_bytes is None: 
+                    program_log.error("{response.content}")
+                else:
+                    for chunk in response.iter_content(chunk_size):
+                        # Save each chunk as it comes in
+                        file.write(chunk)
+                        file.flush()
+                        os.fsync(file.fileno())
+
+                        # track our frame times
+                        time_elapsed = time.time()  - start
+                        this_frame = math.trunc(time_elapsed/frame_length)
+                        
+                        # Update our values to display a new frame
+                        if this_frame > frames_rendered:
+
+                            # metrics
+                            downloaded_bytes = int(os.path.getsize(name))
+                            progress = math.ceil((downloaded_bytes / total_bytes) * 100)
+                            speed = math.trunc((downloaded_bytes // time_elapsed) / 100000)
+
+                            # progress bar pieces
+                            bar_fill = int(bar_length * downloaded_bytes / int(total_bytes))
+                            bar_left = fill_character * bar_fill
+                            bar_right = empty_character * (bar_length - bar_fill)
+
+                            # assemble the frame and flush the buffer
+                            sys.stdout.write(f"\r[{bar_left}{bar_right}] {progress}% of {convered_Size} @ {speed}Mbps")
+                            sys.stdout.flush()
+
+                            # record that we finished the frame
+                            frames_rendered = this_frame
+            q.task_done()
+
+def download_file(url, name):
+    """
+    Downloads a file in a new thread
+    based on https://towardsdatascience.com/multithreading-multiprocessing-python-180d0975ab29
+    """
+    global q
+    q = Queue()
+    q.put([url, name])
+    worker = Thread(target=download_file_worker)
+    worker.daemon = True
+    worker.start()
+    q.join()
 
 # load the yaml config file
 vm_config = read_yaml_file(vm_config_path)
@@ -154,9 +228,7 @@ make_dir(vm_config['VM']['vm_name'], False, True)
 # download a cloud image
 # build the download url from base url, codename, image name, and filetype
 # Name and Type
-name = f"{vm_config['VM']['ubuntu_codename']}{vm_config['VM']['cloud_image_name']}{vm_config['VM']['cloud_image_filetype']}"
+name = f"{vm_config['VM']['cloud_image_name']}"
 url = f"{vm_config['VM']['cloud_image_url']}/{name}"
 
 download_file(url, name)
-
-
