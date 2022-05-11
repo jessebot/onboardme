@@ -102,3 +102,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+#vault
+notes/vault.txt
+notes/vault
