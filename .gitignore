@@ -103,6 +103,9 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-#vault
+# vault
 notes/vault.txt
 notes/vault
+
+# personal :shrug:
+configs/nextcloud/nextcloud-values.yml

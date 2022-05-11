@@ -1,0 +1,19 @@
+[global_config]
+[keybindings]
+[profiles]
+  [[default]]
+    background_darkness = 0.37
+    background_type = transparent
+    cursor_color = "#aaaaaa"
+    font = Ubuntu Mono Bold 16
+    foreground_color = "#729fcf"
+    use_system_font = False
+[layouts]
+  [[default]]
+    [[[window0]]]
+      type = Window
+      parent = ""
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+[plugins]
