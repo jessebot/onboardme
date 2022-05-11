@@ -27,7 +27,7 @@ We've had good luck with [Awesome Humane Tech](https://github.com/humanetech-com
 *Run the script*
 `./onboardme_mac.py`
 
-*You did it!* 🥳 Here, have some [free wallpapers](https://photos.app.goo.gl/mGjmG4o6JB9xxK7BA) from my old Google Pixel <3
+*You did it!* 🥳 Here, have some [free wallpapers](https://photos.app.goo.gl/mGjmG4o6JB9xxK7BA) from my phone <3
 
 ## Mint
 Under construction, but the idea is that we keep the best of both worlds, and just have one script to support both OSes. And even better, it's run via like ansible and dockerized. The basic dev machine goal :blue_heart:
@@ -37,14 +37,14 @@ Totally manual and awful. There is a config file with all the packages from 3 pa
 
 ### TODO
 * add functioning arg parser
-  * OS selection [Mac, Mint]
+  * OS selection [Mac, Debian]
    * Coming Soon: Android, SDR notes
    * Coming Later: SmartWatch OS 
 * KEYBOARD MAPPINGS: CAPSLOCK TO CONTROL - need for both debian (gnome/xfce menu mappings?) and mac osx
 * Move the panel to the side, and add panelettes or whatever they're called
 * Setup crontab (or whatever you do on a mac) script to automatically backup into configurable repo (default to this repo):
   * RSS feeds OPML
-  * FreeTube/NewPipe subscriptions OPML
+  * FreeTube/NewPipe subscriptions OPML/db
   * Shell/editor rc files
     * Ask before doing this!
 * Add chat software
@@ -52,7 +52,6 @@ Totally manual and awful. There is a config file with all the packages from 3 pa
 * Overview of current configs maintained by this script?
 * Add go lines before k8s/docker/kind stuff
 * Check for external apt repos that may need adding
-* add rc file symlinks to this repo directory
 * Which email clients to support? MUTT? ThunderGuy?
 
 ### TODO: Max
@@ -93,3 +92,8 @@ This is ridiculous, but we're using: `apt`, `snap`, `flatpak`, as well as `pip`,
 ### Search
 - Startpage for anonymous google search
 - Duckduckgo for alternative Google search
+
+
+# Extra notes
+
+Brew tips [here](https://gist.github.com/ChristopherA/a579274536aab36ea9966f301ff14f3f)
