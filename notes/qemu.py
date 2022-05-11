@@ -239,32 +239,48 @@ def download_file(url, name, path):
     worker.start()
     q.join()
 
-def create_ssh_keys():
+def create_ssh_keys(vault_token):
     """
     Creates the ephemeral ssh keys we will need to launch and manage the VMs
     this function will probably get replaced by an ansible role soon.
+
+    Base64 encoding everything as a start but these should be hashed 
+
+    # https://www.vaultproject.io/docs/get-started/developer-qs
+    # https://pypi.org/project/pyhcl/
     """
+    import hvac
+    import hcl
+    import base64
     from cryptography.hazmat.primitives import serialization as crypto_serialization
     from cryptography.hazmat.primitives.asymmetric import rsa
     from cryptography.hazmat.backends import default_backend as crypto_default_backend
 
-    program_log.info(f"Generating key files...")
-    key = rsa.generate_private_key(
-        backend=crypto_default_backend(),
-        public_exponent=65537,
-        key_size=2048
+    with open('config.hcl', 'r') as config_file:
+        vault_config = hcl.load(config_file)
+    
+    vault_url = f"{vault_config['api_addr']}"
+    client = hvac.Client(vault_url, vault_token)
+
+    create_response = client.secrets.kv.v2.create_or_update_secret(
+        mount_point='ssh',
+        path='virtualbradley',
+        secret=dict(password='I give my boy a fan, is not a fan-boy?'),
     )
 
-    private_key = key.private_bytes(
-        crypto_serialization.Encoding.PEM,
-        crypto_serialization.PrivateFormat.PKCS8,
-        crypto_serialization.NoEncryption()
-    )
+    print('Secret written successfully.')
 
-    public_key = key.public_key().public_bytes(
-        crypto_serialization.Encoding.OpenSSH,
-        crypto_serialization.PublicFormat.OpenSSH
-    )
+
+    #private_key = base64.b64encode(key.private_bytes(
+    #    crypto_serialization.Encoding.PEM,
+    #    crypto_serialization.PrivateFormat.PKCS8,
+    #    crypto_serialization.NoEncryption())
+    #)
+
+    #public_key = base64.b64encode(key.public_key().public_bytes(
+    #    crypto_serialization.Encoding.OpenSSH,
+    #    crypto_serialization.PublicFormat.OpenSSH)
+    #)
 
 def main():
     """
@@ -283,5 +299,7 @@ def main():
     url = f"{vm_config['VM']['cloud_image_url']}/{name}"
     download_file(url, name, path)
 
-main()
-create_ssh_keys()
+#main()
+
+vault_token='hvs.H7JknpNgEqDVtoSFNLFB5qnc'
+create_ssh_keys(vault_token)
