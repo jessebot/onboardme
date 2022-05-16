@@ -92,7 +92,10 @@ alias gc='git commit -m'
 alias gs='git status'
 alias gd='git diff'
 alias ga='git add .'
-alias gp='git push'
+alias gph='git push'
+alias gpl='git pull'
+# quick to do
+alias todo='vim ~/todo.md'
 
 ########## Extra Functions/One-Liners ###########
 # move faster with base 64
