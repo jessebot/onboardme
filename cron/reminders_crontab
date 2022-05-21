@@ -1,4 +1,4 @@
 # This is for taking lunch at noon each day
-0 12 * * * ~/alarms.sh lunch
+0 12 * * * ~/cron/alarms.sh lunch
 # This one is to stop working for the day
-30 18 * * * ~/alarms.sh stop_work
+30 18 * * * ~/cron/alarms.sh stop_work
