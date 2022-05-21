@@ -1,39 +1,6 @@
-brew_linux:
-  non-cask:
-    - kind
-
-brew_mac:
-  cask:
-    - lulu
-    - spectacle
-    - item3
-    - aws-vault
-    - docker
-  non-cask:
-    - awscli
-    - ag
-    - terraform
-    - tfenv
-    - git-flow
-    - colordiff
-    - docker
-    - jq
-    - tree
-    - wget
-    - openssl
-    - kubectl
-    - npm
-    - kops
-    - helm
-    - fluxctl
-    - tree
-    - pandoc
-    - lynx
-
 # can't be installed through normal package managers anywhere
 mac_special:
   alfred
-  spectacle
 
 python:
   - nothing yet.....
