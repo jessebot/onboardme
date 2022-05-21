@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Simple script by JesseBot@linux to remind you to stop working
 ALARM_TYPE=$1
+SILENCE=$2
 
 case $ALARM_TYPE in
     work_start_soon)
@@ -51,7 +52,7 @@ case $ALARM_TYPE in
     work_end_soon)
         banner_msg="Working Hours End Soon"
         figlet -c -f banner $banner_msg > /tmp/wall_notice
-        echo "It's almost time to stop working :) Find a stopping place." \
+        echo "It's almost time to stop working. Find a stopping place." \
              "Update your tickets. Save any important open tabs to your" \
              "bookmarks. Send that last email or message." >> /tmp/wall_notice
         ;;
@@ -59,19 +60,19 @@ case $ALARM_TYPE in
     work_end)
         banner_msg="Working Hours Complete"
         figlet -c -f banner $banner_msg > /tmp/wall_notice
-        echo "It's time to STOP WORK! :D Close all programs, except your " \
-             "timesheets. Fill in your timesheet, and sign off. Close your " \
-             "work laptop 🎉 " >> /tmp/wall_notice
+        echo "It's time to STOP WORK! Close all programs, except your time" \
+             "sheet. Fill in your timesheet, and sign off. Close your work" \
+             "laptop 🎉 " >> /tmp/wall_notice
         ;;
 
     work_end_serious)
         banner_msg="Stop Working!!"
         figlet -c -f banner $banner_msg > /tmp/wall_notice
-        echo ">:( Overtime is not worth it. You have a life outside of work." \
-             " Seriously, do something else. You're more than the " \
-             "productivity you give your job. Take that back for " \
-             "yourself. Make/order/eat dinner. Hang out with your friends, " \
-             "or do some personal hobby. Be more than work." >> /tmp/wall_notice
+        echo "Over time is not worth it. You have a life outside of work." \
+             "Seriously, do something else. You're more than the" \
+             "productivity you give your job. Take that back for" \
+             "yourself. Make or order dinner. Hang out with your friends." \
+             "Do some personal hobby. Be more than work." >> /tmp/wall_notice
         ;;
 esac
 
@@ -80,5 +81,11 @@ wall /tmp/wall_notice
 
 # If on Mac use the say program to speak the notice outloud.
 if [ "$(uname)" = "Darwin" ]; then
-    say -f /tmp/wall_notice
+    # if they set a second variable then silence the alarm
+    if [ ! -z "$SILENCE" ]; then
+        say -f /tmp/wall_notice
+    # if they have this file in thier home directory, also silence the alarm
+    elif [ ! -e "$HOME/.alarm_silence"  ]; then
+        say -f /tmp/wall_notice
+    fi
 fi
