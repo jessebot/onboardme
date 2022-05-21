@@ -8,5 +8,10 @@ You need to install [PowerToys](https://github.com/microsoft/PowerToys) from eit
 winget install Microsoft.PowerToys -s winget
 ```
 
+## Windows Subsystem for Linux
+```powershell
+wsl --install
+```
+
 ## Tips and Tricks
 `win key` + `x` pulls up a nice little admin tool menu
