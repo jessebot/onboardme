@@ -3,15 +3,79 @@
 ALARM_TYPE=$1
 
 case $ALARM_TYPE in
-    lunch)
-        figlet -c -f banner Take your lunch > /tmp/lunch_art
-        echo "It's time to take lunch :3" >> /tmp/lunch_art
-        wall /tmp/lunch_art
+    work_start_soon)
+        banner_msg="Work Starts Soon"
+        figlet -c -f banner $banner_msg > /tmp/wall_notice
+        echo "It's almost time to start work. Save your place and make some" \
+             "follow up notes." >> /tmp/wall_notice
         ;;
 
-    stop_work)
-        figlet -c -f banner Stop Working > /tmp/stop_working
-        echo "It's time to stop working :)" >> /tmp/stop_working
-        wall /tmp/stop_working
+    work_start)
+        banner_msg="Go To Work"
+        figlet -c -f banner $banner_msg > /tmp/wall_notice
+        echo "It's time to start working. Open your work laptop, and clock" \
+             "in: Fill in timesheet, say good morning in chat, check emails," \
+             "and open important tickets." >> /tmp/wall_notice
+        ;;
+
+    lunch)
+        banner_msg="Take your Lunch!"
+        figlet -c -f banner $banner_msg > /tmp/wall_notice
+        echo "It's time to take lunch! Go have a protein shake and or a" \
+             "salad, or order something healthy to snack on during your" \
+             "break, and use the time to do something for yourself" \
+             ":3" >> /tmp/wall_notice
+        ;;
+
+    lunch_end_soon)
+        banner_msg="Lunch Hour Ends Soon."
+        figlet -c -f banner $banner_msg > /tmp/wall_notice
+        echo "Your lunch hour ends soon, so you should save what you're" \
+             "doing, and make a note to follow up on any" \
+             "loose ends." >> /tmp/wall_notice
+        ;;
+
+    lunch_end)
+        banner_msg="Lunch is over."
+        figlet -c -f banner $banner_msg > /tmp/wall_notice
+        echo "Lunch has ended. Report back to work now." >> /tmp/wall_notice
+        ;;
+
+    break)
+        banner_msg="Take a 5 minute break."
+        figlet -c -f banner $banner_msg > /tmp/wall_notice
+        echo "Take a 5 minute break. Get some water or green tea and perhaps" \
+             "a small snack, a smackoroo, if you will." >> /tmp/wall_notice
+        ;;
+
+    work_end_soon)
+        banner_msg="Working Hours End Soon"
+        figlet -c -f banner $banner_msg > /tmp/wall_notice
+        echo "It's almost time to stop working :) Find a stopping place." \
+             "Update your tickets. Save any important open tabs to your" \
+             "bookmarks. Send that last email or message." >> /tmp/wall_notice
+        ;;
+
+    work_end)
+        banner_msg="Working Hours Complete"
+        figlet -c -f banner $banner_msg > /tmp/wall_notice
+        echo "It's time to STOP WORK! :D Close all programs, except your " \
+             "timesheets. Fill in your timesheet, and sign off. Close your " \
+             "work laptop 🎉 " >> /tmp/wall_notice
+        ;;
+
+    work_end_serious)
+        banner_msg="Stop Working!!"
+        figlet -c -f banner $banner_msg > /tmp/wall_notice
+        echo ">:( Overtime is not worth it. You have a life outside of work." \
+             " Seriously, do something else. You're more than the " \
+             "productivity you give your job. Take that back for " \
+             "yourself. Make/order/eat dinner. Hang out with your friends, " \
+             "or do some personal hobby. Be more than work." >> /tmp/wall_notice
         ;;
 esac
+
+wall /tmp/wall_notice
+if [ "$(uname)" = "Darwin" ]; then
+    say -f /tmp/wall_notice
+fi
