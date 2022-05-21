@@ -15,3 +15,6 @@ wsl --install
 
 ## Tips and Tricks
 `win key` + `x` pulls up a nice little admin tool menu
+
+## VPN causing issues with DNS resolution
+Edit `/etc/wsl.conf` and uncomment generateNetworkConf or whatever it's called, and set it to false. Then unlink your `etc/resolv.conf` and modify it to be the VPN's name servers only.
