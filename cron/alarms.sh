@@ -75,7 +75,10 @@ case $ALARM_TYPE in
         ;;
 esac
 
+# print the text in all logged in, terminals
 wall /tmp/wall_notice
+
+# If on Mac use the say program to speak the notice outloud.
 if [ "$(uname)" = "Darwin" ]; then
     say -f /tmp/wall_notice
 fi
