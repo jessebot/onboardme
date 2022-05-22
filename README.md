@@ -3,12 +3,12 @@ Project in pre-alpha state, and incredibly **Under Construction** in the `main` 
 # OnBoardMe to [mac, mint]
 We have enough productivity tools and special configs for various programs (for both Mac and Linux) that we actually need a repo for them. Example: We need to manage like 4 native OS package managers, at least 🤦
 
-The state of personal development software is not grand, so back to the basics of IT, we start from like 10 years of basic shell/Python scripts, and chain them together using ansible.
+The state of personal development software is not grand, so back to the basics of IT, we start from like 10 years of basic shell/Python scripts, and chain them together using ansible, but even the research phase of this project has taken forever, because there's many things to test and reproduce. This is slow, but trust me, worth it.
 
 ### Notes on FOSS and Ethics
-Here at this humble OnBoardMe repo, we try really hard to do the right thing. We're doing our best to get off of the giants like Google, Microsoft, Apple, Amazon, Samsung, etc... but we've still got a long way to go! Check back here for alternatives as we go on the journey ourselves! We'll link back to any orgs or projects we learn about, but free to open an issue with anything else we should link back to. :)
+Here at this humble OnBoardMe repo, we try really hard to do the right thing. We're doing our best to get off of the giants like Google, Microsoft, Apple, Amazon, Samsung, etc... but we've still got a long way to go! Check back here for alternatives as we go on the journey ourselves! We'll link back to any orgs or projects we learn about, but feel free to open an issue with anything else we should link back to. :)
 
-Living ethically under late stage capitalism is not easy, but we believe generally that software should be:
+Living ethically under late stage capitalism is not easy, but we believe generally that software should be Free and Open Source.
 
 ### Free and Open Source Software (FOSS)
 We believe in free software, and we do our best to use and support actually free and open source software. If you don't know what we mean, please check out this [GNU article on Free SoftWare](https://www.gnu.org/philosophy/free-sw.en.html).
@@ -84,6 +84,8 @@ This is ridiculous, but we're using: `apt`, `snap`, `flatpak`, as well as `pip`,
 
 ### Generic Storage
 - NextCloud for Google photos/drive (In the works)
+- minio for AWS S3 storage
+  (Even if you don't want to host it yourself, you should contact your local datacenters and see if they offer an object storage service, because they might, and it could be really cheap. Don't give your money to AWS.)
 
 ### Youtube
 - FreeTube
@@ -95,5 +97,4 @@ This is ridiculous, but we're using: `apt`, `snap`, `flatpak`, as well as `pip`,
 
 
 # Extra notes
-
 Brew tips [here](https://gist.github.com/ChristopherA/a579274536aab36ea9966f301ff14f3f)
