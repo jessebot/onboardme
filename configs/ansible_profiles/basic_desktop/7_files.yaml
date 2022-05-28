@@ -1,0 +1,30 @@
+Files:
+#- Name: Delete old brew if it's there
+#  Path: ~/.linuxbrew/bin
+#  State: absent
+#- Name: create base dir for brew files
+#  Path: ~/.linuxbrew/bin
+#  State: directory
+#  Recurse: yes
+#  Comment: brew folder
+- Name: Create a simlink
+  Source:  ~/.linuxbrew/Homebrew/bin/brew
+  Dest: ~/.linuxbrew/bin
+  State: link
+#- Name: Copy a file
+#  Source:
+#  Dest:
+#  State: copy
+#  Owner: ansible
+#  Mode: '644'
+Commands:
+- Name: set the path etc..
+  Command: echo "eval \$($(~/.linuxbrew/Homebrew/bin/brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+- Name: set the path etc..
+  Command: echo "export PATH=$PATH:~/.linuxbrew/Homebrew/bin/" >> ~/.bash_profile
+Details:
+  About: "brew install"
+  Name: Base
+  Size:
+  Comment: literally just the commands needed to install brew because it's actually the worst
+

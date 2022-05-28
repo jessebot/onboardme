@@ -1,0 +1,5 @@
+Repos:
+  - Source: https://github.com/Homebrew/brew
+    Destination: ~/.linuxbrew/Homebrew
+    Branch: "master"
+
