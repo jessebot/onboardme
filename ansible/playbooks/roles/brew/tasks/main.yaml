@@ -1,0 +1,20 @@
+# Brew is a pain in the ass to install properly on linux through ansible. 
+# Take a look at the terraform profile to see how to brew is installed prior to using this module to install packages via brew
+---
+- name: gather data
+  set_fact:
+    data: "{{ hostvars['localhost'].profile_json['Brew'] }}"
+    brew_path: "{{ hostvars['localhost'].profile_json['Brew_Path'] }}"
+
+- name: displaying tasks from config
+  debug:
+    msg: "{{ item }}"
+  with_items: "{{ data }}"
+
+- name: Update homebrew first and install formula foo with 'brew' in default path
+  community.general.homebrew:
+    name: "{{ item.Name }}"
+    state: "{{ item.State }}"
+    path: "{{ brew_path }}"
+    update_homebrew: yes
+  with_items: "{{ data }}"

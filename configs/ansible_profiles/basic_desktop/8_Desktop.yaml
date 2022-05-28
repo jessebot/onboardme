@@ -1,0 +1,3 @@
+Apt_Pass_1:
+  - Name: xubuntu-desktop
+    State: present

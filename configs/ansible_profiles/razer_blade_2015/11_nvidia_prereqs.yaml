@@ -1,0 +1,5 @@
+Apt_Pass_1:
+  - Name: dirmngr
+  - Name: ubuntu-drivers-common
+  - Name: primus 
+  - Name: linux-headers-generic

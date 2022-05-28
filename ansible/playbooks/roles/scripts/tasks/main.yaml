@@ -1,0 +1,13 @@
+# Ansible role to execute a script
+---
+- name: scripts section
+  set_fact:
+    section: "{{ hostvars['localhost'].profile_json['Scripts'] }}"
+
+- name: scripts scetion
+  debug:
+    msg: "{{ item.Script }}"
+  with_items: "{{ section }}"
+
+- script: "{{ item.Script }}"
+  with_items: "{{ section }}"

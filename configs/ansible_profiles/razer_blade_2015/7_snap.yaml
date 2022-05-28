@@ -1,0 +1,13 @@
+Snap:
+  - Name: discord
+    State: present
+  - Name: code
+    Classic: yes
+  - Name: httpie
+    State: present
+  - Name: lxd
+    State: present
+  - Name: multipass
+    State: present
+  - Name: slack
+    Classic: yes

@@ -1,0 +1,5 @@
+Commands:
+- Command: ubuntu-drivers autoinstall
+  Become: yes
+  Become_User: vmadmin
+  Become_Method: sudo

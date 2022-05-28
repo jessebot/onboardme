@@ -1,0 +1,45 @@
+Downloads:
+  - Name: download steamcmd from source
+    URL: https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz
+    Destination: "/home/steam/steamcmd_linux.tar.gz"
+  - Name: download Steam Client from source
+    URL: http://repo.steampowered.com/steam/archive/precise/steam_latest.deb
+    Destination: "/home/steam/steam_latest.deb"
+Files:
+  - Name: create the steamcmd application dir
+    Path: /home/steam/steamcmd
+    State: directory
+    Recurse: yes
+  - Name: create the steamcmd output dir
+    Path: /home/steam/output
+    State: directory
+    Recurse: yes
+  - Name: unarchive the steamcmd package
+    Archive: "/home/steam/steamcmd_linux.tar.gz"
+    Dest: "/home/steam/steamcmd/"
+    State: extract
+  - Name: change permissions on the steamcmd script
+    Path: "/home/steam/steamcmd/steamcmd.sh"
+    State: permissions 
+    Owner: steam
+    Mode: '777'
+Apt_Pass_1:
+  - Name: "gcc-10-base"
+    Version: 10.3.0-1ubuntu1~20.04
+    Hold: true
+    State: present
+  - Name: "lib32stdc++6"
+  - Name: lib32gcc1
+  - Name: locales
+  - Name: bzip2
+  - Name: libarchive13
+  - Name: lib32gcc-s1
+  - Name: p7zip-full 
+  - Name: tar
+  - Name: unzip
+  - Name: wget
+  - Name: ca-certificates
+  - Name: xz-utils
+  - Name: zenity
+  - Name: zenity-common
+  - Name: xterm

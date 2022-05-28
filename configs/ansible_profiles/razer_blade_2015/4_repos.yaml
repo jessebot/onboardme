@@ -1,0 +1,10 @@
+Apt_Repos:
+  - Name: Docker
+    URL: "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" 
+  - Name: Kubectl
+    URL: "deb [arch=amd64] https://apt.kubernetes.io/ kubernetes-xenial main"
+Commands:
+- Command: echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+  Become: yes
+  Become_User: vmadmin
+  Become_Method: sudo

@@ -1,0 +1,5 @@
+Apt_Repos:
+  - Name: Docker
+    URL: "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" 
+  - Name: Kubectl
+    URL: "deb [arch=amd64] https://apt.kubernetes.io/ kubernetes-xenial main"

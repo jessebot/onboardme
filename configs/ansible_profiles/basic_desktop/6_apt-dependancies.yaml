@@ -1,0 +1,30 @@
+Apt_Pass_1:
+  - Name: software-properties-common
+  - Name: ca-certificates
+  - Name: gnupg
+  - Name: apt-transport-https
+  - Name: curl
+  - Name: build-essential
+  - Name: sudo
+  - Name: unzip
+  - Name: git
+  - Name: vim
+  - Name: lsb-release
+  - Name: python3-distutils
+  - Name: python3-pip
+  - Name: docker-ce
+  - Name: docker-ce-cli
+  - Name: containerd.io
+  - Name: kubectl
+  - Name: ansible
+  - Name: build-essential
+  - Name: checkinstall
+  - Name: zlib1g-dev
+  - Name: openssl
+Details:
+  About: "dependancies + user"
+  Name: Base
+  Size:
+  Comment: ""
+
+

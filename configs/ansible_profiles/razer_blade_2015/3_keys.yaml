@@ -1,0 +1,18 @@
+Apt_Keys:
+  - Name: Docker
+    URL: https://download.docker.com/linux/ubuntu/gpg
+  - Name: Kubectl
+    URL: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+Downloads:
+  - Name: github cli encrypted key
+    URL: "https://cli.github.com/packages/githubcli-archive-keyring.gpg"
+    Destination: "."
+Commands:
+- Command: gpg --dearmor githubcli-archive-keyring.gpg
+  Become: yes
+  Become_User: vmadmin
+  Become_Method: sudo
+- Command: sudo mv githubcli-archive-keyring.gpg /usr/share/keyrings/githubcli-archive-keyring.gpg
+  Become: yes
+  Become_User: vmadmin
+  Become_Method: sudo
