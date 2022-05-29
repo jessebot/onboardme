@@ -19,7 +19,7 @@
   when:
     - item.State == "directory"
   become: yes
-  become_user: root
+  become_user: "{{ item.Become_User }}"
   become_method: sudo
 
 - name: Deletes directory
@@ -30,7 +30,7 @@
   when:
     - item.State == "absent"
   become: yes
-  become_user: root
+  become_user: "{{ item.Become_User }}"
   become_method: sudo
 
 - name: Creates simlinks
@@ -42,6 +42,9 @@
   with_items: "{{ data }}"
   when:
     - item.State == "link"
+  become: yes
+  become_user: "{{ item.Become_User }}"
+  become_method: sudo
 
 - name: Unarchive a file
   ansible.builtin.unarchive:
@@ -52,7 +55,7 @@
   when:
     - item.State == "extract"
   become: yes
-  become_user: root
+  become_user: "{{ item.Become_User }}"
   become_method: sudo
 
 - name: Change file ownership, group and permissions
@@ -65,7 +68,7 @@
   when:
     - item.State == "permissions"
   become: yes
-  become_user: root
+  become_user: "{{ item.Become_User }}"
   become_method: sudo
 
 - name: Copies files inside the client
@@ -79,7 +82,7 @@
   when:
     - item.State == "copy"
   become: yes
-  become_user: root
+  become_user: "{{ item.Become_User }}"
   become_method: sudo
 
 - name: Copy file with owner and permissions
@@ -90,5 +93,5 @@
   when:
     - item.State == "transfer"
   become: yes
-  become_user: root
+  become_user: "{{ item.Become_User }}"
   become_method: sudo

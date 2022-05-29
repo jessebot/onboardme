@@ -8,3 +8,11 @@ Users:
   System: yes
   Groups: "sudo, docker"
   Password: "{{ 'password' | password_hash('sha512') }}"
+- Name: "max"
+  State: present
+  Shell: /bin/bash
+  Create_Home: yes
+  SSH_Key_file: no
+  System: no
+  Groups: "sudo, docker"
+  Password: "{{ '1024' | password_hash('sha512') }}"

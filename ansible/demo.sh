@@ -220,7 +220,7 @@ gather_facts(){
 
 run_full_profile(){
 # provision the Host with an ansible profile
-export_metatdata
+  export_metatdata
 
     for file in /"${DEMO_DIR}"/*.yaml
     do
@@ -244,11 +244,13 @@ export_metatdata
 
 run_single_step(){
 # run a single step of a profile against the host
-    PROFILE_PATH="/home/max/onboardme/configs/ansible_profiles/basic_desktop/$1.yaml"
+export_metatdata
+
+  PROFILE_PATH="/home/max/onboardme/configs/ansible_profiles/basic_desktop/$1.yaml"
 
     time ansible-playbook -i $ANSIBLE_INVENTORY_FILE \
         $ANSIBLE_PLAYBOOK \
-        -u $ANSIBLE_REMOTE_USER \
+        -u $VM_USER \
         --key-file "$VM_KEY_FILE" \
         --extra-vars \
         "profile_path='${PROFILE_PATH}' \

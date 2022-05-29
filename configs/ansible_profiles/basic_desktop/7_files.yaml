@@ -11,6 +11,9 @@ Files:
   Source:  ~/.linuxbrew/Homebrew/bin/brew
   Dest: ~/.linuxbrew/bin
   State: link
+  Become: yes
+  Become_User: root
+  Become_Method: sudo
 #- Name: Copy a file
 #  Source:
 #  Dest:
@@ -20,11 +23,21 @@ Files:
 Commands:
 - Name: set the path etc..
   Command: echo "eval \$($(~/.linuxbrew/Homebrew/bin/brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+  Become: yes
+  Become_User: vmadmin
+  Become_Method: sudo
 - Name: set the path etc..
   Command: echo "export PATH=$PATH:~/.linuxbrew/Homebrew/bin/" >> ~/.bash_profile
+  Become: yes
+  Become_User: vmadmin
+  Become_Method: sudo
+- Name: change permissions
+  Command: chown -R vmadmin:vmadmin /home/vmadmin/.linuxbrew/Homebrew/
+  Become: yes
+  Become_User: root
+  Become_Method: sudo
 Details:
   About: "brew install"
   Name: Base
   Size:
   Comment: literally just the commands needed to install brew because it's actually the worst
-
