@@ -1,12 +1,4 @@
 Files:
-#- Name: Delete old brew if it's there
-#  Path: ~/.linuxbrew/bin
-#  State: absent
-#- Name: create base dir for brew files
-#  Path: ~/.linuxbrew/bin
-#  State: directory
-#  Recurse: yes
-#  Comment: brew folder
 - Name: Create a simlink
   Source:  /home/vmadmin/.linuxbrew/Homebrew/bin/brew
   Dest: /home/vmadmin/.linuxbrew/bin
@@ -14,12 +6,6 @@ Files:
   Become: yes
   Become_User: root
   Become_Method: sudo
-#- Name: Copy a file
-#  Source:
-#  Dest:
-#  State: copy
-#  Owner: ansible
-#  Mode: '644'
 Commands:
 - Name: set the path etc..
   Command: echo "eval \$($(~/.linuxbrew/Homebrew/bin/brew --prefix)/bin/brew shellenv)" >>~/.bash_profile

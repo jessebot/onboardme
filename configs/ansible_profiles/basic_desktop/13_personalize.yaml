@@ -1,0 +1,3 @@
+Sync:
+  - name: Transfer files/folder from ServerA to ServerB
+    Dest: /destinaton/path

@@ -1,0 +1,13 @@
+Apt_Pass_1:
+  - Name: flatpack
+    State: present
+  - Name: gnome-software-plugin-flatpak
+    State: present
+Flatpack_Remotes:
+  - Name: flathub
+    State: present
+    Flatpakrepo_URL: "https://dl.flathub.org/repo/flathub.flatpakrepo"
+    Method: system
+
+
+    

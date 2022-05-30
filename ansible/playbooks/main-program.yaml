@@ -156,14 +156,6 @@
       - hostvars['localhost'].profile_json['Apt_Pass_1'] is defined
       - (hostvars['localhost'].profile_json['Apt_Pass_1']|length>0)
 
-  - name: apt_pass_2
-    include_role:
-      name: apt_pass2
-    when:
-      - ansible_facts['pkg_mgr'] == "apt"
-      - hostvars['localhost'].profile_json['Apt_Pass_2'] is defined
-      - (hostvars['localhost'].profile_json['Apt_Pass_2']|length>0)
-
   - name: brew
     include_role:
       name: brew
@@ -185,6 +177,20 @@
       - hostvars['localhost'].profile_json['Snap'] is defined
       - (hostvars['localhost'].profile_json['Snap']|length>0)
       - ansible_facts['distribution'] == "Ubuntu"
+
+  - name: flatpack_remotes
+    include_role:
+      name: flatpack_remotes
+    when:
+      - hostvars['localhost'].profile_json['Flatpack_Remotes'] is defined
+      - (hostvars['localhost'].profile_json['Flatpack_Remotes']|length>0)
+
+  - name: flatpack
+    include_role:
+      name: flatpack
+    when:
+      - hostvars['localhost'].profile_json['Flatpack_Remotes'] is defined
+      - (hostvars['localhost'].profile_json['Flatpack_Remotes']|length>0)
 
   - name: sqlite
     include_role:
