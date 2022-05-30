@@ -178,19 +178,19 @@
       - (hostvars['localhost'].profile_json['Snap']|length>0)
       - ansible_facts['distribution'] == "Ubuntu"
 
-  - name: flatpack_remotes
+  - name: flatpack_remote
     include_role:
-      name: flatpack_remotes
+      name: flatpak_remote
     when:
-      - hostvars['localhost'].profile_json['Flatpack_Remotes'] is defined
-      - (hostvars['localhost'].profile_json['Flatpack_Remotes']|length>0)
+      - hostvars['localhost'].profile_json['Flatpak_Remote'] is defined
+      - (hostvars['localhost'].profile_json['Flatpak_Remote']|length>0)
 
   - name: flatpack
     include_role:
-      name: flatpack
+      name: flatpak
     when:
-      - hostvars['localhost'].profile_json['Flatpack_Remotes'] is defined
-      - (hostvars['localhost'].profile_json['Flatpack_Remotes']|length>0)
+      - hostvars['localhost'].profile_json['Flatpak'] is defined
+      - (hostvars['localhost'].profile_json['Flatpak']|length>0)
 
   - name: sqlite
     include_role:

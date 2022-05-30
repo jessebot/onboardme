@@ -2,7 +2,7 @@
 ---
 - name: gather data
   set_fact:
-    data: "{{ hostvars['localhost'].profile_json['Flatpack_Remotes'] }}"
+    data: "{{ hostvars['localhost'].profile_json['Flatpak_Remote'] }}"
 
 - name: displaying tasks from config
   debug:
@@ -13,6 +13,6 @@
   community.general.flatpak_remote:
     name: "{{ item.Name }}"
     state: "{{ item.State }}"
-    flatpakrepo_url: "{{ item.FlatpackRepo_URL }}"
+    flatpakrepo_url: "{{ item.URL }}"
     method: "{{ item.Method }}"
   with_items: "{{ data }}"
