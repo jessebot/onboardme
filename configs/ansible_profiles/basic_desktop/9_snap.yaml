@@ -5,9 +5,5 @@ Snap:
     Classic: yes
   - Name: slack
     Classic: yes
-  - Name: httpie
-    State: present
-  - Name: lxd
-    State: present
-  - Name: multipass
-    State: present
+  - Name: fluent-reader 
+    Channel: candidate

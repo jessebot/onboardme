@@ -62,7 +62,7 @@
   ansible.builtin.file:
     path: "{{ item.Path }}"
     owner: "{{ item.Owner }}"
-    group: sudo
+    group: "{{ item.Group }}"
     mode: "{{ item.Mode }}"
   with_items: "{{ data }}"
   when:

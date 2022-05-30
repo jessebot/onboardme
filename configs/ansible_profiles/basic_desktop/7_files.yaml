@@ -8,8 +8,8 @@ Files:
 #  Recurse: yes
 #  Comment: brew folder
 - Name: Create a simlink
-  Source:  ~/.linuxbrew/Homebrew/bin/brew
-  Dest: ~/.linuxbrew/bin
+  Source:  /home/vmadmin/.linuxbrew/Homebrew/bin/brew
+  Dest: /home/vmadmin/.linuxbrew/bin
   State: link
   Become: yes
   Become_User: root

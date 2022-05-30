@@ -26,7 +26,7 @@ export_metatdata(){
   export CLOUD_IMAGE_NAME="${UBUNTU_CODENAME}-server-cloudimg-amd64"
   export CLOUD_IMAGE_URL="https://cloud-images.ubuntu.com/jammy/current"
   export MEMORY="8G"
-  export PHYSICAL_CORES="4"
+  export PHYSICAL_CORES="2"
   export VGA="std"
   export VM_KEY=""
   export VM_KEY_FILE="$VM_USER"
@@ -189,11 +189,11 @@ ssh_to_vm(){
 }
 
 add_vm_to_inventory(){
-export_metatdata
-VM_KEY_FILE=$(find "$(cd ..; pwd)" -name $VM_USER)
-VM_KEY=$(cat "$VM_KEY_FILE".pub)
+  export_metatdata
+  VM_KEY_FILE=$(find "$(cd ..; pwd)" -name $VM_USER)
+  VM_KEY=$(cat "$VM_KEY_FILE".pub)
 
-# add the new VM to the ansible inventory
+    # add the new VM to the ansible inventory
     cat << EOF > ${VM_NAME}/${VM_NAME}-inventory.yaml
 webservers:
   hosts:
@@ -209,7 +209,7 @@ EOF
 }
 
 gather_facts(){
-# gather facts about client
+  # gather facts about client
   export_metatdata
   
   ansible-playbook -i $ANSIBLE_INVENTORY_FILE \
@@ -219,7 +219,7 @@ gather_facts(){
 }
 
 run_full_profile(){
-# provision the Host with an ansible profile
+  # provision the Host with an ansible profile
   export_metatdata
 
     for file in /"${DEMO_DIR}"/*.yaml
@@ -243,8 +243,8 @@ run_full_profile(){
 }
 
 run_single_step(){
-# run a single step of a profile against the host
-export_metatdata
+  # run a single step of a profile against the host
+  export_metatdata
 
   PROFILE_PATH="/home/max/onboardme/configs/ansible_profiles/basic_desktop/$1.yaml"
 
@@ -282,14 +282,15 @@ create(){
   attach_to_vm_tmux
 }
 
+provision(){
+  add_vm_to_inventory
+  gather_facts
+  run_full_profile
+}
+
 boot(){
   export_metatdata
   create_dir
-  #download_cloud_image
-  #expand_cloud_image
-  #create_ssh_key
-  #create_user_data
-  #generate_seed_iso
   boot_ubuntu_cloud_vm
   attach_to_vm_tmux
 }

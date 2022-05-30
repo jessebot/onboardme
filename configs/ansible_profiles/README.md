@@ -1,11 +1,10 @@
-## State of the project
+## Ansible Provisioning
 
 - It's generally best right now to use 1 file per set of actions in the same family (file manipulation, users, groups, installing packages)
 
-  This is a byproduct of how the demo script work right now. Certain design choices with the demo mean that steps in the automation pipeline run in a pre-determined order of events which can cause race-condition-like issues when combining multiple riles into one step (setting up groups, installing packages, and running commands all in the same yaml file).
+  This is a byproduct of how the demo script work right now. Certain design choices with the demo mean that steps in the automation pipeline run in a pre-determined order of events which can cause race-condition-like issues when combining multiple roles into one file (setting up groups, installing packages, and running commands all in the same yaml file will not always execute int he orger expected).
 
-  The good news is this is easily resolved in the next step of development of transitioning from a PoC bash script to using python + proper cloud-native techniques. I just have not had the time yet.
-
+  The cause is that the demo uses a fore-each loop to traverse the profile folder and execute each file found in order - when migrating to python we can just use one file and execute each element in order as they appear. We could do that in bash but I dont want to write that logic in shell right nowand increase the tech-debt.
 
 ##  Build Your Own Profile
 
@@ -91,117 +90,267 @@ which will allow me to run docker later without sudo.
         ```
         There's no magic or anything, we're just defining a list of similar actions using ansible roles, then letting the tooling make it happen using some loopy-loops. 
 
-## A non-complete list of available ansible roles
+## Available Ansible Roles and Options
 
-- wip
+
+1. Apt Keys
+
+- Uses the built-in [apt_key](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_key_module.html) module
+
+  ```yaml
+  ---
+  Apt_Keys:
+    - Name:
+      URL:
+  ```
+
+2. Apt packages
+
+  - uses the built-in [apt](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html) module
+
+    To enable squash installs (an optimized process that accepts a list of packages), pass the squash variable to ansible via the extravars flag. State, Hold, and Version flags are not support for squash install and ansible to revert to normal install when those flags are present. Ansible will automatically translate the YAML into a string list at runtime.
 
     ```yaml
     ---
-    Apt_Keys:
-      - Name:
-        URL:
-      - Name:
-        URL:
     Apt_Pass_1:
       - Name:
+        State: present/absent
+        Hold: True/False
         Version: (optional)
-      - Name:
-        Version: (optional)
-    Apt_Pass_2:
-      - Name:
-        Version: (optional)
-      - Name:
-        Version: (optional)
-    Apt_Repos:
-      - Name:
-        URL:
-      - Name:
-        URL:
-    Brew_Path:
-    Brew:
-      - Name:
-        State:
-      - Name:
-        State:
-    Commands:
-      - Command: ""
-        become:
-        become_user:
-        become_method:
-      - Command: ""
-        become:
-        become_user:
-        become_method:
-    Downloads:
-      - Name:
-        URL: ""
-        Destination: ""
-      - Name:
-        URL: ""
-        Destination: ""
-    Files:
-     - Name: Unarchive
-       Archive: ""
-       Dest: ""
-       State: extract
-     - Name: Create directory
-       Path: ""
-       Recurse:
-       State: directory
-     - Name: Delete directory
-       Path: ""
-       State: absent
-     - Name: Create Simlink
-       Source: ""
-       Dest: ""
-       State: link
-     - Name: Change file ownership, group and permissions
-       Path: ""
-       Mode: ""
-       State: permissions
-     - Name: Copy files within remote client
-       Source: ""
-       Dest: ""
-       Mode: ""
-       State: copy
-    Repos:
-      - Source:
-        Destination:
-        Branch: ""
-    Groups:
-      - Name:
-        State:
-    Kernel_Upgrade:
-      - Method: "yes"
-        Comments: "choices are 'dist' 'full', 'no', 'safe', 'yes'"
-    Package_Update:
-      - Update: true
-        Autoremove: true
-    Path:
-    Pip:
-    Scripts:
-    Snap:
-    Sync:
-    Users:
     ```
 
-## Profiles I've been messing with
+3. Apt Repos
 
-1. [Tanzu (Community Edition)](tanzu_ce)
+- Uses the builtin [apt_repository](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_repository_module.html) module
 
-- [Terraform](terraform)
+  ```yaml
+  ---
+  Apt_Repos:
+    - Name:
+      URL:
+  ```
 
-- [vSphere (WIP)](vsphere)
+4. Apt Keys
 
-- [Little Bradley](LB)
+- uses the builtin [apt_key](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_key_module.html) module
 
-- [Big Bradley](BB)
+  ```yaml
+  ---
+  Apt_Keys
+    - Name:
+      URL: 
+  ```
 
-- [Pi-hole (WiP)](dev/pihole)
+5. Brew Packages
 
-- [Tanzu (on sSphere) WIP](dev/tanzu)
+- uses the [community.general.homebrew](https://docs.ansible.com/ansible/latest/collections/community/general/homebrew_module.html) module
 
-- [Lilu (Linux-in-Linux-Ubuntu)](dev/Lilu)
+  ```yaml
+  ---
+  Brew_Path: ~/.path/to/brew
+  Brew:
+    - Name: some_package
+      State: present / absent
+    - Name: homebrew/cask/some_pckage
+      State: present / absent
+  ```
+
+6. Snap Packages
+
+- Uses the [community.general.snap](https://docs.ansible.com/ansible/latest/collections/community/general/snap_module.html) module
+
+  ```yaml
+  ---
+  Snap:
+    - Name: 
+      State: present / absent
+    - Name: 
+      Classic:
+    - Name: 
+      Channel: 
+  ```
+
+7. Pip
+
+- Uses the builtin [pip](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/pip_module.html) module
+- ToDo: add support for requirements.txt files and virtual envs
+
+  ```yaml
+  ---
+  Pip:
+    - Name:
+      Version: (optional)
+  ```
+
+8. Clone a git repo
+
+- Uses the [ansible.builtin.git](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/git_module.html) module
+
+  ```yaml
+  Repos:
+    - Source: repo url
+      Destination: /path/to/destination
+      Branch: 
+  ```
+
+9. Download files
+
+- Uses the builtin [get_url](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/get_url_module.html) module
+
+  ```yaml
+  ---
+  Downloads:
+    - Name: 
+      URL: url to download
+      Destination: /path/to/destination
+  ```
+
+10. Manipulate Files
+
+- [ansible.builtin.file](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html)
+- [ansible.builtin.unarchive](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/unarchive_module.html)
+- [ansible.builtin.copy](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html)
+
+  ```yaml
+  ---
+  Files:
+   - Name: Unarchive a file
+     Archive: ""
+     Dest: ""
+     State: extract
+     Become_User: some_user
+  
+   - Name: Create a new directory
+     Path: ""
+     Recurse:
+     State: directory
+     Become_User: some_user
+    
+   - Name: Delete a directory
+     Path: ""
+     State: absent
+     Become_User: some_user
+  
+   - Name: Create a Simlink
+     Source: ""
+     Dest: ""
+     State: link
+     Become_User: some_user
+  
+   - Name: Change file ownership, group and permissions
+     Path: ""
+     Mode: ""
+     Group: ""
+     State: permissions
+     Become_User: some_user
+  
+   - Name: Copy files within the remote client
+     Source: ""
+     Dest: ""
+     Mode: ""
+     State: copy
+     Become_User: some_user
+  ```
+
+11. Run a command
+
+- Uses the [ansible.builtin.command](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/command_module.html) module
+
+  Delegated commands are WiP/semi-functional, documentation about delegated command can be found [HERE](https://docs.ansible.com/ansible/latest/user_guide/playbooks_delegation.html)
+
+  ```yaml
+  Commands:
+    - Command: "a normal user command"
+
+    - Command: "a sudo command"
+      Become:
+      Become_User:
+      Become_Method:
+
+    - Command: "a delegated command"
+      Delegated_Host: 
+      Become:
+      Become_User:
+      Become_Method:
+  ```
+
+12. Manage User Accounts
+
+- Uses the builtin [user](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/user_module.html) module
+- Uses the [community.crypto.openssh_keypair](https://docs.ansible.com/ansible/latest/collections/community/crypto/openssh_keypair_module.html) module 
+- passwords must be hashed via sha512. For example: ```"{{ 'password' | password_hash('sha512') }}"```
+- system users will get sudoless root by default
+
+  ```yaml
+  ---
+  Users:
+  - Name: User Name
+    State: present / absent
+    Comment: descriiption text
+    Shell: user's default shell
+    Create_Home: yes / no
+    SSH_Key_file: no ( we use the community.crypto.openssh_keypair module instead )
+    System: yes / no (is a system account)
+    Groups: ""
+    Password: hashed password value
+  ```
+
+13. Manage Groups
+
+- Uses [ansible.builtin.user](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/user_module.html) module
+
+  ```yaml
+  ---
+  Groups:
+    - Name: 
+      State: present / absent
+  ```
+
+14. Update Package Cache
+
+- uses the built-in [apt](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html) module
+
+  ```yaml
+  ---
+  Package_Update:
+    - Update: 
+      Autoremove: 
+  ```
+
+15. Upgrade Packages
+
+- uses the built-in [apt](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html) module
+
+  ```yaml
+  ---
+  Package_Upgrade:
+    - Method: choices are 'dist' 'full', 'no', 'safe', 'yes'
+  ```
+
+16. Copy a script from the host and execute it on the remote
+
+- Uses the builtin [script](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/script_module.html) module
+  
+  ```yaml
+  ---
+  Scripts:
+    - Script: "/path/to/script.sh"
+      Become:
+      Become_User:
+      Become_Method:
+  ```
+
+17. Sync the shared Diredctory and Files from local server to remote
+
+- Uses the [synchronize](https://docs.ansible.com/ansible/2.3/synchronize_module.html) modue which is a just a wrapper around rsync.
+
+  ```yaml
+  ---
+  Sync:
+    - name: Transfer files/folder from ServerA to ServerB
+      Dest: /destinaton/path
+  ```
+
 
 ## __Linux Heads Up:__
 
@@ -212,15 +361,3 @@ which will allow me to run docker later without sudo.
     - `ansible.cfg` (in the current directory)
     - `~/.ansible.cfg` (in the home directory)
     - `/etc/ansible/ansible.cfg`
-
-## __Tanzu Heads Up:__
-
-- For troubleshooting failed bootstraps, you can exec into a container and use the kubeconfig at /etc/kubernetes/admin.conf to access the API server directly. For example:
-
-    ```zsh
-    docker exec -it 4ae /bin/bash
-    root@guest-control-plane-tcjk2:/# kubectl –kubeconfig=/etc/kubernetes/admin.conf get nodes
-    ```
-
-- If the Docker host machine is rebooted, the cluster will need to be re-created. Support for clusters surviving a host reboot is tracked in issue
-https://github.com/vmware-tanzu/community-edition/issues/832

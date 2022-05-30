@@ -1,4 +1,0 @@
-Apt_Pass_1:
-  - Name: cinnamon
-    State: present
-    

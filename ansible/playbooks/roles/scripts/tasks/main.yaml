@@ -9,5 +9,10 @@
     msg: "{{ item.Script }}"
   with_items: "{{ section }}"
 
-- script: "{{ item.Script }}"
+- name: Copy a script from the host and execute it on the remote
+  script: "{{ item.Script }}"
+  become: "{{ item.Become }}"
+  become_user: "{{ item.Become_User }}"
+  become_method: "{{ item.Become_Method }}"
   with_items: "{{ section }}"
+

@@ -49,10 +49,10 @@
   with_items: "{{ section }}"
   become: "{{ item.Become }}"
   become_user: "{{ item.Become_User }}"
+  become_method: "{{ item.Become_Method }}"
   when:
     - item.Delegated_Host is defined 
     - item.Delegated_Host | string
-
 
 - debug:
     msg: "Delegated command debug: {{ delegated_command_output }}"
@@ -60,7 +60,7 @@
     - item.Delegated_Host is defined 
     - item.Delegated_Host | string
 
-- name: delegated command
+- name: delegated command to ansible runner localhost
   command: "{{ item.Command }}"
   delegate_to: localhost
   register: command_output

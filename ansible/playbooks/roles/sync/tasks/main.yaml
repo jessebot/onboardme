@@ -15,7 +15,7 @@
     ssh_args: "-l {{ ansible_user }}"
     rsync_path: "/usr/bin/rsync"
     src: "{{ hostvars['localhost'].synced_directory }}"
-    dest: "{{ item.dest }}"
+    dest: "{{ item.Dest }}"
     dest_port: 2222
   delegate_to: localhost
   run_once: true

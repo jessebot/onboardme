@@ -4,7 +4,7 @@
   set_fact:
     section: "{{ hostvars['localhost'].profile_json['Pip'] }}"
 
-- name: Pip scetion
+- name: Pip section
   debug:
     msg: "{{ item.Name }}"
   with_items: "{{ section }}"
@@ -19,7 +19,7 @@
 - name: Install pip packages w/ version
   pip:
     name: "{{ item.Name }}"
-    version: ""{{ item.Version }}
+    version: "{{ item.Version }}"
   with_items: "{{ section }}"
   when:
     - item.Version is defined

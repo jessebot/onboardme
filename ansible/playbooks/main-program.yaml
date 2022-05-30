@@ -98,9 +98,9 @@
       - hostvars['localhost'].profile_json['Package_Update'] is defined
       - (hostvars['localhost'].profile_json['Package_Update']|length>0)
 
-  - name: kernel_upgrade
+  - name: package_upgrade
     include_role:
-      name: kernel_upgrade
+      name: package_upgrade
     when:
       - ansible_facts['pkg_mgr'] == "apt"
       - hostvars['localhost'].profile_json['Kernel_Upgrade'] is defined
