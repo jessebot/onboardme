@@ -70,4 +70,3 @@
     - item.Version is defined
     - item.Hold | bool
     - not squash
-

@@ -145,6 +145,8 @@ which will allow me to run docker later without sudo.
 
 - uses the [community.general.homebrew](https://docs.ansible.com/ansible/latest/collections/community/general/homebrew_module.html) module
 
+    Brew is a tricky package manager because it cannot be installed as root, and requires updating the $PATH environment variable which is a pain with Ansible. This means that the install process for Brew requires the use of the `git_clone`, `files`, and `commands` modules in a specific order.
+
   ```yaml
   ---
   Brew_Path: ~/.path/to/brew

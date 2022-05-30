@@ -8,7 +8,7 @@
 
 ## Package Managers
 
-This is ridiculous, but we're using: `apt`, `snap`, `flatpak`, `brew`, as well as `pip`, and... (researching [deb-get](http://manpages.ubuntu.com/manpages/bionic/man1/debget.1p.html))
+This is ridiculous, but we're using: `apt`, `snap`, `flatpak`, `brew`, as well as `pip`, and... (researching [deb-get](http://manpages.ubuntu.com/manpages/bionic/man1/debget.1p.html)) Ansible also provides an interface for installing more troublesome packages via the `command`, `script`, `download`, `git_clone`, `files`, and `sync` modules. We do this because you often can't use a package manager to install another package manager.
 
 ## Ansible Automated Installation (Under Construction)
 
