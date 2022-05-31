@@ -101,3 +101,5 @@ wsl.exe --set-default-version 2
 ```
 
 After all of that, which takes easily 15 minutes, you'll need to reboot, and then you can launch Docker from windows, and then go to ⚙️ Settings > Resources > WSL and toggle the switch to `on` for your distro.
+
+More info on Docker Desktop WSL 2 backend [here](https://docs.docker.com/desktop/windows/wsl/).
