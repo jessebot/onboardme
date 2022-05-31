@@ -29,6 +29,8 @@ Under "Save snips (Ask to save my snip before closing)" toggle the botton to `on
 Otherwise it will discard your snip when you close it.
 
 # WSL (Windows Subsystem for Linux)
+These instructions should install WSL 2, but on some older versions of Windows, it will install WSL 1, but that is addressed in the final section of this doc.
+
 Should be able to get to this by first hitting 🪟 Key, and then typing "devleoper settings" and hitting `enter`. 
 (Equivelent of: Settings > Update and Security > For developers)
 
@@ -89,7 +91,7 @@ PS C:\Users\jesse> wsl -l -v
 * Debian    Stopped         2
 ```
 
-In the above example I am already running my distro, Debian on the wsl 2 backend, but if you're not, you can fix it like this (replacing Debian with your distro):
+In the above example I am already running my distro, Debian on the wsl 2 backend, but if you're not, you can fix it like this (replacing Debian with your distro).
 ```powershell
 wsl.exe --set-version Debian 2
 ```
