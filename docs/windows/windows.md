@@ -84,7 +84,6 @@ You'll need to first install [Docker Desktop for Windows](https://docs.docker.co
 
 You'll need your Linux distro to be using wsl 2, and you can check with this in powershell:
 ```powershell
-        Unregisters the distribution and deletes the root filesystem.
 PS C:\Users\jesse> wsl -l -v
   NAME      STATE           VERSION
 * Debian    Stopped         2
