@@ -78,3 +78,26 @@ Just open up vim and manually put in the following to it's own line in your `.ba
 ```bash
 export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 ```
+
+## Installing Docker for wsl
+You'll need to first install [Docker Desktop for Windows](https://docs.docker.com/desktop/windows/install/).
+
+You'll need your Linux distro to be using wsl 2, and you can check with this in powershell:
+```powershell
+        Unregisters the distribution and deletes the root filesystem.
+PS C:\Users\jesse> wsl -l -v
+  NAME      STATE           VERSION
+* Debian    Stopped         2
+```
+
+In the above example I am already running my distro, Debian on the wsl 2 backend, but if you're not, you can fix it like this (replacing Debian with your distro):
+```powershell
+wsl.exe --set-version Debian 2
+```
+
+To set v2 as the default version for future installations, run:
+```powershell
+wsl.exe --set-default-version 2
+```
+
+After all of that, which takes easily 15 minutes, you'll need to reboot, and then you can launch Docker from windows, and then go to ⚙️ Settings > Resources > WSL and toggle the switch to `on` for your distro.
