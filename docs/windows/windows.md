@@ -46,9 +46,18 @@ Then you should be able to scroll down to Windows Subsystem for Linux and check 
 FINALLY, you can bring up win key > microsoft store > Debian (app) and hit install.
 
 ## Disable terminal bell/beep in wsl
+
+For BASH:
 ```bash
 sudo sed -i 's/# set bell-style none/set bell-style none/' /etc/inputrc
 ```
+
+For VIM:
+```vim
+set visualbell
+set t_vb=
+```
+
 Requires restart of WSL app (in my case, Debian).
 
 ## VPN causing issues with DNS resolution
