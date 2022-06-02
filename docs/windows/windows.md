@@ -1,16 +1,18 @@
-# Random Tips and Tricks
+## Windows General - Tips/Tricks
 Did you know there's a package manager for Windows by Microsoft? It's called `winget`.
 
 🪟 key + `x` pulls up a nice little admin tool menu
 
-## `caps lock` to `ctrl`
+---
+### `caps lock` to `ctrl`
 You need to install [PowerToys](https://github.com/microsoft/PowerToys) from either the microsoft store, or you can install it via `winget` in PowerShell:
 
 ```powershell
 winget install Microsoft.PowerToys -s winget
 ```
 
-## 📷 Key (Print Screen Key) mapped Snip & Sketch
+---
+### 📷 Key (Print Screen Key) mapped Snip & Sketch
 Snip & Sketch is Microsoft's screenshoting tool, but it's not mapped to your "printscreen" key, because Windows is trash.
 
 Hit the 🪟 key > Settings.
@@ -21,13 +23,15 @@ Scroll to the bottom of the page for "Print Screen Shortcut" and toggle to `On`.
 
 This automatically saves snips to your clipboard, for pasting.
 
-## Snip & Sketch save on close
+---
+### Snip & Sketch save on close
 Launch Snip & Sketch and go to the top right `...` button > ⚙️ Settings.
 
 Under "Save snips (Ask to save my snip before closing)" toggle the botton to `on`.
 
 Otherwise it will discard your snip when you close it.
 
+---
 # WSL (Windows Subsystem for Linux)
 These instructions should install WSL 2, but on some older versions of Windows, it will install WSL 1, but that is addressed in the final section of this doc.
 
@@ -47,7 +51,8 @@ Then you should be able to scroll down to Windows Subsystem for Linux and check 
 
 FINALLY, you can bring up 🪟 key > microsoft store > Debian (app) and hit install.
 
-## Disable terminal bell/beep in wsl
+---
+### Disable terminal bell/beep in wsl
 
 For BASH:
 ```bash
@@ -59,13 +64,14 @@ For VIM:
 set visualbell
 set t_vb=
 ```
-
 Requires restart of WSL app (in my case, Debian).
 
-## VPN causing issues with DNS resolution
+---
+### VPN causing issues with DNS resolution
 Edit `/etc/wsl.conf` and uncomment `generateNetworkConf=false` or whatever it's called, and set it to `false` if it isn't already. Then unlink your `etc/resolv.conf` and modify it to be the VPN's name servers only.
 
-## Can't echo `brew` path into `.bashrc`
+---
+### Can't echo `brew` path into `.bashrc`
 
 When you try this:
 
@@ -81,7 +87,8 @@ Just open up vim and manually put in the following to it's own line in your `.ba
 export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 ```
 
-## Installing Docker for wsl
+---
+### Installing Docker for wsl
 You'll need to first install [Docker Desktop for Windows](https://docs.docker.com/desktop/windows/install/).
 
 You'll need your Linux distro to be using wsl 2, and you can check with this in powershell:
@@ -108,7 +115,8 @@ Toggle the switch to `on` for your distro. Fin.
 
 More info on Docker Desktop WSL 2 backend and Docker is available [here](https://docs.docker.com/desktop/windows/wsl/).
 
-## Launching Windows File Explorer for `pwd` in Linux
+---
+### Launching Windows File Explorer for `pwd` in Linux
 From WSL, you'll want to run the following command, and that will launch File Explorer on Windows for your current Linux directory.
 
 ```bash
