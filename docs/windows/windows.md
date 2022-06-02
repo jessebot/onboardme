@@ -41,11 +41,11 @@ Run this in powershell:
 wsl --install
 ```
 
-After the install, go to Win key > turn windows features on or off (it's in control panel).
+After the install, go to 🪟 key > turn windows features on or off (it's in control panel).
 
 Then you should be able to scroll down to Windows Subsystem for Linux and check the box before saving and quitting.
 
-FINALLY, you can bring up win key > microsoft store > Debian (app) and hit install.
+FINALLY, you can bring up 🪟 key > microsoft store > Debian (app) and hit install.
 
 ## Disable terminal bell/beep in wsl
 
@@ -103,4 +103,13 @@ wsl.exe --set-default-version 2
 
 After all of that, which takes easily 15 minutes, you'll need to reboot, and then you can launch Docker from windows, and then go to ⚙️ Settings > Resources > WSL and toggle the switch to `on` for your distro.
 
-More info on Docker Desktop WSL 2 backend [here](https://docs.docker.com/desktop/windows/wsl/).
+More info on Docker Desktop WSL 2 backend and Docker is available [here](https://docs.docker.com/desktop/windows/wsl/).
+
+## Launching Windows File Explorer for `pwd` in Linux
+From WSL, you'll want to run the following:
+
+```bash
+explorer.exe .
+```
+
+I know it's confusing to see exe run from a Linux shell, but bear with me.
