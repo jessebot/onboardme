@@ -101,7 +101,10 @@ To set v2 as the default version for future installations, run:
 wsl.exe --set-default-version 2
 ```
 
-After all of that, which takes easily 15 minutes, you'll need to reboot, and then you can launch Docker from windows, and then go to ⚙️ Settings > Resources > WSL and toggle the switch to `on` for your distro.
+After all of that, which takes easily 15 minutes, you'll need to reboot, and then you can launch Docker from windows, and then go to:
+⚙️ Settings > Resources > WSL
+
+Toggle the switch to `on` for your distro. Fin.
 
 More info on Docker Desktop WSL 2 backend and Docker is available [here](https://docs.docker.com/desktop/windows/wsl/).
 
