@@ -106,10 +106,14 @@ After all of that, which takes easily 15 minutes, you'll need to reboot, and the
 More info on Docker Desktop WSL 2 backend and Docker is available [here](https://docs.docker.com/desktop/windows/wsl/).
 
 ## Launching Windows File Explorer for `pwd` in Linux
-From WSL, you'll want to run the following:
+From WSL, you'll want to run the following command, and that will launch File Explorer on Windows for your current Linux directory.
 
 ```bash
 explorer.exe .
 ```
 
-I know it's confusing to see exe run from a Linux shell, but bear with me.
+I know it's confusing to see exe run from a Linux shell, but bear with me. In my case, this launched file explorer to my home dir, which was located here in windows:
+```powershell
+\\wsl$\Debian\home\jesse
+```
+Which, in the URI bar, will show as 📂 > Network > wsl$ > Debian > home > jesse
