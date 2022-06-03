@@ -11,19 +11,19 @@
     
     For example:
 
-    ```yaml
-    ---
-    # this yaml file contains a list of 2 commands
-    Commands:
-      - Command: ""
-        become:
-        become_user:
-        become_method:
-      - Command: ""
-        become:
-        become_user:
-        become_method:
-    ```
+      ```yaml
+      # this yaml file contains a list of 2 commands
+      ---
+      Commands:
+        - Command: gpg --dearmor githubcli-archive-keyring.gpg
+          Become: yes
+          Become_User: vmadmin
+          Become_Method: sudo
+        - Command: # another command to run
+          Become: # pretend to be a specific user yes/no
+          Become_User: # the user to pretend to be
+          Become_Method: # how to do it, sudo/su
+      ```
 
 2. `ansible/demo.sh` passes `/profile/0_step.yaml` to ansible as `-extra-vars "profile_path='${PROFILE_PATH}'`.
 
