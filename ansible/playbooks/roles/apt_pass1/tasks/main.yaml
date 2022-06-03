@@ -1,6 +1,7 @@
-# ansible linters will hate the state expansion here because they don't catch that im passing a string as an enum.
-# This ansible role will install apt packages on linux hosts. It is optimized to use squash for optimized bulk installs,
-# and is able to manage package life cycles by specifying, locking, holding packages with apt 
+# Ansible linters will hate the state expansion here because they don't catch that im passing a string as a constant.
+# This ansible role will install apt packages on linux hosts. It is optimized to use squash (installing all packages 
+# with a single apt call vs an apt call for_each package), and is able to manage package life cycles by specifying, 
+# locking, holding packages with apt 
 ---
 - name: gather data
   set_fact:
