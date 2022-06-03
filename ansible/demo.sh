@@ -3,16 +3,16 @@
 set -o nounset
 set -o pipefail
 
-#profile to use for demo (absolute path)
+# Profile to use for demo (absolute path)
 export DEMO_DIR="/home/max/onboardme/configs/ansible_profiles/basic_desktop"
 export ANSIBLE_CONFIG=$(cat "/home/max/onboardme/ansible/config")
 
-# shared files
+# Shared files
 export SYNCED_DIR=""
 SYNCED_DIR=$(find "$(cd ..; pwd)" -name "synced_dir")
 
+# VM Metatdata
 export_metatdata(){
-  # VM Metatdata
   export IMAGE_TYPE="img" #img or iso
   export HOST_ADDRESS="192.168.50.100"
   export HOST_SSH_PORT="22"
@@ -31,13 +31,13 @@ export_metatdata(){
   export VM_KEY=""
   export VM_KEY_FILE="$VM_USER"
 
-  # Ansible metadata
+# Ansible metadata
   export UUID="none"
   export INVENTORY_PATH="/home/max/onboardme/ansible/inventories"
   export ANSIBLE_INVENTORY_FILE="$VM_NAME/$VM_NAME-inventory.yaml"
   export ANSIBLE_PLAYBOOK="/home/max/onboardme/ansible/playbooks/main-program.yaml"
 
-  #program verbosity
+# Program verbosity
   export VERBOSITY="-v"
   export DEBUG="true"
   export SQUASH="false"
