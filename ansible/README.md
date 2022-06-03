@@ -5,6 +5,8 @@
 
 - Each role is just a brick of basic logic to loop over with a list.
 
+- you can find a list of available roles and their fields/values in [ansible_profiles/README.md](ansible/configs/ansible_profiles/README.md)
+
 ## Flow:
 
 1. `/profile/0_step.yaml` contains a list of actions of the same type.
