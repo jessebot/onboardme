@@ -158,6 +158,10 @@ if [ -f $HOME/.bashrc_env_variables ]; then
     . $HOME/.bashrc_env_variables
 fi
 
+# this one is only if emojis already work in your terminal :3
+PS1="\`if [ \$? = 0 ]; then echo 💙; else echo 😔; fi\` [\@]\\$ "
+
+# use this one if you don't have emojis in your terminal
 # adds a smileyface on successful commands and a wat face otherwise :D
 # prompt will show the user.time and that is it, for now. 
-PS1="\`if [ \$? = 0 ]; then echo \[\e[32m\]^_^\[\e[0m\]; else echo \[\e[31m\]O_O\[\e[0m\]; fi\`[\u.\@]\\$ "
+# PS1="\`if [ \$? = 0 ]; then echo \[\e[32m\]^_^\[\e[0m\]; else echo \[\e[31m\]O_O\[\e[0m\]; fi\`[\u.\@]\\$ "
