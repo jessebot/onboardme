@@ -1,0 +1,9 @@
+---
+# ansible role to gather and report facts only
+- hosts: all
+  gather_facts: yes
+  become: yes
+
+  tasks:
+    - debug:
+        var: hostvars

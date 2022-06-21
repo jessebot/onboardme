@@ -1,0 +1,5 @@
+Host 
+  HostName 
+  controlmaster auto
+  controlpersist 5m
+  controlpath ~/.ssh/ansible-%r@%h:%p
