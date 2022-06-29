@@ -27,6 +27,7 @@ def run_apt_installs(opts=""):
     for package in PACKAGES["apt"]:
         apt_install_cmd = f"apt install {package}"
         result = subproc(apt_install_cmd)
+        print(result)
 
     # specific to gaming on linux
     if opts == "gaming":
@@ -34,6 +35,7 @@ def run_apt_installs(opts=""):
         for package in PACKAGES["apt_gaming"]:
             apt_install_cmd = f"apt install {package}"
             result = subproc(apt_install_cmd)
+            print(result)
 
     print(" 👻 Apt packages INSTALLED 👻 ".center(70,'-'))
     print("")
@@ -77,26 +79,31 @@ def run_brew_installs(opts=""):
     url = "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
     install_cmd = f'/bin/bash -c "$(curl -fsSL {url})"'
     result = subproc(install_cmd)
+    print(result)
 
     # this is the stuff that's installed on both mac and linux
     brew_cmd = "brew bundle --file=./packages/Brewfile_standard"
     result = subproc(brew_cmd)
+    print(result)
 
     # install things for devops job
     if opts == "work":
         brew_cmd = "brew bundle --file=./packages/Brewfile_work"
         result = subproc(brew_cmd)
+        print(result)
 
     # install linux specific apps
     if OS.__contains__('linux'):
         print("  Installing 🐧 specific packaging...")
         brew_cmd = "brew bundle --file=./packages/Brewfile_linux"
         result = subproc(brew_cmd)
+        print(result)
     # install mac specific apps
     elif OS == 'darwin':
         print("  Installing 🍎 specific packaging...")
         brew_cmd = "brew bundle --file=./packages/Brewfile_mac"
         result = subproc(brew_cmd)
+        print(result)
     
     print(" 🍻 Brew packages INSTALLED 🍻 ".center(70, '-'))
     print("")
@@ -111,10 +118,12 @@ def run_upgrades():
     # apt
     apt_update_upgrade_cmd = f"apt upgrade && apt update"
     result = subproc(apt_update_upgrade_cmd)
+    print(result)
 
     # brew
     brew_update_upgrade_cmd = f"brew upgrade && brew update"
     result = subproc(brew_update_upgrade_cmd)
+    print(result)
 
 
 def install_rc_files():
@@ -137,6 +146,7 @@ def install_rc_files():
     vim_plug_cmd = ("curl -fLo ~/.vim/autoload/plug.vim --create-dirs "
         "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim")
     res =  subproc(vim_plug_cmd)
+    print(res)
 
     print(" 🐚 Shell and vim rc files INSTALLED 🐚 ".center(70,'-'))
     print("")

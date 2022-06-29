@@ -2,7 +2,7 @@
 brew "curl"
 brew "vim"
 brew "python3"
-brew "docker-ce"
+brew "docker"
 brew "sl"
 brew "figlet"
 brew "cowsay"
@@ -26,4 +26,3 @@ brew "go"
 # cask installs are for apps with GUIs
 cask "lens"
 cask "docker"
-cask "vlc"

@@ -2,6 +2,6 @@
 # These are all cask installs (They have some sort of GUI)
 cask "docker"
 cask "spectacle"
-cask "iterm3"
+cask "iterm2"
 cask "lulu"
 cask "alfred"
