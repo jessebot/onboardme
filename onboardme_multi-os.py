@@ -10,20 +10,23 @@ import yaml
 
 HOME_DIR = os.getenv("HOME")
 OS = platform
-CONFIG_FILE = yaml("packages/packages.yaml")
+CONFIG_FILE = "packages/packages.yml"
+
+with open(CONFIG_FILE, 'r') as yaml_file:
+    PACKAGES = yaml.safe_load(yaml_file)
 
 
 def run_apt_installs(opts=""):
     """
     install every apt package in packages.yaml
     """
-    for package in CONFIG_FILE["apt"]:
+    for package in PACKAGES["apt"]:
         apt_install_cmd = f"apt install {package}"
         result = subproc(apt_install_cmd)
 
     # specific to gaming on linux
     if opts == "gaming":
-        for package in CONFIG_FILE["apt_gaming"]:
+        for package in PACKAGES["apt_gaming"]:
             apt_install_cmd = f"apt install {package}"
             result = subproc(apt_install_cmd)
 
@@ -34,7 +37,7 @@ def run_flatpak_installs():
     """
     install every flatpak package in packages.yaml
     """
-    for package in CONFIG_FILE["flatpak"]:
+    for package in PACKAGES["flatpak"]:
         flatpak_install_cmd = f"flatpak install {package}"
         result = subproc(flatpak_install_cmd)
 
@@ -45,7 +48,7 @@ def run_snap_installs():
     """
     install every snap package in packages.yaml
     """
-    for package in CONFIG_FILE["snap"]:
+    for package in PACKAGES["snap"]:
         snap_install_cmd = f"snap install {package}"
         result = subproc(snap_install_cmd)
 
