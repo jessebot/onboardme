@@ -17,11 +17,33 @@ def run_apt_installs():
     """
     install every apt package in packages.yaml
     """
-    for package in CONFIG_FILE["apt_packages"]:
+    for package in CONFIG_FILE["apt"]:
         apt_install_cmd = f"apt install {package}"
         result = subproc(apt_install_cmd)
 
     return None
+
+
+def run_flatpak_installs():
+    """
+    install every flatpak package in packages.yaml
+    """
+    for package in CONFIG_FILE["flatpak"]:
+        flatpak_install_cmd = f"flatpak install {package}"
+        result = subproc(flatpak_install_cmd)
+
+    return None
+
+def run_snap_installs():
+    """
+    install every snap package in packages.yaml
+    """
+    for package in CONFIG_FILE["snap"]:
+        snap_install_cmd = f"snap install {package}"
+        result = subproc(snap_install_cmd)
+
+    return None
+
 
 
 def run_brew_installs():
@@ -53,9 +75,11 @@ def run_upgrades():
     """
     run upgrade and update for every package manager
     """
+    # apt
     apt_update_upgrade_cmd = f"apt upgrade && apt update"
     result = subproc(apt_update_upgrade_cmd)
 
+    # brew
     brew_update_upgrade_cmd = f"brew upgrade && brew update"
     result = subproc(brew_update_upgrade_cmd)
 
@@ -139,6 +163,9 @@ def main():
         run_apt_installs()
         run_snap_installs()
         run_flatpak_installs()
+
+    print("All done! here's some stuff you gotta do manually:")
+    print("🐋: Add your user to the docker group, and reboot")
 
 
 if __name__ == '__main__':

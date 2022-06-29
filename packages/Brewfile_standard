@@ -1,4 +1,12 @@
 # all of these are non-cask installs
+brew "curl"
+brew "vim"
+brew "python3"
+brew "docker-ce"
+brew "sl"
+brew "figlet"
+brew "cowsay"
+brew "git"
 brew "ag"
 brew "colordiff"
 brew "docker"
@@ -17,3 +25,5 @@ brew "go"
  
 # cask installs are for apps with GUIs
 cask "lens"
+cask "docker"
+cask "vlc"

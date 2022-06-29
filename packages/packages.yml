@@ -10,38 +10,20 @@ apt:
   repos:
     - ppa:mattrose/terminator
   packages:
-    - curl
-    - git
     - terminator
-    - vim
-    - python3-distutils
-    - python3-pip
-    # containers (note, need to add user to docker group and reboot)
     - docker
     - docker-ce
     - openssl
-    - wget
     - sysstat
-    - sl
     - silversearcher-ag
-    - tree
-    - colordiff
-    - figlet
-    - cowsay
-    - vlc
     - libpam-yubico
     - finger
     - ssh
     - nextcloud-desktop
     - screen
     - youtube-dl
-    - go
-    - pandoc
-    - lynx
     # to use web links and the gui to install flatpak and not use cli
     - gnome-software-plugin-flatpak
-    # to formate disks to exFAT, because FAT is too thin for modern windows 10 ISOs
-    - exfat-utils
 
 # gaming on linux specifc
 apt-gaming:
@@ -49,3 +31,5 @@ apt-gaming:
     - winehq-staging
     - steam
     - ubuntu-driver-460
+    # to formate disks to exFAT, because FAT is too thin for modern windows 10 ISOs
+    - exfat-utils
