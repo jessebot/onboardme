@@ -110,10 +110,9 @@ def install_rc_files():
                     f'{HOME_DIR}/{rc_file}')
 
     # Install the vim plugin manager
-    vim_plugin_manager_cmd = ("git clone "
-                              "https://github.com/VundleVim/Vundle.vim.git "
-                              "~/.vim/bundle/Vundle.vim")
-    res =  subproc(vim_plugin_manager_cmd)
+    vim_plug_cmd = ("curl -fLo ~/.vim/autoload/plug.vim --create-dirs "
+        "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim")
+    res =  subproc(vim_plug_cmd)
     return None
 
 
@@ -135,9 +134,9 @@ def subproc(cmd, help="Something went wrong!"):
     Takes a commmand to run in BASH, as well as optional
     help text, both str
     """
-    print("Running command: {cmd}")
+    print(f'Running command: {cmd}')
     command = cmd.split()
-    res_err = ""
+    res_err = ''
     try:
         p = subprocess.Popen(command, stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
