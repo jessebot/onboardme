@@ -74,17 +74,9 @@ augroup vimrcEx
 " for ruby, autoindent with two spaces, always expand tabs
   autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber set ai sw=2 sts=2 et
   autocmd FileType python set sw=4 sts=4 et
+
 " Show different background colour after 80 chars
   autocmd FileType python let &colorcolumn=join(range(81,999),",")
-
-# yaml documents are weird
-  autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-  set foldlevelstart=20
-
-  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-  let g:ale_sign_error = '✘'
-  let g:ale_sign_warning = '⚠'
-  let g:ale_lint_on_text_changed = 'never'
 
   autocmd! BufRead,BufNewFile *.sass setfiletype sass
 
@@ -126,8 +118,6 @@ nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 " Insert a hash rocket with <c-l>
 imap <c-l> <space>=><space>
-" Can't be bothered to understand ESC vs <c-c> in insert mode
-imap <c-c> <esc>
 " Clear the search buffer when hitting return
 function! MapCR()
   nnoremap <cr> :nohlsearch<cr>
@@ -394,3 +384,41 @@ command! InsertTime :normal a<c-r>=strftime('%F %H:%M:%S.0 %z')<cr>
 " forgot to start vim using sudo
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 cmap w!! w !sudo tee > /dev/null %
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" yaml documents are weird
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+  set foldlevelstart=20
+
+  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+  let g:ale_sign_error = '✘'
+  let g:ale_sign_warning = '⚠'
+  let g:ale_lint_on_text_changed = 'never'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vim-plug - plugin manager for vim: https://github.com/junegunn/vim-plug
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+call plug#begin()
+" The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+" You can specify a custom plugin directory by passing it as the argument
+"   - e.g. `call plug#begin('~/.vim/plugged')`
+"   - Avoid using standard Vim directory names like 'plugin'
+"
+" Make sure you use single quotes
+"
+" Example: Multiple Plug commands can be written in a single line using | separators
+" Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+" Example: Using a non-default branch
+" Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+" Example: Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
+" Plug 'fatih/vim-go', { 'tag': '*' }
+
+" On-demand loading
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+
+" Initialize plugin system
+call plug#end()

@@ -3,7 +3,6 @@ apt:
     - "ppa:mattrose/terminator"
   packages:
     - terminator
-    - docker
     - docker-ce
     - openssl
     - sysstat
