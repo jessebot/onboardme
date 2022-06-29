@@ -126,7 +126,7 @@ def run_upgrades():
     print(result)
 
 
-def install_rc_files():
+def hard_link_rc_files():
     """
     Copies over default rc files for vim, zsh, and bash
     """
@@ -134,18 +134,27 @@ def install_rc_files():
     rc_dirs = ['zsh','bash','vim']
     for rc_dir in rc_dirs:
         for rc_file in os.listdir(f'./configs/rc_files/{rc_dir}'):
+            src_rc_file = f'./configs/rc_files/{rc_dir}/{rc_file}'  
+            hard_link_rc_file = f'{HOME_DIR}/{rc_file}'
             try:
-                os.link(f'./configs/rc_files/{rc_dir}/{rc_file}',
-                        f'{HOME_DIR}/{rc_file}')
-                print(f'Linked {HOME_DIR}/{rc_file}')
+                os.link(src_rc_file, hard_link_rc_file)
+                print(f'Hard linked {hard_link_rc_file}')
             except FileExistsError as error:
-                print(f'  {HOME_DIR}/{rc_file} already exists, continuing...')
+                print(f'  {hard_link_rc_file} already exists, continuing...')
+            except PermissionError as error:
+                if os.path.isdir(f'{src_rc_file}'):
+                    print(f'{src_rc_file} is a directory, skipping for now.')
 
+def configure_vim():
+    """
+    vim has it's own plugin manager
+    """
     # Install the vim plugin manager
     print("  Installing a vim plugin manager")
-    vim_plug_cmd = ("curl -fLo ~/.vim/autoload/plug.vim --create-dirs "
-        "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim")
-    res =  subproc(vim_plug_cmd)
+    git_url = "https://raw.githubusercontent.com/"
+    plugin_cmd = (f"curl -fLo {HOME_DIR}/.vim/autoload/plug.vim "
+                  f"--create-dirs {git_url}junegunn/vim-plug/master/plug.vim")
+    res =  subproc(plugin_cmd)
     print(res)
 
     print(" 🐚 Shell and vim rc files INSTALLED 🐚 ".center(70,'-'))
@@ -187,15 +196,16 @@ def subproc(cmd, help="Something went wrong!"):
     print(f'  Running cmd: {cmd}')
     command = cmd.split()
     res_err = ''
+
     try:
         p = subprocess.Popen(command, stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
         return_code = p.returncode
         res_out = p.communicate()
+
         # check return code, raise error if failure
         if return_code != 0:
-            err = "Return code was not zero! It was:" + \
-                  " {0} see res: ".format(return_code)
+            err = f'Return code was not zero! Error code: {return_code}'
             raise Exception(err)
     except Exception as e:
         if res_err:
@@ -208,7 +218,7 @@ def main():
     """
     Core function
     """
-    help = 'This is a generic onboarding script for mint and mac.'
+    help = 'This is a generic onboarding script for mac and mint.'
     parser = argparse.ArgumentParser(description=help)
     dr_help = "perform a Dry Run of the script, NOT WORKING YET"
     parser.add_argument('--dry', action="store_true", default=False,
@@ -235,7 +245,8 @@ def main():
         return
 
     # installs bashrc and the like
-    install_rc_files()
+    hard_link_rc_files()
+    configure_vim()
     run_brew_installs(opts)
     # TODO: configure_firefox()
 
