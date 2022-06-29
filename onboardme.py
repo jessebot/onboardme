@@ -23,16 +23,20 @@ def run_apt_installs(opts=""):
     """
     install every apt package in packages.yaml
     """
+    print(" 👻 Apt packages installing 👻 ".center(70,'-'))
     for package in PACKAGES["apt"]:
         apt_install_cmd = f"apt install {package}"
         result = subproc(apt_install_cmd)
 
     # specific to gaming on linux
     if opts == "gaming":
+        print("  Installing gaming specific packaging...")
         for package in PACKAGES["apt_gaming"]:
             apt_install_cmd = f"apt install {package}"
             result = subproc(apt_install_cmd)
 
+    print(" 👻 Apt packages INSTALLED 👻 ".center(70,'-'))
+    print("")
     return None
 
 
@@ -40,10 +44,13 @@ def run_flatpak_installs():
     """
     install every flatpak package in packages.yaml
     """
+    print(" 🫓 Apt packages installing 🫓 ".center(70,'-'))
     for package in PACKAGES["flatpak"]:
         flatpak_install_cmd = f"flatpak install {package}"
         result = subproc(flatpak_install_cmd)
 
+    print(" 🫓 Apt packages INSTALLED 🫓 ".center(70,'-'))
+    print("")
     return None
 
 
@@ -51,9 +58,12 @@ def run_snap_installs():
     """
     install every snap package in packages.yaml
     """
+    print(" 🫰: Snap apps installing... 🫰: ".center(70,'-'))
     for package in PACKAGES["snap"]:
         snap_install_cmd = f"snap install {package}"
         result = subproc(snap_install_cmd)
+    print(" 🫰: Snap apps INSTALLED 🫰: ".center(70,'-'))
+    print("")
 
     return None
 
@@ -62,6 +72,7 @@ def run_brew_installs(opts=""):
     """
     brew install from the brewfiles
     """
+    print(" 🍻 Brew packages installing... 🍻 ".center(70, '-'))
     # make sure brew is installed
     url = "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
     install_cmd = f'/bin/bash -c "$(curl -fsSL {url})"'
@@ -78,12 +89,17 @@ def run_brew_installs(opts=""):
 
     # install linux specific apps
     if OS.__contains__('linux'):
+        print("  Installing 🐧 specific packaging...")
         brew_cmd = "brew bundle --file=./packages/Brewfile_linux"
         result = subproc(brew_cmd)
     # install mac specific apps
     elif OS == 'darwin':
+        print("  Installing 🍎 specific packaging...")
         brew_cmd = "brew bundle --file=./packages/Brewfile_mac"
         result = subproc(brew_cmd)
+    
+    print(" 🍻 Brew packages INSTALLED 🍻 ".center(70, '-'))
+    print("")
 
     return None
 
@@ -105,7 +121,7 @@ def install_rc_files():
     """
     Copies over default rc files for vim, zsh, and bash
     """
-    print(" 🐚 Install shell and vim rc files 🐚 ".center(70,'-'))
+    print(" 🐚 Shell and vim rc files installing... 🐚 ".center(70,'-'))
     rc_dirs = ['zsh','bash','vim']
     for rc_dir in rc_dirs:
         for rc_file in os.listdir(f'./configs/rc_files/{rc_dir}'):
@@ -117,12 +133,13 @@ def install_rc_files():
                 print(f'  {HOME_DIR}/{rc_file} already exists, continuing...')
 
     # Install the vim plugin manager
-    print("Installing a vim plugin manager")
+    print("  Installing a vim plugin manager")
     vim_plug_cmd = ("curl -fLo ~/.vim/autoload/plug.vim --create-dirs "
         "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim")
     res =  subproc(vim_plug_cmd)
 
-    print(" 🐚 Shell and vim rc files are installed 🐚 ".center(70,'-'))
+    print(" 🐚 Shell and vim rc files INSTALLED 🐚 ".center(70,'-'))
+    print("")
     return None
 
 
@@ -157,7 +174,7 @@ def subproc(cmd, help="Something went wrong!"):
     Takes a commmand to run in BASH, as well as optional
     help text, both str
     """
-    print(f' Running command: {cmd}')
+    print(f'  Running cmd: {cmd}')
     command = cmd.split()
     res_err = ''
     try:
@@ -210,17 +227,12 @@ def main():
     # installs bashrc and the like
     install_rc_files()
     run_brew_installs(opts)
-    print(" 🍻: Finished brew installing stuff")
-
-    # configure_firefox()
+    # TODO: configure_firefox()
 
     if OS.__contains__('linux'):
         run_apt_installs(opts)
-        print(" 🤙: Apt installed apps")
         run_snap_installs()
-        print(" 🫰:: Snap installed apps")
         run_flatpak_installs()
-        print(" 🫓: Flatpak installed apps")
 
     print("All done! here's some stuff you gotta do manually:")
     print(" 📝: run :plugInstall in vim to install vim plugins")
