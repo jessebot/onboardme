@@ -2,15 +2,15 @@
 # Generic onboarding script for mac osx and debian
 # jessebot@linux.com
 import argparse
-import json
 import os
 import subprocess
 import sys
 from sys import platform
+import yaml
 
 HOME_DIR = os.getenv("HOME")
 OS = platform
-CONFIG_FILE = "config.yaml"
+CONFIG_FILE = yaml("packages/packages.yaml")
 
 
 def run_apt_installs():
@@ -28,6 +28,11 @@ def run_brew_installs():
     """
     brew install from the brewfiles
     """
+    # make sure brew is installed
+    url = "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
+    install_cmd = f'/bin/bash -c "$(curl -fsSL {url})"'
+    result = subproc(install_cmd)
+
     # this is the stuff that's installed on both mac and linux
     brew_cmd = "brew bundle --file=./packages/Brewfile_standard"
     result = subproc(brew_cmd)
@@ -120,8 +125,20 @@ def main():
     res = parser.parse_args()
     dry_run = res.dry_run
 
-    install_rc_files()
-    run_apt_install_upgrade()
+    # this is just for rc files and package managers
+    if OS.contains('win'):
+        print("Ooof, this isn't ready yet...")
+    else:
+        install_rc_files()
+        run_brew_installs()
+        configure_firefox()
+        configure_freetube()
+        configure_rss_reader()
+
+    if OS.contains('linux'):
+        run_apt_installs()
+        run_snap_installs()
+        run_flatpak_installs()
 
 
 if __name__ == '__main__':

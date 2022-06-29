@@ -1,0 +1,19 @@
+# all of these are non-cask installs
+brew "ag"
+brew "colordiff"
+brew "docker"
+brew "fluxctl"
+brew "helm"
+brew "jq"
+brew "kubectl"
+brew "kind"
+brew "lynx"
+brew "npm"
+brew "openssl"
+brew "pandoc"
+brew "tree"
+brew "wget"
+brew "go"
+ 
+# cask installs are for apps with GUIs
+cask "lens"
