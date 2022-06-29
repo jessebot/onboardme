@@ -105,6 +105,7 @@ def install_rc_files():
     """
     Copies over default rc files for vim, zsh, and bash
     """
+    print(" 🐚 Install shell and vim rc files 🐚 ".center(70,'-'))
     rc_dirs = ['zsh','bash','vim']
     for rc_dir in rc_dirs:
         for rc_file in os.listdir(f'./configs/rc_files/{rc_dir}'):
@@ -113,13 +114,15 @@ def install_rc_files():
                         f'{HOME_DIR}/{rc_file}')
                 print(f'Linked {HOME_DIR}/{rc_file}')
             except FileExistsError as error:
-                print(f'Looks like {HOME_DIR}/{rc_file} already exists, '
-                       'continuing...')
+                print(f'  {HOME_DIR}/{rc_file} already exists, continuing...')
 
     # Install the vim plugin manager
+    print("Installing a vim plugin manager")
     vim_plug_cmd = ("curl -fLo ~/.vim/autoload/plug.vim --create-dirs "
         "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim")
     res =  subproc(vim_plug_cmd)
+
+    print(" 🐚 Shell and vim rc files are installed 🐚 ".center(70,'-'))
     return None
 
 
@@ -154,7 +157,7 @@ def subproc(cmd, help="Something went wrong!"):
     Takes a commmand to run in BASH, as well as optional
     help text, both str
     """
-    print(f'Running command: {cmd}')
+    print(f' Running command: {cmd}')
     command = cmd.split()
     res_err = ''
     try:
@@ -206,7 +209,6 @@ def main():
 
     # installs bashrc and the like
     install_rc_files()
-    print(" 🐚: Shell and vim rc files are installed")
     run_brew_installs(opts)
     print(" 🍻: Finished brew installing stuff")
 
