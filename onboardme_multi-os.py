@@ -170,23 +170,27 @@ def main():
     else:
         opts = ""
 
+    if OS.contains('win'):
+        print("Ooof, this isn't ready yet...")
+        print("But you can check out the docs/windows directory for "
+              "help getting set up!")
+        return
+
+    # installs bashrc and the like
+    install_rc_files()
+    run_brew_installs(opts)
+    configure_firefox()
+
     if OS.contains('linux'):
         run_apt_installs(opts)
         run_snap_installs()
         run_flatpak_installs()
 
-    if OS.contains('win'):
-        print("Ooof, this isn't ready yet...")
-    else:
-        # installs bashrc and the like
-        install_rc_files()
-        run_brew_installs(opts)
-        configure_firefox()
-
     print("All done! here's some stuff you gotta do manually:")
     print("🐋: Add your user to the docker group, and reboot")
     print("📰: Import rss feeds config into FluentReader or wherever")
     print("📺: Import subscriptions into FreeTube")
+    print("Install any cronjobs you need from the cron dir!")
 
 
 if __name__ == '__main__':
