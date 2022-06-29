@@ -18,7 +18,3 @@ Flatpak:
   - Name: keepassx
     State: present
     Method: user
-
-
-
-    

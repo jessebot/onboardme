@@ -1,16 +1,6 @@
 ---
 Brew_Path: ~/.linuxbrew/Homebrew/bin/
 Brew:
-  - Name: dos2unix
-    State: present
-  - Name: tfenv
-    State: present
-  - Name: azure-cli
-    State: present
-  - Name: dos2unix
-    State: present
-  - Name: awscli
-    State: present
   - Name: ag
     State: present
   - Name: colordiff

@@ -3,8 +3,6 @@ Snap:
     State: present
   - Name: code
     Classic: yes
-  - Name: slack
-    Classic: yes
   - Name: fluent-reader 
     Channel: candidate
   - Name: firefox
