@@ -13,13 +13,19 @@ OS = platform
 CONFIG_FILE = yaml("packages/packages.yaml")
 
 
-def run_apt_installs():
+def run_apt_installs(opts=""):
     """
     install every apt package in packages.yaml
     """
     for package in CONFIG_FILE["apt"]:
         apt_install_cmd = f"apt install {package}"
         result = subproc(apt_install_cmd)
+
+    # specific to gaming on linux
+    if opts == "gaming":
+        for package in CONFIG_FILE["apt_gaming"]:
+            apt_install_cmd = f"apt install {package}"
+            result = subproc(apt_install_cmd)
 
     return None
 
@@ -34,6 +40,7 @@ def run_flatpak_installs():
 
     return None
 
+
 def run_snap_installs():
     """
     install every snap package in packages.yaml
@@ -45,8 +52,7 @@ def run_snap_installs():
     return None
 
 
-
-def run_brew_installs():
+def run_brew_installs(opts=""):
     """
     brew install from the brewfiles
     """
@@ -58,6 +64,11 @@ def run_brew_installs():
     # this is the stuff that's installed on both mac and linux
     brew_cmd = "brew bundle --file=./packages/Brewfile_standard"
     result = subproc(brew_cmd)
+
+    # install things for devops job
+    if opts == "work":
+        brew_cmd = "brew bundle --file=./packages/Brewfile_work"
+        result = subproc(brew_cmd)
 
     # install linux specific apps
     if OS == 'linux' or OS == 'linux2':
@@ -146,26 +157,36 @@ def main():
                        help=dr_help)
     parser.add_argument('--gaming', action="store_true", default=False,
                        help='Install packages related to gaming')
+    parser.add_argument('--work', action="store_true", default=False,
+                       help='Install packages related to devops stuff')
     res = parser.parse_args()
     dry_run = res.dry_run
-
-    # this is just for rc files and package managers
-    if OS.contains('win'):
-        print("Ooof, this isn't ready yet...")
+    gaming = res.gaming
+    work = res.work
+    if work:
+        opts = "work"
+    elif gaming:
+        opts = "gaming"
     else:
-        install_rc_files()
-        run_brew_installs()
-        configure_firefox()
-        configure_freetube()
-        configure_rss_reader()
+        opts = ""
 
     if OS.contains('linux'):
-        run_apt_installs()
+        run_apt_installs(opts)
         run_snap_installs()
         run_flatpak_installs()
 
+    if OS.contains('win'):
+        print("Ooof, this isn't ready yet...")
+    else:
+        # installs bashrc and the like
+        install_rc_files()
+        run_brew_installs(opts)
+        configure_firefox()
+
     print("All done! here's some stuff you gotta do manually:")
     print("🐋: Add your user to the docker group, and reboot")
+    print("📰: Import rss feeds config into FluentReader or wherever")
+    print("📺: Import subscriptions into FreeTube")
 
 
 if __name__ == '__main__':
