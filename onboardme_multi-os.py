@@ -8,26 +8,24 @@ import subprocess
 import sys
 
 HOME_DIR = os.getenv("HOME")
+CONFIG_FILE = "config.something"
 
 
-def main():
+def install_packages(package_manager='brew',os='debian',config):
     """
-    Core function
     """
-    help = 'This is a generic onboarding script for mint'
-    parser = argparse.ArgumentParser(description=help)
-    dr_help = "perform a Dry Run of the script"
-    parser.add_argument('--dryrun', action="store_true", default=False,
-                       help=dr_help)
-    res = parser.parse_args()
-    dry_run = res.dry_run
+    if package_manager == 'apt':
 
-    base_apt_install = "apt-get install"
+        apt_install = "apt-get install {package}"
     apt_install = base_apt_install + " <apt_packages.txt"
     if not dry_run:
         apt_install = base_apt_install + " -y <apt_packages.txt"
 
     subprocess = subproc(apt_install, "Error with package installs :shrug:")
+
+
+def apt_install():
+
 
 
 def install_rc_files():
@@ -72,6 +70,19 @@ def subproc(cmd, help="Something went wrong!"):
             print("ERROR: " + " ".join([help, e, res_out]))
 
     return res_out
+
+
+def main():
+    """
+    Core function
+    """
+    help = 'This is a generic onboarding script for mint'
+    parser = argparse.ArgumentParser(description=help)
+    dr_help = "perform a Dry Run of the script"
+    parser.add_argument('--dryrun', action="store_true", default=False,
+                       help=dr_help)
+    res = parser.parse_args()
+    dry_run = res.dry_run
 
 
 if __name__ == '__main__':

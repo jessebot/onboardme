@@ -1,15 +1,8 @@
 # can't be installed through normal package managers anywhere
-mac_special:
-  alfred
-
-python:
-  - nothing yet.....
-
 go: maybe not needed, todo: add go installation instructions
   - kubernetes
 
 snap:
-  - multipass (maybe not needed if we qemu any harder)
   - fluent-reader --candidate
 
 flatpak:
@@ -68,20 +61,5 @@ vundle:
   - https://github.com/hashivim/vim-terraform.git
 
 # special for all
-  brew:
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# linux special
-  helm:
-    curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
-    sudo apt-get install apt-transport-https --yes
-    echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
-    sudo apt-get update
-    sudo apt-get install helm
-  go:
-    wget https://go.dev/dl/go1.18.1.linux-amd64.tar.gz
-    rm -rf /usr/local/go && tar -C /usr/local -xzf go1.18.1.linux-amd64.tar.gz
-    export PATH=$PATH:/usr/local/go/bin
-  kubectl:
-    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-    sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+brew:
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
