@@ -155,7 +155,7 @@ def configure_vim():
     plugin_cmd = (f"curl -fLo {HOME_DIR}/.vim/autoload/plug.vim "
                   f"--create-dirs {git_url}junegunn/vim-plug/master/plug.vim")
     res =  subproc(plugin_cmd)
-    print(res)
+    # print(res)
 
     print(" 🐚 Shell and vim rc files INSTALLED 🐚 ".center(70,'-'))
     print("")
