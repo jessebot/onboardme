@@ -54,24 +54,33 @@ This is ridiculous, but we're using: `apt`, `snap`, `flatpak`, `brew`, as well a
 
 
 ### TODOs
+Stuff that needs doing
+<details>
+  <summary>Coming Soon</summary>
+* Android notes
+* SDR notes
+</details>
 
-* add functioning arg parser
-  * OS selection [Mac, Debian]
-   * Coming Soon: Android, SDR notes
-   * Coming Later: SmartWatch OS 
+<details>
+  <summary>Coming Later</summary>
+* SmartWatch OS 
+</details>
+
+<details>
+  <summary>Should have already come</summary>
 * KEYBOARD MAPPINGS: CAPSLOCK TO CONTROL - need for both debian (gnome/xfce menu mappings?) and mac osx
 * Move the panel to the side, and add panelettes or whatever they're called
 * Setup crontab (or whatever you do on a mac) script to automatically backup into configurable repo (default to this repo):
   * RSS feeds OPML
   * FreeTube/NewPipe subscriptions OPML/db
-  * Shell/editor rc files
-    * Ask before doing this!
 * Add chat software
 * Add NextCloud stuff - at least try News, Recipes, and Talk
 * Overview of current configs maintained by this script?
-* Add go lines before k8s/docker/kind stuff
-* Check for external apt repos that may need adding
 * Which email clients to support? MUTT? ThunderGuy?
+* Alfred
+  - Find FOSS replacement?
+  - Personal settings for alfred
+</details>
 
 ### TODO: Max
 
@@ -79,9 +88,6 @@ This is ridiculous, but we're using: `apt`, `snap`, `flatpak`, `brew`, as well a
 - [] Add Flatpack support
 - [] switch to debian cloud image for VMs
 - [] USB installer
-- Alfred
-  - Find FOSS replacement?
-  - Personal settings for alfred
 
 #### Note
 
