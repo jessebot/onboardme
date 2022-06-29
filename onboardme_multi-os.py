@@ -3,6 +3,7 @@
 # jessebot@linux.com
 import argparse
 import os
+import shutil
 import subprocess
 import sys
 from sys import platform
@@ -102,12 +103,16 @@ def install_rc_files():
     """
     Copies over default rc files for vim, zsh, and bash
     """
-    rc_files = ['vim','zsh','bash']
-    vim_plugin_manager = ("git clone "
-                          "https://github.com/VundleVim/Vundle.vim.git"
-                          "~/.vim/bundle/Vundle.vim")
-    for rc_file in rc_files:
-        shutil.copytree('configs/rc_files/{rc_file}/', HOME_DIR)
+    rc_dirs = ['zsh','bash','vim']
+    for rc_dir in rc_dirs:
+        for rc_file in os.listdir('configs/rc_files/{rc_dir}'):
+            shutil.copy(file, HOME_DIR+f'/{rc_file}')
+
+    # Install the vim plugin manager
+    vim_plugin_manager_cmd = ("git clone "
+                              "https://github.com/VundleVim/Vundle.vim.git "
+                              "~/.vim/bundle/Vundle.vim")
+    res =  subproc(vim_plugin_manager_cmd)
     return None
 
 
@@ -156,14 +161,14 @@ def main():
     help = 'This is a generic onboarding script for mint'
     parser = argparse.ArgumentParser(description=help)
     dr_help = "perform a Dry Run of the script, NOT WORKING YET"
-    parser.add_argument('--dryrun', action="store_true", default=False,
+    parser.add_argument('--dry', action="store_true", default=False,
                        help=dr_help)
     parser.add_argument('--gaming', action="store_true", default=False,
                        help='Install packages related to gaming')
     parser.add_argument('--work', action="store_true", default=False,
                        help='Install packages related to devops stuff')
     res = parser.parse_args()
-    dry_run = res.dry_run
+    dry_run = res.dry
     gaming = res.gaming
     work = res.work
     if work:
@@ -173,7 +178,7 @@ def main():
     else:
         opts = ""
 
-    if OS.contains('win'):
+    if OS == 'win32' or OS == 'windows':
         print("Ooof, this isn't ready yet...")
         print("But you can check out the docs/windows directory for "
               "help getting set up!")
