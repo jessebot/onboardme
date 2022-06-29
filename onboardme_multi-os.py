@@ -105,8 +105,9 @@ def install_rc_files():
     """
     rc_dirs = ['zsh','bash','vim']
     for rc_dir in rc_dirs:
-        for rc_file in os.listdir('configs/rc_files/{rc_dir}'):
-            shutil.copy(file, HOME_DIR+f'/{rc_file}')
+        for rc_file in os.listdir(f'./configs/rc_files/{rc_dir}'):
+            os.link(f'./configs/rc_files/{rc_dir}/{rc_file}',
+                    f'{HOME_DIR}/{rc_file}')
 
     # Install the vim plugin manager
     vim_plugin_manager_cmd = ("git clone "
