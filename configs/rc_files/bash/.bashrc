@@ -72,28 +72,37 @@ esac
 # ls - human readable file sizes, show hidden files, enable colors
 alias ls='ls -ha --color'
 alias ll='ls -hal --color'
+
 # colordiff - diff, but with colors for accessibility
 alias diff='colordiff -uw'
+
 # grep - always use colors
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
+
 # typos <3
 alias grpe='grep'
 alias gerp='grep'
 alias celar='clear'
 alias gti='git'
+
 # shorten commands
 alias vi='vim'
 alias tracert='traceroute'
+
 # git speed up
 alias gc='git commit -m'
+
 # take that ghostscript
 alias gs='git status'
 alias gd='git diff'
 alias ga='git add .'
 alias gph='git push'
 alias gpl='git pull'
+
+alias tree='tree -C'
+
 # quick to do
 alias todo='vim ~/todo.md'
 
