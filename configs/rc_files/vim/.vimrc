@@ -1,4 +1,3 @@
-" This is Gary Bernhardt's .vimrc file plus jesse edits
 " vim:set ts=2 sts=2 sw=2 expandtab:
 
 " having numbers on makes my life soooo much easier when debugging
@@ -100,7 +99,6 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 :set t_Co=256 " 256 colors
 :set background=dark
-:color grb256
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " STATUS LINE
@@ -407,18 +405,20 @@ call plug#begin()
 " You can specify a custom plugin directory by passing it as the argument
 "   - e.g. `call plug#begin('~/.vim/plugged')`
 "   - Avoid using standard Vim directory names like 'plugin'
-"
-" Make sure you use single quotes
-"
-" Example: Multiple Plug commands can be written in a single line using | separators
-" Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-" Example: Using a non-default branch
-" Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
-" Example: Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
-" Plug 'fatih/vim-go', { 'tag': '*' }
+"   - Make sure you use single quotes
 
-" On-demand loading
+" On-demand loading of nerdtree
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" this is a modern fuzzy searcher
+Plug 'liuchengxu/vim-clap'
+" attempt to make yaml better
+Plug 'stephpy/vim-yaml'
+Plug 'Yggdroot/indentLine'
+" linter
+Plug 'dense-analysis/ale'
+" git plugin
+Plug 'tpope/vim-fugitive'
 
 " Initialize plugin system
 call plug#end()

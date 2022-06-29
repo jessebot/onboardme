@@ -138,7 +138,7 @@ def hard_link_rc_files():
             hard_link_rc_file = f'{HOME_DIR}/{rc_file}'
             try:
                 os.link(src_rc_file, hard_link_rc_file)
-                print(f'Hard linked {hard_link_rc_file}')
+                print(f'  Hard linked {hard_link_rc_file}')
             except FileExistsError as error:
                 print(f'  {hard_link_rc_file} already exists, continuing...')
             except PermissionError as error:
