@@ -2,6 +2,7 @@
 # Generic onboarding script for mac osx and debian
 # jessebot@linux.com
 import argparse
+import getpass
 import os
 import shutil
 import subprocess
@@ -9,6 +10,7 @@ import sys
 from sys import platform
 import yaml
 
+USER_NAME = getpass.getuser()
 HOME_DIR = os.getenv("HOME")
 OS = platform
 CONFIG_FILE = "packages/packages.yml"
@@ -75,7 +77,7 @@ def run_brew_installs(opts=""):
         result = subproc(brew_cmd)
 
     # install linux specific apps
-    if OS == 'linux' or OS == 'linux2':
+    if OS.__contains__('linux'):
         brew_cmd = "brew bundle --file=./packages/Brewfile_linux"
         result = subproc(brew_cmd)
     # install mac specific apps
@@ -106,8 +108,13 @@ def install_rc_files():
     rc_dirs = ['zsh','bash','vim']
     for rc_dir in rc_dirs:
         for rc_file in os.listdir(f'./configs/rc_files/{rc_dir}'):
-            os.link(f'./configs/rc_files/{rc_dir}/{rc_file}',
-                    f'{HOME_DIR}/{rc_file}')
+            try:
+                os.link(f'./configs/rc_files/{rc_dir}/{rc_file}',
+                        f'{HOME_DIR}/{rc_file}')
+                print(f'Linked {HOME_DIR}/{rc_file}')
+            except FileExistsError as error:
+                print(f'Looks like {HOME_DIR}/{rc_file} already exists, '
+                       'continuing...')
 
     # Install the vim plugin manager
     vim_plug_cmd = ("curl -fLo ~/.vim/autoload/plug.vim --create-dirs "
@@ -120,10 +127,23 @@ def configure_firefox():
     """
     Copies over default firefox settings and addons 
     """
-    shutil.copy('configs/browser/firefox/user.js', FIREFOX_PROFILE_DIR)
+    # different os will have this in different places
+    if platform == "linux" or platform == "linux2":
+        # linux - untested
+        PROFILE_PATH=(f"/home/{USER_NAME}/Firefox/Profiles/{FIREFOX_PROFILE}/")
+    elif platform == "darwin":
+        # OS X
+        PROFILE_PATH=(f"/Users/{USER_NAME}/Library/Application Support/Firefox/"
+                      f"Profiles/{FIREFOX_PROFILE}/")
+    elif platform == "win32" or platform == "windows":
+        # Windows... - untested
+        PROFILE_PATH=(f"/Users/{USER_NAME}/Library/Application Support/Firefox/"
+                      f"Profiles/{FIREFOX_PROFILE}/")
+
+    shutil.copy('configs/browser/firefox/user.js', PROFILE_PATH)
 
     shutil.copytree('configs/browser/firefox/distribution/extensions/',
-                    FIREFOX_EXT_DIR)
+                    PROFILE_PATH + 'extensions/')
 
     print("Copied over firefox settings")
     return None
@@ -158,7 +178,7 @@ def main():
     """
     Core function
     """
-    help = 'This is a generic onboarding script for mint'
+    help = 'This is a generic onboarding script for mint and mac.'
     parser = argparse.ArgumentParser(description=help)
     dr_help = "perform a Dry Run of the script, NOT WORKING YET"
     parser.add_argument('--dry', action="store_true", default=False,
@@ -186,19 +206,28 @@ def main():
 
     # installs bashrc and the like
     install_rc_files()
+    print(" 🐚: Shell and vim rc files are installed")
     run_brew_installs(opts)
-    configure_firefox()
+    print(" 🍻: Finished brew installing stuff")
 
-    if OS.contains('linux'):
+    # configure_firefox()
+
+    if OS.__contains__('linux'):
         run_apt_installs(opts)
+        print(" 🤙: Apt installed apps")
         run_snap_installs()
+        print(" 🫰:: Snap installed apps")
         run_flatpak_installs()
+        print(" 🫓: Flatpak installed apps")
 
     print("All done! here's some stuff you gotta do manually:")
-    print("🐋: Add your user to the docker group, and reboot")
-    print("📰: Import rss feeds config into FluentReader or wherever")
-    print("📺: Import subscriptions into FreeTube")
-    print("Install any cronjobs you need from the cron dir!")
+    print(" 📝: run :plugInstall in vim to install vim plugins")
+    print(" 🐋: Add your user to the docker group, and reboot")
+    print(" 📰: Import rss feeds config into FluentReader or wherever")
+    print(" 📺: Import subscriptions into FreeTube")
+    print(" 🦊: Install firefox config!")
+    print(" ⌨️ : Set capslock to control!")
+    print(" ⏰: Install any cronjobs you need from the cron dir!")
 
 
 if __name__ == '__main__':
