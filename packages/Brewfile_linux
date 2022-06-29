@@ -18,3 +18,7 @@ brew "tree"
 brew "wget"
 brew "terraform"
 brew "tfenv"
+brew "go"
+
+# cask installs are for apps with GUIs
+cask "lens"

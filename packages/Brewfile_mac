@@ -1,9 +1,6 @@
 # This file is mac specific
-
 # These are all cask installs (They have some sort of GUI)
-cask "aws-vault"
 cask "docker"
 cask "spectacle"
-cask "item3"
+cask "iterm3"
 cask "lulu"
-

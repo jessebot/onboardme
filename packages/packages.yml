@@ -1,7 +1,4 @@
 # can't be installed through normal package managers anywhere
-go: maybe not needed, todo: add go installation instructions
-  - kubernetes
-
 snap:
   - fluent-reader --candidate
 
@@ -15,6 +12,7 @@ apt:
   packages:
     - curl
     - git
+    - terminator
     - vim
     - python3-distutils
     - python3-pip
@@ -30,7 +28,6 @@ apt:
     - colordiff
     - figlet
     - cowsay
-    - terminator
     - vlc
     - libpam-yubico
     - finger

@@ -6,26 +6,53 @@ import json
 import os
 import subprocess
 import sys
+from sys import platform
 
 HOME_DIR = os.getenv("HOME")
-CONFIG_FILE = "config.something"
+OS = platform
+CONFIG_FILE = "config.yaml"
 
 
-def install_packages(package_manager='brew',os='debian',config):
+def run_apt_installs():
     """
+    install every apt package in packages.yaml
     """
-    if package_manager == 'apt':
+    for package in CONFIG_FILE["apt_packages"]:
+        apt_install_cmd = f"apt install {package}"
+        result = subproc(apt_install_cmd)
 
-        apt_install = "apt-get install {package}"
-    apt_install = base_apt_install + " <apt_packages.txt"
-    if not dry_run:
-        apt_install = base_apt_install + " -y <apt_packages.txt"
-
-    subprocess = subproc(apt_install, "Error with package installs :shrug:")
+    return None
 
 
-def apt_install():
+def run_brew_installs():
+    """
+    brew install from the brewfiles
+    """
+    # this is the stuff that's installed on both mac and linux
+    brew_cmd = "brew bundle --file=./packages/Brewfile_standard"
+    result = subproc(brew_cmd)
 
+    # install linux specific apps
+    if OS == 'linux' or OS == 'linux2':
+        brew_cmd = "brew bundle --file=./packages/Brewfile_linux"
+        result = subproc(brew_cmd)
+    # install mac specific apps
+    elif OS == 'darwin':
+        brew_cmd = "brew bundle --file=./packages/Brewfile_mac"
+        result = subproc(brew_cmd)
+
+    return None
+
+
+def run_upgrades():
+    """
+    run upgrade and update for every package manager
+    """
+    apt_update_upgrade_cmd = f"apt upgrade && apt update"
+    result = subproc(apt_update_upgrade_cmd)
+
+    brew_update_upgrade_cmd = f"brew upgrade && brew update"
+    result = subproc(brew_update_upgrade_cmd)
 
 
 def install_rc_files():
@@ -33,19 +60,25 @@ def install_rc_files():
     Copies over default rc files for vim, zsh, and bash
     """
     rc_files = ['vim','zsh','bash']
-    vim_plugin_manager = "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim"
+    vim_plugin_manager = ("git clone "
+                          "https://github.com/VundleVim/Vundle.vim.git"
+                          "~/.vim/bundle/Vundle.vim")
     for rc_file in rc_files:
-        # TODO: iterate through directory and don't for .vim dir
-        shutil.copytree('../rc_files/{rc_file}/')
-    return
+        shutil.copytree('configs/rc_files/{rc_file}/', HOME_DIR)
+    return None
 
 
-def run_package_managers():
+def configure_firefox():
     """
-    run apt, flatpak, snap because apparently we need 3 to get this running
+    Copies over default firefox settings and addons 
     """
-    # TODO: write the function
-    return
+    shutil.copy('configs/browser/firefox/user.js', FIREFOX_PROFILE_DIR)
+
+    shutil.copytree('configs/browser/firefox/distribution/extensions/',
+                    FIREFOX_EXT_DIR)
+
+    print("Copied over firefox settings")
+    return None
 
 
 def subproc(cmd, help="Something went wrong!"):
@@ -53,6 +86,7 @@ def subproc(cmd, help="Something went wrong!"):
     Takes a commmand to run in BASH, as well as optional
     help text, both str
     """
+    print("Running command: {cmd}")
     command = cmd.split()
     res_err = ""
     try:
@@ -78,11 +112,16 @@ def main():
     """
     help = 'This is a generic onboarding script for mint'
     parser = argparse.ArgumentParser(description=help)
-    dr_help = "perform a Dry Run of the script"
+    dr_help = "perform a Dry Run of the script, NOT WORKING YET"
     parser.add_argument('--dryrun', action="store_true", default=False,
                        help=dr_help)
+    parser.add_argument('--gaming', action="store_true", default=False,
+                       help='Install packages related to gaming')
     res = parser.parse_args()
     dry_run = res.dry_run
+
+    install_rc_files()
+    run_apt_install_upgrade()
 
 
 if __name__ == '__main__':
