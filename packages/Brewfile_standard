@@ -22,7 +22,7 @@ brew "pandoc"
 brew "tree"
 brew "wget"
 brew "go"
-brew "yaml"
+brew "yamllint"
  
 # cask installs are for apps with GUIs
 cask "lens"
