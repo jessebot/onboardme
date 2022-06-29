@@ -20,9 +20,7 @@ apt:
     - python3-pip
     # containers (note, need to add user to docker group and reboot)
     - docker
-    - docker.io
     - docker-ce
-    # - docker-ce-cli ???
     - openssl
     - wget
     - sysstat
@@ -32,18 +30,15 @@ apt:
     - colordiff
     - figlet
     - cowsay
-    - steam
     - terminator
     - vlc
     - libpam-yubico
-    - ubuntu-driver-460
     - finger
     - ssh
     - nextcloud-desktop
     - screen
     - youtube-dl
     - go
-    - albert
     - pandoc
     - lynx
     # to use web links and the gui to install flatpak and not use cli
@@ -55,8 +50,10 @@ apt:
 apt-gaming:
     - lutris
     - winehq-staging
+    - steam
+    - ubuntu-driver-460
 
-# this is for vim
+# vundle is a package manager for vim, the text editor
 vundle:
   - https://github.com/hashivim/vim-terraform.git
 
