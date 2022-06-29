@@ -6,6 +6,7 @@ According to `prefs.js`, we can add a `user.js` to the profile directory and tha
 - Always Send Do Not Track
 - Default Search is Duckduckgo
 - Firefox studies are off by default
+- Active theme is A Teal Glow
 
 ## Extensions
 For moving around firefox compatiable browser extensions, so far I've found:
