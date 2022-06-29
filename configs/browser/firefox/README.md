@@ -14,7 +14,8 @@ For moving around firefox compatiable browser extensions, so far I've found:
 
 ### Current Extensions we always want to install
 
-|   add-on name   |   add-on ID   |
+add-on name | add-on ID
+---|---
 | Woordenboek Nederlands | nl-NL@dictionaries.addons.mozilla.org |
 | Twitter Visible Alt Text | {38a01252-6a18-4cbf-831c-88ff451b4263} |
 | Privacy Badger | jid1-MnnxcxisBPnSXQ@jetpack |
