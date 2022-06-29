@@ -4,8 +4,9 @@ set -o nounset
 set -o pipefail
 
 # Profile to use for demo (absolute path)
-export DEMO_DIR="/home/max/onboardme/configs/ansible_profiles/basic_desktop"
-export ANSIBLE_CONFIG=$(cat "/home/max/onboardme/ansible/config")
+USER=$(whoami)
+export DEMO_DIR="/home/$USER/onboardme/configs/ansible_profiles/basic_desktop"
+export ANSIBLE_CONFIG=$(cat "/home/$USER/onboardme/ansible/config")
 
 # Shared files
 export SYNCED_DIR=""
@@ -33,9 +34,9 @@ export_metatdata(){
 
 # Ansible metadata
   export UUID="none"
-  export INVENTORY_PATH="/home/max/onboardme/ansible/inventories"
+  export INVENTORY_PATH="/home/$USER/onboardme/ansible/inventories"
   export ANSIBLE_INVENTORY_FILE="$VM_NAME/$VM_NAME-inventory.yaml"
-  export ANSIBLE_PLAYBOOK="/home/max/onboardme/ansible/playbooks/main-program.yaml"
+  export ANSIBLE_PLAYBOOK="/home/$USER/onboardme/ansible/playbooks/main-program.yaml"
 
 # Program verbosity
   export VERBOSITY="-v"
@@ -246,7 +247,7 @@ run_single_step(){
   # run a single step of a profile against the host
   export_metatdata
 
-  PROFILE_PATH="/home/max/onboardme/configs/ansible_profiles/basic_desktop/$1.yaml"
+  PROFILE_PATH="/home/$USER/onboardme/configs/ansible_profiles/basic_desktop/$1.yaml"
 
     time ansible-playbook -i $ANSIBLE_INVENTORY_FILE \
         $ANSIBLE_PLAYBOOK \
