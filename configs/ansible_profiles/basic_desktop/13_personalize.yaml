@@ -1,3 +1,4 @@
 Sync:
-  - name: Transfer files/folder from ServerA to ServerB (Dest)
-    Dest: /destinaton/path
+  - name: Transfer files/folder from Host to a destination path on the client (Dest)
+    Source: /host/path/to/source
+    Dest: /destinaton/path/on/client
