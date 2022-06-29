@@ -1,6 +1,6 @@
 apt:
   repos:
-    - ppa:mattrose/terminator
+    - "ppa:mattrose/terminator"
   packages:
     - terminator
     - docker
@@ -29,4 +29,4 @@ flatpak:
   - keepassx
 
 snap:
-  - fluent-reader --candidate
+  - "fluent-reader --candidate"
