@@ -65,23 +65,29 @@ Stuff that needs doing
 
 <details>
   <summary>Coming Later</summary>
-- SmartWatch OS 
+  <ul>
+  <li>SmartWatch OS</li>
+  </ul>
 </details>
 
 <details>
   <summary>Should have already come</summary>
-  - KEYBOARD MAPPINGS: CAPSLOCK TO CONTROL - need for both debian (gnome/xfce menu mappings?) and mac osx
-  - Move the panel to the side, and add panelettes or whatever they're called
-  - Setup crontab (or whatever you do on a mac) script to automatically backup into configurable repo (default to this repo):
-    - RSS feeds OPML
-    - FreeTube/NewPipe subscriptions OPML/db
-  - Add chat software
-  - Add NextCloud stuff - at least try News, Recipes, and Talk
-  - Overview of current configs maintained by this script?
-  - Which email clients to support? MUTT? ThunderGuy?
-  - Alfred
-    - Find FOSS replacement?
-    - Personal settings for alfred
+  <ul>
+  <li> KEYBOARD MAPPINGS: CAPSLOCK TO CONTROL - need for both debian (gnome/xfce menu mappings?) and mac osx</li>
+  <li> Move the panel to the side, and add panelettes or whatever they're called</li>
+  <li> Setup crontab (or whatever you do on a mac) script to automatically backup into configurable repo (default to this repo):</li>
+    <li> RSS feeds OPML</li>
+    <li> FreeTube/NewPipe subscriptions OPML/db</li>
+  <li> Add chat software</li>
+  <li> Add NextCloud stuff <li> at least try News, Recipes, and Talk</li>
+  <li> Overview of current configs maintained by this script?</li>
+  <li> Which email clients to support? MUTT? ThunderGuy?</li>
+  <li> Alfred</li>
+    <ul>
+    <li> Find FOSS replacement?</li>
+    <li> Personal settings for alfred</li>
+    </ul>
+  </ul>
 </details>
 
 #### Note
