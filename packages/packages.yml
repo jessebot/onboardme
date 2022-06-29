@@ -1,11 +1,3 @@
-# can't be installed through normal package managers anywhere
-snap:
-  - fluent-reader --candidate
-
-flatpak:
-  - freetube
-  - keepassx
-
 apt:
   repos:
     - ppa:mattrose/terminator
@@ -22,14 +14,19 @@ apt:
     - nextcloud-desktop
     - screen
     - youtube-dl
-    # to use web links and the gui to install flatpak and not use cli
-    - gnome-software-plugin-flatpak
+    - gnome-software-plugin-flatpak # use web links to launch gui to install flatpak pkgs
 
 # gaming on linux specifc
 apt_gaming:
-    - lutris
-    - winehq-staging
-    - steam
-    - ubuntu-driver-460
-    # to formate disks to exFAT, because FAT is too thin for modern windows 10 ISOs
-    - exfat-utils
+  - lutris
+  - winehq-staging
+  - steam
+  - ubuntu-driver-460
+  - exfat-utils # to format disks to exFAT; FAT is too thin for modern windows 10 ISOs
+
+flatpak:
+  - freetube
+  - keepassx
+
+snap:
+  - fluent-reader --candidate
