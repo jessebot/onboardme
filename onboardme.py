@@ -208,10 +208,13 @@ def subproc(cmd, help="Something went wrong!"):
     res_out = p.communicate()
 
     # check return code, raise error if failure
-    if return_code != 0:
-        res_err = (f'Return code was not zero! Error code: {return_code}'
-                   f'{res_out}')
-        raise Exception(res_err)
+    if not return_code or return_code != 0:
+        if "error" not in f'{res_out}'.lower():
+            return res_out
+        else:
+            res_err = (f'Return code was not zero! Error code: {return_code} '
+                       f'Output: {res_out}')
+            raise Exception(res_err)
 
     return res_out
 
