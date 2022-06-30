@@ -145,6 +145,10 @@ def hard_link_rc_files():
             os.link(src_rc_file, hard_link)
             print(f'  Hard linked {hard_link}')
 
+            # create a bash_profile as well, just in case
+            if src_rc_file == '.bashrc':
+                os.link(src_rc_file, f'{HOME_DIR}/.bash_profile')
+
         except FileExistsError as error:
             # keep these for the end of the loop
             existing_files.append(hard_link)
