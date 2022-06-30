@@ -35,8 +35,23 @@ Now you can run the actual script that does the heavy lifting.
 ./repos/onboardme/onboardme.py
 ```
 
-## Notes on things the scripts don't do
-***Every operating system has that one thing™️  that voids the [XKCD Is It Worth the Time Rule](https://xkcd.com/1205/) which leaves you in the weird place where setting up the thing™️  manually is still faster than trying to keep the script up to date as every OS changes as per the [XKCD Automation Chart](https://xkcd.com/1319/), which illustrates this better than I can. So, I don't know that I'll ever have a perfect solution to map capslock to control in a simple automated manner on Windows, but that's just the systems engineer's mental burden: "I have the ability to do x, but do I really have the time or interest?"
+When it's complete, it'll output a number of other steps to take manually that aren't yet automated.
+
+### Current Ecoscape of Personal Tech
+
+Category | App | Replaces
+---|---|---
+|Desktop Launcher|Albert?|Alfred|
+|Email|Protonmail and Bridge for Linux/MacOS|Gmail|
+|Local Backups|Restic to minio|Google Drive, iCloud, S3|
+|Photo/file Storage|NextCloud - not tested|Google Photos/Drive|
+|News - RSS|Fluent Reader|Facebook/Twitter news company feeds|
+|Remote Backups|Restic to b2|Google Drive, iCloud, S3|
+|Video Streaming|FreeTube|YouTube|
+|Video Streaming|PeerTube - not tested|YouTube|
+
+## Things the scripts don't do
+**Every** operating system has that one thing™️ that voids the [Is It Worth the Time](https://xkcd.com/1205/) rule, which leaves us in the weird place, where setting up the thing™️ manually is still faster than trying to keep the automation up to date as every OS changes over time, which is illustrated in the [Automation Chart](https://xkcd.com/1319/). So, I don't know that I'll ever have a perfect solution to map capslock to control in a simple automated manner on every OS, but that's just the systems engineer's mental burden: "I have the ability to do x, but do I really have the time or interest... to do it on windows, mac, linux, and android...?"
 
 *That's where docs come in handy, because you can't even trust that you'll be able to re-web-search anything™️  these days*
 
@@ -50,24 +65,12 @@ Here at this humble OnBoardMe repo, we try really hard to do the right thing. We
 #### What is (FOSS), Free and Open Source Software
 We believe in free software, and we do our best to use and support actually free and open source software. If you don't know what we mean, please check out this [GNU article on Free SoftWare](https://www.gnu.org/philosophy/free-sw.en.html).
 
-### Current Ecoscape of Personal Tech
-
-Category | App | Replaces
----|---|---
-|Desktop Launcher|Albert?|Alfred|
-|Email|Protonmail and Bridge for Linux/MacOS|gmail|
-|Local Backups|restic to minio|Google Drive, iCloud, S3|
-|Photo/file Storage|NextCloud - not tested|Google Photos/Drive|
-|News - RSS|Fluent Reader|facebook/twitter news feeds|
-|Remote Backups|restic to b2|Google Drive, iCloud, S3|
-|Video Streaming|FreeTube|YouTube|
-|Video Streaming|PeerTube - not tested|YouTube|
+#### Humane Tech Lists
+We've had good luck with [Awesome Humane Tech](https://github.com/humanetech-community/awesome-humane-tech) for guides and checking out alternatives to tech from the Giants you previously used.
 
 ### Language
-We are currently using the philosophy of [Terminology, Power, and Exclusionary Language in Internet-Drafts and RFCs draft](https://datatracker.ietf.org/doc/html/draft-knodel-terminology-09) and at the time of writing, this draft is currently on verison `09`.
-
-### Humane Tech Lists
-We've had good luck with [Awesome Humane Tech](https://github.com/humanetech-community/awesome-humane-tech) for guides and checking out alternatives to tech from the Giants you previously used.
+We are currently using the philosophy of:
+[Terminology, Power, & Exclusionary Language in Internet-Drafts and RFCs - v09](https://datatracker.ietf.org/doc/html/draft-knodel-terminology-09)
 
 ### Tips
 Contact your local datacenters and see if they offer an object storage service, because they might, and it could be really cheap. Don't give your money to AWS.
