@@ -47,16 +47,10 @@ Here at this humble OnBoardMe repo, we try really hard to do the right thing. We
 
   Living ethically under late stage capitalism is not easy, but we believe generally that software should be Free and Open Source.
 
-### What is (FOSS), Free and Open Source Software
+#### What is (FOSS), Free and Open Source Software
 We believe in free software, and we do our best to use and support actually free and open source software. If you don't know what we mean, please check out this [GNU article on Free SoftWare](https://www.gnu.org/philosophy/free-sw.en.html).
 
-### Language
-We are currently using the philosophy of [Terminology, Power, and Exclusionary Language in Internet-Drafts and RFCs draft](https://datatracker.ietf.org/doc/html/draft-knodel-terminology-09) and at the time of writing, this draft is currently on verison `09`.
-
-### Humane Tech Lists
-We've had good luck with [Awesome Humane Tech](https://github.com/humanetech-community/awesome-humane-tech) for guides and checking out alternatives to tech from the Giants you previously used.
-
-# Current Ecoscape of Personal Tech
+### Current Ecoscape of Personal Tech
 
 Category | App | Replaces
 ---|---|---
@@ -69,6 +63,11 @@ Category | App | Replaces
 |Video Streaming|FreeTube|YouTube|
 |Video Streaming|PeerTube - not tested|YouTube|
 
+### Language
+We are currently using the philosophy of [Terminology, Power, and Exclusionary Language in Internet-Drafts and RFCs draft](https://datatracker.ietf.org/doc/html/draft-knodel-terminology-09) and at the time of writing, this draft is currently on verison `09`.
+
+### Humane Tech Lists
+We've had good luck with [Awesome Humane Tech](https://github.com/humanetech-community/awesome-humane-tech) for guides and checking out alternatives to tech from the Giants you previously used.
 
 ### Tips
 Contact your local datacenters and see if they offer an object storage service, because they might, and it could be really cheap. Don't give your money to AWS.
