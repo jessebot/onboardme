@@ -132,20 +132,20 @@ def hard_link_rc_files():
     Copies over default rc files for vim, zsh, and bash
     """
     print(" 🐚 Shell and vim rc files installing... 🐚 ".center(70, '-'))
-    rc_dirs = ['zsh', 'bash', 'vim']
-    for rc_dir in rc_dirs:
-        rc_dir_path = f'{PWD}/configs/rc_files/{rc_dir}'
-        for rc_file in os.listdir(rc_dir_path):
-            src_rc_file = f'{rc_dir_path}/{rc_file}'
-            hard_link_rc_file = f'{HOME_DIR}/{rc_file}'
-            try:
-                os.link(src_rc_file, hard_link_rc_file)
-                print(f'  Hard linked {hard_link_rc_file}')
-            except FileExistsError as error:
-                print(f'  {hard_link_rc_file} already exists, continuing...')
-            except PermissionError as error:
-                if os.path.isdir(f'{src_rc_file}'):
-                    print(f'{src_rc_file} is a directory, skipping for now.')
+    for rc_file in os.listdir(rc_dir_path):
+        src_rc_file = f'{PWD}/configs/rc_files/{rc_file}'
+        hard_link_rc_file = f'{HOME_DIR}/{rc_file}'
+
+        try:
+            os.link(src_rc_file, hard_link_rc_file)
+            print(f'  Hard linked {hard_link_rc_file}')
+
+        except FileExistsError as error:
+            print(f'  {hard_link_rc_file} already exists, continuing...')
+
+        except PermissionError as error:
+            if os.path.isdir(f'{src_rc_file}'):
+                print(f'{src_rc_file} is a directory, skipping for now.')
 
 
 def configure_vim():
