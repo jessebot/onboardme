@@ -129,23 +129,32 @@ def run_upgrades():
 
 def hard_link_rc_files():
     """
-    Copies over default rc files for vim, zsh, and bash
+    Creates hardlinks to default rc files for vim, zsh, and bash in user's
+    home directory. Uses hardlinks, so that if the link or onboardme repo files
+    are removed, the data will remain.
     """
     print(" 🐚 Shell and vim rc files installing... 🐚 ".center(70, '-'))
-    for rc_file in os.listdir(rc_dir_path):
-        src_rc_file = f'{PWD}/configs/rc_files/{rc_file}'
-        hard_link_rc_file = f'{HOME_DIR}/{rc_file}'
+    existing_files = []
+
+    rc_dir = f'{PWD}/configs/rc_files'
+    for rc_file in os.listdir(rc_dir):
+        src_rc_file = f'{rc_dir}/{rc_file}'
+        hard_link = f'{HOME_DIR}/{rc_file}'
 
         try:
-            os.link(src_rc_file, hard_link_rc_file)
-            print(f'  Hard linked {hard_link_rc_file}')
+            os.link(src_rc_file, hard_link)
+            print(f'  Hard linked {hard_link}')
 
         except FileExistsError as error:
-            print(f'  {hard_link_rc_file} already exists, continuing...')
+            # not gonna overwrite anything, so we'll assume it's all good
+            existing_files.append(hardlink)
+
 
         except PermissionError as error:
-            if os.path.isdir(f'{src_rc_file}'):
-                print(f'{src_rc_file} is a directory, skipping for now.')
+            # we keep going, because installing everything else is still useful
+            print(f'Permission error for: {src_rc_file} Error: {error}.')
+
+    return None
 
 
 def configure_vim():
