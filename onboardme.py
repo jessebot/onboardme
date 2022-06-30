@@ -154,16 +154,15 @@ def configure_vim():
     listed in ./config/rc_files/vim/.vimrc
     """
     print("  Installing a vim-plug a plugin manager for vim")
-    git_url = "https://raw.githubusercontent.com/"
-    manager_cmd = (f"curl -fLo {HOME_DIR}/.vim/autoload/plug.vim "
-                   f"--create-dirs {git_url}junegunn/vim-plug/master/plug.vim")
+    url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    plug_cmd = (f"curl -fLo {HOME_DIR}/.vim/autoload/plug.vim "
+                f"--create-dirs {url}")
     res = subproc(manager_cmd)
-    print(res)
 
-    print("  Installing a vim plugins!")
+    print("  Installing vim plugins...")
     plugin_cmd = (f'vim -E -s -u "{HOME_DIR}/.vimrc" +PlugInstall +qall')
     res = subproc(plugin_cmd)
-    print(res)
+    print("  vim plugins INSTALLED :)")
 
     return None
 
