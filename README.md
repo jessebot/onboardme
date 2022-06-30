@@ -1,38 +1,27 @@
 # OnBoardMe to [mac, mint]
+ ♪ it only shoots t-shirts ♪
 
-> **This project in pre-alpha state, and incredibly **Under Construction** in the `main` branch, because there is so much rot and tech debt. Open an issue if something doesn't make sense, and we'll help you out 💙**
+ This is a project to store config files, as well as programatically install core packages that I need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping I'd remember why it was there later, so this is now a renewed effort in remembering all the things.
 
-## Why?
+Please report 🐛 in the GitHub issues, and I will get them as I have time.
 
-- We have enough productivity tools and special configs for various programs (for both Mac and Linux) that we actually need a repo for them. Example: We need to manage like 4 native OS package managers, at least 🤦 The state of personal development software is not grand, so back to the basics of IT, we start from like 10 years of basic shell/Python scripts, and chain them together using ansible, but even the research phase of this project has taken forever, because there's many things to test and reproduce. This is slow, but trust me, worth it.
+## Quick Start
+Run the setup script to install python dependencies and brew. This will ask for your password, because brew does that.
+```bash
+bash setup.sh
+```
+
+Now you can run the actual script that does the heavy lifting.
+```bash
+./onboardme.py
+```
+
+# Notes
+You can find the bulk of my notes under the `docs` directory in this repo, but the goal is to get into some sort of wiki somewhere... soonish. Probably something like a little flask app with some sort of material design and a markdown plugin, because I don't have time for frontend at this stage of my life.
 
 ## Package Managers
 
-This is ridiculous, but we're using: `apt`, `snap`, `flatpak`, `brew`, as well as `pip`, and... (researching [deb-get](http://manpages.ubuntu.com/manpages/bionic/man1/debget.1p.html)) Ansible also provides an interface for installing more troublesome packages via the `command`, `script`, `download`, `git_clone`, `files`, and `sync` modules. We do this because you often can't use a package manager to install another package manager.
-
-## Ansible Automated Installation (Under Construction)
-
-  1. `cd onboardme/ansible`
-  2. `bash demo.sh create`
-  3. When you see a login prompt press "ctrl + b" then "d" to detach from the tmux session
-  4. `bash demo.sh provision`
-  5. `bash demo.sh ssh_to_vm`
-
-## Ansible Manual Installation
-
-1. Select or Create a profile
-
-    - Existing profiles/templates can be found in the [ansible_profiles](onboardme/configs/ansible_profiles) directoy
-
-    - Follow the instructions [HERE](onboardme/configs/ansible_profiles/README.md) to customize or create a profile
-
-2. Create an Ansible inventory file for the client
-
-    - Create an inventory file for your target machine. See [demo.sh add_vm_to_inventory](/home/max/onboardme/ansible/demo.sh) for an automated example
-
-3. Provision the client by running a playbook
-
-    - Run an ansible playbook to gether facts, run a single step, or a full profile against the target host. See [demo.sh](/home/max/onboardme/ansible/demo.sh) for automated examples.
+This is ridiculous, but we're using: `apt`, `snap`, `flatpak`, and `brew`. Ansible is also being looked into, and provides an interface for installing more troublesome packages via the `command`, `script`, `download`, `git_clone`, `files`, and `sync` modules. We do this because you often can't use a package manager to install another package manager. For more info on Ansible, visit the `ansible` directory and check out the readme there :3
 
 ## Important Notes on FOSS and Ethics
 
