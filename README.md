@@ -3,6 +3,8 @@
 
 This is a project to store config files, as well as programatically install core packages that I need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping I'd remember why it was there later, so this is now a renewed effort in remembering all the thing™️s.
 
+🚧 Under Construction 🚧
+
 Currently tested on macOS monteray 12.4, but will work on debian soon. Please report 🐛 in the GitHub issues, and I will get them as I have time.
 
 ### Under the hood
@@ -10,6 +12,8 @@ Currently tested on macOS monteray 12.4, but will work on debian soon. Please re
 - Installs apt/snap/flatpak packages from `./packages/packages.yml`
 - Installs brew files from `./packages/Brewfile_*` depending on OS and if `--work` is passed in
 - Installs vim-plug, a vim plugin manager to setup things like nerdtree, indentations lines, and fuzzysearch
+
+I'm using github issues to track future work on this thing.
 
 ## Quick Start
 Run the setup script to install python dependencies and brew. This will ask for your password, because brew does that. Run the following from your home directory:
@@ -54,48 +58,6 @@ We are currently using the philosophy of [Terminology, Power, and Exclusionary L
 ### Humane Tech Lists
 
 We've had good luck with [Awesome Humane Tech](https://github.com/humanetech-community/awesome-humane-tech) for guides and checking out alternatives to tech from the Giants you previously used.
-
-### TODOs
-Stuff that needs doing
-<details>
-  <summary>Coming Soon</summary>
-  <ul>
-  <li>Android notes</li>
-  <li>SDR notes</li>
-  </ul>
-</details>
-
-<details>
-  <summary>Coming Later</summary>
-  <ul>
-  <li>SmartWatch OS</li>
-  </ul>
-</details>
-
-<details>
-  <summary>Should have already come</summary>
-  <ul>
-  <li> KEYBOARD MAPPINGS: CAPSLOCK TO CONTROL - need for both debian (gnome/xfce menu mappings?) and mac osx</li>
-  <li> Move the panel to the side, and add panelettes or whatever they're called</li>
-  <li> Setup crontab (or whatever you do on a mac) script to automatically backup into configurable repo (default to this repo):</li>
-    <li> RSS feeds OPML</li>
-    <li> FreeTube/NewPipe subscriptions OPML/db</li>
-  <li> Add chat software</li>
-  <li> Add NextCloud stuff <li> at least try News, Recipes, and Talk</li>
-  <li> Overview of current configs maintained by this script?</li>
-  <li> Which email clients to support? MUTT? ThunderGuy?</li>
-  <li> Alfred</li>
-    <ul>
-    <li> Find FOSS replacement?</li>
-    <li> Personal settings for alfred</li>
-    </ul>
-  </ul>
-</details>
-
-#### Note
-
-Theorectically, most of the config and setup for Mint, also works for Ubuntu and other Debian based distros, but YMMV.
-Current attempts at getting the Debian portions of the onboardme script working, and then merging them both. Trying to gather thoughts generally here for first pass.
 
 # Current Ecoscape of Personal Tech
 
