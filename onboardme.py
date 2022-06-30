@@ -9,6 +9,7 @@ import subprocess
 import sys
 from sys import platform
 import yaml
+import wget
 
 USER_NAME = getpass.getuser()
 HOME_DIR = os.getenv("HOME")
@@ -24,7 +25,7 @@ def run_apt_installs(opts=""):
     """
     install every apt package in packages.yaml
     """
-    print(" 👻 Apt packages installing 👻 ".center(70,'-'))
+    print(" 👻 Apt packages installing 👻 ".center(70, '-'))
     for package in PACKAGES["apt"]:
         apt_install_cmd = f"apt install {package}"
         result = subproc(apt_install_cmd)
@@ -38,7 +39,7 @@ def run_apt_installs(opts=""):
             result = subproc(apt_install_cmd)
             print(result)
 
-    print(" 👻 Apt packages INSTALLED 👻 ".center(70,'-'))
+    print(" 👻 Apt packages INSTALLED 👻 ".center(70, '-'))
     print("")
     return None
 
@@ -47,12 +48,13 @@ def run_flatpak_installs():
     """
     install every flatpak package in packages.yaml
     """
-    print(" 🫓 Apt packages installing 🫓 ".center(70,'-'))
+    print(" 🫓 Apt packages installing 🫓 ".center(70, '-'))
     for package in PACKAGES["flatpak"]:
         flatpak_install_cmd = f"flatpak install {package}"
         result = subproc(flatpak_install_cmd)
+        print(result)
 
-    print(" 🫓 Apt packages INSTALLED 🫓 ".center(70,'-'))
+    print(" 🫓 Apt packages INSTALLED 🫓 ".center(70, '-'))
     print("")
     return None
 
@@ -61,11 +63,12 @@ def run_snap_installs():
     """
     install every snap package in packages.yaml
     """
-    print(" 🫰: Snap apps installing... 🫰: ".center(70,'-'))
+    print(" 🫰: Snap apps installing... 🫰: ".center(70, '-'))
     for package in PACKAGES["snap"]:
         snap_install_cmd = f"snap install {package}"
         result = subproc(snap_install_cmd)
-    print(" 🫰: Snap apps INSTALLED 🫰: ".center(70,'-'))
+        print(result)
+    print(" 🫰: Snap apps INSTALLED 🫰: ".center(70, '-'))
     print("")
 
     return None
@@ -74,13 +77,10 @@ def run_snap_installs():
 def run_brew_installs(opts=""):
     """
     brew install from the brewfiles
+    Takes opts, which is a string set to 'gaming', or 'work'
+    Tested only on mac and linux, but maybe works for windows :shrug:
     """
     print(" 🍻 Brew packages installing... 🍻 ".center(70, '-'))
-    # make sure brew is installed
-    url = "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
-    install_cmd = f'/bin/bash -c "$(curl -fsSL {url})"'
-    result = subproc(install_cmd)
-    print(result)
 
     # this is the stuff that's installed on both mac and linux
     brew_cmd = "brew bundle --file=./packages/Brewfile_standard"
@@ -105,7 +105,7 @@ def run_brew_installs(opts=""):
         brew_cmd = "brew bundle --file=./packages/Brewfile_mac"
         result = subproc(brew_cmd)
         print(result)
-    
+
     print(" 🍻 Brew packages INSTALLED 🍻 ".center(70, '-'))
     print("")
 
@@ -131,12 +131,12 @@ def hard_link_rc_files():
     """
     Copies over default rc files for vim, zsh, and bash
     """
-    print(" 🐚 Shell and vim rc files installing... 🐚 ".center(70,'-'))
-    rc_dirs = ['zsh','bash','vim']
+    print(" 🐚 Shell and vim rc files installing... 🐚 ".center(70, '-'))
+    rc_dirs = ['zsh', 'bash', 'vim']
     for rc_dir in rc_dirs:
         rc_dir_path = f'{PWD}/configs/rc_files/{rc_dir}'
         for rc_file in os.listdir(rc_dir_path):
-            src_rc_file = f'{rc_dir_path}/{rc_file}'  
+            src_rc_file = f'{rc_dir_path}/{rc_file}'
             hard_link_rc_file = f'{HOME_DIR}/{rc_file}'
             try:
                 os.link(src_rc_file, hard_link_rc_file)
@@ -147,39 +147,42 @@ def hard_link_rc_files():
                 if os.path.isdir(f'{src_rc_file}'):
                     print(f'{src_rc_file} is a directory, skipping for now.')
 
+
 def configure_vim():
     """
-    vim has it's own plugin manager
+    Installs vim-plug, a plugin manager for vim, and then installs vim plugins,
+    listed in ./config/rc_files/vim/.vimrc
     """
-    # Install the vim plugin manager
-    print("  Installing a vim plugin manager")
+    print("  Installing a vim-plug a plugin manager for vim")
     git_url = "https://raw.githubusercontent.com/"
-    plugin_cmd = (f"curl -fLo {HOME_DIR}/.vim/autoload/plug.vim "
-                  f"--create-dirs {git_url}junegunn/vim-plug/master/plug.vim")
-    res =  subproc(plugin_cmd)
-    # print(res)
+    manager_cmd = (f"curl -fLo {HOME_DIR}/.vim/autoload/plug.vim "
+                   f"--create-dirs {git_url}junegunn/vim-plug/master/plug.vim")
+    res = subproc(manager_cmd)
+    print(res)
 
-    print(" 🐚 Shell and vim rc files INSTALLED 🐚 ".center(70,'-'))
-    print("")
+    print("  Installing a vim plugins!")
+    plugin_cmd = (f'vim -E -s -u "{HOME_DIR}/.vimrc" +PlugInstall +qall')
+    res = subproc(plugin_cmd)
+    print(res)
+
     return None
 
 
 def configure_firefox():
     """
-    Copies over default firefox settings and addons 
+    Copies over default firefox settings and addons
     """
     # different os will have this in different places
     if platform == "linux" or platform == "linux2":
         # linux - untested
-        PROFILE_PATH=(f"/home/{USER_NAME}/Firefox/Profiles/{FIREFOX_PROFILE}/")
+        PROFILE_PATH = (f"{HOME_DIR}/Firefox/Profiles/{FIREFOX_PROFILE}/")
     elif platform == "darwin":
         # OS X
-        PROFILE_PATH=(f"/Users/{USER_NAME}/Library/Application Support/Firefox/"
-                      f"Profiles/{FIREFOX_PROFILE}/")
+        PROFILE_PATH = (f"{HOME_DIR}/Library/Application Support/Firefox/"
+                        f"Profiles/{FIREFOX_PROFILE}/")
     elif platform == "win32" or platform == "windows":
         # Windows... - untested
-        PROFILE_PATH=(f"/Users/{USER_NAME}/Library/Application Support/Firefox/"
-                      f"Profiles/{FIREFOX_PROFILE}/")
+        PROFILE_PATH = (f"{HOME_DIR}/Firefox/Profiles/{FIREFOX_PROFILE}/")
 
     shutil.copy('configs/browser/firefox/user.js', PROFILE_PATH)
 
@@ -199,19 +202,16 @@ def subproc(cmd, help="Something went wrong!"):
     command = cmd.split()
     res_err = ''
 
-    try:
-        p = subprocess.Popen(command, stdout=subprocess.PIPE,
-                             stderr=subprocess.PIPE)
-        return_code = p.returncode
-        res_out = p.communicate()
+    p = subprocess.Popen(command, stdout=subprocess.PIPE,
+                         stderr=subprocess.PIPE)
+    return_code = p.returncode
+    res_out = p.communicate()
 
-        # check return code, raise error if failure
-        if return_code != 0:
-            err = f'Return code was not zero! Error code: {return_code}'
-            raise Exception(err)
-    except Exception as e:
-        if res_err:
-            print("ERROR: " + " ".join([help, e, res_out]))
+    # check return code, raise error if failure
+    if return_code != 0:
+        res_err = (f'Return code was not zero! Error code: {return_code}'
+                   f'{res_out}')
+        raise Exception(res_err)
 
     return res_out
 
@@ -224,13 +224,11 @@ def main():
     parser = argparse.ArgumentParser(description=help)
     dr_help = "perform a Dry Run of the script, NOT WORKING YET"
     parser.add_argument('--dry', action="store_true", default=False,
-                       help=dr_help)
+                        help=dr_help)
     parser.add_argument('--gaming', action="store_true", default=False,
-                       help='Install packages related to gaming')
+                        help='Install packages related to gaming')
     parser.add_argument('--work', action="store_true", default=False,
-                       help='Install packages related to devops stuff')
-    parser.add_argument('--wsl', action="store_true", default=False,
-                       help='Do some stuff different if we are on wsl')
+                        help='Install packages related to devops stuff')
     res = parser.parse_args()
     dry_run = res.dry
     gaming = res.gaming
@@ -249,9 +247,11 @@ def main():
         return
 
     # installs bashrc and the like
+    run_brew_installs(opts)
     hard_link_rc_files()
     configure_vim()
-    run_brew_installs(opts)
+    print(" 🐚 Shell and vim rc files INSTALLED 🐚 ".center(70, '-'))
+    print("")
     # TODO: configure_firefox()
 
     if OS.__contains__('linux'):
@@ -260,7 +260,6 @@ def main():
         run_flatpak_installs()
 
     print("All done! here's some stuff you gotta do manually:")
-    print(" 📝: run :plugInstall in vim to install vim plugins")
     print(" 🐋: Add your user to the docker group, and reboot")
     print(" 📰: Import rss feeds config into FluentReader or wherever")
     print(" 📺: Import subscriptions into FreeTube")
