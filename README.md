@@ -37,7 +37,7 @@ Now you can run the actual script that does the heavy lifting.
 
 When it's complete, it'll output a number of other steps to take manually that aren't yet automated.
 
-### Current Ecoscape of Personal Tech
+## Current Ecoscape of Personal Tech
 
 Category | App | Replaces
 ---|---|---
