@@ -105,3 +105,6 @@ venv.bak/
 
 # personal :shrug:
 configs/nextcloud/nextcloud-values.yml
+
+# brew lock files
+packages/Brewfile_*.lock.json
