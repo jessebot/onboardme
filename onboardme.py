@@ -12,6 +12,7 @@ import yaml
 
 USER_NAME = getpass.getuser()
 HOME_DIR = os.getenv("HOME")
+PWD = os.getcwd()
 OS = platform
 CONFIG_FILE = "packages/packages.yml"
 
@@ -133,8 +134,9 @@ def hard_link_rc_files():
     print(" 🐚 Shell and vim rc files installing... 🐚 ".center(70,'-'))
     rc_dirs = ['zsh','bash','vim']
     for rc_dir in rc_dirs:
-        for rc_file in os.listdir(f'./configs/rc_files/{rc_dir}'):
-            src_rc_file = f'./configs/rc_files/{rc_dir}/{rc_file}'  
+        rc_dir_path = f'{PWD}/configs/rc_files/{rc_dir}'
+        for rc_file in os.listdir(rc_dir_path):
+            src_rc_file = f'{rc_dir_path}/{rc_file}'  
             hard_link_rc_file = f'{HOME_DIR}/{rc_file}'
             try:
                 os.link(src_rc_file, hard_link_rc_file)
@@ -227,6 +229,8 @@ def main():
                        help='Install packages related to gaming')
     parser.add_argument('--work', action="store_true", default=False,
                        help='Install packages related to devops stuff')
+    parser.add_argument('--wsl', action="store_true", default=False,
+                       help='Do some stuff different if we are on wsl')
     res = parser.parse_args()
     dry_run = res.dry
     gaming = res.gaming
