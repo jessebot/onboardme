@@ -20,5 +20,8 @@ fi
 echo "Now installing python reqs"
 pip install -r requirements.txt
 
+# create the docker group now and add your user to it
+# sudo 
+
 # success!
 echo "You should be able to use onboardme.py now :)"
