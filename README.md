@@ -61,33 +61,17 @@ We've had good luck with [Awesome Humane Tech](https://github.com/humanetech-com
 
 # Current Ecoscape of Personal Tech
 
-### News
+Category | App | Replaces
+---
+|News - RSS|Fluent Reader|facebook/twitter news feeds|
+|Desktop Launcher|Albert?|Alfred|
+|Email|Protonmail and Bridge for Linux/MacOS|gmail|
+|Photo/file Storage|NextCloud - not tested|Google Photos/Drive|
+|Video Streaming|FreeTube|YouTube|
+|Video Streaming|PeerTube - not tested|YouTube|
+|Remote Backups|restic to b2|Google Drive, iCloud, S3|
+|Local Backups|restic to minio|Google Drive, iCloud, S3|
 
-- RSS client: Fluent Reader
 
-## Apple/Mac replacements
-
-- `albert` instead of alfred
-*albert fails to install via apt or dpkg, but works via the linux mint software manager :shrug:*
-
-## Google Replacements
-
-### Email
-
-- ProtonMail and Bridge for Linux
-
-### Generic Storage
-
-- NextCloud for Google photos/drive (In the works)
-- minio for AWS S3 storage
-  (Even if you don't want to host it yourself, you should contact your local datacenters and see if they offer an object storage service, because they might, and it could be really cheap. Don't give your money to AWS.)
-
-### Youtube
-
-- FreeTube
-- PeerTube (Currently just using this via web URLs and not hosting my own)
-
-### Search
-
-- Startpage for anonymous google search
-- Duckduckgo for alternative Google search
+### Tips
+Contact your local datacenters and see if they offer an object storage service, because they might, and it could be really cheap. Don't give your money to AWS.
