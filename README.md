@@ -1,7 +1,7 @@
 # OnBoardMe to [mac, mint]
  ♪ it only shoots t-shirts ♪
 
-This is a project to store config files, as well as programatically install core packages that I need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping I'd remember why it was there later, so this is now a renewed effort in remembering all the thing™️ s.
+This is a project to store config files, as well as programatically install core packages that I need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping I'd remember why it was there later, so this is now a renewed effort in remembering all the thing™️s.
 
 Please report 🐛 in the GitHub issues, and I will get them as I have time.
 
