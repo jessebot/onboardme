@@ -146,13 +146,18 @@ def hard_link_rc_files():
             print(f'  Hard linked {hard_link}')
 
         except FileExistsError as error:
-            # not gonna overwrite anything, so we'll assume it's all good
-            existing_files.append(hardlink)
-
+            # keep these for the end of the loop
+            existing_files.append(hard_link)
 
         except PermissionError as error:
             # we keep going, because installing everything else is still useful
-            print(f'Permission error for: {src_rc_file} Error: {error}.')
+            print(f'  Permission error for: {src_rc_file} Error: {error}.')
+
+    if existing_files:
+        print(' 🤷 Looks like the following file(s) already exist:\n  (If you '
+              'want the links anyway, delete the files, and rerun the script)')
+        for file in existing_files:
+            print(f' - {file}')
 
     return None
 
@@ -166,7 +171,7 @@ def configure_vim():
     url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
     plug_cmd = (f"curl -fLo {HOME_DIR}/.vim/autoload/plug.vim "
                 f"--create-dirs {url}")
-    res = subproc(manager_cmd)
+    res = subproc(plug_cmd)
 
     print("  Installing vim plugins...")
     plugin_cmd = (f'vim -E -s -u "{HOME_DIR}/.vimrc" +PlugInstall +qall')
