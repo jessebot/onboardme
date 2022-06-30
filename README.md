@@ -118,9 +118,3 @@ Current attempts at getting the Debian portions of the onboardme script working,
 - Duckduckgo for alternative Google search
 
 
-# Extra notes
-
-Brew tips [here](https://gist.github.com/ChristopherA/a579274536aab36ea9966f301ff14f3f)
-
-great vim yaml walkthrough:
-https://www.arthurkoziel.com/setting-up-vim-for-yaml/

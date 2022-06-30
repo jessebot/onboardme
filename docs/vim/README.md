@@ -1,9 +1,12 @@
 # Vim tips and tricks
-interactive sed example
+### Interactive sed example
 ```vim
 :s/^/meep/
 ```
-the above will prepend meep to the front of the current line
+The above will prepend meep to the front of the current line
+
+### Great vim yaml walkthrough
+https://www.arthurkoziel.com/setting-up-vim-for-yaml/
 
 ## Plugins
 ### NerdTree
