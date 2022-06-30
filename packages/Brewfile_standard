@@ -23,6 +23,7 @@ brew "tree"
 brew "wget"
 brew "go"
 brew "yamllint"
+brew "duf"
 
  
 # cask installs are for apps with GUIs
