@@ -5,7 +5,7 @@
 which brew
 brew_return_code=$?
 if [ $brew_return_code -ne 0 ]; then
-    echo "installing brew really quick..."
+    echo "installing brew really quick, this will require your credentials for sudo abilities..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # check to make sure we have python installed
