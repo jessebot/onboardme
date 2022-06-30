@@ -8,7 +8,7 @@ brew_return_code=$?
 if [ $brew_return_code -ne 0 ]; then
     echo "installing brew really quick, this will require your credentials for sudo abilities..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-else; then
+else
     echo "Brew is already installed :)"
 fi
 
@@ -20,7 +20,7 @@ if [ $git_return_code -ne 0 ]; then
     echo "Git not installed or in path, attempting to install git and gh..."
     brew install git
     brew install gh
-else; then
+else
     echo "Git already installed :>"
 fi
 
@@ -31,7 +31,7 @@ py_return_code=$?
 if [ $py_return_code -ne 0 ]; then
     echo "We don't have python3 installed, installing..."
     brew install python3
-else; then
+else
     echo "Python3 is already installed :D"
 fi
 
@@ -51,4 +51,5 @@ echo "Now installing python reqs..."
 pip install -r onboardme/requirements.txt
 
 echo "Success~! You should be able to use onboardme.py now ^O^"
-echo "Try running the following:\n~/repos/onboardme/onboardme.py"
+echo "Try running the following:"
+echo "~/repos/onboardme/onboardme.py"
