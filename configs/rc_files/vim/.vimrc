@@ -1,7 +1,8 @@
-" vim:set ts=2 sts=2 sw=2 expandtab:
-
 " having numbers on makes my life soooo much easier when debugging
 set number
+
+" need this for fun icons
+set encoding=UTF-8
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BASIC EDITING CONFIGURATION
@@ -395,6 +396,11 @@ cmap w!! w !sudo tee > /dev/null %
   let g:ale_lint_on_text_changed = 'never'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Font stuff
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set guifont=Hack\ Nerd\ Font:h11
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim-plug - plugin manager for vim: https://github.com/junegunn/vim-plug
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin()
@@ -410,6 +416,8 @@ call plug#begin()
 " On-demand loading of nerdtree
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'ryanoasis/vim-devicons'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 " this is a modern fuzzy searcher
 Plug 'liuchengxu/vim-clap'
 " attempt to make yaml better
@@ -419,6 +427,5 @@ Plug 'Yggdroot/indentLine'
 Plug 'dense-analysis/ale'
 " git plugin
 Plug 'tpope/vim-fugitive'
-
-" Initialize plugin system
+" fun icons
 call plug#end()

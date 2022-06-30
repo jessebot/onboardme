@@ -23,7 +23,11 @@ brew "tree"
 brew "wget"
 brew "go"
 brew "yamllint"
+
  
 # cask installs are for apps with GUIs
 cask "lens"
 cask "docker"
+# have to tap special cask for various fonts
+tap "homebrew/cask-fonts"
+cask "font-hack-nerd-font"
