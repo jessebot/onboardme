@@ -14,6 +14,7 @@ apt:
     - screen
     - youtube-dl
     - gnome-software-plugin-flatpak # use web links to launch gui to install flatpak pkgs
+    - gnome-tweaks # this is for remapping capslock to control
 
 # gaming on linux specifc
 apt_gaming:

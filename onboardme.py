@@ -25,22 +25,18 @@ def run_apt_installs(opts=""):
     """
     install every apt package in packages.yaml
     """
-    print(" 👻 Apt packages installing 👻 ".center(70, '-'))
+    print(" 👻 \033[94m Apt packages installing \033[00m".center(70, '-'))
     for package in PACKAGES["apt"]:
         apt_install_cmd = f"apt install {package}"
-        result = subproc(apt_install_cmd)
-        print(result)
+        subproc(apt_install_cmd)
 
     # specific to gaming on linux
     if opts == "gaming":
-        print("  Installing gaming specific packaging...")
+        print("  - Installing gaming specific packaging...")
         for package in PACKAGES["apt_gaming"]:
             apt_install_cmd = f"apt install {package}"
-            result = subproc(apt_install_cmd)
-            print(result)
+            subproc(apt_install_cmd)
 
-    print(" 👻 Apt packages INSTALLED 👻 ".center(70, '-'))
-    print("")
     return None
 
 
@@ -48,14 +44,11 @@ def run_flatpak_installs():
     """
     install every flatpak package in packages.yaml
     """
-    print(" 🫓 Apt packages installing 🫓 ".center(70, '-'))
+    print(" 🫓 \033[94m Apt packages installing\033[00m".center(70, '-'))
     for package in PACKAGES["flatpak"]:
         flatpak_install_cmd = f"flatpak install {package}"
-        result = subproc(flatpak_install_cmd)
-        print(result)
+        subproc(flatpak_install_cmd)
 
-    print(" 🫓 Apt packages INSTALLED 🫓 ".center(70, '-'))
-    print("")
     return None
 
 
@@ -63,13 +56,10 @@ def run_snap_installs():
     """
     install every snap package in packages.yaml
     """
-    print(" 🫰: Snap apps installing... 🫰: ".center(70, '-'))
+    print(" 🫰: \033[94m Snap apps installing...\033[00m ".center(70, '-'))
     for package in PACKAGES["snap"]:
         snap_install_cmd = f"snap install {package}"
-        result = subproc(snap_install_cmd)
-        print(result)
-    print(" 🫰: Snap apps INSTALLED 🫰: ".center(70, '-'))
-    print("")
+        subproc(snap_install_cmd)
 
     return None
 
@@ -80,34 +70,29 @@ def run_brew_installs(opts=""):
     Takes opts, which is a string set to 'gaming', or 'work'
     Tested only on mac and linux, but maybe works for windows :shrug:
     """
-    print(" 🍻 Brew packages installing... 🍻 ".center(70, '-'))
+    print(" 🍺\033[94m Brew packages installing \033[00m".center(70, '-'))
+    print("\n  You may be asked for your password for docker, and karabiner.")
 
     # this is the stuff that's installed on both mac and linux
     brew_cmd = "brew bundle --file=./packages/Brewfile_standard"
-    result = subproc(brew_cmd)
-    print(result)
+    # this just formats the by spacing for the terminal
+    subproc(brew_cmd)
 
     # install things for devops job
     if opts == "work":
         brew_cmd = "brew bundle --file=./packages/Brewfile_work"
-        result = subproc(brew_cmd)
-        print(result)
+        subproc(brew_cmd)
 
     # install linux specific apps
     if OS.__contains__('linux'):
-        print("  Installing 🐧 specific packaging...")
+        print(" - Installing 🐧 specific packaging...")
         brew_cmd = "brew bundle --file=./packages/Brewfile_linux"
-        result = subproc(brew_cmd)
-        print(result)
+        subproc(brew_cmd)
     # install mac specific apps
     elif OS == 'darwin':
-        print("  Installing 🍎 specific packaging...")
+        print(" 🍻 🍎\033[94m macOS specific brew packages installing \033[00m".center(70, '-'))
         brew_cmd = "brew bundle --file=./packages/Brewfile_mac"
-        result = subproc(brew_cmd)
-        print(result)
-
-    print(" 🍻 Brew packages INSTALLED 🍻 ".center(70, '-'))
-    print("")
+        subproc(brew_cmd)
 
     return None
 
@@ -118,13 +103,11 @@ def run_upgrades():
     """
     # apt
     apt_update_upgrade_cmd = f"apt upgrade && apt update"
-    result = subproc(apt_update_upgrade_cmd)
-    print(result)
+    subproc(apt_update_upgrade_cmd)
 
     # brew
     brew_update_upgrade_cmd = f"brew upgrade && brew update"
-    result = subproc(brew_update_upgrade_cmd)
-    print(result)
+    subproc(brew_update_upgrade_cmd)
 
 
 def hard_link_rc_files():
@@ -133,7 +116,8 @@ def hard_link_rc_files():
     home directory. Uses hardlinks, so that if the link or onboardme repo files
     are removed, the data will remain.
     """
-    print(" 🐚 Shell and vim rc files installing... 🐚 ".center(70, '-'))
+    print(" 🐚 \033[94m Shell and vim rc files installing..."
+          "\033[00m".center(70, '-'))
     existing_files = []
 
     rc_dir = f'{PWD}/configs/rc_files'
@@ -158,10 +142,11 @@ def hard_link_rc_files():
             print(f'  Permission error for: {src_rc_file} Error: {error}.')
 
     if existing_files:
-        print(' 🤷 Looks like the following file(s) already exist:\n  (If you '
-              'want the links anyway, delete the files, and rerun the script)')
+        print(' 🤷 Looks like the following file(s) already exist:')
         for file in existing_files:
             print(f' - {file}')
+        print('\nIf you want the links anyway, delete the files, and then '
+              'rerun the script.')
 
     return None
 
@@ -171,16 +156,16 @@ def configure_vim():
     Installs vim-plug, a plugin manager for vim, and then installs vim plugins,
     listed in ./config/rc_files/vim/.vimrc
     """
-    print("  Installing a vim-plug a plugin manager for vim")
+    print("\033[94m Installing vim-plug, for vim plugins\033[00m ".center(65,
+                                                                          '-'))
     url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
     plug_cmd = (f"curl -fLo {HOME_DIR}/.vim/autoload/plug.vim "
                 f"--create-dirs {url}")
-    res = subproc(plug_cmd)
+    subproc(plug_cmd)
 
-    print("  Installing vim plugins...")
+    # this installs the vim plugins, can also use :PlugInstall in vim
     plugin_cmd = (f'vim -E -s -u "{HOME_DIR}/.vimrc" +PlugInstall +qall')
-    res = subproc(plugin_cmd)
-    print("  vim plugins INSTALLED :)")
+    subproc(plugin_cmd)
 
     return None
 
@@ -215,25 +200,32 @@ def subproc(cmd, help="Something went wrong!"):
     Takes a commmand to run in BASH, as well as optional
     help text, both str
     """
-    print(f'  Running cmd: {cmd}')
+    print(f'\n \033[92m Running cmd:\033[00m {cmd}')
     command = cmd.split()
     res_err = ''
 
     p = subprocess.Popen(command, stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE)
     return_code = p.returncode
-    res_out = p.communicate()
+    res = p.communicate()
+    res_stdout = res[0].decode('UTF-8')
+    res_stderr = res[1].decode('UTF-8')
 
     # check return code, raise error if failure
     if not return_code or return_code != 0:
-        if "error" not in f'{res_out}'.lower():
-            return res_out
-        else:
-            res_err = (f'Return code was not zero! Error code: {return_code} '
-                       f'Output: {res_out}')
-            raise Exception(res_err)
+        # also scan both stdout and stdin for weird errors
+        if "error" in res_stdout:
+            res_err = 'Output: {res_stdout}'
+        elif "error" in res_stderr:
+            res_err = res_err + 'Output: {res_stderr}'
 
-    return res_out
+        if res_err:
+            err = (f'Return code was not zero! Error code: {return_code}')
+            raise Exception(f'{err}\n{res_err}')
+
+    return_str = '  ' + res_stdout.replace('\n','\n  ')
+    print(return_str)
+    return return_str
 
 
 def main():
@@ -270,8 +262,6 @@ def main():
     run_brew_installs(opts)
     hard_link_rc_files()
     configure_vim()
-    print(" 🐚 Shell and vim rc files INSTALLED 🐚 ".center(70, '-'))
-    print("")
     # TODO: configure_firefox()
 
     if OS.__contains__('linux'):
@@ -279,7 +269,8 @@ def main():
         run_snap_installs()
         run_flatpak_installs()
 
-    print("All done! here's some stuff you gotta do manually:")
+    print("\033[92m SUCCESS \033[00m".center(70,'-'))
+    print("\n Here's some stuff you gotta do manually:")
     print(" 🐋: Add your user to the docker group, and reboot")
     print(" 📰: Import rss feeds config into FluentReader or wherever")
     print(" 📺: Import subscriptions into FreeTube")

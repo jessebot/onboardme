@@ -1,0 +1,6 @@
+"manipulators": [{
+    "type": "basic",
+    "from": {"key_code": "caps_lock"},
+    "to": [{"key_code": "left_control"}],
+    "description": "Maps caps lock to control, consistently, hopefully"
+}]
