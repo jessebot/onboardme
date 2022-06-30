@@ -1,9 +1,15 @@
-# OnBoardMe to [mac, mint]
+# OnBoardMe to [mac, debian]
  ♪ it only shoots t-shirts ♪
 
 This is a project to store config files, as well as programatically install core packages that I need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping I'd remember why it was there later, so this is now a renewed effort in remembering all the thing™️s.
 
-Please report 🐛 in the GitHub issues, and I will get them as I have time.
+Currently tested on macOS monteray 12.4, but will work on debian soon. Please report 🐛 in the GitHub issues, and I will get them as I have time.
+
+### Under the hood
+- Installs `.bashrc`/`.vimrc`/`.zshrc` files, by linking them, not overwriting them
+- Installs apt/snap/flatpak packages from `./packages/packages.yml`
+- Installs brew files from `./packages/Brewfile_*` depending on OS and if `--work` is passed in
+- Installs vim-plug, a vim plugin manager to setup things like nerdtree, indentations lines, and fuzzysearch
 
 ## Quick Start
 Run the setup script to install python dependencies and brew. This will ask for your password, because brew does that. Run the following from your home directory:
@@ -25,15 +31,12 @@ Now you can run the actual script that does the heavy lifting.
 ./repos/onboardme/onboardme.py
 ```
 
-# Notes on things the scripts don't do
+## Notes on things the scripts don't do
 ***Every operating system has that one thing™️  that voids the [XKCD Is It Worth the Time Rule](https://xkcd.com/1205/) which leaves you in the weird place where setting up the thing™️  manually is still faster than trying to keep the script up to date as every OS changes as per the [XKCD Automation Chart](https://xkcd.com/1319/), which illustrates this better than I can. So, I don't know that I'll ever have a perfect solution to map capslock to control in a simple automated manner on Windows, but that's just the systems engineer's mental burden: "I have the ability to do x, but do I really have the time or interest?"
 
 *That's where docs come in handy, because you can't even trust that you'll be able to re-web-search anything™️  these days*
 
 You can find the bulk of my notes under the `docs/` directory in this repo, but the goal is to get into some sort of wiki somewhere... soonish. Probably something like a little flask app with some sort of material design and a markdown plugin, because I don't have time for frontend at this stage of my life.
-
-## Package Managers
-This is ridiculous, but we're using: `apt`, `snap`, `flatpak`, and `brew`. Ansible is also being looked into, and provides an interface for installing more troublesome packages via the `command`, `script`, `download`, `git_clone`, `files`, and `sync` modules. We do this because you often can't use a package manager to install another package manager. For more info on Ansible, visit the `ansible` directory and check out the readme there :3
 
 ## Important Notes on FOSS and Ethics
 Here at this humble OnBoardMe repo, we try really hard to do the right thing. We're doing our best to get off of the giants like Google, Microsoft, Apple, Amazon, Samsung, etc... but we've still got a long way to go! Check back here for alternatives as we go on the journey ourselves! We'll link back to any orgs or projects we learn about, but feel free to open an issue with anything else we should link back to. :)
@@ -44,14 +47,13 @@ Here at this humble OnBoardMe repo, we try really hard to do the right thing. We
 
 We believe in free software, and we do our best to use and support actually free and open source software. If you don't know what we mean, please check out this [GNU article on Free SoftWare](https://www.gnu.org/philosophy/free-sw.en.html).
 
-## Language
+### Language
 
 We are currently using the philosophy of [Terminology, Power, and Exclusionary Language in Internet-Drafts and RFCs draft](https://datatracker.ietf.org/doc/html/draft-knodel-terminology-09) and at the time of writing, this draft is currently on verison `09`.
 
-## Humane Tech Lists
+### Humane Tech Lists
 
 We've had good luck with [Awesome Humane Tech](https://github.com/humanetech-community/awesome-humane-tech) for guides and checking out alternatives to tech from the Giants you previously used.
-
 
 ### TODOs
 Stuff that needs doing
