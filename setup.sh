@@ -20,9 +20,6 @@ echo "--------------------------------------------------------------------------
 # make sure linuxbrew is in the path
 if [ "$OS" == "linux*" ]; then
     export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
-    echo "path is: $PATH"
-    PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
-    echo "path is: $PATH"
 fi
 
 # check to make sure we have brew installed
