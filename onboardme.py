@@ -238,9 +238,10 @@ def subproc(cmd=""):
         if res_err:
             err = (f'Return code was not zero! Error code: {return_code}')
             # hacky, but whatevs
-            if 'flatpak' in res_err:
-                print(f' {err} \n {res_err}')
-                print('If this is flatpak related, try a reboot.')
+            if 'flathub' in res_err:
+                print(f' {err} \n {res_err} \nIf this is flatpak related, try'
+                       ' a reboot, or verify package name on flathub.org/apps')
+
             else:
                 raise Exception(f' {err} \n {res_err}')
 

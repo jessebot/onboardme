@@ -27,7 +27,7 @@ apt:
 
 flatpak:
   default_packages:
-    - io.freetube.FreeTube
+    - io.freetubeapp.FreeTube
     # - keepassx
 
 snap:
