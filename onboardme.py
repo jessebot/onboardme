@@ -75,7 +75,6 @@ def run_brew_installs(opts=""):
 
     # this is the stuff that's installed on both mac and linux
     brew_cmd = "brew bundle --file=./packages/Brewfile_standard"
-    # this just formats the by spacing for the terminal
     subproc(brew_cmd)
 
     # install things for devops job
@@ -223,8 +222,12 @@ def subproc(cmd, help="Something went wrong!"):
             err = (f'Return code was not zero! Error code: {return_code}')
             raise Exception(f'{err}\n{res_err}')
 
-    return_str = '  ' + res_stdout.replace('\n','\n  ')
-    print(return_str)
+    if not res_stdout:
+        print(res_stderr)
+    else:
+        return_str = '  ' + res_stdout.replace('\n','\n  ')
+        print(return_str)
+
     return return_str
 
 
