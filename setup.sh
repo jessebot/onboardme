@@ -1,6 +1,20 @@
 #!/usr/bin/env bash
 # just to install some quick reqs
 # Checks for: Brew, git, python3, and python3 requirements.txt
+# takes values of os you want to start, defaults to linux, but can do mac as well
+os=$1
+
+# git should be default installed on macOS Monterey, we but should check linux
+which git
+git_return_code=$?
+if [ $git_return_code -ne 0 ]; then
+    echo "Git not installed or in path, attempting to install git..."
+    if [ "$os" == "debian" ]; then
+        sudo apt install git
+    fi
+else
+    echo "Git already installed :>"
+fi
 
 # check to make sure we have brew installed
 which brew
@@ -10,18 +24,6 @@ if [ $brew_return_code -ne 0 ]; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
     echo "Brew is already installed :)"
-fi
-
-
-# check to make sure we have git installed
-which git
-git_return_code=$?
-if [ $git_return_code -ne 0 ]; then
-    echo "Git not installed or in path, attempting to install git and gh..."
-    brew install git
-    brew install gh
-else
-    echo "Git already installed :>"
 fi
 
 
