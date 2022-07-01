@@ -20,45 +20,39 @@ with open(f'{PKG_DIR}/packages.yml', 'r') as yaml_file:
     PACKAGES = yaml.safe_load(yaml_file)
 
 
-def run_apt_installs(opts=""):
+def run_linux_installer(installer="", extra_packages=[]):
     """
-    install every apt package in packages/packages.yml
+    Install every flatpak and snap package in packages.yml
+    pass in gaming=True for things like steam, and/or work=True to install
+    packages needed for devops
     """
-    print(" 👻 \033[94m Apt packages installing \033[00m".center(70, '-'))
-    for package in PACKAGES['apt']['packages']:
-        apt_install_cmd = f"sudo apt-get install -y {package}"
-        subproc(apt_install_cmd)
-
-    # specific to gaming on linux
-    if opts == "gaming":
-        print("  - Installing gaming specific packaging...")
-        for package in PACKAGES['apt_gaming']['packages']:
-            apt_install_cmd = f"sudo apt-get install -y {package}"
-            subproc(apt_install_cmd)
-
-    return None
+    if installer == 'apt':
+        emoji = "🫠"
+        installer = 'apt-get'
+    elif installer == 'snap':
+        emoji = "🫰 "
+    elif installer == 'flatpak':
+        emoji = "🫓"
+    else:
+        print(f'INVALID INSTALLER: {installer}')
 
 
-def run_flatpak_installs():
-    """
-    install every flatpak package in packages.yml
-    """
-    print(" 🫓 \033[94m Apt packages installing\033[00m".center(70, '-'))
-    for package in PACKAGES['flatpak']:
-        flatpak_install_cmd = f"sudo flatpak install {package}"
-        subproc(flatpak_install_cmd)
-
-    return None
-
-
-def run_snap_installs():
-    """
-    install every snap package in packages.yml
-    """
-    print(" 🫰: \033[94m Snap apps installing...\033[00m ".center(70, '-'))
-    for package in PACKAGES["snap"]:
-        snap_install_cmd = f"sudo snap install {package}"
+    print(f" {emoji} \033[94m {installer} apps "
+          "installing...\033[00m ".center(70, '-'))
+    for package in PACKAGES[installer]['default_packages']:
+        snap_install_cmd = f"sudo {installer} install {package}"
+        if installer == 'apt-get':
+            # -y for "yes I'm sure I want to install"
+            snap_install_cmd = f"sudo {installer} install -y {package}"
         subproc(snap_install_cmd)
+
+    # install work or gaming packages
+    if extra_packages:
+        for extra_pkg in extra_packages:
+            for package in PACKAGES[installer][f'{extra_pkg}_packages']:
+                snap_install_cmd = f"sudo {installer} install {package}"
+                subproc(snap_install_cmd)
+
 
     return None
 
@@ -272,12 +266,11 @@ def main():
     gaming = res.gaming
     work = res.work
     overwrite_bool = res.overwrite
+    opts = []
     if work:
-        opts = "work"
+        opts.append("work")
     elif gaming:
-        opts = "gaming"
-    else:
-        opts = ""
+        opts.append("gaming")
 
     if OS == 'win32' or OS == 'windows':
         print("Ooof, this isn't ready yet...")
@@ -292,9 +285,9 @@ def main():
     # TODO: configure_firefox()
 
     if OS.__contains__('linux'):
-        run_apt_installs(opts)
-        run_snap_installs()
-        run_flatpak_installs()
+        run_linux_installer('apt', opts)
+        run_linux_installer('snap', opts)
+        run_linux_installer('flatpak', opts)
 
     print("\033[92m SUCCESS \033[00m".center(70,'-'))
     print("\n Here's some stuff you gotta do manually:")
