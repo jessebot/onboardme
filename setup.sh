@@ -9,7 +9,7 @@ which git > /dev/null
 git_return_code=$?
 if [ $git_return_code -ne 0 ]; then
     echo "Git not installed or in path, attempting to install git..."
-    if [ "$OS" == "linux" ]; then
+    if [ "$OS" == "linux*" ]; then
         sudo apt install git
     fi
 else
@@ -18,7 +18,7 @@ fi
 echo "--------------------------------------------------------------------------------"
 
 # make sure linuxbrew is in the path
-if [ "$OS" == "linux" ]; then
+if [ "$OS" == "linux*" ]; then
     export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
     echo "path is: $PATH"
     PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
