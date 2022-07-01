@@ -108,11 +108,12 @@ def run_upgrades():
     subproc(brew_update_upgrade_cmd)
 
 
-def hard_link_rc_files():
+def hard_link_rc_files(overwrite=False):
     """
     Creates hardlinks to default rc files for vim, zsh, and bash in user's
     home directory. Uses hardlinks, so that if the link or onboardme repo files
-    are removed, the data will remain.
+    are removed, the data will remain. If overwrite is set to True, we delete
+    files before beginning.
     """
     print(" 🐚 \033[94m Shell and vim rc files installing..."
           "\033[00m".center(70, '-'))
@@ -123,13 +124,18 @@ def hard_link_rc_files():
     for rc_file in os.listdir(rc_dir):
         src_rc_file = f'{rc_dir}/{rc_file}'
         hard_link = f'{HOME_DIR}/{rc_file}'
+        if overwrite:
+            try:
+                os.remove(hard_link)
+            except:
+                pass
 
         try:
             os.link(src_rc_file, hard_link)
             print(f'  Hard linked {hard_link}')
 
         except FileExistsError as error:
-            # keep these for the end of the loop
+            # keep till loop ends, to notify user to clean up if they want
             existing_files.append(hard_link)
 
         except PermissionError as error:
@@ -248,10 +254,14 @@ def main():
                         help='Install packages related to gaming')
     parser.add_argument('--work', action="store_true", default=False,
                         help='Install packages related to devops stuff')
+    parser.add_argument('--overwrite', action="store_true", default=False,
+                        help='Deletes existing rc files, such as .bashrc, '
+                             'before creating hardlinks. Be careful!')
     res = parser.parse_args()
     dry_run = res.dry
     gaming = res.gaming
     work = res.work
+    overwrite_bool = res.overwrite
     if work:
         opts = "work"
     elif gaming:
@@ -267,7 +277,7 @@ def main():
 
     # installs bashrc and the like
     run_brew_installs(opts)
-    hard_link_rc_files()
+    hard_link_rc_files(overwrite_bool)
     configure_vim()
     # TODO: configure_firefox()
 
