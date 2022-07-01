@@ -9,7 +9,7 @@ Currently tested on macOS monteray 12.4, but will work on debian soon.
 Please report 🐛 in the GitHub issues, and I will get them as I have time.
 
 ### Under the hood
-- Installs `.bashrc`/`.vimrc`/`.zshrc` files, by linking them, not overwriting them
+- Installs `.bashrc`,`.vimrc`, and`.zshrc` files, by linking them, not overwriting them
 - Installs apt/snap/flatpak packages from `./packages/packages.yml`
 - Installs brew files from `./packages/Brewfile_*` depending on OS and if `--work` is passed in
 - Installs vim-plug, a vim plugin manager to setup things like nerdtree, indentations lines, and fuzzysearch
