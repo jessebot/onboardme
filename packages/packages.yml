@@ -13,7 +13,6 @@ apt:
     - youtube-dl
     # this is for remapping capslock to control
     - gnome-tweaks
-    - snap
     - snapd
     - flatpak
     - gnome-software-plugin-flatpak
