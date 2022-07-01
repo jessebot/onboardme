@@ -302,6 +302,9 @@ def main():
     print(" ⌨️ : Set capslock to control!")
     print(" ⏰: Install any cronjobs you need from the cron dir!")
 
+    if OS == 'Darwin':
+        print('Maybe also checkout: https://wangchujiang.com/awesome-mac/')
+
 
 if __name__ == '__main__':
     main()

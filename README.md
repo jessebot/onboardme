@@ -67,6 +67,7 @@ Category | App | Replaces
 
 *That's where docs come in handy, because you can't even trust that you'll be able to re-web-search anything™️  these days*
 
+#### Docs
 You can find the bulk of my notes under the `docs/` directory in this repo, but the goal is to get into some sort of wiki somewhere... soonish. Probably something like a little flask app with some sort of material design and a markdown plugin, because I don't have time for frontend at this stage of my life.
 
 ## Important Notes on FOSS and Ethics
