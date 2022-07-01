@@ -3,7 +3,9 @@ brew "curl"
 brew "vim"
 brew "python3"
 brew "docker"
+# top replacements
 brew "htop"
+brew "gotop"
 brew "sl"
 brew "figlet"
 brew "cowsay"
@@ -24,5 +26,9 @@ brew "tree"
 brew "wget"
 brew "go"
 brew "yamllint"
+# ls replacement written in rust
+brew "exa"
 # pretty df outputs
 brew "duf"
+# search for all sorts of stuff
+brew "howdoi"
