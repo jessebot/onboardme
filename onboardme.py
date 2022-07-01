@@ -13,11 +13,11 @@ import wget
 
 USER_NAME = getpass.getuser()
 HOME_DIR = os.getenv("HOME")
-PWD = os.getcwd()
+PWD = os.path.dirname(__file__)
 OS = platform
-CONFIG_FILE = "packages/packages.yml"
+PKG_CONFIG_FILE = f"{PWD}/packages/packages.yml"
 
-with open(CONFIG_FILE, 'r') as yaml_file:
+with open(PKG_CONFIG_FILE, 'r') as yaml_file:
     PACKAGES = yaml.safe_load(yaml_file)
 
 
