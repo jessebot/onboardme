@@ -28,7 +28,6 @@ def run_linux_installer(installer="", extra_packages=[]):
     """
     if installer == 'apt':
         emoji = "🫠"
-        installer = 'apt-get'
     elif installer == 'snap':
         emoji = "🫰 "
     elif installer == 'flatpak':
@@ -36,23 +35,21 @@ def run_linux_installer(installer="", extra_packages=[]):
     else:
         print(f'INVALID INSTALLER: {installer}')
 
+    pkg_lists = ['default_packages']
+    pkg_lists.extend(extra_packages)
 
-    print(f" {emoji} \033[94m {installer} apps "
-          "installing...\033[00m ".center(70, '-'))
-    for package in PACKAGES[installer]['default_packages']:
-        snap_install_cmd = f"sudo {installer} install {package}"
-        if installer == 'apt-get':
-            # -y for "yes I'm sure I want to install"
-            snap_install_cmd = f"sudo {installer} install -y {package}"
-        subproc(snap_install_cmd)
+    for pkg_list in pkg_lists:
+        for package in PACKAGES[installer][pkg_list]:
+            print(f" {emoji} \033[94m {installer} apps "
+                   "installing...\033[00m ".center(70, '-'))
 
-    # install work or gaming packages
-    if extra_packages:
-        for extra_pkg in extra_packages:
-            for package in PACKAGES[installer][f'{extra_pkg}_packages']:
-                snap_install_cmd = f"sudo {installer} install {package}"
-                subproc(snap_install_cmd)
+            install_cmd = f"sudo {installer} install {package}"
 
+            if installer == 'apt':
+                # use apt-get, and -y for "yes I'm sure I want to install"
+                install_cmd = f"sudo apt-get install -y {package}"
+                
+            subproc(install_cmd)
 
     return None
 
