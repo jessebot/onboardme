@@ -18,6 +18,7 @@ apt:
     # this is for remapping capslock to control
     - gnome-tweaks
     - snap
+    - snapd
     - flatpak
 
 # gaming on linux specifc
