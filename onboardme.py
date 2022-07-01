@@ -234,9 +234,9 @@ def subproc(cmd, help="Something went wrong!"):
     if not return_code or return_code != 0:
         # also scan both stdout and stdin for weird errors
         if "error" in res_stdout:
-            res_err = 'Output: {res_stdout}'
+            res_err = f'Output: {res_stdout}'
         elif "error" in res_stderr:
-            res_err = res_err + 'Output: {res_stderr}'
+            res_err = res_err + f'Output: {res_stderr}'
 
         if res_err:
             err = (f'Return code was not zero! Error code: {return_code}')
