@@ -3,6 +3,8 @@
 # Checks for: Brew, git, python3, and python3 requirements.txt
 OS=$(uname | tr '[:upper:]' '[:lower:]')
 
+echo "This script will ask for your password to sudo install things."
+
 echo "-------------------------------- Beginning Setup -------------------------------"
 # git should be default installed on macOS Monterey, we but should check linux
 which git > /dev/null
@@ -34,7 +36,7 @@ fi
 echo "--------------------------------------------------------------------------------"
 
 
-# check to make sure we have python installed
+# check to make sure we have python3 and pip3 installed
 which python3 > /dev/null
 py_return_code=$?
 if [ $py_return_code -ne 0 ]; then
@@ -42,6 +44,16 @@ if [ $py_return_code -ne 0 ]; then
     brew install python3
 else
     echo "Python3 is already installed :D"
+fi
+echo "--------------------------------------------------------------------------------"
+
+which pip3
+pip_return_code=$?
+if [ $pip_return_code -ne 0 ]; then
+    echo "Installing Pip3..." 
+    sudo apt install python3-pip
+else
+    echo "Pip3 is already installed as well :D"
 fi
 echo "--------------------------------------------------------------------------------"
 
@@ -60,7 +72,7 @@ echo "--------------------------------------------------------------------------
 
 # make sure we have wget and pyyaml
 echo "Now installing python reqs..."
-pip install -r ~/repos/onboardme/requirements.txt 
+pip3 install -r ~/repos/onboardme/requirements.txt 
 echo ""
 echo "------------------------------ Success~! ^O^ -----------------------------------"
 echo ""
