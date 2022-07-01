@@ -180,6 +180,10 @@ def configure_vim():
 
     # this installs the vim plugins, can also use :PlugInstall in vim
     plugin_cmd = (f'vim -E -s -u "{HOME_DIR}/.vimrc" +PlugInstall +qall')
+    if OS.__contains__('linux'):
+        plugin_cmd = ('/home/linuxbrew/.linuxbrew/bin/vim -E -s -u '
+                      f'"{HOME_DIR}/.vimrc" +PlugInstall +qall')
+
     subproc(plugin_cmd)
 
     return None
