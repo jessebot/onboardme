@@ -42,9 +42,8 @@ When it's complete, it'll output a number of other steps to take manually that a
 ## Current Ecoscape of Personal Tech
 
 Category | App | Replaces
----|---|---
+:---:|:---:|:---:
 |Desktop Launcher|Albert?|Alfred|
----|---|---
 |Email|Protonmail and Bridge for Linux/MacOS|Gmail|
 |Local Backups|Restic to minio|Google Drive, iCloud, S3|
 |Photo/file Storage|NextCloud - not tested|Google Photos/Drive|
