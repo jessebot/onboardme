@@ -8,15 +8,6 @@ This is a project to store config files, as well as programatically install core
 Currently tested on macOS monteray 12.4, but will work on debian soon.
 Please report 🐛 in the GitHub issues, and I will get them as I have time.
 
-### Under the hood
-- Installs files are in the directory `configs/rc_files`: `.bashrc` files, `.vimrc`, and `.zshrc`.
-- Installs apt, snap, and flatpak packages from `./packages/packages.yml`
-- Installs gaming related packages via apt if you pass in `--gaming`.
-- Installs brew files from `./packages/Brewfile_*` depending on OS and if `--work` is passed in
-- Installs vim-plug, a vim plugin manager to setup things like nerdtree, indentations lines, and fuzzysearch
-
-I'm using github issues to track future work on this thing.
-
 ## Quick Start
 Run the setup script to install python dependencies and brew. This will ask for your password, because brew does that. Run the following from your home directory:
 ```bash
@@ -37,7 +28,16 @@ Now you can run the actual script that does the heavy lifting.
 ./repos/onboardme/onboardme.py
 ```
 
-When it's complete, it'll output a number of other steps to take manually that aren't yet automated.
+When the script completes, it'll output a number of other steps to take manually that aren't yet automated.
+
+### Under the hood
+- Installs files are in the directory `configs/rc_files`: `.bashrc` files, `.vimrc`, and `.zshrc`.
+- Installs apt, snap, and flatpak packages from `./packages/packages.yml`
+- Installs gaming related packages via apt if you pass in `--gaming`.
+- Installs brew files from `./packages/Brewfile_*` depending on OS and if `--work` is passed in
+- Installs vim-plug, a vim plugin manager to setup things like nerdtree, indentations lines, and fuzzysearch
+
+I'm using github issues to track future work on this thing.
 
 ## Current Ecoscape of Personal Tech
 
