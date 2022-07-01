@@ -224,8 +224,8 @@ def subproc(cmd=""):
                          stderr=subprocess.PIPE)
     return_code = p.returncode
     res = p.communicate()
-    res_stdout = res[0].decode('UTF-8')
-    res_stderr = res[1].decode('UTF-8')
+    res_stdout = '  ' + res[0].decode('UTF-8').replace('\n','\n  ')
+    res_stderr = '  ' + res[1].decode('UTF-8').replace('\n','\n  ')
 
     # check return code, raise error if failure
     if not return_code or return_code != 0:
@@ -237,12 +237,17 @@ def subproc(cmd=""):
 
         if res_err:
             err = (f'Return code was not zero! Error code: {return_code}')
-            raise Exception(f'{err}\n{res_err}')
+            # hacky, but whatevs
+            if 'flatpak' in res_err:
+                print(f' {err} \n {res_err}')
+                print('If this is flatpak related, try a reboot.')
+            else:
+                raise Exception(f' {err} \n {res_err}')
 
     if not res_stdout:
-        return_str = '  ' + res_stderr.replace('\n','\n  ')
+        return_str = res_stder
     else:
-        return_str = '  ' + res_stdout.replace('\n','\n  ')
+        return_str = res_stdout
 
     print(return_str)
     return return_str
