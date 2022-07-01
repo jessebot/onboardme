@@ -5,13 +5,23 @@ This is a project to store config files, as well as programatically install core
 
 🚧 Under Construction 🚧
 
-Currently tested on macOS monteray 12.4, but will work on debian soon.
+Currently tested on macOS monterey 12.4, but will work on debian soon.
 Please report 🐛 in the GitHub issues, and I will get them as I have time.
 
 ## Quick Start
-Run the setup script to install python dependencies and brew. This will ask for your password, because brew does that. Run the following from your home directory:
+First, make sure you have curl, but it should be there already on macOS monterey:
 ```bash
-# Download the setup.sh
+# if this doesn't return anything
+which curl
+
+# try installing it - this only works on debian, but you can install curl with
+# any default package manager in linux like yum, yast, etc
+sudo apt install curl
+```
+
+Then, download and run the setup script to install git, brew, python, and python dependencies. The `setup.sh` will ask for your password, because brew does that. Run the following from your home directory:
+```bash
+# Download the setup.sh; you may have to install curl, see above codeblock
 curl -O https://raw.githubusercontent.com/jessebot/onboardme/main/setup.sh
 
 # give it execute permissions
