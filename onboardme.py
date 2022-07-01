@@ -118,6 +118,7 @@ def hard_link_rc_files():
           "\033[00m".center(70, '-'))
     existing_files = []
 
+    # loop through the rc_files and hard link them all to the user's home dir
     rc_dir = f'{PWD}/configs/rc_files'
     for rc_file in os.listdir(rc_dir):
         src_rc_file = f'{rc_dir}/{rc_file}'
@@ -127,10 +128,6 @@ def hard_link_rc_files():
             os.link(src_rc_file, hard_link)
             print(f'  Hard linked {hard_link}')
 
-            # create a bash_profile as well, just in case
-            if src_rc_file == f'{rc_dir}/.bashrc':
-                os.link(src_rc_file, f'{HOME_DIR}/.bash_profile')
-
         except FileExistsError as error:
             # keep these for the end of the loop
             existing_files.append(hard_link)
@@ -138,6 +135,14 @@ def hard_link_rc_files():
         except PermissionError as error:
             # we keep going, because installing everything else is still useful
             print(f'  Permission error for: {src_rc_file} Error: {error}.')
+
+    # create a bash_profile as well for macOS, and also just in case
+    hard_link = f'{HOME_DIR}/.bash_profile'
+    try:
+        os.link(f'{rc_dir}/.bashrc', hard_link)
+        print(f'  Hard linked {hard_link}')
+    except FileExistsError as error:
+        existing_files.append(hard_link)
 
     if existing_files:
         print(' 🤷 Looks like the following file(s) already exist:')
@@ -261,7 +266,7 @@ def main():
         return
 
     # installs bashrc and the like
-    run_brew_installs(opts)
+    # run_brew_installs(opts)
     hard_link_rc_files()
     configure_vim()
     # TODO: configure_firefox()
