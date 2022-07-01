@@ -266,7 +266,7 @@ def main():
         return
 
     # installs bashrc and the like
-    # run_brew_installs(opts)
+    run_brew_installs(opts)
     hard_link_rc_files()
     configure_vim()
     # TODO: configure_firefox()
