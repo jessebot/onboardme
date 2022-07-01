@@ -1,9 +1,9 @@
+---
 apt:
   repos:
     - "ppa:mattrose/terminator"
   packages:
     - terminator
-    - docker-ce
     - openssl
     - sysstat
     - silversearcher-ag
@@ -13,8 +13,12 @@ apt:
     - nextcloud-desktop
     - screen
     - youtube-dl
-    - gnome-software-plugin-flatpak # use web links to launch gui to install flatpak pkgs
-    - gnome-tweaks # this is for remapping capslock to control
+    # use web links to launch gui to install flatpak pkgs
+    - gnome-software-plugin-flatpak
+    # this is for remapping capslock to control
+    - gnome-tweaks
+    - snap
+    - flatpak
 
 # gaming on linux specifc
 apt_gaming:
@@ -22,11 +26,13 @@ apt_gaming:
   - winehq-staging
   - steam
   - ubuntu-driver-460
-  - exfat-utils # to format disks to exFAT; FAT is too thin for modern windows 10 ISOs
+  # to format disks to exFAT; FAT is too thin for modern windows 10 ISOs
+  - exfat-utils
 
 flatpak:
   - freetube
   - keepassx
 
 snap:
+  - core
   - "fluent-reader --candidate"

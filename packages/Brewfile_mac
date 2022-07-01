@@ -6,3 +6,8 @@ cask "iterm2"
 cask "lulu"
 cask "alfred"
 cask "karabiner-elements"
+cask "lens"
+cask "docker"
+# have to tap special cask for various fonts
+tap "homebrew/cask-fonts"
+cask "font-hack-nerd-font"
