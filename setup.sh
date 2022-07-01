@@ -5,10 +5,20 @@
 # we make this lowercase because I don't trust it not to be random caps
 OS=$(uname | tr '[:upper:]' '[:lower:]')
 
-echo "This script will ask for your password to sudo install things."
+echo "This script will ask for your password to sudo install things"
 
-echo "-------------------------------- Beginning Setup -------------------------------"
-# git should be default installed on macOS Monterey, we but should check linux
+echo -e "-------------------------------- \033[00m Beginning Setup \033[00m -------------------------------"
+echo "Before we begin, please make sure you're on a wired connection,"
+echo "or sitting close to the wifi."
+
+if [[ "$OS" == *"linux"* ]]; then
+    echo -e "---------------------------- \033[00m Updating existing apt packages \033[00m --------------------"
+    sudo apt update && sudo apt upgrade
+    echo -e "\033[92m apt updated/upgraded :3 \033[92m"
+fi
+
+# git should be default installed on macOS Monterey :shrug:
+echo -e "-------------------------------- \033[00m Checking for Git \033[00m ------------------------------"
 which git > /dev/null
 git_return_code=$?
 if [ $git_return_code -ne 0 ]; then
@@ -17,8 +27,12 @@ if [ $git_return_code -ne 0 ]; then
     if [[ "$OS" == *"linux"* ]]; then
         sudo apt install git
     fi
+    if [ "$OS" == "darwin" ]; then
+        brew install git
+    fi
+    echo -e "\033[92m Git Installed :3 \033[92m"
 else
-    echo "Git already installed :>"
+    echo -e "\033[92mGit already installed :3 \033[92m"
 fi
 echo "--------------------------------------------------------------------------------"
 
@@ -33,8 +47,9 @@ brew_return_code=$?
 if [ $brew_return_code -ne 0 ]; then
     echo "Installing brew really quick, this will require your credentials for sudo abilities..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    echo -e "\033[92mBrew installed :3 \033[92m"
 else
-    echo "Brew is already installed :)"
+    echo -e "\033[92mBrew already installed :3 \033[92m"
 fi
 echo "--------------------------------------------------------------------------------"
 
@@ -45,8 +60,9 @@ py_return_code=$?
 if [ $py_return_code -ne 0 ]; then
     echo "Installing Python3..."
     brew install python3
+    echo -e "\033[92mPython installed :3 \033[92m"
 else
-    echo "Python3 is already installed :D"
+    echo -e "\033[92mPython already installed :3 \033[92m"
 fi
 echo "--------------------------------------------------------------------------------"
 
@@ -56,22 +72,20 @@ if [ $pip_return_code -ne 0 ]; then
     echo "Installing Pip3..." 
     if [[ "$OS" == *"linux"* ]]; then
         sudo apt install python3-pip
+        echo -e "\033[92mPip3 installed :3 \033[92m"
     fi
 else
-    echo "Pip3 is already installed as well :D"
+    echo -e "\033[92mPip3 already installed :3 \033[92m"
 fi
 echo "--------------------------------------------------------------------------------"
 
 
 # I always put my projects in a directory called repos, idk why I can't stop...
-echo "Creating directory structure..."
-mkdir -p ~/repos
-echo "--------------------------------------------------------------------------------"
+echo -e "----------------------\033[00mCreating directory and cloning repo...\033[00m----------------------"
+mkdir -p ~/repos && git clone https://github.com/jessebot/onboardme.git ~/repos/onboardme
 
 # Let's just download the repo now 
-# haven't tested this: gh repo clone jessebot/onboardme
 echo "Cloning the onboardme repo into ~/repos/onboardme ..."
-git clone https://github.com/jessebot/onboardme.git ~/repos/onboardme
 echo "--------------------------------------------------------------------------------"
 
 
