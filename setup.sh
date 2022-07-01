@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # just a quick script to install some reqs, works on debian based distros and macOS
 # Checks for: Brew, git, python3, and python3 requirements.txt
-OS=`$(uname) | tr '[:upper:]' '[:lower:]'`
+OS=$(uname | tr '[:upper:]' '[:lower:]')
 
 echo "-------------------------------- Beginning Setup -------------------------------"
 # git should be default installed on macOS Monterey, we but should check linux
