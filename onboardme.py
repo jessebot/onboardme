@@ -26,14 +26,14 @@ def run_apt_installs(opts=""):
     """
     print(" 👻 \033[94m Apt packages installing \033[00m".center(70, '-'))
     for package in PACKAGES['apt']['packages']:
-        apt_install_cmd = f"sudo apt install {package}"
+        apt_install_cmd = f"sudo apt install -y {package}"
         subproc(apt_install_cmd)
 
     # specific to gaming on linux
     if opts == "gaming":
         print("  - Installing gaming specific packaging...")
         for package in PACKAGES['apt_gaming']['packages']:
-            apt_install_cmd = f"sudo apt install {package}"
+            apt_install_cmd = f"sudo apt install -y {package}"
             subproc(apt_install_cmd)
 
     return None
