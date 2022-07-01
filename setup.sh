@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # just a quick script to install some reqs, works on debian based distros and macOS
 # Checks for: Brew, git, python3, and python3 requirements.txt
+OS=`$(uname) | tr '[:upper:]' '[:lower:]'`
 
 echo "-------------------------------- Beginning Setup -------------------------------"
 # git should be default installed on macOS Monterey, we but should check linux
@@ -8,7 +9,7 @@ which git > /dev/null
 git_return_code=$?
 if [ $git_return_code -ne 0 ]; then
     echo "Git not installed or in path, attempting to install git..."
-    if [ "$(uname)" == "linux" ]; then
+    if [ "$OS" == "linux" ]; then
         sudo apt install git
     fi
 else
@@ -17,7 +18,7 @@ fi
 echo "--------------------------------------------------------------------------------"
 
 # make sure linuxbrew is in the path
-if [ "$(uname)" == "linux" ]; then
+if [ "$OS" == "linux" ]; then
     export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
     echo "path is: $PATH"
     PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
