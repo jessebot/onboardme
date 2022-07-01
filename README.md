@@ -30,7 +30,7 @@ Now you can run the actual script that does the heavy lifting.
 
 When the script completes, it'll output a number of other steps to take manually that aren't yet automated.
 
-### Under the hood
+## Under the hood
 - Installs files are in the directory `configs/rc_files`: `.bashrc` files, `.vimrc`, and `.zshrc`.
 - Installs apt, snap, and flatpak packages from `./packages/packages.yml`
 - Installs gaming related packages via apt if you pass in `--gaming`.
@@ -39,7 +39,7 @@ When the script completes, it'll output a number of other steps to take manually
 
 I'm using github issues to track future work on this thing.
 
-## Current Ecoscape of Personal Tech
+### Current Ecoscape of Personal Tech
 
 Category | App | Replaces
 :---:|:---:|:---:
