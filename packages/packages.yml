@@ -18,12 +18,12 @@ apt:
     - flatpak
     - gnome-software-plugin-flatpak
   gaming_packages:
-    - lutris
-    - winehq-staging
+    # - lutris
+    # - winehq-staging
     - steam
-    - ubuntu-driver-460
+    # - ubuntu-driver-460
     # to format disks to exFAT; FAT is too thin for modern windows 10 ISOs
-    - exfat-utils
+    # - exfat-utils
 
 flatpak:
   default_packages:

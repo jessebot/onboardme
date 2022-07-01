@@ -16,38 +16,45 @@ HOME_DIR = os.getenv("HOME")
 PWD = os.path.dirname(__file__)
 PKG_DIR = f"{PWD}/packages"
 
-with open(f'{PKG_DIR}/packages.yml', 'r') as yaml_file:
-    PACKAGES = yaml.safe_load(yaml_file)
-
 
 def run_linux_installer(installer="", extra_packages=[]):
     """
-    Install every flatpak and snap package in packages.yml
-    pass in gaming=True for things like steam, and/or work=True to install
-    packages needed for devops
+    Installs packages from one of the following installers: apt, snap, flatpak
+    Takes an optional variable of extra_packages list to install optional
+    packages for gaming or work tasks. Uses the yaml in packages/packages.yml
     """
+    with open(f'{PKG_DIR}/packages.yml', 'r') as yaml_file:
+        packages_dict = yaml.safe_load(yaml_file)
+
     if installer == 'apt':
         emoji = "🫠"
+        # use apt-get, and -y for "yes I'm sure I want to install"
+        apt_install_cmd = f"sudo apt-get install -y {package}"
     elif installer == 'snap':
         emoji = "🫰 "
     elif installer == 'flatpak':
         emoji = "🫓"
+        # this should make more packages available
+        subproc("sudo flatpak remote-add --if-not-exists flathub "
+                "https://flathub.org/repo/flathub.flatpakrepo")
     else:
         print(f'INVALID INSTALLER: {installer}')
+        return None
 
+    # Install default_packages always, but also install gaming or work
     pkg_lists = ['default_packages']
-    pkg_lists.extend(extra_packages)
+    if extra_packages:
+        pkg_lists.extend(extra_packages)
 
     for pkg_list in pkg_lists:
-        for package in PACKAGES[installer][pkg_list]:
+        for package in packages_dict[installer][pkg_list]:
             print(f" {emoji} \033[94m {installer} apps "
                    "installing...\033[00m ".center(70, '-'))
 
-            install_cmd = f"sudo {installer} install {package}"
-
             if installer == 'apt':
-                # use apt-get, and -y for "yes I'm sure I want to install"
                 install_cmd = f"sudo apt-get install -y {package}"
+            else:
+                install_cmd = f"sudo {installer} install {package}"
                 
             subproc(install_cmd)
 
@@ -205,7 +212,7 @@ def configure_firefox():
     return None
 
 
-def subproc(cmd, help="Something went wrong!"):
+def subproc(cmd=""):
     """
     Takes a commmand to run in BASH, as well as optional
     help text, both str
