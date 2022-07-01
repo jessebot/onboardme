@@ -406,26 +406,32 @@ set guifont=Hack\ Nerd\ Font:h11
 call plug#begin()
 " The default plugin directory will be as follows:
 "   - Vim (Linux/macOS): '~/.vim/plugged'
-"   - Vim (Windows): '~/vimfiles/plugged'
 "   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
-" You can specify a custom plugin directory by passing it as the argument
-"   - e.g. `call plug#begin('~/.vim/plugged')`
-"   - Avoid using standard Vim directory names like 'plugin'
-"   - Make sure you use single quotes
 
 " On-demand loading of nerdtree
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+
 " this is a modern fuzzy searcher
 Plug 'liuchengxu/vim-clap'
-" attempt to make yaml better
-Plug 'stephpy/vim-yaml'
+
+" indents lines and adds a line to show blocks of code
 Plug 'Yggdroot/indentLine'
-" linter
+
+" linter - will use shellcheck for bash and highlight broken code
 Plug 'dense-analysis/ale'
-" git plugin
+
+" bash tab completion
+Plug 'WolfgangMehner/bash-support'
+
+" python tab completion
+Plug 'davidhalter/jedi-vim'
+
+" yaml syntax highlighting better
+Plug 'stephpy/vim-yaml'
+
+" git plugin for running things with :git
 Plug 'tpope/vim-fugitive'
-" fun icons
 call plug#end()
