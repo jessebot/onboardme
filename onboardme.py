@@ -18,6 +18,7 @@ PKG_DIR = f"{PWD}/packages"
 
 with open(f'{PKG_DIR}/packages.yml', 'r') as yaml_file:
     PACKAGES = yaml.safe_load(yaml_file)
+    print(PACKAGES)
 
 
 def run_apt_installs(opts=""):
@@ -26,14 +27,14 @@ def run_apt_installs(opts=""):
     """
     print(" 👻 \033[94m Apt packages installing \033[00m".center(70, '-'))
     for package in PACKAGES["apt"]:
-        apt_install_cmd = f"apt install {package}"
+        apt_install_cmd = f"sudo apt install {package}"
         subproc(apt_install_cmd)
 
     # specific to gaming on linux
     if opts == "gaming":
         print("  - Installing gaming specific packaging...")
         for package in PACKAGES["apt_gaming"]:
-            apt_install_cmd = f"apt install {package}"
+            apt_install_cmd = f"sudo apt install {package}"
             subproc(apt_install_cmd)
 
     return None
@@ -45,7 +46,7 @@ def run_flatpak_installs():
     """
     print(" 🫓 \033[94m Apt packages installing\033[00m".center(70, '-'))
     for package in PACKAGES["flatpak"]:
-        flatpak_install_cmd = f"flatpak install {package}"
+        flatpak_install_cmd = f"sudo flatpak install {package}"
         subproc(flatpak_install_cmd)
 
     return None
@@ -57,7 +58,7 @@ def run_snap_installs():
     """
     print(" 🫰: \033[94m Snap apps installing...\033[00m ".center(70, '-'))
     for package in PACKAGES["snap"]:
-        snap_install_cmd = f"snap install {package}"
+        snap_install_cmd = f"sudo snap install {package}"
         subproc(snap_install_cmd)
 
     return None
