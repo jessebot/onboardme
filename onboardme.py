@@ -7,23 +7,22 @@ import os
 import shutil
 import subprocess
 import sys
-from sys import platform
 import yaml
 import wget
 
+OS = sys.platform
 USER_NAME = getpass.getuser()
 HOME_DIR = os.getenv("HOME")
 PWD = os.path.dirname(__file__)
-OS = platform
-PKG_CONFIG_FILE = f"{PWD}/packages/packages.yml"
+PKG_DIR = f"{PWD}/packages"
 
-with open(PKG_CONFIG_FILE, 'r') as yaml_file:
+with open(f'{PKG_DIR}/packages.yml', 'r') as yaml_file:
     PACKAGES = yaml.safe_load(yaml_file)
 
 
 def run_apt_installs(opts=""):
     """
-    install every apt package in packages.yaml
+    install every apt package in packages/packages.yml
     """
     print(" 👻 \033[94m Apt packages installing \033[00m".center(70, '-'))
     for package in PACKAGES["apt"]:
@@ -42,7 +41,7 @@ def run_apt_installs(opts=""):
 
 def run_flatpak_installs():
     """
-    install every flatpak package in packages.yaml
+    install every flatpak package in packages.yml
     """
     print(" 🫓 \033[94m Apt packages installing\033[00m".center(70, '-'))
     for package in PACKAGES["flatpak"]:
@@ -54,7 +53,7 @@ def run_flatpak_installs():
 
 def run_snap_installs():
     """
-    install every snap package in packages.yaml
+    install every snap package in packages.yml
     """
     print(" 🫰: \033[94m Snap apps installing...\033[00m ".center(70, '-'))
     for package in PACKAGES["snap"]:
@@ -74,23 +73,23 @@ def run_brew_installs(opts=""):
     print("\n  You may be asked for your password for docker, and karabiner.")
 
     # this is the stuff that's installed on both mac and linux
-    brew_cmd = "brew bundle --file=./packages/Brewfile_standard"
+    brew_cmd = f"brew bundle --file={PKG_DIR}/Brewfile_standard"
     subproc(brew_cmd)
 
     # install things for devops job
     if opts == "work":
-        brew_cmd = "brew bundle --file=./packages/Brewfile_work"
+        brew_cmd = f"brew bundle --file={PKG_DIR}/Brewfile_work"
         subproc(brew_cmd)
 
     # install linux specific apps
     if OS.__contains__('linux'):
         print(" - Installing 🐧 specific packaging...")
-        brew_cmd = "brew bundle --file=./packages/Brewfile_linux"
+        brew_cmd = f"brew bundle --file={PKG_DIR}/Brewfile_linux"
         subproc(brew_cmd)
     # install mac specific apps
     elif OS == 'darwin':
         print(" 🍻 🍎\033[94m macOS specific brew packages installing \033[00m".center(70, '-'))
-        brew_cmd = "brew bundle --file=./packages/Brewfile_mac"
+        brew_cmd = f"brew bundle --file={PKG_DIR}/Brewfile_mac"
         subproc(brew_cmd)
 
     return None
@@ -129,7 +128,7 @@ def hard_link_rc_files():
             print(f'  Hard linked {hard_link}')
 
             # create a bash_profile as well, just in case
-            if src_rc_file == '.bashrc':
+            if src_rc_file == f'{rc_dir}/.bashrc':
                 os.link(src_rc_file, f'{HOME_DIR}/.bash_profile')
 
         except FileExistsError as error:
@@ -223,11 +222,11 @@ def subproc(cmd, help="Something went wrong!"):
             raise Exception(f'{err}\n{res_err}')
 
     if not res_stdout:
-        print(res_stderr)
+        return_str = '  ' + res_stderr.replace('\n','\n  ')
     else:
         return_str = '  ' + res_stdout.replace('\n','\n  ')
-        print(return_str)
 
+    print(return_str)
     return return_str
 
 
