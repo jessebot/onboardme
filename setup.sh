@@ -51,7 +51,9 @@ which pip3
 pip_return_code=$?
 if [ $pip_return_code -ne 0 ]; then
     echo "Installing Pip3..." 
-    sudo apt install python3-pip
+    if [ "$OS" == "linux*" ]; then
+        sudo apt install python3-pip
+    fi
 else
     echo "Pip3 is already installed as well :D"
 fi
