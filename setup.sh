@@ -81,5 +81,6 @@ pip3 install -r ~/repos/onboardme/requirements.txt
 echo ""
 echo "------------------------------ Success~! ^O^ -----------------------------------"
 echo ""
-echo "Now, try running the following: ~/repos/onboardme/onboardme.py"
+echo "Now, try running the following:"
+echo "cd ~/repos/onboardme/onboardme.py && ./onboardme.py"
 echo ""
