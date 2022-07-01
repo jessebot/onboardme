@@ -28,12 +28,13 @@ def run_linux_installer(installer="", extra_packages=[]):
 
     if installer == 'apt':
         emoji = "🫠"
-        # use apt-get, and -y for "yes I'm sure I want to install"
+        install_cmd = f"sudo apt-get install -y "
     elif installer == 'snap':
         emoji = "🫰 "
+        install_cmd = f"sudo snap install "
     elif installer == 'flatpak':
         emoji = "🫓"
-        # this should make more packages available
+        install_cmd = f"flatpak install flathub "
         subproc("sudo flatpak remote-add --if-not-exists flathub "
                 "https://flathub.org/repo/flathub.flatpakrepo")
     else:
@@ -49,13 +50,7 @@ def run_linux_installer(installer="", extra_packages=[]):
         for package in packages_dict[installer][pkg_list]:
             print(f" {emoji} \033[94m {installer} apps "
                    "installing...\033[00m ".center(70, '-'))
-
-            if installer == 'apt':
-                install_cmd = f"sudo apt-get install -y {package}"
-            else:
-                install_cmd = f"sudo {installer} install {package}"
-                
-            subproc(install_cmd)
+            subproc(installer_cmd + package)
 
     return None
 
