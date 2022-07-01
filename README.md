@@ -69,9 +69,9 @@ We believe in free software, and we do our best to use and support actually free
 #### Humane Tech Lists
 We've had good luck with [Awesome Humane Tech](https://github.com/humanetech-community/awesome-humane-tech) for guides and checking out alternatives to tech from the Giants you previously used.
 
-### Language
-We are currently using the philosophy of:
-[Terminology, Power, & Exclusionary Language in Internet-Drafts and RFCs - v09](https://datatracker.ietf.org/doc/html/draft-knodel-terminology-09)
+#### Language
+We are currently using the philosophy of this RFC draft:
+[Terminology, Power, & Exclusionary Language...](https://datatracker.ietf.org/doc/html/draft-knodel-terminology-09)
 
 ### Tips
 Contact your local datacenters and see if they offer an object storage service, because they might, and it could be really cheap. Don't give your money to AWS.
