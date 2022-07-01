@@ -70,22 +70,28 @@ def run_brew_installs(opts=""):
     Tested only on mac and linux, but maybe works for windows :shrug:
     """
     print(" 🍺\033[94m Brew packages installing \033[00m".center(70, '-'))
-    print("\n  You may be asked for your password for docker, and karabiner.")
+    if OS.__contains__('linux'):
+        # on linux, just in case it's not in our path, but it's in our .bashrc
+        base_brew_cmd = ('/home/linuxbrew/.linuxbrew/bin/brew bundle '
+                         f'--file={PKG_DIR}')
+    else:
+        base_brew_cmd = f'brew bundle --file={PKG_DIR}'
 
     # this is the stuff that's installed on both mac and linux
-    brew_cmd = f"brew bundle --file={PKG_DIR}/Brewfile_standard"
+    brew_cmd = f"{base_brew_cmd}/Brewfile_standard"
     subproc(brew_cmd)
 
     # install things for devops job
     if opts == "work":
-        brew_cmd = f"brew bundle --file={PKG_DIR}/Brewfile_work"
+        brew_cmd = f"{base_brew_cmd}/Brewfile_work"
         subproc(brew_cmd)
 
     # install linux specific apps
     if OS.__contains__('linux'):
         print(" - Installing 🐧 specific packaging...")
-        brew_cmd = f"brew bundle --file={PKG_DIR}/Brewfile_linux"
+        brew_cmd = f"{base_brew_cmd}/Brewfile_linux"
         subproc(brew_cmd)
+
     # install mac specific apps
     elif OS == 'darwin':
         print(" 🍻 🍎\033[94m macOS specific brew packages installing \033[00m".center(70, '-'))
