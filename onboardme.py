@@ -18,7 +18,6 @@ PKG_DIR = f"{PWD}/packages"
 
 with open(f'{PKG_DIR}/packages.yml', 'r') as yaml_file:
     PACKAGES = yaml.safe_load(yaml_file)
-    print(PACKAGES)
 
 
 def run_apt_installs(opts=""):
@@ -26,14 +25,14 @@ def run_apt_installs(opts=""):
     install every apt package in packages/packages.yml
     """
     print(" 👻 \033[94m Apt packages installing \033[00m".center(70, '-'))
-    for package in PACKAGES["apt"]:
+    for package in PACKAGES['apt']['packages']:
         apt_install_cmd = f"sudo apt install {package}"
         subproc(apt_install_cmd)
 
     # specific to gaming on linux
     if opts == "gaming":
         print("  - Installing gaming specific packaging...")
-        for package in PACKAGES["apt_gaming"]:
+        for package in PACKAGES['apt_gaming']['packages']:
             apt_install_cmd = f"sudo apt install {package}"
             subproc(apt_install_cmd)
 
@@ -45,7 +44,7 @@ def run_flatpak_installs():
     install every flatpak package in packages.yml
     """
     print(" 🫓 \033[94m Apt packages installing\033[00m".center(70, '-'))
-    for package in PACKAGES["flatpak"]:
+    for package in PACKAGES['flatpak']:
         flatpak_install_cmd = f"sudo flatpak install {package}"
         subproc(flatpak_install_cmd)
 
