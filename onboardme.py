@@ -29,7 +29,6 @@ def run_linux_installer(installer="", extra_packages=[]):
     if installer == 'apt':
         emoji = "🫠"
         # use apt-get, and -y for "yes I'm sure I want to install"
-        apt_install_cmd = f"sudo apt-get install -y {package}"
     elif installer == 'snap':
         emoji = "🫰 "
     elif installer == 'flatpak':
