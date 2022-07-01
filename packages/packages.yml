@@ -26,8 +26,9 @@ apt:
 
 flatpak:
   default_packages:
+    - org.freedesktop.Platform/x86_64/21.08
     - io.freetubeapp.FreeTube
-    # - keepassx
+    - com.bitwarden.desktop
 
 snap:
   default_packages:

@@ -58,6 +58,7 @@ Category | App | Replaces
 |Email|Protonmail and Bridge for Linux/MacOS|Gmail|
 |Launcher|Albert?|Alfred|
 |Photo/file Storage|NextCloud - not tested|Google Photos/Drive|
+|Passwords|Bitwarden|LastPass|
 |News - RSS|Fluent Reader|Facebook/Twitter news company feeds|
 |Video|FreeTube,Peertube|YouTube|
 
