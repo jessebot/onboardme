@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # just a quick script to install some reqs, works on debian based distros and macOS
 # Checks for: Brew, git, python3, and python3 requirements.txt
+
+# we make this lowercase because I don't trust it not to be random caps
 OS=$(uname | tr '[:upper:]' '[:lower:]')
 
 echo "This script will ask for your password to sudo install things."
@@ -11,7 +13,8 @@ which git > /dev/null
 git_return_code=$?
 if [ $git_return_code -ne 0 ]; then
     echo "Git not installed or in path, attempting to install git..."
-    if [ "$OS" == "linux*" ]; then
+    # we use *"linux"* because linux2 is a possibility, and who knows what else
+    if [[ "$OS" == *"linux"* ]]; then
         sudo apt install git
     fi
 else
@@ -20,7 +23,7 @@ fi
 echo "--------------------------------------------------------------------------------"
 
 # make sure linuxbrew is in the path
-if [ "$OS" == "linux*" ]; then
+if [[ "$OS" == *"linux"* ]]; then
     export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 fi
 
@@ -51,7 +54,7 @@ which pip3
 pip_return_code=$?
 if [ $pip_return_code -ne 0 ]; then
     echo "Installing Pip3..." 
-    if [ "$OS" == "linux*" ]; then
+    if [[ "$OS" == *"linux"* ]]; then
         sudo apt install python3-pip
     fi
 else
