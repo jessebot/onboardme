@@ -29,7 +29,8 @@ def run_linux_installer(installer="", extra_packages=[]):
     # -y is assume yes for "are you sure you want to install"
     if installer == 'apt':
         emoji = "🫠"
-        currently_installed = subproc('apt list --installed').split('/')[0]
+        ls_installed = 'apt list --installed | cut -d '/' -f 1 | grep -v error'
+        installed = subproc(ls_installed)
         installer_cmd = f"sudo apt-get install -y "
     elif installer == 'flatpak':
         emoji = "🫓"
@@ -233,9 +234,9 @@ def subproc(cmd=""):
     if not return_code or return_code != 0:
         # also scan both stdout and stdin for weird errors
         if "error" in res_stdout:
-            res_err = f'Output: {res_stdout}'
+            res_err = f'stdout:\n{res_stdout}'
         elif "error" in res_stderr:
-            res_err = res_err + f'Output: {res_stderr}'
+            res_err = res_err + f'stderr:\n{res_stderr}'
 
         if res_err:
             err = (f'Return code was not zero! Error code: {return_code}')
