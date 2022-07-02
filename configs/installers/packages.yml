@@ -2,7 +2,7 @@
 brew:
   emoji: "🍺"
   list_cmd: "brew list -1"
-  install_cmd: "brew bundle --file={PKG_MNGR_DIR}/brew/"
+  install_cmd: "brew bundle --file="
   default_packages:
     - Brewfile_standard
   linux_packages:

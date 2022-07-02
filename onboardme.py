@@ -3,7 +3,6 @@
 # jessebot@linux.com
 import argparse
 from configparser import ConfigParser
-import getpass
 import os
 import shutil
 import subprocess
@@ -13,10 +12,8 @@ import wget
 import zipfile
 
 OS = sys.platform
-USER_NAME = getpass.getuser()
 HOME_DIR = os.getenv("HOME")
 PWD = os.path.dirname(__file__)
-PKG_MNGR_DIR = f"{PWD}/configs/installers"
 
 
 def run_installer(installer="", extra_packages=[]):
@@ -29,12 +26,8 @@ def run_installer(installer="", extra_packages=[]):
         subproc("sudo flatpak remote-add --if-not-exists flathub "
                 "https://flathub.org/repo/flathub.flatpakrepo")
 
-    if OS.__contains__('linux') and installer == 'brew':
-        # on linux, just in case it's not in our path yet
-        base_brew_cmd = ('/home/linuxbrew/.linuxbrew/bin/brew bundle '
-                         f'--file={PKG_MNGR_DIR}/brew/Brewfile_')
-
-    with open(f'{PKG_MNGR_DIR}/packages.yml', 'r') as yaml_file:
+    pkg_manager_dir = f"{PWD}/configs/installers/"
+    with open(pkg_manager_dir + 'packages.yml', 'r') as yaml_file:
         packages_dict = yaml.safe_load(yaml_file)[installer]
 
     emoji = packages_dict['emoji']
@@ -43,6 +36,10 @@ def run_installer(installer="", extra_packages=[]):
 
     installed_pkgs = subproc(packages_dict['list_cmd'], True, True)
     install_cmd = packages_dict['install_cmd']
+
+    # For brew, we're still using bundle files, so this is a little weird
+    if installer == 'brew':
+        install_cmd += pkg_manager_dir + '/brew/Brewfile_'
 
     # Install default_packages always, but also install gaming or work
     pkg_types = ['default_packages']
