@@ -39,7 +39,7 @@ def run_installer(installer="", extra_packages=[]):
 
     # For brew, we're still using bundle files, so this is a little weird
     if installer == 'brew':
-        install_cmd += pkg_manager_dir + '/brew/Brewfile_'
+        install_cmd += pkg_manager_dir + 'brew/Brewfile_'
 
     # Install default_packages always, but also install gaming or work
     pkg_types = ['default_packages']
@@ -152,9 +152,6 @@ def configure_vim():
 
     # this installs the vim plugins, can also use :PlugInstall in vim
     plugin_cmd = (f'vim -E -s -u "{HOME_DIR}/.vimrc" +PlugInstall +qall')
-    if OS.__contains__('linux'):
-        plugin_cmd = ('/home/linuxbrew/.linuxbrew/bin/vim -E -s -u '
-                      f'"{HOME_DIR}/.vimrc" +PlugInstall +qall')
 
     subproc(plugin_cmd)
 
@@ -183,7 +180,6 @@ def configure_firefox():
 
     sections = prof_config.sections()
     for section in sections:
-        print('section: ' + section)
         if section.startswith('Install'):
             profile_dir = ini_dir + prof_config.get(section, 'Default')
             print("  Current firefox profile is in: " + profile_dir)
