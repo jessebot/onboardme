@@ -19,7 +19,7 @@ PWD = os.path.dirname(__file__)
 PKG_MNGR_DIR = f"{PWD}/configs/installers"
 
 
-def run_linux_installer(installer="", extra_packages=[]):
+def run_installer(installer="", extra_packages=[]):
     """
     Installs packages from one of the following installers: apt, snap, flatpak
     Takes an optional variable of extra_packages list to install optional
@@ -41,7 +41,7 @@ def run_linux_installer(installer="", extra_packages=[]):
     with open(f'{PKG_MNGR_DIR}/packages.yml', 'r') as yaml_file:
         packages_dict = yaml.safe_load(yaml_file)[installer]
 
-    installed_pkgs = subproc(packages_dict['list_cmd'], True, False)
+    installed_pkgs = subproc(packages_dict['list_cmd'], True, True)
     emoji = packages_dict['emoji']
     install_cmd = packages_dict['install_cmd']
 
@@ -172,6 +172,7 @@ def configure_firefox():
     configur = ConfigParser()
     configur.read(ini_dir + 'profiles.ini')
     for section in configur.sections():
+        print(section)
         if section.startswith('Install'):
             profile_dir = ini_dir + configur.get(section, 'Default')
             print("  Current firefox profile is in: " + profile)
@@ -268,14 +269,14 @@ def main():
         return
 
     # installs bashrc and the like
-    run_linux_installer('brew', opts)
+    run_installer('brew', opts)
     hard_link_rc_files(overwrite_bool)
     install_fonts()
     configure_vim()
 
     if OS.__contains__('linux'):
         for installer in ['apt', 'snap', 'flatpak']:
-            run_linux_installer(installer, opts)
+            run_installer(installer, opts)
 
     # this can't be done until we have firefox, and who knows when that is
     configure_firefox()
