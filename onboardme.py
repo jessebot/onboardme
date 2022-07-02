@@ -293,6 +293,10 @@ def main():
     if OS.__contains__('linux'):
         for installer in ['apt', 'snap', 'flatpak']:
             run_installer(installer, opts)
+        # map capslock to control
+        cmd = ("gsettings set org.gnome.desktop.input-sources xkb-options "
+               """'["caps:ctrl_modifier"]'""")
+        subproc(cmd)
 
     # this can't be done until we have firefox, and who knows when that is
     configure_firefox()
