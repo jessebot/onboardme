@@ -172,7 +172,6 @@ def configure_firefox():
     configur = ConfigParser()
     configur.read(ini_dir + 'profiles.ini')
     sections = configur.sections()
-    print('sections: ' + sections)
     for section in sections:
         print('section: ' + section)
         if section.startswith('Install'):
