@@ -1,5 +1,7 @@
 ## Install even moar stuff
-[Awesome Mac](https://wangchujiang.com/awesome-mac/) has a list of like every tool you care about for every category, and has a good system to determine which things are FOSS vs Free vs Paid.
+- [Awesome Mac](https://wangchujiang.com/awesome-mac/) has a list of like every tool you care about for every category, and has a good system to determine which things are FOSS vs Free vs Paid.
+
+- [Awesome macOS open source applications](https://github.com/serhii-londar/open-source-mac-os-apps) is just open source stuff, skipping the app store all together, hopefully. I haven't verified everything.
 
 ## Emojis
 Mac Emoji Keyboard Shortcut: control + cmd + space
