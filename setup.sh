@@ -33,12 +33,23 @@ else
     echo -e "\033[92mGit already installed :3 \033[00m"
 fi
 
-# make sure linuxbrew is in the path
-if [[ "$OS" == *"linux"* ]]; then
-    export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
-fi
 
 echo -e "------------------------------- \033[94m Checking for Brew \033[00m ------------------------------"
+# make sure linuxbrew is in the path
+if [[ "$OS" == *"linux"* ]]; then
+    # source the existing bashrc, just in case
+    if [ -f "~/.bashrc" ]; then
+        source ~/.bashrc
+    fi
+
+    # if this still isn't in our path, export it and source this bashrc
+    if [[ "linuxbrew" != *"$PATH"* ]]; then
+        export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
+        echo "PATH=$PATH:/home/linuxbrew/.linuxbrew/bin" >> ~/.bashrc
+        source ~/.bashrc
+    fi
+fi
+
 which brew > /dev/null
 brew_return_code=$?
 if [ $brew_return_code -ne 0 ]; then
@@ -75,9 +86,14 @@ else
 fi
 
 # I always put my projects in a directory called repos, idk why I can't stop...
-echo -e "--------------------- \033[94mCreating directory and cloning repo...\033[00m ---------------------"
+echo -e "--------------------- \033[94mCreating directories and cloning repo...\033[00m ---------------------"
 mkdir -p ~/repos
 git clone https://github.com/jessebot/onboardme.git ~/repos/onboardme
+
+# we do this for Debian, to download custom fonts during onboardme
+if [[ "$OS" == *"linux"* ]]; then
+    mkdir -p ~/.local/share/fonts
+fi
 
 # make sure we have wget and pyyaml
 echo "Now installing python reqs..."

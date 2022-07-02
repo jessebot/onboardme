@@ -15,20 +15,20 @@ OS = sys.platform
 USER_NAME = getpass.getuser()
 HOME_DIR = os.getenv("HOME")
 PWD = os.path.dirname(__file__)
-PKG_DIR = f"{PWD}/packages"
+PKG_MNGR_DIR = f"{PWD}/configs/installers"
 
 
 def run_linux_installer(installer="", extra_packages=[]):
     """
     Installs packages from one of the following installers: apt, snap, flatpak
     Takes an optional variable of extra_packages list to install optional
-    packages for gaming or work tasks. Uses the yaml in packages/packages.yml
+    packages for gaming or work tasks. Uses the yaml in configs/installers
     """
     if installer == 'flatpak':
         subproc("sudo flatpak remote-add --if-not-exists flathub "
                 "https://flathub.org/repo/flathub.flatpakrepo")
 
-    with open(f'{PKG_DIR}/packages.yml', 'r') as yaml_file:
+    with open(f'{PKG_MNGR_DIR}/installers.yml', 'r') as yaml_file:
         packages_dict = yaml.safe_load(yaml_file)[installer]
 
     installed_pkgs = subproc(packages_dict['list_cmd'], True, False)
@@ -60,12 +60,11 @@ def run_brew_installs(opts=""):
     Tested only on mac and linux, but maybe works for windows :shrug:
     """
     print(" 🍺\033[94m Brew packages installing \033[00m".center(70, '-'))
+    base_brew_cmd = f'brew bundle --file={PKG_MNGR_DIR}/brew/'
     if OS.__contains__('linux'):
-        # on linux, just in case it's not in our path, but it's in our .bashrc
+        # on linux, just in case it's not in our path yet
         base_brew_cmd = ('/home/linuxbrew/.linuxbrew/bin/brew bundle '
-                         f'--file={PKG_DIR}')
-    else:
-        base_brew_cmd = f'brew bundle --file={PKG_DIR}'
+                         f'--file={PKG_MNGR_DIR}/brew/')
 
     # this is the stuff that's installed on both mac and linux
     brew_cmd = f"{base_brew_cmd}/Brewfile_standard"
@@ -87,7 +86,7 @@ def run_brew_installs(opts=""):
     elif OS == 'darwin':
         msg = " 🍻 🍎\033[94m macOS specific brew packages installing \033[00m"
         print(msg.center(70, '-'))
-        brew_cmd = f"brew bundle --file={PKG_DIR}/Brewfile_mac"
+        brew_cmd = f"{base_brew_cmd}/Brewfile_mac"
         subproc(brew_cmd)
 
     return None
@@ -97,11 +96,9 @@ def install_fonts():
     """
     This installs nerd fonts :)
     """
-    print("Installing fonts")
-    clone the repo locally
-    subproc("git clone --depth 1 https://github.com/ryanoasis/nerd-fonts.git"
-           " {HOME_DIR}/repos/nerd-fonts")
-    # subproc("")
+    if OS.__contains__('linux'):
+        print("Installing fonts")
+        subproc("")
 
 
 def hard_link_rc_files(overwrite=False):
@@ -162,8 +159,8 @@ def configure_vim():
     Installs vim-plug, a plugin manager for vim, and then installs vim plugins,
     listed in ./config/rc_files/vim/.vimrc
     """
-    print("\033[94m Installing vim-plug, for vim plugins\033[00m ".center(65,
-                                                                          '-'))
+    msg = "\033[94m Installing vim-plug, for vim plugins\033[00m "
+    print(msg.center(70, '-'))
     url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
     plug_cmd = (f"curl -fLo {HOME_DIR}/.vim/autoload/plug.vim "
                 f"--create-dirs {url}")
@@ -184,41 +181,37 @@ def configure_firefox():
     """
     Copies over default firefox settings and addons
     """
-    print("\033[94m Installing Firefox addons and preferences"
-          "\033[00m ".center(65, '-'))
-
+    repo_config_dir = f'{PWD}/configs/browser/firefox/extensions/'
     # different OS will have firefox profile info in different paths
     if OS.__contains__('linux'):
-        ini_dir = f"{HOME_DIR}/.mozilla/Firefox"
+        ini_dir = f"{HOME_DIR}/.mozilla/Firefox/"
     elif OS == "darwin":
-        ini_dir = f"{HOME_DIR}/Library/Application Support/Firefox"
+        ini_dir = f"{HOME_DIR}/Library/Application Support/Firefox/"
 
-    repo_config_dir = f'{PWD}/configs/browser/firefox/extensions/'
+    msg = "\033[94m 🦊 Installing Firefox preferences and addons\033[00m "
+    print(msg.center(70, '-'))
 
     print("  Checking Firefox profiles.ini for correct profile...")
+    profile = ""
     configur = ConfigParser()
-    configur.read(f'{ini_dir}/profiles.ini')
+    configur.read(ini_dir + 'profiles.ini')
     for section in configur.sections():
-        print(section)
         if section.startswith('Install'):
-            profile = configur.get(section, 'Default')
-            print("  Copying Firefox addons from:")
-            print("  " + repo_config_dir)
-            print("  To location:")
-            print(f"  {ini_dir}/{profile}/extensions/")
-            shutil.copytree(repo_config_dir,
-                            f'{ini_dir}/{profile}/extensions/')
-            print("  Firefox extensions installed, but you still need to "
-                  "enable them manually...\n")
+            profile_dir = ini_dir + configur.get(section, 'Default')
+            print("  Current firefox profile is in: " + profile)
 
-            print("  Copying Firefox user preferences from:")
-            print("  " + repo_config_dir.replace("extensions/", ""))
-            print("  To location:")
-            print(f"  {ini_dir}/{profile}/")
-            print("  Configuring Firefox user preferences")
-            shutil.copy(f'{repo_config_dir}/user.js', f'{ini_dir}/{profile}/')
+    print("\n  Configuring Firefox user preferences...")
+    usr_prefs = repo_config_dir.replace("extensions/", "user.js")
+    shutil.copy(usr_prefs, profile_dir)
+    print("\n  Finished copying over firefox settings :3")
 
-    print("  Finished copying over firefox settings :3")
+    print("  Copying over firefox addons...")
+    for addon_xpi in os.listdir(repo_config_dir):
+        shutil.copy(repo_config_dir + addon_xpi,
+                    f'{profile_dir}/extensions/')
+    print("  Firefox extensions installed, but you still need to enable them.")
+
+
     return None
 
 
@@ -300,23 +293,24 @@ def main():
         return
 
     # installs bashrc and the like
-    # run_brew_installs(opts)
+    run_brew_installs(opts)
     hard_link_rc_files(overwrite_bool)
+    install_fonts()
     configure_vim()
-    configure_firefox()
 
     if OS.__contains__('linux'):
         run_linux_installer('apt', opts)
         run_linux_installer('snap', opts)
         run_linux_installer('flatpak', opts)
-        # install_fonts()
+
+    # this can't be done until we have firefox, and who knows when that is
+    configure_firefox()
 
     print("\033[92m SUCCESS \033[00m".center(70, '-'))
     print("\n Here's some stuff you gotta do manually:")
     print(" 🐋: Add your user to the docker group, and reboot")
     print(" 📰: Import rss feeds config into FluentReader or wherever")
     print(" 📺: Import subscriptions into FreeTube")
-    print(" 🦊: Install firefox config!")
     print(" ⌨️ : Set capslock to control!")
     print(" ⏰: Install any cronjobs you need from the cron dir!")
 

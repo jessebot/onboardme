@@ -69,9 +69,11 @@ xterm*|rxvt*)
     ;;
 esac
 
-# ls - human readable file sizes, show hidden files, enable colors
-alias ls='ls -ha --color'
-alias ll='ls -hal --color'
+# ls - use lsd for colors/icons, human readable file sizes, show hidden files
+alias ls='lsd -a'
+alias lse='exa -a'
+alias ll='lsd -hal'
+alias lle='exa -hal'
 
 # colordiff - diff, but with colors for accessibility
 alias diff='colordiff -uw'
@@ -93,8 +95,6 @@ alias tracert='traceroute'
 
 # git speed up
 alias gc='git commit -m'
-
-# take that ghostscript
 alias gs='git status'
 alias gd='git diff'
 alias ga='git add .'
