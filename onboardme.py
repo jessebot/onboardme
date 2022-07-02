@@ -47,7 +47,7 @@ def run_linux_installer(installer="", extra_packages=[]):
         print(f'INVALID INSTALLER: {installer}')
         return None
 
-    status_msg = f" \033[94m {emoji} {installer} apps installing \033[00m")
+    status_msg = f" \033[94m {emoji} {installer} apps installing \033[00m"
     print(status_msg.center(70, '-'))
 
     # Install default_packages always, but also install gaming or work
@@ -89,7 +89,6 @@ def run_brew_installs(opts=""):
         subproc(brew_cmd)
 
     # install linux specific apps
-    msg = " 🍻 🍎\033[94m specific brew packages installing \033[00m"
 
     if OS.__contains__('linux'):
         msg = " 🍻 \033[94m Linux specific brew packages installing \033[00m"
