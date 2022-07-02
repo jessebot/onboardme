@@ -96,7 +96,8 @@ def run_brew_installs(opts=""):
 
     # install mac specific apps
     elif OS == 'darwin':
-        print(" 🍻 🍎\033[94m macOS specific brew packages installing \033[00m".center(70, '-'))
+        print(" 🍻 🍎\033[94m macOS specific brew packages installing "
+              "\033[00m".center(70, '-'))
         brew_cmd = f"brew bundle --file={PKG_DIR}/Brewfile_mac"
         subproc(brew_cmd)
 
@@ -111,7 +112,7 @@ def install_fonts():
     # clone the repo locally
     # subproc("git clone --depth 1 https://github.com/ryanoasis/nerd-fonts.git"
     #         " {HOME_DIR}/repos/nerd-fonts")
-    #subproc("")
+    # subproc("")
 
 
 def hard_link_rc_files(overwrite=False):
@@ -130,11 +131,12 @@ def hard_link_rc_files(overwrite=False):
     for rc_file in os.listdir(rc_dir):
         src_rc_file = f'{rc_dir}/{rc_file}'
         hard_link = f'{HOME_DIR}/{rc_file}'
+        # if overwrite set to True, delete the existing files first
         if overwrite:
             try:
                 os.remove(hard_link)
-            except:
-                pass
+            except Error as e:
+                print('  ' + e)
 
         try:
             os.link(src_rc_file, hard_link)
@@ -193,11 +195,16 @@ def configure_firefox():
     """
     Copies over default firefox settings and addons
     """
-    # different os will have this in different places
-    if OS.__contains__('linux'): 
+    print("\033[94m Installing Firefox addons and preferences"
+          "\033[00m ".center(65, '-'))
+
+    # different OS will have firefox profile info in different paths
+    if OS.__contains__('linux'):
         ini_dir = f"{HOME_DIR}/.mozilla/Firefox"
     elif OS == "darwin":
         ini_dir = f"{HOME_DIR}/Library/Application Support/Firefox"
+
+    repo_config_dir = f'{PWD}/configs/browser/firefox/extensions/'
 
     print("  Checking Firefox profiles.ini for correct profile...")
     configur = ConfigParser()
@@ -205,15 +212,21 @@ def configure_firefox():
     for section in configur.sections():
         if section.startswith('Install'):
             profile = configur.get(section, 'Default')
-            print("  Copying Firefox extensions now...")
-            shutil.copytree('configs/browser/firefox/extensions/',
+            print("  Copying Firefox addons from:")
+            print("  " + repo_config_dir)
+            print("  To location:")
+            print(f"  {ini_dir}/{profile}/extensions/}")
+            shutil.copytree(repo_config_dir,
                             f'{ini_dir}/{profile}/extensions/')
             print("  Firefox extensions installed, but you still need to "
                   "enable them manually...\n")
 
+            print("  Copying Firefox user preferences from:")
+            print("  " + repo_config_dir.replace("extensions/", ""))
+            print("  To location:")
+            print(f"  {ini_dir}/{profile}/")_
             print("  Configuring Firefox user preferences")
-            shutil.copy('configs/browser/firefox/user.js',
-                        f'{ini_dir}/{profile}/')
+            shutil.copy(f'{repo_config_dir}/user.js', f'{ini_dir}/{profile}/')
 
     print("  Finished copying over firefox settings :3")
     return None
@@ -232,8 +245,8 @@ def subproc(cmd="", error_ok=False, suppress_output=False):
                          stderr=subprocess.PIPE)
     return_code = p.returncode
     res = p.communicate()
-    res_stdout = '  ' + res[0].decode('UTF-8').replace('\n','\n  ')
-    res_stderr = '  ' + res[1].decode('UTF-8').replace('\n','\n  ')
+    res_stdout = '  ' + res[0].decode('UTF-8').replace('\n', '\n  ')
+    res_stderr = '  ' + res[1].decode('UTF-8').replace('\n', '\n  ')
 
     # check return code, raise error if failure
     if not return_code or return_code != 0:
@@ -248,7 +261,7 @@ def subproc(cmd="", error_ok=False, suppress_output=False):
             # hacky, but whatevs
             if 'flathub' in res_err:
                 print(f' {err} \n {res_err} \nIf this is flatpak related, try'
-                       ' a reboot, or verify package name on flathub.org/apps')
+                      ' a reboot, or verify package name on flathub.org/apps')
 
             else:
                 raise Exception(f' {err} \n {res_err}')
@@ -306,9 +319,9 @@ def main():
         run_linux_installer('apt', opts)
         run_linux_installer('snap', opts)
         run_linux_installer('flatpak', opts)
-        #install_fonts()
+        # install_fonts()
 
-    print("\033[92m SUCCESS \033[00m".center(70,'-'))
+    print("\033[92m SUCCESS \033[00m".center(70, '-'))
     print("\n Here's some stuff you gotta do manually:")
     print(" 🐋: Add your user to the docker group, and reboot")
     print(" 📰: Import rss feeds config into FluentReader or wherever")
