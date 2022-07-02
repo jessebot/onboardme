@@ -215,7 +215,7 @@ def configure_firefox():
             print("  Copying Firefox addons from:")
             print("  " + repo_config_dir)
             print("  To location:")
-            print(f"  {ini_dir}/{profile}/extensions/}")
+            print(f"  {ini_dir}/{profile}/extensions/")
             shutil.copytree(repo_config_dir,
                             f'{ini_dir}/{profile}/extensions/')
             print("  Firefox extensions installed, but you still need to "
