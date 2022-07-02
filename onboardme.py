@@ -98,7 +98,12 @@ def install_fonts():
     """
     if OS.__contains__('linux'):
         print("Installing fonts")
-        subproc("")
+        git_url = 'https://github.com/'
+        z = 'source-foundry/Hack/releases/download/v3.003/Hack-v3.003-ttf.zip'
+        wget(git_url + z)
+        # unzip into our local font location
+        with zipfile.ZipFile('./Hack-v3.003-ttf.zip', 'r') as zip_ref:
+            zip_ref.extractall(f'{HOME_DIR}/.local/share/fonts')
 
 
 def hard_link_rc_files(overwrite=False):
@@ -210,7 +215,6 @@ def configure_firefox():
         shutil.copy(repo_config_dir + addon_xpi,
                     f'{profile_dir}/extensions/')
     print("  Firefox extensions installed, but you still need to enable them.")
-
 
     return None
 
