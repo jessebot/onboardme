@@ -201,7 +201,7 @@ def configure_firefox():
 
     print("  Checking Firefox profiles.ini for correct profile...")
     configur = ConfigParser()
-    configur.read(f'{ini_dr}/profiles.ini')
+    configur.read(f'{ini_dir}/profiles.ini')
     for section in configur.sections():
         if section.startswith('Install'):
             profile = configur.get(section, 'Default')
