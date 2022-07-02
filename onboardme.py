@@ -91,7 +91,7 @@ def run_brew_installs(opts=""):
     # install linux specific apps
 
     if OS.__contains__('linux'):
-        msg = " 🍻 \033[94m Linux specific brew packages installing \033[00m"
+        msg = " 🍻 🐧 \033[94m Linux specific brew packages installing \033[00m"
         print(msg.center(70, '-'))
         brew_cmd = f"{base_brew_cmd}/Brewfile_linux"
         subproc(brew_cmd)
@@ -110,9 +110,9 @@ def install_fonts():
     This installs nerd fonts :)
     """
     print("Installing fonts")
-    # clone the repo locally
-    # subproc("git clone --depth 1 https://github.com/ryanoasis/nerd-fonts.git"
-    #         " {HOME_DIR}/repos/nerd-fonts")
+    clone the repo locally
+    subproc("git clone --depth 1 https://github.com/ryanoasis/nerd-fonts.git"
+           " {HOME_DIR}/repos/nerd-fonts")
     # subproc("")
 
 
