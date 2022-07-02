@@ -232,14 +232,14 @@ def subproc(cmd="", error_ok=False):
     res_stderr = '  ' + res[1].decode('UTF-8').replace('\n','\n  ')
 
     # check return code, raise error if failure
-    if not error_ok and not return_code or return_code != 0:
+    if not return_code or return_code != 0:
         # also scan both stdout and stdin for weird errors
         if "error" in res_stdout:
             res_err = f'stdout:\n{res_stdout}'
         elif "error" in res_stderr:
             res_err = res_err + f'stderr:\n{res_stderr}'
 
-        if res_err:
+        if res_err and not error_ok:
             err = (f'Return code was not zero! Error code: {return_code}')
             # hacky, but whatevs
             if 'flathub' in res_err:
