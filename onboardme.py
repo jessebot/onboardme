@@ -65,12 +65,27 @@ def install_fonts():
     """
     if OS.__contains__('linux'):
         print("Installing fonts")
+        status_msg = f" \033[94m ✍️ Installing fonts... \033[00m"
+        print(status_msg.center(70, '-'))
+
+        print("  Downloading font sets...")
         url = ('https://github.com/source-foundry/Hack/releases/download/'
                'v3.003/Hack-v3.003-ttf.zip')
         downloaded_zip_file = wget.download(url)
+        print("  Font sets downloaded.")
+
         # unzip into our local font location
         with zipfile.ZipFile(downloaded_zip_file, 'r') as zip_ref:
             zip_ref.extractall(f'{HOME_DIR}/.local/share/fonts')
+            print("  Font sets extracted into hopefully the right place ")
+
+        # clear and regenerate your font cache and indexes
+        subproc('fc-cache -f -v')
+        # confirm that the fonts are installed
+        if 'Hack' in subproc("fc-list"):
+            print("  Hack font should be installed now :D Probably")
+
+    return None
 
 
 def hard_link_rc_files(overwrite=False):
@@ -117,7 +132,7 @@ def hard_link_rc_files(overwrite=False):
         existing_files.append(hard_link)
 
     if existing_files:
-        print(' 🤷 Looks like the following file(s) already exist:')
+        print(' ¯\_(ツ)_/¯ Looks like the following file(s) already exist:')
         for file in existing_files:
             print(f' - {file}')
         print('\nIf you want the links anyway, delete the files, and then '
@@ -220,7 +235,6 @@ def subproc(cmd="", error_ok=False, suppress_output=False):
             if 'flathub' in res_err:
                 print(f' {err} \n {res_err} \nIf this is flatpak related, try'
                       ' a reboot, or verify package name on flathub.org/apps')
-
             else:
                 raise Exception(f' {err} \n {res_err}')
 
