@@ -34,7 +34,7 @@ def run_linux_installer(installer="", extra_packages=[]):
         installer_cmd = f"sudo snap install "
     elif installer == 'flatpak':
         emoji = "🫓"
-        installer_cmd = f"flatpak install flathub "
+        installer_cmd = f"flatpak install -y flathub "
         subproc("sudo flatpak remote-add --if-not-exists flathub "
                 "https://flathub.org/repo/flathub.flatpakrepo")
     else:
