@@ -32,7 +32,7 @@ def run_installer(installer="", extra_packages=[]):
     if OS.__contains__('linux') and installer == 'brew':
         # on linux, just in case it's not in our path yet
         base_brew_cmd = ('/home/linuxbrew/.linuxbrew/bin/brew bundle '
-                         f'--file={PKG_MNGR_DIR}/brew/Brewfile')
+                         f'--file={PKG_MNGR_DIR}/brew/Brewfile_')
 
     with open(f'{PKG_MNGR_DIR}/packages.yml', 'r') as yaml_file:
         packages_dict = yaml.safe_load(yaml_file)[installer]
@@ -54,7 +54,7 @@ def run_installer(installer="", extra_packages=[]):
             if package in installed_pkgs:
                 print(f'  {package} is already installed, continuing...')
             else:
-                subproc(install_cmd + package)
+                subproc(f'{install_cmd}' + package)
 
     return None
 
@@ -156,8 +156,9 @@ def configure_firefox():
     repo_config_dir = f'{PWD}/configs/browser/firefox/extensions/'
     # different OS will have firefox profile info in different paths
     if OS.__contains__('linux'):
-        ini_dir = f"{HOME_DIR}/.mozilla/Firefox/"
+        ini_dir = f"{HOME_DIR}/.mozilla/firefox/"
     elif OS == "darwin":
+        # hate apple for their capitalized directories
         ini_dir = f"{HOME_DIR}/Library/Application Support/Firefox/"
 
     msg = "\033[94m 🦊 Installing Firefox preferences and addons\033[00m "
@@ -165,13 +166,14 @@ def configure_firefox():
 
     print("  Checking Firefox profiles.ini for correct profile...")
     profile_dir = ""
-    configur = ConfigParser()
-    configur.read(ini_dir + 'profiles.ini')
-    sections = configur.sections()
+    prof_config = ConfigParser()
+    prof_config.read(ini_dir + 'profiles.ini')
+
+    sections = prof_config.sections()
     for section in sections:
         print('section: ' + section)
         if section.startswith('Install'):
-            profile_dir = ini_dir + configur.get(section, 'Default')
+            profile_dir = ini_dir + prof_config.get(section, 'Default')
             print("  Current firefox profile is in: " + profile_dir)
 
     print("\n  Configuring Firefox user preferences...")
