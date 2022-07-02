@@ -24,10 +24,6 @@ def run_installer(installer="", extra_packages=[]):
     Installs packages from one of the following installers: apt, snap, flatpak
     Takes an optional variable of extra_packages list to install optional
     packages for gaming or work tasks. Uses the yaml in configs/installers
-    ---
-    brew install from the brewfiles
-    Takes opts, which is a string set to 'gaming', or 'work'
-    Tested only on mac and linux, but maybe works for windows :shrug:
     """
     if installer == 'flatpak':
         subproc("sudo flatpak remote-add --if-not-exists flathub "
