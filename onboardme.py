@@ -24,10 +24,19 @@ def run_linux_installer(installer="", extra_packages=[]):
     Installs packages from one of the following installers: apt, snap, flatpak
     Takes an optional variable of extra_packages list to install optional
     packages for gaming or work tasks. Uses the yaml in configs/installers
+    ---
+    brew install from the brewfiles
+    Takes opts, which is a string set to 'gaming', or 'work'
+    Tested only on mac and linux, but maybe works for windows :shrug:
     """
     if installer == 'flatpak':
         subproc("sudo flatpak remote-add --if-not-exists flathub "
                 "https://flathub.org/repo/flathub.flatpakrepo")
+
+    if OS.__contains__('linux') and installer == 'brew':
+        # on linux, just in case it's not in our path yet
+        base_brew_cmd = ('/home/linuxbrew/.linuxbrew/bin/brew bundle '
+                         f'--file={PKG_MNGR_DIR}/brew/Brewfile')
 
     with open(f'{PKG_MNGR_DIR}/installers.yml', 'r') as yaml_file:
         packages_dict = yaml.safe_load(yaml_file)[installer]
@@ -50,48 +59,6 @@ def run_linux_installer(installer="", extra_packages=[]):
                 print(f'  {package} is already installed, continuing...')
             else:
                 subproc(install_cmd + package)
-
-    return None
-
-
-def run_brew_installs(opts=""):
-    """
-    brew install from the brewfiles
-    Takes opts, which is a string set to 'gaming', or 'work'
-    Tested only on mac and linux, but maybe works for windows :shrug:
-    """
-    print(" 🍺\033[94m Brew packages installing \033[00m".center(70, '-'))
-    base_brew_cmd = f'brew bundle --file={PKG_MNGR_DIR}/brew/Brewfile'
-    if OS.__contains__('linux'):
-        # on linux, just in case it's not in our path yet
-        base_brew_cmd = ('/home/linuxbrew/.linuxbrew/bin/brew bundle '
-                         f'--file={PKG_MNGR_DIR}/brew/Brewfile')
-
-    # this is the stuff that's installed on both mac and linux
-    brew_cmd = base_brew_cmd + '_standard'
-    subproc(brew_cmd)
-
-    # install linux specific apps
-    if OS.__contains__('linux'):
-        msg = " 🍻 🐧 \033[94m Linux specific brew packages installing \033[00m"
-        print(msg.center(70, '-'))
-        brew_cmd = base_brew_cmd + '_linux'
-        subproc(brew_cmd)
-
-    # install mac specific apps
-    elif OS == 'darwin':
-        msg = " 🍻 🍎\033[94m macOS specific brew packages installing \033[00m"
-        print(msg.center(70, '-'))
-        brew_cmd = base_brew_cmd + '_mac'
-        subproc(brew_cmd)
-
-    # install optional packages for work
-    if opts == "work":
-        msg = " 🍻 💼\033[94m work specific brew packages installing \033[00m"
-        print(msg.center(70, '-'))
-        brew_cmd = base_brew_cmd + '_work'
-        subproc(brew_cmd)
-
 
     return None
 
@@ -301,7 +268,7 @@ def main():
         return
 
     # installs bashrc and the like
-    run_brew_installs(opts)
+    run_linux_installer('brew',opts)
     hard_link_rc_files(overwrite_bool)
     install_fonts()
     configure_vim()
