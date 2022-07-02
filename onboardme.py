@@ -151,7 +151,7 @@ def configure_vim():
     listed in ./config/rc_files/vim/.vimrc
     """
     msg = "\033[94m Installing vim-plug, for vim plugins\033[00m "
-    print(msg.center(70, '-'))
+    print(f'\n{msg.center(70, '-')}')
 
     autoload_dir = f'{HOME_DIR}/.vim/autoload'
     url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
