@@ -4,6 +4,7 @@
 import argparse
 from configparser import ConfigParser
 import os
+from pathlib import Path
 import shutil
 import subprocess
 import sys
@@ -58,10 +59,11 @@ def run_installer(installer="", extra_packages=[]):
 
 def install_fonts():
     """
-    This installs nerd fonts :)
+    This installs nerd fonts by wgetting the source archive and unextracting
+    them into the user's local font directory. Runs fc-cache -fv to generate
+    config, but you should still reboot when you're done :shrug:
     """
     if OS.__contains__('linux'):
-        print("Installing fonts")
         status_msg = f" \033[94m ✍️ Installing fonts... \033[00m"
         print(status_msg.center(70, '-'))
 
@@ -71,16 +73,21 @@ def install_fonts():
         downloaded_zip_file = wget.download(url)
         print("  Font sets downloaded.")
 
+        # to keep this all clean, we create a nerdfont directory
+        extract_dir = f'{HOME_DIR}/.local/share/fonts/nerd-fonts'
+        Path(extract_dir).mkdir(parents=True, exist_ok=True)
+
         # unzip into our local font location
         with zipfile.ZipFile(downloaded_zip_file, 'r') as zip_ref:
-            zip_ref.extractall(f'{HOME_DIR}/.local/share/fonts')
+            zip_ref.extractall(f'{HOME_DIR}/.local/share/fonts/nerd-fonts')
             print("  Font sets extracted into hopefully the right place ")
 
         # clear and regenerate your font cache and indexes
-        subproc('fc-cache -f -v')
+        subproc('fc-cache -fv')
         # confirm that the fonts are installed
         if 'Hack' in subproc("fc-list"):
-            print("  Hack font should be installed now :D Probably")
+            print("  Hack font should be installed now :D Probably, but it's "
+                  "still recommended you reboot after this.")
 
     return None
 
@@ -145,14 +152,16 @@ def configure_vim():
     """
     msg = "\033[94m Installing vim-plug, for vim plugins\033[00m "
     print(msg.center(70, '-'))
+
+    # make sure directory exists
+    autoload_dir = f'{HOME_DIR}/.vim/autoload'
+    Path(autoload_dir).mkdir(parents=True, exist_ok=True)
+
     url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-    plug_cmd = (f"curl -fLo {HOME_DIR}/.vim/autoload/plug.vim "
-                f"--create-dirs {url}")
-    subproc(plug_cmd)
+    wget.download(url, autoload_dir)
 
     # this installs the vim plugins, can also use :PlugInstall in vim
     plugin_cmd = (f'vim -E -s -u "{HOME_DIR}/.vimrc" +PlugInstall +qall')
-
     subproc(plugin_cmd)
 
     return None
@@ -162,7 +171,6 @@ def configure_firefox():
     """
     Copies over default firefox settings and addons
     """
-    repo_config_dir = f'{PWD}/configs/browser/firefox/extensions/'
     # different OS will have firefox profile info in different paths
     if OS.__contains__('linux'):
         ini_dir = f"{HOME_DIR}/.mozilla/firefox/"
@@ -183,6 +191,8 @@ def configure_firefox():
         if section.startswith('Install'):
             profile_dir = ini_dir + prof_config.get(section, 'Default')
             print("  Current firefox profile is in: " + profile_dir)
+
+    repo_config_dir = f'{PWD}/configs/browser/firefox/extensions/'
 
     print("\n  Configuring Firefox user preferences...")
     usr_prefs = repo_config_dir.replace("extensions/", "user.js")
