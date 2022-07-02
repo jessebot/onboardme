@@ -30,7 +30,7 @@ def run_linux_installer(installer="", extra_packages=[]):
     if installer == 'apt':
         emoji = "🫠"
         ls_installed = "apt list --installed"
-        currently_installed = subproc(ls_installed, True)
+        currently_installed = subproc(ls_installed, True, True)
         installer_cmd = f"sudo apt-get install -y "
     elif installer == 'flatpak':
         emoji = "🫓"
@@ -46,6 +46,9 @@ def run_linux_installer(installer="", extra_packages=[]):
         print(f'INVALID INSTALLER: {installer}')
         return None
 
+    print(f" {emoji}\033[94m {installer} apps installing\033[00m ".center(70,
+                                                                          '-'))
+
     # Install default_packages always, but also install gaming or work
     pkg_lists = ['default_packages']
     if extra_packages:
@@ -53,8 +56,6 @@ def run_linux_installer(installer="", extra_packages=[]):
 
     for pkg_list in pkg_lists:
         for package in packages_dict[installer][pkg_list]:
-            print(f" {emoji} \033[94m {installer} apps "
-                   "installing...\033[00m ".center(70, '-'))
             if package in currently_installed:
                 print(f'  {package} is already installed, continuing...')
             else:
@@ -214,7 +215,7 @@ def configure_firefox():
     return None
 
 
-def subproc(cmd="", error_ok=False):
+def subproc(cmd="", error_ok=False, suppress_output=False):
     """
     Takes a commmand to run in BASH, as well as optional error_ok bool to pass
     on errors in stderr/stdout
@@ -253,7 +254,8 @@ def subproc(cmd="", error_ok=False):
     else:
         return_str = res_stdout
 
-    print(return_str)
+    if not suppress_output:
+        print(return_str)
     return return_str
 
 
