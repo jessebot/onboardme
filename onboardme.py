@@ -24,43 +24,31 @@ def run_linux_installer(installer="", extra_packages=[]):
     Takes an optional variable of extra_packages list to install optional
     packages for gaming or work tasks. Uses the yaml in packages/packages.yml
     """
-    with open(f'{PKG_DIR}/packages.yml', 'r') as yaml_file:
-        packages_dict = yaml.safe_load(yaml_file)
-
-    # -y is assume yes for "are you sure you want to install"
-    if installer == 'apt':
-        emoji = "🫠 "
-        ls_installed = "apt list --installed"
-        currently_installed = subproc(ls_installed, True, True)
-        installer_cmd = f"sudo apt-get install -y "
-    elif installer == 'flatpak':
-        emoji = "🫓"
-        currently_installed = subproc('flatpak list --columns=application')
-        installer_cmd = f"flatpak install -y flathub "
+    if installer == 'flatpak':
         subproc("sudo flatpak remote-add --if-not-exists flathub "
                 "https://flathub.org/repo/flathub.flatpakrepo")
-    elif installer == 'snap':
-        emoji = "🫰 "
-        currently_installed = subproc('snap list')
-        installer_cmd = f"sudo snap install "
-    else:
-        print(f'INVALID INSTALLER: {installer}')
-        return None
+
+    with open(f'{PKG_DIR}/packages.yml', 'r') as yaml_file:
+        packages_dict = yaml.safe_load(yaml_file)[installer]
+
+    installed_pkgs = subproc(packages_dict['list_cmd'], True, False)
+    emoji = packages_dict['emoji']
+    install_cmd = packages_dict['install_cmd']
 
     status_msg = f" \033[94m {emoji} {installer} apps installing \033[00m"
     print(status_msg.center(70, '-'))
 
     # Install default_packages always, but also install gaming or work
-    pkg_lists = ['default_packages']
+    pkg_types = ['default_packages']
     if extra_packages:
-        pkg_lists.extend(extra_packages)
+        pkg_types.extend(extra_packages)
 
-    for pkg_list in pkg_lists:
-        for package in packages_dict[installer][pkg_list]:
-            if package in currently_installed:
+    for pkg_list in pkg_types:
+        for package in packages_dict[pkg_list]:
+            if package in installed_pkgs:
                 print(f'  {package} is already installed, continuing...')
             else:
-                subproc(installer_cmd + package)
+                subproc(install_cmd + package)
 
     return None
 

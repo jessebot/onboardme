@@ -1,5 +1,8 @@
 ---
 apt:
+  emoji: "🫠 "
+  list_cmd: "apt list --installed"
+  install_cmd: "sudo apt-get install -y "
   default_packages:
     - terminator
     - openssl
@@ -25,12 +28,18 @@ apt:
     # - exfat-utils
 
 flatpak:
+  emoji: "🫓"
+  list_cmd: "flatpak list  --columns=application"
+  install_cmd: "sudo flatpak install -y flathub"
   default_packages:
     - "org.freedesktop.Platform/x86_64/21.08"
     - io.freetubeapp.FreeTube
     - com.bitwarden.desktop
 
 snap:
+  emoji: "🫰 "
+  list_cmd: "snap list"
+  install_cmd: "sudo snap install "
   default_packages:
     - core
     - "fluent-reader --candidate"
