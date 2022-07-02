@@ -10,6 +10,7 @@ import subprocess
 import sys
 import yaml
 import wget
+import zipfile
 
 OS = sys.platform
 USER_NAME = getpass.getuser()
