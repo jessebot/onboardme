@@ -191,13 +191,13 @@ def configure_firefox():
     print("\n  Configuring Firefox user preferences...")
     usr_prefs = repo_config_dir.replace("extensions/", "user.js")
     shutil.copy(usr_prefs, profile_dir)
-    print("\n  Finished copying over firefox settings :3")
+    print("  Finished copying over firefox settings :3")
 
-    print("  Copying over firefox addons...")
+    print("\n  Copying over firefox addons...")
     for addon_xpi in os.listdir(repo_config_dir):
         shutil.copy(repo_config_dir + addon_xpi,
                     f'{profile_dir}/extensions/')
-    print("  Firefox extensions installed, but you still need to enable them.")
+    print("  Firefox extensions installed, but they need to be enabled\n")
 
     return None
 
