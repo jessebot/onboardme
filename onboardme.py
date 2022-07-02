@@ -211,6 +211,7 @@ def configure_firefox():
     configur = ConfigParser()
     configur.read(f'{ini_dir}/profiles.ini')
     for section in configur.sections():
+        print(section)
         if section.startswith('Install'):
             profile = configur.get(section, 'Default')
             print("  Copying Firefox addons from:")
@@ -311,7 +312,7 @@ def main():
         return
 
     # installs bashrc and the like
-    run_brew_installs(opts)
+    # run_brew_installs(opts)
     hard_link_rc_files(overwrite_bool)
     configure_vim()
     configure_firefox()
