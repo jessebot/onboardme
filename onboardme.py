@@ -224,7 +224,7 @@ def configure_firefox():
             print("  Copying Firefox user preferences from:")
             print("  " + repo_config_dir.replace("extensions/", ""))
             print("  To location:")
-            print(f"  {ini_dir}/{profile}/")_
+            print(f"  {ini_dir}/{profile}/")
             print("  Configuring Firefox user preferences")
             shutil.copy(f'{repo_config_dir}/user.js', f'{ini_dir}/{profile}/')
 
