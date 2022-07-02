@@ -30,7 +30,7 @@ def run_linux_installer(installer="", extra_packages=[]):
     if installer == 'apt':
         emoji = "🫠"
         ls_installed = "apt list --installed | cut -d '/' -f 1 | grep -v error"
-        installed = subproc(ls_installed)
+        currently_installed = subproc(ls_installed)
         installer_cmd = f"sudo apt-get install -y "
     elif installer == 'flatpak':
         emoji = "🫓"
