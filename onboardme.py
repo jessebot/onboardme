@@ -268,13 +268,13 @@ def main():
         return
 
     # installs bashrc and the like
-    run_linux_installer('brew',opts)
+    run_linux_installer('brew', opts)
     hard_link_rc_files(overwrite_bool)
     install_fonts()
     configure_vim()
 
     if OS.__contains__('linux'):
-        for installer in ['apt','snap','flatpak']:
+        for installer in ['apt', 'snap', 'flatpak']:
             run_linux_installer(installer, opts)
 
     # this can't be done until we have firefox, and who knows when that is
