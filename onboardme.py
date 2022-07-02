@@ -85,7 +85,7 @@ def install_fonts():
         # clear and regenerate your font cache and indexes
         subproc('fc-cache -fv')
         # confirm that the fonts are installed
-        if 'Hack' in subproc("fc-list"):
+        if 'Hack' in subproc("fc-list", False, True):
             print("  Hack font should be installed now :D Probably, but it's "
                   "still recommended you reboot after this.")
 
@@ -153,12 +153,12 @@ def configure_vim():
     msg = "\033[94m Installing vim-plug, for vim plugins\033[00m "
     print(msg.center(70, '-'))
 
-    # make sure directory exists
     autoload_dir = f'{HOME_DIR}/.vim/autoload'
-    Path(autoload_dir).mkdir(parents=True, exist_ok=True)
-
     url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-    wget.download(url, autoload_dir)
+    if not os.path.exists(autoload_dir):
+        print("  Creating directory structure and downloading vim-plug...")
+        Path(autoload_dir).mkdir(parents=True, exist_ok=True)
+        wget.download(url, autoload_dir)
 
     # this installs the vim plugins, can also use :PlugInstall in vim
     plugin_cmd = (f'vim -E -s -u "{HOME_DIR}/.vimrc" +PlugInstall +qall')
