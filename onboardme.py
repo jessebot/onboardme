@@ -27,12 +27,9 @@ def run_linux_installer(installer="", extra_packages=[]):
     with open(f'{PKG_DIR}/packages.yml', 'r') as yaml_file:
         packages_dict = yaml.safe_load(yaml_file)
 
-    print(f" {emoji}\033[94m {installer} apps installing\033[00m ".center(70,
-                                                                          '-'))
-
     # -y is assume yes for "are you sure you want to install"
     if installer == 'apt':
-        emoji = "🫠"
+        emoji = "🫠 "
         ls_installed = "apt list --installed"
         currently_installed = subproc(ls_installed, True, True)
         installer_cmd = f"sudo apt-get install -y "
@@ -50,6 +47,8 @@ def run_linux_installer(installer="", extra_packages=[]):
         print(f'INVALID INSTALLER: {installer}')
         return None
 
+    status_msg = f" \033[94m {emoji} {installer} apps installing \033[00m")
+    print(status_msg.center(70, '-'))
 
     # Install default_packages always, but also install gaming or work
     pkg_lists = ['default_packages']
@@ -90,15 +89,17 @@ def run_brew_installs(opts=""):
         subproc(brew_cmd)
 
     # install linux specific apps
+    msg = " 🍻 🍎\033[94m specific brew packages installing \033[00m"
+
     if OS.__contains__('linux'):
-        print(" - Installing 🐧 specific packaging...")
+        msg = " 🍻 \033[94m Linux specific brew packages installing \033[00m"
+        print(msg.center(70, '-'))
         brew_cmd = f"{base_brew_cmd}/Brewfile_linux"
         subproc(brew_cmd)
-
     # install mac specific apps
     elif OS == 'darwin':
-        print(" 🍻 🍎\033[94m macOS specific brew packages installing "
-              "\033[00m".center(70, '-'))
+        msg = " 🍻 🍎\033[94m macOS specific brew packages installing \033[00m"
+        print(msg.center(70, '-'))
         brew_cmd = f"brew bundle --file={PKG_DIR}/Brewfile_mac"
         subproc(brew_cmd)
 
