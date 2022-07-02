@@ -306,9 +306,8 @@ def main():
     configure_vim()
 
     if OS.__contains__('linux'):
-        run_linux_installer('apt', opts)
-        run_linux_installer('snap', opts)
-        run_linux_installer('flatpak', opts)
+        for installer in ['apt','snap','flatpak']:
+            run_linux_installer(installer, opts)
 
     # this can't be done until we have firefox, and who knows when that is
     configure_firefox()
