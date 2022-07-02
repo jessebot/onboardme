@@ -29,17 +29,17 @@ def run_linux_installer(installer="", extra_packages=[]):
     # -y is assume yes for "are you sure you want to install"
     if installer == 'apt':
         emoji = "🫠"
-        currently_installed = subproc(apt list --installed).split('/')[0]
+        currently_installed = subproc('apt list --installed').split('/')[0]
         installer_cmd = f"sudo apt-get install -y "
     elif installer == 'flatpak':
         emoji = "🫓"
-        currently_installed = subproc(apt list --installed).split('/')[0]
+        currently_installed = subproc('flatpak list --columns=application')
         installer_cmd = f"flatpak install -y flathub "
         subproc("sudo flatpak remote-add --if-not-exists flathub "
                 "https://flathub.org/repo/flathub.flatpakrepo")
     elif installer == 'snap':
         emoji = "🫰 "
-        currently_installed = subproc(apt list --installed).split('/')[0]
+        currently_installed = subproc('snap list')
         installer_cmd = f"sudo snap install "
     else:
         print(f'INVALID INSTALLER: {installer}')
