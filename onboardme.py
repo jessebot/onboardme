@@ -30,7 +30,7 @@ def run_linux_installer(installer="", extra_packages=[]):
     if installer == 'apt':
         emoji = "🫠"
         ls_installed = "apt list --installed"
-        currently_installed = subproc(ls_installed)
+        currently_installed = subproc(ls_installed, True)
         installer_cmd = f"sudo apt-get install -y "
     elif installer == 'flatpak':
         emoji = "🫓"
@@ -215,10 +215,10 @@ def configure_firefox():
     return None
 
 
-def subproc(cmd=""):
+def subproc(cmd="", error_ok=False):
     """
-    Takes a commmand to run in BASH, as well as optional
-    help text, both str
+    Takes a commmand to run in BASH, as well as optional error_ok bool to pass
+    on errors in stderr/stdout
     """
     print(f'\n \033[92m Running cmd:\033[00m {cmd}')
     command = cmd.split()
@@ -232,7 +232,7 @@ def subproc(cmd=""):
     res_stderr = '  ' + res[1].decode('UTF-8').replace('\n','\n  ')
 
     # check return code, raise error if failure
-    if not return_code or return_code != 0:
+    if not error_ok and not return_code or return_code != 0:
         # also scan both stdout and stdin for weird errors
         if "error" in res_stdout:
             res_err = f'stdout:\n{res_stdout}'
