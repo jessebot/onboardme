@@ -30,7 +30,7 @@ def run_linux_installer(installer="", extra_packages=[]):
     if installer == 'apt':
         emoji = "🫠"
         ls_installed = "apt list --installed | cut -d '/' -f 1 | grep -v error"
-        currently_installed = subproc(ls_installed)
+        currently_installed = subproc(ls_installed).split()
         installer_cmd = f"sudo apt-get install -y "
     elif installer == 'flatpak':
         emoji = "🫓"
@@ -46,6 +46,7 @@ def run_linux_installer(installer="", extra_packages=[]):
         print(f'INVALID INSTALLER: {installer}')
         return None
 
+    print(currently_installed)
     # Install default_packages always, but also install gaming or work
     pkg_lists = ['default_packages']
     if extra_packages:
@@ -55,10 +56,10 @@ def run_linux_installer(installer="", extra_packages=[]):
         for package in packages_dict[installer][pkg_list]:
             print(f" {emoji} \033[94m {installer} apps "
                    "installing...\033[00m ".center(70, '-'))
-            if package not in currently_installed:
-                subproc(installer_cmd + package)
-            else:
+            if package in currently_installed:
                 print(f'  {package} is already installed, continuing...')
+            else:
+                subproc(installer_cmd + package)
 
     return None
 
