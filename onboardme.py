@@ -100,9 +100,9 @@ def install_fonts():
         print("Installing fonts")
         git_url = 'https://github.com/'
         z = 'source-foundry/Hack/releases/download/v3.003/Hack-v3.003-ttf.zip'
-        wget(git_url + z)
+        downloaded_zip_file = wget(git_url + z)
         # unzip into our local font location
-        with zipfile.ZipFile('./Hack-v3.003-ttf.zip', 'r') as zip_ref:
+        with zipfile.ZipFile(downloaded_zip_file, 'r') as zip_ref:
             zip_ref.extractall(f'{HOME_DIR}/.local/share/fonts')
 
 
