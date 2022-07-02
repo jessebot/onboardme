@@ -46,7 +46,6 @@ def run_linux_installer(installer="", extra_packages=[]):
         print(f'INVALID INSTALLER: {installer}')
         return None
 
-    print(f' installed already: {currently_installed}')
     # Install default_packages always, but also install gaming or work
     pkg_lists = ['default_packages']
     if extra_packages:
