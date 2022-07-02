@@ -38,7 +38,7 @@ def run_linux_installer(installer="", extra_packages=[]):
         base_brew_cmd = ('/home/linuxbrew/.linuxbrew/bin/brew bundle '
                          f'--file={PKG_MNGR_DIR}/brew/Brewfile')
 
-    with open(f'{PKG_MNGR_DIR}/installers.yml', 'r') as yaml_file:
+    with open(f'{PKG_MNGR_DIR}/packages.yml', 'r') as yaml_file:
         packages_dict = yaml.safe_load(yaml_file)[installer]
 
     installed_pkgs = subproc(packages_dict['list_cmd'], True, False)
