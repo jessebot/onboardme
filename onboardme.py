@@ -33,7 +33,7 @@ def run_installer(installer="", extra_packages=[]):
 
     emoji = packages_dict['emoji']
     status_msg = f" \033[94m {emoji} {installer} apps installing \033[00m"
-    print(status_msg.center(70, '-'))
+    print(status_msg.center(80, '-'))
 
     installed_pkgs = subproc(packages_dict['list_cmd'], True, True)
     install_cmd = packages_dict['install_cmd']
@@ -65,7 +65,7 @@ def install_fonts():
     """
     if OS.__contains__('linux'):
         status_msg = f" \033[94m ✍️ Installing fonts... \033[00m"
-        print(status_msg.center(70, '-'))
+        print(status_msg.center(80, '-'))
 
         print("  Downloading font sets...")
         url = ('https://github.com/source-foundry/Hack/releases/download/'
@@ -100,7 +100,7 @@ def hard_link_rc_files(overwrite=False):
     files before beginning.
     """
     print(" 🐚 \033[94m Shell and vim rc files installing..."
-          "\033[00m".center(70, '-'))
+          "\033[00m".center(80, '-'))
     existing_files = []
 
     # loop through the rc_files and hard link them all to the user's home dir
@@ -151,7 +151,7 @@ def configure_vim():
     listed in ./config/rc_files/vim/.vimrc
     """
     msg = "\033[94m Installing vim-plug, for vim plugins\033[00m "
-    print(f'\n{msg.center(70, '-')}')
+    print(msg.center(80, '-'))
 
     autoload_dir = f'{HOME_DIR}/.vim/autoload'
     url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
@@ -179,7 +179,7 @@ def configure_firefox():
         ini_dir = f"{HOME_DIR}/Library/Application Support/Firefox/"
 
     msg = "\033[94m 🦊 Installing Firefox preferences and addons\033[00m "
-    print(msg.center(70, '-'))
+    print(msg.center(80, '-'))
 
     print("  Checking Firefox profiles.ini for correct profile...")
     profile_dir = ""
@@ -301,7 +301,7 @@ def main():
     # this can't be done until we have firefox, and who knows when that is
     configure_firefox()
 
-    print("\033[92m SUCCESS \033[00m".center(70, '-'))
+    print("\033[92m SUCCESS \033[00m".center(80, '-'))
     print("\n Here's some stuff you gotta do manually:")
     print(" 🐋: Add your user to the docker group, and reboot")
     print(" 📰: Import rss feeds config into FluentReader or wherever")
