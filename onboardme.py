@@ -2,6 +2,7 @@
 # Generic onboarding script for mac osx and debian
 # jessebot@linux.com
 import argparse
+from configparser import ConfigParser
 import getpass
 import os
 import shutil
@@ -102,17 +103,15 @@ def run_brew_installs(opts=""):
     return None
 
 
-def run_upgrades():
+def install_fonts():
     """
-    run upgrade and update for every package manager
+    This installs nerd fonts :)
     """
-    # apt
-    apt_update_upgrade_cmd = f"apt upgrade && apt update"
-    subproc(apt_update_upgrade_cmd)
-
-    # brew
-    brew_update_upgrade_cmd = f"brew upgrade && brew update"
-    subproc(brew_update_upgrade_cmd)
+    print("Installing fonts")
+    # clone the repo locally
+    # subproc("git clone --depth 1 https://github.com/ryanoasis/nerd-fonts.git"
+    #         " {HOME_DIR}/repos/nerd-fonts")
+    #subproc("")
 
 
 def hard_link_rc_files(overwrite=False):
@@ -195,23 +194,28 @@ def configure_firefox():
     Copies over default firefox settings and addons
     """
     # different os will have this in different places
-    if platform == "linux" or platform == "linux2":
-        # linux - untested
-        PROFILE_PATH = (f"{HOME_DIR}/Firefox/Profiles/{FIREFOX_PROFILE}/")
-    elif platform == "darwin":
-        # OS X
-        PROFILE_PATH = (f"{HOME_DIR}/Library/Application Support/Firefox/"
-                        f"Profiles/{FIREFOX_PROFILE}/")
-    elif platform == "win32" or platform == "windows":
-        # Windows... - untested
-        PROFILE_PATH = (f"{HOME_DIR}/Firefox/Profiles/{FIREFOX_PROFILE}/")
+    if OS.__contains__('linux'): 
+        ini_dir = f"{HOME_DIR}/.mozilla/Firefox"
+    elif OS == "darwin":
+        ini_dir = f"{HOME_DIR}/Library/Application Support/Firefox"
 
-    shutil.copy('configs/browser/firefox/user.js', PROFILE_PATH)
+    print("  Checking Firefox profiles.ini for correct profile...")
+    configur = ConfigParser()
+    configur.read(f'{ini_dr}/profiles.ini')
+    for section in configur.sections():
+        if section.startswith('Install'):
+            profile = configur.get(section, 'Default')
+            print("  Copying Firefox extensions now...")
+            shutil.copytree('configs/browser/firefox/extensions/',
+                            f'{ini_dir}/{profile}/extensions/')
+            print("  Firefox extensions installed, but you still need to "
+                  "enable them manually...\n")
 
-    shutil.copytree('configs/browser/firefox/distribution/extensions/',
-                    PROFILE_PATH + 'extensions/')
+            print("  Configuring Firefox user preferences")
+            shutil.copy('configs/browser/firefox/user.js',
+                        f'{ini_dir}/{profile}/')
 
-    print("Copied over firefox settings")
+    print("  Finished copying over firefox settings :3")
     return None
 
 
@@ -296,12 +300,13 @@ def main():
     run_brew_installs(opts)
     hard_link_rc_files(overwrite_bool)
     configure_vim()
-    # TODO: configure_firefox()
+    configure_firefox()
 
     if OS.__contains__('linux'):
         run_linux_installer('apt', opts)
         run_linux_installer('snap', opts)
         run_linux_installer('flatpak', opts)
+        #install_fonts()
 
     print("\033[92m SUCCESS \033[00m".center(70,'-'))
     print("\n Here's some stuff you gotta do manually:")

@@ -408,6 +408,10 @@ call plug#begin()
 "   - Vim (Linux/macOS): '~/.vim/plugged'
 "   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
 
+" git plugin for running things with :git
+Plug 'tpope/vim-fugitive'
+Plug 'powerline/powerline'
+
 " On-demand loading of nerdtree
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -432,6 +436,4 @@ Plug 'davidhalter/jedi-vim'
 " yaml syntax highlighting better
 Plug 'stephpy/vim-yaml'
 
-" git plugin for running things with :git
-Plug 'tpope/vim-fugitive'
 call plug#end()
