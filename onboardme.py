@@ -29,7 +29,7 @@ def run_linux_installer(installer="", extra_packages=[]):
     # -y is assume yes for "are you sure you want to install"
     if installer == 'apt':
         emoji = "🫠"
-        ls_installed = "apt list --installed | grep -v error"
+        ls_installed = "apt list --installed"
         currently_installed = subproc(ls_installed)
         installer_cmd = f"sudo apt-get install -y "
     elif installer == 'flatpak':
