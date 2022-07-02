@@ -27,6 +27,9 @@ def run_linux_installer(installer="", extra_packages=[]):
     with open(f'{PKG_DIR}/packages.yml', 'r') as yaml_file:
         packages_dict = yaml.safe_load(yaml_file)
 
+    print(f" {emoji}\033[94m {installer} apps installing\033[00m ".center(70,
+                                                                          '-'))
+
     # -y is assume yes for "are you sure you want to install"
     if installer == 'apt':
         emoji = "🫠"
@@ -47,8 +50,6 @@ def run_linux_installer(installer="", extra_packages=[]):
         print(f'INVALID INSTALLER: {installer}')
         return None
 
-    print(f" {emoji}\033[94m {installer} apps installing\033[00m ".center(70,
-                                                                          '-'))
 
     # Install default_packages always, but also install gaming or work
     pkg_lists = ['default_packages']
