@@ -60,34 +60,37 @@ def run_brew_installs(opts=""):
     Tested only on mac and linux, but maybe works for windows :shrug:
     """
     print(" 🍺\033[94m Brew packages installing \033[00m".center(70, '-'))
-    base_brew_cmd = f'brew bundle --file={PKG_MNGR_DIR}/brew/'
+    base_brew_cmd = f'brew bundle --file={PKG_MNGR_DIR}/brew/Brewfile'
     if OS.__contains__('linux'):
         # on linux, just in case it's not in our path yet
         base_brew_cmd = ('/home/linuxbrew/.linuxbrew/bin/brew bundle '
-                         f'--file={PKG_MNGR_DIR}/brew/')
+                         f'--file={PKG_MNGR_DIR}/brew/Brewfile')
 
     # this is the stuff that's installed on both mac and linux
-    brew_cmd = f"{base_brew_cmd}/Brewfile_standard"
+    brew_cmd = base_brew_cmd + '_standard'
     subproc(brew_cmd)
 
-    # install things for devops job
-    if opts == "work":
-        brew_cmd = f"{base_brew_cmd}/Brewfile_work"
-        subproc(brew_cmd)
-
     # install linux specific apps
-
     if OS.__contains__('linux'):
         msg = " 🍻 🐧 \033[94m Linux specific brew packages installing \033[00m"
         print(msg.center(70, '-'))
-        brew_cmd = f"{base_brew_cmd}/Brewfile_linux"
+        brew_cmd = base_brew_cmd + '_linux'
         subproc(brew_cmd)
+
     # install mac specific apps
     elif OS == 'darwin':
         msg = " 🍻 🍎\033[94m macOS specific brew packages installing \033[00m"
         print(msg.center(70, '-'))
-        brew_cmd = f"{base_brew_cmd}/Brewfile_mac"
+        brew_cmd = base_brew_cmd + '_mac'
         subproc(brew_cmd)
+
+    # install optional packages for work
+    if opts == "work":
+        msg = " 🍻 💼\033[94m work specific brew packages installing \033[00m"
+        print(msg.center(70, '-'))
+        brew_cmd = base_brew_cmd + '_work'
+        subproc(brew_cmd)
+
 
     return None
 
