@@ -28,6 +28,7 @@ brew "go"
 brew "yamllint"
 # ls replacement written in rust
 brew "exa"
+brew "lsd"
 # pretty df outputs
 brew "duf"
 # search for all sorts of stuff

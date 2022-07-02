@@ -430,8 +430,8 @@ Plug 'dense-analysis/ale'
 " bash tab completion
 Plug 'WolfgangMehner/bash-support'
 
-" python tab completion
-Plug 'davidhalter/jedi-vim'
+" python tab completion - I actually find this kind of annoying
+" Plug 'davidhalter/jedi-vim'
 
 " yaml syntax highlighting better
 Plug 'stephpy/vim-yaml'
