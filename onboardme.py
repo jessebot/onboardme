@@ -168,7 +168,7 @@ def configure_firefox():
     print(msg.center(70, '-'))
 
     print("  Checking Firefox profiles.ini for correct profile...")
-    profile = ""
+    profile_dir = ""
     configur = ConfigParser()
     configur.read(ini_dir + 'profiles.ini')
     sections = configur.sections()
@@ -176,7 +176,7 @@ def configure_firefox():
         print('section: ' + section)
         if section.startswith('Install'):
             profile_dir = ini_dir + configur.get(section, 'Default')
-            print("  Current firefox profile is in: " + profile)
+            print("  Current firefox profile is in: " + profile_dir)
 
     print("\n  Configuring Firefox user preferences...")
     usr_prefs = repo_config_dir.replace("extensions/", "user.js")
