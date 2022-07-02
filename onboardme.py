@@ -41,12 +41,12 @@ def run_installer(installer="", extra_packages=[]):
     with open(f'{PKG_MNGR_DIR}/packages.yml', 'r') as yaml_file:
         packages_dict = yaml.safe_load(yaml_file)[installer]
 
-    installed_pkgs = subproc(packages_dict['list_cmd'], True, True)
     emoji = packages_dict['emoji']
-    install_cmd = packages_dict['install_cmd']
-
     status_msg = f" \033[94m {emoji} {installer} apps installing \033[00m"
     print(status_msg.center(70, '-'))
+
+    installed_pkgs = subproc(packages_dict['list_cmd'], True, True)
+    install_cmd = packages_dict['install_cmd']
 
     # Install default_packages always, but also install gaming or work
     pkg_types = ['default_packages']
