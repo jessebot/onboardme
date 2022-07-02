@@ -26,17 +26,18 @@ def run_linux_installer(installer="", extra_packages=[]):
     with open(f'{PKG_DIR}/packages.yml', 'r') as yaml_file:
         packages_dict = yaml.safe_load(yaml_file)
 
+    # -y is assume yes for "are you sure you want to install"
     if installer == 'apt':
         emoji = "🫠"
         installer_cmd = f"sudo apt-get install -y "
-    elif installer == 'snap':
-        emoji = "🫰 "
-        installer_cmd = f"sudo snap install "
     elif installer == 'flatpak':
         emoji = "🫓"
         installer_cmd = f"flatpak install -y flathub "
         subproc("sudo flatpak remote-add --if-not-exists flathub "
                 "https://flathub.org/repo/flathub.flatpakrepo")
+    elif installer == 'snap':
+        emoji = "🫰 "
+        installer_cmd = f"sudo snap install "
     else:
         print(f'INVALID INSTALLER: {installer}')
         return None
