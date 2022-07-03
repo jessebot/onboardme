@@ -45,15 +45,15 @@ hyper install hyper-highlight-pane
 
 ### basic
 
-- verminal: high-contrast + transparancy 
+- [verminal](https://github.com/defringe/verminal): high-contrast + transparancy 
 
-- hyper-dracula: simple semi-dark material theme with good contrast
+- [hyper-dracula](https://hyper.is/store/hyper-dracula): simple semi-dark material theme with good contrast
 
-- hyper-materialshell: similar to dracula but darker
+- [hyper-materialshell](https://github.com/carloscuesta/hyper-materialshell): similar to dracula but darker
 
-- hypernasa: see the daily nasa picture in your terminal. looks nice, but can suck on days where th pic doesnt contrast well
+- [hypernasa](https://www.npmjs.com/package/hypernasa): see the daily nasa picture in your terminal. looks nice, but can suck on days where th pic doesnt contrast well
 
-- hyper-pokemon: configure your own poke station! configurable flat desgn pokemon walpapers with color matching text + tab iconse
+- [hyper-pokemon](https://github.com/klaussinani/hyper-pokemon): configure your own poke station! configurable flat desgn pokemon walpapers with color matching text + tab iconse
 
 ## install zsh plugin manager
 
