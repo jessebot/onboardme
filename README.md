@@ -5,7 +5,7 @@ This is a project to store config files, as well as programatically install core
 
 🚧 Under Construction 🚧
 
-Currently tested on macOS monterey 12.4, but will work on debian soon.
+Currently tested on macOS monterey 12.4, mostly working on Debian 11 soon.
 Please report 🐛 in the GitHub issues, and I will get them as I have time.
 
 ## Quick Start
@@ -87,3 +87,6 @@ We are currently using the philosophy of this RFC draft:
 
 ### Tips
 Contact your local datacenters and see if they offer an object storage service, because they might, and it could be really cheap. Don't give your money to AWS.
+
+### Special Thanks
+Thank you to @cloudymax for all their direct contributions for gaming on Linux, virtualization, ansible, the hyper terminal configs. Also great engineer to rubberduck with generally. Couldn't have polished a lot of this without their patience during my late night ramblings about my 8 different package managers and why utf-8 isn't called utf-14 :3 :blue_heart:
