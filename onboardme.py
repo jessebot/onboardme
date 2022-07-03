@@ -43,7 +43,8 @@ def run_installer(installer="", extra_packages=[]):
     if installer == 'brew':
         install_cmd += pkg_manager_dir + 'brew/Brewfile_'
 
-    # Install default_packages always, but also install gaming or work
+    # Install default_packages always, but this allows for loop like:
+    # for each set of packages, e.g. default, work, gaming
     pkg_types = ['default_packages']
     if extra_packages:
         pkg_types.extend(extra_packages)
