@@ -31,5 +31,6 @@ brew "lsd"
 brew "duf"
 # search for all sorts of stuff
 brew "howdoi"
+brew "tldr"
 # make fun colors in the terminal
 brew "lolcat"
