@@ -41,13 +41,13 @@ Now you can run the actual script that does the heavy lifting.
 When the script completes, it'll output a number of other steps to take manually that aren't yet automated.
 
 ## Under the hood
-- Installs files are in the directory `.config/rc_files`: `.bashrc` files, `.vimrc`, and `.zshrc`.
+- Installs files are in the directory `configs/rc_files`: `.bashrc` files, `.vimrc`, and `.zshrc`.
 - Installs apt, snap, and flatpak packages from `./packages/packages.yml`
 - Installs gaming related packages via apt if you pass in `--gaming`.
 - Installs brew files from `./packages/Brewfile_*` depending on OS and if `--work` is passed in
 - Installs vim-plug, a vim plugin manager to setup things like nerdtree, indentations lines, and fuzzysearch
 
-If you want to see the exact packages being installed, you can check out `.config/installers/packages.yml` for an easy to absorb yaml list of packages per installer. I bias towards brew fo cross-platform usage.
+If you want to see the exact packages being installed, you can check out `configs/installers/packages.yml` for an easy to absorb yaml list of packages per installer. I bias towards brew fo cross-platform usage.
 
 I'm using github issues to track future work on this thing.
 

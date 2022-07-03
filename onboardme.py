@@ -35,7 +35,7 @@ def run_installers(installers=[], extra_packages=[]):
             subproc("sudo flatpak remote-add --if-not-exists flathub "
                     "https://flathub.org/repo/flathub.flatpakrepo")
 
-        pkg_manager_dir = f"{PWD}/.config/installers/"
+        pkg_manager_dir = f"{PWD}/configs/installers/"
         with open(pkg_manager_dir + 'packages.yml', 'r') as yaml_file:
             packages_dict = yaml.safe_load(yaml_file)[installer]
 
@@ -122,7 +122,7 @@ def hard_link_rc_files(overwrite=False):
     existing_files = []
 
     # loop through the rc_files and hard link them all to the user's home dir
-    rc_dir = f'{PWD}/.config/rc_files'
+    rc_dir = f'{PWD}/configs/rc_files'
     for rc_file in os.listdir(rc_dir):
         src_rc_file = f'{rc_dir}/{rc_file}'
         hard_link = f'{HOME_DIR}/{rc_file}'
@@ -209,7 +209,7 @@ def configure_firefox():
             profile_dir = ini_dir + prof_config.get(section, 'Default')
             print("  Current firefox profile is in: " + profile_dir)
 
-    repo_config_dir = f'{PWD}/.config/browser/firefox/extensions/'
+    repo_config_dir = f'{PWD}/configs/browser/firefox/extensions/'
 
     print("\n  Configuring Firefox user preferences...")
     usr_prefs = repo_config_dir.replace("extensions/", "user.js")
