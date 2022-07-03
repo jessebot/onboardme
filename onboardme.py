@@ -76,7 +76,7 @@ def install_fonts():
             fonts_repo = "https://github.com/ryanoasis/nerd-fonts.git"
             Repo.clone_from(fonts_repo, fonts_dir, depth=1)
 
-        subproc(fonts_dir + '/install.sh Hack --fontawesome')
+        subproc(fonts_dir + '/install.sh --fontawesome Hack')
     return None
 
 
