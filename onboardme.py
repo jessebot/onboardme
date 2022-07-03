@@ -220,9 +220,11 @@ def map_caps_to_control():
     """
     maps capslock to control
     """
-    cmd = ("gsettings set org.gnome.desktop.input-sources xkb-options "
-           """'["caps:ctrl_modifier"]'""")
-    subproc(cmd)
+    if OS.__contains__('linux'):
+        # god this is ugly and awful
+        cmd = ("gsettings set org.gnome.desktop.input-sources xkb-options "
+               """'["caps:ctrl_modifier"]'""")
+        subproc(cmd)
 
 
 def subproc(cmd="", error_ok=False, suppress_output=False):
