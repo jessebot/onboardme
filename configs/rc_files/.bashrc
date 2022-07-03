@@ -168,7 +168,7 @@ if [ -f $HOME/.bashrc_env_variables ]; then
 fi
 
 # this one is only if emojis already work in your terminal :3
-PS1="\`if [ \$? = 0 ]; then echo 💙; else echo 😔; fi\` \[\e[34m\][\@]\[\e[0m\]\\$ "
+PS1="\`if [ \$? = 0 ]; then echo 💙; else echo 😔; fi\` \[\e[94m\][\@]\[\e[0m\]\\$ "
 
 # use this one if you don't have emojis in your terminal
 # adds a smileyface on successful commands and a wat face otherwise :D
