@@ -86,8 +86,10 @@ def install_fonts():
         bitmap_conf = '/etc/fonts/conf.d/70-no-bitmaps.conf'
         print("  Going to remove '{bitmap_conf} and link a yes map...")
 
+        # we do all of this with subprocess because I want the sudo prompt
         if os.path.exists(bitmap_conf):
             subproc(f'sudo rm {bitmap_conf}')
+
         subproc('sudo ln -s /etc/fonts/conf.avail/70-yes-bitmaps.conf '
                 '/etc/fonts/conf.d/70-yes-bitmaps.conf', True, False)
 
