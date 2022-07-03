@@ -2,7 +2,7 @@
   "entries": {
     "cask": {
       "docker": {
-        "version": "4.9.1,81317",
+        "version": "4.10.0,82025",
         "options": {
           "full_name": "docker"
         }
@@ -52,7 +52,13 @@
     },
     "tap": {
       "homebrew/cask-fonts": {
-        "revision": "40ac7a64450f9827e0d748a6d78760fb078cd0b2"
+        "revision": "460c645d259e946d1ded0dc7798969f29b789a23"
+      }
+    },
+    "brew": {
+      "imgcat": {
+        "version": "2.5.1",
+        "bottle": false
       }
     }
   },
@@ -61,7 +67,7 @@
       "monterey": {
         "HOMEBREW_VERSION": "3.5.3",
         "HOMEBREW_PREFIX": "/usr/local",
-        "Homebrew/homebrew-core": "ffe83c8abda81a3fb68ebe10f6a3e382e101ea7e",
+        "Homebrew/homebrew-core": "93f2216494b95213cdffbb5aec2fca5f64fa0d5f",
         "CLT": "13.4.0.0.1.1651278267",
         "Xcode": "13.4.1",
         "macOS": "12.4"
