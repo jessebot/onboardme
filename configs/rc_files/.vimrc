@@ -432,6 +432,7 @@ Plug 'WolfgangMehner/bash-support'
 
 " python tab completion - I actually find this kind of annoying
 " Plug 'davidhalter/jedi-vim'
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 
 " yaml syntax highlighting better
 Plug 'stephpy/vim-yaml'
