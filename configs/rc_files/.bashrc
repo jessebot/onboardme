@@ -78,8 +78,7 @@ alias lt='lsd -atr'
 # same as above, but long
 alias llt='lsd -haltr'
 # lsd already has a fancier tree command with icons
-alias tree='lsd --tree'
-alias tre='lsd --tree'
+alias tree='lsd --tree --depth=2'
 
 # colordiff - diff, but with colors for accessibility
 alias diff='colordiff -uw'
@@ -95,6 +94,7 @@ alias gerp='grep'
 alias celar='clear'
 alias gti='git'
 alias ter='tree'
+alias tre='tree'
 
 # shorten commands
 alias vi='vim'
