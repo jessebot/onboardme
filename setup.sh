@@ -101,5 +101,5 @@ pip3 install -r ~/repos/onboardme/requirements.txt
 echo ""
 echo -e "------------------------------ \033[92mSuccess~! ^O^\033[00m -----------------------------------"
 echo ""
-echo "Now, try running the following: ~/repos/onboardme/onboardme.py"
+echo "Now, try running the following: ~/repos/onboardme/onboardme.py --help"
 echo ""
