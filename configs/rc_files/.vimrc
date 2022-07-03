@@ -2,7 +2,7 @@
 set number
 
 " need this for fun icons
-set encoding=UTF-8
+set encoding=utf-8
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BASIC EDITING CONFIGURATION
