@@ -1,6 +1,6 @@
 # Learn about Hyper :D
 
-## [Hyper.js terminal](https://hyper.is/#installation)
+[Hyper.js terminal](https://hyper.is/#installation)
 
 Some cool CSS thing @cloudymax has been up to
 
