@@ -3,19 +3,17 @@
 
 This is a project to store config files, as well as programatically install core packages that I need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping I'd remember why it was there later, so this is now a renewed effort in remembering all the thing™️s, and automating as much as possible.
 
-🚧 Under Construction 🚧
-
-Currently tested on macOS monterey 12.4, mostly working on Debian 11 soon.
+🚧 Alpha state :3 Currently tested on macOS monterey 12.4, and Debian 11.
 Please report 🐛 in the GitHub issues, and I will get them as I have time.
 
 ## Quick Start
-First, make sure you have curl, but it *should* be there **already be on macOS monterey**:
+First, make sure you have curl, but it *should* be there ***already be on macOS monterey***:
 ```bash
 # if this doesn't return anything, you need to install curl
 which curl
 ```
-If it's not there on Linux, you can install it with `apt` or use any default package manager like yum, yast, etc
-```
+If it's not there on Linux, you can install it with `apt` or use any default package manager like yum, or whatever people who use gentoo use
+```bash
 # Debian/Ubuntu
 sudo apt install -y curl
 ```
@@ -60,7 +58,7 @@ Category | App | Replaces
 |Email|Protonmail and Bridge for Linux/MacOS|Gmail|
 |Launcher|Albert?|Alfred|
 |Photo/file Storage|NextCloud - not tested|Google Photos/Drive|
-|Passwords|Bitwarden|LastPass|
+|Passwords|Bitwarden*|LastPass|
 |News - RSS|Fluent Reader|Facebook/Twitter news company feeds|
 |Video|FreeTube,Peertube|YouTube|
 
