@@ -76,7 +76,12 @@ def install_fonts():
             fonts_repo = "https://github.com/ryanoasis/nerd-fonts.git"
             Repo.clone_from(fonts_repo, fonts_dir, depth=1)
 
-        subproc(fonts_dir + '/install.sh --fontawesome Hack')
+        old_pwd = PWD
+        os.chdir(fonts_dir)
+        subproc('./install.sh Hack')
+        os.chdir(old_pwd)
+        print("  The fonts should be installed, however, you have to set "
+              "your terminal font to the new font. I rebooted too.")
     return None
 
 
