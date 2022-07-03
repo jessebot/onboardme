@@ -99,7 +99,7 @@ module.exports = {
         // for environment variables
         env: {
           // fix encoding issues
-          LANG: 'fi_FI.UTF-8',
+          LANG: 'en_EN.UTF-8',
         },
         // Supported Options:
         //  1. 'SOUND' -> Enables the bell as a sound
