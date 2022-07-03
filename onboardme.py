@@ -114,12 +114,11 @@ def hard_link_rc_files(overwrite=False):
     for rc_file in os.listdir(rc_dir):
         src_rc_file = f'{rc_dir}/{rc_file}'
         hard_link = f'{HOME_DIR}/{rc_file}'
+
         # if overwrite set to True, delete the existing files first
         if overwrite:
-            try:
+            if os.path.exists(hard_link):
                 os.remove(hard_link)
-            except Exception as e:
-                print('  ' + e)
 
         try:
             os.link(src_rc_file, hard_link)
@@ -212,14 +211,6 @@ def configure_firefox():
     print("  Firefox extensions installed, but they need to be enabled\n")
 
     return None
-
-
-def configure_terminal():
-    """
-    this should just configure terminal configs <3
-    """
-    msg = "\033[94m 💻 Confgiuring terminal preferences\033[00m "
-    print(msg.center(80, '-'))
 
 
 def map_caps_to_control():
