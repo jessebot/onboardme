@@ -1,4 +1,7 @@
 # Vim tips and tricks
+
+- [How does the vim write with sudo trick work?](https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
+
 ### Interactive sed example
 ```vim
 :s/^/meep/
