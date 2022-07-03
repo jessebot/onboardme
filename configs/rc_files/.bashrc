@@ -77,7 +77,7 @@ alias ll='lsd -hal'
 alias lt='lsd -atr'
 # same as above, but long
 alias llt='lsd -haltr'
-# fancir tree command with icons
+# lsd already has a fancier tree command with icons
 alias tree='lsd --tree'
 alias tre='lsd --tree'
 
