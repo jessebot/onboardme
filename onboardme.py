@@ -118,7 +118,7 @@ def hard_link_rc_files(overwrite=False):
         if overwrite:
             try:
                 os.remove(hard_link)
-            except Error as e:
+            except Exception as e:
                 print('  ' + e)
 
         try:
