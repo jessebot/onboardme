@@ -66,7 +66,7 @@ def install_fonts():
     """
     if OS.__contains__('linux'):
         status_msg = f" \033[94m ✍️ Installing fonts... \033[00m"
-        print(status_msg)
+        print(status_msg.center(80, '-'))
         fonts_repo = "https://github.com/ryanoasis/nerd-fonts.git"
         fonts_dir = f'{HOME_DIR}/repos/nerd-fonts'
         Repo.clone_from(fonts_repo, fonts_dir, depth=1)
