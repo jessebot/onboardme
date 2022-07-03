@@ -25,10 +25,9 @@ brew "pandoc"
 brew "wget"
 brew "go"
 brew "yamllint"
-# ls replacement written in rust
-brew "exa"
+# ls replacement written in rust: https://github.com/Peltoche/lsd
 brew "lsd"
-# pretty df outputs
+# prettier du/df outputs: https://github.com/muesli/duf
 brew "duf"
 # search for all sorts of stuff
 brew "howdoi"
