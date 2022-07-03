@@ -69,11 +69,17 @@ xterm*|rxvt*)
     ;;
 esac
 
-# ls - use lsd for colors/icons, human readable file sizes, show hidden files
+# lsd instead of ls for colors/icons, human readable file sizes, show hidden files
 alias ls='lsd -a'
-alias lse='exa -a'
 alias ll='lsd -hal'
-alias lle='exa -hal'
+# list, sorted by most recent and reversed, so the most recent
+# file is the last ouputted line, helpful for directories with lots of files
+alias lt='lsd -atr'
+# same as above, but long
+alias llt='lsd -haltr'
+# fancir tree command with icons
+alias tree='lsd --tree'
+alias tre='lsd --tree'
 
 # colordiff - diff, but with colors for accessibility
 alias diff='colordiff -uw'
@@ -88,6 +94,7 @@ alias grpe='grep'
 alias gerp='grep'
 alias celar='clear'
 alias gti='git'
+alias ter='tree'
 
 # shorten commands
 alias vi='vim'
