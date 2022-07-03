@@ -67,8 +67,7 @@ def install_fonts():
     if OS.__contains__('linux'):
         fonts_repo = "https://github.com/ryanoasis/nerd-fonts.git"
         fonts_dir = f'{HOME_DIR}/repos/nerd-fonts'
-        Repo.clone_from(fonts_repo, fonts_dir,
-                        filter=['tree:0', 'blob:none'], sparse=True)
+        Repo.clone_from(fonts_repo, fonts_dir, depth=1)
         subproc(fonts_dir + 'nerd-fonts/install.sh Hack')
     return None
 
