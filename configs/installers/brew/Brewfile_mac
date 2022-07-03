@@ -13,3 +13,4 @@ brew "danielgatis/imgcat/imgcat"
 # have to tap special cask for various fonts
 tap "homebrew/cask-fonts"
 cask "font-hack-nerd-font"
+cask "hyper"
