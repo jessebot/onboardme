@@ -108,8 +108,6 @@ alias ga='git add .'
 alias gph='git push'
 alias gpl='git pull'
 
-alias tree='tree -C'
-
 # quick to do
 alias todo='vim ~/todo.md'
 
