@@ -73,3 +73,11 @@ configure your own poke station! configurable flat desgn pokemon walpapers with 
 1. [Pure Prompt](https://github.com/sindresorhus/pure)
 `npm install --global pure-prompt`
 
+2. initialize by adding the following to the top of your .zshrc
+
+```bash
+autoload -U promptinit; promptinit
+prompt pure
+```
+
+
