@@ -26,8 +26,8 @@ def run_installers(installers=[], extra_packages=[]):
     gaming or work tasks.
     """
     if not installers:
-        print("  If this is a fresh install of your OS, this could take a "
-              "while. Settle in ")
+        print("\n 🥱 ⚠️  If this is a fresh install of your OS, this could take"
+              "a while. Settle in and get comfy 🛋️ \n")
         installers = ['brew']
         if OS == 'linux':
             installers.extend(['apt', 'snap', 'flatpak'])
