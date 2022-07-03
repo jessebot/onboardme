@@ -72,7 +72,7 @@ def install_fonts():
 
         # do a shallow clone of the repo
         if not os.path.exists(fonts_dir):
-            Path(autoload_dir).mkdir(parents=True, exist_ok=True)
+            Path(fonts_dir).mkdir(parents=True, exist_ok=True)
             fonts_repo = "https://github.com/ryanoasis/nerd-fonts.git"
             Repo.clone_from(fonts_repo, fonts_dir, depth=1)
 
