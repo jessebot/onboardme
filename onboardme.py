@@ -64,6 +64,15 @@ def install_fonts():
     config, but you should still reboot when you're done :shrug:
     """
     if OS.__contains__('linux'):
+        fonts_repo = "https://github.com/ryanoasis/nerd-fonts.git"
+        fonts_dir = f'(HOME_DIR)/repos'
+        Repo.clone_front(fonts_repo, fonts_dir,
+                         filter=['tree:0', 'blob:none'], sparse=True)
+        subproc(fonts_dir + 'nerd-fonts/install.sh Hack')
+
+
+    # this is the manual way, which we're commenting out for now
+    """
         status_msg = f" \033[94m ✍️ Installing fonts... \033[00m"
         print(status_msg.center(80, '-'))
 
@@ -88,7 +97,7 @@ def install_fonts():
         if 'Hack' in subproc("fc-list", False, True):
             print("  Hack font should be installed now :D Probably, but it's "
                   "still recommended you reboot after this.")
-
+    """
     return None
 
 
