@@ -5,23 +5,23 @@
 # we make this lowercase because I don't trust it not to be random caps
 OS=$(uname | tr '[:upper:]' '[:lower:]')
 
-echo "Before we begin, please make sure you're on a wired connection, or sit "
-echo " close to the wifi. This might take a while if you're a fresh OS install"
-echo " and you'll need to present to enter your password for package installs"
-printf "so grab some tea and get comfy :3\n\n"
-printf "Here's some relaxing music: https://youtu.be/-5KAN9_CzSA\n\n"
+echo -e "-------------------------------- \033[94m 🛋️  Comfy Warning \033[00m -------------------------------"
+echo "Before we begin, please make sure you're on a wired connection, or sitclose to the wifi. This "
+echo "might take a while if you're a fresh OS install and you'll need to present to enter your password "
+echo "for package installs, so grab some tea and get comfy :3"
+printf "\nHere's some relaxing music: https://youtu.be/-5KAN9_CzSA"
 while true; do
-    read -p "Are you ready to get started? Do you have a nice cup of ☕? [y/n]  " answer
+    printf "\n\n"
+    read -p "Are you ready to get started? Do you have a nice cup of ☕? [y/n] " answer
     if [ "$answer" != "y" ]; then
-        echo "That's totally reasonable. You take your time, and I will be here."
+        printf "\nThat's totally reasonable. You take your time, and I will be here."
         sleep 5
     else
         break
     fi
 done
 
-echo -e "-------------------------------- \033[94m Beginning Setup \033[00m -------------------------------"
-echo "This script will ask for your password to sudo install things"
+echo -e "\n-------------------------------- \033[94m 🎬 Beginning Setup \033[00m -------------------------------"
 echo ""
 if [[ "$OS" == *"linux"* ]]; then
     echo -e "---------------------------- \033[94m Updating existing apt packages \033[00m --------------------"
@@ -115,5 +115,5 @@ pip3 install -r ~/repos/onboardme/requirements.txt
 echo ""
 echo -e "------------------------------ \033[92mSuccess~! ^O^\033[00m -----------------------------------"
 echo ""
-echo "Now, try running the following: ~/repos/onboardme/onboardme.py --help"
+echo -e "✨ Now, try running the following: ~/repos/onboardme/onboardme.py --help"
 echo ""
