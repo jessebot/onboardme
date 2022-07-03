@@ -72,15 +72,26 @@ def install_fonts():
 
         # do a shallow clone of the repo
         if not os.path.exists(fonts_dir):
+            print("  Downloading installer and font sets...  (can take a bit)")
             Path(fonts_dir).mkdir(parents=True, exist_ok=True)
             fonts_repo = "https://github.com/ryanoasis/nerd-fonts.git"
             Repo.clone_from(fonts_repo, fonts_dir, depth=1)
 
+        print("  Running the font installer...")
         old_pwd = PWD
         os.chdir(fonts_dir)
         subproc('./install.sh Hack')
         os.chdir(old_pwd)
-        print("  The fonts should be installed, however, you have to set "
+
+        bitmap_conf = '/etc/fonts/conf.d/70-no-bitmaps.conf'
+        print("  Going to remove '{bitmap_conf} and link a yes map...")
+
+        if os.path.exists(bitmap_conf):
+            subproc(f'sudo rm {bitmap_conf}')
+        subproc('sudo ln -s /etc/fonts/conf.avail/70-yes-bitmaps.conf ',
+                '/etc/fonts/conf.d/70-yes-bitmaps.conf', True, False)
+
+        print("\n  The fonts should be installed, however, you have to set "
               "your terminal font to the new font. I rebooted too.")
     return None
 
