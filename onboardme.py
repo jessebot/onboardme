@@ -13,12 +13,8 @@ import yaml
 import wget
 import zipfile
 OS = sys.platform
-if OS == 'darwin':
-    OS = 'mac'
-elif OS.__contains__('linux'):
+if OS.__contains__('linux'):
     OS = 'linux'
-else:
-    OS = 'windows'
 HOME_DIR = os.getenv("HOME")
 PWD = os.path.dirname(__file__)
 
@@ -61,7 +57,7 @@ def run_installers(installers=[], extra_packages=[]):
             install_cmd += pkg_manager_dir + 'brew/'
             if OS == 'linux':
                 pkg_types.append('linux_packages')
-            elif OS == 'mac':
+            elif OS == 'darwin':
                 pkg_types.append('mac_packages')
 
         for pkg_type in pkg_types:
@@ -197,7 +193,7 @@ def configure_firefox():
     # different OS will have firefox profile info in different paths
     if OS == 'linux':
         ini_dir = f"{HOME_DIR}/.mozilla/firefox/"
-    elif OS == 'mac':
+    elif OS == 'darwin':
         # hate apple for their capitalized directories
         ini_dir = f"{HOME_DIR}/Library/Application Support/Firefox/"
 
@@ -305,7 +301,8 @@ def main():
     res = parser.parse_args()
     dry_run = res.dry
     overwrite_bool = res.overwrite
-    if OS == 'win32' or OS == 'windows':
+
+    if OS.startswith('win'):
         print("Ooof, this isn't ready yet...")
         print("But you can check out the docs/windows directory for "
               "help getting set up!")
@@ -313,13 +310,15 @@ def main():
 
     # installs bashrc and the like
     run_installers(None, res.extra)
+
     hard_link_rc_files(overwrite_bool)
+
     install_fonts()
+
     configure_vim()
+
     # currently broken
     map_caps_to_control()
-    # coming soon
-    # configure_terminal()
 
     # this can't be done until we have firefox, and who knows when that is
     configure_firefox()
