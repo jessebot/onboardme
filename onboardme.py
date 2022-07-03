@@ -290,7 +290,8 @@ def main():
             'If you run this with no options on macOS, it will install all '
             'default brew packages, and updated you rc_files. On Linux it will'
             ' do the same, but it will also install apt, flatpak, snap, and '
-            'AppImage packages, plus it will configure firefox.')
+            'AppImage packages, plus it will configure firefox. For optional'
+            "packages, -e/--extras ['package_list_name']")
     parser = argparse.ArgumentParser(description=help)
     dr_help = "perform a Dry Run of the script, NOT WORKING YET"
     parser.add_argument('--dry', action="store_true", default=False,
@@ -303,6 +304,8 @@ def main():
                              'before creating hardlinks. Be careful!')
     parser.add_argument('--installers', type=list, default=[],
                         help='list of installers you want to run, not working')
+    parser.add_argument('--firefox', action="store_true", default=False,
+                        help='Opt into experimental firefox configuring')
     res = parser.parse_args()
     overwrite_bool = res.overwrite
 
@@ -325,7 +328,8 @@ def main():
     map_caps_to_control()
 
     # this can't be done until we have firefox, and who knows when that is
-    configure_firefox()
+    if res.firefox:
+        configure_firefox()
 
     print("\033[92m SUCCESS \033[00m".center(80, '-'))
     print("\n Here's some stuff you gotta do manually:")
