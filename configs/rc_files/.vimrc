@@ -1,13 +1,12 @@
-" having numbers on makes my life soooo much easier when debugging
-set number
-
-" need this for fun icons
-set encoding=utf-8
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BASIC EDITING CONFIGURATION
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible
+" line numbers for debugging and screen sharing 
+set number
+" Enable syntax highlighting by default 
+syntax on
 " allow unsaved background buffers and remember marks/undo for them
 set hidden
 " remember more commands and search history
@@ -45,8 +44,6 @@ set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set backspace=indent,eol,start
 " display incomplete commands
 set showcmd
-" Enable highlighting for syntax
-syntax on
 " Enable file type detection.
 " Use the default filetype settings, so that mail gets 'tw' set to 72,
 " 'cindent' is on in C files, etc.
@@ -71,35 +68,12 @@ augroup vimrcEx
     \ exe "normal g`\"" |
     \ endif
 
-" for ruby, autoindent with two spaces, always expand tabs
-  autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber set ai sw=2 sts=2 et
-  autocmd FileType python set sw=4 sts=4 et
-
-" Show different background colour after 80 chars
-  autocmd FileType python let &colorcolumn=join(range(81,999),",")
-
-  autocmd! BufRead,BufNewFile *.sass setfiletype sass
-
-  autocmd BufRead *.mkd set ai formatoptions=tcroqn2 comments=n:&gt;
-  autocmd BufRead *.markdown set ai formatoptions=tcroqn2 comments=n:&gt;
-
-" Indent p tags
-  autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
-
-" Don't syntax highlight markdown because it's often wrong
-  autocmd! FileType mkd setlocal syn=off
-
 " Leave the return key alone when in command line windows, since it's used
 " to run commands there.
   autocmd! CmdwinEnter * :unmap <cr>
   autocmd! CmdwinLeave * :call MapCR()
 augroup END
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" COLOR
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-:set t_Co=256 " 256 colors
-:set background=dark
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " STATUS LINE
@@ -115,8 +89,6 @@ nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
-" Insert a hash rocket with <c-l>
-imap <c-l> <space>=><space>
 " Clear the search buffer when hitting return
 function! MapCR()
   nnoremap <cr> :nohlsearch<cr>
@@ -169,67 +141,6 @@ endfunction
 map <leader>n :call RenameFile()<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" PROMOTE VARIABLE TO RSPEC LET
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! PromoteToLet()
-  :normal! dd
-" :exec '?^\s*it\>'
-  :normal! P
-  :.s/\(\w\+\) = \(.*\)$/let(:\1) { \2 }/
-  :normal ==
-endfunction
-:command! PromoteToLet :call PromoteToLet()
-:map <leader>p :PromoteToLet<cr>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" EXTRACT VARIABLE (SKETCHY)
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! ExtractVariable()
-    let name = input("Variable name: ")
-    if name == ''
-        return
-    endif
-" Enter visual mode (not sure why this is needed since we're already in
-" visual mode anyway)
-    normal! gv
-
-" Replace selected text with the variable name
-    exec "normal c" . name
-" Define the variable on the line above
-    exec "normal! O" . name . " = "
-" Paste the original selected text to be the variable value
-    normal! $p
-endfunction
-vnoremap <leader>rv :call ExtractVariable()<cr>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" INLINE VARIABLE (SKETCHY)
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! InlineVariable()
-" Copy the variable under the cursor into the 'a' register
-    :let l:tmp_a = @a
-    :normal "ayiw
-" Delete variable and equals sign
-    :normal 2daW
-" Delete the expression into the 'b' register
-    :let l:tmp_b = @b
-    :normal "bd$
-" Delete the remnants of the line
-    :normal dd
-" Go to the end of the previous line so we can start our search for the
-" usage of the variable to replace. Doing '0' instead of 'k$' doesn't
-" work; I'm not sure why.
-    normal k$
-" Find the next occurence of the variable
-    exec '/\<' . @a . '\>'
-" Replace that occurence with the text we yanked
-    exec ':.s/\<' . @a . '\>/' . @b
-    :let @a = l:tmp_a
-    :let @b = l:tmp_b
-endfunction
-nnoremap <leader>ri :call InlineVariable()<cr>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MAPS TO JUMP TO SPECIFIC COMMAND-T TARGETS AND FILES
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <leader>gr :topleft :split config/routes.rb<cr>
@@ -262,94 +173,6 @@ map <leader>gg :topleft 100 :split Gemfile<cr>
 map <leader>gt :CommandTFlush<cr>\|:CommandTTag<cr>
 map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
 map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" SWITCH BETWEEN TEST AND PRODUCTION CODE
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! OpenTestAlternate()
-  let new_file = AlternateForCurrentFile()
-  exec ':e ' . new_file
-endfunction
-function! AlternateForCurrentFile()
-  let current_file = expand("%")
-  let new_file = current_file
-  let in_spec = match(current_file, '^spec/') != -1
-  let going_to_spec = !in_spec
-  let in_app = match(current_file, '\<controllers\>') != -1 || match(current_file, '\<models\>') != -1 || match(current_file, '\<views\>') != -1 || match(current_file, '\<helpers\>') != -1
-  if going_to_spec
-    if in_app
-      let new_file = substitute(new_file, '^app/', '', '')
-    end
-    let new_file = substitute(new_file, '\.rb$', '_spec.rb', '')
-    let new_file = 'spec/' . new_file
-  else
-    let new_file = substitute(new_file, '_spec\.rb$', '.rb', '')
-    let new_file = substitute(new_file, '^spec/', '', '')
-    if in_app
-      let new_file = 'app/' . new_file
-    end
-  endif
-  return new_file
-endfunction
-nnoremap <leader>. :call OpenTestAlternate()<cr>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" RUNNING TESTS
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>t :call RunTestFile()<cr>
-map <leader>T :call RunNearestTest()<cr>
-map <leader>a :call RunTests('')<cr>
-map <leader>c :w\|:!script/features<cr>
-map <leader>w :w\|:!script/features --profile wip<cr>
-
-function! RunTestFile(...)
-    if a:0
-        let command_suffix = a:1
-    else
-        let command_suffix = ""
-    endif
-
-" Run the tests for the previously-marked file.
-    let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\)$') != -1
-    if in_test_file
-        call SetTestFile()
-    elseif !exists("t:grb_test_file")
-        return
-    end
-    call RunTests(t:grb_test_file . command_suffix)
-endfunction
-
-function! RunNearestTest()
-    let spec_line_number = line('.')
-    call RunTestFile(":" . spec_line_number . " -b")
-endfunction
-
-function! SetTestFile()
-" Set the spec file that tests will be run for.
-    let t:grb_test_file=@%
-endfunction
-
-function! RunTests(filename)
-" Write the file and run tests for the given filename
-    :w
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    if match(a:filename, '\.feature$') != -1
-        exec ":!script/features " . a:filename
-    else
-        if filereadable("script/test")
-            exec ":!script/test " . a:filename
-        elseif filereadable("Gemfile")
-            exec ":!bundle exec rspec --color " . a:filename
-        else
-            exec ":!rspec --color " . a:filename
-        end
-    end
-endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Md5 COMMAND
@@ -385,7 +208,7 @@ command! InsertTime :normal a<c-r>=strftime('%F %H:%M:%S.0 %z')<cr>
 cmap w!! w !sudo tee > /dev/null %
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" yaml documents are weird
+" yaml documents are weird, but this does proper linting w/o leaving vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
   set foldlevelstart=20
@@ -396,8 +219,9 @@ cmap w!! w !sudo tee > /dev/null %
   let g:ale_lint_on_text_changed = 'never'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Font stuff
+" This is so that nerd fonts work
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set encoding=utf-8
 set guifont=Hack\ Nerd\ Font:h11
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
