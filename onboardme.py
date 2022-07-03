@@ -3,6 +3,7 @@
 # jessebot@linux.com
 import argparse
 from configparser import ConfigParser
+from git import Repo
 import os
 from pathlib import Path
 import shutil
