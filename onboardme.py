@@ -15,7 +15,7 @@ OS = sys.platform
 if OS.__contains__('linux'):
     OS = 'linux'
 HOME_DIR = os.getenv("HOME")
-PWD = os.path.dirname(__file__)[:-1]
+PWD = os.path.dirname(__file__)
 
 
 def run_installers(installers=[], extra_packages=[]):
@@ -283,7 +283,12 @@ def main():
     """
     Core function
     """
-    help = 'This is a generic onboarding script for mac and mint.'
+    help = ('This is a generic onboarding script for macOS and debian. It uses'
+            'a config in the script repo directory under configs/installers'
+            'If you run this with no options on macOS, it will install all '
+            'default brew packages, and updated you rc_files. On Linux it will'
+            ' do the same, but it will also install apt, flatpak, snap, and '
+            'AppImage packages, plus it will configure firefox.')
     parser = argparse.ArgumentParser(description=help)
     dr_help = "perform a Dry Run of the script, NOT WORKING YET"
     parser.add_argument('--dry', action="store_true", default=False,
@@ -297,7 +302,6 @@ def main():
     parser.add_argument('--installers', type=list, default=[],
                         help='list of installers you want to run, not working')
     res = parser.parse_args()
-    dry_run = res.dry
     overwrite_bool = res.overwrite
 
     if OS.startswith('win'):
