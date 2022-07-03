@@ -69,35 +69,6 @@ def install_fonts():
         Repo.clone_front(fonts_repo, fonts_dir,
                          filter=['tree:0', 'blob:none'], sparse=True)
         subproc(fonts_dir + 'nerd-fonts/install.sh Hack')
-
-
-    # this is the manual way, which we're commenting out for now
-    """
-        status_msg = f" \033[94m ✍️ Installing fonts... \033[00m"
-        print(status_msg.center(80, '-'))
-
-        print("  Downloading font sets...")
-        url = ('https://github.com/source-foundry/Hack/releases/download/'
-               'v3.003/Hack-v3.003-ttf.zip')
-        downloaded_zip_file = wget.download(url)
-        print("  Font sets downloaded.")
-
-        # to keep this all clean, we create a nerdfont directory
-        extract_dir = f'{HOME_DIR}/.local/share/fonts/nerd-fonts'
-        Path(extract_dir).mkdir(parents=True, exist_ok=True)
-
-        # unzip into our local font location
-        with zipfile.ZipFile(downloaded_zip_file, 'r') as zip_ref:
-            zip_ref.extractall(f'{HOME_DIR}/.local/share/fonts/nerd-fonts')
-            print("  Font sets extracted into hopefully the right place ")
-
-        # clear and regenerate your font cache and indexes
-        subproc('fc-cache -fv')
-        # confirm that the fonts are installed
-        if 'Hack' in subproc("fc-list", False, True):
-            print("  Hack font should be installed now :D Probably, but it's "
-                  "still recommended you reboot after this.")
-    """
     return None
 
 

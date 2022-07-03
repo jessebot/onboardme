@@ -1,2 +1,3 @@
 PyYAML==6.0
 wget==3.2
+GitPython
