@@ -55,4 +55,5 @@ snap:
   install_cmd: "sudo snap install "
   default_packages:
     - core
-    - "fluent-reader --candidate"
+    - fluent-reader
+    - imgcat

@@ -8,6 +8,8 @@ cask "alfred"
 cask "karabiner-elements"
 cask "lens"
 cask "docker"
+# cat images in the terminal :)
+brew "imgcat"
 # have to tap special cask for various fonts
 tap "homebrew/cask-fonts"
 cask "font-hack-nerd-font"

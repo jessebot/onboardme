@@ -13,9 +13,9 @@ import yaml
 import wget
 import zipfile
 OS = sys.platform
-if OS == 'Darwin':
+if OS == 'darwin':
     OS = 'mac'
-elif OS.__contains__('Linux'):
+elif OS.__contains__('linux'):
     OS = 'linux'
 else:
     OS = 'windows'
@@ -53,17 +53,16 @@ def run_installers(installers=[], extra_packages=[]):
 
         # Install default_packages always
         pkg_types = ['default_packages']
-        if extra_packages:
-            extra_pkgs = [extra_pkg + "_packages" for extra_pkg in lst]
-            pkg_types.extend(extra_pkgs)
+        extra_pkgs = [extra_pkg + "_packages" for extra_pkg in extra_packages]
+        pkg_types.extend(extra_pkgs)
 
         # For brew, we're still using bundle files, so this is a little weird
         if installer == 'brew':
             install_cmd += pkg_manager_dir + 'brew/'
             if OS == 'linux':
-                extra_pkgs.append('linux_packages')
-            else:
-                extra_pkgs.append('mac_packages')
+                pkg_types.append('linux_packages')
+            elif OS == 'mac':
+                pkg_types.append('mac_packages')
 
         for pkg_type in pkg_types:
             for package in packages_dict[pkg_type]:
@@ -298,7 +297,7 @@ def main():
                         help='Deletes existing rc files, such as .bashrc, '
                              'before creating hardlinks. Be careful!')
     parser.add_argument('--installers', type=list, default=[],
-                        help='list of installers you want to run')
+                        help='list of installers you want to run, not working')
     res = parser.parse_args()
     dry_run = res.dry
     overwrite_bool = res.overwrite
@@ -309,7 +308,7 @@ def main():
         return None
 
     # installs bashrc and the like
-    run_installer(installers, res.extra)
+    run_installers(None, res.extra)
     hard_link_rc_files(overwrite_bool)
     install_fonts()
     configure_vim()
