@@ -208,6 +208,14 @@ def configure_firefox():
     return None
 
 
+def configure_terminal():
+    """
+    this should just configure terminal configs <3
+    """
+    msg = "\033[94m 💻 Confgiuring terminal preferences\033[00m "
+    print(msg.center(80, '-'))
+
+
 def subproc(cmd="", error_ok=False, suppress_output=False):
     """
     Takes a commmand to run in BASH, as well as optional error_ok bool to pass
@@ -289,6 +297,8 @@ def main():
     hard_link_rc_files(overwrite_bool)
     install_fonts()
     configure_vim()
+    # coming soon
+    # configure_terminal()
 
     if OS.__contains__('linux'):
         for installer in ['apt', 'snap', 'flatpak']:
