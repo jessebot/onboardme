@@ -8,8 +8,8 @@ OS=$(uname | tr '[:upper:]' '[:lower:]')
 echo "Before we begin, please make sure you're on a wired connection, or sit "
 echo " close to the wifi. This might take a while if you're a fresh OS install"
 echo " and you'll need to present to enter your password for package installs"
-printf "so grab some tea and get comfy.\n\n"
-echo "Here's some relaxing music: https://youtu.be/-5KAN9_CzSA"
+printf "so grab some tea and get comfy :3\n\n"
+printf "Here's some relaxing music: https://youtu.be/-5KAN9_CzSA\n\n"
 while true; do
     read -p "Are you ready to get started? Do you have a nice cup of ☕? [y/n]  " answer
     if [ "$answer" != "y" ]; then
