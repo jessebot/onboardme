@@ -77,14 +77,14 @@ def install_fonts():
             fonts_repo = "https://github.com/ryanoasis/nerd-fonts.git"
             Repo.clone_from(fonts_repo, fonts_dir, depth=1)
 
-        print("  Running the font installer...")
+        print('  Running the font installer...')
         old_pwd = PWD
         os.chdir(fonts_dir)
         subproc('./install.sh Hack')
         os.chdir(old_pwd)
 
         bitmap_conf = '/etc/fonts/conf.d/70-no-bitmaps.conf'
-        print("  Going to remove '{bitmap_conf} and link a yes map...")
+        print(f'  Going to remove {bitmap_conf} and link a yes map...')
 
         # we do all of this with subprocess because I want the sudo prompt
         if os.path.exists(bitmap_conf):
@@ -93,8 +93,8 @@ def install_fonts():
         subproc('sudo ln -s /etc/fonts/conf.avail/70-yes-bitmaps.conf '
                 '/etc/fonts/conf.d/70-yes-bitmaps.conf', True, False)
 
-        print("\n  The fonts should be installed, however, you have to set "
-              "your terminal font to the new font. I rebooted too.")
+        print('\n  The fonts should be installed, however, you have to set '
+              'your terminal font to the new font. I rebooted too.')
     return None
 
 
@@ -142,7 +142,7 @@ def hard_link_rc_files(overwrite=False):
         existing_files.append(hard_link)
 
     if existing_files:
-        print(' ¯\_(ツ)_/¯ Looks like the following file(s) already exist:')
+        print("  Looks like the following file(s) already exist:")
         for file in existing_files:
             print(f' - {file}')
         print('\nIf you want the links anyway, delete the files, and then '
