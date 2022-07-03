@@ -9,7 +9,7 @@ Currently tested on macOS monterey 12.4, mostly working on Debian 11 soon.
 Please report 🐛 in the GitHub issues, and I will get them as I have time.
 
 ## Quick Start
-First, make sure you have curl, but it****** *should be there already on macOS monterey***:
+First, make sure you have curl, but it *should* be there **already be on macOS monterey**:
 ```bash
 # if this doesn't return anything, you need to install curl
 which curl
