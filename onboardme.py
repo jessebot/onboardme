@@ -12,50 +12,65 @@ import sys
 import yaml
 import wget
 import zipfile
-
 OS = sys.platform
+if OS == 'Darwin':
+    OS = 'mac'
+elif OS.__contains__('Linux'):
+    OS = 'linux'
+else:
+    OS = 'windows'
 HOME_DIR = os.getenv("HOME")
 PWD = os.path.dirname(__file__)
 
 
-def run_installer(installer="", extra_packages=[]):
+def run_installers(installers=[], extra_packages=[]):
     """
-    Installs packages from one of the following installers: apt, snap, flatpak
-    Takes an optional variable of extra_packages list to install optional
-    packages for gaming or work tasks. Uses the yaml in configs/installers
+    Installs packages with apt, appimage, brew, snap, flatpak. If no installers
+    list passed in, will do only brew for mac, but all for linux. Takes an
+    optional variable of extra_packages list to install optional packages for
+    gaming or work tasks.
     """
-    if installer == 'flatpak':
-        subproc("sudo flatpak remote-add --if-not-exists flathub "
-                "https://flathub.org/repo/flathub.flatpakrepo")
+    if not installers:
+        installers = ['brew']
+        if OS == 'linux':
+            installers.extend(['apt', 'snap', 'flatpak'])
 
-    pkg_manager_dir = f"{PWD}/configs/installers/"
-    with open(pkg_manager_dir + 'packages.yml', 'r') as yaml_file:
-        packages_dict = yaml.safe_load(yaml_file)[installer]
+    for installer in installers:
+        if installer == 'flatpak':
+            subproc("sudo flatpak remote-add --if-not-exists flathub "
+                    "https://flathub.org/repo/flathub.flatpakrepo")
 
-    emoji = packages_dict['emoji']
-    status_msg = f" \033[94m {emoji} {installer} apps installing \033[00m"
-    print(status_msg.center(80, '-'))
+        pkg_manager_dir = f"{PWD}/configs/installers/"
+        with open(pkg_manager_dir + 'packages.yml', 'r') as yaml_file:
+            packages_dict = yaml.safe_load(yaml_file)[installer]
 
-    installed_pkgs = subproc(packages_dict['list_cmd'], True, True)
-    install_cmd = packages_dict['install_cmd']
+        emoji = packages_dict['emoji']
+        status_msg = f" \033[94m {emoji} {installer} apps installing \033[00m"
+        print(status_msg.center(80, '-'))
 
-    # For brew, we're still using bundle files, so this is a little weird
-    if installer == 'brew':
-        install_cmd += pkg_manager_dir + 'brew/Brewfile_'
+        installed_pkgs = subproc(packages_dict['list_cmd'], True, True)
+        install_cmd = packages_dict['install_cmd']
 
-    # Install default_packages always, but this allows for loop like:
-    # for each set of packages, e.g. default, work, gaming
-    pkg_types = ['default_packages']
-    if extra_packages:
-        pkg_types.extend(extra_packages)
+        # Install default_packages always
+        pkg_types = ['default_packages']
+        if extra_packages:
+            extra_pkgs = [extra_pkg + "_packages" for extra_pkg in lst]
+            pkg_types.extend(extra_pkgs)
 
-    for pkg_list in pkg_types:
-        for package in packages_dict[pkg_list]:
-            if package in installed_pkgs:
-                print(f'  {package} is already installed, continuing...')
+        # For brew, we're still using bundle files, so this is a little weird
+        if installer == 'brew':
+            install_cmd += pkg_manager_dir + 'brew/'
+            if OS == 'linux':
+                extra_pkgs.append('linux_packages')
             else:
-                subproc(f'{install_cmd}' + package)
+                extra_pkgs.append('mac_packages')
 
+        for pkg_type in pkg_types:
+            for package in packages_dict[pkg_type]:
+                if package in installed_pkgs:
+                    print(f'  {package} is already installed, continuing...')
+                else:
+                    subproc(f'{install_cmd}' + package)
     return None
 
 
@@ -65,7 +80,7 @@ def install_fonts():
     them into the user's local font directory. Runs fc-cache -fv to generate
     config, but you should still reboot when you're done :shrug:
     """
-    if OS.__contains__('linux'):
+    if OS == 'linux':
         status_msg = f"\033[94m ✍️  Installing fonts... \033[00m"
         print(status_msg.center(80, '-'))
         fonts_dir = f'{HOME_DIR}/repos/nerd-fonts'
@@ -177,9 +192,9 @@ def configure_firefox():
     Copies over default firefox settings and addons
     """
     # different OS will have firefox profile info in different paths
-    if OS.__contains__('linux'):
+    if OS == 'linux':
         ini_dir = f"{HOME_DIR}/.mozilla/firefox/"
-    elif OS == "darwin":
+    elif OS == 'mac':
         # hate apple for their capitalized directories
         ini_dir = f"{HOME_DIR}/Library/Application Support/Firefox/"
 
@@ -217,7 +232,7 @@ def map_caps_to_control():
     """
     maps capslock to control
     """
-    if OS.__contains__('linux'):
+    if OS == 'linux':
         # god this is ugly and awful
         cmd = ("gsettings set org.gnome.desktop.input-sources xkb-options "
                """'["caps:ctrl_modifier"]'""")
@@ -276,42 +291,32 @@ def main():
     dr_help = "perform a Dry Run of the script, NOT WORKING YET"
     parser.add_argument('--dry', action="store_true", default=False,
                         help=dr_help)
-    parser.add_argument('--gaming', action="store_true", default=False,
-                        help='Install packages related to gaming')
-    parser.add_argument('--work', action="store_true", default=False,
-                        help='Install packages related to devops stuff')
+    h_msg = "Takes list of extra package lists to install, example:" + \
+            "--extra ['gaming']"
+    parser.add_argument('-e', '--extra', type=list, default=[], help=h_msg)
     parser.add_argument('--overwrite', action="store_true", default=False,
                         help='Deletes existing rc files, such as .bashrc, '
                              'before creating hardlinks. Be careful!')
+    parser.add_argument('--installers', type=list, default=[],
+                        help='list of installers you want to run')
     res = parser.parse_args()
     dry_run = res.dry
-    gaming = res.gaming
-    work = res.work
     overwrite_bool = res.overwrite
-    opts = []
-    if work:
-        opts.append("work")
-    elif gaming:
-        opts.append("gaming")
-
     if OS == 'win32' or OS == 'windows':
         print("Ooof, this isn't ready yet...")
         print("But you can check out the docs/windows directory for "
               "help getting set up!")
-        return
+        return None
 
     # installs bashrc and the like
-    run_installer('brew', opts)
+    run_installer(installers, res.extra)
     hard_link_rc_files(overwrite_bool)
     install_fonts()
     configure_vim()
+    # currently broken
     map_caps_to_control()
     # coming soon
     # configure_terminal()
-
-    if OS.__contains__('linux'):
-        for installer in ['apt', 'snap', 'flatpak']:
-            run_installer(installer, opts)
 
     # this can't be done until we have firefox, and who knows when that is
     configure_firefox()
