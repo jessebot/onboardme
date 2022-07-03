@@ -9,17 +9,16 @@ Currently tested on macOS monterey 12.4, mostly working on Debian 11 soon.
 Please report 🐛 in the GitHub issues, and I will get them as I have time.
 
 ## Quick Start
-### Debian
-First, make sure you have curl, but it should be there already on macOS monterey:
+First, make sure you have curl, but it****** *should be there already on macOS monterey***:
 ```bash
-# if this doesn't return anything
+# if this doesn't return anything, you need to install curl
 which curl
-
-# try installing it - this only works on debian, but you can install curl with
-# any default package manager in linux like yum, yast, etc
-sudo apt install curl
 ```
-### macOS
+If it's not there on Linux, you can install it with `apt` or use any default package manager like yum, yast, etc
+```
+# Debian/Ubuntu
+sudo apt install -y curl
+```
 Then, download and run the setup script to install git, brew, python, and python dependencies. The `setup.sh` will ask for your password, because brew does that. Run the following from your home directory:
 ```bash
 # Download the setup.sh; you may have to install curl, see above codeblock
