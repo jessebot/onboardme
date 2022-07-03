@@ -67,9 +67,8 @@ def run_installers(installers=[], extra_packages=[]):
         for pkg_type in pkg_types:
             if pkg_type != 'default_packages':
                 pkg = pkg_type.replace('_packages','')
-                msg = (f" \033[94m installing {pkg} specific {installer} "
-                        "packages... \033[00m")
-                print(status_msg.center(80, '-'))
+                msg = (f"  Installing {pkg} specific {installer} packages... ")
+                print(msg.center(80, '-'))
             for package in packages_dict[pkg_type]:
                 if package in installed_pkgs:
                     print(f'  {package} is already installed, continuing...')
