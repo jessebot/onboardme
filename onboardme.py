@@ -11,12 +11,11 @@ import subprocess
 import sys
 import yaml
 import wget
-import zipfile
 OS = sys.platform
 if OS.__contains__('linux'):
     OS = 'linux'
 HOME_DIR = os.getenv("HOME")
-PWD = os.path.dirname(__file__)
+PWD = os.path.dirname(__file__)[:-1]
 
 
 def run_installers(installers=[], extra_packages=[]):
@@ -79,7 +78,7 @@ def install_fonts():
     config, but you should still reboot when you're done :shrug:
     """
     if OS == 'linux':
-        status_msg = f"\033[94m ✍️  Installing fonts... \033[00m"
+        status_msg = "\033[94m ✍️  Installing fonts... \033[00m"
         print(status_msg.center(80, '-'))
         fonts_dir = f'{HOME_DIR}/repos/nerd-fonts'
 
@@ -137,7 +136,7 @@ def hard_link_rc_files(overwrite=False):
             os.link(src_rc_file, hard_link)
             print(f'  Hard linked {hard_link}')
 
-        except FileExistsError as error:
+        except FileExistsError:
             # keep till loop ends, to notify user to clean up if they want
             existing_files.append(hard_link)
 
@@ -150,7 +149,7 @@ def hard_link_rc_files(overwrite=False):
     try:
         os.link(f'{rc_dir}/.bashrc', hard_link)
         print(f'  Hard linked {hard_link}')
-    except FileExistsError as error:
+    except FileExistsError:
         existing_files.append(hard_link)
 
     if existing_files:
@@ -232,8 +231,8 @@ def map_caps_to_control():
     """
     if OS == 'linux':
         # god this is ugly and awful
-        cmd = ("gsettings set org.gnome.desktop.input-sources xkb-options "
-               """'["caps:ctrl_modifier"]'""")
+        cmd = ("sudo gsettings set org.gnome.desktop.input-sources "
+               """xkb-options '["caps:ctrl_modifier"]'""")
         subproc(cmd)
 
 
@@ -271,7 +270,7 @@ def subproc(cmd="", error_ok=False, suppress_output=False):
                 raise Exception(f' {err} \n {res_err}')
 
     if not res_stdout:
-        return_str = res_stder
+        return_str = res_stderr
     else:
         return_str = res_stdout
 

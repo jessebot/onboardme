@@ -59,6 +59,8 @@
       "imgcat": {
         "version": "2.5.1",
         "bottle": false
+      },
+      "danielgatis/imgcat/imgcat": {
       }
     }
   },
@@ -67,7 +69,7 @@
       "monterey": {
         "HOMEBREW_VERSION": "3.5.3",
         "HOMEBREW_PREFIX": "/usr/local",
-        "Homebrew/homebrew-core": "93f2216494b95213cdffbb5aec2fca5f64fa0d5f",
+        "Homebrew/homebrew-core": "11eca4ba807360ee4ebfbd116869c93b8f87ec6e",
         "CLT": "13.4.0.0.1.1651278267",
         "Xcode": "13.4.1",
         "macOS": "12.4"
