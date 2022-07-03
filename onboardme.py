@@ -88,7 +88,7 @@ def install_fonts():
 
         if os.path.exists(bitmap_conf):
             subproc(f'sudo rm {bitmap_conf}')
-        subproc('sudo ln -s /etc/fonts/conf.avail/70-yes-bitmaps.conf ',
+        subproc('sudo ln -s /etc/fonts/conf.avail/70-yes-bitmaps.conf '
                 '/etc/fonts/conf.d/70-yes-bitmaps.conf', True, False)
 
         print("\n  The fonts should be installed, however, you have to set "
