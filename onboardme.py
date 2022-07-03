@@ -308,6 +308,7 @@ def main():
     hard_link_rc_files(overwrite_bool)
     install_fonts()
     configure_vim()
+    map_caps_to_control()
     # coming soon
     # configure_terminal()
 
