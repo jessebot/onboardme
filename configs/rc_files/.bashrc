@@ -152,7 +152,7 @@ complete -C /usr/local/bin/terraform terraform
 export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
 
 # brew on linux
-if [[ "$OS" == *"linux"* ]]; then
+if [[ "$OS" == *"Linux"* ]]; then
     export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 fi
 
