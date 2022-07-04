@@ -22,9 +22,6 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
     passed in, only use brew for mac. Takes optional variable, pkg_group_lists
     to install optional packages.
     """
-    print("\n 🥱 This could take a while on a fresh install of an OS, so "
-          "settle in and get comfy 🛋️ \n")
-
     pkg_manager_dir = f"{PWD}/configs/installers/"
     with open(pkg_manager_dir + 'packages.yml', 'r') as yaml_file:
         installer_dict_list = yaml.safe_load(yaml_file)
@@ -60,7 +57,7 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
                     if package in installed_pkgs:
                         print(f'  {package} is already installed, continuing.')
                     else:
-                        subproc(f'{install_cmd}' + package)
+                        subproc(f'{install_cmd}' + package, True)
 
 
 def install_fonts():
@@ -274,6 +271,8 @@ def main():
                              'before creating hardlinks. Be careful!')
     opt = parser.parse_args()
 
+    print("\n 🥱 This could take a while on a fresh install of an OS, so "
+          "settle in and get comfy 🛋️ \n")
     hard_link_rc_files(opt.overwrite)
     install_fonts()
 
