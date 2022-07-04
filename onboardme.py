@@ -285,24 +285,29 @@ def main():
     """
     Core function
     """
+    default_installers = ['brew']
+    if OS == 'linux':
+        default_installers.extend(['apt', 'flatpak', 'snap', 'AppImage'])
+
     help = ('This is a generic onboarding script for macOS and debian. It uses'
             'a config in the script repo directory under configs/installers'
             'If you run this with no options on macOS, it will install all '
             'default brew packages, and updated you rc_files. On Linux it will'
             ' do the same, but it will also install apt, flatpak, snap, and '
             'AppImage packages, plus it will configure firefox. For optional'
-            "packages, -e/--extras ['package_list_name']")
+            "packages, example for gaming and work -e/--extras gaming work")
     parser = argparse.ArgumentParser(description=help)
     dr_help = "perform a Dry Run of the script, NOT WORKING YET"
     parser.add_argument('--dry', action="store_true", default=False,
                         help=dr_help)
     h_msg = "Takes list of extra package lists to install, example:" + \
-            "--extra ['gaming']"
-    parser.add_argument('-e', '--extra', type=list, default=[], help=h_msg)
+            "--extra gaming"
+    parser.add_argument('-e', '--extra', type=str, default=['default'],
+                        nargs="+", help=h_msg)
     parser.add_argument('--overwrite', action="store_true", default=False,
                         help='Deletes existing rc files, such as .bashrc, '
                              'before creating hardlinks. Be careful!')
-    parser.add_argument('--installers', type=list, default=[],
+    parser.add_argument('--installers', type=str, default=default_installers,
                         help='list of installers you want to run, not working')
     parser.add_argument('--firefox', action="store_true", default=False,
                         help='Opt into experimental firefox configuring')
