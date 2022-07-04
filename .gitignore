@@ -103,8 +103,5 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# personal :shrug:
-configs/nextcloud/nextcloud-values.yml
-
 # brew lock files
-packages/brew/Brewfile_*.lock.json
+configs/installers/brew/Brewfile_*.lock.json
