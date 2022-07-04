@@ -18,7 +18,7 @@ HOME_DIR = os.getenv("HOME")
 PWD = os.path.dirname(__file__)
 
 
-def run_installers(installers=['brew'], pkg_group_lists=['default']):
+def run_installers(installers=['brew'], pkg_groups=['default']):
     """
     Installs packages with apt, appimage, brew, snap, flatpak. If no installers
     list passed in, will do only brew for mac, but all for linux. Takes an
@@ -48,20 +48,21 @@ def run_installers(installers=['brew'], pkg_group_lists=['default']):
         if installer == 'brew':
             install_cmd += pkg_manager_dir + 'brew/'
             if OS == 'darwin':
-                pkg_group_lists.append('mac')
+                pkg_groups.append('mac')
 
-        for pkg_group in pkg_group_lists:
-            inst_msg = f"Installing {pkg_group} specific {installer} packages"
+        for pkg_group in pkg_groups:
             try:
-                for package in packages_dict[pkg_group + '_packages']:
-                    if pkg_group != 'default':
-                        print(f" {inst_msg}... ".center(80, '-'))
-                    if package in installed_pkgs:
-                        print(f'  {package} is already installed, continuing.')
-                    else:
-                        subproc(f'{install_cmd}' + package)
+                pkg_list = packages_dict[pkg_group + '_packages']
             except KeyError:
-                pass
+                continue
+            inst_msg = f"Installing {pkg_group} specific {installer} packages"
+            if pkg_group != 'default':
+                print(f" {inst_msg}... ".center(80, '-'))
+            for package in pkg_list:
+                if package in installed_pkgs:
+                    print(f'  {package} is already installed, continuing.')
+                else:
+                    subproc(f'{install_cmd}' + package)
     return None
 
 

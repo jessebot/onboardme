@@ -1,17 +1,4 @@
 ---
-brew:
-  emoji: "🍺"
-  list_cmd: "brew list -1"
-  install_cmd: "brew bundle --file="
-  default_packages:
-    - Brewfile_standard
-  linux_packages:
-    - Brewfile_linux
-  mac_packages:
-    - Brewfile_mac
-  work_packages:
-    - Brewfile_work
-
 apt:
   emoji: "🫠 "
   list_cmd: "apt list --installed"
@@ -33,7 +20,6 @@ apt:
     - flatpak
     - gnome-software-plugin-flatpak
   gaming_packages:
-    - nvidia-driver
     - lutris
     - winehq-staging
     - steam
@@ -41,6 +27,19 @@ apt:
     # - ubuntu-driver-460
     # to format disks to exFAT; FAT is too thin for modern windows 10 ISOs
     # - exfat-utils
+
+brew:
+  emoji: "🍺"
+  list_cmd: "brew list -1"
+  install_cmd: "brew bundle --file="
+  default_packages:
+    - Brewfile_standard
+  linux_packages:
+    - Brewfile_linux
+  mac_packages:
+    - Brewfile_mac
+  work_packages:
+    - Brewfile_work
 
 flatpak:
   emoji: "🫓"
@@ -59,3 +58,11 @@ snap:
     - core
     - fluent-reader
     - imgcat
+
+# welcome to the experimental zone. YMMV
+appimage:
+  emoji: "📥 "
+  list_cmd: "echo 'AppImages dont really have a way to list them, I think'"
+  install_cmd: "./"
+  default_packages:
+    - hyper
