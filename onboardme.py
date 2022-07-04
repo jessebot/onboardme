@@ -286,13 +286,12 @@ def main():
             "packages, example for gaming and work -e/--extras gaming work")
     parser = argparse.ArgumentParser(description=help)
 
-    dr_help = "perform a Dry Run of the script, NOT WORKING YET"
+    d_help = "perform a Dry Run of the script, NOT WORKING YET"
     parser.add_argument('--dry', action="store_true", default=False,
-                        help=dr_help)
+                        help=d_help)
 
     e_msg = ("Takes optional package lists to install, accepts multiple, "
              "example: --extra gaming")
-
     parser.add_argument('-e', '--extra', type=str, default=None, nargs="+",
                         help=e_msg)
 
@@ -323,35 +322,29 @@ def main():
     if res.installers:
         default_installers = res.installers
 
-    # runs installers for brew, apt, etc...
     run_installers(default_installers, packages)
 
-    # installs bashrc and the like
     hard_link_rc_files(overwrite_bool)
 
-    # fun icons related to vim and lsd
     install_fonts()
 
     # this is SUPPOSED to install the vim plugins, but sometimes does not
     configure_vim()
 
-    # currently broken
+    # currently broken on both mac and linux
     map_caps_to_control()
 
     # this can't be done until we have firefox, and who knows when that is
     if res.firefox:
         configure_firefox()
 
-    print("\033[92m SUCCESS \033[00m".center(80, '-'))
+    print("\033[92m ❇️  SUCCESS ❇️  \033[00m".center(80, '-'))
     print("\n Here's some stuff you gotta do manually:")
-    print(" 🐋: Add your user to the docker group, and reboot")
     print(" 📰: Import rss feeds config into FluentReader or wherever")
     print(" 📺: Import subscriptions into FreeTube")
     print(" ⌨️ : Set capslock to control!")
     print(" ⏰: Install any cronjobs you need from the cron dir!")
-
-    if OS == 'darwin':
-        print('\nMaybe also checkout: https://wangchujiang.com/awesome-mac/')
+    print(" 🐋: Add your user to the docker group, and reboot")
 
 
 if __name__ == '__main__':
