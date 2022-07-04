@@ -12,8 +12,6 @@ import sys
 import yaml
 import wget
 OS = sys.platform
-if OS.__contains__('linux'):
-    OS = 'linux'
 HOME_DIR = os.getenv("HOME")
 PWD = os.path.dirname(__file__)
 
@@ -72,7 +70,7 @@ def install_fonts():
     them into the user's local font directory. Runs fc-cache -fv to generate
     config, but you should still reboot when you're done :shrug:
     """
-    if OS == 'linux':
+    if 'linux' in OS:
         status_msg = "\033[94m ✍️  Installing fonts... \033[00m"
         print(status_msg.center(80, '-'))
         fonts_dir = f'{HOME_DIR}/repos/nerd-fonts'
@@ -184,7 +182,7 @@ def configure_firefox():
     Copies over default firefox settings and addons
     """
     # different OS will have firefox profile info in different paths
-    if OS == 'linux':
+    if 'linux' in OS:
         ini_dir = f"{HOME_DIR}/.mozilla/firefox/"
     elif OS == 'darwin':
         # hate apple for their capitalized directories
@@ -224,7 +222,7 @@ def map_caps_to_control():
     """
     maps capslock to control
     """
-    if OS == 'linux':
+    if 'linux' in OS:
         # god this is ugly and awful
         cmd = ("sudo gsettings set org.gnome.desktop.input-sources "
                """xkb-options '["caps:ctrl_modifier"]'""")
@@ -316,7 +314,7 @@ def main():
         packages.extend(res.extra)
 
     default_installers = ['brew']
-    if OS == 'linux':
+    if 'linux' in OS:
         default_installers.extend(['apt', 'snap', 'flatpak'])
 
     # if user specifies, only do packages passed into --installers
