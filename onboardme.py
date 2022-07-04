@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Generic onboarding script for mac osx and debian
+# Generic onboarding script for macOS and Debian
 # jessebot@linux.com
 import argparse
 from configparser import ConfigParser
@@ -18,21 +18,17 @@ HOME_DIR = os.getenv("HOME")
 PWD = os.path.dirname(__file__)
 
 
-def run_installers(installers=[], extra_packages=[]):
+def run_installers(installers=['brew'], pkg_lists=['default']):
     """
     Installs packages with apt, appimage, brew, snap, flatpak. If no installers
     list passed in, will do only brew for mac, but all for linux. Takes an
-    optional variable of extra_packages list to install optional packages for
-    gaming or work tasks.
+    optional variable of pkg_lists to install optional packages for work/gaming
     """
-    if not installers:
-        print("\n 🥱 ⚠️  If this is a fresh install of your OS, this could take"
-              "a while. Settle in and get comfy 🛋️ \n")
-        installers = ['brew']
-        if OS == 'linux':
-            installers.extend(['apt', 'snap', 'flatpak'])
+    print("\n 🥱 ⚠️  If this is a fresh install of your OS, this could take a"
+          "while. Settle in and get comfy 🛋️ \n")
 
-    for installer in installers:
+    # just in case we got any duplicates, we iterate through this as a set
+    for installer in set(installers):
         if installer == 'flatpak':
             subproc("sudo flatpak remote-add --if-not-exists flathub "
                     "https://flathub.org/repo/flathub.flatpakrepo")
@@ -48,24 +44,19 @@ def run_installers(installers=[], extra_packages=[]):
         installed_pkgs = subproc(packages_dict['list_cmd'], True, True)
         install_cmd = packages_dict['install_cmd']
 
-        # Install default_packages always
-        pkg_types = ['default_packages']
-        extra_pkgs = [extra_pkg + "_packages" for extra_pkg in extra_packages]
-        pkg_types.extend(extra_pkgs)
-
         # For brew, we're still using bundle files, so this is a little weird
         if installer == 'brew':
             install_cmd += pkg_manager_dir + 'brew/'
             if OS == 'linux':
-                pkg_types.append('linux_packages')
+                pkg_lists.append('linux')
             elif OS == 'darwin':
-                pkg_types.append('mac_packages')
+                pkg_lists.append('mac')
 
-        for pkg_type in pkg_types:
-            if pkg_type != 'default_packages':
-                print((f"  Installing {pkg_type.replace('_packages', '')} "
-                       f"specific {installer} packages... ").center(80, '-'))
-            for package in packages_dict[pkg_type]:
+        for pkg_list in pkg_lists:
+            if pkg_list != 'default':
+                msg = f"Installing {pkg_list} specific {installer} packages..."
+                print(f" {msg} ".center(80, '-'))
+            for package in packages_dict[pkg_list + '_packages']:
                 if package in installed_pkgs:
                     print(f'  {package} is already installed, continuing...')
                 else:
@@ -283,50 +274,64 @@ def subproc(cmd="", error_ok=False, suppress_output=False):
 
 def main():
     """
-    Core function
+    This calls the arg parser and all the core functions above
     """
-    default_installers = ['brew']
-    if OS == 'linux':
-        default_installers.extend(['apt', 'flatpak', 'snap', 'AppImage'])
-
     help = ('This is a generic onboarding script for macOS and debian. It uses'
             'a config in the script repo directory under configs/installers'
             'If you run this with no options on macOS, it will install all '
             'default brew packages, and updated you rc_files. On Linux it will'
-            ' do the same, but it will also install apt, flatpak, snap, and '
-            'AppImage packages, plus it will configure firefox. For optional'
+            ' do the same, but it will also install apt, flatpak, snap '
+            ' packages, plus it will configure firefox. For optional'
             "packages, example for gaming and work -e/--extras gaming work")
     parser = argparse.ArgumentParser(description=help)
+
     dr_help = "perform a Dry Run of the script, NOT WORKING YET"
     parser.add_argument('--dry', action="store_true", default=False,
                         help=dr_help)
-    h_msg = "Takes list of extra package lists to install, example:" + \
-            "--extra gaming"
-    parser.add_argument('-e', '--extra', type=str, default=['default'],
-                        nargs="+", help=h_msg)
+
+    e_msg = ("Takes optional package lists to install, accepts multiple, "
+             "example: --extra gaming")
+
+    parser.add_argument('-e', '--extra', type=str, default=None, nargs="+",
+                        help=e_msg)
+
+    i_msg = ('ONLY install packages from these installers. experimental, '
+             'accepts multiple args  example: --installers brew apt')
+    parser.add_argument('--installers', type=str, default=None, nargs="+",
+                        help=i_msg)
+
+    parser.add_argument('--firefox', action="store_true", default=False,
+                        help='Opt into experimental firefox configuring')
+
     parser.add_argument('--overwrite', action="store_true", default=False,
                         help='Deletes existing rc files, such as .bashrc, '
                              'before creating hardlinks. Be careful!')
-    parser.add_argument('--installers', type=str, default=default_installers,
-                        help='list of installers you want to run, not working')
-    parser.add_argument('--firefox', action="store_true", default=False,
-                        help='Opt into experimental firefox configuring')
     res = parser.parse_args()
     overwrite_bool = res.overwrite
 
-    if OS.startswith('win'):
-        print("Ooof, this isn't ready yet...")
-        print("But you can check out the docs/windows directory for "
-              "help getting set up!")
-        return None
+    # process additional package lists, if any
+    packages = ['default']
+    if res.extra:
+        packages.extend(res.extra)
+
+    default_installers = ['brew']
+    if OS == 'linux':
+        default_installers.extend(['apt', 'snap', 'flatpak'])
+
+    # if user specifies, only do packages passed into --installers
+    if res.installers:
+        default_installers = res.installers
+
+    # runs installers for brew, apt, etc...
+    run_installers(default_installers, packages)
 
     # installs bashrc and the like
-    run_installers(None, res.extra)
-
     hard_link_rc_files(overwrite_bool)
 
+    # fun icons related to vim and lsd
     install_fonts()
 
+    # this is SUPPOSED to install the vim plugins, but sometimes does not
     configure_vim()
 
     # currently broken
@@ -344,8 +349,8 @@ def main():
     print(" ⌨️ : Set capslock to control!")
     print(" ⏰: Install any cronjobs you need from the cron dir!")
 
-    if OS == 'Darwin':
-        print('Maybe also checkout: https://wangchujiang.com/awesome-mac/')
+    if OS == 'darwin':
+        print('\nMaybe also checkout: https://wangchujiang.com/awesome-mac/')
 
 
 if __name__ == '__main__':
