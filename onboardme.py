@@ -22,8 +22,8 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
     passed in, only use brew for mac. Takes optional variable, pkg_group_lists
     to install optional packages.
     """
-    print("\n 🥱 ⚠️  If this is a fresh install of your OS, this could take a "
-          "while. Settle in and get comfy 🛋️ \n")
+    print("\n 🥱 This could take a while on a fresh install of an OS, so "
+          "settle in and get comfy 🛋️ \n")
 
     pkg_manager_dir = f"{PWD}/configs/installers/"
     with open(pkg_manager_dir + 'packages.yml', 'r') as yaml_file:
@@ -51,19 +51,16 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
                     "https://flathub.org/repo/flathub.flatpakrepo")
 
         for pkg_group in pkg_groups:
-            if not pkg_group + '_packages' in installer_dict:
-                continue
+            if pkg_group + '_packages' in installer_dict:
+                if pkg_group != 'default':
+                    msg = f"Installing {pkg_group} specific {installer}"
+                    print(f" {msg} packages... ".center(80, '-'))
 
-            if pkg_group != 'default':
-                msg = f"Installing {pkg_group} specific {installer} packages"
-                print(f" {msg}... ".center(80, '-'))
-
-            for package in installer_dict[pkg_group + '_packages']:
-                if package in installed_pkgs:
-                    print(f'  {package} is already installed, continuing.')
-                else:
-                    subproc(f'{install_cmd}' + package)
-    return None
+                for package in installer_dict[pkg_group + '_packages']:
+                    if package in installed_pkgs:
+                        print(f'  {package} is already installed, continuing.')
+                    else:
+                        subproc(f'{install_cmd}' + package)
 
 
 def install_fonts():
@@ -102,15 +99,13 @@ def install_fonts():
 
         print('\n  The fonts should be installed, however, you have to set '
               'your terminal font to the new font. I rebooted too.')
-    return None
 
 
 def hard_link_rc_files(overwrite=False):
     """
     Creates hardlinks to default rc files for vim, zsh, and bash in user's
-    home directory. Uses hardlinks, so that if the link or onboardme repo files
-    are removed, the data will remain. If overwrite is set to True, we delete
-    files before beginning.
+    home dir. Uses hardlinks, so that if the target file is removed, the data
+    will remain. If overwrite is set to True, we delete files before beginning.
     """
     print(" 🐚 \033[94m Shell and vim rc files installing..."
           "\033[00m".center(80, '-'))
@@ -125,18 +120,18 @@ def hard_link_rc_files(overwrite=False):
         # if overwrite set to True, delete the existing files first
         if overwrite:
             if os.path.exists(hard_link):
-                os.remove(hard_link)
+                try:
+                    os.remove(hard_link)
+                except Exception:
+                    pass
 
         try:
             os.link(src_rc_file, hard_link)
             print(f'  Hard linked {hard_link}')
-
         except FileExistsError:
-            # keep till loop ends, to notify user to clean up if they want
+            # keep till loop ends, to notify user that no action was taken
             existing_files.append(hard_link)
-
         except PermissionError as error:
-            # we keep going, because installing everything else is still useful
             print(f'  Permission error for: {src_rc_file} Error: {error}.')
 
     # create a bash_profile as well for macOS, and also just in case
@@ -151,16 +146,12 @@ def hard_link_rc_files(overwrite=False):
         print("  Looks like the following file(s) already exist:")
         for file in existing_files:
             print(f' - {file}')
-        print('\nIf you want the links anyway, delete the files, and then '
-              'rerun the script.')
-
-    return None
+        print('\n If you want the links anyway, rerun script with --overwrite')
 
 
 def configure_vim():
     """
-    Installs vim-plug, a plugin manager for vim, and then installs vim plugins,
-    listed in ./config/rc_files/vim/.vimrc
+    Installs vim-plug, vim plugin manager, and then installs vim plugins
     """
     msg = "\033[94m Installing vim-plug, for vim plugins\033[00m "
     print(msg.center(80, '-'))
@@ -175,8 +166,6 @@ def configure_vim():
     # this installs the vim plugins, can also use :PlugInstall in vim
     plugin_cmd = (f'vim -E -s -u "{HOME_DIR}/.vimrc" +PlugInstall +qall')
     subproc(plugin_cmd)
-
-    return None
 
 
 def configure_firefox():
@@ -217,61 +206,44 @@ def configure_firefox():
                     f'{profile_dir}/extensions/')
     print("  Firefox extensions installed, but they need to be enabled\n")
 
-    return None
-
 
 def map_caps_to_control():
     """
-    maps capslock to control
+    Maps capslock to control. This is ugly and awful
     """
     if 'linux' in OS:
-        # god this is ugly and awful
         cmd = ("sudo gsettings set org.gnome.desktop.input-sources "
                """xkb-options '["caps:ctrl_modifier"]'""")
         subproc(cmd)
 
 
-def subproc(cmd="", error_ok=False, suppress_output=False):
+def subproc(command="", error_ok=False, suppress_output=False):
     """
-    Takes a commmand to run in BASH, as well as optional error_ok bool to pass
-    on errors in stderr/stdout
+    Takes a commmand to run in BASH, as well as optionals bools to pass on
+    errors in stderr/stdout and suppress_output
     """
-    print(f'\n \033[92m Running cmd:\033[00m {cmd}')
-    command = cmd.split()
-    res_err = ''
-
-    p = subprocess.Popen(command, stdout=subprocess.PIPE,
-                         stderr=subprocess.PIPE)
+    print(f'\n \033[92m Running cmd:\033[00m {command}')
+    cmd = command.split()
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     return_code = p.returncode
     res = p.communicate()
     res_stdout = '  ' + res[0].decode('UTF-8').replace('\n', '\n  ')
     res_stderr = '  ' + res[1].decode('UTF-8').replace('\n', '\n  ')
 
-    # check return code, raise error if failure
-    if not return_code or return_code != 0:
-        # also scan both stdout and stdin for weird errors
-        if "error" in res_stdout:
-            res_err = f'stdout:\n{res_stdout}'
-        elif "error" in res_stderr:
-            res_err = res_err + f'stderr:\n{res_stderr}'
+    if not error_ok:
+        # check return code, raise error if failure
+        if not return_code or return_code != 0:
+            # also scan both stdout and stdin for weird errors
+            for output in [res_stdout.lower(), res_stderr.lower()]:
+                if "error" in output:
+                    err = f'Return code not zero! Return code: {return_code}'
+                    raise Exception(f'\033[0;33m {err} \n {output} \033[00m')
 
-        if res_err and not error_ok:
-            err = (f'Return code was not zero! Error code: {return_code}')
-            # hacky, but whatevs
-            if 'flathub' in res_err:
-                print(f' {err} \n {res_err} \nIf this is flatpak related, try'
-                      ' a reboot, or verify package name on flathub.org/apps')
-            else:
-                raise Exception(f' {err} \n {res_err}')
-
-    if not res_stdout:
-        return_str = res_stderr
-    else:
-        return_str = res_stdout
-
-    if not suppress_output:
-        print(return_str)
-    return return_str
+    for output in [res_stdout, res_stderr]:
+        if output:
+            if not suppress_output:
+                print(output)
+            return output
 
 
 def main():
@@ -279,17 +251,10 @@ def main():
     This calls the arg parser and all the core functions above
     """
     help = ('This is a generic onboarding script for macOS and debian. It uses'
-            'a config in the script repo directory under configs/installers'
-            'If you run this with no options on macOS, it will install all '
-            'default brew packages, and updated you rc_files. On Linux it will'
-            ' do the same, but it will also install apt, flatpak, snap '
-            ' packages, plus it will configure firefox. For optional'
-            "packages, example for gaming and work -e/--extras gaming work")
+            ' a config in the script repo in configs/installers/packages.yml.'
+            ' If you run this with no options on Linux it will install brew, '
+            'apt, flatpak, and snap packages. On mac, it just used brew.')
     parser = argparse.ArgumentParser(description=help)
-
-    d_help = "perform a Dry Run of the script, NOT WORKING YET"
-    parser.add_argument('--dry', action="store_true", default=False,
-                        help=d_help)
 
     e_msg = ("Takes optional package lists to install, accepts multiple, "
              "example: --extra gaming")
@@ -307,36 +272,32 @@ def main():
     parser.add_argument('--overwrite', action="store_true", default=False,
                         help='Deletes existing rc files, such as .bashrc, '
                              'before creating hardlinks. Be careful!')
-    res = parser.parse_args()
-    overwrite_bool = res.overwrite
+    opt = parser.parse_args()
+
+    hard_link_rc_files(opt.overwrite)
+    install_fonts()
 
     # process additional package lists, if any
     package_groups = ['default']
-    if res.extra:
-        package_groups.extend(res.extra)
+    if opt.extra:
+        package_groups.extend(opt.extra)
 
     default_installers = ['brew']
     if 'linux' in OS:
         default_installers.extend(['apt', 'snap', 'flatpak'])
 
     # if user specifies, only do packages passed into --installers
-    if res.installers:
-        default_installers = res.installers
+    if opt.installers:
+        default_installers = opt.installers
 
     run_installers(default_installers, package_groups)
 
-    hard_link_rc_files(overwrite_bool)
-
-    install_fonts()
-
     # this is SUPPOSED to install the vim plugins, but sometimes does not
     configure_vim()
-
     # currently broken on both mac and linux
     map_caps_to_control()
-
     # this can't be done until we have firefox, and who knows when that is
-    if res.firefox:
+    if opt.firefox:
         configure_firefox()
 
     print("\033[92m ❇️  SUCCESS ❇️  \033[00m".center(80, '-'))
