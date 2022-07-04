@@ -45,7 +45,7 @@ When the script completes, it'll output a number of other steps to take manually
 - Installs brew files from `./packages/Brewfile_*` depending on OS and if `--work` is passed in
 - Installs vim-plug, a vim plugin manager to setup things like nerdtree, indentations lines, and fuzzysearch
 
-If you want to see the exact packages being installed, you can check out `configs/installers/packages.yml` for an easy to absorb yaml list of packages per installer. I bias towards brew fo cross-platform usage.
+If you want to see the exact packages being installed, you can check out `configs/installers/packages.yml` for an easy to absorb yaml list of packages per installer. I bias towards brew fo cross-platform usage, and those packages are avavailble as Brewfiles in `configs/installers/brew/`.
 
 I'm using github issues to track future work on this thing.
 
