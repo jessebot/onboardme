@@ -29,6 +29,7 @@ def run_installers(installers=['brew'], pkg_lists=['default']):
 
     # just in case we got any duplicates, we iterate through this as a set
     for installer in set(installers):
+        pkgs = pkg_lists
         if installer == 'flatpak':
             subproc("sudo flatpak remote-add --if-not-exists flathub "
                     "https://flathub.org/repo/flathub.flatpakrepo")
@@ -48,11 +49,11 @@ def run_installers(installers=['brew'], pkg_lists=['default']):
         if installer == 'brew':
             install_cmd += pkg_manager_dir + 'brew/'
             if OS == 'linux':
-                pkg_lists.append('linux')
+                pkgs.append('linux')
             elif OS == 'darwin':
-                pkg_lists.append('mac')
+                pkgs.append('mac')
 
-        for pkg_list in pkg_lists:
+        for pkg_list in pkgs:
             if pkg_list != 'default':
                 msg = f"Installing {pkg_list} specific {installer} packages..."
                 print(f" {msg} ".center(80, '-'))
