@@ -18,18 +18,17 @@ HOME_DIR = os.getenv("HOME")
 PWD = os.path.dirname(__file__)
 
 
-def run_installers(installers=['brew'], pkg_lists=['default']):
+def run_installers(installers=['brew'], pkg_group_lists=['default']):
     """
     Installs packages with apt, appimage, brew, snap, flatpak. If no installers
     list passed in, will do only brew for mac, but all for linux. Takes an
-    optional variable of pkg_lists to install optional packages for work/gaming
+    optional variable, pkg_group_lists to install optional packages
     """
-    print("\n 🥱 ⚠️  If this is a fresh install of your OS, this could take a"
+    print("\n 🥱 ⚠️  If this is a fresh install of your OS, this could take a "
           "while. Settle in and get comfy 🛋️ \n")
 
     # just in case we got any duplicates, we iterate through this as a set
     for installer in set(installers):
-        pkgs = pkg_lists
         if installer == 'flatpak':
             subproc("sudo flatpak remote-add --if-not-exists flathub "
                     "https://flathub.org/repo/flathub.flatpakrepo")
@@ -48,20 +47,21 @@ def run_installers(installers=['brew'], pkg_lists=['default']):
         # For brew, we're still using bundle files, so this is a little weird
         if installer == 'brew':
             install_cmd += pkg_manager_dir + 'brew/'
-            if OS == 'linux':
-                pkgs.append('linux')
-            elif OS == 'darwin':
-                pkgs.append('mac')
+            if OS == 'darwin':
+                pkg_group_lists.append('mac')
 
-        for pkg_list in pkgs:
-            if pkg_list != 'default':
-                msg = f"Installing {pkg_list} specific {installer} packages..."
-                print(f" {msg} ".center(80, '-'))
-            for package in packages_dict[pkg_list + '_packages']:
-                if package in installed_pkgs:
-                    print(f'  {package} is already installed, continuing...')
-                else:
-                    subproc(f'{install_cmd}' + package)
+        for pkg_group in pkg_group_lists:
+            if pkg_group != 'default':
+                msg = f"Installing {pkg_group} specific {installer} packages"
+                print(f" {msg}... ".center(80, '-'))
+            try:
+                for package in packages_dict[pkg_group + '_packages']:
+                    if package in installed_pkgs:
+                        print(f'  {package} is already installed, continuing.')
+                    else:
+                        subproc(f'{install_cmd}' + package)
+            except KeyError:
+                pass
     return None
 
 
