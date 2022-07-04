@@ -18,45 +18,47 @@ PWD = os.path.dirname(__file__)
 
 def run_installers(installers=['brew'], pkg_groups=['default']):
     """
-    Installs packages with apt, appimage, brew, snap, flatpak. If no installers
-    list passed in, will do only brew for mac, but all for linux. Takes an
-    optional variable, pkg_group_lists to install optional packages.
+    Installs packages with apt, brew, snap, flatpak. If no installers list
+    passed in, only use brew for mac. Takes optional variable, pkg_group_lists
+    to install optional packages.
     """
     print("\n 🥱 ⚠️  If this is a fresh install of your OS, this could take a "
           "while. Settle in and get comfy 🛋️ \n")
 
+    pkg_manager_dir = f"{PWD}/configs/installers/"
+    with open(pkg_manager_dir + 'packages.yml', 'r') as yaml_file:
+        installer_dict_list = yaml.safe_load(yaml_file)
+
     # just in case we got any duplicates, we iterate through this as a set
     for installer in set(installers):
-        if installer == 'flatpak':
-            subproc("sudo flatpak remote-add --if-not-exists flathub "
-                    "https://flathub.org/repo/flathub.flatpakrepo")
+        installer_dict = installer_dict_list[installer]
+        installed_pkgs = subproc(installer_dict['list_cmd'], True, True)
+        install_cmd = installer_dict['install_cmd']
+        emoji = installer_dict['emoji']
 
-        pkg_manager_dir = f"{PWD}/configs/installers/"
-        with open(pkg_manager_dir + 'packages.yml', 'r') as yaml_file:
-            packages_dict = yaml.safe_load(yaml_file)[installer]
-
-        emoji = packages_dict['emoji']
         status_msg = f" \033[94m {emoji} {installer} apps installing \033[00m"
         print(status_msg.center(80, '-'))
 
-        installed_pkgs = subproc(packages_dict['list_cmd'], True, True)
-        install_cmd = packages_dict['install_cmd']
-
-        # For brew, we're still using bundle files, so this is a little weird
+        # Brew: still using bundle files, so this is a little weird
         if installer == 'brew':
             install_cmd += pkg_manager_dir + 'brew/'
             if OS == 'darwin':
                 pkg_groups.append('mac')
 
+        # Flatpak: requires us add flathub remote repo manually
+        if installer == 'flatpak':
+            subproc("sudo flatpak remote-add --if-not-exists flathub "
+                    "https://flathub.org/repo/flathub.flatpakrepo")
+
         for pkg_group in pkg_groups:
-            try:
-                pkg_list = packages_dict[pkg_group + '_packages']
-            except KeyError:
+            if not pkg_group + '_packages' in installer_dict:
                 continue
-            inst_msg = f"Installing {pkg_group} specific {installer} packages"
+
             if pkg_group != 'default':
-                print(f" {inst_msg}... ".center(80, '-'))
-            for package in pkg_list:
+                msg = f"Installing {pkg_group} specific {installer} packages"
+                print(f" {msg}... ".center(80, '-'))
+
+            for package in installer_dict[pkg_group + '_packages']:
                 if package in installed_pkgs:
                     print(f'  {package} is already installed, continuing.')
                 else:
@@ -309,9 +311,9 @@ def main():
     overwrite_bool = res.overwrite
 
     # process additional package lists, if any
-    packages = ['default']
+    package_groups = ['default']
     if res.extra:
-        packages.extend(res.extra)
+        package_groups.extend(res.extra)
 
     default_installers = ['brew']
     if 'linux' in OS:
@@ -321,7 +323,7 @@ def main():
     if res.installers:
         default_installers = res.installers
 
-    run_installers(default_installers, packages)
+    run_installers(default_installers, package_groups)
 
     hard_link_rc_files(overwrite_bool)
 
