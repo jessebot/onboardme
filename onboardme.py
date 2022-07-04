@@ -22,7 +22,7 @@ def run_installers(installers=['brew'], pkg_group_lists=['default']):
     """
     Installs packages with apt, appimage, brew, snap, flatpak. If no installers
     list passed in, will do only brew for mac, but all for linux. Takes an
-    optional variable, pkg_group_lists to install optional packages
+    optional variable, pkg_group_lists to install optional packages.
     """
     print("\n 🥱 ⚠️  If this is a fresh install of your OS, this could take a "
           "while. Settle in and get comfy 🛋️ \n")
@@ -51,11 +51,11 @@ def run_installers(installers=['brew'], pkg_group_lists=['default']):
                 pkg_group_lists.append('mac')
 
         for pkg_group in pkg_group_lists:
-            if pkg_group != 'default':
-                msg = f"Installing {pkg_group} specific {installer} packages"
-                print(f" {msg}... ".center(80, '-'))
+            inst_msg = f"Installing {pkg_group} specific {installer} packages"
             try:
                 for package in packages_dict[pkg_group + '_packages']:
+                    if pkg_group != 'default':
+                        print(f" {inst_msg}... ".center(80, '-'))
                     if package in installed_pkgs:
                         print(f'  {package} is already installed, continuing.')
                     else:
