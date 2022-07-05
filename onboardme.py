@@ -104,8 +104,8 @@ def hard_link_rc_files(overwrite=False):
     home dir. Uses hardlinks, so that if the target file is removed, the data
     will remain. If overwrite is set to True, we delete files before beginning.
     """
-    print(" 🐚 \033[94m Shell and vim rc files installing..."
-          "\033[00m".center(80, '-'))
+    status_msg = " 🐚 \033[94m Shell and vim rc files installing...\033[00m"
+    print(status_msg.center(80, '-'))
     existing_files = []
 
     # loop through the rc_files and hard link them all to the user's home dir
