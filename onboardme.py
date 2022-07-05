@@ -229,11 +229,9 @@ def subproc(command="", error_ok=False, suppress_output=False):
             return output
 
 
-def main():
+def parse_args():
     """
-    Onboarding script for macOS and debian. Uses config in the script repo in
-    configs/installers/packages.yml. If run with no options on Linux it will
-    install brew, apt, flatpak, and snap packages. On mac, only brew.
+    Parse arguments and return dict
     """
     help = main.__doc__
     d_help = 'Deletes existing rc files before creating hardlinks. BE CAREFUL!'
@@ -248,7 +246,16 @@ def main():
     p.add_argument('-f', '--firefox', action='store_true', default=False,
                    help='Opt into experimental firefox configuring')
     p.add_argument('-i', '--installers', default=None, nargs='+', help=i_help)
-    opt = p.parse_args()
+    return p.parse_args()
+
+
+def main():
+    """
+    Onboarding script for macOS and debian. Uses config in the script repo in
+    configs/installers/packages.yml. If run with no options on Linux it will
+    install brew, apt, flatpak, and snap packages. On mac, only brew.
+    """
+    opt = parse_args()
 
     print('\n 🥱 This could take a while on a fresh install, so settle in and '
           'get comfy 🛋️ \n')
