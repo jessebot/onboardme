@@ -305,6 +305,7 @@ def main():
     print(" 📺: Import subscriptions into FreeTube")
     print(" ⌨️ : Set capslock to control!")
     print(" ⏰: Install any cronjobs you need from the cron dir!")
+    print(" 💲: Source your .bashrc")
     print(" 🐋: Add your user to the docker group, and reboot")
 
 
