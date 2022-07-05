@@ -131,14 +131,6 @@ def hard_link_rc_files(overwrite=False):
         except PermissionError as error:
             print(f'  Permission error for: {src_rc_file} Error: {error}.')
 
-    # create a bash_profile as well for macOS, and also just in case
-    hard_link = f'{HOME_DIR}/.bash_profile'
-    try:
-        os.link(f'{rc_dir}/.bashrc', hard_link)
-        print(f'  Hard linked {hard_link}')
-    except FileExistsError:
-        existing_files.append(hard_link)
-
     if existing_files:
         print("  Looks like the following file(s) already exist:")
         for file in existing_files:
