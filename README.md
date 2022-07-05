@@ -1,13 +1,13 @@
 # OnBoardMe
  ♪ it only shoots t-shirts ♪
 
-This is a project to store config files, as well as programatically install core packages that I need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping I'd remember why it was there later, so this is now a renewed effort in remembering all the thing™️s, and automating as much as possible.
+This is a project to store config files, as well as programatically install core packages accross serveral package managers that I need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping I'd remember why it was there later, so this is now a renewed effort in remembering all the thing™️s, and automating as much as possible. The idea is that it's faster, smaller, and easier to configure than it's ansible equivlent.
 
-🚧 Alpha state :3 Currently tested on macOS monterey 12.4, and Debian 11.
+🚧 Alpha state :3 Currently tested on macOS Monterey 12.4, and Debian 11 (Bullseye).
 Please report 🐛 in the GitHub issues, and I will get them as I have time.
 
 ## Quick Start
-First, make sure you have curl, but it *should* be there ***already be on macOS monterey***:
+First, make sure you have curl, but it *should* be there ***already be on macOS Monterey***:
 ```bash
 # if this doesn't return anything, you need to install curl
 which curl
@@ -17,16 +17,13 @@ If it's not there on Linux, you can install it with `apt` or use any default pac
 # Debian/Ubuntu
 sudo apt install -y curl
 ```
-Then, download and run the setup script to install git, brew, python, and python dependencies. The `setup.sh` will ask for your password, because brew does that. Run the following from your home directory:
+Download and run the setup script to install git, brew, python, and python dependencies. The `setup.sh` will ask for your password to install things. Run the following from your home directory:
 ```bash
 # Download the setup.sh; you may have to install curl, see above codeblock
 curl -O https://raw.githubusercontent.com/jessebot/onboardme/main/setup.sh
-
 # give it execute permissions
 chmod 0500 ./setup.sh
-
-# run the script, to install dependencies like brew, git, and python
-# Also clones the onboardme repo
+# run the script, to install dependencies and clone the onboardme repo
 ./setup.sh
 ```
 
@@ -36,13 +33,13 @@ Now you can run the actual script that does the heavy lifting.
 ./repos/onboardme/onboardme.py
 ```
 
-When the script completes, it'll output a number of other steps to take manually that aren't yet automated.
+When the script completes, it'll output a number of other steps to take manually that aren't yet, or can't be, automated.
 
 ## Under the hood
-- Installs files are in the directory `configs/rc_files`: `.bashrc` files, `.vimrc`, and `.zshrc`.
-- Installs apt, snap, and flatpak packages from `./packages/packages.yml`
+- Installs files are in the directory `configs/rc_files`: `.bashrc` files, `.vimrc`, `.zshrc`, and `.hyper.js`.
+- Installs apt, snap, and flatpak packages from `./configs/installers/packages.yml`
 - Installs gaming related packages via apt if you pass in `--gaming`.
-- Installs brew files from `./packages/Brewfile_*` depending on OS and if `--work` is passed in
+- Installs brew files from `./configs/installers/brew/Brewfile_*` depending on OS, and if `--extra` is passed in
 - Installs vim-plug, a vim plugin manager to setup things like nerdtree, indentations lines, and fuzzysearch
 
 If you want to see the exact packages being installed, you can check out `configs/installers/packages.yml` for an easy to absorb yaml list of packages per installer. I bias towards brew fo cross-platform usage, and those packages are avavailble as Brewfiles in `configs/installers/brew/`.
