@@ -14,8 +14,8 @@ apt:
     - nextcloud-desktop
     - screen
     - youtube-dl
-    # this is for remapping capslock to control
-    - gnome-tweaks
+    - iptables
+    # package managers
     - snapd
     - flatpak
     - gnome-software-plugin-flatpak
