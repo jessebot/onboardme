@@ -100,7 +100,7 @@ def install_fonts():
 
 def hard_link_rc_files(overwrite=False):
     """
-    Creates hardlinks to default rc files for vim, zsh, and bash in user's
+    Creates hardlinks to rc files for vim, zsh, bash, and hyper in user's
     home dir. Uses hardlinks, so that if the target file is removed, the data
     will remain. If overwrite is set to True, we delete files before beginning.
     """
@@ -114,15 +114,12 @@ def hard_link_rc_files(overwrite=False):
         src_rc_file = f'{rc_dir}/{rc_file}'
         hard_link = f'{HOME_DIR}/{rc_file}'
 
-        # if overwrite set to True, delete the existing files first
-        if overwrite:
-            if os.path.exists(hard_link):
-                try:
-                    os.remove(hard_link)
-                except Exception:
-                    pass
-
         try:
+            # if overwrite set to True, delete the existing files first
+            if overwrite:
+                if os.path.exists(hard_link):
+                    os.remove(hard_link)
+
             os.link(src_rc_file, hard_link)
             print(f'  Hard linked {hard_link}')
         except FileExistsError:
