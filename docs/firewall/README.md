@@ -1,10 +1,15 @@
 # Firewall notes
-Thing I read: [How to control internet access for each program?](https://askubuntu.com/questions/45072/how-to-control-internet-access-for-each-program)
+Thing I read once: [How to control internet access for each program?](https://askubuntu.com/questions/45072/how-to-control-internet-access-for-each-program)
 
 Iptables relies on some basic concepts, if you just wanna get rollin':
-*Chains*        - lists of rules
-*Source*        - where the traffic is coming from
-*Destination*   - where it's going toA
+
+|Thing|Description|
+---|---
+|Chains|lists of rules|
+|Rules|firewall rule of blocking or allowing based on source/destination|
+|Source ip/port|where the traffic is coming from|
+|Destination ip/port|where the traffic's going to|
+|Flush|clear rules|
 
 ## Iptables
 
