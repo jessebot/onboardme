@@ -36,7 +36,7 @@ VCS_INFO_detect_git() {
 setopt extended_glob
 # Set variables of useful.
 #xport PS1='Pi!%n@%h [#%~] ' IRC style nick!user@host :)
-export PROMPT='☭ %n@%m:%~ ' # domo@host:~/public_html $ 
+export PROMPT='🐧 %n@%m:%~ ' # jesse@host:~/public_html $ 
 # VCS info, if available, stopped jobs and number of shell levels on the right
 setopt PROMPT_SUBST
 setopt TRANSIENT_RPROMPT
