@@ -28,13 +28,13 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
 
     # just in case we got any duplicates, we iterate through this as a set
     for installer in set(installers):
-        installer_dict = installer_dict_list[installer]
-        installed_pkgs = subproc(installer_dict['list_cmd'], True, True)
-        install_cmd = installer_dict['install_cmd']
         emoji = installer_dict['emoji']
-
         status_msg = f" \033[94m {emoji} {installer} apps installing \033[00m"
         print(status_msg.center(80, '-'))
+
+        installer_dict = installer_dict_list[installer]
+        install_cmd = installer_dict['install_cmd']
+        installed_pkgs = subproc(installer_dict['list_cmd'], True, True)
 
         # Brew: still using bundle files, so this is a little weird
         if installer == 'brew':
