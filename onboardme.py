@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-# Generic onboarding script for macOS and Debian
-# jessebot@linux.com
+# Generic onboarding script for macOS and Debian by jessebot@linux.com
 import argparse
 from configparser import ConfigParser
 from git import Repo
@@ -98,11 +97,11 @@ def install_fonts():
               'your terminal font to the new font. I rebooted too.')
 
 
-def hard_link_rc_files(overwrite=False):
+def hard_link_rc_files(delete=False):
     """
     Creates hardlinks to rc files for vim, zsh, bash, and hyper in user's
     home dir. Uses hardlinks, so that if the target file is removed, the data
-    will remain. If overwrite is set to True, we delete files before beginning.
+    will remain. If delete is True, we delete files before beginning.
     """
     status_msg = " 🐚 \033[94m Shell and vim rc files installing...\033[00m"
     print(status_msg.center(80, '-'))
@@ -115,10 +114,8 @@ def hard_link_rc_files(overwrite=False):
         hard_link = f'{HOME_DIR}/{rc_file}'
 
         try:
-            # if overwrite set to True, delete the existing files first
-            if overwrite:
-                if os.path.exists(hard_link):
-                    os.remove(hard_link)
+            if delete and os.path.exists(hard_link):
+                os.remove(hard_link)
 
             os.link(src_rc_file, hard_link)
             print(f'  Hard linked {hard_link}')
@@ -132,7 +129,7 @@ def hard_link_rc_files(overwrite=False):
         print("  Looks like the following file(s) already exist:")
         for file in existing_files:
             print(f' - {file}')
-        print('\n If you want the links anyway, rerun script with --overwrite')
+        print('\n If you want the links anyway, rerun script with --delete')
 
 
 def configure_vim():
@@ -234,35 +231,28 @@ def subproc(command="", error_ok=False, suppress_output=False):
 
 def main():
     """
-    This calls the arg parser and all the core functions above
+    Onboarding script for macOS and debian. Uses config in the script repo in
+    configs/installers/packages.yml. If run with no options on Linux it will
+    install brew, apt, flatpak, and snap packages. On mac, only brew.
     """
-    help = ('This is a generic onboarding script for macOS and debian. It uses'
-            ' a config in the script repo in configs/installers/packages.yml.'
-            ' If you run this with no options on Linux it will install brew, '
-            'apt, flatpak, and snap packages. On mac, it just used brew.')
-    parser = argparse.ArgumentParser(description=help)
+    help = main.__doc__
+    d_help = 'Deletes existing rc files before creating hardlinks. BE CAREFUL!'
+    e_help = ('Extra package groups to install. Accepts multiple args, e.g. '
+              '--extra gaming')
+    i_help = ('Installers to run. Accepts multiple args, e.g. only run brew '
+              'and apt: --installers brew apt')
+    p = argparse.ArgumentParser(description=help)
 
-    e_msg = ("Takes optional package lists to install, accepts multiple, "
-             "example: --extra gaming")
-    parser.add_argument('-e', '--extra', type=str, default=None, nargs="+",
-                        help=e_msg)
+    p.add_argument('--delete', action='store_true', default=False, help=d_help)
+    p.add_argument('-e', '--extra', default=None, nargs='+', help=e_help)
+    p.add_argument('-f', '--firefox', action='store_true', default=False,
+                   help='Opt into experimental firefox configuring')
+    p.add_argument('-i', '--installers', default=None, nargs='+', help=i_help)
+    opt = p.parse_args()
 
-    i_msg = ('ONLY install packages from these installers. experimental, '
-             'accepts multiple args  example: --installers brew apt')
-    parser.add_argument('--installers', type=str, default=None, nargs="+",
-                        help=i_msg)
-
-    parser.add_argument('--firefox', action="store_true", default=False,
-                        help='Opt into experimental firefox configuring')
-
-    parser.add_argument('--overwrite', action="store_true", default=False,
-                        help='Deletes existing rc files, such as .bashrc, '
-                             'before creating hardlinks. Be careful!')
-    opt = parser.parse_args()
-
-    print("\n 🥱 This could take a while on a fresh install of an OS, so "
-          "settle in and get comfy 🛋️ \n")
-    hard_link_rc_files(opt.overwrite)
+    print('\n 🥱 This could take a while on a fresh install, so settle in and '
+          'get comfy 🛋️ \n')
+    hard_link_rc_files(opt.delete)
     install_fonts()
 
     # process additional package lists, if any
@@ -284,18 +274,17 @@ def main():
     configure_vim()
     # currently broken on both mac and linux
     map_caps_to_control()
-    # this can't be done until we have firefox, and who knows when that is
     if opt.firefox:
         configure_firefox()
 
-    print("\033[92m ❇️  SUCCESS ❇️  \033[00m".center(80, '-'))
+    print('\033[92m ❇️  SUCCESS ❇️  \033[00m'.center(80, '-'))
     print("\n Here's some stuff you gotta do manually:")
-    print(" 📰: Import rss feeds config into FluentReader or wherever")
-    print(" 📺: Import subscriptions into FreeTube")
-    print(" ⌨️ : Set capslock to control!")
-    print(" ⏰: Install any cronjobs you need from the cron dir!")
-    print(" 💲: Source your .bashrc")
-    print(" 🐋: Add your user to the docker group, and reboot")
+    print(' 📰: Import rss feeds config into FluentReader or wherever')
+    print(' 📺: Import subscriptions into FreeTube')
+    print(' ⌨️ : Set capslock to control!')
+    print(' ⏰: Install any cronjobs you need from the cron dir!')
+    print(' 💲: Source your .bashrc')
+    print(' 🐋: Add your user to the docker group, and reboot')
 
 
 if __name__ == '__main__':
