@@ -151,9 +151,12 @@ complete -C /usr/local/bin/terraform terraform
 # go
 export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
 
-# brew on linux
+# special linux pathing
 if [[ $(uname) == *"Linux"* ]]; then
+    # Brew on Linux
     export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
+    # this is for iptables on debian, which is elusive
+    export PATH=$PATH:/usr/sbin:/usr/share
 fi
 
 # include external .bashrc_$application if it exists
