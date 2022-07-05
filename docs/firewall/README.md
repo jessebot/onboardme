@@ -1,6 +1,11 @@
 # Firewall notes
 Thing I read: [How to control internet access for each program?](https://askubuntu.com/questions/45072/how-to-control-internet-access-for-each-program)
 
+Iptables relies on some basic concepts, if you just wanna get rollin':
+*Chains*        - lists of rules
+*Source*        - where the traffic is coming from
+*Destination*   - where it's going toA
+
 ## Iptables
 
 Most of the firewalls on linux actually just wrap iptables anyway, so here's a bunch of quick how-tos. Remember that iptables requires sudo.
@@ -11,19 +16,19 @@ Most of the firewalls on linux actually just wrap iptables anyway, so here's a b
 systemctl start/stop/restart iptables
 ```
 
-List current rules:
+List current rules (-n is numeric, -v is verbose):
 ```bash
 sudo iptables -L -n -v
 ```
 
 ### Blocking and Allowing
-Block an IP address:
+Block an IP address (-A is append):
 
 ```bash
 sudo iptables -A INPUT -s xxx.xxx.xxx.xxx -j DROP
 ```
 
-Unblock:
+Unblock (-D is delete):
 ```bash
 sudo iptables -D INPUT -s xxx.xxx.xxx.xxx -j DROP
 ```
@@ -68,10 +73,19 @@ sudo iptables -A INPUT -i eth0 -j LOG --log-prefix "IPtables dropped packets:"
 ```
 
 ### Flush iptables firewall chains or rules
-
-Flush your firewall chains:
+Flush your firewall chains. Equivalent to deleting all the iptables rules one by one:
 ```bash
 sudo iptables -F
+```
+
+Delete a chain:
+```
+sudo iptables -X
+```
+
+Zero out all the packet and byte counters:
+```
+sudo iptables -Z
 ```
 
 Flush chains from a specific table, example with the nat table:
@@ -89,21 +103,18 @@ iptables-restore < ~/iptables.rules
 ```
 
 ## UFW notes
-
 Need to get `$remote_ip` at time of running if this is being set up as a secondary machine
-
 ```bash
 ufw allow from $remote_ip to any port 22
 ```
 
 This is to create special firewall configs for annoying apps want to phone home while they're supposed to be not running:
-
 ```bash
 ufw app list
+
 # move special app 
 cp ufw/* /etc/ufw/applications.d
 ufw app update discord
 ufw app info discord
 ufw deny discord
 ```
-
