@@ -15,6 +15,10 @@ Iptables relies on some basic concepts, if you just wanna get rollin':
 
 Most of the firewalls on linux actually just wrap iptables anyway, so here's a bunch of quick how-tos. Remember that iptables requires sudo.
 
+The iptables configs are stored in:
+- `/etc/sysconfig/iptables`
+- `/etc/sysconfig/ip6tables`
+
 ### Start, Stop, List
 ```bash
 # only select one of the middle options
