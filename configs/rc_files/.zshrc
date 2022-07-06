@@ -2,6 +2,9 @@
 export LANG=en_US.UTF-8
 export LC_CTYPE=$LANG
 
+# make noise stop
+unsetopt beep
+
 # Turn on the magic completion!
 fpath=($fpath $HOME/.zsh) # For extra zsh completion files
 export FPATH

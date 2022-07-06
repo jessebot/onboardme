@@ -1,4 +1,8 @@
 # Jessebot's personal .bash_profile/.bashrc
+
+# I hate bells
+set bell-style none
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
