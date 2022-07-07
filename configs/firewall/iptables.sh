@@ -2,7 +2,7 @@
 IPT="sudo iptables"
 
 # Remote IPs - IPs that remote hosts that want access to this machine
-REMOTE_IPS="thing1 thing2"
+REMOTE_IPS=$1
 
 # Server IP - that of localhost
 SERVER_IP="$(ip addr show eth0 | grep 'inet ' | cut -f2 | awk '{ print $2}')"
