@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 # Generic onboarding script for macOS and Debian by jessebot@linux.com
-import argparse
+from argparse import ArgumentParser
 from configparser import ConfigParser
+import fileinput
 from git import Repo
 import os
 from pathlib import Path
+from random import randint
 import shutil
 import subprocess
 import sys
@@ -21,7 +23,7 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
     passed in, only use brew for mac. Takes optional variable, pkg_group_lists
     to install optional packages.
     """
-    pkg_manager_dir = f"{PWD}/configs/installers/"
+    pkg_manager_dir = f'{PWD}/configs/installers/'
     with open(pkg_manager_dir + 'packages.yml', 'r') as yaml_file:
         installers_list = yaml.safe_load(yaml_file)
 
@@ -29,7 +31,7 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
     for installer in set(installers):
         installer_dict = installers_list[installer]
         emoji = installer_dict['emoji']
-        status_msg = f" \033[94m {emoji} {installer} apps installing \033[00m"
+        status_msg = f' \033[94m {emoji} {installer} apps installing \033[00m'
         print(status_msg.center(80, '-'))
 
         install_cmd = installer_dict['install_cmd']
@@ -43,14 +45,14 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
 
         # Flatpak: requires us add flathub remote repo manually
         if installer == 'flatpak':
-            subproc("sudo flatpak remote-add --if-not-exists flathub "
-                    "https://flathub.org/repo/flathub.flatpakrepo")
+            subproc('sudo flatpak remote-add --if-not-exists flathub '
+                    'https://flathub.org/repo/flathub.flatpakrepo')
 
         for pkg_group in pkg_groups:
             if pkg_group + '_packages' in installer_dict:
                 if pkg_group != 'default':
-                    msg = f"Installing {pkg_group} specific {installer}"
-                    print(f" {msg} packages... ".center(80, '-'))
+                    msg = f'Installing {pkg_group} specific {installer}'
+                    print(f' {msg} packages... '.center(80, '-'))
 
                 for package in installer_dict[pkg_group + '_packages']:
                     if package in installed_pkgs:
@@ -66,15 +68,15 @@ def install_fonts():
     config, but you should still reboot when you're done :shrug:
     """
     if 'linux' in OS:
-        status_msg = "\033[94m ✍️  Installing fonts... \033[00m"
+        status_msg = '\033[94m ✍️  Installing fonts... \033[00m'
         print(status_msg.center(80, '-'))
         fonts_dir = f'{HOME_DIR}/repos/nerd-fonts'
 
         # do a shallow clone of the repo
         if not os.path.exists(fonts_dir):
-            print("  Downloading installer and font sets...  (can take a bit)")
+            print('  Downloading installer and font sets...  (can take a bit)')
             Path(fonts_dir).mkdir(parents=True, exist_ok=True)
-            fonts_repo = "https://github.com/ryanoasis/nerd-fonts.git"
+            fonts_repo = 'https://github.com/ryanoasis/nerd-fonts.git'
             Repo.clone_from(fonts_repo, fonts_dir, depth=1)
 
         print('  Running the font installer...')
@@ -103,7 +105,7 @@ def hard_link_rc_files(delete=False):
     home dir. Uses hardlinks, so that if the target file is removed, the data
     will remain. If delete is True, we delete files before beginning.
     """
-    status_msg = " 🐚 \033[94m Shell and vim rc files installing...\033[00m"
+    status_msg = ' 🐚 \033[94m Shell and vim rc files installing...\033[00m'
     print(status_msg.center(80, '-'))
     existing_files = []
 
@@ -126,7 +128,7 @@ def hard_link_rc_files(delete=False):
             print(f'  Permission error for: {src_rc_file} Error: {error}.')
 
     if existing_files:
-        print("  Looks like the following file(s) already exist:")
+        print('  Looks like the following file(s) already exist:')
         for file in existing_files:
             print(f' - {file}')
         print('\n If you want the links anyway, rerun script with --delete')
@@ -136,13 +138,13 @@ def configure_vim():
     """
     Installs vim-plug, vim plugin manager, and then installs vim plugins
     """
-    msg = "\033[94m Installing vim-plug, for vim plugins\033[00m "
+    msg = '\033[94m Installing vim-plug, for vim plugins\033[00m '
     print(msg.center(80, '-'))
 
     autoload_dir = f'{HOME_DIR}/.vim/autoload'
-    url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     if not os.path.exists(autoload_dir):
-        print("  Creating directory structure and downloading vim-plug...")
+        print('  Creating directory structure and downloading vim-plug...')
         Path(autoload_dir).mkdir(parents=True, exist_ok=True)
         wget.download(url, autoload_dir)
 
@@ -157,16 +159,16 @@ def configure_firefox():
     """
     # different OS will have firefox profile info in different paths
     if 'linux' in OS:
-        ini_dir = f"{HOME_DIR}/.mozilla/firefox/"
+        ini_dir = f'{HOME_DIR}/.mozilla/firefox/'
     elif OS == 'darwin':
         # hate apple for their capitalized directories
-        ini_dir = f"{HOME_DIR}/Library/Application Support/Firefox/"
+        ini_dir = f'{HOME_DIR}/Library/Application Support/Firefox/'
 
-    msg = "\033[94m 🦊 Installing Firefox preferences and addons\033[00m "
+    msg = '\033[94m 🦊 Installing Firefox preferences and addons\033[00m '
     print(msg.center(80, '-'))
 
-    print("  Checking Firefox profiles.ini for correct profile...")
-    profile_dir = ""
+    print('  Checking Firefox profiles.ini for correct profile...')
+    profile_dir = ''
     prof_config = ConfigParser()
     prof_config.read(ini_dir + 'profiles.ini')
 
@@ -174,35 +176,67 @@ def configure_firefox():
     for section in sections:
         if section.startswith('Install'):
             profile_dir = ini_dir + prof_config.get(section, 'Default')
-            print("  Current firefox profile is in: " + profile_dir)
+            print('  Current firefox profile is in: ' + profile_dir)
 
     repo_config_dir = f'{PWD}/configs/browser/firefox/extensions/'
 
-    print("\n  Configuring Firefox user preferences...")
-    usr_prefs = repo_config_dir.replace("extensions/", "user.js")
+    print('\n  Configuring Firefox user preferences...')
+    usr_prefs = repo_config_dir.replace('extensions/', 'user.js')
     shutil.copy(usr_prefs, profile_dir)
-    print("  Finished copying over firefox settings :3")
+    print('  Finished copying over firefox settings :3')
 
-    print("\n  Copying over firefox addons...")
+    print('\n  Copying over firefox addons...')
     for addon_xpi in os.listdir(repo_config_dir):
         shutil.copy(repo_config_dir + addon_xpi,
                     f'{profile_dir}/extensions/')
-    print("  Firefox extensions installed, but they need to be enabled\n")
+    print('  Firefox extensions installed, but they need to be enabled\n')
 
 
 def map_caps_to_control():
     """
     Maps capslock to control. This is ugly and awful
     """
-    if 'linux' in OS:
-        cmd = ("sudo gsettings set org.gnome.desktop.input-sources "
-               """xkb-options '["caps:ctrl_modifier"]'""")
-        subproc(cmd)
+    cmd = ("sudo gsettings set org.gnome.desktop.input-sources "
+           """xkb-options '["caps:ctrl_modifier"]'""")
+    subproc(cmd)
+
+
+def configure_ssh():
+    """
+    This will setup SSH for you on a semi-random port that probably isn't taken
+    """
+    random_port = randint(2224, 2260)
+    print(f'  Setting SSHD port to {random_port}')
+    sshd_config = fileinput.input('/etc/ssh/sshd_config', inplace=True)
+
+    for line in sshd_config:
+        if '#Port ' in line:
+            print(f'Port {random_port}', end='')
+        elif '#PasswordAuthentication ' in line:
+            print('PasswordAuthentication no')
+        elif '#PubkeyAuthentication' in line:
+            print('PubkeyAuthentication no')
+        else:
+            print(line)
+
+    sshd_config.append('Match Group ssh')
+    sshd_config.append('  PubkeyAuthentication yes')
+
+
+def configure_firewall(remote_hosts=[]):
+    """
+    configure iptables
+    """
+    if remote_hosts:
+        remote_ips = ' '.join(remote_hosts)
+        subproc(f'{PWD}/configs/firewall/iptables.sh "{remote_ips}"')
+    else:
+        subproc(f'{PWD}/configs/firewall/no_ssh_iptables.sh')
 
 
 def subproc(command="", error_ok=False, suppress_output=False):
     """
-    Takes a commmand to run in BASH, as well as optionals bools to pass on
+    Takes a str commmand to run in BASH, as well as optionals bools to pass on
     errors in stderr/stdout and suppress_output
     """
     print(f'\n \033[92m Running cmd:\033[00m {command}')
@@ -218,7 +252,7 @@ def subproc(command="", error_ok=False, suppress_output=False):
         if not return_code or return_code != 0:
             # also scan both stdout and stdin for weird errors
             for output in [res_stdout.lower(), res_stderr.lower()]:
-                if "error" in output:
+                if 'error' in output:
                     err = f'Return code not zero! Return code: {return_code}'
                     raise Exception(f'\033[0;33m {err} \n {output} \033[00m')
 
@@ -233,19 +267,22 @@ def parse_args():
     """
     Parse arguments and return dict
     """
-    help = main.__doc__
     d_help = 'Deletes existing rc files before creating hardlinks. BE CAREFUL!'
     e_help = ('Extra package groups to install. Accepts multiple args, e.g. '
               '--extra gaming')
     i_help = ('Installers to run. Accepts multiple args, e.g. only run brew '
               'and apt: --installers brew apt')
-    p = argparse.ArgumentParser(description=help)
+    h_help = 'Add IP to firewall for remote access'
+    p = ArgumentParser(description=main.__doc__)
 
     p.add_argument('--delete', action='store_true', default=False, help=d_help)
     p.add_argument('-e', '--extra', default=None, nargs='+', help=e_help)
     p.add_argument('-f', '--firefox', action='store_true', default=False,
                    help='Opt into experimental firefox configuring')
     p.add_argument('-i', '--installers', default=None, nargs='+', help=i_help)
+    p.add_argument('-r', '--remote', action='store_true', default=False,
+                   help='Setup SSH on a random port and add it to firewall.')
+    p.add_argument('-H', '--host', nargs='+', default=None, help=h_help)
     return p.parse_args()
 
 
@@ -270,6 +307,9 @@ def main():
     default_installers = ['brew']
     if 'linux' in OS:
         default_installers.extend(['apt', 'snap', 'flatpak'])
+        map_caps_to_control()
+        if opt.firefox:
+            configure_firefox()
 
     # if user specifies, only do packages passed into --installers
     if opt.installers:
@@ -277,21 +317,23 @@ def main():
 
     run_installers(default_installers, package_groups)
 
+    # this will also configure ssh if you specify --remote
+    if opt.remote and 'linux' in OS:
+        configure_ssh(opt.remote)
+        configure_firewall(opt.host)
+
     # this is SUPPOSED to install the vim plugins, but sometimes does not
     configure_vim()
-    # currently broken on both mac and linux
-    map_caps_to_control()
-    if opt.firefox:
-        configure_firefox()
 
     print('\033[92m ❇️  SUCCESS ❇️  \033[00m'.center(80, '-'))
     print("\n Here's some stuff you gotta do manually:")
-    print(' 📰: Import rss feeds config into FluentReader or wherever')
+    print(' 📰: Import RSS feeds config into FluentReader or wherever')
     print(' 📺: Import subscriptions into FreeTube')
     print(' ⌨️ : Set capslock to control!')
     print(' ⏰: Install any cronjobs you need from the cron dir!')
     print(' 💲: Source your .bashrc')
     print(' 🐋: Add your user to the docker group, and reboot')
+    print(' 🛡️: Configure your firewall! (lulu on mac)')
 
 
 if __name__ == '__main__':

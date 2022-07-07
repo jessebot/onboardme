@@ -1,9 +1,15 @@
-#!/bin/bash
+#!/bin/bash -
+#===============================================================================
+#         USAGE: ./iptables.sh 
+#
+#   DESCRIPTION: 
+#
+#         NOTES: ---
+#        AUTHOR: Jesse Hitch
+#       CREATED: 07/07/2022 20:55:13
+#      REVISION:  ---
+#===============================================================================
 IPT="sudo iptables"
-
-# Remote IPs - IPs that remote hosts that want access to this machine
-REMOTE_IPS=$1
-
 # Server IP - that of localhost
 SERVER_IP="$(ip addr show eth0 | grep 'inet ' | cut -f2 | awk '{ print $2}')"
 eth_res=$?
@@ -55,17 +61,6 @@ for ip in $PACKAGE_SERVER; do
 	$IPT -A OUTPUT -p tcp -d "$ip" --dport 21  -m state --state NEW,ESTABLISHED -j ACCEPT
 	$IPT -A INPUT  -p tcp -s "$ip" --sport 21  -m state --state ESTABLISHED     -j ACCEPT
 done
-
-for remote_ip in $REMOTE_IPS; do
-    echo "Allow outgoing/incoming connections to port 22 (SSH) for $remote_ip"
-    $IPT -A OUTPUT -p tcp -d $remote_ip --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
-    $IPT -A INPUT  -p tcp -s $remote_ip --sport 22 -m state --state ESTABLISHED     -j ACCEPT
-
-    echo "Allow outgoing/incoming icmp connections (pings) for $remote_ip"
-    $IPT -A OUTPUT -p icmp -d $remote_ip  -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
-    $IPT -A INPUT  -p icmp -s $remote_ip  -m state --state ESTABLISHED,RELATED     -j ACCEPT
-done
-
 #######################################################################################################
 ## Global iptable rules. Not IP specific
 $IPT -A INPUT -p tcp --sport 443 -j ACCEPT
