@@ -42,12 +42,11 @@ echo "allow all and everything on localhost"
 $IPT -A INPUT -i lo -j ACCEPT
 $IPT -A OUTPUT -o lo -j ACCEPT
 
-## Global iptable rules. Not IP specific
-echo "Allowing new and established incoming connections to port 80 (HTTP), 443 (HTTPS)"
-$IPT -A OUTPUT -p tcp --sport 80 -m state --state ESTABLISHED     -j ACCEPT
-$IPT -A INPUT  -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
-$IPT -A INPUT  -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
-$IPT -A OUTPUT -p tcp --sport 443 -m state --state ESTABLISHED     -j ACCEPT
+# echo "Allowing new and established incoming connections to port 80 (HTTP), 443 (HTTPS)"
+# $IPT -A OUTPUT -p tcp --sport 80 -m state --state ESTABLISHED     -j ACCEPT
+# $IPT -A INPUT  -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+# $IPT -A INPUT  -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
+# $IPT -A OUTPUT -p tcp --sport 443 -m state --state ESTABLISHED     -j ACCEPT
 
 
 for ip in $PACKAGE_SERVER
@@ -67,10 +66,10 @@ done
 
 
 #######################################################################################################
-
-# echo "Allowing new and established incoming connections to port 21 (ftp), 80 (HTTP), 443 (HTTPS)"
-# $IPT -A INPUT  -p tcp -m multiport --dports 21,80,443 -m state --state NEW,ESTABLISHED -j ACCEPT
-# $IPT -A OUTPUT -p tcp -m multiport --sports 21,80,443 -m state --state ESTABLISHED     -j ACCEPT
+## Global iptable rules. Not IP specific
+echo "Allowing new and established incoming connections to port 21 (ftp), 80 (HTTP), 443 (HTTPS)"
+$IPT -A INPUT  -p tcp -m multiport --dports 21,80,443 -m state --state NEW,ESTABLISHED -j ACCEPT
+$IPT -A OUTPUT -p tcp -m multiport --sports 21,80,443 -m state --state ESTABLISHED     -j ACCEPT
 
 #echo "Allow all outgoing connections to port 22 (SSH)"
 #$IPT -A OUTPUT -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
@@ -90,5 +89,7 @@ $IPT -A INPUT  -j DROP
 
 $IPT -A OUTPUT -j LOG  -m limit --limit 12/min --log-level 4 --log-prefix 'IP OUTPUT drop: '
 $IPT -A OUTPUT -j DROP
+
+$IPT save
 
 exit 0
