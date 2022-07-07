@@ -31,8 +31,7 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
     for installer in set(installers):
         installer_dict = installers_list[installer]
         emoji = installer_dict['emoji']
-        status_msg = f' \033[94m {emoji} {installer} apps installing \033[00m'
-        print(status_msg.center(80, '-'))
+        print_head(f'{emoji} {installer} apps installing')
 
         install_cmd = installer_dict['install_cmd']
         installed_pkgs = subproc(installer_dict['list_cmd'], True, True)
@@ -51,9 +50,7 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
         for pkg_group in pkg_groups:
             if pkg_group + '_packages' in installer_dict:
                 if pkg_group != 'default':
-                    msg = f'Installing {pkg_group} specific {installer}'
-                    print(f' {msg} packages... '.center(80, '-'))
-
+                    print_head(f'Installing {pkg_group} {installer} packages')
                 for package in installer_dict[pkg_group + '_packages']:
                     if package in installed_pkgs:
                         print(f'  {package} is already installed, continuing.')
@@ -68,8 +65,7 @@ def install_fonts():
     config, but you should still reboot when you're done :shrug:
     """
     if 'linux' in OS:
-        status_msg = '\033[94m ✍️  Installing fonts... \033[00m'
-        print(status_msg.center(80, '-'))
+        print_head('✍️  Installing fonts...')
         fonts_dir = f'{HOME_DIR}/repos/nerd-fonts'
 
         # do a shallow clone of the repo
@@ -105,8 +101,7 @@ def hard_link_rc_files(delete=False):
     home dir. Uses hardlinks, so that if the target file is removed, the data
     will remain. If delete is True, we delete files before beginning.
     """
-    status_msg = ' 🐚 \033[94m Shell and vim rc files installing...\033[00m'
-    print(status_msg.center(80, '-'))
+    print_head(' 🐚 Shell and vim rc files installing...')
     existing_files = []
 
     # loop through the rc_files and hard link them all to the user's home dir
@@ -138,8 +133,7 @@ def configure_vim():
     """
     Installs vim-plug, vim plugin manager, and then installs vim plugins
     """
-    msg = '\033[94m Installing vim-plug, for vim plugins\033[00m '
-    print(msg.center(80, '-'))
+    print_head('Installing vim-plug, for vim plugins')
 
     autoload_dir = f'{HOME_DIR}/.vim/autoload'
     url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
@@ -164,8 +158,7 @@ def configure_firefox():
         # hate apple for their capitalized directories
         ini_dir = f'{HOME_DIR}/Library/Application Support/Firefox/'
 
-    msg = '\033[94m 🦊 Installing Firefox preferences and addons\033[00m '
-    print(msg.center(80, '-'))
+    print_head('🦊 Installing Firefox preferences and addons')
 
     print('  Checking Firefox profiles.ini for correct profile...')
     profile_dir = ''
@@ -227,9 +220,10 @@ def configure_firewall(remote_hosts=[]):
     """
     configure iptables
     """
+    print_head('🛡️ Configuring Firewall...')
     if remote_hosts:
         remote_ips = ' '.join(remote_hosts)
-        subproc(f'{PWD}/configs/firewall/iptables.sh "{remote_ips}"')
+        subproc(f'{PWD}/configs/firewall/iptables.sh {remote_ips}')
     else:
         subproc(f'{PWD}/configs/firewall/no_ssh_iptables.sh')
 
@@ -261,6 +255,13 @@ def subproc(command="", error_ok=False, suppress_output=False):
             if not suppress_output:
                 print(output)
             return output
+
+
+def print_head(status=""):
+    """
+    takes a string and prints it pretty
+    """
+    print(f'\n \033[92m {status} \033[00m'.center(80, '-'))
 
 
 def parse_args():
@@ -325,7 +326,7 @@ def main():
     # this is SUPPOSED to install the vim plugins, but sometimes does not
     configure_vim()
 
-    print('\033[92m ❇️  SUCCESS ❇️  \033[00m'.center(80, '-'))
+    print_head('❇️  SUCCESS ❇️  ')
     print("\n Here's some stuff you gotta do manually:")
     print(' 📰: Import RSS feeds config into FluentReader or wherever')
     print(' 📺: Import subscriptions into FreeTube')
@@ -333,7 +334,6 @@ def main():
     print(' ⏰: Install any cronjobs you need from the cron dir!')
     print(' 💲: Source your .bashrc')
     print(' 🐋: Add your user to the docker group, and reboot')
-    print(' 🛡️: Configure your firewall! (lulu on mac)')
 
 
 if __name__ == '__main__':
