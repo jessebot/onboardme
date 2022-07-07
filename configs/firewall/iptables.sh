@@ -23,13 +23,6 @@ $IPT -P INPUT   DROP
 $IPT -P FORWARD DROP
 $IPT -P OUTPUT  DROP
 
-## Global iptable rules. Not IP specific
-echo "Allowing new and established incoming connections to port 80 (HTTP), 443 (HTTPS)"
-$IPT -A INPUT  -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
-$IPT -A OUTPUT -p tcp --sport 80 -m state --state ESTABLISHED     -j ACCEPT
-$IPT -A INPUT  -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
-$IPT -A OUTPUT -p tcp --sport 443 -m state --state ESTABLISHED     -j ACCEPT
-
 ## This should be one of the first rules.
 ## so dns lookups are already allowed for your other rules
 for ip in $DNS_SERVER
@@ -49,6 +42,14 @@ echo "allow all and everything on localhost"
 $IPT -A INPUT -i lo -j ACCEPT
 $IPT -A OUTPUT -o lo -j ACCEPT
 
+## Global iptable rules. Not IP specific
+echo "Allowing new and established incoming connections to port 80 (HTTP), 443 (HTTPS)"
+$IPT -A OUTPUT -p tcp --sport 80 -m state --state ESTABLISHED     -j ACCEPT
+$IPT -A INPUT  -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+$IPT -A INPUT  -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
+$IPT -A OUTPUT -p tcp --sport 443 -m state --state ESTABLISHED     -j ACCEPT
+
+
 for ip in $PACKAGE_SERVER
 do
 	echo "Allow connection to '$ip' on port 21"
@@ -66,7 +67,6 @@ done
 
 
 #######################################################################################################
-## Global iptable rules. Not IP specific
 
 # echo "Allowing new and established incoming connections to port 21 (ftp), 80 (HTTP), 443 (HTTPS)"
 # $IPT -A INPUT  -p tcp -m multiport --dports 21,80,443 -m state --state NEW,ESTABLISHED -j ACCEPT
