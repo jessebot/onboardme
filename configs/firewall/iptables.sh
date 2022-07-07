@@ -8,7 +8,7 @@ SERVER_IP="$(ip addr show eth0 | grep 'inet ' | cut -f2 | awk '{ print $2}')"
 DNS_SERVER="192.168.50.1"
 
 # Allow connections to this package servers
-PACKAGE_SERVER="ftp.us.debian.org security.debian.org"
+PACKAGE_SERVER="ftp.us.debian.org security.debian.org github.com"
 
 echo "flush iptable rules"
 $IPT -F
@@ -23,15 +23,26 @@ $IPT -P INPUT   DROP
 $IPT -P FORWARD DROP
 $IPT -P OUTPUT  DROP
 
+## Global iptable rules. Not IP specific
+echo "Allowing new and established incoming connections to port 80 (HTTP), 443 (HTTPS)"
+$IPT -A INPUT  -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+$IPT -A OUTPUT -p tcp --sport 80 -m state --state ESTABLISHED     -j ACCEPT
+$IPT -A INPUT  -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
+$IPT -A OUTPUT -p tcp --sport 443 -m state --state ESTABLISHED     -j ACCEPT
+
 ## This should be one of the first rules.
 ## so dns lookups are already allowed for your other rules
 for ip in $DNS_SERVER
 do
-	echo "Allowing DNS lookups (tcp, udp port 53) to server '$ip'"
+	echo "Allowing DNS lookups (tcp, udp port 53, 5353) to server '$ip'"
 	$IPT -A OUTPUT -p udp -d $ip --dport 53 -m state --state NEW,ESTABLISHED -j ACCEPT
 	$IPT -A INPUT  -p udp -s $ip --sport 53 -m state --state ESTABLISHED     -j ACCEPT
 	$IPT -A OUTPUT -p tcp -d $ip --dport 53 -m state --state NEW,ESTABLISHED -j ACCEPT
 	$IPT -A INPUT  -p tcp -s $ip --sport 53 -m state --state ESTABLISHED     -j ACCEPT
+	$IPT -A OUTPUT -p udp -d $ip --dport 5353 -m state --state NEW,ESTABLISHED -j ACCEPT
+	$IPT -A INPUT  -p udp -s $ip --sport 5353 -m state --state ESTABLISHED     -j ACCEPT
+	$IPT -A OUTPUT -p tcp -d $ip --dport 5353 -m state --state NEW,ESTABLISHED -j ACCEPT
+	$IPT -A INPUT  -p tcp -s $ip --sport 5353 -m state --state ESTABLISHED     -j ACCEPT
 done
 
 echo "allow all and everything on localhost"
@@ -60,11 +71,6 @@ done
 # echo "Allowing new and established incoming connections to port 21 (ftp), 80 (HTTP), 443 (HTTPS)"
 # $IPT -A INPUT  -p tcp -m multiport --dports 21,80,443 -m state --state NEW,ESTABLISHED -j ACCEPT
 # $IPT -A OUTPUT -p tcp -m multiport --sports 21,80,443 -m state --state ESTABLISHED     -j ACCEPT
-echo "Allowing new and established incoming connections to port 80 (HTTP), 443 (HTTPS)"
-$IPT -A INPUT  -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
-$IPT -A OUTPUT -p tcp --sport 80 -m state --state ESTABLISHED     -j ACCEPT
-$IPT -A INPUT  -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
-$IPT -A OUTPUT -p tcp --sport 443 -m state --state ESTABLISHED     -j ACCEPT
 
 #echo "Allow all outgoing connections to port 22 (SSH)"
 #$IPT -A OUTPUT -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT

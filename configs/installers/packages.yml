@@ -14,17 +14,19 @@ apt:
     - nextcloud-desktop
     - screen
     - youtube-dl
+    # networking
     - iptables
+    - gufw
+    - net-tools
     # package managers
     - snapd
     - flatpak
     - gnome-software-plugin-flatpak
+
   gaming_packages:
     - lutris
     - winehq-staging
     - steam
-    # not really sure if I need these
-    # - ubuntu-driver-460
     # to format disks to exFAT; FAT is too thin for modern windows 10 ISOs
     # - exfat-utils
 
@@ -58,11 +60,3 @@ snap:
     - core
     - fluent-reader
     - imgcat
-
-# welcome to the experimental zone. YMMV
-appimage:
-  emoji: "📥 "
-  list_cmd: "echo 'AppImages dont really have a way to list them, I think'"
-  install_cmd: "./"
-  default_packages:
-    - hyper
