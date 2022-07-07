@@ -1,6 +1,6 @@
 ---
 apt:
-  emoji: "🫠 "
+  emoji: "🙃"
   list_cmd: "apt list --installed"
   install_cmd: "sudo apt-get install -y "
   default_packages:

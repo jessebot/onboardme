@@ -261,7 +261,7 @@ def print_head(status=""):
     """
     takes a string and prints it pretty
     """
-    print(f'\n \033[92m {status} \033[00m'.center(80, '-'))
+    print(f'\033[92m {status} \033[00m'.center(80, '-'))
 
 
 def parse_args():
@@ -326,7 +326,7 @@ def main():
     # this is SUPPOSED to install the vim plugins, but sometimes does not
     configure_vim()
 
-    print_head('❇️  SUCCESS ❇️  ')
+    print_head('❇️  SUCCESS ❇️ ')
     print("\n Here's some stuff you gotta do manually:")
     print(' 📰: Import RSS feeds config into FluentReader or wherever')
     print(' 📺: Import subscriptions into FreeTube')
