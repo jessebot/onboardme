@@ -319,7 +319,7 @@ def main():
 
     # this will also configure ssh if you specify --remote
     if opt.remote and 'linux' in OS:
-        configure_ssh(opt.remote)
+        # configure_ssh()
         configure_firewall(opt.host)
 
     # this is SUPPOSED to install the vim plugins, but sometimes does not
