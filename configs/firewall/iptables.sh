@@ -57,13 +57,18 @@ done
 #######################################################################################################
 ## Global iptable rules. Not IP specific
 
-echo "Allowing new and established incoming connections to port 21, 80, 443"
-$IPT -A INPUT  -p tcp -m multiport --dports 21,80,443 -m state --state NEW,ESTABLISHED -j ACCEPT
-$IPT -A OUTPUT -p tcp -m multiport --sports 21,80,443 -m state --state ESTABLISHED     -j ACCEPT
+# echo "Allowing new and established incoming connections to port 21 (ftp), 80 (HTTP), 443 (HTTPS)"
+# $IPT -A INPUT  -p tcp -m multiport --dports 21,80,443 -m state --state NEW,ESTABLISHED -j ACCEPT
+# $IPT -A OUTPUT -p tcp -m multiport --sports 21,80,443 -m state --state ESTABLISHED     -j ACCEPT
+echo "Allowing new and established incoming connections to port 80 (HTTP), 443 (HTTPS)"
+$IPT -A INPUT  -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+$IPT -A OUTPUT -p tcp --sport 80 -m state --state ESTABLISHED     -j ACCEPT
+$IPT -A INPUT  -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
+$IPT -A OUTPUT -p tcp --sport 443 -m state --state ESTABLISHED     -j ACCEPT
 
-echo "Allow all outgoing connections to port 22 (SSH)"
-$IPT -A OUTPUT -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
-$IPT -A INPUT  -p tcp --sport 22 -m state --state ESTABLISHED     -j ACCEPT
+#echo "Allow all outgoing connections to port 22 (SSH)"
+#$IPT -A OUTPUT -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+#$IPT -A INPUT  -p tcp --sport 22 -m state --state ESTABLISHED     -j ACCEPT
 
 echo "Allow outgoing icmp connections (pings,...)"
 $IPT -A OUTPUT -p icmp -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
