@@ -1,7 +1,5 @@
 # OnBoardMe
- ♪ it only shoots t-shirts ♪
-
-This is a project to store config files, as well as programatically install core packages accross serveral package managers that I need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping I'd remember why it was there later, so this is now a renewed effort in remembering all the thing™️s, and automating as much as possible. The idea is that it's faster, smaller, and easier to configure than it's ansible equivlent.
+A project to store config files, as well as programatically install core packages accross several package managers that I need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping I'd remember why it was there later, so this is now a renewed effort in remembering all the thing™️s, and automating as much as possible. The idea is that it's faster, smaller, and easier to configure than it's ansible equivlent.
 
 🚧 Alpha state :3 Currently tested on macOS Monterey 12.4, and Debian 11 (Bullseye).
 Please report 🐛 in the GitHub issues, and I will get them as I have time.
@@ -38,9 +36,10 @@ When the script completes, it'll output a number of other steps to take manually
 ## Under the hood
 - Installs files are in the directory `configs/rc_files`: `.bashrc` files, `.vimrc`, `.zshrc`, and `.hyper.js`.
 - Installs apt, snap, and flatpak packages from `./configs/installers/packages.yml`
-- Installs gaming related packages via apt if you pass in `--gaming`.
-- Installs brew files from `./configs/installers/brew/Brewfile_*` depending on OS, and if `--extra` is passed in
+- Installs gaming related packages via apt if you pass in `--extras gaming`.
+- Installs brew files from `./configs/installers/brew/Brewfile_*` depending on OS
 - Installs vim-plug, a vim plugin manager to setup things like nerdtree, indentations lines, and fuzzysearch
+- Configures iptables to block traffic if on most ports except for HTTPS and SSH for a single IP
 
 If you want to see the exact packages being installed, you can check out `configs/installers/packages.yml` for an easy to absorb yaml list of packages per installer. I bias towards brew fo cross-platform usage, and those packages are avavailble as Brewfiles in `configs/installers/brew/`.
 
