@@ -122,7 +122,7 @@ def hard_link_rc_files(delete=False):
             print(f'  Permission error for: {src_rc_file} Error: {error}.')
 
     if existing_files:
-        print('  Looks like the following file(s) already exist:')
+        print('Looks like the following file(s) already exist:')
         for file in existing_files:
             print(f' - {file}')
         print('\n If you want the links anyway, rerun script with --delete')
