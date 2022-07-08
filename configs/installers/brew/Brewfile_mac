@@ -9,6 +9,7 @@ cask "lens"
 cask "hyper"
 cask "firefox"
 cask "docker"
+cask "vlc"
 # cat images in the terminal :)
 brew "danielgatis/imgcat/imgcat"
 # have to tap special cask for various fonts
