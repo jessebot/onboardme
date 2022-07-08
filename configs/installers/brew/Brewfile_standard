@@ -2,7 +2,6 @@
 brew "curl"
 brew "vim"
 brew "python3"
-brew "docker"
 # top replacements
 brew "htop"
 brew "gotop"
