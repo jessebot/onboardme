@@ -142,7 +142,8 @@ def configure_vim():
         wget.download(url, autoload_dir)
 
     # this installs the vim plugins, can also use :PlugInstall in vim
-    plugin_cmd = (f'vim -E -s -u "{HOME_DIR}/.vimrc" +PlugInstall +qall')
+    # plugin_cmd = (f'vim -E -s -u "{HOME_DIR}/.vimrc" +PlugInstall +qall')
+    plugin_cmd = ('vim +PlugInstall +qall')
     subproc(plugin_cmd)
 
 
