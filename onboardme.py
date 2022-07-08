@@ -297,8 +297,8 @@ def main():
     """
     opt = parse_args()
 
-    print('\n 🥱 This could take a while on a fresh install, so settle in and '
-          'get comfy 🛋️ ')
+    print('\n 🥱 This could take a while on a fresh install. Settle in & get '
+          'comfy 🛋️ ')
     hard_link_rc_files(opt.delete)
     install_fonts()
 
