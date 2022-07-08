@@ -252,7 +252,7 @@ def subproc(command="", error_ok=False, suppress_output=False):
     for output in [res_stdout, res_stderr]:
         if output:
             if not suppress_output:
-                print(output)
+                print(output.rstrip())
             return output
 
 
