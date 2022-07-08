@@ -71,12 +71,12 @@ done
 
 for remote_ip in $REMOTE_IPS; do
     echo "Allow outgoing/incoming connections to port 22 (SSH) for $remote_ip"
-    $IPT -A OUTPUT -p tcp -d $remote_ip --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
-    $IPT -A INPUT  -p tcp -s $remote_ip --sport 22 -m state --state ESTABLISHED     -j ACCEPT
+    $IPT -A OUTPUT -p tcp -d $remote_ip --dport 22 -j ACCEPT
+    $IPT -A INPUT  -p tcp -s $remote_ip --sport 22 -j ACCEPT
 
     echo "Allow outgoing/incoming icmp connections (pings) for $remote_ip"
-    $IPT -A OUTPUT -p icmp -d $remote_ip  -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
-    $IPT -A INPUT  -p icmp -s $remote_ip  -m state --state ESTABLISHED,RELATED     -j ACCEPT
+    $IPT -A OUTPUT -p icmp -d $remote_ip -j ACCEPT
+    $IPT -A INPUT  -p icmp -s $remote_ip -j ACCEPT
 done
 
 #############################################################################################
