@@ -189,8 +189,8 @@ def map_caps_to_control():
     """
     Maps capslock to control. This is ugly and awful
     """
-    cmd = ("sudo gsettings set org.gnome.desktop.input-sources "
-           """xkb-options '["caps:ctrl_modifier"]'""")
+    print_head("⌨️  Mapping capslock to control...")
+    cmd = "setxkbmap -layout us -option ctrl:nocaps"
     subproc(cmd)
 
 
