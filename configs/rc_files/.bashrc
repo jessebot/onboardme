@@ -87,6 +87,9 @@ alias tree='lsd --tree --depth=2'
 # colordiff - diff, but with colors for accessibility
 alias diff='colordiff -uw'
 
+# python3 alias because python2 is still in some places
+alias python='python3'
+
 # grep - always use colors
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
@@ -99,6 +102,9 @@ alias celar='clear'
 alias gti='git'
 alias ter='tree'
 alias tre='tree'
+alias pthyon='python3'
+alias ptyhon='python3'
+alias python='pythong'
 
 # shorten commands
 alias vi='vim'
