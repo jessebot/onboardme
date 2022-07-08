@@ -2,11 +2,12 @@
 #===============================================================================
 #         USAGE: ./iptables.sh 
 #
-#   DESCRIPTION: 
+#   DESCRIPTION: just some basic iptables config to make sure nothing happens 
+#                outside of basic web traffic, SSH/ICMP to specific locations,
+#                and packages managers working as normal
 #
-#         NOTES: ---
-#        AUTHOR: Jesse Hitch
-#       CREATED: 07/07/2022 20:55:13
+#      AUTHOR:    Jesse Hitch
+#      CREATED:   07/07/2022 20:55:13
 #      REVISION:  ---
 #===============================================================================
 IPT="sudo iptables"
@@ -78,7 +79,7 @@ for remote_ip in $REMOTE_IPS; do
     $IPT -A INPUT  -p icmp -s $remote_ip  -m state --state ESTABLISHED,RELATED     -j ACCEPT
 done
 
-##############################################################################################
+#############################################################################################
 # Global iptable rules. Not IP specific
 
 echo "Allow outgoing connections to port 123 (ntp syncs)"
