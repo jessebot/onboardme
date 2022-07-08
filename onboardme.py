@@ -182,7 +182,7 @@ def configure_firefox():
     for addon_xpi in os.listdir(repo_config_dir):
         shutil.copy(repo_config_dir + addon_xpi,
                     f'{profile_dir}/extensions/')
-    print('  Firefox extensions installed, but they need to be enabled\n')
+    print('  Firefox extensions installed, but they need to be enabled.')
 
 
 def map_caps_to_control():
@@ -261,7 +261,9 @@ def print_head(status=""):
     """
     takes a string and prints it pretty
     """
+    print('\n')
     print(f'\033[92m {status} \033[00m'.center(80, '-'))
+    print('\n')
 
 
 def parse_args():
@@ -327,7 +329,7 @@ def main():
     configure_vim()
 
     print_head('❇️  SUCCESS ❇️ ')
-    print("\n Here's some stuff you gotta do manually:")
+    print("Here's some stuff you gotta do manually:")
     print(' 📰: Import RSS feeds config into FluentReader or wherever')
     print(' 📺: Import subscriptions into FreeTube')
     print(' ⌨️ : Set capslock to control!')
