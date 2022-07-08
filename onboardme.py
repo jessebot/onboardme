@@ -233,7 +233,7 @@ def subproc(command="", error_ok=False, suppress_output=False):
     Takes a str commmand to run in BASH, as well as optionals bools to pass on
     errors in stderr/stdout and suppress_output
     """
-    print(f'\n \033[92m Running cmd:\033[00m {command}')
+    print(f'\033[92m Running cmd:\033[00m {command}')
     cmd = command.split()
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     return_code = p.returncode
@@ -298,7 +298,7 @@ def main():
     opt = parse_args()
 
     print('\n 🥱 This could take a while on a fresh install, so settle in and '
-          'get comfy 🛋️ \n')
+          'get comfy 🛋️ ')
     hard_link_rc_files(opt.delete)
     install_fonts()
 
