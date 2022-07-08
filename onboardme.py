@@ -75,7 +75,6 @@ def install_fonts():
             fonts_repo = 'https://github.com/ryanoasis/nerd-fonts.git'
             Repo.clone_from(fonts_repo, fonts_dir, depth=1)
 
-        print('  Running the font installer...')
         old_pwd = PWD
         os.chdir(fonts_dir)
         subproc('./install.sh Hack')
