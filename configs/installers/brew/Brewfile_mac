@@ -1,17 +1,16 @@
 # This file is mac specific
 # These are all cask installs (They have some sort of GUI)
-cask "docker"
 cask "spectacle"
 cask "iterm2"
 cask "lulu"
 cask "alfred"
 cask "karabiner-elements"
 cask "lens"
+cask "hyper"
+cask "firefox"
 cask "docker"
 # cat images in the terminal :)
 brew "danielgatis/imgcat/imgcat"
 # have to tap special cask for various fonts
 tap "homebrew/cask-fonts"
 cask "font-hack-nerd-font"
-cask "hyper"
-cask "firefox"
