@@ -39,7 +39,7 @@ When the script completes, it'll output a number of other steps to take manually
 - Installs gaming related packages via apt if you pass in `--extras gaming`.
 - Installs brew files from `./configs/installers/brew/Brewfile_*` depending on OS
 - Installs vim-plug, a vim plugin manager to setup things like nerdtree, indentations lines, and fuzzysearch
-- Configures iptables to block traffic if on most ports except for HTTPS and SSH for a single IP
+- Configures iptables to block traffic on most ports except for HTTPS as well as ICMP/SSH for a single IP
 
 If you want to see the exact packages being installed, you can check out `configs/installers/packages.yml` for an easy to absorb yaml list of packages per installer. I bias towards brew fo cross-platform usage, and those packages are avavailble as Brewfiles in `configs/installers/brew/`.
 
