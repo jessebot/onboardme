@@ -228,6 +228,15 @@ def configure_firewall(remote_hosts=[]):
         subproc(f'{PWD}/configs/firewall/no_ssh_iptables.sh')
 
 
+def setup_groups():
+    """
+    Set up any groups and add current user to them
+    """
+    USER = os.getlogin()
+    subproc(f'sudo usermod -a -G docker {USER}')
+    print('  User added to docker group, but you may still need to restart')
+
+
 def subproc(command="", error_ok=False, suppress_output=False):
     """
     Takes a str commmand to run in BASH, as well as optionals bools to pass on
