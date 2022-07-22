@@ -1,4 +1,0 @@
-Repos:
-  - Source: https://github.com/Homebrew/brew
-    Destination: /home/vmadmin/.linuxbrew/Homebrew
-    Branch: "master"

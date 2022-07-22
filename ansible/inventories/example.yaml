@@ -1,9 +1,0 @@
-webservers:
-  hosts:
-    <some host>:
-      ansible_connection: ssh
-      ansible_host: <some ip address here>
-      ansible_ssh_user: <some user>
-      ansible_ssh_port: <some port>
-      ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o ControlMaster=auto -o ControlPath=~/.ssh/ansible-%r@%h:%p"
-      ansible_ssh_private_key_file: <some path>
