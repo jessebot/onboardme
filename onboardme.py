@@ -275,6 +275,15 @@ def print_head(status=""):
     print('\n')
 
 
+def configure_feeds():
+    """
+    configures feeds like freetube and RSS readers
+    """
+    # freeTube is weird, requires this name and directory to work smoothly
+    subs_db = os.listdir(f'{PWD}/configs/feeds/freetube/subscriptions.db')
+    shutil.copy(subs_db, f'{HOME_DIR}/Downloads/subscriptions.db')
+
+
 def parse_args():
     """
     Parse arguments and return dict
