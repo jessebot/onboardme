@@ -1,2 +1,4 @@
-# Install a freetube subscription db file
-This has to be renamed to specifically `subscriptions.db`, or it will *not* work!
+# Import a freetube subscription db file
+#### On Debian via the GUI
+FreeTube > Data Settings > Import Subscriptions > Import FreeTube(.db)
+DB exports files must be named `subscriptions.db` and placed in your `Downloads` directory, or it will *not* work!
