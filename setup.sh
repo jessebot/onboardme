@@ -38,6 +38,13 @@ if [ $git_return_code -ne 0 ]; then
     # we use *"Linux"* because linux2 is a possibility, and who knows what else
     if [[ "$OS" == *"Linux"* ]]; then
         sudo apt install git
+        git_return_code=$?
+        if [ $git_return_code -ne 0 ]; then
+            echo "Git didn't install. This may be because you don't have main branch"
+            echo "software enabled on Debian. You can enable that via the GUI under:"
+            echo "Software & Updates (Software-properties-gtk) > Debian Software"
+            exit
+        fi
     fi
     if [ "$OS" == "darwin" ]; then
         brew install git
