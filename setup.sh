@@ -65,6 +65,7 @@ if [[ "$OS" == *"Linux"* ]]; then
 
     # if this still isn't in our path, export it and source this bashrc
     if [[ "linuxbrew" != *"$PATH"* ]]; then
+        echo "Linuxbrew isn't in your path. Let's get that installed :)"
         export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
         echo "export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin" >> ~/.bashrc
         source ~/.bashrc
