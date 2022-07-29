@@ -346,7 +346,7 @@ def main():
     print(' 📺: Import subscriptions into FreeTube')
     print(' ⌨️ : Set capslock to control!')
     print(' ⏰: Install any cronjobs you need from the cron dir!')
-    print(' 💲: Source your .bashrc')
+    print(' 💲: Source your bash config: source .bashrc')
     print(' 🐋: Reboot, as the whale demands it')
 
 
