@@ -68,12 +68,12 @@ if [[ "$OS" == *"Linux"* ]]; then
     brew_return_code=$?
     if [ $brew_return_code -ne 0 ]; then
         echo "Linuxbrew isn't in your path. Let's get that installed :)"
-        echo 'HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"' >> ~/.bashrc
-        echo 'HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"' >> ~/.bashrc
-        echo 'HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"' >> ~/.bashrc
-        echo 'PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}"' >> ~/.bashrc
-        echo 'MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:"' >> ~/.bashrc
-        echo 'INFOPATH="/home/linuxbrew/.linuxbrew/share/info${INFOPATH:-}"' >> ~/.bashrc
+        echo 'export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"' >> ~/.bashrc
+        echo 'export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"' >> ~/.bashrc
+        echo 'export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"' >> ~/.bashrc
+        echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}"' >> ~/.bashrc
+        echo 'export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:"' >> ~/.bashrc
+        echo 'export INFOPATH="/home/linuxbrew/.linuxbrew/share/info${INFOPATH:-}"' >> ~/.bashrc
         source ~/.bashrc
     fi
 fi

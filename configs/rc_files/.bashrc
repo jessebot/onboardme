@@ -164,10 +164,15 @@ export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
 
 # special linux pathing
 if [[ $(uname) == *"Linux"* ]]; then
-    # Brew on Linux
-    export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
     # this is for iptables on debian, which is elusive
     export PATH=$PATH:/usr/sbin:/usr/share
+    # Brew on Linux
+    export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+    export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
+    export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
+    export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}"
+    export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:"
+    export INFOPATH="/home/linuxbrew/.linuxbrew/share/info${INFOPATH:-}"
 fi
 
 # include external .bashrc_$application if it exists
