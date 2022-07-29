@@ -10,6 +10,7 @@ cask "hyper"
 cask "firefox"
 cask "docker"
 cask "vlc"
+cask "freetube"
 # have to tap special cask for various fonts
 cask "font-hack-nerd-font"
 tap "homebrew/cask-fonts"
