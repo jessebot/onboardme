@@ -121,6 +121,8 @@ def hard_link_rc_files(delete=False):
         except PermissionError as error:
             print(f'  Permission error for: {src_rc_file} Error: {error}.')
 
+    subproc("source ~/.bashrc")
+
     if existing_files:
         print('Looks like the following file(s) already exist:')
         for file in existing_files:
