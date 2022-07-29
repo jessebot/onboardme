@@ -58,12 +58,14 @@ fi
 echo -e "------------------------------- \033[94m Checking for Brew \033[00m ------------------------------"
 # make sure linuxbrew is in the path
 if [[ "$OS" == *"Linux"* ]]; then
+    echo "Doing some linux brew path checking..."
     # source the existing bashrc, just in case
     if [ -f "~/.bashrc" ]; then
         source ~/.bashrc
     fi
 
     # if this still isn't in our path, export it and source this bashrc
+    echo "Doing some linux brew env checking..."
     env | grep "brew"
     brew_return_code=$?
     if [ $brew_return_code -ne 0 ]; then
