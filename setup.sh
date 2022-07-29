@@ -58,24 +58,24 @@ fi
 echo -e "------------------------------- \033[94m Checking for Brew \033[00m ------------------------------"
 # make sure linuxbrew is in the path
 if [[ "$OS" == *"linux"* ]]; then
-    echo "Doing some linux brew path checking..."
     # source the existing bashrc, just in case
     if [ -f "~/.bashrc" ]; then
         source ~/.bashrc
     fi
 
     # if this still isn't in our path, export it and source this bashrc
-    echo "Doing some linux brew env checking..."
+    echo "Doing some linux brew path/env checking..."
+    echo "  .  .  .  "
     env | grep "brew"
     brew_return_code=$?
     if [ $brew_return_code -ne 0 ]; then
         echo "Linuxbrew isn't in your path. Let's get that installed :)"
-        echo 'export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"' >> ~/.bashrc
-        echo 'export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"' >> ~/.bashrc
-        echo 'export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"' >> ~/.bashrc
-        echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}"' >> ~/.bashrc
-        echo 'export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:"' >> ~/.bashrc
-        echo 'export INFOPATH="/home/linuxbrew/.linuxbrew/share/info${INFOPATH:-}"' >> ~/.bashrc
+        echo "export HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew" >> ~/.bashrc
+        echo "export HOMEBREW_CELLAR=/home/linuxbrew/.linuxbrew/Cellar" >> ~/.bashrc
+        echo "export HOMEBREW_REPOSITORY=/home/linuxbrew/.linuxbrew/Homebrew" >> ~/.bashrc
+        echo "export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin" >> ~/.bashrc
+        echo "export MANPATH=$MANPATH:/home/linuxbrew/.linuxbrew/share/man" >> ~/.bashrc
+        echo "export INFOPATH=$INFOPATH:H/home/linuxbrew/.linuxbrew/share/info" >> ~/.bashrc
         source ~/.bashrc
     fi
 fi
