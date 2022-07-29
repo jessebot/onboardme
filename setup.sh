@@ -60,7 +60,7 @@ echo -e "------------------------------- \033[94m Checking for Brew \033[00m ---
 if [[ "$OS" == *"linux"* ]]; then
     # source the existing bashrc, just in case
     if [ -f "~/.bashrc" ]; then
-        source ~/.bashrc
+        . ~/.bashrc
     fi
 
     # if this still isn't in our path, export it and source this bashrc
@@ -135,7 +135,11 @@ fi
 
 # make sure we have wget and pyyaml
 echo "Now installing python reqs..."
-pip3 install -r ~/repos/onboardme/requirements.txt 
+pip3 install -r ~/repos/onboardme/requirements.txt
+
+# source the bashrc, just in case
+. ~/.bashrc
+
 echo ""
 echo -e "------------------------------ \033[92mSuccess~! ^O^\033[00m -----------------------------------"
 echo ""
