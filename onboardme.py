@@ -121,8 +121,6 @@ def hard_link_rc_files(delete=False):
         except PermissionError as error:
             print(f'  Permission error for: {src_rc_file} Error: {error}.')
 
-    subproc("source ~/.bashrc")
-
     if existing_files:
         print('Looks like the following file(s) already exist:')
         for file in existing_files:
@@ -230,7 +228,7 @@ def configure_firewall(remote_hosts=[]):
         subproc(f'{PWD}/configs/firewall/no_ssh_iptables.sh')
 
 
-def setup_groups():
+def setup_nix_groups():
     """
     Set up any groups and add current user to them
     """
@@ -331,13 +329,16 @@ def main():
 
     run_installers(default_installers, package_groups)
 
-    # this will also configure ssh if you specify --remote
+    # will also configure ssh if you specify --remote
     if opt.remote and 'linux' in OS:
         # configure_ssh()
         configure_firewall(opt.host)
 
     # this is SUPPOSED to install the vim plugins, but sometimes does not
     configure_vim()
+
+    # will add your user to linux groups such as docker
+    setup_nix_groups()
 
     print_head('❇️  SUCCESS ❇️ ')
     print("Here's some stuff you gotta do manually:")
@@ -346,7 +347,7 @@ def main():
     print(' ⌨️ : Set capslock to control!')
     print(' ⏰: Install any cronjobs you need from the cron dir!')
     print(' 💲: Source your .bashrc')
-    print(' 🐋: Add your user to the docker group, and reboot')
+    print(' 🐋: Reboot, as the whale demands it')
 
 
 if __name__ == '__main__':
