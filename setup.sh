@@ -23,7 +23,7 @@ done
 
 echo -e "\n-------------------------------- \033[94m 🎬 Beginning Setup \033[00m -------------------------------"
 echo ""
-if [[ "$OS" == *"Linux"* ]]; then
+if [[ "$OS" == *"linux"* ]]; then
     echo -e "---------------------------- \033[94m Updating existing apt packages \033[00m --------------------"
     sudo apt update && sudo apt upgrade
     echo -e "\033[92m apt updated/upgraded :3 \033[00m"
@@ -35,8 +35,8 @@ which git > /dev/null
 git_return_code=$?
 if [ $git_return_code -ne 0 ]; then
     echo "Git not installed or in path, attempting to install git..."
-    # we use *"Linux"* because linux2 is a possibility, and who knows what else
-    if [[ "$OS" == *"Linux"* ]]; then
+    # we use *"linux"* because linux2 is a possibility, and who knows what else
+    if [[ "$OS" == *"linux"* ]]; then
         sudo apt install git
         git_return_code=$?
         if [ $git_return_code -ne 0 ]; then
@@ -57,7 +57,7 @@ fi
 
 echo -e "------------------------------- \033[94m Checking for Brew \033[00m ------------------------------"
 # make sure linuxbrew is in the path
-if [[ "$OS" == *"Linux"* ]]; then
+if [[ "$OS" == *"linux"* ]]; then
     echo "Doing some linux brew path checking..."
     # source the existing bashrc, just in case
     if [ -f "~/.bashrc" ]; then
@@ -107,7 +107,7 @@ which pip3 > /dev/null
 pip_return_code=$?
 if [ $pip_return_code -ne 0 ]; then
     echo "Installing Pip3..." 
-    if [[ "$OS" == *"Linux"* ]]; then
+    if [[ "$OS" == *"linux"* ]]; then
         sudo apt install python3-pip
         echo -e "\033[92mPip3 installed :3 \033[00m"
     fi
@@ -121,7 +121,7 @@ mkdir -p ~/repos
 git clone https://github.com/jessebot/onboardme.git ~/repos/onboardme
 
 # we do this for Debian, to download custom fonts during onboardme
-if [[ "$OS" == *"Linux"* ]]; then
+if [[ "$OS" == *"linux"* ]]; then
     mkdir -p ~/.local/share/fonts
 fi
 
