@@ -70,21 +70,17 @@ if [[ "$OS" == *"linux"* ]]; then
     brew_return_code=$?
     if [ $brew_return_code -ne 0 ]; then
         echo "Linuxbrew isn't in your path. Let's get that installed :)"
-        # export all the env vars
-        export HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew
-        export HOMEBREW_CELLAR=/home/linuxbrew/.linuxbrew/Cellar
-        export HOMEBREW_REPOSITORY=/home/linuxbrew/.linuxbrew/Homebrew
-        export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin
-        export MANPATH=$MANPATH:/home/linuxbrew/.linuxbrew/share/man
-        export INFOPATH=$INFOPATH:/home/linuxbrew/.linuxbrew/share/info
-
-        # now make sure they're all in the bashrc for new shells
+        # make sure this is all in the bashrc for new shells
         echo "export HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew" >> ~/.bashrc
         echo "export HOMEBREW_CELLAR=/home/linuxbrew/.linuxbrew/Cellar" >> ~/.bashrc
         echo "export HOMEBREW_REPOSITORY=/home/linuxbrew/.linuxbrew/Homebrew" >> ~/.bashrc
         echo "export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin" >> ~/.bashrc
         echo "export MANPATH=$MANPATH:/home/linuxbrew/.linuxbrew/share/man" >> ~/.bashrc
         echo "export INFOPATH=$INFOPATH:/home/linuxbrew/.linuxbrew/share/info" >> ~/.bashrc
+
+        # source the bashrc, for this shell
+        . ~/.bashrc
+
     fi
 fi
 
@@ -136,9 +132,6 @@ fi
 # make sure we have wget and pyyaml
 echo "Now installing python reqs..."
 pip3 install -r ~/repos/onboardme/requirements.txt
-
-# source the bashrc, just in case
-. ~/.bashrc
 
 echo ""
 echo -e "------------------------------ \033[92mSuccess~! ^O^\033[00m -----------------------------------"

@@ -22,12 +22,15 @@ curl -O https://raw.githubusercontent.com/jessebot/onboardme/main/setup.sh
 # give it execute permissions
 chmod 0500 ./setup.sh
 # run the script, to install dependencies and clone the onboardme repo
-./setup.sh
+. ./setup.sh
 ```
 
-Now you can run the actual script that does the heavy lifting.
+Now you can run the actual script that does the heavy lifting. If you can `setup.sh` above without errors, it will be installed in `~/repos/onboardme`:
 ```bash
-# if you ran setup.sh, it should have installed this repo into repos/
+# This will display a help
+./repos/onboardme/onboardme.py --help
+
+# this will run the script with no options
 ./repos/onboardme/onboardme.py
 ```
 
