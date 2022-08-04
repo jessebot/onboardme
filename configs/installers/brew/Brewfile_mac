@@ -1,5 +1,9 @@
-# This file is mac specific
-# These are all cask installs (They have some sort of GUI)
+## This file is mac specific ##
+#
+# cat images in the terminal :)
+brew "danielgatis/imgcat/imgcat"
+#
+## Cask installs (They have some sort of GUI) ##
 cask "spectacle"
 cask "iterm2"
 cask "lulu"
@@ -11,9 +15,7 @@ cask "firefox"
 cask "docker"
 cask "vlc"
 cask "freetube"
-# have to tap special cask for various fonts
+# have to tap special cask for various terminal fonts
 cask "font-hack-nerd-font"
 tap "homebrew/cask-fonts"
 cask "bitwarden"
-# cat images in the terminal :)
-brew "danielgatis/imgcat/imgcat"

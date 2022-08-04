@@ -47,12 +47,16 @@ if [ $git_return_code -ne 0 ]; then
         fi
     fi
     if [ "$OS" == "darwin" ]; then
+        echo "running: brew install git"
         brew install git
     fi
     echo -e "\033[92mGit Installed :3 \033[00m"
 else
     echo -e "\033[92mGit already installed :3 \033[00m"
 fi
+
+echo "running: git config --global init.defaultBranch main"
+git config --global init.defaultBranch main
 
 
 echo -e "------------------------------- \033[94m Checking for Brew \033[00m ------------------------------"
@@ -132,9 +136,13 @@ fi
 # make sure we have wget and pyyaml
 echo "Now installing python reqs..."
 pip3 install -r ~/repos/onboardme/requirements.txt
-
-echo ""
-echo -e "------------------------------ \033[92mSuccess~! ^O^\033[00m -----------------------------------"
-echo ""
-echo -e "✨ Now, try running the following: ~/repos/onboardme/onboardme.py --help"
-echo ""
+pip_install_return_code=$?
+if [ $pip_install_return_code -ne 0 ]; then
+    echo "Something went wrong with the installation of the python dependencies with pip3 for onboardme"
+else
+    echo ""
+    echo -e "------------------------------ \033[92mSuccess~! ^O^\033[00m -----------------------------------"
+    echo ""
+    echo -e "✨ Now, try running the following: ~/repos/onboardme/onboardme.py --help"
+    echo ""
+fi
