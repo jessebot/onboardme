@@ -138,7 +138,8 @@ echo "Now installing python reqs..."
 pip3 install -r ~/repos/onboardme/requirements.txt
 pip_install_return_code=$?
 if [ $pip_install_return_code -ne 0 ]; then
-    echo "Something went wrong with the installation of the python dependencies with pip3 for onboardme"
+    echo "Something went wrong with the installation of the python dependencies with pip3."
+    echo "You cannot run onboardme in this state :("
 else
     echo ""
     echo -e "------------------------------ \033[92mSuccess~! ^O^\033[00m -----------------------------------"
