@@ -2,6 +2,8 @@
 #
 # cat images in the terminal :)
 brew "danielgatis/imgcat/imgcat"
+# this gives us the default gnu/linux sed we all know and love
+brew "gnu-sed"
 #
 ## Cask installs (They have some sort of GUI) ##
 cask "spectacle"
