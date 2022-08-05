@@ -4,6 +4,8 @@
 brew "danielgatis/imgcat/imgcat"
 # this gives us the default gnu/linux sed we all know and love
 brew "gnu-sed"
+# so that bash completion stuff works
+brew "bash-completion@2"
 #
 ## Cask installs (They have some sort of GUI) ##
 cask "spectacle"
