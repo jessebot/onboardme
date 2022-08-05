@@ -123,6 +123,10 @@ alias gpl='git pull'
 # quick to do
 alias todo='vim ~/todo.md'
 
+# whoami, whereami, whoareyou?
+alias whereami='hostname'
+alias whoareyou='echo "Your friend :)"'
+
 ########## Extra Functions/One-Liners ###########
 # move faster with base 64
 function b64 {
