@@ -173,6 +173,9 @@ if [[ $(uname) == *"Linux"* ]]; then
     export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin
     export MANPATH=$MANPATH:/home/linuxbrew/.linuxbrew/share/man
     export INFOPATH=$INFOPATH:/home/linuxbrew/.linuxbrew/share/info
+else
+    # this is to use GNU sed instead of MacOS's POSIX
+    export PATH=$PATH:/usr/local/opt/gnu-sed/libexec/gnubin
 fi
 
 # include external .bashrc_$application if it exists
