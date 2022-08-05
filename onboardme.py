@@ -191,7 +191,7 @@ def map_caps_to_control():
     """
     print_head("⌨️  Mapping capslock to control...")
     cmd = "setxkbmap -layout us -option ctrl:nocaps"
-    subproc(cmd, True)
+    subproc(cmd, True, True)
 
 
 def configure_ssh():
