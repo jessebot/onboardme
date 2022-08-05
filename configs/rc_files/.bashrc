@@ -176,6 +176,7 @@ if [[ $(uname) == *"Linux"* ]]; then
 else
     # this is to use GNU sed instead of MacOS's POSIX
     export PATH=$PATH:/usr/local/opt/gnu-sed/libexec/gnubin
+    alias sed='gsed'
 fi
 
 # include external .bashrc_$application if it exists
