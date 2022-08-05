@@ -328,7 +328,8 @@ def main():
     default_installers = ['brew']
     if 'linux' in OS:
         default_installers.extend(['apt', 'snap', 'flatpak'])
-        map_caps_to_control()
+        # this is broken
+        # map_caps_to_control()
         if opt.firefox:
             configure_firefox()
 
