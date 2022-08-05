@@ -177,7 +177,7 @@ else
     # this is so bash completion works on MacOS
     [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
     # this is to use GNU sed instead of MacOS's POSIX
-    export PATH=$PATH:/usr/local/opt/gnu-sed/libexec/gnubin
+    export PATH=/usr/local/opt/gnu-sed/libexec/gnubin:$PATH
     alias sed='gsed'
 fi
 
