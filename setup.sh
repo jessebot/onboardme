@@ -3,6 +3,18 @@
 # Checks for: Brew, git, python3, and python3 requirements.txt
 
 # we make this lowercase because I don't trust it not to be random caps
+
+# extremely simply loading bar
+function simple_loading_bar() {
+    echo ""
+    echo "          "
+    for i in $(seq 1 $1); do
+        echo -n "   ❤︎";
+        sleep 1
+    done
+    echo ""
+}
+
 OS=$(uname | tr '[:upper:]' '[:lower:]')
 
 echo -e "-------------------------------- \033[94m 🛋️  Comfy Warning \033[00m -------------------------------"
@@ -15,7 +27,7 @@ while true; do
     read -p "Are you ready to get started? Do you have a nice cup of ☕? [y/n] " answer
     if [ "$answer" != "y" ]; then
         printf "\nThat's totally reasonable. You take your time, and I will be here."
-        sleep 5
+        simple_loading_bar 5
     else
         break
     fi
