@@ -1,8 +1,10 @@
 # OnBoardMe
 A project to store config files, as well as programatically install core packages accross several package managers that I need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping I'd remember why it was there later, so this is now a renewed effort in remembering all the thing™️s, and automating as much as possible. The idea is that it's faster, smaller, and easier to configure than it's ansible equivalent.
 
-🚧 Alpha state :3 Currently tested on macOS Monterey 12.4, and Debian 11 (Bullseye).
+🚧 Later beta state :3 Currently tested on macOS Monterey 12.4, and Debian 11 (Bullseye).
 Please report 🐛 in the GitHub issues, and I will get them as I have time.
+
+Looking for a project to get a fresh OS entirely? Check out [pxeless](https://github.com/cloudymax/pxeless).
 
 ## Quick Start
 First, make sure you have curl, but it *should* be there ***already be on macOS Monterey***:
@@ -88,4 +90,4 @@ We are currently using the philosophy of this RFC draft:
 Contact your local datacenters and see if they offer an object storage service, because they might, and it could be really cheap. Don't give your money to AWS, Microsoft, or Google.
 
 ### Special Thanks
-Thank you to @cloudymax for all their direct contributions for gaming on Linux, virtualization, and the hyper terminal configs. Also great engineer to rubberduck with generally. Couldn't have polished a lot of this without their patience during my late night ramblings about my 8 different package managers and why utf-8 isn't called utf-14 :3 :blue_heart: You should check out their project aimed at the server side of things with ansible [here](https://github.com/cloudymax/public-infra).
+Thank you to @cloudymax for all their direct contributions for gaming on Linux, virtualization, and the hyper terminal configs. Also great engineer to rubberduck with generally. Couldn't have polished a lot of this without their patience during my late night ramblings about my 8 different package managers and why utf-8 isn't called utf-14 :3 :blue_heart:
