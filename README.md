@@ -1,8 +1,10 @@
 # OnBoardMe
-A project to store config files, as well as programatically install core packages accross several package managers that I need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping I'd remember why it was there later, so this is now a renewed effort in remembering all the thing™️s, and automating as much as possible. The idea is that it's faster, smaller, and easier to configure than it's ansible equivlent.
+A project to store config files, as well as programatically install core packages accross several package managers that I need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping I'd remember why it was there later, so this is now a renewed effort in remembering all the thing™️s, and automating as much as possible. The idea is that it's faster, smaller, and easier to configure than it's ansible equivalent.
 
-🚧 Alpha state :3 Currently tested on macOS Monterey 12.4, and Debian 11 (Bullseye).
+🚧 Later beta state :3 Currently tested on macOS Monterey 12.4, and Debian 11 (Bullseye).
 Please report 🐛 in the GitHub issues, and I will get them as I have time.
+
+Looking for a project to get a fresh OS entirely? Check out [pxeless](https://github.com/cloudymax/pxeless).
 
 ## Quick Start
 First, make sure you have curl, but it *should* be there ***already be on macOS Monterey***:
@@ -22,12 +24,15 @@ curl -O https://raw.githubusercontent.com/jessebot/onboardme/main/setup.sh
 # give it execute permissions
 chmod 0500 ./setup.sh
 # run the script, to install dependencies and clone the onboardme repo
-./setup.sh
+. ./setup.sh
 ```
 
-Now you can run the actual script that does the heavy lifting.
+Now you can run the actual script that does the heavy lifting. If you can `setup.sh` above without errors, it will be installed in `~/repos/onboardme`:
 ```bash
-# if you ran setup.sh, it should have installed this repo into repos/
+# This will display a help
+./repos/onboardme/onboardme.py --help
+
+# this will run the script with no options
 ./repos/onboardme/onboardme.py
 ```
 
@@ -82,7 +87,7 @@ We are currently using the philosophy of this RFC draft:
 [Terminology, Power, & Exclusionary Language...](https://datatracker.ietf.org/doc/html/draft-knodel-terminology-09)
 
 ### Tips
-Contact your local datacenters and see if they offer an object storage service, because they might, and it could be really cheap. Don't give your money to AWS.
+Contact your local datacenters and see if they offer an object storage service, because they might, and it could be really cheap. Don't give your money to AWS, Microsoft, or Google.
 
 ### Special Thanks
-Thank you to @cloudymax for all their direct contributions for gaming on Linux, virtualization, ansible, the hyper terminal configs. Also great engineer to rubberduck with generally. Couldn't have polished a lot of this without their patience during my late night ramblings about my 8 different package managers and why utf-8 isn't called utf-14 :3 :blue_heart:
+Thank you to @cloudymax for all their direct contributions for gaming on Linux, virtualization, and the hyper terminal configs. Also great engineer to rubberduck with generally. Couldn't have polished a lot of this without their patience during my late night ramblings about my 8 different package managers and why utf-8 isn't called utf-14 :3 :blue_heart:

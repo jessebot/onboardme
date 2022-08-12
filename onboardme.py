@@ -191,7 +191,7 @@ def map_caps_to_control():
     """
     print_head("⌨️  Mapping capslock to control...")
     cmd = "setxkbmap -layout us -option ctrl:nocaps"
-    subproc(cmd)
+    subproc(cmd, True, True)
 
 
 def configure_ssh():
@@ -226,6 +226,15 @@ def configure_firewall(remote_hosts=[]):
         subproc(f'{PWD}/configs/firewall/iptables.sh {remote_ips}')
     else:
         subproc(f'{PWD}/configs/firewall/no_ssh_iptables.sh')
+
+
+def setup_nix_groups():
+    """
+    Set up any groups and add current user to them
+    """
+    USER = os.getlogin()
+    subproc(f'sudo usermod -a -G docker {USER}')
+    print('  User added to docker group, but you may still need to restart')
 
 
 def subproc(command="", error_ok=False, suppress_output=False):
@@ -264,6 +273,15 @@ def print_head(status=""):
     print('\n')
     print(f'\033[92m {status} \033[00m'.center(80, '-'))
     print('\n')
+
+
+def configure_feeds():
+    """
+    configures feeds like freetube and RSS readers
+    """
+    # freeTube is weird, requires this name and directory to work smoothly
+    subs_db = os.listdir(f'{PWD}/configs/feeds/freetube/subscriptions.db')
+    shutil.copy(subs_db, f'{HOME_DIR}/Downloads/subscriptions.db')
 
 
 def parse_args():
@@ -310,7 +328,8 @@ def main():
     default_installers = ['brew']
     if 'linux' in OS:
         default_installers.extend(['apt', 'snap', 'flatpak'])
-        map_caps_to_control()
+        # this is broken
+        # map_caps_to_control()
         if opt.firefox:
             configure_firefox()
 
@@ -320,7 +339,7 @@ def main():
 
     run_installers(default_installers, package_groups)
 
-    # this will also configure ssh if you specify --remote
+    # will also configure ssh if you specify --remote
     if opt.remote and 'linux' in OS:
         # configure_ssh()
         configure_firewall(opt.host)
@@ -328,14 +347,17 @@ def main():
     # this is SUPPOSED to install the vim plugins, but sometimes does not
     configure_vim()
 
+    # will add your user to linux groups such as docker
+    setup_nix_groups()
+
     print_head('❇️  SUCCESS ❇️ ')
     print("Here's some stuff you gotta do manually:")
     print(' 📰: Import RSS feeds config into FluentReader or wherever')
     print(' 📺: Import subscriptions into FreeTube')
     print(' ⌨️ : Set capslock to control!')
     print(' ⏰: Install any cronjobs you need from the cron dir!')
-    print(' 💲: Source your .bashrc')
-    print(' 🐋: Add your user to the docker group, and reboot')
+    print(' 💲: Source your bash config: source .bashrc')
+    print(' 🐋: Reboot, as the whale demands it')
 
 
 if __name__ == '__main__':

@@ -99,7 +99,9 @@ alias egrep='egrep --color=auto'
 alias grpe='grep'
 alias gerp='grep'
 alias celar='clear'
+alias clar='clear'
 alias gti='git'
+alias gtt='git'
 alias ter='tree'
 alias tre='tree'
 alias pthyon='python3'
@@ -120,6 +122,10 @@ alias gpl='git pull'
 
 # quick to do
 alias todo='vim ~/todo.md'
+
+# whoami, whereami, whoareyou?
+alias whereami='hostname'
+alias whoareyou='echo "Your friend :)"'
 
 ########## Extra Functions/One-Liners ###########
 # move faster with base 64
@@ -163,10 +169,21 @@ export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
 
 # special linux pathing
 if [[ $(uname) == *"Linux"* ]]; then
-    # Brew on Linux
-    export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
     # this is for iptables on debian, which is elusive
     export PATH=$PATH:/usr/sbin:/usr/share
+    # Brew on Linux
+    export HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew
+    export HOMEBREW_CELLAR=/home/linuxbrew/.linuxbrew/Cellar
+    export HOMEBREW_REPOSITORY=/home/linuxbrew/.linuxbrew/Homebrew
+    export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin
+    export MANPATH=$MANPATH:/home/linuxbrew/.linuxbrew/share/man
+    export INFOPATH=$INFOPATH:/home/linuxbrew/.linuxbrew/share/info
+else
+    # this is so bash completion works on MacOS
+    [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+    # this is to use GNU sed instead of MacOS's POSIX
+    export PATH=/usr/local/opt/gnu-sed/libexec/gnubin:$PATH
+    alias sed='gsed'
 fi
 
 # include external .bashrc_$application if it exists
