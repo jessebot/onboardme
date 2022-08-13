@@ -106,7 +106,7 @@ alias ter='tree'
 alias tre='tree'
 alias pthyon='python3'
 alias ptyhon='python3'
-alias python='pythong'
+alias pythong='python'
 
 # shorten commands
 alias vi='vim'
