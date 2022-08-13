@@ -181,8 +181,9 @@ if [[ $(uname) == *"Linux"* ]]; then
 else
     # this is so bash completion works on MacOS
     [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
-    # this is to use GNU sed instead of MacOS's POSIX
+    # this is to use GNU sed, called gsed, instead of MacOS's POSIX
     export PATH=/usr/local/opt/gnu-sed/libexec/gnubin:$PATH
+    # this is so we always use gsed
     alias sed='gsed'
 fi
 
