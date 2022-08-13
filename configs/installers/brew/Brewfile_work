@@ -1,9 +1,5 @@
 # this is stuff I only need for work
 cask "aws-vault"
+brew "aws-cli"
 brew "terraform"
 brew "tfenv"
-brew "aws-cli"
-brew "argocd"
-brew "k9s"
-brew "helm"
-brew "helmfile"

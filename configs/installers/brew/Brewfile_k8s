@@ -1,0 +1,14 @@
+# gitops continuous delivery for k8s configs
+brew "argocd"
+
+# terminal based dashbaord for k8s
+brew "k9s"
+
+# package manager for k8s
+brew "helm"
+
+# kubectl plugin manager
+brew "krew"
+
+# manages helm files
+# brew "helmfile"
