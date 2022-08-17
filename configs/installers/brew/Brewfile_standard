@@ -1,37 +1,78 @@
-# all of these are non-cask installs
+###########################################################
+#  ===-----------------------------------------------===  #
+#                         General                         #
+#  ===-----------------------------------------------===  #
+###########################################################
+
+# for testing apis and downloading things
 brew "curl"
-brew "vim"
-brew "python3"
-# top replacements
+brew "wget"
+
+# terminal based web browser
+brew "lynx"
+
+# top, live terminal based system metrics, replacements
 brew "htop"
 brew "gotop"
-brew "sl"
-brew "figlet"
-brew "cowsay"
-brew "git"
-brew "ag"
-brew "colordiff"
-brew "fluxctl"
-brew "jq"
-brew "kubectl"
-brew "helm"
-brew "kind"
-brew "k9s"
-brew "lynx"
-brew "npm"
-brew "openssl"
-brew "pandoc"
-brew "wget"
-brew "go"
-brew "yamllint"
+
+###########################################################
+#  ===-----------------------------------------------===  #
+#            Prettier outputs / Decorations               #
+#  ===-----------------------------------------------===  #
+###########################################################
+
 # ls replacement written in rust: https://github.com/Peltoche/lsd
 brew "lsd"
 # prettier du/df outputs: https://github.com/muesli/duf
 brew "duf"
-# search for all sorts of stuff
+# like grep or ack, but more modern, for searching file text
+brew "ag"
+# diff, but with colors
+brew "colordiff"
+
+# make fun text in the terminal
+brew "lolcat"
+brew "figlet"
+brew "cowsay"
+
+# steam locamotive
+brew "sl"
+
+###########################################################
+#  ===-----------------------------------------------===  #
+#                      Programming                        #
+#  ===-----------------------------------------------===  #
+###########################################################
+
+# revision control system
+brew "git"
+# github cli
+brew "gh"
+# gitlab cli
+brew "glab"
+# main terminal based text editor
+brew "vim"
+# linter for YAML
+brew "yamllint"
+# programming languages and their package managers
+brew "python3"
+brew "go"
+brew "npm"
+# search for all sorts of stuff e.g. howdoi extend a dictionary in python
 brew "howdoi"
 brew "tldr"
-# make fun colors in the terminal
-brew "lolcat"
-# This is to use the bitwarden cli, which is really useful
+# mardown rendering
+brew "pandoc"
+# for parsing json via cli
+brew "jq"
+
+###########################################################
+#  ===-----------------------------------------------===  #
+#                    Security Stuff                       #
+#  ===-----------------------------------------------===  #
+###########################################################
+
+# generating SSL certs and random strings
+brew "openssl"
+# password management
 brew "bitwarden-cli"
