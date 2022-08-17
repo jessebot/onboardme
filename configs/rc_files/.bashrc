@@ -191,31 +191,19 @@ else
 fi
 
 # include external .bashrc_$application if it exists
-if [ -f $HOME/.bashrc_k8s ]; then
-    . $HOME/.bashrc_k8s
-    . $HOME/.bashrc_k8s_completion
+for bash_file in `ls -1 $HOME/.bashrc_*`; do
+    . $bash_file
+done
+
+if [ -f  ~/.local/lib/python3.9/site-packages/powerline/bindings/bash/powerline.sh ]; then
+    powerline-daemon -q
+    POWERLINE_BASH_CONTINUATION=1
+    POWERLINE_BASH_SELECT=1
+    . ~/.local/lib/python3.9/site-packages/powerline/bindings/bash/powerline.sh
 fi
 
-if [ -f $HOME/.bashrc_helm ]; then
-    . $HOME/.bashrc_helm
-fi
-
-if [ -f $HOME/.bashrc_azure ]; then
-    . $HOME/.bashrc_azure
-fi
-
-if [ -f $HOME/.bashrc_env_variables ]; then
-    . $HOME/.bashrc_env_variables
-fi
-
-# this one is only if emojis already work in your terminal :3
+# this prompt one is only if emojis already work in your terminal :3
 # PS1="\`if [ \$? = 0 ]; then echo 💙; else echo 😔; fi\` \[\e[94m\][\@]\[\e[0m\]\\$ "
-
-powerline-daemon -q
-POWERLINE_BASH_CONTINUATION=1
-POWERLINE_BASH_SELECT=1
-source ~/.local/lib/python3.9/site-packages/powerline/bindings/bash/powerline.sh
-
 # use this one if you don't have emojis in your terminal
 # adds a smileyface on successful commands and a wat face otherwise :D
 # prompt will show the user.time and that is it, for now. 
