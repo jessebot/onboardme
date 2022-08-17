@@ -68,3 +68,6 @@ pip:
   install_cmd: "pip3 install "
   default_packages:
     - powerline-status
+    - powerline-gitstatus
+    # not sure if this is working
+    - powerline-kubernetes
