@@ -41,12 +41,14 @@ brew:
     - Brewfile_linux
   mac_packages:
     - Brewfile_mac
+  k8s_packages:
+    - Brewfile_k8s
   work_packages:
     - Brewfile_work
 
 flatpak:
   emoji: "🫓"
-  list_cmd: "flatpak list  --columns=application"
+  list_cmd: "flatpak list --columns=application"
   install_cmd: "sudo flatpak install -y flathub "
   default_packages:
     - "org.freedesktop.Platform/x86_64/21.08"
@@ -61,3 +63,10 @@ snap:
     - core
     - fluent-reader
     - imgcat
+
+pip:
+  emoji: ":snake:"
+  list_cmd: "pip3 list"
+  install_cmd: "pip3 install "
+  default_packages:
+    - powerline-status
