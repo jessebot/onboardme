@@ -95,3 +95,4 @@ Thank you to @cloudymax for all their direct contributions for gaming on Linux, 
 ## TODO
 - make pip installs work, possibly do that in setup?
 - allow to only update rc files
+- configure powerline files
