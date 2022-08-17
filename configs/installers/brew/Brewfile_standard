@@ -33,3 +33,5 @@ brew "howdoi"
 brew "tldr"
 # make fun colors in the terminal
 brew "lolcat"
+# This is to use the bitwarden cli, which is really useful
+brew "bitwarden-cli"
