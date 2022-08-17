@@ -37,8 +37,6 @@ brew:
   install_cmd: "brew bundle --file="
   default_packages:
     - Brewfile_standard
-  linux_packages:
-    - Brewfile_linux
   mac_packages:
     - Brewfile_mac
   k8s_packages:

@@ -11,6 +11,9 @@ brew "wget"
 # terminal based web browser
 brew "lynx"
 
+# tmux - screen session + sharing/splitting
+brew "tmux"
+
 # top, live terminal based system metrics, replacements
 brew "htop"
 brew "gotop"
