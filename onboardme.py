@@ -94,7 +94,7 @@ def install_fonts():
               'your terminal font to the new font. I rebooted too.')
 
 
-def hard_link_rc_files(delete=False):
+def hard_link_dot_files(delete=False):
     """
     Creates hardlinks to rc files for vim, zsh, bash, and hyper in user's
     home dir. Uses hardlinks, so that if the target file is removed, the data
@@ -103,23 +103,23 @@ def hard_link_rc_files(delete=False):
     print_head(' 🐚 Shell and vim rc files installing...')
     existing_files = []
 
-    # loop through the rc_files and hard link them all to the user's home dir
-    rc_dir = f'{PWD}/configs/rc_files'
-    for rc_file in os.listdir(rc_dir):
-        src_rc_file = f'{rc_dir}/{rc_file}'
-        hard_link = f'{HOME_DIR}/{rc_file}'
+    # loop through the dot_files and hard link them all to the user's home dir
+    rc_dir = f'{PWD}/configs/dot_files'
+    for dot_file in os.listdir(rc_dir):
+        src_dot_file = f'{rc_dir}/{dot_file}'
+        hard_link = f'{HOME_DIR}/{dot_file}'
 
         try:
             if delete and os.path.exists(hard_link):
                 os.remove(hard_link)
 
-            os.link(src_rc_file, hard_link)
+            os.link(src_dot_file, hard_link)
             print(f'  Hard linked {hard_link}')
         except FileExistsError:
             # keep till loop ends, to notify user that no action was taken
             existing_files.append(hard_link)
         except PermissionError as error:
-            print(f'  Permission error for: {src_rc_file} Error: {error}.')
+            print(f'  Permission error for: {src_dot_file} Error: {error}.')
 
     if existing_files:
         print('Looks like the following file(s) already exist:')
@@ -317,7 +317,7 @@ def main():
 
     print('\n 🥱 This could take a while on a fresh install. Settle in & get '
           'comfy 🛋️ ')
-    hard_link_rc_files(opt.delete)
+    hard_link_dot_files(opt.delete)
     install_fonts()
 
     # process additional package lists, if any
