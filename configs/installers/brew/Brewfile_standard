@@ -14,10 +14,6 @@ brew "lynx"
 # tmux - screen session + sharing/splitting
 brew "tmux"
 
-# top, live terminal based system metrics, replacements
-brew "htop"
-brew "gotop"
-
 ###########################################################
 #  ===-----------------------------------------------===  #
 #            Prettier outputs / Decorations               #
@@ -26,12 +22,17 @@ brew "gotop"
 
 # ls replacement written in rust: https://github.com/Peltoche/lsd
 brew "lsd"
-# prettier du/df outputs: https://github.com/muesli/duf
-brew "duf"
 # like grep or ack, but more modern, for searching file text
 brew "ag"
 # diff, but with colors
 brew "colordiff"
+
+# terminal based system metrics
+brew "htop"
+brew "gotop"
+brew "neofetch"
+# prettier du/df outputs: https://github.com/muesli/duf
+brew "duf"
 
 # make fun text in the terminal
 brew "lolcat"
@@ -68,6 +69,8 @@ brew "tldr"
 brew "pandoc"
 # for parsing json via cli
 brew "jq"
+# fuzzy search, helps with completion and searching
+brew "fzf"
 
 ###########################################################
 #  ===-----------------------------------------------===  #
