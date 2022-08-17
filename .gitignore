@@ -104,4 +104,4 @@ venv.bak/
 .mypy_cache/
 
 # brew lock files
-configs/installers/brew/Brewfile_*.lock.json
+configs/installers/brew/*.lock.json
