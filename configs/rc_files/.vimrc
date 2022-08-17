@@ -219,8 +219,9 @@ Plug 'dense-analysis/ale'
 " bash tab completion
 Plug 'WolfgangMehner/bash-support'
 
-" python tab completion - I actually find this kind of annoying
-" Plug 'davidhalter/jedi-vim'
+" python tab completion - I actually find this kind of annoying, but turn it
+" on when I'm using a new library
+Plug 'davidhalter/jedi-vim'
 Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 
 " yaml syntax highlighting better
