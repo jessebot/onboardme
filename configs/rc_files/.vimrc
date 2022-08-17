@@ -199,7 +199,7 @@ call plug#begin()
 
 " git plugin for running things with :git
 Plug 'tpope/vim-fugitive'
-Plug 'powerline/powerline'
+" Plug 'powerline/powerline'
 
 " On-demand loading of nerdtree
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -228,3 +228,11 @@ Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plug 'stephpy/vim-yaml'
 
 call plug#end()
+
+set rtp+=~/.local/lib/python3.9/site-packages/powerline/bindings/vim
+
+" uncomment these below to install powerline for vim for the first time
+" python3 from powerline import vim
+" python3 from vim import setup as powerline_setup
+" python3 powerline_setup()
+" python3 del powerline_setup

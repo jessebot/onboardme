@@ -167,6 +167,9 @@ complete -C /usr/local/bin/terraform terraform
 # go
 export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
 
+# python packages default location when you do pip3 install --user somepackage
+export PATH=$PATH:$HOME/.local/bin
+
 # special linux pathing
 if [[ $(uname) == *"Linux"* ]]; then
     # this is for iptables on debian, which is elusive
@@ -206,7 +209,12 @@ if [ -f $HOME/.bashrc_env_variables ]; then
 fi
 
 # this one is only if emojis already work in your terminal :3
-PS1="\`if [ \$? = 0 ]; then echo 💙; else echo 😔; fi\` \[\e[94m\][\@]\[\e[0m\]\\$ "
+# PS1="\`if [ \$? = 0 ]; then echo 💙; else echo 😔; fi\` \[\e[94m\][\@]\[\e[0m\]\\$ "
+
+powerline-daemon -q
+POWERLINE_BASH_CONTINUATION=1
+POWERLINE_BASH_SELECT=1
+source ~/.local/lib/python3.9/site-packages/powerline/bindings/bash/powerline.sh
 
 # use this one if you don't have emojis in your terminal
 # adds a smileyface on successful commands and a wat face otherwise :D
