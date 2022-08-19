@@ -36,11 +36,12 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
         install_cmd = installer_dict['install_cmd']
         installed_pkgs = subproc(installer_dict['list_cmd'], True, True)
 
-        # Brew: still using bundle files, so this is a little weird
-        if installer == 'brew':
-            install_cmd += pkg_manager_dir + 'brew/'
-            if OS == 'darwin':
-                pkg_groups.append('mac')
+        # Brew and python: still using bundle files, and requirements.txt
+        for special_pkg in ['brew', 'pip']:
+            if installer == special_pkg:
+                install_cmd += f'{pkg_manager_dir}/{special_pkg}'
+                if OS == 'darwin' and special_pkg == 'brew':
+                    pkg_groups.append('mac')
 
         # Flatpak: requires us add flathub remote repo manually
         if installer == 'flatpak':

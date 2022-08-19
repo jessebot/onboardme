@@ -65,9 +65,6 @@ snap:
 pip:
   emoji: ":snake:"
   list_cmd: "pip3 list"
-  install_cmd: "pip3 install "
+  install_cmd: "pip3 install -r"
   default_packages:
-    - powerline-status
-    - powerline-gitstatus
-    # not sure if this is working
-    - powerline-kubernetes
+    - python/requirements.txt
