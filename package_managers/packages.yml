@@ -63,7 +63,7 @@ snap:
     - imgcat
 
 pip:
-  emoji: ":snake:"
+  emoji: "🐍"
   list_cmd: "pip3 list"
   install_cmd: "pip3 install -r"
   default_packages:

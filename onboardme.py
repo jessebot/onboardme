@@ -108,32 +108,18 @@ def hard_link_dot_files(delete=False,
     existing_files = []
 
     # loop through the dot_files and hard link them all to the user's home dir
-    dot_files_list = os.listdir(dot_files_dir)
+    for root, dirs, files in os.walk(dot_files_dir):
 
-    for dot_file in dot_files_list:
-        # if we hit the .config dir, we can't hard link in macOS, so we do this
-        if dot_file == '.config':
-            # grab all the nested files and directories
-            for root, dirs, files in os.walk(f'{dot_files_dir}/{dot_file}'):
-                # make sure the directory structure matches in ~/.config
-                for config_dir in dirs:
-                    full_path_dir = os.path.join(HOME_DIR, root, config_dir)
-                    Path(full_path_dir).mkdir(parents=True, exist_ok=True)
-                # then add each file to the list of files to hardlink
-                for file in files:
-                    dot_files_list.append(os.path.join(root, file))
-        else:
-            # need to build the
-            if dot_files_dir not in dot_file:
-                src_dot_file = os.path.join(dot_files_dir, dot_file)
-                hard_link = os.path.join(HOME_DIR, dot_file)
-            # these are all .config directory files
-            else:
-                print(f"{dot_files_dir} IS in {dot_file}")
-                src_dot_file = dot_file
-                hard_link = dot_file.replace(dot_files_dir, HOME_DIR)
-                print("Resulting src_dot_file and hard_link")
-                print(src_dot_file, hard_link)
+        # make sure the directory structure matches in ~/.config
+        for config_dir in dirs:
+            full_path = os.path.join(root, config_dir)
+            full_home_path = full_path.replace(dot_files_dir, HOME_DIR)
+            Path(full_home_path).mkdir(parents=True, exist_ok=True)
+
+        # then add each file to the list of files to hardlink
+        for config_file in files:
+            src_dot_file = os.path.join(root, config_file)
+            hard_link = src_dot_file.replace(dot_files_dir, HOME_DIR)
 
             # try to hard link here, but catch errors if delete set to False
             try:
@@ -143,13 +129,11 @@ def hard_link_dot_files(delete=False,
                         os.remove(hard_link)
 
                 os.link(src_dot_file, hard_link)
-
                 print(f'  Hard linked {hard_link}')
+
             except FileExistsError:
                 # keep till loop ends, to notify user that no action was taken
                 existing_files.append(hard_link)
-            except PermissionError:
-                print(f'  Permission error for file: {src_dot_file}')
 
     if existing_files:
         print('Looks like the following file(s) already exist:')
@@ -369,18 +353,19 @@ def main():
     if opt.installers:
         default_installers = opt.installers
 
-    # run_installers(default_installers, package_groups)
+    run_installers(default_installers, package_groups)
 
     # will also configure ssh if you specify --remote
     if opt.remote and 'linux' in OS:
+        # not sure what's up with this...
         # configure_ssh()
         configure_firewall(opt.host)
 
     # this is SUPPOSED to install the vim plugins, but sometimes does not
-    # configure_vim()
+    configure_vim()
 
     # will add your user to linux groups such as docker
-    # setup_nix_groups()
+    setup_nix_groups()
 
     print_head('❇️  SUCCESS ❇️ ')
     print("Here's some stuff you gotta do manually:")
