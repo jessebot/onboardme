@@ -13,8 +13,8 @@
 				"function": "powerline.segments.common.env.cwd",
 				"priority": 30,
                 "args": {
-                    "dir_shorten_len": 1,
-                    "dir_limit_depth": 2
+                    "dir_shorten_len": 3,
+                    "dir_limit_depth": 1
                 }
 			},
 			{
