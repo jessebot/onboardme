@@ -64,7 +64,7 @@ snap:
 
 pip:
   emoji: "🐍"
-  list_cmd: "pip3 list"
-  install_cmd: "pip3 install -r "
+  list_cmd: "pip3.10 list"
+  install_cmd: "pip3.10 install -r "
   default_packages:
     - requirements.txt

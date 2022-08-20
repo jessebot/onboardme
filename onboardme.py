@@ -37,7 +37,7 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
         installed_pkgs = subproc(installer_dict['list_cmd'], True, True)
 
         # Brew and python: still using bundle files, and requirements.txt
-        for special_pkg in ['brew', 'pip']:
+        for special_pkg in ['brew', 'pip3.10']:
             if installer == special_pkg:
                 file_path = os.path.join(PWD, pkg_manager_dir, special_pkg)
                 install_cmd += file_path + '/'
@@ -342,7 +342,7 @@ def main():
         package_groups.extend(opt.extra)
 
     # Pip currently just gets you powerline :)
-    default_installers = ['brew', 'pip']
+    default_installers = ['brew', 'pip3.10']
     if 'linux' in OS:
         default_installers.extend(['apt', 'snap', 'flatpak'])
         # this is broken
