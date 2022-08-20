@@ -198,7 +198,7 @@ done
 # This is for powerline, a prompt I've been playing with: https://powerline.readthedocs.io
 
 if [[ $(uname) == *"Linux"* ]]; then
-    pip_packages="$HOME/.local/lib/python3.10/site-packages"
+    pip_packages="/home/linuxbrew/.linuxbrew/lib/python3.10/site-packages"
 else
     pip_packages="/usr/local/lib/python3.10/site-packages" 
 fi
