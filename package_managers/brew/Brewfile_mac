@@ -32,7 +32,7 @@ brew "bash-completion@2"
 cask "font-hack-nerd-font"
 tap "homebrew/cask-fonts"
 # remap keys... not working yet though :<
-cask "karabiner-elements"
+# cask "karabiner-elements"
 
 ###########################################################
 #  ===-----------------------------------------------===  #

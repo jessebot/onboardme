@@ -39,7 +39,8 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
         # Brew and python: still using bundle files, and requirements.txt
         for special_pkg in ['brew', 'pip']:
             if installer == special_pkg:
-                install_cmd += f'{pkg_manager_dir}/{special_pkg}'
+                file_path = os.path.join(PWD, pkg_manager_dir, special_pkg)
+                install_cmd += file_path + '/'
                 if OS == 'darwin' and special_pkg == 'brew':
                     pkg_groups.append('mac')
 
