@@ -195,11 +195,21 @@ for bash_file in `ls -1 $HOME/.bashrc_*`; do
     . $bash_file
 done
 
-if [ -f  ~/.local/lib/python3.9/site-packages/powerline/bindings/bash/powerline.sh ]; then
-    powerline-daemon -q
-    POWERLINE_BASH_CONTINUATION=1
-    POWERLINE_BASH_SELECT=1
-    . ~/.local/lib/python3.9/site-packages/powerline/bindings/bash/powerline.sh
+# This is for powerline, a prompt I've been playing with: https://powerline.readthedocs.io
+if [[ $(uname) == *"Linux"* ]]; then
+    if [ -f  ~/.local/lib/python3.9/site-packages/powerline/bindings/bash/powerline.sh ]; then
+        powerline-daemon -q
+        POWERLINE_BASH_CONTINUATION=1
+        POWERLINE_BASH_SELECT=1
+        . ~/.local/lib/python3.9/site-packages/powerline/bindings/bash/powerline.sh
+    fi
+else
+    if [ -f /usr/local/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh ]; then
+        powerline-daemon -q
+        POWERLINE_BASH_CONTINUATION=1
+        POWERLINE_BASH_SELECT=1
+        . /usr/local/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh
+    fi
 fi
 
 # this prompt one is only if emojis already work in your terminal :3
