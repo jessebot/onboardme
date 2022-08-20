@@ -45,7 +45,7 @@ brew:
     - Brewfile_work
 
 flatpak:
-  emoji: "🫓"
+  emoji: "🫓 "
   list_cmd: "flatpak list --columns=application"
   install_cmd: "sudo flatpak install -y flathub "
   default_packages:
@@ -62,7 +62,7 @@ snap:
     - fluent-reader
     - imgcat
 
-pip:
+pip3.10:
   emoji: "🐍"
   list_cmd: "pip3.10 list"
   install_cmd: "pip3.10 install -r "
