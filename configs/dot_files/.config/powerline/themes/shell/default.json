@@ -3,11 +3,19 @@
 		"left": [
 			{
 				"function": "powerline.segments.shell.last_status",
-				"priority": 20
+				"priority": 10
 			},
 			{
 				"function": "powerline.segments.common.net.hostname",
-				"priority": 30
+				"priority": 20
+			},
+			{
+				"function": "powerline.segments.common.env.cwd",
+				"priority": 30,
+                "args": {
+                    "dir_shorten_len": 1,
+                    "dir_limit_depth": 2
+                }
 			},
 			{
 				"function": "powerline_gitstatus.gitstatus",
@@ -15,7 +23,7 @@
 			},
             {
                 "function": "powerline_kubernetes.kubernetes",
-                "priority": 40,
+                "priority": 50,
                 "args": {
                     "show_kube_logo": true, 
                     "show_cluster": true, 
