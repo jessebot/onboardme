@@ -2,11 +2,12 @@
 	"segments": {
 		"left": [
 			{
-				"function": "powerline.segments.shell.mode"
+				"function": "powerline.segments.shell.last_status",
+				"priority": 20
 			},
 			{
 				"function": "powerline.segments.common.net.hostname",
-				"priority": 10
+				"priority": 30
 			},
 			{
 				"function": "powerline_gitstatus.gitstatus",
@@ -14,7 +15,7 @@
 			},
             {
                 "function": "powerline_kubernetes.kubernetes",
-                "priority": 50,
+                "priority": 40,
                 "args": {
                     "show_kube_logo": true, 
                     "show_cluster": true, 
@@ -25,10 +26,6 @@
             }
 		],
 		"right": [
-			{
-				"function": "powerline.segments.shell.last_pipe_status",
-				"priority": 10
-			},
 			{
 				"function": "powerline.segments.common.vcs.stash",
 				"priority": 50
