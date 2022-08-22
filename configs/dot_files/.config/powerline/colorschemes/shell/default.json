@@ -1,7 +1,7 @@
 {
 	"name": "Default color scheme for shell prompts",
 	"groups": {
-		"hostname":         { "fg": "white", "bg": "darkestcyan", "attrs": [] },
+		"hostname":         { "fg": "white", "bg": "brightgreen", "attrs": [] },
 		"environment":      { "fg": "white", "bg": "darkestgreen", "attrs": [] },
 		"mode":             { "fg": "darkestgreen", "bg": "brightgreen", "attrs": ["bold"] },
 		"attached_clients": { "fg": "white", "bg": "darkestgreen", "attrs": [] }

@@ -2,10 +2,6 @@
 	"segments": {
 		"left": [
 			{
-				"function": "powerline.segments.shell.last_status",
-				"priority": 10
-			},
-			{
 				"function": "powerline.segments.common.net.hostname",
 				"priority": 20
 			},
@@ -13,7 +9,6 @@
 				"function": "powerline.segments.common.env.cwd",
 				"priority": 30,
                 "args": {
-                    "dir_shorten_len": 1,
                     "dir_limit_depth": 1,
                     "use_shortened_path": true
                 }
@@ -36,12 +31,12 @@
 		],
 		"right": [
 			{
-				"function": "powerline.segments.common.vcs.stash",
-				"priority": 50
+				"function": "powerline.segments.shell.last_status",
+				"priority": 10
 			},
 			{
-				"function": "powerline.segments.common.vcs.branch",
-				"priority": 40
+				"function": "powerline_gitstatus.gitstatus",
+				"priority": 10
 			}
 		]
 	}
