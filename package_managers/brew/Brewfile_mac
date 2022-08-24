@@ -24,8 +24,8 @@ cask "iterm2"
 cask "hyper"
 # gives us the default gnu/linux sed we all know and love
 brew "gnu-sed"
-# cat images in the terminal :)
-brew "danielgatis/imgcat/imgcat"
+# cat images in the terminal (e.g. img2sixel imagename.png)
+brew "libsixel"
 # so that bash completion stuff works
 brew "bash-completion@2"
 # tap special cask for various terminal fonts

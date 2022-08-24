@@ -23,6 +23,8 @@ apt:
     - snapd
     - flatpak
     - gnome-software-plugin-flatpak
+    # cat images in the terminal :) works in tmux
+    - catimg
 
   gaming_packages:
     - lutris
@@ -60,7 +62,6 @@ snap:
   default_packages:
     - core
     - fluent-reader
-    - imgcat
 
 pip3.10:
   emoji: "🐍"
