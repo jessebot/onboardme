@@ -1,0 +1,68 @@
+# This file is macOS specific. Won't work with LinuxBrew  #
+###########################################################
+#  ===-----------------------------------------------===  #
+#                         General                         #
+#  ===-----------------------------------------------===  #
+###########################################################
+
+# this lets us resize windows
+cask "spectacle"
+# productivity search and command bar
+cask "alfred"
+# Default browser
+cask "firefox"
+
+###########################################################
+#  ===-----------------------------------------------===  #
+#               Making the terminal better                #
+#  ===-----------------------------------------------===  #
+###########################################################
+
+# Default terminal
+cask "iterm2"
+# backup terminal in javascript :shrug:
+cask "hyper"
+# gives us the default gnu/linux sed we all know and love
+brew "gnu-sed"
+# cat images in the terminal (e.g. img2sixel imagename.png)
+brew "libsixel"
+# so that bash completion stuff works
+brew "bash-completion@2"
+# tap special cask for various terminal fonts
+cask "font-hack-nerd-font"
+tap "homebrew/cask-fonts"
+# remap keys... not working yet though :<
+# cask "karabiner-elements"
+
+###########################################################
+#  ===-----------------------------------------------===  #
+#               Mac specific DevOpsing                    #
+#  ===-----------------------------------------------===  #
+###########################################################
+
+# This should be docker desktop
+cask "docker"
+# k8s IDE
+cask "lens"
+
+###########################################################
+#  ===-----------------------------------------------===  #
+#               Media and Entertainment                   #
+#  ===-----------------------------------------------===  #
+###########################################################
+
+# primary media player
+cask "vlc"
+# youtube replacement
+cask "freetube"
+
+###########################################################
+#  ===-----------------------------------------------===  #
+#                       Security                          #
+#  ===-----------------------------------------------===  #
+###########################################################
+
+# firewall
+cask "lulu"
+# password manager
+cask "bitwarden"

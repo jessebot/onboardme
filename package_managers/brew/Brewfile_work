@@ -1,0 +1,11 @@
+# this is stuff I only need for work
+
+# terraform for building stuff
+brew "terraform"
+# this lets you manage multiple versions of terraform
+brew "tfenv"
+
+# aws
+brew "aws-cli"
+# aws credentials switcher
+cask "aws-vault"

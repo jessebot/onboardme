@@ -81,7 +81,7 @@ if [[ "$OS" == *"linux"* ]]; then
 
     # if this still isn't in our path, export it and source this bashrc
     echo "Doing some linux brew path/env checking..."
-    echo "  .  .  .  "
+    simple_loading_bar 3
     env | grep "brew"
     brew_return_code=$?
     if [ $brew_return_code -ne 0 ]; then

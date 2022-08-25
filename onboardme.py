@@ -23,7 +23,7 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
     passed in, only use brew for mac. Takes optional variable, pkg_group_lists
     to install optional packages.
     """
-    pkg_manager_dir = f'{PWD}/configs/installers/'
+    pkg_manager_dir = f'{PWD}/package_managers/'
     with open(pkg_manager_dir + 'packages.yml', 'r') as yaml_file:
         installers_list = yaml.safe_load(yaml_file)
 
@@ -36,11 +36,13 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
         install_cmd = installer_dict['install_cmd']
         installed_pkgs = subproc(installer_dict['list_cmd'], True, True)
 
-        # Brew: still using bundle files, so this is a little weird
-        if installer == 'brew':
-            install_cmd += pkg_manager_dir + 'brew/'
-            if OS == 'darwin':
-                pkg_groups.append('mac')
+        # Brew and python: still using bundle files, and requirements.txt
+        for special_pkg in ['brew', 'pip3.10']:
+            if installer == special_pkg:
+                file_path = os.path.join(PWD, pkg_manager_dir, special_pkg)
+                install_cmd += file_path + '/'
+                if OS == 'darwin' and special_pkg == 'brew':
+                    pkg_groups.append('mac')
 
         # Flatpak: requires us add flathub remote repo manually
         if installer == 'flatpak':
@@ -94,32 +96,45 @@ def install_fonts():
               'your terminal font to the new font. I rebooted too.')
 
 
-def hard_link_rc_files(delete=False):
+def hard_link_dot_files(delete=False,
+                        dot_files_dir=f'{PWD}/configs/dot_files'):
     """
     Creates hardlinks to rc files for vim, zsh, bash, and hyper in user's
     home dir. Uses hardlinks, so that if the target file is removed, the data
     will remain. If delete is True, we delete files before beginning.
+    Takes optional dot_files_dir for special directory to grab files from
     """
+
     print_head(' 🐚 Shell and vim rc files installing...')
     existing_files = []
 
-    # loop through the rc_files and hard link them all to the user's home dir
-    rc_dir = f'{PWD}/configs/rc_files'
-    for rc_file in os.listdir(rc_dir):
-        src_rc_file = f'{rc_dir}/{rc_file}'
-        hard_link = f'{HOME_DIR}/{rc_file}'
+    # loop through the dot_files and hard link them all to the user's home dir
+    for root, dirs, files in os.walk(dot_files_dir):
 
-        try:
-            if delete and os.path.exists(hard_link):
-                os.remove(hard_link)
+        # make sure the directory structure matches in ~/.config
+        for config_dir in dirs:
+            full_path = os.path.join(root, config_dir)
+            full_home_path = full_path.replace(dot_files_dir, HOME_DIR)
+            Path(full_home_path).mkdir(parents=True, exist_ok=True)
 
-            os.link(src_rc_file, hard_link)
-            print(f'  Hard linked {hard_link}')
-        except FileExistsError:
-            # keep till loop ends, to notify user that no action was taken
-            existing_files.append(hard_link)
-        except PermissionError as error:
-            print(f'  Permission error for: {src_rc_file} Error: {error}.')
+        # then add each file to the list of files to hardlink
+        for config_file in files:
+            src_dot_file = os.path.join(root, config_file)
+            hard_link = src_dot_file.replace(dot_files_dir, HOME_DIR)
+
+            # try to hard link here, but catch errors if delete set to False
+            try:
+                # if delete has been passed in, delete the existing file first
+                if delete and os.path.exists(hard_link):
+                    if not os.path.islink(hard_link):
+                        os.remove(hard_link)
+
+                os.link(src_dot_file, hard_link)
+                print(f'  Hard linked {hard_link}')
+
+            except FileExistsError:
+                # keep till loop ends, to notify user that no action was taken
+                existing_files.append(hard_link)
 
     if existing_files:
         print('Looks like the following file(s) already exist:')
@@ -142,7 +157,6 @@ def configure_vim():
         wget.download(url, autoload_dir)
 
     # this installs the vim plugins, can also use :PlugInstall in vim
-    # plugin_cmd = (f'vim -E -s -u "{HOME_DIR}/.vimrc" +PlugInstall +qall')
     plugin_cmd = ('vim +PlugInstall +qall')
     subproc(plugin_cmd)
 
@@ -198,6 +212,7 @@ def configure_ssh():
     """
     This will setup SSH for you on a semi-random port that probably isn't taken
     """
+    # it's not a huge list right now, but it's better than just 22 or 2222
     random_port = randint(2224, 2260)
     print(f'  Setting SSHD port to {random_port}')
     sshd_config = fileinput.input('/etc/ssh/sshd_config', inplace=True)
@@ -219,6 +234,7 @@ def configure_ssh():
 def configure_firewall(remote_hosts=[]):
     """
     configure iptables
+    TODO: Add Lulu configuration
     """
     print_head('🛡️ Configuring Firewall...')
     if remote_hosts:
@@ -310,14 +326,14 @@ def parse_args():
 def main():
     """
     Onboarding script for macOS and debian. Uses config in the script repo in
-    configs/installers/packages.yml. If run with no options on Linux it will
+    package_managers/packages.yml. If run with no options on Linux it will
     install brew, apt, flatpak, and snap packages. On mac, only brew.
     """
     opt = parse_args()
 
     print('\n 🥱 This could take a while on a fresh install. Settle in & get '
           'comfy 🛋️ ')
-    hard_link_rc_files(opt.delete)
+    hard_link_dot_files(opt.delete)
     install_fonts()
 
     # process additional package lists, if any
@@ -325,7 +341,8 @@ def main():
     if opt.extra:
         package_groups.extend(opt.extra)
 
-    default_installers = ['brew']
+    # Pip currently just gets you powerline :)
+    default_installers = ['brew', 'pip3.10']
     if 'linux' in OS:
         default_installers.extend(['apt', 'snap', 'flatpak'])
         # this is broken
@@ -341,6 +358,7 @@ def main():
 
     # will also configure ssh if you specify --remote
     if opt.remote and 'linux' in OS:
+        # not sure what's up with this...
         # configure_ssh()
         configure_firewall(opt.host)
 

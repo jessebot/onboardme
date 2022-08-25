@@ -106,7 +106,7 @@ alias ter='tree'
 alias tre='tree'
 alias pthyon='python3'
 alias ptyhon='python3'
-alias python='pythong'
+alias pythong='python'
 
 # shorten commands
 alias vi='vim'
@@ -167,6 +167,9 @@ complete -C /usr/local/bin/terraform terraform
 # go
 export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
 
+# python packages default location when you do pip3 install --user somepackage
+export PATH=$PATH:$HOME/.local/bin
+
 # special linux pathing
 if [[ $(uname) == *"Linux"* ]]; then
     # this is for iptables on debian, which is elusive
@@ -181,32 +184,34 @@ if [[ $(uname) == *"Linux"* ]]; then
 else
     # this is so bash completion works on MacOS
     [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
-    # this is to use GNU sed instead of MacOS's POSIX
+    # this is to use GNU sed, called gsed, instead of MacOS's POSIX
     export PATH=/usr/local/opt/gnu-sed/libexec/gnubin:$PATH
+    # this is so we always use gsed
     alias sed='gsed'
 fi
 
 # include external .bashrc_$application if it exists
-if [ -f $HOME/.bashrc_k8s ]; then
-    . $HOME/.bashrc_k8s
-    . $HOME/.bashrc_k8s_completion
+for bash_file in `ls -1 $HOME/.bashrc_*`; do
+    . $bash_file
+done
+
+# This is for powerline, a prompt I've been playing with: https://powerline.readthedocs.io
+
+if [[ $(uname) == *"Linux"* ]]; then
+    pip_packages="/home/linuxbrew/.linuxbrew/lib/python3.10/site-packages"
+else
+    pip_packages="/usr/local/lib/python3.10/site-packages" 
 fi
 
-if [ -f $HOME/.bashrc_helm ]; then
-    . $HOME/.bashrc_helm
+if [ -f $pip_packages/powerline/bindings/bash/powerline.sh ]; then
+    powerline-daemon -q
+    POWERLINE_BASH_CONTINUATION=1
+    POWERLINE_BASH_SELECT=1
+    . $pip_packages/powerline/bindings/bash/powerline.sh
 fi
 
-if [ -f $HOME/.bashrc_azure ]; then
-    . $HOME/.bashrc_azure
-fi
-
-if [ -f $HOME/.bashrc_env_variables ]; then
-    . $HOME/.bashrc_env_variables
-fi
-
-# this one is only if emojis already work in your terminal :3
-PS1="\`if [ \$? = 0 ]; then echo 💙; else echo 😔; fi\` \[\e[94m\][\@]\[\e[0m\]\\$ "
-
+# this prompt one is only if emojis already work in your terminal :3
+# PS1="\`if [ \$? = 0 ]; then echo 💙; else echo 😔; fi\` \[\e[94m\][\@]\[\e[0m\]\\$ "
 # use this one if you don't have emojis in your terminal
 # adds a smileyface on successful commands and a wat face otherwise :D
 # prompt will show the user.time and that is it, for now. 

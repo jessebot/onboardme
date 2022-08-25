@@ -1,0 +1,43 @@
+{
+	"segments": {
+		"left": [
+			{
+				"function": "powerline.segments.common.net.hostname",
+				"priority": 20
+			},
+			{
+				"function": "powerline.segments.common.env.cwd",
+				"priority": 30,
+                "args": {
+                    "dir_limit_depth": 1,
+                    "use_shortened_path": true
+                }
+			},
+			{
+				"function": "powerline_gitstatus.gitstatus",
+				"priority": 40
+			},
+            {
+                "function": "powerline_kubernetes.kubernetes",
+                "priority": 50,
+                "args": {
+                    "show_kube_logo": true, 
+                    "show_cluster": false, 
+                    "show_namespace": true, 
+                    "show_default_namespace": false, 
+                    "alerts": ["live", "cluster:live"]
+                }
+            }
+		],
+		"right": [
+			{
+				"function": "powerline.segments.shell.last_status",
+				"priority": 10
+			},
+			{
+				"function": "powerline_gitstatus.gitstatus",
+				"priority": 10
+			}
+		]
+	}
+}

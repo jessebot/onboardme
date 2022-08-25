@@ -23,6 +23,8 @@ apt:
     - snapd
     - flatpak
     - gnome-software-plugin-flatpak
+    # cat images in the terminal :) works in tmux
+    - catimg
 
   gaming_packages:
     - lutris
@@ -37,16 +39,16 @@ brew:
   install_cmd: "brew bundle --file="
   default_packages:
     - Brewfile_standard
-  linux_packages:
-    - Brewfile_linux
   mac_packages:
     - Brewfile_mac
+  k8s_packages:
+    - Brewfile_k8s
   work_packages:
     - Brewfile_work
 
 flatpak:
-  emoji: "🫓"
-  list_cmd: "flatpak list  --columns=application"
+  emoji: "🫓 "
+  list_cmd: "flatpak list --columns=application"
   install_cmd: "sudo flatpak install -y flathub "
   default_packages:
     - "org.freedesktop.Platform/x86_64/21.08"
@@ -60,4 +62,10 @@ snap:
   default_packages:
     - core
     - fluent-reader
-    - imgcat
+
+pip3.10:
+  emoji: "🐍"
+  list_cmd: "pip3.10 list"
+  install_cmd: "pip3.10 install -r "
+  default_packages:
+    - requirements.txt

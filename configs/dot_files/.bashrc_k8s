@@ -1,7 +1,12 @@
 # Jessebot's Kubernetes helpful exports and aliases for BASH
+
+# this is for the kubernetes plugin manager, krew
+export PATH="${PATH}:${HOME}/.krew/bin"
+
 export KUBECONFIG=~/.kube/kubeconfig
-# 
+
 export DOMAIN="example.com"
+
 # change this to what ever search tool you'd like,
 # e.g. "grep -i"
 export SEARCH_TOOL="ag"

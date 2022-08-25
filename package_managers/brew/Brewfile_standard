@@ -1,0 +1,84 @@
+###########################################################
+#  ===-----------------------------------------------===  #
+#                         General                         #
+#  ===-----------------------------------------------===  #
+###########################################################
+
+# for testing apis and downloading things
+brew "curl"
+brew "wget"
+
+# terminal based web browser
+brew "lynx"
+
+# tmux - screen session + sharing/splitting
+brew "tmux"
+
+###########################################################
+#  ===-----------------------------------------------===  #
+#            Prettier outputs / Decorations               #
+#  ===-----------------------------------------------===  #
+###########################################################
+
+# ls replacement written in rust: https://github.com/Peltoche/lsd
+brew "lsd"
+# like grep or ack, but more modern, for searching file text
+brew "ag"
+# diff, but with colors
+brew "colordiff"
+
+# terminal based system metrics
+brew "htop"
+brew "gotop"
+brew "neofetch"
+# prettier du/df outputs: https://github.com/muesli/duf
+brew "duf"
+
+# make fun text in the terminal
+brew "lolcat"
+brew "figlet"
+brew "cowsay"
+
+# steam locamotive
+brew "sl"
+
+###########################################################
+#  ===-----------------------------------------------===  #
+#                      Programming                        #
+#  ===-----------------------------------------------===  #
+###########################################################
+
+# revision control system
+brew "git"
+# github cli
+brew "gh"
+# gitlab cli
+brew "glab"
+# main terminal based text editor
+brew "vim"
+# linter for YAML
+brew "yamllint"
+# programming languages and their package managers
+brew "python3"
+brew "go"
+brew "npm"
+# search for all sorts of stuff e.g. howdoi extend a dictionary in python
+brew "howdoi"
+brew "tldr"
+# mardown rendering
+brew "pandoc"
+# for parsing json via cli
+brew "jq"
+# fuzzy search, helps with completion and searching
+brew "fzf"
+
+###########################################################
+#  ===-----------------------------------------------===  #
+#                    Security Stuff                       #
+#  ===-----------------------------------------------===  #
+###########################################################
+
+# generating SSL certs and random strings
+brew "openssl"
+# password management
+brew "bitwarden-cli"
