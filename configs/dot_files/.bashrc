@@ -115,6 +115,8 @@ alias tracert='traceroute'
 # git speed up
 alias gc='git commit -m'
 alias gs='git status'
+# check all directories below my current directory for their git status
+alias gsa='ls -1 -A | xargs -I % sh -c "figlet %; cd %; git status; cd - > /dev/null; echo '\n'"'
 alias gd='git diff'
 alias ga='git add .'
 alias gph='git push'
