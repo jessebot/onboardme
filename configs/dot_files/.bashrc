@@ -111,6 +111,9 @@ alias pythong='python'
 # shorten commands
 alias vi='vim'
 alias tracert='traceroute'
+# batcat is cat with syntax highlighting
+alias cat='batcat'
+alias bat='batcat'
 
 # git speed up
 alias gc='git commit -m'
