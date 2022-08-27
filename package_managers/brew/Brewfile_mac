@@ -66,3 +66,5 @@ cask "freetube"
 cask "lulu"
 # password manager
 cask "bitwarden"
+# VPN
+cask "protonvpn"
