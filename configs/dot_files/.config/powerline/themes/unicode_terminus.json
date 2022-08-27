@@ -1,30 +1,30 @@
 {
 	"dividers": {
 		"left": {
-			"hard": "",
-			"soft": " "
+			"hard": "▌ ",
+			"soft": "│ "
 		},
 		"right": {
-			"hard": " ",
-			"soft": " "
+			"hard": " ▐",
+			"soft": " │"
 		}
 	},
 	"spaces": 1,
 	"segment_data": {
 		"branch": {
-			"before": " "
+			"before": "BR "
 		},
 		"stash": {
-			"before": "⌆ "
+			"before": "ST "
 		},
 		"cwd": {
 			"args": {
-				"ellipsis": "⋯"
+				"ellipsis": "…"
 			}
 		},
 
 		"line_current_symbol": {
-			"contents": " "
+			"contents": "␤ "
 		},
 		"player": {
 			"args": {
@@ -38,17 +38,17 @@
 		},
 
 		"time": {
-			"before": "⌚ "
+			"before": ""
 		},
 
 		"powerline.segments.common.net.network_load": {
 			"args": {
-				"recv_format": "⬇ {value:>8}",
-				"sent_format": "⬆ {value:>8}"
+				"recv_format": "⇓ {value:>8}",
+				"sent_format": "⇑ {value:>8}"
 			}
 		},
 		"powerline.segments.common.net.hostname": {
-			"before": " "
+			"before": "⌂ "
 		},
 		"powerline.segments.common.bat.battery": {
 			"args": {
@@ -59,29 +59,32 @@
 			}
 		},
 		"powerline.segments.common.sys.uptime": {
-			"before": "⇑  "
+			"before": "↑  "
+		},
+		"powerline.segments.common.sys.system_load": {
+			"before": "  "
 		},
 		"powerline.segments.common.mail.email_imap_alert": {
-			"before": "✉ "
+			"before": "MAIL "
 		},
 		"powerline.segments.common.env.virtualenv": {
-			"before": "ⓔ  "
+			"before": "(e) "
 		},
 		"powerline.segments.common.wthr.weather": {
 			"args": {
 				"icons": {
-					"day":           "〇",
-					"blustery":      "⚑",
-					"rainy":         "☔",
-					"cloudy":        "☁",
-					"snowy":         "❅",
-					"stormy":        "☈",
-					"foggy":         "≡",
-					"sunny":         "☼",
-					"night":         "☾",
-					"windy":         "☴",
-					"not_available": "�",
-					"unknown":       "⚠"
+					"day":           "DAY",
+					"blustery":      "WIND",
+					"rainy":         "RAIN",
+					"cloudy":        "CLOUDS",
+					"snowy":         "SNOW",
+					"stormy":        "STORM",
+					"foggy":         "FOG",
+					"sunny":         "SUN",
+					"night":         "NIGHT",
+					"windy":         "WINDY",
+					"not_available": "NA",
+					"unknown":       "UKN"
 				}
 			}
 		},
@@ -122,15 +125,15 @@
 		},
 		"powerline.segments.vim.visual_range": {
 			"args": {
-				"CTRL_V_text": "↕{rows} ↔{vcols}",
-				"v_text_oneline": "↔{vcols}",
-				"v_text_multiline": "↕{rows}",
-				"V_text": "⇕{rows}"
+				"CTRL_V_text": "{rows} × {vcols}",
+				"v_text_oneline": "C:{vcols}",
+				"v_text_multiline": "L:{rows}",
+				"V_text": "L:{rows}"
 			}
 		},
 		"powerline.segments.vim.readonly_indicator": {
 			"args": {
-				"text": ""
+				"text": "RO"
 			}
 		},
 		"powerline.segments.vim.modified_indicator": {

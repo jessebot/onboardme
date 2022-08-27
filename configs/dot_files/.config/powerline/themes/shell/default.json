@@ -9,7 +9,7 @@
 				"function": "powerline.segments.common.env.cwd",
 				"priority": 30,
                 "args": {
-                    "dir_limit_depth": 0,
+                    "dir_limit_depth": 1,
                     "use_shortened_path": true
                 }
 			},

@@ -2,7 +2,7 @@
 	"dividers": {
 		"left": {
 			"hard": " ",
-			"soft": ""
+			"soft": " "
 		},
 		"right": {
 			"hard": " ",
@@ -60,6 +60,9 @@
 		},
 		"powerline.segments.common.sys.uptime": {
 			"before": "↑  "
+		},
+		"powerline.segments.common.sys.system_load": {
+			"before": " "
 		},
 		"powerline.segments.common.mail.email_imap_alert": {
 			"before": "MAIL "
