@@ -11,6 +11,8 @@ cask "spectacle"
 cask "alfred"
 # Default browser
 cask "firefox"
+# File server
+cask "nextcloud"
 
 ###########################################################
 #  ===-----------------------------------------------===  #
