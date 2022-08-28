@@ -5,7 +5,7 @@
 			"soft": " "
 		},
 		"right": {
-			"hard": " ",
+			"hard": "  ",
 			"soft": " "
 		}
 	},
@@ -48,7 +48,7 @@
 			}
 		},
 		"powerline.segments.common.net.hostname": {
-			"before": "  "
+			"before": "ﮟ "
 		},
 		"powerline.segments.common.bat.battery": {
 			"args": {
