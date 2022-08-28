@@ -119,7 +119,7 @@ alias bat='batcat'
 alias gc='git commit -m'
 alias gs='git status'
 # check all directories below my current directory for their git status
-alias gsa='ls -1 -A | xargs -I % sh -c "figlet % | lolcat ; cd %; git status; cd - > /dev/null; echo '\n'"'
+alias gsa='ls -1 -A | xargs -I % sh -c "figlet % | lolcat ; cd %; git status --short; cd - > /dev/null; echo ''"'
 alias gd='git diff'
 alias ga='git add .'
 alias gph='git push'
