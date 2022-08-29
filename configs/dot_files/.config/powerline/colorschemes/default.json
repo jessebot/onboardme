@@ -1,7 +1,7 @@
 {
 	"name": "Default",
 	"groups": {
-		"information:additional":     { "fg": "gray9", "bg": "gray4", "attrs": [] },
+		"information:additional":     { "fg": "mediumcyan", "bg": "gray4", "attrs": [] },
 		"information:regular":        { "fg": "gray10", "bg": "gray4", "attrs": ["bold"] },
 		"information:highlighted":    { "fg": "white", "bg": "gray4", "attrs": [] },
 		"information:priority":       { "fg": "brightyellow", "bg": "mediumorange", "attrs": [] },
@@ -48,7 +48,7 @@
 		"stash":                      "branch_dirty",
 		"stash:divider":              "branch:divider",
 		"cwd":                        "information:additional",
-		"cwd:current_folder":         "information:regular",
+		"cwd:current_folder":         "information:additional",
 		"cwd:divider":                { "fg": "gray7", "bg": "gray4", "attrs": [] },
 		"virtualenv":                 { "fg": "white", "bg": "darkcyan", "attrs": [] },
 		"attached_clients":           { "fg": "gray8", "bg": "gray0", "attrs": [] },
