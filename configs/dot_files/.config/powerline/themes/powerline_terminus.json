@@ -19,7 +19,8 @@
 		},
 		"cwd": {
 			"args": {
-				"ellipsis": "…"
+				"ellipsis": "…",
+				"use_path_separator": "True"
 			}
 		},
 
