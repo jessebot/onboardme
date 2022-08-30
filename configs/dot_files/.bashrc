@@ -111,9 +111,14 @@ alias pythong='python'
 # shorten commands
 alias vi='vim'
 alias tracert='traceroute'
-# batcat is cat with syntax highlighting
-alias cat='batcat'
-alias bat='batcat'
+
+# cat with syntax highlighting
+if [[ $(uname) == *"Linux"* ]]; then
+    alias cat='batcat'
+    alias bat='batcat'
+else
+    alias cat='ccat'
+fi
 
 # git speed up
 alias gc='git commit -m'
@@ -203,7 +208,6 @@ for bash_file in `ls -1 $HOME/.bashrc_*`; do
 done
 
 # This is for powerline, a prompt I've been playing with: https://powerline.readthedocs.io
-
 if [[ $(uname) == *"Linux"* ]]; then
     pip_packages="/home/linuxbrew/.linuxbrew/lib/python3.10/site-packages"
 else
@@ -217,6 +221,7 @@ if [ -f $pip_packages/powerline/bindings/bash/powerline.sh ]; then
     . $pip_packages/powerline/bindings/bash/powerline.sh
 fi
 
+# TODO: put old prompts into docs for future travelers
 # this prompt one is only if emojis already work in your terminal :3
 # PS1="\`if [ \$? = 0 ]; then echo 💙; else echo 😔; fi\` \[\e[94m\][\@]\[\e[0m\]\\$ "
 # use this one if you don't have emojis in your terminal

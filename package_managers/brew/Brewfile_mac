@@ -24,15 +24,20 @@ cask "nextcloud"
 cask "iterm2"
 # backup terminal in javascript :shrug:
 cask "hyper"
+
 # gives us the default gnu/linux sed we all know and love
 brew "gnu-sed"
-# cat images in the terminal (e.g. img2sixel imagename.png)
-brew "libsixel"
 # so that bash completion stuff works
 brew "bash-completion@2"
+
+# pretty printing for cat
+brew "ccat"
 # tap special cask for various terminal fonts
 cask "font-hack-nerd-font"
 tap "homebrew/cask-fonts"
+# cat images in the terminal (e.g. img2sixel imagename.png)
+brew "libsixel"
+
 # remap keys... not working yet though :<
 # cask "karabiner-elements"
 
