@@ -64,6 +64,7 @@ snap:
   default_packages:
     - core
     - fluent-reader
+    - scrcpy
 
 pip3.10:
   emoji: "🐍"

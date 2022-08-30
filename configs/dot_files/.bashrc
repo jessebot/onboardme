@@ -179,6 +179,8 @@ export PATH=$PATH:$HOME/.local/bin
 if [[ $(uname) == *"Linux"* ]]; then
     # this is for iptables on debian, which is elusive
     export PATH=$PATH:/usr/sbin:/usr/share
+    # for snap package manager packages
+    export PATH=$PATH:/snap/bin
     # Brew on Linux
     export HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew
     export HOMEBREW_CELLAR=/home/linuxbrew/.linuxbrew/Cellar
