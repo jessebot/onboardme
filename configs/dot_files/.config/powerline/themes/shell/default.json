@@ -3,6 +3,13 @@
         "above": [{
                 "left": [
                     {
+                        "function": "powerline.segments.common.time.date",
+                        "priority": 10,
+                        "args": {
+                            "format": " %H:%M"
+                        }
+                    },
+                    {
                         "function": "powerline.segments.common.net.hostname",
                         "priority": 20
                     },
@@ -38,11 +45,11 @@
                 "priority": 20
             },
             {
-                "function": "powerline.segments.common.time.date",
-                "priority": 30,
-				"args": {
-					"format": " %H:%M"
-				}
+                "type": "string",
+                "name": "newline_prompt",
+                "contents": "﬌",
+                "highlight_groups": ["newline_prompt"],
+                "priority": 30
             }
         ]
     }
