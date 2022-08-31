@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Gaming on Linux
+title: Gaming
 parent: Linux
-permalink: /docs/linux/gaming-on-linux
+permalink: /docs/linux/gaming
 ---
 
 ## Gaming on Linux
