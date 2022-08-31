@@ -300,11 +300,24 @@ def configure_feeds():
     shutil.copy(subs_db, f'{HOME_DIR}/Downloads/subscriptions.db')
 
 
+def parse_local_configs():
+    """
+    parse the local config yaml file if it exists
+    """
+    local_config_dir = f'{HOME_DIR}/.config/onboardme/config.yaml'
+    if os.path.exists(local_config_dir):
+        with open(local_config_dir, 'r') as yaml_file:
+            config = yaml.safe_load(yaml_file)
+    return config
+
+
 def parse_args():
     """
     Parse arguments and return dict
     """
     d_help = 'Deletes existing rc files before creating hardlinks. BE CAREFUL!'
+    df_help = ('COMING SOON. Git url to clone for dot files, assumes dot files'
+               'are in root directory for now')
     e_help = ('Extra package groups to install. Accepts multiple args, e.g. '
               '--extra gaming')
     i_help = ('Installers to run. Accepts multiple args, e.g. only run brew '
@@ -312,7 +325,9 @@ def parse_args():
     h_help = 'Add IP to firewall for remote access'
     p = ArgumentParser(description=main.__doc__)
 
-    p.add_argument('--delete', action='store_true', default=False, help=d_help)
+    p.add_argument('--dot_files', default=None, nargs='+', help=df_help)
+    p.add_argument('-d', '--delete', action='store_true', default=False,
+                   help=d_help)
     p.add_argument('-e', '--extra', default=None, nargs='+', help=e_help)
     p.add_argument('-f', '--firefox', action='store_true', default=False,
                    help='Opt into experimental firefox configuring')
@@ -320,6 +335,7 @@ def parse_args():
     p.add_argument('-r', '--remote', action='store_true', default=False,
                    help='Setup SSH on a random port and add it to firewall.')
     p.add_argument('-H', '--host', nargs='+', default=None, help=h_help)
+
     return p.parse_args()
 
 
@@ -328,6 +344,7 @@ def main():
     Onboarding script for macOS and debian. Uses config in the script repo in
     package_managers/packages.yml. If run with no options on Linux it will
     install brew, apt, flatpak, and snap packages. On mac, only brew.
+    coming soon: config via env variables and config files.
     """
     opt = parse_args()
 

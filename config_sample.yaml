@@ -1,0 +1,31 @@
+---
+# opt into experimental firefox configs
+firefox_config: false
+
+# delete any existing dot files we see in the home directory that match the ones
+# we want to install
+delete_existing_dot_files: false
+
+# list of extra existing packages groups to install
+extra_package_groups:
+# - gaming
+# - work
+
+# whether or not to configure remote access to additional hosts
+remote_access:
+  enabled: true
+  # known safe remote hosts that you expect to be able to ping and SSH into
+  hosts:
+  #  - 192.168.42.42
+
+# package managers to use. Defaults to brew and pip on mac
+# Linux defaults to brew, pip, snap, flatpak, apt
+enabled_package_managers:
+  - brew
+
+### TODO: make these work
+# Your personal git URL for your dot files
+dot_file_url: "https://github.com/jessebot/onboardme"
+
+# any URL we can curl to download a folder from
+wallpapers_download_url: ""
