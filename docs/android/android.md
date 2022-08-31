@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Android
+title: android
 has_children: false
 permalink: /docs/android
 ---

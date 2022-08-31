@@ -1,6 +1,6 @@
 ---
 layout: default
-title: mac
+title: macOS
 nav_order: 3
 permalink: /docs/mac
 ---

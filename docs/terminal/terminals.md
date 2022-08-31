@@ -6,10 +6,10 @@ permalink: /docs/terminals
 ---
 
 ## Explanation of what, why, how when it comes to Terminals
-App | Local Config | Link | Pros | Cons
+| App | Local Config | Link | Pros | Cons |
 :---:|:---:|:---:|:---:|:---:
-hyper.js|[../../configs/rc_files/.hyper.js](../../configs/rc_files/.hyper.js)|[hyper.is](https://hyper.is/)|modern feel, configurable|Slow :(
-cmder|None|*[cmder](https://cmder.net/)|terminal for windows that scales, splits, and supports config|kinda buggy
+| hyper.js|[~/.hyper.js](https://github.com/jessebot/onboardme/configs/rc_files/.hyper.js)|[hyper.is](https://hyper.is/)|modern feel, configurable|Slow :( |
+| cmder|None|[cmder](https://cmder.net/)|terminal for windows that scales, splits, and supports config|kinda buggy|
 
 You can find more Hyper.js docs [here](./hyper/README.md), thanks to @cloudymax :)
 

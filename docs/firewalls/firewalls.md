@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Firewalls
+title: firewalls
 ---
 
 Thing I read once: [How to control internet access for each program?](https://askubuntu.com/questions/45072/how-to-control-internet-access-for-each-program)

@@ -1,6 +1,15 @@
 ---
-title: "Onboardme to thing"
+title: "OnBoardMe"
 remote_theme: just-the-docs/just-the-docs
 color_scheme: "dark"
-search_enabled: false
+search_enabled: true
+permalink: pretty
 exclude: ["README.md"]
+url: "https://jessebot.github.io/onboardme"
+# Aux links for the upper right navigation
+aux_links:
+  "OnBoardMe on GitHub":
+    - "//github.com/jessebot/onboardme"
+
+plugins:
+  - jekyll-seo-tag

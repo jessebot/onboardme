@@ -1,6 +1,9 @@
 ---
 layout: default
 title: Welcome
+description: "This is where we throw everything we don't want to forget about computers"
+nav_order: 1
+permalink: /
 ---
 
 ## Welcome lost friend
