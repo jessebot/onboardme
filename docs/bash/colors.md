@@ -1,12 +1,11 @@
-# Random collection of stuff I forget all the time
+---
+layout: default
+title: Colors in Bash
+has_children: false
+permalink: /docs/bash/colors
+---
 
-## which not working to find program
-If you do a `which` and the program isn't in your path, but it shows as installed, try this. Example with `iptables`:
-```bash
-whereis iptables
-```
-
-## echo colors in bash
+## `echo` with colors in BASH
 **Example**
 Prints love in red:
 ```bash
