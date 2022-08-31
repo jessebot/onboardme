@@ -1,8 +1,7 @@
 ---
 layout: default
 title: Colors in Bash
-has_children: false
-parent: bash
+parent: Bash
 permalink: /docs/bash/colors
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: BASH
+title: Bash
 has_children: true
 permalink: /docs/bash
 ---

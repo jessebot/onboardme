@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Vim
-has_children: false
 permalink: /docs/vim
 ---
 

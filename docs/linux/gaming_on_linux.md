@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Gaming on Linux
-has_children: false
+parent: linux
 permalink: /docs/linux/gaming
 ---
 
