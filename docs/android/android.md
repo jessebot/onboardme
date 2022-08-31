@@ -1,3 +1,10 @@
+---
+layout: default
+title: android
+has_children: false
+permalink: /docs/android
+---
+
 ## Screen Mirroring from Android device
 We'll be using [scrcpy](https://github.com/Genymobile/scrcpy) in this guide, which bundles abd, so you don't need to install abd in addition to this.
 

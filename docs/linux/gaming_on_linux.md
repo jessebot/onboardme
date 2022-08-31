@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Gaming
+title: gaming
 parent: Linux
 nav_order: 2
 ---
