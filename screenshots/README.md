@@ -10,4 +10,4 @@
 <img src='./git_powerline_example.png' width='800'>
 
 ### Image in your terminal
-<img src='./terminal_screenshot.png' width='800'>
+<img src='./image_in_terminal.png' width='800'>
