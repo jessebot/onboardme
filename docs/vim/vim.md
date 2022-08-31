@@ -1,9 +1,11 @@
 ---
 layout: default
-title: Vim tips/tricks
+title: Vim
 has_children: false
 permalink: /docs/vim
 ---
+
+## Vim Tips and Tricks
 
 - [How does the vim write with sudo trick work?](https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
 

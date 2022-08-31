@@ -2,7 +2,7 @@
 layout: default
 title: WSL
 has_children: false
-parent: windows
+parent: Windows
 permalink: /docs/windows/wsl
 ---
 
