@@ -26,7 +26,7 @@ options:
 
 Currently in beta :3 Tested on macOS Monterey 12.4-12.5, and Debian 11 (Bullseye). Please report 🐛 in the GitHub issues, and I will get them as I have time.
 
-Looking for a project to get a fresh OS entirely? Check out [pxeless](https://github.com/cloudymax/pxeless).
+Looking for a project to get a fresh OS entirely, on a machine that has no OS? Check out [pxeless](https://github.com/cloudymax/pxeless).
 
 ## Quick Start
 First, make sure you have curl, but it *should* be there ***already be on macOS Monterey***:
