@@ -1,3 +1,11 @@
+---
+layout: default
+title: WSL
+has_children: false
+parent: windows
+permalink: /docs/windows/wsl
+---
+
 # WSL (Windows Subsystem for Linux)
 These instructions should install WSL 2, but on some older versions of Windows, it will install WSL 1, but that is addressed in the final section of this doc.
 

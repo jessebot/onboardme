@@ -5,7 +5,6 @@ has_children: false
 permalink: /docs/vim
 ---
 
-# Vim tips and tricks
 - [How does the vim write with sudo trick work?](https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
 
 If you’re copying blocks of text around and need to align the indent of a block in its new location, use `]`then `p` instead of just `p`. This aligns the pasted block with the surrounding text.

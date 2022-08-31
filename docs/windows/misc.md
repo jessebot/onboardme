@@ -1,4 +1,11 @@
-# Windows General - Tips/Tricks
+---
+layout: default
+title: tips and tricks
+has_children: false
+parent: windows
+permalink: /docs/windows/trips-and-tricks
+---
+
 Did you know there's a package manager for Windows by Microsoft? It's called `winget`.
 
 🪟 key + `x` pulls up a nice little admin tool menu

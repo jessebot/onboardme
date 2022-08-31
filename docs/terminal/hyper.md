@@ -1,4 +1,10 @@
-# Learn about Hyper :D
+---
+layout: default
+title: Hyper
+has_children: false
+parent: terminals
+permalink: /docs/terminals/hyper
+---
 
 [Hyper.js terminal](https://hyper.is/#installation)
 

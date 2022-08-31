@@ -1,5 +1,4 @@
-# Powerline - a status line for your terminal
-[Powerline](https://github.com/powerline/powerline/tree/master) has plugins common shells, to create beautiful prompts for shells such as BASH or ZSH, but it can also work with vim, tmux, and other apps. You can check out the docs [here](https://powerline.readthedocs.io/en/master/index.html).
+[Powerline](https://github.com/powerline/powerline/tree/master) is a configurable status line for use in the terminal. It has plugins for common shells, to create beautiful prompts for shells such as BASH or ZSH, but it can also work with vim, tmux, and other apps. You can check out the docs [here](https://powerline.readthedocs.io/en/master/index.html).
 
 Here's an example of [my personal powerline setup](https://github.com/jessebot/onboardme/tree/main/configs/dot_files/.config/powerline):
 

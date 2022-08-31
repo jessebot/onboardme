@@ -3,7 +3,6 @@ layout: default
 title: Firewalls
 ---
 
-# Firewall notes
 Thing I read once: [How to control internet access for each program?](https://askubuntu.com/questions/45072/how-to-control-internet-access-for-each-program)
 
 Iptables relies on some basic concepts, if you just wanna get rollin':

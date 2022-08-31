@@ -1,5 +1,11 @@
-# Explanation of what, why, how when it comes to Terminals
+---
+layout: default
+title: terminals
+has_children: true
+permalink: /docs/terminals
+---
 
+## Explanation of what, why, how when it comes to Terminals
 App | Local Config | Link | Pros | Cons
 :---:|:---:|:---:|:---:|:---:
 hyper.js|[../../configs/rc_files/.hyper.js](../../configs/rc_files/.hyper.js)|[hyper.is](https://hyper.is/)|modern feel, configurable|Slow :(
