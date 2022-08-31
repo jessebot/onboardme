@@ -7,7 +7,7 @@ permalink: /docs/onboardme
 ## OnBoardMe
 A project to store config files, as well as programatically install core packages accross several package managers that I need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping I'd remember why it was there later, so this is now a renewed effort in remembering all the thing™️s, and automating as much as possible. The idea is that it's faster, smaller, and easier to configure than it's ansible equivalent. Here's an example of the terminal after the script has run:
 
-<img src='./screenshots/terminal_screenshot.png' width='800'>
+<img src='https://github.com/jessebot/onboardme/screenshots/terminal_screenshot.png' width='800'>
 
 And here's an example of the cli:
 ```
