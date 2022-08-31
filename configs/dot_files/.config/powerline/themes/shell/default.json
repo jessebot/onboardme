@@ -49,6 +49,7 @@
                 "name": "newline_prompt",
                 "contents": "﬌",
                 "highlight_groups": ["newline_prompt"],
+                "draw_hard_divider": "False",
                 "priority": 30
             }
         ]
