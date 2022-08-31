@@ -1,8 +1,30 @@
 # OnBoardMe
-A project to store config files, as well as programatically install core packages accross several package managers that I need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping I'd remember why it was there later, so this is now a renewed effort in remembering all the thing™️s, and automating as much as possible. The idea is that it's faster, smaller, and easier to configure than it's ansible equivalent.
+A project to store config files, as well as programatically install core packages accross several package managers that I need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping I'd remember why it was there later, so this is now a renewed effort in remembering all the thing™️s, and automating as much as possible. The idea is that it's faster, smaller, and easier to configure than it's ansible equivalent. Here's an example of the terminal after the script has run:
 
-Later beta state :3 Currently tested on macOS Monterey 12.4, and Debian 11 (Bullseye).
-Please report 🐛 in the GitHub issues, and I will get them as I have time.
+<img src='./screenshots/terminal_screenshot.png' width='800'>
+
+And here's an example of the cli:
+```
+# ./onboardme.py --help
+usage: onboardme.py [-h] [--delete] [-e EXTRA [EXTRA ...]] [-f] [-i INSTALLERS [INSTALLERS ...]] [-r] [-H HOST [HOST ...]]
+
+Onboarding script for macOS and debian. Uses config in the script repo in package_managers/packages.yml. If run with no options on
+Linux it will install brew, apt, flatpak, and snap packages. On mac, only brew.
+
+options:
+  -h, --help            show this help message and exit
+  --delete              Deletes existing rc files before creating hardlinks. BE CAREFUL!
+  -e EXTRA [EXTRA ...], --extra EXTRA [EXTRA ...]
+                        Extra package groups to install. Accepts multiple args, e.g. --extra gaming
+  -f, --firefox         Opt into experimental firefox configuring
+  -i INSTALLERS [INSTALLERS ...], --installers INSTALLERS [INSTALLERS ...]
+                        Installers to run. Accepts multiple args, e.g. only run brew and apt: --installers brew apt
+  -r, --remote          Setup SSH on a random port and add it to firewall.
+  -H HOST [HOST ...], --host HOST [HOST ...]
+                        Add IP to firewall for remote access
+```
+
+Currently in beta :3 Tested on macOS Monterey 12.4-12.5, and Debian 11 (Bullseye). Please report 🐛 in the GitHub issues, and I will get them as I have time.
 
 Looking for a project to get a fresh OS entirely? Check out [pxeless](https://github.com/cloudymax/pxeless).
 
@@ -93,6 +115,5 @@ Contact your local datacenters and see if they offer an object storage service, 
 Thank you to @cloudymax for all their direct contributions for gaming on Linux, virtualization, and the hyper terminal configs. Also great engineer to rubberduck with generally. Couldn't have polished a lot of this without their patience during my late night ramblings about my 8 different package managers and why utf-8 isn't called utf-14 :3 :blue_heart:
 
 ## TODO
-- make pip installs work, possibly do that in setup?
 - allow to only update rc files
-- configure powerline files
+- add ci/cd and automatic releases/release notes
