@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Tips and Tricks
-has_children: false
 parent: Windows
 permalink: /docs/windows/trips-and-tricks
 ---

@@ -1,7 +1,6 @@
 ---
 layout: default
 title: WSL
-has_children: false
 parent: Windows
 permalink: /docs/windows/wsl
 ---
