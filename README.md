@@ -117,3 +117,4 @@ Thank you to @cloudymax for all their direct contributions for gaming on Linux, 
 ## TODO
 - allow to only update rc files
 - add ci/cd and automatic releases/release notes
+- fix jekyll site
