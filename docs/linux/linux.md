@@ -3,8 +3,8 @@ layout: default
 title: linux notes
 has_children: true
 permalink: /docs/linux
-nav_order: 3
 ---
+
 ## apt notes
 Thanks to Vaibhav for their solution [here](https://vskulkarni.wordpress.com/2011/10/07/gpg-error-httpppa-launchpad-net/) for when you get this error:
 ```bash

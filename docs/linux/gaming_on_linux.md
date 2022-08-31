@@ -1,13 +1,13 @@
 ---
 layout: default
-title: gaming
-parent: Linux
-nav_order: 2
+title: Gaming on Linux
+has_children: false
+permalink: /docs/linux/gaming
 ---
 
-# Gaming on Linux
+## Gaming on Linux
 
-## Wine
+### Wine
 If you're on Debian, you want the instructions on [winehq.com](https://wiki.winehq.org/Debian) which are basically:
 
 
@@ -28,10 +28,10 @@ sudo apt update
 
 Then, and ONLY THEN can you run: `sudo apt install winehq-staging`
 
-## Xbox controller for Debian drivers
+### Xbox controller for Debian drivers
 https://launchpad.net/~grumbel/+archive/ubuntu/ppa
 
-## Misc
+### Misc
 ROMS megathread: [https://r-roms.github.io/](https://r-roms.github.io/)
 
 Also, in my travels I found these:

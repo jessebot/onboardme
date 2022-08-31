@@ -2,6 +2,7 @@
 layout: default
 title: Colors in Bash
 has_children: false
+parent: bash
 permalink: /docs/bash/colors
 ---
 
