@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Vim tips/tricks
+has_children: false
+permalink: /docs/vim
 ---
 
 # Vim tips and tricks

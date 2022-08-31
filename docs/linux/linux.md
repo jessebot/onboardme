@@ -1,3 +1,10 @@
+---
+layout: default
+title: linux
+has_children: true
+permalink: /docs/linux
+---
+
 # Linux notes
 
 ## apt notes
