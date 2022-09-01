@@ -1,3 +1,9 @@
+---
+layout: default
+title: Kubernetes
+permalink: /docs/k8s
+---
+
 # K8s stuff
 ## KIND - because easy local testing on linux
 
