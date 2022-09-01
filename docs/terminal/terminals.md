@@ -7,12 +7,6 @@ permalink: /docs/terminals
 
 ## Explanation of what, why, how when it comes to Terminals
 
-|Thing|Description|
----|---
-|Chains|lists of rules|
-
-
-
 | App | Local Config | Link | Pros | Cons |
 ---|---|---|---|---
 | hyper.js | [~/.hyper.js](https://github.com/jessebot/onboardme/configs/rc_files/.hyper.js) | [hyper.is](https://hyper.is/) | modern feel, configurable | Slow :( |
