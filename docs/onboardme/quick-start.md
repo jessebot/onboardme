@@ -1,11 +1,11 @@
 ---
 layout: default
 title: Quick Start
-parent: OnBoardMe
+parent: onboardme.py
 permalink: /docs/onboardme/quickstart
 ---
 
-## Quick Start
+## OnBoardMe Quick Start
 First, make sure you have curl, but it *should* be there ***already be on macOS Monterey***:
 ```bash
 # if this doesn't return anything, you need to install curl

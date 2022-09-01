@@ -24,7 +24,7 @@ options:
                         Add IP to firewall for remote access
 ```
 
-Currently in beta :3 Tested on macOS Monterey 12.4-12.5, and Debian 11 (Bullseye). Please report 🐛 in the GitHub issues, and I will get them as I have time.
+Currently in beta :3 Tested on macOS Monterey 12.4-12.5, and Debian 11 (Bullseye). Please report 🐛 in the GitHub issues, and I will get them as I have time. You can also open a pull request, and I can review it :blue_heart:
 
 Looking for a project to get a fresh OS entirely, on a machine that has no OS? Check out [pxeless](https://github.com/cloudymax/pxeless).
 
@@ -70,8 +70,6 @@ When the script completes, it'll output a number of other steps to take manually
 
 If you want to see the exact packages being installed, you can check out `configs/installers/packages.yml` for an easy to absorb yaml list of packages per installer. I bias towards brew fo cross-platform usage, and those packages are avavailble as Brewfiles in `configs/installers/brew/`.
 
-I'm using github issues to track future work on this thing.
-
 ### Current Ecoscape of Personal Tech
 
 Category | App | Replaces
@@ -91,10 +89,7 @@ You can find the bulk of my notes under the `docs/` directory in this repo, but 
 ## Important Notes on FOSS and Ethics
 Here at this humble OnBoardMe repo, we try really hard to do the right thing. We're doing our best to get off of the giants like Google, Microsoft, Apple, Amazon, Samsung, etc... but we've still got a long way to go! Check back here for alternatives as we go on the journey ourselves! We'll link back to any orgs or projects we learn about, but feel free to open an issue with anything else we should link back to. :)
 
-  Living ethically under late stage capitalism is not easy, but we believe generally that software should be Free and Open Source.
-
-#### What is (FOSS), Free and Open Source Software
-We believe in free software, and we do our best to use and support actually free and open source software. If you don't know what we mean, please check out this [GNU article on Free SoftWare](https://www.gnu.org/philosophy/free-sw.en.html).
+  *Living ethically under late stage capitalism is not easy, but we believe generally that software should be [Free and Open Source](https://www.gnu.org/philosophy/free-sw.en.html).*
 
 #### Humane Tech Lists
 We've had good luck with [Awesome Humane Tech](https://github.com/humanetech-community/awesome-humane-tech) for guides and checking out alternatives to tech from the Giants you previously used.
@@ -108,8 +103,3 @@ Contact your local datacenters and see if they offer an object storage service, 
 
 ### Special Thanks
 Thank you to @cloudymax for all their direct contributions for gaming on Linux, virtualization, and the hyper terminal configs. Also great engineer to rubberduck with generally. Couldn't have polished a lot of this without their patience during my late night ramblings about my 8 different package managers and why utf-8 isn't called utf-14 :3 :blue_heart:
-
-## TODO
-- allow to only update rc files
-- add ci/cd and automatic releases/release notes
-- fix jekyll site to look less gross

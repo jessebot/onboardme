@@ -1,12 +1,12 @@
 ---
 layout: default
-title: OnBoardMe
+title: onboardme.py
 has_children: true
 permalink: /docs/onboardme
 ---
 
 ## OnBoardMe
-A project to store config files, as well as programatically install core packages accross several package managers that I need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping I'd remember why it was there later, so this is now a renewed effort in remembering all the thing™️s, and automating as much as possible. The idea is that it's faster, smaller, and easier to configure than it's ansible equivalent. Here's an example of the terminal after the script has run:
+[A project](https://github.com/jessebot/onboardme) to store config files, as well as programatically install core packages accross several package managers that I need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping I'd remember why it was there later, so this is now a renewed effort in remembering all the thing™️s, and automating as much as possible. The idea is that it's faster, smaller, and easier to configure than it's ansible equivalent. Here's an example of the terminal after the script has run:
 
 <img src='https://raw.githubusercontent.com/jessebot/onboardme/main/screenshots/terminal_screenshot.png' width='800'>
 
@@ -57,21 +57,13 @@ If you want to see the exact packages being installed, you can check out `config
 | News - RSS         | Fluent Reader       | Facebook/Twitter news/company feeds |
 | Video              | FreeTube,Peertube   | YouTube |
 
-## Things the scripts don't do
-**Every** operating system has that one thing™️ that voids the [Is It Worth the Time](https://xkcd.com/1205/) rule, which leaves us in the weird place, where setting up the thing™️ manually is still faster than trying to keep the automation up to date as every OS changes over time, which is illustrated in the [Automation Chart](https://xkcd.com/1319/). So, I don't know that I'll ever have a perfect solution to map capslock to control in a simple automated manner on every OS, but that's just the systems engineer's mental burden: "I have the ability to do x, but do I really have the time or interest... to do it on windows, mac, linux, and android...?"
-
-*That's where docs come in handy, because you can't even trust that you'll be able to re-web-search any thing™️ these days.*
-
 #### Docs
 You can find the bulk of my notes under the `docs/` directory in [this repo](https://github.com/jessebot/onboardme).
 
 ## Important Notes on FOSS and Ethics
 Here at this humble OnBoardMe repo, we try really hard to do the right thing. We're doing our best to get off of the giants like Google, Microsoft, Apple, Amazon, Samsung, etc... but we've still got a long way to go! Check back here for alternatives as we go on the journey ourselves! We'll link back to any orgs or projects we learn about, but feel free to open an issue with anything else we should link back to. :)
 
-  Living ethically under late stage capitalism is not easy, but we believe generally that software should be Free and Open Source.
-
-#### What is (FOSS), Free and Open Source Software
-We believe in free software, and we do our best to use and support actually free and open source software. If you don't know what we mean, please check out this [GNU article on Free SoftWare](https://www.gnu.org/philosophy/free-sw.en.html).
+  *Living ethically under late stage capitalism is not easy, but we believe generally that software should be [Free and Open Source](https://www.gnu.org/philosophy/free-sw.en.html).*
 
 #### Humane Tech Lists
 We've had good luck with [Awesome Humane Tech](https://github.com/humanetech-community/awesome-humane-tech) for guides and checking out alternatives to tech from the Giants you previously used.
@@ -86,13 +78,6 @@ Contact your local datacenters and see if they offer an object storage service, 
 ### Special Thanks
 Thank you to @cloudymax for all their direct contributions for gaming on Linux, virtualization, and the hyper terminal configs. Also great engineer to rubberduck with generally. Couldn't have polished a lot of this without their patience during my late night ramblings about my 8 different package managers and why utf-8 isn't called utf-14 :3 :blue_heart:
 
-## TODO
-- allow to only update rc files
-- add ci/cd and automatic releases/release notes
-- fix jekyll site to look less gross
-
 ### Status
 Currently in beta :3 Tested on macOS Monterey 12.4-12.5, and Debian 11 (Bullseye). Please report 🐛 in the GitHub issues, and I will get them as I have time.
 I'm using github issues to track future work on this thing.
-
-
