@@ -25,7 +25,7 @@ Then you should be able to scroll down to Windows Subsystem for Linux and check 
 FINALLY, you can bring up 🪟 key > microsoft store > Debian (app) and hit install.
 
 ---
-### Disable terminal bell/beep in wsl
+## Disable terminal bell/beep in wsl
 
 For BASH:
 ```bash
@@ -40,11 +40,11 @@ set t_vb=
 Requires restart of WSL app (in my case, Debian).
 
 ---
-### VPN causing issues with DNS resolution
+## VPN causing issues with DNS resolution
 Edit `/etc/wsl.conf` and uncomment `generateNetworkConf=false` or whatever it's called, and set it to `false` if it isn't already. Then unlink your `etc/resolv.conf` and modify it to be the VPN's name servers only.
 
 ---
-### Can't echo `brew` path into `.bashrc`
+## Can't echo `brew` path into `.bashrc`
 
 When you try this:
 
@@ -61,7 +61,7 @@ export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 ```
 
 ---
-### Installing Docker for wsl
+## Installing Docker for wsl
 You'll need to first install [Docker Desktop for Windows](https://docs.docker.com/desktop/windows/install/).
 
 You'll need your Linux distro to be using wsl 2, and you can check with this in powershell:
@@ -89,7 +89,7 @@ Toggle the switch to `on` for your distro. Fin.
 More info on Docker Desktop WSL 2 backend and Docker is available [here](https://docs.docker.com/desktop/windows/wsl/).
 
 ---
-### Launching Windows File Explorer for `pwd` in Linux
+## Launching Windows File Explorer for `pwd` in Linux
 From WSL, you'll want to run the following command, and that will launch File Explorer on Windows for your current Linux directory.
 
 ```bash
