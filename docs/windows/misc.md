@@ -5,15 +5,26 @@ parent: Windows
 permalink: /docs/windows/trips-and-tricks
 ---
 
+## Tips and Tricks
+
+---
+### Package Managers for Windows
+
 Did you know there's a package manager for Windows by Microsoft? It's called `winget`.
+
+The other alternatives are [chocolately](https://chocolatey.org/install) and [scoop](https://scoop.sh/).
+
+---
+### Admin tool menu
 
 🪟 key + `x` pulls up a nice little admin tool menu
 
 ---
-## cmder - a useable terminal for windows
+### cmder - a useable terminal for windows
 [cmdr](https://cmder.net/) absolutely remains my favorite windows terminal. It supports all the important things like transparency, easy on the eyes colors, and splitting. Seems to struggle with some utf-8/emojis, but allows for access of powershell, cmd, and wsl, and is fairly configurable.
 
-## Fonts Installation
+---
+### Fonts Installation
 
 ```powershell
 git clone https://github.com/ryanoasis/nerd-fonts.git --depth 1

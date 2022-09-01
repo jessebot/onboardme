@@ -1,7 +1,6 @@
 ---
 layout: default
-title: FreeTube Notes
-has_children: false
+title: FreeTube
 permalink: /docs/freetube
 ---
 

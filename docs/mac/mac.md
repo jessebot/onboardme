@@ -1,9 +1,9 @@
 ---
 layout: default
 title: macOS
-nav_order: 3
-permalink: /docs/mac
+permalink: /docs/macos
 ---
+
 ## Emojis
 Mac Emoji Keyboard Shortcut: control + cmd + space
 
