@@ -85,13 +85,8 @@ Category | App | Replaces
 |News - RSS|Fluent Reader|Facebook/Twitter news company feeds|
 |Video|FreeTube,Peertube|YouTube|
 
-## Things the scripts don't do
-**Every** operating system has that one thing™️ that voids the [Is It Worth the Time](https://xkcd.com/1205/) rule, which leaves us in the weird place, where setting up the thing™️ manually is still faster than trying to keep the automation up to date as every OS changes over time, which is illustrated in the [Automation Chart](https://xkcd.com/1319/). So, I don't know that I'll ever have a perfect solution to map capslock to control in a simple automated manner on every OS, but that's just the systems engineer's mental burden: "I have the ability to do x, but do I really have the time or interest... to do it on windows, mac, linux, and android...?"
-
-*That's where docs come in handy, because you can't even trust that you'll be able to re-web-search any thing™️ these days.*
-
 #### Docs
-You can find the bulk of my notes under the `docs/` directory in this repo, but the goal is to get into some sort of wiki somewhere... soonish. Probably something like a little flask app with some sort of material design and a markdown plugin, because I don't have time for frontend at this stage of my life.
+You can find the bulk of my notes under the `docs/` directory in this repo, but I've also recently setup a justthedocs page [here](https://jessebot.github.io/onboardme/).
 
 ## Important Notes on FOSS and Ethics
 Here at this humble OnBoardMe repo, we try really hard to do the right thing. We're doing our best to get off of the giants like Google, Microsoft, Apple, Amazon, Samsung, etc... but we've still got a long way to go! Check back here for alternatives as we go on the journey ourselves! We'll link back to any orgs or projects we learn about, but feel free to open an issue with anything else we should link back to. :)
