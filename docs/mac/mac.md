@@ -1,7 +1,7 @@
 ---
 layout: default
 title: macOS
-permalink: /docs/macos
+permalink: /macos
 ---
 
 ## Emojis

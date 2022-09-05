@@ -2,7 +2,7 @@
 layout: default
 title: TODOs
 parent: onboardme.py
-permalink: /docs/onboardme/todo
+permalink: /onboardme/todo
 ---
 
 ## TODOs and sort of Roadmap

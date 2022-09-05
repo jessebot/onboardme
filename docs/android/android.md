@@ -2,7 +2,7 @@
 layout: default
 title: android
 has_children: true
-permalink: /docs/android
+permalink: /android
 ---
 
 ## Some apps I use currently and why

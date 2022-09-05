@@ -2,7 +2,7 @@
 layout: default
 title: Screenshots
 parent: Windows
-permalink: /docs/windows/screenshots
+permalink: /windows/screenshots
 ---
 
 ## 📷 Key (Print Screen Key) mapped Snip & Sketch

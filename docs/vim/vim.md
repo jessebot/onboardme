@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Vim
-permalink: /docs/vim
+permalink: /vim
 ---
 
 ## Vim Tips and Tricks

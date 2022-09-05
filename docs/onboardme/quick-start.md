@@ -2,7 +2,7 @@
 layout: default
 title: Quick Start
 parent: onboardme.py
-permalink: /docs/onboardme/quickstart
+permalink: /onboardme/quickstart
 ---
 
 ## OnBoardMe Quick Start

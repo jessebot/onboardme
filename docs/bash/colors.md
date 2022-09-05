@@ -2,7 +2,7 @@
 layout: default
 title: Colors in BASH
 parent: BASH
-permalink: /docs/bash/colors
+permalink: /bash/colors
 ---
 
 ## `echo` with colors in BASH

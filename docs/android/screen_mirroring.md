@@ -2,7 +2,7 @@
 layout: default
 parent: android
 title: Screen Mirroring
-permalink: /docs/android/screen-mirroring
+permalink: /android/screen-mirroring
 ---
 
 ## Screen Mirroring from Android device

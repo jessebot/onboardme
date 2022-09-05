@@ -2,7 +2,7 @@
 layout: default
 title: BASH
 has_children: true
-permalink: /docs/bash
+permalink: /bash
 ---
 
 ## BASH notes

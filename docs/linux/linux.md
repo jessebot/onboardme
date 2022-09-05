@@ -2,7 +2,7 @@
 layout: default
 title: Linux
 has_children: true
-permalink: /docs/linux
+permalink: /linux
 ---
 
 ## Pretty view markdown

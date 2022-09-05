@@ -2,7 +2,7 @@
 layout: default
 title: terminals
 has_children: true
-permalink: /docs/terminals
+permalink: /terminals
 ---
 
 ## Explanation of what, why, how when it comes to Terminals

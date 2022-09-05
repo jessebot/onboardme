@@ -2,7 +2,7 @@
 layout: default
 title: Multipass
 parent: Virtual Machines
-permalink: /docs/vm/multipass
+permalink: /vm/multipass
 ---
 
 ## Multipass

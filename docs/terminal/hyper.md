@@ -3,7 +3,7 @@ layout: default
 title: Hyper
 has_children: false
 parent: terminals
-permalink: /docs/terminals/hyper
+permalink: /terminals/hyper
 ---
 
 [Hyper.js terminal](https://hyper.is/#installation)

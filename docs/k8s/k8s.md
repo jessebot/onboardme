@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Kubernetes
-permalink: /docs/k8s
+permalink: /k8s
 ---
 
 # K8s stuff

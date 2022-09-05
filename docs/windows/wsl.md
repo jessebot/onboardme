@@ -2,7 +2,7 @@
 layout: default
 title: WSL
 parent: Windows
-permalink: /docs/windows/wsl
+permalink: /windows/wsl
 ---
 
 # WSL (Windows Subsystem for Linux)

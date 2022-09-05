@@ -1,7 +1,7 @@
 ---
 layout: default
 title: FreeTube
-permalink: /docs/freetube
+permalink: /freetube
 ---
 
 ## Import a freetube subscription db file

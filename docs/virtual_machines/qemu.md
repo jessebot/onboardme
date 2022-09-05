@@ -2,7 +2,7 @@
 layout: default
 title: QEMU
 parent: Virtual Machines
-permalink: /docs/vm/qemu
+permalink: /vm/qemu
 ---
 
 ## QEMU

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: SSL
-permalink: /docs/ssl
+permalink: /ssl
 has_children: true
 ---
 

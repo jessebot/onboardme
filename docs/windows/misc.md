@@ -2,7 +2,7 @@
 layout: default
 title: Tips and Tricks
 parent: Windows
-permalink: /docs/windows/trips-and-tricks
+permalink: /windows/trips-and-tricks
 ---
 
 ## Tips and Tricks

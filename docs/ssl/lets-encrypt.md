@@ -2,7 +2,7 @@
 layout: default
 title: LetsEncrypt
 parent: SSL
-permalink: /docs/ssl/letsencrypt
+permalink: /ssl/letsencrypt
 ---
 
 ## Installing cmctl, the cli tool for cert-manager
