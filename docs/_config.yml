@@ -1,7 +1,7 @@
 ---
 title: "OnBoardMe"
 remote_theme: just-the-docs/just-the-docs
-color_scheme: "dark"
+color_scheme: "new_colors"
 search_enabled: true
 permalink: pretty
 exclude: ["README.md"]

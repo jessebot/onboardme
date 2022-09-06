@@ -1,6 +1,7 @@
 ---
 layout: default
 title: onboardme.py
+nav_order: 2
 has_children: true
 permalink: /onboardme
 ---
