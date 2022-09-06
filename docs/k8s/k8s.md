@@ -5,23 +5,11 @@ permalink: /k8s
 ---
 
 # K8s stuff
-## KIND - because easy local testing on linux
 
-```bash
-# creating a quick small cluster (unnamed, defaults to name: kind)
-sudo kind create cluster
+Most of my k8s work is also open source with repos kind of scattered all over.
 
-# adding newly created KIND kubeconfig
-sudo kind get kubeconfig > ~/.kube/kubeconfig
-```
+You can find things about kops [here](https://github.com/jessebot/terraform-kops-sample).
 
-## HELM - package manager for k9s
+A small script to get a homelab up and running with KinD or K3s is located [here](https://github.com/jessebot/smol_k8s_homelab) with docs [here](https://jessebot.github.io/smol_k8s_homelab/). The docs have further notes for various apps you can run on k8s as well as full tutorials on k3s and KinD.
 
-### installing helm
-```bash
-curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
-sudo apt-get install apt-transport-https --yes
-echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
-sudo apt-get update
-sudo apt-get install helm
-```
+You can also find the stuff that runs on top of my homelab [here](https://gitlab.com/vleermuis_tech/goobernetes).

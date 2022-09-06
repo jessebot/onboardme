@@ -28,6 +28,8 @@ Currently in beta :3 Tested on macOS Monterey 12.4-12.5, and Debian 11 (Bullseye
 
 Looking for a project to get a fresh OS entirely, on a machine that has no OS? Check out [pxeless](https://github.com/cloudymax/pxeless).
 
+Actually looking for a project to get started with self hosting k8s stuff? Check out [smol k8s homelab](https://github.com/jessebot/smol_k8s_homelab).
+
 ## Quick Start
 First, make sure you have curl, but it *should* be there ***already be on macOS Monterey***:
 ```bash
