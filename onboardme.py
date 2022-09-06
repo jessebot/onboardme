@@ -392,7 +392,9 @@ def main():
     print(' ⌨️ : Set capslock to control!')
     print(' ⏰: Install any cronjobs you need from the cron dir!')
     print(' 💲: Source your bash config: source .bashrc')
-    print(' 🐋: Reboot, as the whale demands it')
+    print(' 🐋: Reboot, as the whale demands it \n')
+    print("If there's anything else you need help with, check the docs here:")
+    print("https://jessebot.github.io/onboardme/")
 
 
 if __name__ == '__main__':
