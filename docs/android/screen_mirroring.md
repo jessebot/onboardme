@@ -18,8 +18,11 @@ sudo snap install scrcpy
 Make sure your phone is also in debug mode:
 
 ```bash
+# alias already present in onboardme.py .bashrc
+alias adb='scrcpy.adb'
+
 # Start the server with scrcpy's bundled adb
-scrcpy.adb start-server
+adb start-server
 ```
 
 ### Put your phone in Debug mode and connect via USB
@@ -32,13 +35,13 @@ Settings > Search > Type ‘developer options’ > Select the ‘Developer optio
 Then connect your phone via USB and you will get a message on your phone that says "Allow USB debugging?". Tap Allow. Finally, you'll get a "Allow access to phone data?" and you should tap allow for that too.
 
 #### Step Three
-List devices and verify their integrity
+List devices and verify their integrity.
 ```bash
 # should list a device if your phone is plugged in and working
-scrcpy.adb devices
+adb devices
 
 # this will put you into a shell ot verify everything is working correctly
-scrcpy.adb shell
+adb shell
 ```
 
 In the adb shell, try this:
@@ -53,7 +56,7 @@ exit
 ### Connect to your phone via WIFI
 Restart the connection on a new port (port number is arbitrary)
 ```bash
-scrcpy.adb tcpip 2233
+adb tcpip 2233
 ```
 You should get this: `restarting in TCP mode port: 2233`
 
@@ -61,11 +64,11 @@ Now you need to get your phone's local IP address. You can check your phone, pih
 
 ```bash
 # assuming your phone's IP is 192.168.42.42 and you selected port 2233 above
-scrcpy.adb connect 192.168.42.42:2233
+adb connect 192.168.42.42:2233
 ```
 That should return: `connected to 192.168.42.42:2233` You can verify for sure with this:
 ```bash
-scrcpy.adb devices
+adb devices
 ```
 Which should return `List of devices attached` followed by something like `192.168.42.42:2233 device`
 
@@ -79,8 +82,8 @@ scrcpy
 Is the device not showing up? Try disconnecting your phone and unmounting it via the file explorer.
 Then restart the server with:
 ```bash
-scrcpy.adb kill-server
-scrcpy.adb start-server
+adb kill-server
+adb start-server
 ```
 
 Then try connecting again and it _should_ work, but you may need to remove all allowed developer USB connections and restart the phone before trying. That's all I got.
