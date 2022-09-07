@@ -137,6 +137,9 @@ alias todo='vim ~/todo.md'
 alias whereami='hostname'
 alias whoareyou='echo "Your friend :)"'
 
+# scrncpy install adb for you, but it's awkward to use
+alias adb='scrcpy.adb'
+
 ########## Extra Functions/One-Liners ###########
 # move faster with base 64
 function b64 {
