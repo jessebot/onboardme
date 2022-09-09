@@ -77,6 +77,7 @@ alias tre='tree'
 alias pthyon='python3'
 alias ptyhon='python3'
 alias pythong='python'
+alias gtop='gotop'
 
 # shorten commands
 alias vi='vim'
