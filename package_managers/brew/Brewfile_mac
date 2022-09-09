@@ -27,6 +27,8 @@ cask "hyper"
 
 # gives us the default gnu/linux sed we all know and love
 brew "gnu-sed"
+# current version of bash :)
+brew "bash"
 # so that bash completion stuff works
 brew "bash-completion@2"
 
