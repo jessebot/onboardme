@@ -147,6 +147,8 @@ export NVM_DIR="$HOME/.nvm"
 # terraform bash completion
 complete -C /usr/local/bin/terraform terraform
 
+########################## PATHING #################################
+
 # go
 export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
 
@@ -171,7 +173,7 @@ if [[ $(uname) == *"Linux"* ]]; then
 else
     # check if this an M1 mac or not
     if [ $(uname -a | grep arm > /dev/null ; echo $?) -ne 0 ]; then
-        # for the M1/M2 you brew default installs here
+        # for the M1/M2 brew default installs here
         PATH=$PATH:/opt/homebrew/bin
     fi
     pip_packages="/usr/local/lib/python3.10/site-packages" 
@@ -187,10 +189,6 @@ fi
 for bash_file in `ls -1 $HOME/.bashrc_*`; do
     . $bash_file
 done
-
-if [[ $(uname) == *"Linux"* ]]; then
-else
-fi
 
 # This is for powerline, a prompt I've been playing with: https://powerline.readthedocs.io
 if [ -f $pip_packages/powerline/bindings/bash/powerline.sh ]; then
