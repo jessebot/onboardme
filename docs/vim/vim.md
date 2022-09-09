@@ -16,15 +16,15 @@ You can type a number before all of these hot keys to change the number of lines
 
 |Keys|Description|
 |:---:|:---|
+|`y`| copy the current selection (only in visual mode) |
 |`yy`| copy the current line |
 |`yw`| copy the current word |
 |`dw`| cut the current word (deletes and puts in clipboard)|
 |`dd`| cut the current line (deletes and puts in clipboard)|
-|`p` | paste a line |
+|`p` | paste a line or selection |
+|`]p` | paste a line or selection to match current indentation|
 
 :star2: the `y` you're typing stands for "yank", so you're yanking a line. 
-
-If you’re copying blocks of text around and need to align the indent of a block in its new location, use `]`then `p` instead of just `p`. This aligns the pasted block with the surrounding text.
 
 ## Indent and Unindent
 
@@ -65,7 +65,6 @@ This will prepend each line with "meep ":
 ```vim
 :%s/^/meep /
 ```
-Fun fact: I am legitmately faster with interactive sed than what you're actually supposed to do to indent lines, because I didn't learn about visualblock mode till 2022, and I hate it.
 
 ## Terminal
 In command mode...
