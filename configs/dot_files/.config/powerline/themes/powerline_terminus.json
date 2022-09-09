@@ -63,7 +63,7 @@
 			"before": "↑  "
 		},
 		"powerline.segments.common.sys.system_load": {
-			"before": " "
+			"before": "  "
 		},
 		"powerline.segments.common.mail.email_imap_alert": {
 			"before": "MAIL "
