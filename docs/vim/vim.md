@@ -10,6 +10,22 @@ Guides and helpful answers:
 - [How does the vim write with sudo trick work?](https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
 - [Setting up vim for yaml](https://www.arthurkoziel.com/setting-up-vim-for-yaml/).
 
+## Navigation 
+
+|Keys|Description|
+|:---:|:---|
+|`gg`| top of the file|
+|`shift` + `g`| bottom of the file|
+
+You can type a number before any of these to increase how far they go, e.g. `2j` will take you to down two lines.
+
+|Keys|Description|
+|:---:|:---|
+|`j`| down a line|
+|`k`| up a line|
+|`h`| left a character|
+|`l`| right a character|
+
 ## Copying, Pasting, Deleting
 
 You can type a number before all of these hot keys to change the number of lines or words you cut, copy, and paste.
