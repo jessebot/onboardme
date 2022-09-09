@@ -68,6 +68,24 @@ In command mode...
 |:---:|:---|
 |`:term`| splits the current window horizonitally and puts the terminal on **TOP** of the current window |
 |`:vertical term`| splits the current window vertically and puts the terminal to the **LEFT** of the current window |
+|`:bottom ter`| To get a terminal on the bottom of the active pane |
+|`:botright term`|To get a terminal that spans the entire bottom |
+
+## TouchiD for sudo auth:
+
+Add `auth sufficient pam_tid.so` to line 2 of `/etc/pam.d/sudo`
+
+Example:
+
+```bash
+# sudo: auth account password session
+auth       sufficient     pam_tid.so
+auth       sufficient     pam_smartcard.so
+auth       required       pam_opendirectory.so
+account    required       pam_permit.so
+password   required       pam_deny.so
+session    required       pam_permit.so
+```
 
 
 ## Navigate through windows 
