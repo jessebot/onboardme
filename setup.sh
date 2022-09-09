@@ -91,15 +91,17 @@ if [ $brew_return_code -ne 0 ]; then
         echo "export HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew" >> ~/.bashrc
         echo "export HOMEBREW_CELLAR=/home/linuxbrew/.linuxbrew/Cellar" >> ~/.bashrc
         echo "export HOMEBREW_REPOSITORY=/home/linuxbrew/.linuxbrew/Homebrew" >> ~/.bashrc
-        echo "export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin" >> ~/.bashrc
         echo "export MANPATH=$MANPATH:/home/linuxbrew/.linuxbrew/share/man" >> ~/.bashrc
         echo "export INFOPATH=$INFOPATH:/home/linuxbrew/.linuxbrew/share/info" >> ~/.bashrc
+        echo "PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin" >> ~/.bashrc
 
     else
         # check if this an M1 mac or not
-        if [ $(uname -a | grep arm > /dev/null ; echo $?) -ne 0 ]; then
+        uname -a | grep arm > /dev/null
+        M1=$?
+        if [ $M1 -ne 0 ]; then
             # for the M1/M2 brew default installs here
-            echo "export PATH=$PATH:/opt/homebrew/bin" >> ~/.bashrc
+            echo "PATH=$PATH:/opt/homebrew/bin" >> ~/.bashrc
         fi
     fi
     # source the bashrc, for this shell
