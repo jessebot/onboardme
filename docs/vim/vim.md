@@ -68,8 +68,8 @@ In command mode...
 |:---:|:---|
 |`:term`| splits the current window horizonitally and puts the terminal on **TOP** of the current window |
 |`:vertical term`| splits the current window vertically and puts the terminal to the **LEFT** of the current window |
-|`:bottom ter`| To get a terminal on the bottom of the active pane |
-|`:botright term`|To get a terminal that spans the entire bottom |
+|`:below term`| To get a terminal on the **BOTTOM OF THE ACTIVE PANE** |
+|`:botright term`|To get a terminal that spans the **ENTIRE BOTTOM** |
 
 ## Navigate through windows 
 **While Holding the `Ctrl` key,** type one to switch windows in vim:
