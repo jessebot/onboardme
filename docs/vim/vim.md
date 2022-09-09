@@ -10,15 +10,19 @@ Guides and helpful answers:
 - [How does the vim write with sudo trick work?](https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
 - [Setting up vim for yaml](https://www.arthurkoziel.com/setting-up-vim-for-yaml/).
 
-## Copying and Pasting
+## Copying, Pasting, Deleting
+
+You can type a number before all of these hot keys to change the number of lines or words you cut, copy, and paste.
 
 |Keys|Description|
 |:---:|:---|
 |`yy`| copy the current line |
 |`yw`| copy the current word |
+|`dw`| cut the current word (deletes and puts in clipboard)|
+|`dd`| cut the current line (deletes and puts in clipboard)|
 |`p` | paste a line |
 
-:shooting-star: the `y` you're typing stands for "yank", so you're yanking a line. 
+:star2: the `y` you're typing stands for "yank", so you're yanking a line. 
 
 If you’re copying blocks of text around and need to align the indent of a block in its new location, use `]`then `p` instead of just `p`. This aligns the pasted block with the surrounding text.
 
@@ -45,6 +49,8 @@ Move your cursor over *one of the curly braces*, then hit `>` followed by `%`
 |`v`          | Enter *v*isual mode - highlight multiple characters from left to right `h`,`l` |
 |`shift` + `v`| Enter *V*isual (capital V) mode - highlight multiple lines up and down with `j`,`k` |
 |`ctrl` + `v` | Enter Visual**Block** mode - highlight a visual block of character and lines in all directions with `j`,`k`,`l`,`h` |
+
+Once you've highlighted a selection, you can then operate on just that selection, so you can cut it, copy it, indent it, and use interactive sed on it. It's pretty helpful.
 
 ### Insert into all selected visualblock lines
 After you have a visual block selected:
