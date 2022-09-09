@@ -320,8 +320,8 @@ def parse_args():
                'are in root directory for now')
     e_help = ('Extra package groups to install. Accepts multiple args, e.g. '
               '--extra gaming')
-    i_help = ('Installers to run. Accepts multiple args, e.g. only run brew '
-              'and apt: --installers brew apt')
+    i_help = ('Installers to run. Accepts multiple args. Defaults to only run '
+              'brew, pip3, and apt(if linux). example: --installers brew apt')
     h_help = 'Add IP to firewall for remote access'
     p = ArgumentParser(description=main.__doc__)
 
