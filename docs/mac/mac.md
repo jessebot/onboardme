@@ -29,3 +29,18 @@ https://github.com/jesscxc/hide-finder-trash-dock-icons
 
 - [Awesome macOS open source applications](https://github.com/serhii-londar/open-source-mac-os-apps) is just open source stuff, skipping the app store all together, hopefully. I haven't verified everything.
 
+## TouchiD for sudo auth:
+
+Add `auth sufficient pam_tid.so` to line 2 of `/etc/pam.d/sudo`
+
+Example:
+
+```bash
+# sudo: auth account password session
+auth       sufficient     pam_tid.so
+auth       sufficient     pam_smartcard.so
+auth       required       pam_opendirectory.so
+account    required       pam_permit.so
+password   required       pam_deny.so
+session    required       pam_permit.so
+```
