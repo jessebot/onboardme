@@ -13,3 +13,4 @@ aux_links:
 
 plugins:
   - jekyll-seo-tag
+  - jemoji

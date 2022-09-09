@@ -13,6 +13,7 @@ Guides and helpful answers:
 ## Copying and Pasting
 
 |Keys|Description|
+|:---:|:---|
 |`yy`| copy the current line |
 |`yw`| copy the current word |
 |`p` | paste a line |
@@ -23,7 +24,7 @@ If you’re copying blocks of text around and need to align the indent of a bloc
 
 ## Indent and Unindent
 
-|keys|description|
+|Keys|Description|
 |:---:|:---|
 | `>>` | Indent current line *or* selection |
 | `<<` | Unindent current line *or* selection |
@@ -39,11 +40,11 @@ Move your cursor over *one of the curly braces*, then hit `>` followed by `%`
 
 ## Visual modes
 
-|keys|description|
+|Keys|Description|
 |:---:|:---|
 |`v`          | Enter *v*isual mode - highlight multiple characters from left to right `h`,`l` |
 |`shift` + `v`| Enter *V*isual (capital V) mode - highlight multiple lines up and down with `j`,`k` |
-|`Ctrl` + `v` | Enter Visual**Block** mode - highlight a visual block of character and lines in all directions with `j`,`k`,`l`,`h` |
+|`ctrl` + `v` | Enter Visual**Block** mode - highlight a visual block of character and lines in all directions with `j`,`k`,`l`,`h` |
 
 ### Insert into all selected visualblock lines
 After you have a visual block selected:
@@ -63,8 +64,8 @@ Fun fact: I am legitmately faster with interactive sed than what you're actually
 ## Terminal
 In command mode...
 
-| keys | description |
-|:---:|:---:|
+| Keys | Description |
+|:---:|:---|
 |`:term`| splits the current window horizonitally and puts the terminal on **TOP** of the current window |
 |`:vertical term`| splits the current window vertically and puts the terminal to the **LEFT** of the current window |
 
@@ -72,8 +73,8 @@ In command mode...
 ## Navigate through windows 
 **While Holding the `Ctrl` key,** type one to switch windows in vim:
 
-| keys | description |
-|:---:|:---:|
+| Keys | Description |
+|:---:|:---|
 |`ww`| cycle though all windows (I actually just use this one all the time and nothing else) |
 |`wh`| takes you left a window  |
 |`wj`| takes you down a window  |
