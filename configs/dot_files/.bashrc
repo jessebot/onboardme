@@ -172,7 +172,7 @@ if [[ $(uname) == *"Linux"* ]]; then
     pip_packages="/home/linuxbrew/.linuxbrew/lib/python3.10/site-packages"
 else
     # check if this an M1 mac or not
-    if [ $(uname -a | grep arm > /dev/null ; echo $?) -ne 0 ]; then
+    if [ $(uname -a | grep arm > /dev/null ; echo $?) -eq 0 ]; then
         # for the M1/M2 brew default installs here
         PATH=$PATH:/opt/homebrew/bin
     fi

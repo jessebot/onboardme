@@ -99,7 +99,7 @@ if [ $brew_return_code -ne 0 ]; then
         # check if this an M1 mac or not
         uname -a | grep arm > /dev/null
         M1=$?
-        if [ $M1 -ne 0 ]; then
+        if [ $M1 -eq 1 ]; then
             # for the M1/M2 brew default installs here
             echo "PATH=$PATH:/opt/homebrew/bin" >> ~/.bash_profile
         fi
