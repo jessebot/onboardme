@@ -71,20 +71,21 @@ echo "running: git config --global init.defaultBranch main"
 git config --global init.defaultBranch main
 
 
-echo -e "------------------------------- \033[94m Checking for Brew \033[00m ------------------------------"
-# make sure linuxbrew is in the path
-if [[ "$OS" == *"linux"* ]]; then
-    # source the existing bashrc, just in case
-    if [ -f "~/.bashrc" ]; then
-        . ~/.bashrc
-    fi
+echo -e "------------------------------- \033[94m Checking for Brew \033[00m ------------------------------\n"
 
-    # if this still isn't in our path, export it and source this bashrc
-    echo "Doing some linux brew path/env checking..."
-    simple_loading_bar 3
-    env | grep "brew"
-    brew_return_code=$?
-    if [ $brew_return_code -ne 0 ]; then
+echo "Doing some linux brew path/env checking..."
+
+# source the existing bashrc, just in case
+if [ -f "~/.bashrc" ]; then
+    . ~/.bashrc
+fi
+
+env | grep -i "brew"
+brew_return_code=$?
+
+# if this still isn't in our path, export it and source this bashrc
+if [ $brew_return_code -ne 0 ]; then
+    if [[ "$OS" == *"linux"* ]]; then
         echo "Linuxbrew isn't in your path. Let's get that installed :)"
         # make sure this is all in the bashrc for new shells
         echo "export HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew" >> ~/.bashrc
@@ -94,10 +95,15 @@ if [[ "$OS" == *"linux"* ]]; then
         echo "export MANPATH=$MANPATH:/home/linuxbrew/.linuxbrew/share/man" >> ~/.bashrc
         echo "export INFOPATH=$INFOPATH:/home/linuxbrew/.linuxbrew/share/info" >> ~/.bashrc
 
-        # source the bashrc, for this shell
-        . ~/.bashrc
-
+    else
+        # check if this an M1 mac or not
+        if [ $(uname -a | grep arm > /dev/null ; echo $?) -ne 0 ]; then
+            # for the M1/M2 brew default installs here
+            echo "export PATH=$PATH:/opt/homebrew/bin" >> ~/.bashrc
+        fi
     fi
+    # source the bashrc, for this shell
+    . ~/.bashrc
 fi
 
 which brew > /dev/null
