@@ -62,6 +62,7 @@ Fun fact: I am legitmately faster with interactive sed than what you're actually
 
 ## Terminal
 In command mode...
+
 | keys | description |
 |:---:|:---:|
 |`:term`| splits the current window horizonitally and puts the terminal on **TOP** of the current window |
@@ -69,8 +70,8 @@ In command mode...
 
 
 ## Navigate through windows 
-
 **While Holding the `Ctrl` key,** type one to switch windows in vim:
+
 | keys | description |
 |:---:|:---:|
 |`ww`| cycle though all windows (I actually just use this one all the time and nothing else) |
