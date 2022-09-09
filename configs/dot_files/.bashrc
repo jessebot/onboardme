@@ -1,5 +1,4 @@
-# Jessebot's personal .bash_profile/.bashrc
-
+# @jessebot's personal .bash_profile/.bashrc
 # I hate bells
 set bell-style none
 
@@ -29,6 +28,7 @@ HISTTIMEFORMAT="%d/%m/%y %T "
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
+
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
 #shopt -s globstar
@@ -41,38 +41,7 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color) color_prompt=yes;;
-esac
-
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-#force_color_prompt=yes
-
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
-fi
-
-unset color_prompt force_color_prompt
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
-
+################# ls aliases ####################
 # lsd instead of ls for colors/icons, human readable file sizes, show hidden files
 alias ls='lsd -a'
 alias ll='lsd -hal'
@@ -83,6 +52,7 @@ alias lt='lsd -atr'
 alias llt='lsd -haltr'
 # lsd already has a fancier tree command with icons
 alias tree='lsd --tree --depth=2'
+
 
 # colordiff - diff, but with colors for accessibility
 alias diff='colordiff -uw'
@@ -95,7 +65,7 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-# typos <3
+####################### typos <3 ########################
 alias grpe='grep'
 alias gerp='grep'
 alias celar='clear'
@@ -189,14 +159,22 @@ if [[ $(uname) == *"Linux"* ]]; then
     export PATH=$PATH:/usr/sbin:/usr/share
     # for snap package manager packages
     export PATH=$PATH:/snap/bin
-    # Brew on Linux
+    ############################## Brew on Linux #########################
     export HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew
     export HOMEBREW_CELLAR=/home/linuxbrew/.linuxbrew/Cellar
     export HOMEBREW_REPOSITORY=/home/linuxbrew/.linuxbrew/Homebrew
     export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin
     export MANPATH=$MANPATH:/home/linuxbrew/.linuxbrew/share/man
     export INFOPATH=$INFOPATH:/home/linuxbrew/.linuxbrew/share/info
+
+    pip_packages="/home/linuxbrew/.linuxbrew/lib/python3.10/site-packages"
 else
+    # check if this an M1 mac or not
+    if [ $(uname -a | grep arm > /dev/null ; echo $?) -ne 0 ]; then
+        # for the M1/M2 you brew default installs here
+        PATH=$PATH:/opt/homebrew/bin
+    fi
+    pip_packages="/usr/local/lib/python3.10/site-packages" 
     # this is so bash completion works on MacOS
     [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
     # this is to use GNU sed, called gsed, instead of MacOS's POSIX
@@ -210,13 +188,11 @@ for bash_file in `ls -1 $HOME/.bashrc_*`; do
     . $bash_file
 done
 
-# This is for powerline, a prompt I've been playing with: https://powerline.readthedocs.io
 if [[ $(uname) == *"Linux"* ]]; then
-    pip_packages="/home/linuxbrew/.linuxbrew/lib/python3.10/site-packages"
 else
-    pip_packages="/usr/local/lib/python3.10/site-packages" 
 fi
 
+# This is for powerline, a prompt I've been playing with: https://powerline.readthedocs.io
 if [ -f $pip_packages/powerline/bindings/bash/powerline.sh ]; then
     powerline-daemon -q
     POWERLINE_BASH_CONTINUATION=1
