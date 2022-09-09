@@ -58,9 +58,6 @@ If you want to see the exact packages being installed, you can check out `config
 | News - RSS         | Fluent Reader       | Facebook/Twitter news/company feeds |
 | Video              | FreeTube,Peertube   | YouTube |
 
-#### Docs
-You can find the bulk of my notes under the `` directory in [this repo](https://github.com/jessebot/onboardme).
-
 ## Important Notes on FOSS and Ethics
 Here at this humble OnBoardMe repo, we try really hard to do the right thing. We're doing our best to get off of the giants like Google, Microsoft, Apple, Amazon, Samsung, etc... but we've still got a long way to go! Check back here for alternatives as we go on the journey ourselves! We'll link back to any orgs or projects we learn about, but feel free to open an issue with anything else we should link back to. :)
 
