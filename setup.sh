@@ -78,6 +78,8 @@ echo "Doing some linux brew path/env checking..."
 # source the existing bashrc, just in case
 if [ -f "~/.bashrc" ]; then
     . ~/.bashrc
+elif [ -f "~/.bash_profile" ]; then
+    . ~/.bash_profile
 fi
 
 env | grep -i "brew"
@@ -94,7 +96,8 @@ if [ $brew_return_code -ne 0 ]; then
         echo "export MANPATH=$MANPATH:/home/linuxbrew/.linuxbrew/share/man" >> ~/.bashrc
         echo "export INFOPATH=$INFOPATH:/home/linuxbrew/.linuxbrew/share/info" >> ~/.bashrc
         echo "PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin" >> ~/.bashrc
-
+        # source the bashrc, for this shell
+        . ~/.bashrc
     else
         # check if this an M1 mac or not
         uname -a | grep arm > /dev/null
@@ -103,9 +106,9 @@ if [ $brew_return_code -ne 0 ]; then
             # for the M1/M2 brew default installs here
             echo "PATH=/opt/homebrew/bin:$PATH" >> ~/.bash_profile
         fi
+        # source the bashrc, for this shell
+        . ~/.bash_profile
     fi
-    # source the bashrc, for this shell
-    . ~/.bashrc
 fi
 
 which brew > /dev/null
