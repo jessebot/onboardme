@@ -71,23 +71,6 @@ In command mode...
 |`:bottom ter`| To get a terminal on the bottom of the active pane |
 |`:botright term`|To get a terminal that spans the entire bottom |
 
-## TouchiD for sudo auth:
-
-Add `auth sufficient pam_tid.so` to line 2 of `/etc/pam.d/sudo`
-
-Example:
-
-```bash
-# sudo: auth account password session
-auth       sufficient     pam_tid.so
-auth       sufficient     pam_smartcard.so
-auth       required       pam_opendirectory.so
-account    required       pam_permit.so
-password   required       pam_deny.so
-session    required       pam_permit.so
-```
-
-
 ## Navigate through windows 
 **While Holding the `Ctrl` key,** type one to switch windows in vim:
 
