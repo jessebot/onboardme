@@ -8,6 +8,7 @@ permalink: /onboardme/quickstart
 ## OnBoardMe Quick Start
 
 First, make sure you have curl, but it *should* be there **already be on macOS**:
+
 ```bash
 # if this doesn't return anything, you need to install curl
 which curl
@@ -27,19 +28,22 @@ curl -O https://raw.githubusercontent.com/jessebot/onboardme/main/setup.sh
 chmod 0500 ./setup.sh
 ```
 
-# macOS
+### macOS
 macOS uses zsh as the default shell, and I don't currently support zsh, so type bash to get this ancient verison of bash to run the setup and onboardme, which will install a current version of bash. **The script will not run properly in zsh**
 
 ```bash
 bash
 ```
-# run the script, to install dependencies and clone the onboardme repo
+## run the setup.sh script
+This is to install dependencies and clone the onboardme repo.
 
 ```bash
+# NOTE THE . before the script! *Very* important!
 . ./setup.sh
 ```
 
 Now you can run the actual script that does the heavy lifting. If you can `setup.sh` above without errors, it will be installed in `~/repos/onboardme`:
+
 ```bash
 # This will display a help
 ./repos/onboardme/onboardme.py --help
@@ -50,4 +54,4 @@ Now you can run the actual script that does the heavy lifting. If you can `setup
 
 When the script completes, it'll output a number of other steps to take manually that aren't yet, or can't be, automated.
 
-:party: You're done :D
+:partying_face: You're done :D
