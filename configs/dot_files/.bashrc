@@ -165,20 +165,22 @@ if [[ $(uname) == *"Linux"* ]]; then
     export HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew
     export HOMEBREW_CELLAR=/home/linuxbrew/.linuxbrew/Cellar
     export HOMEBREW_REPOSITORY=/home/linuxbrew/.linuxbrew/Homebrew
-    export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin
     export MANPATH=$MANPATH:/home/linuxbrew/.linuxbrew/share/man
     export INFOPATH=$INFOPATH:/home/linuxbrew/.linuxbrew/share/info
-
+    export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin
     pip_packages="/home/linuxbrew/.linuxbrew/lib/python3.10/site-packages"
 else
     # check if this an M1 mac or not
     if [ $(uname -a | grep arm > /dev/null ; echo $?) -eq 0 ]; then
         # for the M1/M2 brew default installs here
-        PATH=$PATH:/opt/homebrew/bin
+        export PATH=/opt/homebrew/bin:$PATH
+        pip_packages="/opt/homebrew/lib/python3.10/site-packages" 
+    else
+        pip_packages="/usr/local/lib/python3.10/site-packages" 
     fi
-    pip_packages="/usr/local/lib/python3.10/site-packages" 
     # this is so bash completion works on MacOS
     [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+
     # this is to use GNU sed, called gsed, instead of MacOS's POSIX
     export PATH=/usr/local/opt/gnu-sed/libexec/gnubin:$PATH
     # this is so we always use gsed
