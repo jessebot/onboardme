@@ -101,7 +101,7 @@ if [ $brew_return_code -ne 0 ]; then
         M1=$?
         if [ $M1 -eq 0 ]; then
             # for the M1/M2 brew default installs here
-            echo "PATH=$PATH:/opt/homebrew/bin" >> ~/.bash_profile
+            echo "PATH=/opt/homebrew/bin:$PATH" >> ~/.bash_profile
         fi
     fi
     # source the bashrc, for this shell
