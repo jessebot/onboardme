@@ -26,7 +26,7 @@ options:
                         Extra package groups to install. Accepts multiple args, e.g. --extra gaming
   -f, --firefox         Opt into experimental firefox configuring
   -i INSTALLERS [INSTALLERS ...], --installers INSTALLERS [INSTALLERS ...]
-                        Installers to run. Accepts multiple args, e.g. only run brew and apt: --installers brew apt
+                        Installers to run. Accepts multiple args. Defaults to only run brew, pip3, and apt(if linux). example: --installers brew apt
   -r, --remote          Setup SSH on a random port and add it to firewall.
   -H HOST [HOST ...], --host HOST [HOST ...]
                         Add IP to firewall for remote access
