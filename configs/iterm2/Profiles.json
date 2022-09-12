@@ -322,7 +322,7 @@
   "Smart Cursor Color" : false,
   "Ambiguous Double Width" : false,
   "Badge Max Height" : 0.20000000000000001,
-  "Cursor Type" : 0,
+  "Cursor Type" : 2,
   "Ansi 0 Color" : {
     "Green Component" : 0.54379904995920658,
     "Red Component" : 0.48946561629468649,
