@@ -2,7 +2,7 @@
 layout: default
 title: iTerm2
 has_children: false
-parent: terminals
+parent: Terminal Emulators
 permalink: /terminals/iterm2
 ---
 

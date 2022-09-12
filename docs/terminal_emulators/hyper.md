@@ -2,7 +2,7 @@
 layout: default
 title: Hyper
 has_children: false
-parent: terminals
+parent: Terminal Emulators
 permalink: /terminals/hyper
 ---
 

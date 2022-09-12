@@ -1,9 +1,14 @@
 ---
 layout: default
-title: terminals
+title: Terminal Emulators
+description: Various terminal emulators and what I know about them
 has_children: true
 permalink: /terminals
 ---
+
+# Terminal Emulators
+
+I use a few different terminal emulators across macOS, Debian, and Windows, and they all have their pros and cons.
 
 ## Explanation of what, why, how when it comes to Terminals
 
