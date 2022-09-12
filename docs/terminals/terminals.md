@@ -20,5 +20,4 @@ When you're using nerdfonts, you want to set the font in the terminal config its
 
 ### other cool stuff you do in a terminal that I wasn't sure where to put
 - [qrenco.de](https://asciinema.org/a/123683)
-- additional hyper plugin write up I wanna look at:
-https://medium.com/cloud-native-the-gathering/hyper-terminal-plugins-that-will-make-your-life-easier-859897df79d6
+- [additional hyper plugins](https://medium.com/cloud-native-the-gathering/hyper-terminal-plugins-that-will-make-your-life-easier-859897df79d6)
