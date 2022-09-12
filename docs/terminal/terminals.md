@@ -7,10 +7,11 @@ permalink: /terminals
 
 ## Explanation of what, why, how when it comes to Terminals
 
-| App | Local Config | Link | Pros | Cons |
----|---|---|---|---
-| hyper.js | [~/.hyper.js](https://github.com/jessebot/onboardme/configs/rc_files/.hyper.js) | [hyper.is](https://hyper.is/) | modern feel, configurable | Slow :( |
-| cmder | None yet | [cmder](https://cmder.net/) | terminal for windows that scales, splits, and supports config | kinda buggy |
+| App | Local Config | Pros | Cons |
+|---|---|---|---|
+| [iTerm2](https://iterm2.com/) | [~/Library/ApplicationSupport/iTerm2/DynamicProfiles/](https://github.com/jessebot/onboardme/configs/iterm2/Profiles.json) | configurable, highly supported | macOS only |
+| [hyper.js](https://hyper.is/) | [~/.hyper.js](https://github.com/jessebot/onboardme/configs/dot_files/.hyper.js) | modern feel, configurable | Slow, Javascript :( |
+| [cmder](https://cmder.net/) | None yet | terminal for windows that scales, splits, and supports config | kinda buggy |
 
 You can find more Hyper.js docs [here](./hyper/README.md), thanks to @cloudymax :)
 
