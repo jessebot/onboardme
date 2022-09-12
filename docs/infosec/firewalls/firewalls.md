@@ -1,6 +1,8 @@
 ---
 layout: default
 title: Firewalls
+parent: InfoSec
+permalink: /infosec/firewalls
 ---
 
 # Firewalls

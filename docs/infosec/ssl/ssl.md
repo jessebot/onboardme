@@ -1,8 +1,9 @@
 ---
 layout: default
 title: SSL
-permalink: /ssl
+parent: InfoSec
 has_children: true
+permalink: /infosec/ssl
 ---
 
 All things ssl all the time
