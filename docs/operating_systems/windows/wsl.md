@@ -1,8 +1,8 @@
 ---
 layout: default
 title: WSL
-parent: Operating Systems
-grant_parent: Windows
+grand_parent: Operating Systems
+parent: Windows
 permalink: /os/windows/wsl
 ---
 
