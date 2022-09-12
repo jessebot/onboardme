@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Screenshots
-grand_parent: Windows
-parent: Operating Systems
+parent: Windows
+grand_parent: Operating Systems
 permalink: /os/windows/screenshots
 ---
 
