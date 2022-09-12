@@ -1,8 +1,9 @@
 ---
 layout: default
-title: android
+title: Android
 has_children: true
-permalink: /android
+parent: Operating Systems
+permalink: /os/android
 ---
 
 ## Some apps I use currently and why

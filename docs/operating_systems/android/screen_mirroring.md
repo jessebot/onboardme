@@ -1,8 +1,9 @@
 ---
 layout: default
-parent: android
+parent: Android
+grand_parent: Operating Systems
 title: Screen Mirroring
-permalink: /android/screen-mirroring
+permalink: /os/android/screen-mirroring
 ---
 
 ## Screen Mirroring from Android device
