@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Screenshots
-parent: Windows
-permalink: /windows/screenshots
+grand_parent: Windows
+parent: Operating Systems
+permalink: /os/windows/screenshots
 ---
 
 ## 📷 Key (Print Screen Key) mapped Snip & Sketch

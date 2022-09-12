@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Vim
-permalink: /vim
+parent: Command Line Interface
+permalink: /cli/vim
 ---
 
 # Vim Tips and Tricks

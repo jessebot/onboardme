@@ -1,8 +1,9 @@
 ---
 layout: default
 title: WSL
-parent: Windows
-permalink: /windows/wsl
+parent: Operating Systems
+grant_parent: Windows
+permalink: /os/windows/wsl
 ---
 
 # WSL (Windows Subsystem for Linux)

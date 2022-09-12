@@ -1,8 +1,9 @@
 ---
 layout: default
+parent: Command Line Interface
 title: BASH
 has_children: true
-permalink: /bash
+permalink: /cli/bash
 ---
 
 ## BASH notes

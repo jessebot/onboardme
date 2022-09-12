@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Colors in BASH
+grand_parent: Command Line Interface
 parent: BASH
-permalink: /bash/colors
+permalink: /cli/bash/colors
 ---
 
 # Printing colors with BASH

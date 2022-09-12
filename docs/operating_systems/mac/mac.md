@@ -1,7 +1,8 @@
 ---
 layout: default
+parent: Operating Systems
 title: macOS
-permalink: /macos
+permalink: /os/macos
 ---
 
 ## Emojis

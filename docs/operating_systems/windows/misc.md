@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Tips and Tricks
+grand_parent: Operating Systems
 parent: Windows
-permalink: /windows/trips-and-tricks
+permalink: /os/windows/trips-and-tricks
 ---
 
 ## Tips and Tricks
