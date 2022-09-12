@@ -307,7 +307,8 @@ def configure_terminal(OS='darwin'):
     if OS == "darwin":
         print_head("Configuring iTerm2 settings...")
         print_head
-        p = f'{HOME_DIR}/Library/Application\\ Support/iTerm2/DynamicProfiles/'
+        p = os.path.join(HOME_DIR,
+                         'Library/Application Support/iTerm2/DynamicProfiles')
         shutil.copy(f'{PWD}/configs/iterm2/Profiles.json', p)
     print("Finished installing default Dynamic Profile.")
 
