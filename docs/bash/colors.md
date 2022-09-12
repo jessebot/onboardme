@@ -5,9 +5,50 @@ parent: BASH
 permalink: /bash/colors
 ---
 
-## `echo` with colors in BASH
-**Example**
-Prints love in red:
+# Printing colors with BASH
+
+## `printf` with colors
+
+Here's a quick function I wrote for printf with green colors
+
+```bash
+# pretty echo so that I don't have to remember this
+function p_echo() {
+    # prints with green colors and centered
+    green=$(tput setaf 2)
+    norm=$(tput sgr0)
+    COLUMNS=$(tput cols)
+    printf "$green\n%*s\n\n$norm" $(((${#title}+$COLUMNS)/2)) "$1"
+}
+
+p_echo "Hi everyone :)"
+```
+
+#### 'printf` color examples
+Thanks to [SiegeX on StackOverflow](https://stackoverflow.com/a/4332530) for all the colors.
+
+```bash
+BLACK=$(tput setaf 0)
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+YELLOW=$(tput setaf 3)
+LIME_YELLOW=$(tput setaf 190)
+POWDER_BLUE=$(tput setaf 153)
+BLUE=$(tput setaf 4)
+MAGENTA=$(tput setaf 5)
+CYAN=$(tput setaf 6)
+WHITE=$(tput setaf 7)
+BRIGHT=$(tput bold)
+NORMAL=$(tput sgr0)
+BLINK=$(tput blink)
+REVERSE=$(tput smso)
+UNDERLINE=$(tput smul)
+```
+
+## `echo -e` with colors
+
+**Example**: Prints love in red:
+
 ```bash
 RED='\033[0;31m'
 NC='\033[0m' # No Color
@@ -16,11 +57,13 @@ printf "I ${RED}love${NC} Stack Overflow\n"
 # Continued from above example
 echo -e "I ${RED}love${NC} Stack Overflow"
 ```
+
 Learn more about [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escape_code).
 
 - From a stackoverflow [Answer from Tobias](https://stackoverflow.com/a/5947802).
 
-#### Full list of color
+#### `echo -e` color examples
+
 ```bash
 # Reset
 Color_Off='\033[0m'       # Text Reset
