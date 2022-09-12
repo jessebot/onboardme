@@ -4,6 +4,7 @@
   "Badge Text" : "",
   "Working Directory" : "~",
   "Prompt Before Closing 2" : false,
+  "Dynamic Profile Filename" : "\/Users\/jhitch\/Library\/Application Support\/iTerm2\/DynamicProfiles\/Profiles.json",
   "Selected Text Color" : {
     "Green Component" : 0.24950546026229858,
     "Red Component" : 0.24626246094703674,
@@ -255,14 +256,16 @@
     "Blue Component" : 0.74187815387757039
   },
   "Ansi 2 Color" : {
-    "Green Component" : 0.60644089366515841,
-    "Red Component" : 0.47089726353294475,
-    "Blue Component" : 0.41532100759933388
+    "Red Component" : 0.53235447842359918,
+    "Color Space" : "sRGB",
+    "Blue Component" : 0.41793219944543125,
+    "Alpha Component" : 1,
+    "Green Component" : 0.80954396724700928
   },
   "Send Code When Idle" : false,
   "ASCII Anti Aliased" : true,
   "Tags" : [
-
+    "Dynamic"
   ],
   "Ansi 9 Color" : {
     "Green Component" : 0.28235295414924622,
@@ -277,7 +280,7 @@
     "Red Component" : 0.25301916229341825,
     "Blue Component" : 1
   },
-  "Window Type" : 0,
+  "Window Type" : 10,
   "Use Bright Bold" : true,
   "Cursor Text Color" : {
     "Green Component" : 0.15575926005840302,
@@ -300,12 +303,14 @@
   "Name" : "Default macOS",
   "Blinking Cursor" : true,
   "Guid" : "34FE2EC6-53C9-4684-B56A-689C836BAB60",
-  "Badge Max Width" : 0.40999999999999998,
+  "Badge Max Width" : 0.14999999999999999,
   "Idle Code" : 0,
   "Ansi 10 Color" : {
-    "Green Component" : 0.77022058823529416,
-    "Red Component" : 0.50210547698154084,
-    "Blue Component" : 0.4380863119291733
+    "Red Component" : 0.62841771892272524,
+    "Color Space" : "sRGB",
+    "Blue Component" : 0.55606282539882557,
+    "Alpha Component" : 1,
+    "Green Component" : 0.94509148597717285
   },
   "Ansi 8 Color" : {
     "Green Component" : 0.53333336114883423,
@@ -321,7 +326,7 @@
   },
   "Smart Cursor Color" : false,
   "Ambiguous Double Width" : false,
-  "Badge Max Height" : 0.20000000000000001,
+  "Badge Max Height" : 0.10000000000000001,
   "Cursor Type" : 2,
   "Ansi 0 Color" : {
     "Green Component" : 0.54379904995920658,
@@ -355,12 +360,17 @@
   "Transparency" : 0.036935307797016766,
   "Badge Top Margin" : 0,
   "Background Color" : {
-    "Green Component" : 0.17562578618526459,
-    "Red Component" : 0.16979476809501648,
-    "Blue Component" : 0.18184389173984528
+    "Red Component" : 0.12524902820587158,
+    "Color Space" : "sRGB",
+    "Blue Component" : 0.12337929787562985,
+    "Alpha Component" : 1,
+    "Green Component" : 0.12337929787562985
   },
-  "Screen" : -1,
+  "Screen" : -2,
   "tmux Pane Title" : "SSH",
+  "Bound Hosts" : [
+
+  ],
   "Non Ascii Font" : "HackNerdFontComplete-Regular 15",
   "Ansi 13 Color" : {
     "Green Component" : 0.32033414432100477,
