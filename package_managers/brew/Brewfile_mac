@@ -6,7 +6,7 @@
 ###########################################################
 
 # this lets us resize windows
-cask "spectacle"
+cask "rectangle"
 # productivity search and command bar
 cask "alfred"
 # Default browser
