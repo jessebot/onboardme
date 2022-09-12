@@ -395,7 +395,7 @@ def main():
         configure_firewall(opt.host)
 
     # configure the iterm2 if we're on macOS
-    configure_terminal()
+    configure_terminal(OS)
 
     # this is SUPPOSED to install the vim plugins, but sometimes does not
     configure_vim()
