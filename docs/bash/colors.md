@@ -24,7 +24,7 @@ function p_echo() {
 p_echo "Hi everyone :)"
 ```
 
-#### 'printf` color examples
+### 'printf` color examples
 Thanks to [SiegeX on StackOverflow](https://stackoverflow.com/a/4332530) for all the colors.
 
 ```bash
@@ -62,7 +62,7 @@ Learn more about [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escape_c
 
 - From a stackoverflow [Answer from Tobias](https://stackoverflow.com/a/5947802).
 
-#### `echo -e` color examples
+### `echo -e` color examples
 
 ```bash
 # Reset
