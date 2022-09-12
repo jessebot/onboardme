@@ -1,7 +1,7 @@
 {
 "Profiles": [
 {
-  "Badge Text" : "",
+  "Badge Text" : "",
   "Working Directory" : "~",
   "Prompt Before Closing 2" : false,
   "Dynamic Profile Filename" : "\/Users\/jhitch\/Library\/Application Support\/iTerm2\/DynamicProfiles\/Profiles.json",
@@ -31,6 +31,7 @@
     "Red Component" : 0.8929295539855957,
     "Blue Component" : 0.93112045526504517
   },
+  "Blend" : 1,
   "Mouse Reporting" : true,
   "Cursor Boost" : 0,
   "Ansi 4 Color" : {
@@ -40,7 +41,7 @@
   },
   "Non-ASCII Anti Aliased" : true,
   "Sync Title" : false,
-  "Badge Font" : "HackNerdFontComplete-Bold",
+  "Badge Font" : "HackNerdFontCompleteM-Regular",
   "Disable Window Resizing" : true,
   "Description" : "Default",
   "Close Sessions On End" : true,
@@ -77,7 +78,6 @@
     "Alpha Component" : 1,
     "Green Component" : 0.35915297269821167
   },
-  "Background Image Location" : "",
   "Bold Color" : {
     "Green Component" : 0.9264177680015564,
     "Red Component" : 0.92623984813690186,
@@ -272,7 +272,7 @@
     "Red Component" : 0.94901961088180542,
     "Blue Component" : 0.25098040699958801
   },
-  "Badge Right Margin" : 32,
+  "Badge Right Margin" : 48,
   "Use Bold Font" : true,
   "Silence Bell" : true,
   "Ansi 12 Color" : {
@@ -280,7 +280,7 @@
     "Red Component" : 0.25301916229341825,
     "Blue Component" : 1
   },
-  "Window Type" : 10,
+  "Window Type" : 6,
   "Use Bright Bold" : true,
   "Cursor Text Color" : {
     "Green Component" : 0.15575926005840302,
@@ -303,7 +303,7 @@
   "Name" : "Default macOS",
   "Blinking Cursor" : true,
   "Guid" : "34FE2EC6-53C9-4684-B56A-689C836BAB60",
-  "Badge Max Width" : 0.14999999999999999,
+  "Badge Max Width" : 0.23000000000000001,
   "Idle Code" : 0,
   "Ansi 10 Color" : {
     "Red Component" : 0.62841771892272524,
@@ -326,7 +326,8 @@
   },
   "Smart Cursor Color" : false,
   "Ambiguous Double Width" : false,
-  "Badge Max Height" : 0.10000000000000001,
+  "Badge Max Height" : 0.20000000000000001,
+  "Background Image Mode" : 2,
   "Cursor Type" : 2,
   "Ansi 0 Color" : {
     "Green Component" : 0.54379904995920658,
@@ -341,6 +342,7 @@
     "Red Component" : 0.82352942228317261,
     "Blue Component" : 0.85098040103912354
   },
+  "Space" : 0,
   "Command" : "",
   "Terminal Type" : "xterm-256color",
   "Horizontal Spacing" : 1,
@@ -357,7 +359,7 @@
     "Red Component" : 0.26824772357940674,
     "Blue Component" : 0.6001695990562439
   },
-  "Transparency" : 0.036935307797016766,
+  "Transparency" : 0.10000000000000001,
   "Badge Top Margin" : 0,
   "Background Color" : {
     "Red Component" : 0.12524902820587158,
