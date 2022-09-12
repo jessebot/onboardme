@@ -9,7 +9,7 @@ permalink: /terminals
 
 | App | Local Config | Pros | Cons |
 |---|---|---|---|
-| [iTerm2](https://iterm2.com/) | [~/Library/ApplicationSupport/iTerm2/DynamicProfiles/](https://github.com/jessebot/onboardme/configs/iterm2/Profiles.json) | configurable, highly supported | macOS only |
+| [iTerm2](https://iterm2.com/) | [~/Library/ApplicationSupport/iTerm2/DynamicProfiles/Profiles.json](https://github.com/jessebot/onboardme/configs/iterm2/Profiles.json) | configurable, highly supported | macOS only |
 | [hyper.js](https://hyper.is/) | [~/.hyper.js](https://github.com/jessebot/onboardme/configs/dot_files/.hyper.js) | modern feel, configurable | Slow, Javascript :( |
 | [cmder](https://cmder.net/) | None yet | terminal for windows that scales, splits, and supports config | kinda buggy |
 
