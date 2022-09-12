@@ -35,8 +35,9 @@ brew "bash-completion@2"
 # pretty printing for cat
 brew "ccat"
 # tap special cask for various terminal fonts
-cask "font-hack-nerd-font"
 tap "homebrew/cask-fonts"
+cask "font-hack-nerd-font"
+cask "font-mononoki-nerd-font"
 # cat images in the terminal (e.g. img2sixel imagename.png)
 brew "libsixel"
 
