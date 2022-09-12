@@ -11,6 +11,9 @@ esac
 ## default editor
 export EDITOR=vim
 
+## silences the macos zsh default terminal message
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
 GOROOT=$HOME
 
 ################# HISTORY ####################
