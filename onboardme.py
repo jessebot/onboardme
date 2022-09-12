@@ -296,8 +296,20 @@ def configure_feeds():
     configures feeds like freetube and RSS readers
     """
     # freeTube is weird, requires this name and directory to work smoothly
-    subs_db = os.listdir(f'{PWD}/configs/feeds/freetube/subscriptions.db')
+    subs_db = '{PWD}/configs/feeds/freetube/subscriptions.db'
     shutil.copy(subs_db, f'{HOME_DIR}/Downloads/subscriptions.db')
+
+
+def configure_terminal(OS='darwin'):
+    """
+    configure colorschemes and dynamic profiles for iterm2 if we're on macOS
+    """
+    if OS == "darwin":
+        print_head("Configuring iTerm2 settings...")
+        print_head
+        p = f'{HOME_DIR}/Library/ApplicationSupport/iTerm2/DynamicProfiles/'
+        shutil.copy(f'{PWD}/configs/iterm2/Profiles.json', p)
+    print("Finished installing default Dynamic Profile.")
 
 
 def parse_local_configs():
@@ -309,17 +321,6 @@ def parse_local_configs():
         with open(local_config_dir, 'r') as yaml_file:
             config = yaml.safe_load(yaml_file)
     return config
-
-
-def configure_terminal(OS='darwin'):
-    """
-    configure colorschemes and dynamic profiles for iterm2 if we're on macOS
-    """
-    if OS == "darwin":
-        print_head("Configuring iTerm2 settings...")
-        print_head
-        p = f'{HOME_DIR}/Library/Application\ Support/iTerm2/DynamicProfiles/'
-        shutil.copy('{PWD}/configs/iterm2/Profiles.json', p + 'Profiles.json')
 
 
 def parse_args():

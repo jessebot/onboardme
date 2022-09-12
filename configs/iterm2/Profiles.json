@@ -2,7 +2,7 @@
 "Profiles": [
 {
   "Badge Text" : "",
-  "Working Directory" : "\/Users\/jhitch",
+  "Working Directory" : "~",
   "Prompt Before Closing 2" : false,
   "Selected Text Color" : {
     "Green Component" : 0.24950546026229858,
