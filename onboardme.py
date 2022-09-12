@@ -351,7 +351,10 @@ def main():
     print('\n 🥱 This could take a while on a fresh install. Settle in & get '
           'comfy 🛋️ ')
     hard_link_dot_files(opt.delete)
-    install_fonts()
+
+    # fonts are brew installed unless we're on linux
+    if 'linux' in OS:
+        install_fonts()
 
     # process additional package lists, if any
     package_groups = ['default']
@@ -384,6 +387,9 @@ def main():
 
     # will add your user to linux groups such as docker
     setup_nix_groups()
+
+    # TODO: cp profiles from configs/iterm2 to
+    # ~/Library/Application\ Support/iTerm2/DynamicProfiles/
 
     print_head('❇️  SUCCESS ❇️ ')
     print("Here's some stuff you gotta do manually:")
