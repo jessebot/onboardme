@@ -262,7 +262,7 @@
   "Send Code When Idle" : false,
   "ASCII Anti Aliased" : true,
   "Tags" : [
-    "macOS"
+
   ],
   "Ansi 9 Color" : {
     "Green Component" : 0.28235295414924622,
