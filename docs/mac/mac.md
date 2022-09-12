@@ -7,6 +7,13 @@ permalink: /macos
 ## Emojis
 Mac Emoji Keyboard Shortcut: control + cmd + space
 
+## Disable BASH `chsh` warning
+
+Add the following to your BASH profile:
+```bash
+export BASH_SILENCE_DEPRECATION_WARNING=1
+```
+
 ## Finder
 you can run
 ```
