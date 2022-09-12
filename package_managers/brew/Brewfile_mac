@@ -20,9 +20,12 @@ cask "nextcloud"
 #  ===-----------------------------------------------===  #
 ###########################################################
 
-# Default terminal
+# Default terminal used by most macOS users, standard
 cask "iterm2"
-# backup terminal in javascript :shrug:
+# cross platform terminal written in rust :shrug:
+tap "wez/wezterm"
+cask "wez/wezterm/wezterm"
+# backup terminal written in javascript :shrug:
 cask "hyper"
 
 # gives us the default gnu/linux sed we all know and love
