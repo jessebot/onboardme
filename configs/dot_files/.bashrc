@@ -171,6 +171,11 @@ if [[ $(uname) == *"Linux"* ]]; then
     export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin
     pip_packages="/home/linuxbrew/.linuxbrew/lib/python3.10/site-packages"
 else
+    # this is so bash completion works on MacOS
+    [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+    # don't warn me that BASH is deprecated, I already upgraded it
+    export BASH_SILENCE_DEPRECATION_WARNING=1
+
     # check if this an M1 mac or not
     if [ $(uname -a | grep arm > /dev/null ; echo $?) -eq 0 ]; then
         # for the M1/M2 brew default installs here
@@ -179,8 +184,6 @@ else
     else
         pip_packages="/usr/local/lib/python3.10/site-packages" 
     fi
-    # this is so bash completion works on MacOS
-    [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
     # this is to use GNU sed, called gsed, instead of MacOS's POSIX
     export PATH=/usr/local/opt/gnu-sed/libexec/gnubin:$PATH
