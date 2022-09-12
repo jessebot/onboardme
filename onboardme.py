@@ -311,6 +311,17 @@ def parse_local_configs():
     return config
 
 
+def configure_terminal(OS='darwin'):
+    """
+    configure colorschemes and dynamic profiles for iterm2 if we're on macOS
+    """
+    if OS == "darwin":
+        print_head("Configuring iTerm2 settings...")
+        print_head
+        p = f'{HOME_DIR}/Library/Application\ Support/iTerm2/DynamicProfiles/'
+        shutil.copy('{PWD}/configs/iterm2/Profiles.json', p + 'Profiles.json')
+
+
 def parse_args():
     """
     Parse arguments and return dict
@@ -382,14 +393,14 @@ def main():
         # configure_ssh()
         configure_firewall(opt.host)
 
+    # configure the iterm2 if we're on macOS
+    configure_terminal()
+
     # this is SUPPOSED to install the vim plugins, but sometimes does not
     configure_vim()
 
     # will add your user to linux groups such as docker
     setup_nix_groups()
-
-    # TODO: cp profiles from configs/iterm2 to
-    # ~/Library/Application\ Support/iTerm2/DynamicProfiles/
 
     print_head('❇️  SUCCESS ❇️ ')
     print("Here's some stuff you gotta do manually:")
