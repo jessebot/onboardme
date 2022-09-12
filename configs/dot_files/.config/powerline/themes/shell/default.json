@@ -50,6 +50,7 @@
                 "contents": "﬌",
                 "highlight_groups": ["newline_prompt"],
                 "draw_hard_divider": "False",
+                "draw_soft_divider": "False",
                 "priority": 30
             }
         ]
