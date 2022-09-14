@@ -335,6 +335,8 @@ def parse_args():
               '--extra gaming')
     i_help = ('Installers to run. Accepts multiple args. Defaults to only run '
               'brew, pip3, and apt(if linux). example: --installers brew apt')
+    o_help = ('Experimental. Only run these steps in the script, e.g. --only '
+              'dot_files. Steps include dot_files, and package_managers.')
     h_help = 'Add IP to firewall for remote access'
     p = ArgumentParser(description=main.__doc__)
 
@@ -345,6 +347,7 @@ def parse_args():
     p.add_argument('-f', '--firefox', action='store_true', default=False,
                    help='Opt into experimental firefox configuring')
     p.add_argument('-i', '--installers', default=None, nargs='+', help=i_help)
+    p.add_argument('-o', '--only', default=None, nargs='+', help=i_help)
     p.add_argument('-r', '--remote', action='store_true', default=False,
                    help='Setup SSH on a random port and add it to firewall.')
     p.add_argument('-H', '--host', nargs='+', default=None, help=h_help)
