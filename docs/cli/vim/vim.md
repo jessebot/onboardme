@@ -7,10 +7,38 @@ permalink: /cli/vim
 
 # Vim Tips and Tricks
 
-Guides and helpful answers:
+## Guides and helpful answers
 - [How does the vim write with sudo trick work?](https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
 - [Setting up vim for yaml](https://www.arthurkoziel.com/setting-up-vim-for-yaml/).
 - [How to change the highlight color for search hits and quickfix selection](https://stackoverflow.com/questions/7103173/vim-how-to-change-the-highlight-color-for-search-hits-and-quickfix-selection)
+
+## Vim tutor
+
+Type `vimtutor` anywhere vim is installed to try out a vim tutorial.
+Per the vim docs (`:help vimtutor`):
+
+```
+==============================================================================
+01.3    Using the Vim tutor                             tutor vimtutor
+
+Instead of reading the text (boring!) you can use the vimtutor to learn your
+first Vim commands.  This is a 30-minute tutorial that teaches the most basic
+Vim functionality hands-on.
+
+On Unix, if Vim has been properly installed, you can start it from the shell:
+
+        vimtutor
+
+On MS-Windows you can find it in the Program/Vim menu.  Or execute
+vimtutor.bat in the $VIMRUNTIME directory.
+
+This will make a copy of the tutor file, so that you can edit it without
+the risk of damaging the original.
+   There are a few translated versions of the tutor.  To find out if yours is
+available, use the two-letter language code.  For French:
+
+        vimtutor fr
+```
 
 ## Navigation 
 
