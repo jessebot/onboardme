@@ -10,6 +10,7 @@ permalink: /cli/vim
 Guides and helpful answers:
 - [How does the vim write with sudo trick work?](https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
 - [Setting up vim for yaml](https://www.arthurkoziel.com/setting-up-vim-for-yaml/).
+- [How to change the highlight color for search hits and quickfix selection](https://stackoverflow.com/questions/7103173/vim-how-to-change-the-highlight-color-for-search-hits-and-quickfix-selection)
 
 ## Navigation 
 
