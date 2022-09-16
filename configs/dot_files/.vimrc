@@ -7,6 +7,8 @@ set nocompatible
 set number
 " Enable syntax highlighting by default 
 syntax on
+hi Search ctermbg=White
+hi Search ctermfg=DarkBlue
 " allow unsaved background buffers and remember marks/undo for them
 set hidden
 " remember more commands and search history
