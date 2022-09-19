@@ -335,7 +335,7 @@
     "Blue Component" : 0.56232324660633481
   },
   "Blur" : false,
-  "Normal Font" : "mononokiNerdFontComplete-Regular 16",
+  "Normal Font" : "mononokiNerdFontComplete-Regular 15",
   "Vertical Spacing" : 1.01,
   "Ansi 7 Color" : {
     "Green Component" : 0.84705883264541626,
@@ -374,7 +374,7 @@
   "Bound Hosts" : [
 
   ],
-  "Non Ascii Font" : "HackNerdFontComplete-Regular 15",
+  "Non Ascii Font" : "HackNerdFontComplete-Regular 14",
   "Ansi 13 Color" : {
     "Green Component" : 0.32033414432100477,
     "Red Component" : 0.98699095022624439,
