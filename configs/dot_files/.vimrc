@@ -19,9 +19,7 @@ set cursorline
 " fix window to be 80 characters at start, I think
 set winwidth=80
 
-" Use 24-bit (true-color) mode in Vim, For Neovim > 0.1.5 and Vim > patch 7.4.1799
-" see: https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162
-" Based on Vim patch 7.4.1770 (`guicolors` option) https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd
+" Use 24-bit (true-color) mode in Neovim 0.1.5+ and Vim 7.4+
 if (has("termguicolors"))
     set termguicolors
 endif
@@ -49,9 +47,8 @@ set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set autoindent
-" Enable file type detection.
-" Use the default filetype settings, so that mail gets 'tw' set to 72,
-" 'cindent' is on in C files, etc.
+" Enable file type detection. Use the default filetype settings, so that mail
+" gets 'tw' set to 72, 'cindent' is on in C files, etc.
 " Also load indent files, to automatically do language-dependent indenting.
 filetype plugin indent on
 
@@ -229,37 +226,49 @@ cmap w!! w !sudo tee > /dev/null %
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin()
 
-" git plugin for running things with :git
+" adds a pretty status line that uses powerline, might try airline as well...
+Plug 'powerline/powerline'
+
+" git plugin for running git commands with :git
 Plug 'tpope/vim-fugitive'
-" Plug 'powerline/powerline'
-
-" On-demand loading of nerdtree
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'ryanoasis/vim-devicons'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-
-" this is a modern fuzzy searcher
-Plug 'liuchengxu/vim-clap'
 
 " indents lines and adds a line to show blocks of code
 Plug 'Yggdroot/indentLine'
 
-" linter - will use shellcheck for bash and highlight broken code
-Plug 'dense-analysis/ale'
+" NerdTree - Tree explorer plugin - use :NERDTreeToggle to try it out
+"          - after nerdtree is on visible, use ? for help
+"
+" On-demand loading of nerdtree
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+" syntax highlighing for nerdtree
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" puts little glyphs for different file types
+Plug 'ryanoasis/vim-devicons'
+" add git awareness to see modified, merged, etc status of file in nerdtree
+Plug 'Xuyuanp/nerdtree-git-plugin'
+"
+" END NerdTree
 
-" bash tab completion
-Plug 'WolfgangMehner/bash-support'
-
-" python tab completion - I actually find this kind of annoying, but turn it
-" on when I'm using a new library
-Plug 'davidhalter/jedi-vim'
-Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+" this is a modern fuzzy searcher
+Plug 'liuchengxu/vim-clap'
 
 " yaml syntax highlighting better
 Plug 'stephpy/vim-yaml'
+" helm yaml specifically (includes go support)
+Plug 'towolf/vim-helm'
+
+" python tab completion - I actually find this kind of annoying :shrug:
+Plug 'davidhalter/jedi-vim'
+" I don't actually remember what this does...
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+" bash tab completion
+Plug 'WolfgangMehner/bash-support'
+
+" linter - will use shellcheck for bash and highlight broken code
+Plug 'dense-analysis/ale'
 
 call plug#end()
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set rtp+=~/.local/lib/python3.9/site-packages/powerline/bindings/vim
 
