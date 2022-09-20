@@ -33,7 +33,7 @@
                         "type": "string",
                         "highlight_groups": ["background"],
                         "draw_soft_divider": false,
-                        "draw_hard_divider": true,
+                        "draw_hard_divider": false,
                         "width": "auto"
                     },
                     {
