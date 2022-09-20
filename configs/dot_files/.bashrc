@@ -1,7 +1,6 @@
-##################################################
-# @jessebot's personal .bashrc (and .bash_profile)
-##################################################
-
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  @jessebot's personal .bashrc (and .bash_profile) 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ######################### GENERAL #################################
 
@@ -26,7 +25,6 @@ shopt -s checkwinsize
 
 ########################## HISTORY ########################
 # don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
 HISTCONTROL=ignoreboth
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -55,14 +53,15 @@ alias diff='colordiff -uw'
 # python3 alias because python2 is still in some places
 alias python='python3'
 
-# grep - always use colors
+############ grep aliases ###########################
+# always use colors
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
-
-####################### typos <3 ########################
 alias grpe='grep'
 alias gerp='grep'
+
+####################### typos <3 ########################
 alias celar='clear'
 alias clar='clear'
 alias gti='git'
