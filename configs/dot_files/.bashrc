@@ -1,4 +1,7 @@
-# @jessebot's personal .bash_profile/.bashrc
+##################################################
+# @jessebot's personal .bashrc (and .bash_profile)
+##################################################
+
 # I hate bells
 set bell-style none
 
@@ -52,7 +55,6 @@ alias lt='lsd -atr'
 alias llt='lsd -haltr'
 # lsd already has a fancier tree command with icons
 alias tree='lsd --tree --depth=2'
-
 
 # colordiff - diff, but with colors for accessibility
 alias diff='colordiff -uw'
@@ -108,7 +110,7 @@ alias todo='vim ~/todo.md'
 alias whereami='hostname'
 alias whoareyou='echo "Your friend :)"'
 
-# scrncpy install adb for you, but it's awkward to use
+# scrncpy installs adb for you, but it's awkward to use
 alias adb='scrcpy.adb'
 
 ########## Extra Functions/One-Liners ###########
@@ -116,6 +118,7 @@ alias adb='scrcpy.adb'
 function b64 {
     echo -n $1 | base64
 }
+
 function b64d {
     echo -n $1 | base64 --decode
 }
@@ -131,9 +134,9 @@ function agr {
     ag $1 $REPOS
 }
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
+
+###################### COMPLETION ################################################
+# enable programmable completion features
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
@@ -141,10 +144,14 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
 # bash completion for nvm
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# This loads nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+# This loads nvm bash_completion
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
 # terraform bash completion
 complete -C /usr/local/bin/terraform terraform
 
@@ -185,7 +192,7 @@ else
         pip_packages="/usr/local/lib/python3.10/site-packages" 
     fi
 
-    # this is to use GNU sed, called gsed, instead of MacOS's POSIX
+    # this is to use GNU sed, called gsed, instead of MacOS's POSIX sed
     export PATH=/usr/local/opt/gnu-sed/libexec/gnubin:$PATH
     # this is so we always use gsed
     alias sed='gsed'
@@ -204,10 +211,5 @@ if [ -f $pip_packages/powerline/bindings/bash/powerline.sh ]; then
     . $pip_packages/powerline/bindings/bash/powerline.sh
 fi
 
-# TODO: put old prompts into docs for future travelers
-# this prompt one is only if emojis already work in your terminal :3
-# PS1="\`if [ \$? = 0 ]; then echo 💙; else echo 😔; fi\` \[\e[94m\][\@]\[\e[0m\]\\$ "
-# use this one if you don't have emojis in your terminal
-# adds a smileyface on successful commands and a wat face otherwise :D
-# prompt will show the user.time and that is it, for now. 
-# PS1="\`if [ \$? = 0 ]; then echo \[\e[32m\]^_^\[\e[0m\]; else echo \[\e[31m\]O_O\[\e[0m\]; fi\`[\u.\@]\\$ "
+# run neofetch as soon as I login to any place, just so I know where I am <3
+neofetch
