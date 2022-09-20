@@ -3,13 +3,6 @@
         "above": [{
                 "left": [
                     {
-                        "function": "powerline.segments.common.time.date",
-                        "priority": 10,
-                        "args": {
-                            "format": " %H:%M"
-                        }
-                    },
-                    {
                         "function": "powerline.segments.common.net.hostname",
                         "priority": 20
                     },
@@ -35,6 +28,19 @@
                             "show_default_namespace": false, 
                             "alerts": ["live", "cluster:live"]
                         }
+                    },
+                    {
+                        "type": "string",
+                        "highlight_groups": ["background"],
+                        "draw_soft_divider": false,
+                        "draw_hard_divider": true,
+                        "width": "auto"
+                    },
+                    {
+                        "function": "powerline.segments.common.time.date",
+                        "args": {
+                            "format": " %H:%M"
+                        }
                     }
                 ]
             }],
@@ -49,8 +55,6 @@
                 "name": "newline_prompt",
                 "contents": "﬌",
                 "highlight_groups": ["newline_prompt"],
-                "draw_hard_divider": "False",
-                "draw_soft_divider": "False",
                 "priority": 30
             }
         ]

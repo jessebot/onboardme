@@ -2,6 +2,9 @@
 # @jessebot's personal .bashrc (and .bash_profile)
 ##################################################
 
+
+######################### GENERAL #################################
+
 # I hate bells
 set bell-style none
 
@@ -14,9 +17,14 @@ esac
 ## default editor
 export EDITOR=vim
 
-GOROOT=$HOME
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
 
-################# HISTORY ####################
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+########################## HISTORY ########################
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -28,21 +36,6 @@ HISTFILESIZE=20000
 # for setting time stamps on history
 HISTTIMEFORMAT="%d/%m/%y %T "
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
-#shopt -s globstar
-
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
 
 ################# ls aliases ####################
 # lsd instead of ls for colors/icons, human readable file sizes, show hidden files
@@ -158,6 +151,7 @@ complete -C /usr/local/bin/terraform terraform
 ########################## PATHING #################################
 
 # go
+GOROOT=$HOME
 export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
 
 # python packages default location when you do pip3 install --user somepackage

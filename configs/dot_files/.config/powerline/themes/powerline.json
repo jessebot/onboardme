@@ -1,12 +1,12 @@
 {
 	"dividers": {
 		"left": {
-			"hard": "",
+			"hard": " ",
 			"soft": " "
 		},
 		"right": {
-			"hard": " ",
-			"soft": " "
+			"hard": "  ",
+			"soft": " "
 		}
 	},
 	"spaces": 1,
@@ -29,7 +29,7 @@
 		"player": {
 			"args": {
 				"state_symbols": {
-					"fallback": "♫",
+					"fallback": "♫ ",
 					"play":     "▶",
 					"pause":    "▮▮",
 					"stop":     "■"
