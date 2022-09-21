@@ -3,7 +3,8 @@
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" GENERAL - stuff like line numbers and syntax highlighting
+"                                 GENERAL 
+"              stuff like line numbers and syntax highlighting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " NERD FONTS - fonts with free glyphs require utf-8 on & specific guifont var
@@ -39,8 +40,10 @@ set history=10000
 " unsure what this does and afraid to remove it...
 set nocompatible
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" INDENT ZONE - define tabs and spaces
+"                                INDENT ZONE 
+"                          define tabs and spaces
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set expandtab
 set tabstop=4
@@ -52,8 +55,10 @@ set autoindent
 " Also load indent files, to automatically do language-dependent indenting.
 filetype plugin indent on
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" SEARCHING - how we highlight search results and the like
+"                                SEARCHING 
+"                how we highlight search results and the like
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set laststatus=2
 set showmatch
@@ -92,8 +97,9 @@ set wildmode=longest,list
 set wildmenu
 let mapleader=","
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" CUSTOM AUTOCMDS
+"                            CUSTOM AUTOCMDS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup vimrcEx
 " Clear all autocmds in the group
@@ -113,7 +119,7 @@ augroup END
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" MISC KEY MAPS
+"                              MISC KEY MAPS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " not sure what this does :shrug:
 map <leader>y "*y
@@ -129,9 +135,10 @@ endfunction
 call MapCR()
 nnoremap <leader><leader> <c-^>
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" MULTIPURPOSE TAB KEY
-" Indent if we're at the beginning of a line. Else, do completion.
+"                         MULTIPURPOSE TAB KEY
+"     Indent if we're at the beginning of a line. Else, do completion.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! InsertTabWrapper()
     let col = col('.') - 1
@@ -144,23 +151,27 @@ endfunction
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <s-tab> <c-n>
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" ARROW KEYS ARE UNACCEPTABLE :P (really though, you should learn hjkl for vi)
+"                    ARROW KEYS ARE UNACCEPTABLE :P
+"              (really though, you should learn hjkl for vi)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <Left> <Nop>
 map <Right> <Nop>
 map <Up> <Nop>
 map <Down> <Nop>
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" OPEN FILES IN DIRECTORY OF CURRENT FILE
+"                  OPEN FILES IN DIRECTORY OF CURRENT FILE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 map <leader>e :edit %%
 map <leader>v :view %%
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" RENAME CURRENT FILE
+"                            RENAME CURRENT FILE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! RenameFile()
     let old_name = expand('%')
@@ -173,14 +184,17 @@ function! RenameFile()
 endfunction
 map <leader>n :call RenameFile()<cr>
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Md5 COMMAND - Show the MD5 of the current buffer
+"                               Md5 COMMAND
+"                   Show the MD5 of the current buffer
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 command! -range Md5 :echo system('echo '.shellescape(join(getline(<line1>, <line2>), '\n')) . '| md5')
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" OpenChangedFiles COMMAND
-" Open a split for each dirty file in git
+"                          OpenChangedFiles COMMAND
+"                  Open a split for each dirty file in git
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! OpenChangedFiles()
   only " Close all windows, unless they're modified
@@ -193,19 +207,24 @@ function! OpenChangedFiles()
 endfunction
 command! OpenChangedFiles :call OpenChangedFiles()
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" InsertTime COMMAND - Insert the current time
+"                         InsertTime COMMAND 
+"                       Insert the current time
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 command! InsertTime :normal a<c-r>=strftime('%F %H:%M:%S.0 %z')<cr>
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                    :w!!
 " Sudo vim trick with less key strokes - allow saving of files as sudo when I
-" forgot to start vim using sudo. it's now :w!!
+"                      forgot to start vim using sudo. 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 cmap w!! w !sudo tee > /dev/null %
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" YAML documents are weird, but this does proper linting w/o leaving vim
+"                               YAML
+"                does proper linting w/o leaving vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
   set foldlevelstart=20
@@ -216,8 +235,9 @@ cmap w!! w !sudo tee > /dev/null %
   let g:ale_lint_on_text_changed = 'never'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Vim-plug - plugin manager for vim: https://github.com/junegunn/vim-plug
-"            plugin directory will be (on Linux/macOS): '~/.vim/plugged'
+"                                 Vim-plug
+"         plugin manager for vim: https://github.com/junegunn/vim-plug
+"          plugin directory will be (on Linux/macOS): '~/.vim/plugged'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin()
 
