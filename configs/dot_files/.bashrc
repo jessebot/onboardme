@@ -155,22 +155,21 @@ alias grpe='grep'
 alias gerp='grep'
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ cat ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-alias cat='dog'
-
 # always use rich for viewing markdown, vs ccat or batcat
 # see my docs more for info, TODO: Write those docs with links to all 3 apps
 function dog {
     # make sure this is a markdown file
     if [[ "$1" == *".md" ]]; then
         # if this is a git directory, we might want to use gh or glab
-        if [[ $(git rev-parse --is-inside-work-tree) == "true" ]]; then
+        # if [[ $(git rev-parse --is-inside-work-tree) == "true" ]]; then
             # glab
-            if [[ $(git config -l | grep url | grep gitlab) == *"gitlab"* ]]; then
-                glab repo view
-            fi
-        else
-            rich --pager $1
-        fi
+            # if [[ $(git config -l | grep url | grep gitlab) == *"gitlab"* ]]; then
+            #     glab repo view
+            # else
+            #     gh repo view
+            # fi
+        # fi
+        rich --pager $1
     else
         # cat with syntax highlighting
         if [[ $(uname) == *"Linux"* ]]; then
@@ -180,6 +179,9 @@ function dog {
         fi
     fi
 }
+
+alias cat='dog'
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ git ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 alias gc='git commit -m'
