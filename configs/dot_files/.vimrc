@@ -111,11 +111,6 @@ augroup vimrcEx
   autocmd! CmdwinLeave * :call MapCR()
 augroup END
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" STATUS LINE - left : filename, program, if the file has been modified
-"             - right: line, coloumn
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-:set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MISC KEY MAPS
@@ -268,12 +263,18 @@ Plug 'WolfgangMehner/bash-support'
 Plug 'dense-analysis/ale'
 
 call plug#end()
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               STATUS LINE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set rtp+=~/.local/lib/python3.10/site-packages/powerline/bindings/vim
-
-" uncomment these below to install powerline for vim for the first time
-python3 from powerline-status import vim
-python3 from vim import setup as powerline_setup
+" Powerline needs to be loaded last. Learn more about powerline here:
+" https://powerline.readthedocs.io/en/master/usage/other.html#vim-statusline
+python3 from powerline.vim import setup as powerline_setup
 python3 powerline_setup()
 python3 del powerline_setup
+
+" Backup status line: left : filename, program, if the file has been modified
+"                     right: line, coloumn
+" :set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
