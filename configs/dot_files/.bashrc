@@ -244,4 +244,5 @@ fi
 # -------------------------------------------------------------------------- #
 
 # run neofetch, a system facts cli script, immediately when we login anywhere
+echo ""
 neofetch
