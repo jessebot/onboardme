@@ -16,7 +16,16 @@
                     },
                     {
                         "function": "powerline_gitstatus.gitstatus",
+                        "draw_soft_divider": false,
+                        "draw_hard_divider": false,
                         "priority": 40
+                    },
+                    {
+                        "type": "string",
+                        "highlight_groups": ["background"],
+                        "draw_soft_divider": false,
+                        "draw_hard_divider": true,
+                        "width": "auto"
                     },
                     {
                         "function": "powerline_kubernetes.kubernetes",
@@ -28,13 +37,6 @@
                             "show_default_namespace": false, 
                             "alerts": ["live", "cluster:live"]
                         }
-                    },
-                    {
-                        "type": "string",
-                        "highlight_groups": ["background"],
-                        "draw_soft_divider": false,
-                        "draw_hard_divider": false,
-                        "width": "auto"
                     },
                     {
                         "function": "powerline.segments.common.time.date",
