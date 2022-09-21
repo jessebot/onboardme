@@ -253,7 +253,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'liuchengxu/vim-clap'
 
 " yaml syntax highlighting better
-Plug 'stephpy/vim-yaml'
+" Plug 'stephpy/vim-yaml'
 " helm yaml specifically (includes go support)
 Plug 'towolf/vim-helm'
 
@@ -270,10 +270,10 @@ Plug 'dense-analysis/ale'
 call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set rtp+=~/.local/lib/python3.9/site-packages/powerline/bindings/vim
+set rtp+=~/.local/lib/python3.10/site-packages/powerline/bindings/vim
 
 " uncomment these below to install powerline for vim for the first time
-" python3 from powerline import vim
-" python3 from vim import setup as powerline_setup
-" python3 powerline_setup()
-" python3 del powerline_setup
+python3 from powerline-status import vim
+python3 from vim import setup as powerline_setup
+python3 powerline_setup()
+python3 del powerline_setup
