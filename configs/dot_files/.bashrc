@@ -138,7 +138,7 @@ alias todo='vim ~/todo.md'
 alias ls='lsd -a'
 # lsd and list long, human readable file sizes, show hidden files
 alias ll='lsd -hal'
-# ls, sorted by most recent and reversed, so the most recent file is the last
+# sort by most recent and reversed, so the most recent file is the last
 # helpful for directories with lots of files
 alias lt='lsd -atr'
 # same as above, but long
@@ -155,23 +155,43 @@ alias grpe='grep'
 alias gerp='grep'
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ cat ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-# cat with syntax highlighting
-if [[ $(uname) == *"Linux"* ]]; then
-    alias cat='batcat'
-    alias bat='batcat'
-else
-    alias cat='ccat'
-fi
+alias cat='dog'
+
+# always use rich for viewing markdown, vs ccat or batcat
+# see my docs more for info, TODO: Write those docs with links to all 3 apps
+function dog {
+    # make sure this is a markdown file
+    if [[ "$1" == *".md" ]]; then
+        # if this is a git directory, we might want to use gh or glab
+        if [[ $(git rev-parse --is-inside-work-tree) == "true" ]]; then
+            # glab
+            if [[ $(git config -l | grep url | grep gitlab) == *"gitlab"* ]]; then
+                glab repo view
+            fi
+        else
+            rich --pager $1
+        fi
+    else
+        # cat with syntax highlighting
+        if [[ $(uname) == *"Linux"* ]]; then
+            batcat $1
+        else
+            ccat $1
+        fi
+    fi
+}
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ git ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 alias gc='git commit -m'
 alias gs='git status'
-# check all directories below my current directory for their git status
+# check all directories below current directory for their git status
 alias gsa='ls -1 -A | xargs -I % sh -c "figlet % | lolcat ; cd %; git status --short; cd - > /dev/null; echo ''"'
 alias gd='git diff'
 alias ga='git add .'
 alias gph='git push && git push --tags'
 alias gpl='git pull'
+# glab is gitlab's cli, but I always type gl by accident
+alias gl='glab'
 
 
 # -------------------------------------------------------------------------- #
