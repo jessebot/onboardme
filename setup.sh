@@ -9,13 +9,13 @@ function simple_loading_bar() {
     echo ""
     echo "          "
     for i in $(seq 1 $1); do
-        echo -n "   ❤︎";
+        echo -n "❤︎ ";
         sleep 1
     done
     echo ""
 }
 
-OS=$(uname | tr '[:upper:]' '[:lower:]')
+OS=$(uname)
 
 echo -e "-------------------------------- \033[94m 🛋️  Comfy Warning \033[00m -------------------------------"
 echo "Before we begin, please make sure you're on a wired connection, or sitclose to the wifi. This "
@@ -35,7 +35,7 @@ done
 
 echo -e "\n-------------------------------- \033[94m 🎬 Beginning Setup \033[00m -------------------------------"
 echo ""
-if [[ "$OS" == *"linux"* ]]; then
+if [[ "$OS" == *"Linux"* ]]; then
     echo -e "---------------------------- \033[94m Updating existing apt packages \033[00m --------------------"
     sudo apt update && sudo apt upgrade
     echo -e "\033[92m apt updated/upgraded :3 \033[00m"
@@ -48,7 +48,7 @@ git_return_code=$?
 if [ $git_return_code -ne 0 ]; then
     echo "Git not installed or in path, attempting to install git..."
     # we use *"linux"* because linux2 is a possibility, and who knows what else
-    if [[ "$OS" == *"linux"* ]]; then
+    if [[ "$OS" == "Linux"* ]]; then
         sudo apt install git
         git_return_code=$?
         if [ $git_return_code -ne 0 ]; then
@@ -58,7 +58,7 @@ if [ $git_return_code -ne 0 ]; then
             exit
         fi
     fi
-    if [ "$OS" == "darwin" ]; then
+    if [ "$OS" == "Darwin" ]; then
         echo "running: brew install git"
         brew install git
     fi
@@ -87,7 +87,7 @@ brew_return_code=$?
 
 # if this still isn't in our path, export it and source this bashrc
 if [ $brew_return_code -ne 0 ]; then
-    if [[ "$OS" == *"linux"* ]]; then
+    if [[ "$OS" == *"Linux"* ]]; then
         echo "Linuxbrew isn't in your path. Let's get that installed :)"
         # make sure this is all in the bashrc for new shells
         echo "export HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew" >> ~/.bashrc
@@ -138,7 +138,7 @@ which pip3 > /dev/null
 pip_return_code=$?
 if [ $pip_return_code -ne 0 ]; then
     echo "Installing Pip3..." 
-    if [[ "$OS" == *"linux"* ]]; then
+    if [[ "$OS" == *"Linux"* ]]; then
         sudo apt install python3-pip
         echo -e "\033[92mPip3 installed :3 \033[00m"
     fi
@@ -152,7 +152,7 @@ mkdir -p ~/repos
 git clone https://github.com/jessebot/onboardme.git ~/repos/onboardme
 
 # we do this for Debian, to download custom fonts during onboardme
-if [[ "$OS" == *"linux"* ]]; then
+if [[ "$OS" == *"Linux"* ]]; then
     mkdir -p ~/.local/share/fonts
 fi
 
@@ -167,6 +167,13 @@ else
     echo ""
     echo -e "------------------------------ \033[92mSuccess~! ^O^\033[00m -----------------------------------"
     echo ""
-    echo -e "✨ Now, try running the following: ~/repos/onboardme/onboardme.py --help"
+    # source the existing bashrc, just in case
+    if [[ "$OS" == *"Linux"* ]]; then
+        echo -e "\033[92mPlease run:\033[00m source .bashrc"
+    elif [ -f "~/.bash_profile" ]; then
+        echo -e "\033[92mPlease run:\033[00m source .bash_profile"
+    fi
+    echo -e "✨ Then you can try running the following:"
+    echo "~/repos/onboardme/onboardme.py --help"
     echo ""
 fi

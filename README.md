@@ -46,15 +46,15 @@ If you want to see the exact packages being installed, you can check out `config
 ### Current Ecoscape of Personal Tech
 
 Category | App | Replaces
-:---:|:---:|:---:
-|Backups - local|Restic to minio|Google Drive, iCloud|
-|Backups - remote |Restic to b2|Google Drive, iCloud, S3|
-|Email|Protonmail and Bridge for Linux/MacOS|Gmail|
-|Launcher|Albert?|Alfred|
-|Photo/file Storage|NextCloud - not tested|Google Photos/Drive|
-|Passwords|Bitwarden|LastPass|
-|News - RSS|Fluent Reader|Facebook/Twitter news company feeds|
-|Video|FreeTube,Peertube|YouTube|
+|:---:|:---:|:---:|
+| Backups - local  | Restic to minio                       | Google Drive, iCloud                |
+| Backups - remote | Restic to b2                          | Google Drive, iCloud, S3            |
+| Email            | Protonmail and Bridge for Linux/MacOS | Gmail                               |
+| Launcher         | ???                                   | Alfred                              |
+| File Storage     | NextCloud Files/Photos                | Google Photos/Drive                 |
+| Passwords        | Bitwarden                             | LastPass                            |
+| News - RSS       | Fluent Reader                         | Facebook/Twitter news company feeds |
+| Internet Videos  | FreeTube,Peertube                     | YouTube (Google)                    |
 
 #### Docs
 You can find the bulk of my notes under the `docs/` directory in this repo, but I've also recently setup a justthedocs page [here](https://jessebot.github.io/onboardme/).
