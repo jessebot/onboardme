@@ -35,8 +35,6 @@ brew "bash"
 # so that bash completion stuff works
 brew "bash-completion@2"
 
-# pretty printing for cat
-brew "ccat"
 # tap special cask for various terminal fonts
 tap "homebrew/cask-fonts"
 cask "font-hack-nerd-font"
