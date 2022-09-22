@@ -135,6 +135,8 @@ endfunction
 call MapCR()
 nnoremap <leader><leader> <c-^>
 
+" let spacebar take me into command mode
+noremap <space> :
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                         MULTIPURPOSE TAB KEY
