@@ -237,6 +237,14 @@ cmap w!! w !sudo tee > /dev/null %
   let g:ale_lint_on_text_changed = 'never'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"   maybe this maeks some of the powerline fonts work better
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:airline_powerline_fonts = 1
+let g:airline_theme='murmur'
+let g:airline_left_sep=' '
+let g:airline_right_sep=''
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                 Vim-plug
 "         plugin manager for vim: https://github.com/junegunn/vim-plug
 "          plugin directory will be (on Linux/macOS): '~/.vim/plugged'
