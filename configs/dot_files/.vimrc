@@ -243,8 +243,9 @@ cmap w!! w !sudo tee > /dev/null %
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin()
 
-" adds a pretty status line that uses powerline, might try airline as well...
-Plug 'powerline/powerline'
+" adds a pretty status line
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " git plugin for running git commands with :git
 Plug 'tpope/vim-fugitive'
@@ -285,18 +286,3 @@ Plug 'WolfgangMehner/bash-support'
 Plug 'dense-analysis/ale'
 
 call plug#end()
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                               STATUS LINE
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Powerline needs to be loaded last. Learn more about powerline here:
-" https://powerline.readthedocs.io/en/master/usage/other.html#vim-statusline
-python3 from powerline.vim import setup as powerline_setup
-python3 powerline_setup()
-python3 del powerline_setup
-
-" Backup status line: left : filename, program, if the file has been modified
-"                     right: line, coloumn
-" :set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
