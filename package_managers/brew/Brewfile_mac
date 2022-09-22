@@ -6,11 +6,13 @@
 ###########################################################
 
 # this lets us resize windows
-cask "spectacle"
+cask "rectangle"
 # productivity search and command bar
 cask "alfred"
 # Default browser
 cask "firefox"
+# File server
+cask "nextcloud"
 
 ###########################################################
 #  ===-----------------------------------------------===  #
@@ -18,19 +20,30 @@ cask "firefox"
 #  ===-----------------------------------------------===  #
 ###########################################################
 
-# Default terminal
+# Default terminal used by most macOS users, standard
 cask "iterm2"
-# backup terminal in javascript :shrug:
+# cross platform terminal written in rust :shrug:
+tap "wez/wezterm"
+cask "wez/wezterm/wezterm"
+# backup terminal written in javascript :shrug:
 cask "hyper"
+
 # gives us the default gnu/linux sed we all know and love
 brew "gnu-sed"
-# cat images in the terminal (e.g. img2sixel imagename.png)
-brew "libsixel"
+# current version of bash :)
+brew "bash"
 # so that bash completion stuff works
 brew "bash-completion@2"
+
+# pretty printing for cat
+brew "ccat"
 # tap special cask for various terminal fonts
-cask "font-hack-nerd-font"
 tap "homebrew/cask-fonts"
+cask "font-hack-nerd-font"
+cask "font-mononoki-nerd-font"
+# cat images in the terminal (e.g. img2sixel imagename.png)
+brew "libsixel"
+
 # remap keys... not working yet though :<
 # cask "karabiner-elements"
 
@@ -42,8 +55,6 @@ tap "homebrew/cask-fonts"
 
 # This should be docker desktop
 cask "docker"
-# k8s IDE
-cask "lens"
 
 ###########################################################
 #  ===-----------------------------------------------===  #
@@ -66,3 +77,5 @@ cask "freetube"
 cask "lulu"
 # password manager
 cask "bitwarden"
+# VPN
+cask "protonvpn"

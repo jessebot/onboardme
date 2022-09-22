@@ -1,4 +1,11 @@
-# Jessebot's personal .bash_profile/.bashrc
+##############################################################################
+#             @jessebot's personal .bashrc (and .bash_profile)               #
+##############################################################################
+
+
+# -------------------------------------------------------------------------- #
+#                                 General                                    #
+# -------------------------------------------------------------------------- #
 
 # I hate bells
 set bell-style none
@@ -12,11 +19,19 @@ esac
 ## default editor
 export EDITOR=vim
 
-GOROOT=$HOME
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
 
-################# HISTORY ####################
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+
+# -------------------------------------------------------------------------- #
+#                                 History                                    #
+# -------------------------------------------------------------------------- #
+
 # don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
 HISTCONTROL=ignoreboth
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -26,111 +41,190 @@ HISTFILESIZE=20000
 # for setting time stamps on history
 HISTTIMEFORMAT="%d/%m/%y %T "
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
-#shopt -s globstar
 
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+# -------------------------------------------------------------------------- #
+#                                 Pathing                                    #
+# -------------------------------------------------------------------------- #
 
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
+# go
+GOROOT=$HOME
+export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
+
+# python packages' default location when you do pip3 install --user package
+export PATH=$PATH:$HOME/.local/bin
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Linux PATH ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+if [[ $(uname) == *"Linux"* ]]; then
+    # this is for iptables on debian, which is elusive
+    export PATH=$PATH:/usr/sbin:/usr/share
+    # for snap package manager packages
+    export PATH=$PATH:/snap/bin
+    # ~ HomeBrew on Linux ~ #
+    export HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew
+    export HOMEBREW_CELLAR=/home/linuxbrew/.linuxbrew/Cellar
+    export HOMEBREW_REPOSITORY=/home/linuxbrew/.linuxbrew/Homebrew
+    export MANPATH=$MANPATH:/home/linuxbrew/.linuxbrew/share/man
+    export INFOPATH=$INFOPATH:/home/linuxbrew/.linuxbrew/share/info
+    export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin
+    pip_packages="/home/linuxbrew/.linuxbrew/lib/python3.10/site-packages"
 fi
 
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color) color_prompt=yes;;
-esac
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ macOS PATH ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+if [[ $(uname) == *"Darwin"* ]]; then
+    # don't warn me that BASH is deprecated, becasuse it is already upgraded
+    export BASH_SILENCE_DEPRECATION_WARNING=1
+    # bash completion on macOS
+    [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && \
+        . "/usr/local/etc/profile.d/bash_completion.sh"
 
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-#force_color_prompt=yes
-
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
+    # check if this an M1/M2 mac
+    if [ $(uname -a | grep arm > /dev/null ; echo $?) -eq 0 ]; then
+        # On M1/M2: brew default installs here
+        export PATH=/opt/homebrew/bin:$PATH
+        pip_packages="/opt/homebrew/lib/python3.10/site-packages" 
     else
-	color_prompt=
+        # For older macs before the M1, pre-2020
+        pip_packages="/usr/local/lib/python3.10/site-packages" 
     fi
+
+    # Load GNU sed, called gsed, instead of MacOS's POSIX sed
+    export PATH=/usr/local/opt/gnu-sed/libexec/gnubin:$PATH
+    # Always use GNU sed
+    alias sed='gsed'
 fi
 
-unset color_prompt force_color_prompt
 
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
+# -------------------------------------------------------------------------- #
+#                                 ALIASES                                    #
+# -------------------------------------------------------------------------- #
 
-# lsd instead of ls for colors/icons, human readable file sizes, show hidden files
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Typos <3 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ # 
+alias gtop='gotop'
+# can never spell clear
+alias celar='clear'
+alias clar='clear'
+# clear, but in dutch
+alias leegmaken='clear'
+alias gti='git'
+alias gtt='git'
+# can't spell tree
+alias ter='tree'
+alias tre='tree'
+alias tere='tree'
+# can't spell python
+alias pthyon='python3.10'
+alias ptyhon='python3.10'
+alias pythong='python3.10'
+# alias because python2-python3.9 still in some places
+alias python='python3.10'
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ General ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+# colordiff - diff, but with colors for accessibility
+alias diff='colordiff -uw'
+# always use vim instead of vi, TODO: check if vim installed?
+alias vi='vim'
+# we love a good tracer t
+alias tracert='traceroute'
+# whoami, whereami, whoareyou?
+alias whereami='hostname'
+alias whoareyou='echo "Your friend :)"'
+# scrncpy installs adb for you, but it's awkward to use
+alias adb='scrcpy.adb'
+# quick to do
+alias todo='vim ~/todo.md'
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ls ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+# lsd instead of ls for colors/icons
 alias ls='lsd -a'
+# lsd and list long, human readable file sizes, show hidden files
 alias ll='lsd -hal'
-# list, sorted by most recent and reversed, so the most recent
-# file is the last ouputted line, helpful for directories with lots of files
+# sort by most recent and reversed, so the most recent file is the last
+# helpful for directories with lots of files
 alias lt='lsd -atr'
 # same as above, but long
 alias llt='lsd -haltr'
 # lsd already has a fancier tree command with icons
 alias tree='lsd --tree --depth=2'
 
-# colordiff - diff, but with colors for accessibility
-alias diff='colordiff -uw'
-
-# python3 alias because python2 is still in some places
-alias python='python3'
-
-# grep - always use colors
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ grep ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+# always use colors
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
-
-# typos <3
 alias grpe='grep'
 alias gerp='grep'
-alias celar='clear'
-alias clar='clear'
-alias gti='git'
-alias gtt='git'
-alias ter='tree'
-alias tre='tree'
-alias pthyon='python3'
-alias ptyhon='python3'
-alias pythong='python'
 
-# shorten commands
-alias vi='vim'
-alias tracert='traceroute'
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ cat ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+# always use rich for viewing markdown, vs ccat or batcat
+# see my docs more for info, TODO: Write those docs with links to all 3 apps
+function dog {
+    # make sure this is a markdown file
+    if [[ "$1" == *".md" ]]; then
+        # if this is a git directory, we might want to use gh or glab
+        # if [[ $(git rev-parse --is-inside-work-tree) == "true" ]]; then
+            # glab
+            # if [[ $(git config -l | grep url | grep gitlab) == *"gitlab"* ]]; then
+            #     glab repo view
+            # else
+            #     gh repo view
+            # fi
+        # fi
+        rich --pager $1
+    else
+        # cat with syntax highlighting
+        if [[ $(uname) == *"Linux"* ]]; then
+            batcat $1
+        else
+            ccat $1
+        fi
+    fi
+}
 
-# git speed up
+alias cat='dog'
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ git ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 alias gc='git commit -m'
 alias gs='git status'
-# check all directories below my current directory for their git status
-alias gsa='ls -1 -A | xargs -I % sh -c "figlet %; cd %; git status; cd - > /dev/null; echo '\n'"'
+# check all directories below current directory for their git status
+alias gsa='ls -1 -A | xargs -I % sh -c "figlet % | lolcat ; cd %; git status --short; cd - > /dev/null; echo ''"'
 alias gd='git diff'
 alias ga='git add .'
-alias gph='git push'
+alias gph='git push && git push --tags'
 alias gpl='git pull'
+# glab is gitlab's cli, but I always type gl by accident
+alias gl='glab'
 
-# quick to do
-alias todo='vim ~/todo.md'
 
-# whoami, whereami, whoareyou?
-alias whereami='hostname'
-alias whoareyou='echo "Your friend :)"'
+# -------------------------------------------------------------------------- #
+#                               COMPLETION                                   #
+# -------------------------------------------------------------------------- #
 
-########## Extra Functions/One-Liners ###########
-# move faster with base 64
+# ~~~~~~~~~~~~~~~~ enable programmable completion features ~~~~~~~~~~~~~~~~~ #
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ nvm ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+export NVM_DIR="$HOME/.nvm"
+# This loads nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+# This loads nvm bash_completion
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Terraform ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+complete -C /usr/local/bin/terraform terraform
+
+
+# -------------------------------------------------------------------------- #
+# --------------------------  CUSTOM FUNCTIONS ----------------------------- #
+# -------------------------------------------------------------------------- #
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ base64 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 function b64 {
     echo -n $1 | base64
 }
@@ -138,7 +232,7 @@ function b64d {
     echo -n $1 | base64 --decode
 }
 
-# allow for searching of all repos with ag
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~ ag (search repos) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 function agr {
     if [ $2 = "y"]; then
         for $repo in $(ls -1 $REPOS); do
@@ -149,62 +243,17 @@ function agr {
     ag $1 $REPOS
 }
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
-fi
-# bash completion for nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-# terraform bash completion
-complete -C /usr/local/bin/terraform terraform
-
-# go
-export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
-
-# python packages default location when you do pip3 install --user somepackage
-export PATH=$PATH:$HOME/.local/bin
-
-# special linux pathing
-if [[ $(uname) == *"Linux"* ]]; then
-    # this is for iptables on debian, which is elusive
-    export PATH=$PATH:/usr/sbin:/usr/share
-    # Brew on Linux
-    export HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew
-    export HOMEBREW_CELLAR=/home/linuxbrew/.linuxbrew/Cellar
-    export HOMEBREW_REPOSITORY=/home/linuxbrew/.linuxbrew/Homebrew
-    export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin
-    export MANPATH=$MANPATH:/home/linuxbrew/.linuxbrew/share/man
-    export INFOPATH=$INFOPATH:/home/linuxbrew/.linuxbrew/share/info
-else
-    # this is so bash completion works on MacOS
-    [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
-    # this is to use GNU sed, called gsed, instead of MacOS's POSIX
-    export PATH=/usr/local/opt/gnu-sed/libexec/gnubin:$PATH
-    # this is so we always use gsed
-    alias sed='gsed'
-fi
+# -------------------------------------------------------------------------- #
+#                            Other Load on start                             #
+# -------------------------------------------------------------------------- #
 
 # include external .bashrc_$application if it exists
+# example: if there's a .bashrc_k8s, source that as well
 for bash_file in `ls -1 $HOME/.bashrc_*`; do
     . $bash_file
 done
 
-# This is for powerline, a prompt I've been playing with: https://powerline.readthedocs.io
-
-if [[ $(uname) == *"Linux"* ]]; then
-    pip_packages="/home/linuxbrew/.linuxbrew/lib/python3.10/site-packages"
-else
-    pip_packages="/usr/local/lib/python3.10/site-packages" 
-fi
-
+# This is for powerline, a fancy extensible prompt: https://powerline.readthedocs.io
 if [ -f $pip_packages/powerline/bindings/bash/powerline.sh ]; then
     powerline-daemon -q
     POWERLINE_BASH_CONTINUATION=1
@@ -212,9 +261,10 @@ if [ -f $pip_packages/powerline/bindings/bash/powerline.sh ]; then
     . $pip_packages/powerline/bindings/bash/powerline.sh
 fi
 
-# this prompt one is only if emojis already work in your terminal :3
-# PS1="\`if [ \$? = 0 ]; then echo 💙; else echo 😔; fi\` \[\e[94m\][\@]\[\e[0m\]\\$ "
-# use this one if you don't have emojis in your terminal
-# adds a smileyface on successful commands and a wat face otherwise :D
-# prompt will show the user.time and that is it, for now. 
-# PS1="\`if [ \$? = 0 ]; then echo \[\e[32m\]^_^\[\e[0m\]; else echo \[\e[31m\]O_O\[\e[0m\]; fi\`[\u.\@]\\$ "
+# -------------------------------------------------------------------------- #
+#                            PERSONAL MOTD                                   #
+# -------------------------------------------------------------------------- #
+
+# run neofetch, a system facts cli script, immediately when we login anywhere
+echo ""
+neofetch

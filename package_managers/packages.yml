@@ -25,6 +25,8 @@ apt:
     - gnome-software-plugin-flatpak
     # cat images in the terminal :) works in tmux
     - catimg
+    # pretty cat files
+    - batcat
 
   gaming_packages:
     - lutris
@@ -62,6 +64,7 @@ snap:
   default_packages:
     - core
     - fluent-reader
+    - scrcpy
 
 pip3.10:
   emoji: "🐍"

@@ -71,32 +71,43 @@ echo "running: git config --global init.defaultBranch main"
 git config --global init.defaultBranch main
 
 
-echo -e "------------------------------- \033[94m Checking for Brew \033[00m ------------------------------"
-# make sure linuxbrew is in the path
-if [[ "$OS" == *"linux"* ]]; then
-    # source the existing bashrc, just in case
-    if [ -f "~/.bashrc" ]; then
-        . ~/.bashrc
-    fi
+echo -e "------------------------------- \033[94m Checking for Brew \033[00m ------------------------------\n"
 
-    # if this still isn't in our path, export it and source this bashrc
-    echo "Doing some linux brew path/env checking..."
-    simple_loading_bar 3
-    env | grep "brew"
-    brew_return_code=$?
-    if [ $brew_return_code -ne 0 ]; then
+echo "Doing some linux brew path/env checking..."
+
+# source the existing bashrc, just in case
+if [ -f "~/.bashrc" ]; then
+    . ~/.bashrc
+elif [ -f "~/.bash_profile" ]; then
+    . ~/.bash_profile
+fi
+
+env | grep -i "brew"
+brew_return_code=$?
+
+# if this still isn't in our path, export it and source this bashrc
+if [ $brew_return_code -ne 0 ]; then
+    if [[ "$OS" == *"linux"* ]]; then
         echo "Linuxbrew isn't in your path. Let's get that installed :)"
         # make sure this is all in the bashrc for new shells
         echo "export HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew" >> ~/.bashrc
         echo "export HOMEBREW_CELLAR=/home/linuxbrew/.linuxbrew/Cellar" >> ~/.bashrc
         echo "export HOMEBREW_REPOSITORY=/home/linuxbrew/.linuxbrew/Homebrew" >> ~/.bashrc
-        echo "export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin" >> ~/.bashrc
         echo "export MANPATH=$MANPATH:/home/linuxbrew/.linuxbrew/share/man" >> ~/.bashrc
         echo "export INFOPATH=$INFOPATH:/home/linuxbrew/.linuxbrew/share/info" >> ~/.bashrc
-
+        echo "PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin" >> ~/.bashrc
         # source the bashrc, for this shell
         . ~/.bashrc
-
+    else
+        # check if this an M1 mac or not
+        uname -a | grep arm > /dev/null
+        M1=$?
+        if [ $M1 -eq 0 ]; then
+            # for the M1/M2 brew default installs here
+            echo "PATH=/opt/homebrew/bin:$PATH" >> ~/.bash_profile
+        fi
+        # source the bashrc, for this shell
+        . ~/.bash_profile
     fi
 fi
 

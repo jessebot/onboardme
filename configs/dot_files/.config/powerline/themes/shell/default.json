@@ -1,43 +1,64 @@
 {
 	"segments": {
-		"left": [
-			{
-				"function": "powerline.segments.common.net.hostname",
-				"priority": 20
-			},
-			{
-				"function": "powerline.segments.common.env.cwd",
-				"priority": 30,
-                "args": {
-                    "dir_limit_depth": 1,
-                    "use_shortened_path": true
-                }
-			},
-			{
-				"function": "powerline_gitstatus.gitstatus",
-				"priority": 40
-			},
+        "above": [{
+                "left": [
+                    {
+                        "function": "powerline.segments.common.net.hostname",
+                        "priority": 20
+                    },
+                    {
+                        "function": "powerline.segments.common.env.cwd",
+                        "before": " ",
+                        "priority": 30,
+                        "args": {
+                            "use_shortened_path": true
+                        }
+                    },
+                    {
+                        "function": "powerline_gitstatus.gitstatus",
+                        "draw_soft_divider": false,
+                        "draw_hard_divider": false,
+                        "priority": 40
+                    },
+                    {
+                        "type": "string",
+                        "highlight_groups": ["background"],
+                        "draw_soft_divider": false,
+                        "draw_hard_divider": true,
+                        "width": "auto"
+                    },
+                    {
+                        "function": "powerline_kubernetes.kubernetes",
+                        "priority": 50,
+                        "args": {
+                            "show_kube_logo": true, 
+                            "show_cluster": false, 
+                            "show_namespace": true, 
+                            "show_default_namespace": false, 
+                            "alerts": ["live", "cluster:live"]
+                        }
+                    },
+                    {
+                        "function": "powerline.segments.common.time.date",
+                        "args": {
+                            "format": " %H:%M"
+                        }
+                    }
+                ]
+            }],
+
+        "left": [
             {
-                "function": "powerline_kubernetes.kubernetes",
-                "priority": 50,
-                "args": {
-                    "show_kube_logo": true, 
-                    "show_cluster": false, 
-                    "show_namespace": true, 
-                    "show_default_namespace": false, 
-                    "alerts": ["live", "cluster:live"]
-                }
+                "function": "powerline.segments.shell.last_pipe_status",
+                "priority": 20
+            },
+            {
+                "type": "string",
+                "name": "newline_prompt",
+                "contents": "﬌",
+                "highlight_groups": ["newline_prompt"],
+                "priority": 30
             }
-		],
-		"right": [
-			{
-				"function": "powerline.segments.shell.last_status",
-				"priority": 10
-			},
-			{
-				"function": "powerline_gitstatus.gitstatus",
-				"priority": 10
-			}
-		]
-	}
+        ]
+    }
 }

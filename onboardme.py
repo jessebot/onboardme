@@ -296,8 +296,32 @@ def configure_feeds():
     configures feeds like freetube and RSS readers
     """
     # freeTube is weird, requires this name and directory to work smoothly
-    subs_db = os.listdir(f'{PWD}/configs/feeds/freetube/subscriptions.db')
+    subs_db = '{PWD}/configs/feeds/freetube/subscriptions.db'
     shutil.copy(subs_db, f'{HOME_DIR}/Downloads/subscriptions.db')
+
+
+def configure_terminal(OS='darwin'):
+    """
+    configure colorschemes and dynamic profiles for iterm2 if we're on macOS
+    """
+    if OS == "darwin":
+        print_head("Configuring iTerm2 settings...")
+        print_head
+        p = os.path.join(HOME_DIR,
+                         'Library/Application Support/iTerm2/DynamicProfiles')
+        shutil.copy(f'{PWD}/configs/iterm2/Profiles.json', p)
+    print("Finished installing default Dynamic Profile.")
+
+
+def parse_local_configs():
+    """
+    parse the local config yaml file if it exists
+    """
+    local_config_dir = f'{HOME_DIR}/.config/onboardme/config.yaml'
+    if os.path.exists(local_config_dir):
+        with open(local_config_dir, 'r') as yaml_file:
+            config = yaml.safe_load(yaml_file)
+    return config
 
 
 def parse_args():
@@ -305,21 +329,29 @@ def parse_args():
     Parse arguments and return dict
     """
     d_help = 'Deletes existing rc files before creating hardlinks. BE CAREFUL!'
+    df_help = ('COMING SOON. Git url to clone for dot files, assumes dot files'
+               'are in root directory for now')
     e_help = ('Extra package groups to install. Accepts multiple args, e.g. '
               '--extra gaming')
-    i_help = ('Installers to run. Accepts multiple args, e.g. only run brew '
-              'and apt: --installers brew apt')
+    i_help = ('Installers to run. Accepts multiple args. Defaults to only run '
+              'brew, pip3, and apt(if linux). example: --installers brew apt')
+    o_help = ('Experimental. Only run these steps in the script, e.g. --only '
+              'dot_files. Steps include dot_files, and package_managers.')
     h_help = 'Add IP to firewall for remote access'
     p = ArgumentParser(description=main.__doc__)
 
-    p.add_argument('--delete', action='store_true', default=False, help=d_help)
+    p.add_argument('--dot_files', default=None, nargs='+', help=df_help)
+    p.add_argument('-d', '--delete', action='store_true', default=False,
+                   help=d_help)
     p.add_argument('-e', '--extra', default=None, nargs='+', help=e_help)
     p.add_argument('-f', '--firefox', action='store_true', default=False,
                    help='Opt into experimental firefox configuring')
     p.add_argument('-i', '--installers', default=None, nargs='+', help=i_help)
+    p.add_argument('-o', '--only', default=None, nargs='+', help=i_help)
     p.add_argument('-r', '--remote', action='store_true', default=False,
                    help='Setup SSH on a random port and add it to firewall.')
     p.add_argument('-H', '--host', nargs='+', default=None, help=h_help)
+
     return p.parse_args()
 
 
@@ -328,13 +360,17 @@ def main():
     Onboarding script for macOS and debian. Uses config in the script repo in
     package_managers/packages.yml. If run with no options on Linux it will
     install brew, apt, flatpak, and snap packages. On mac, only brew.
+    coming soon: config via env variables and config files.
     """
     opt = parse_args()
 
     print('\n 🥱 This could take a while on a fresh install. Settle in & get '
           'comfy 🛋️ ')
     hard_link_dot_files(opt.delete)
-    install_fonts()
+
+    # fonts are brew installed unless we're on linux
+    if 'linux' in OS:
+        install_fonts()
 
     # process additional package lists, if any
     package_groups = ['default']
@@ -362,6 +398,9 @@ def main():
         # configure_ssh()
         configure_firewall(opt.host)
 
+    # configure the iterm2 if we're on macOS
+    configure_terminal(OS)
+
     # this is SUPPOSED to install the vim plugins, but sometimes does not
     configure_vim()
 
@@ -375,7 +414,10 @@ def main():
     print(' ⌨️ : Set capslock to control!')
     print(' ⏰: Install any cronjobs you need from the cron dir!')
     print(' 💲: Source your bash config: source .bashrc')
-    print(' 🐋: Reboot, as the whale demands it')
+    print(' 🐋: Reboot, as the whale demands it \n')
+
+    print("If there's anything else you need help with, check the docs here:")
+    print("https://jessebot.github.io/onboardme/")
 
 
 if __name__ == '__main__':
