@@ -155,33 +155,43 @@ alias grpe='grep'
 alias gerp='grep'
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ cat ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-# always use rich for viewing markdown, vs ccat or batcat
-# see my docs more for info, TODO: Write those docs with links to all 3 apps
+
+# TODO: Write those docs with links to all 3 apps (vim, rich, and batcat)
+# Function to use the best syntax highlighting app for the job
 function dog {
-    # make sure this is a markdown file
-    if [[ "$1" == *".md" ]]; then
-        # if this is a git directory, we might want to use gh or glab
-        # if [[ $(git rev-parse --is-inside-work-tree) == "true" ]]; then
-            # glab
-            # if [[ $(git config -l | grep url | grep gitlab) == *"gitlab"* ]]; then
-            #     glab repo view
-            # else
-            #     gh repo view
-            # fi
-        # fi
-        rich --pager $1
+    # if file has more lines than legnth of the terminal use app with pager
+    too_long=false
+    if [ $(wc -l $1 | awk '{print $1}') -gt $(tput lines) ]; then
+        too_long=true
+    fi
+
+    # if this is a markdown or csv file, ALWAYS use rich to print the data
+    if [[ "$1" == *".md" ]] || [[ "$1" == *".csv" ]]; then
+        if $too_long; then
+            # pager allows moving with j for down, k for up, and :q for quit
+            rich --pager $1
+        else
+            rich $1
+            echo ""
+        fi
     else
-        # cat with syntax highlighting
+        # On Linux, use batcat - sytnax highlighting + git support and pager
         if [[ $(uname) == *"Linux"* ]]; then
             batcat $1
         else
-            ccat $1
+            if $too_long; then
+                # if it's not a markdown file, go directly into vim in readonly
+                vim -R $1
+            else
+                # add line numbers
+                rich -n $1
+                echo ""
+            fi
         fi
     fi
 }
 
 alias cat='dog'
-
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ git ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 alias gc='git commit -m'
