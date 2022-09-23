@@ -3,22 +3,9 @@
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                 GENERAL 
-"              stuff like line numbers and syntax highlighting
+"                                 GENERAL
+"            stuff like line numbers and syntax highlighting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" NERD FONTS - fonts with free glyphs require utf-8 on & specific guifont var
-set encoding=utf-8
-set guifont=Hack\ Nerd\ Font:h15
-
-" line numbers for debugging and screen sharing 
-set number
-
-" highlight current line - very useful, shouldn't turn off, you will be lost
-set cursorline
-
-" fix window to be 80 characters at start, I think
-set winwidth=80
 
 " Use 24-bit (true-color) mode in Neovim 0.1.5+ and Vim 7.4+
 if (has("termguicolors"))
@@ -28,21 +15,73 @@ endif
 " setting default colorscheme
 set background=dark
 
-" Enable syntax highlighting by default 
-syntax on
+" NERD FONTS - fonts with free glyphs require utf-8
+set encoding=utf-8
+" use specific font with the glyphs patched in
+set guifont=Hack\ Nerd\ Font:h15
 
-" allow unsaved background buffers and remember marks/undo for them
-set hidden
+" line numbers for debugging and screen sharing
+set number
+
+" highlight current line - very useful, shouldn't turn off, you will be lost
+set cursorline
+
+" fix window to be 80 characters at start
+set winwidth=80
+
+" Enable syntax highlighting by default
+syntax on
 
 " remember more commands and search history
 set history=10000
 
-" unsure what this does and afraid to remove it...
-set nocompatible
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                INDENT ZONE 
+"                            GENERAL - Part 2
+"                     stuff I need to research more
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" allow unsaved background buffers and remember marks/undo for them
+set hidden
+set scrolloff=3
+" Prevent Vim from clobbering the scrollback buffer. See
+" http://www.shallowsky.com/linux/noaltscreen.html
+set t_ti= t_te=
+
+" This makes RVM work inside Vim. I have no idea why. ? RVM?
+set shell=bash
+
+" Store temporary files in a central spot ?
+set backup
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+
+" display incomplete commands ?
+set showcmd
+
+" use emacs-style tab completion when selecting files, etc ?
+set wildmode=longest,list
+" make tab completion for files/buffers act like bash ?
+set wildmenu
+
+" still don't know what a leader is ?
+let mapleader=","
+
+" unsure what this does and afraid to remove it...?
+set nocompatible
+
+" other stuff that I don't know if it matters...?
+set cmdheight=2
+set switchbuf=useopen
+set numberwidth=5
+set showtabline=2
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                INDENT ZONE
 "                          define tabs and spaces
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set expandtab
@@ -57,7 +96,20 @@ filetype plugin indent on
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                SEARCHING 
+"                               YAML
+"                does proper linting w/o leaving vim
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+  set foldlevelstart=20
+
+  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+  let g:ale_sign_error = '✘'
+  let g:ale_sign_warning = '⚠'
+  let g:ale_lint_on_text_changed = 'never'
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                SEARCHING
 "                how we highlight search results and the like
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set laststatus=2
@@ -69,33 +121,6 @@ set ignorecase smartcase
 " solve issue where sometimes search is used with white text on yellow bg
 hi Search ctermbg=White
 hi Search ctermfg=DarkBlue
-
-set cmdheight=2
-set switchbuf=useopen
-set numberwidth=5
-set showtabline=2
-
-" This makes RVM work inside Vim. I have no idea why.
-set shell=bash
-
-" Prevent Vim from clobbering the scrollback buffer. See
-" http://www.shallowsky.com/linux/noaltscreen.html
-set t_ti= t_te=
-" keep more context when scrolling off the end of a buffer
-set scrolloff=3
-" Store temporary files in a central spot
-set backup
-set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
-" display incomplete commands
-set showcmd
-" use emacs-style tab completion when selecting files, etc
-set wildmode=longest,list
-" make tab completion for files/buffers act like bash
-set wildmenu
-let mapleader=","
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -211,7 +236,7 @@ command! OpenChangedFiles :call OpenChangedFiles()
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                         InsertTime COMMAND 
+"                         InsertTime COMMAND
 "                       Insert the current time
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 command! InsertTime :normal a<c-r>=strftime('%F %H:%M:%S.0 %z')<cr>
@@ -220,29 +245,26 @@ command! InsertTime :normal a<c-r>=strftime('%F %H:%M:%S.0 %z')<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                    :w!!
 " Sudo vim trick with less key strokes - allow saving of files as sudo when I
-"                      forgot to start vim using sudo. 
+"                      forgot to start vim using sudo.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 cmap w!! w !sudo tee > /dev/null %
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                               YAML
-"                does proper linting w/o leaving vim
+"                              Airline
+"               A pure vim script status line for vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-  set foldlevelstart=20
-
-  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-  let g:ale_sign_error = '✘'
-  let g:ale_sign_warning = '⚠'
-  let g:ale_lint_on_text_changed = 'never'
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"   maybe this maeks some of the powerline fonts work better
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" use powerline fonts
 let g:airline_powerline_fonts = 1
+" use softer colors
 let g:airline_theme='murmur'
+" changing separators to match personal powerline for shell
 let g:airline_left_sep=' '
 let g:airline_right_sep=''
+" this is a smaller more consise final section
+function! LinePercent()
+    return line('.') * 100 / line('$') . '%'
+endfunction
+let g:airline_section_z = ':%l (%{LinePercent()}) :%v'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                 Vim-plug
@@ -279,9 +301,10 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'liuchengxu/vim-clap'
 
 " yaml syntax highlighting better
-" Plug 'stephpy/vim-yaml'
-" helm yaml specifically (includes go support)
-Plug 'towolf/vim-helm'
+Plug 'stephpy/vim-yaml'
+" helm yaml specifically (includes go support) doesn't seem to work for
+" auto-indenting, so it's off for now
+" Plug 'towolf/vim-helm'
 
 " python tab completion - I actually find this kind of annoying :shrug:
 Plug 'davidhalter/jedi-vim'
