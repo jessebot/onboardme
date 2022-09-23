@@ -273,15 +273,15 @@ let g:airline_section_z = ':%l (%{LinePercent()}) :%v'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin()
 
+" this is a modern fuzzy searcher
+Plug 'liuchengxu/vim-clap'
+
 " adds a pretty status line
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 " git plugin for running git commands with :git
 Plug 'tpope/vim-fugitive'
-
-" indents lines and adds a line to show blocks of code
-Plug 'Yggdroot/indentLine'
 
 " NerdTree - Tree explorer plugin - use :NERDTreeToggle to try it out
 "          - after nerdtree is on visible, use ? for help
@@ -297,15 +297,11 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 "
 " END NerdTree
 
-" this is a modern fuzzy searcher
-Plug 'liuchengxu/vim-clap'
+" indents lines and adds a line to show blocks of code
+Plug 'Yggdroot/indentLine'
 
 " yaml syntax highlighting better
 Plug 'stephpy/vim-yaml'
-" helm yaml specifically (includes go support) doesn't seem to work for
-" auto-indenting, so it's off for now
-" Plug 'towolf/vim-helm'
-
 " python tab completion - I actually find this kind of annoying :shrug:
 Plug 'davidhalter/jedi-vim'
 " I don't actually remember what this does...
@@ -315,5 +311,17 @@ Plug 'WolfgangMehner/bash-support'
 
 " linter - will use shellcheck for bash and highlight broken code
 Plug 'dense-analysis/ale'
+
+" ------------------------- k8s -------------------------------
+"
+" For the current buffer (including modifications not on disk)
+" :KubeApply :KubeDelete :KubeCreate
+" And for the current directory (read from disk)
+" :KubeApplyDir :KubeDeleteDir
+Plug 'andrewstuart/vim-kubernetes'
+
+" helm yaml specifically (includes go support) doesn't seem to work for
+" auto-indenting, so it's off for now
+" Plug 'towolf/vim-helm'
 
 call plug#end()
