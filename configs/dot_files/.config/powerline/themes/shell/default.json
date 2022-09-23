@@ -1,5 +1,5 @@
 {
-	"segments": {
+    "segments": {
         "above": [{
                 "left": [
                     {
@@ -31,10 +31,10 @@
                         "function": "powerline_kubernetes.kubernetes",
                         "priority": 50,
                         "args": {
-                            "show_kube_logo": true, 
-                            "show_cluster": false, 
-                            "show_namespace": true, 
-                            "show_default_namespace": false, 
+                            "show_kube_logo": true,
+                            "show_cluster": false,
+                            "show_namespace": true,
+                            "show_default_namespace": false,
                             "alerts": ["live", "cluster:live"]
                         }
                     },
