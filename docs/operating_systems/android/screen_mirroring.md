@@ -75,7 +75,7 @@ Which should return `List of devices attached` followed by something like `192.1
 
 FINALLY, you can now run this to get your phone mirrored:
 ```bash
-scrcpy
+scrcpy --select-tcpip
 ```
 :party:
 
