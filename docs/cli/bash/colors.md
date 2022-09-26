@@ -23,7 +23,7 @@ colortest-16   colortest-16b  colortest-256  colortest-8
 
 Thanks to this [person on askubuntu.com](https://askubuntu.com/a/396569) for showing me the `colortest-256` command. Really pretty stuff :)
 
-<img src="/https://raw.githubusercontent.com/jessebot/onboardme/main/screenshots/terminal_palete.png" width="600">
+<img src="https://raw.githubusercontent.com/jessebot/onboardme/main/screenshots/terminal_palete.png" width="600">
 
 ## Test colors with BASH
 If you just want the base terminal colors and all you got is bash, you can try this:
