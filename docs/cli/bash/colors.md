@@ -6,6 +6,41 @@ parent: BASH
 permalink: /cli/bash/colors
 ---
 
+# Testing colors with BASH
+
+## `colortest`
+The simplest way on Debian based systems is to install colortest:
+
+```bash
+sudo apt-get install colortest
+```
+
+It provides several commands which you can use, depending on how many colors you want:
+
+```bash
+colortest-16   colortest-16b  colortest-256  colortest-8
+```
+
+Thanks to this [person on askubuntu.com](https://askubuntu.com/a/396569) for showing me the `colortest-256` command. Really pretty stuff :)
+
+<img src="/https://raw.githubusercontent.com/jessebot/onboardme/main/screenshots/terminal_palete.png" width="600">
+
+## Test colors with BASH
+If you just want the base terminal colors and all you got is bash, you can try this:
+```
+bash
+echo -e "\033[0mNC (No color)"
+echo -e "\033[1;37mWHITE\t\033[0;30mBLACK"
+echo -e "\033[0;34mBLUE\t\033[1;34mLIGHT_BLUE"
+echo -e "\033[0;32mGREEN\t\033[1;32mLIGHT_GREEN"
+echo -e "\033[0;36mCYAN\t\033[1;36mLIGHT_CYAN"
+echo -e "\033[0;31mRED\t\033[1;31mLIGHT_RED"
+echo -e "\033[0;35mPURPLE\t\033[1;35mLIGHT_PURPLE"
+echo -e "\033[0;33mYELLOW\t\033[1;33mLIGHT_YELLOW"
+echo -e "\033[1;30mGRAY\t\033[0;37mLIGHT_GRAY"
+```
+<img src="https://i.stack.imgur.com/i2zcd.png">
+
 # Printing colors with BASH
 
 ## `printf` with colors
