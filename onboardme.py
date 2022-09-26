@@ -12,6 +12,9 @@ import subprocess
 import sys
 import yaml
 import wget
+
+
+# Constants
 OS = sys.platform
 HOME_DIR = os.getenv("HOME")
 PWD = os.path.dirname(__file__)

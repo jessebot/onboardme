@@ -8,6 +8,7 @@ apt:
     - openssl
     - sysstat
     - silversearcher-ag
+    # this should let you use the a yubikey for auth
     - libpam-yubico
     - finger
     - ssh
@@ -25,9 +26,9 @@ apt:
     - gnome-software-plugin-flatpak
     # cat images in the terminal :) works in tmux
     - catimg
-    # pretty cat files with git diff support
+    # pretty syntaxhighlighted cat files with git diff support
     - batcat
-    # print a very pretty pallete
+    # print a very pretty pallete to see all the colors the terminal can render
     - colortest
 
   gaming_packages:
