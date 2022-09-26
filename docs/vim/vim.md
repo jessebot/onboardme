@@ -5,9 +5,21 @@ permalink: /vim
 has_children: true
 ---
 
-# Vim Tips and Tricks
+# Vim
+Welcome to the wacky world of [Vim](https://www.vim.org/),
 
-## Vim tutor
+> a highly configurable text editor built to make creating and changing any kind of text very efficient. It is included as "vi" with most UNIX systems and with Apple OS X.
+
+Vim is my daily driver for text editing. It serves as my [IDE](https://wikiless.org/wiki/Integrated_development_environment) which includes most bells and whistles of any other editor, but with a WAY smaller footprint. Vim can do anything that visual studio or atom or pycharm or whatever the kids are using these days, but it's generally going to be more barebones, and that's a good thing, because you don't need a new computer every other year to keep up with how bloated your current IDE is. You need a better IDE.
+
+Here's a peak at what it looks like to work in vim:
+
+<img src="https://raw.githubusercontent.com/jessebot/onboardme/main/screenshots/vim_example_1.png" width"=800">
+(Fun fact: typing `:term` will make a terminal appear without leaving vim)
+
+## Vim Tips and Tricks
+
+### Vim tutor
 
 Type `vimtutor` anywhere vim is installed to try out a vim tutorial.
 Per the vim docs (`:help vimtutor`):
@@ -35,7 +47,7 @@ available, use the two-letter language code.  For French:
         vimtutor fr
 ```
 
-## Navigation 
+### Navigation 
 
 |Keys|Description|
 |:---:|:---|
@@ -51,7 +63,7 @@ You can type a number before any of these to increase how far they go, e.g. `2j`
 |`h`| left a character|
 |`l`| right a character|
 
-## Copying, Pasting, Deleting
+### Copying, Pasting, Deleting
 
 You can type a number before all of these hot keys to change the number of lines or words you cut, copy, and paste.
 
@@ -67,7 +79,7 @@ You can type a number before all of these hot keys to change the number of lines
 
 :star2: the `y` you're typing stands for "yank", so you're yanking a line. 
 
-## Indent and Unindent
+### Indent and Unindent
 
 |Keys|Description|
 |:---:|:---|
@@ -78,12 +90,12 @@ You can type a number before all of these hot keys to change the number of lines
 
 *Note: `shiftwidth` setting in your `.vimrc` controls how many spaces to indent.*
 
-#### Indent curly brace block
+##### Indent curly brace block
 Move your cursor over *one of the curly braces*, then hit `>` followed by `%`
 
 (From anywhere inside the curly brace block you can hit: `>` then `i` then `B`.)
 
-## Visual modes
+### Visual modes
 
 |Keys|Description|
 |:---:|:---|
@@ -93,7 +105,7 @@ Move your cursor over *one of the curly braces*, then hit `>` followed by `%`
 
 Once you've highlighted a selection, you can then operate on just that selection, so you can cut it, copy it, indent it, and use interactive sed on it. It's pretty helpful.
 
-### Insert into all selected visualblock lines
+#### Insert into all selected visualblock lines
 After you have a visual block selected:
 `shift` + `i` takes you into insert for all lines, and you can type whatever you want, including indentation like spaces or tabs.
 
@@ -101,13 +113,13 @@ After you have a visual block selected:
 
 Hit `esc` **twice**!
 
-### Interactive sed example
+#### Interactive sed example
 This will prepend each line with "meep ":
 ```vim
 :%s/^/meep /
 ```
 
-## Terminal
+### Terminal
 In command mode...
 
 | Keys | Description |
@@ -117,7 +129,7 @@ In command mode...
 |`:below term`| To get a terminal on the **BOTTOM OF THE ACTIVE PANE** |
 |`:botright term`|To get a terminal that spans the **ENTIRE BOTTOM** |
 
-## Navigate through windows 
+### Navigate through windows 
 **While Holding the `Ctrl` key,** type one to switch windows in vim:
 
 | Keys | Description |
@@ -129,7 +141,7 @@ In command mode...
 |`wl`| takes you right a window |
 
 
-## Guides and helpful answers
+### Guides and helpful answers
 - [How does the vim write with sudo trick work?](https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
 - [Setting up vim for yaml](https://www.arthurkoziel.com/setting-up-vim-for-yaml/).
 - [How to change the highlight color for search hits and quickfix selection](https://stackoverflow.com/questions/7103173/vim-how-to-change-the-highlight-color-for-search-hits-and-quickfix-selection)
