@@ -16,8 +16,11 @@ case $- in
       *) return;;
 esac
 
-## default editor
+# default editor
 export EDITOR=vim
+
+# make all colors work by default
+export TERM=xterm-256color
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
