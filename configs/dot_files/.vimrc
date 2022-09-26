@@ -266,6 +266,28 @@ function! LinePercent()
 endfunction
 let g:airline_section_z = ':%l (%{LinePercent()}) :%v'
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               vim-gitgutter
+"  git gutter is a vim plugin that puts a symbol in a column before the line #
+"  We need to do a little configuring to make it less ugly
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-gitgutter used to do this by default:
+highlight! link SignColumn LineNr
+" change sign color color
+highlight SignColumn guibg=#1d1d1d ctermbg=black
+
+" change the colors back to what they should be when there are changes
+highlight GitGutterAdd    guifg=#009900 ctermfg=2
+highlight GitGutterChange guifg=#bbbb00 ctermfg=3
+highlight GitGutterDelete guifg=#ff2222 ctermfg=1
+
+" use the nerdfont symbols inst4ead of -,+
+let g:gitgutter_sign_added = ''
+let g:gitgutter_sign_modified = ''
+let g:gitgutter_sign_removed = ''
+
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                 Vim-plug
 "         plugin manager for vim: https://github.com/junegunn/vim-plug
@@ -282,6 +304,8 @@ Plug 'vim-airline/vim-airline-themes'
 
 " git plugin for running git commands with :git
 Plug 'tpope/vim-fugitive'
+" puts a git + or - in side line to show git changes in file
+Plug 'airblade/vim-gitgutter'
 
 " NerdTree - Tree explorer plugin - use :NERDTreeToggle to try it out
 "          - after nerdtree is on visible, use ? for help
@@ -305,7 +329,7 @@ Plug 'stephpy/vim-yaml'
 " python tab completion - I actually find this kind of annoying :shrug:
 Plug 'davidhalter/jedi-vim'
 " I don't actually remember what this does...
-Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+Plug 'python-mode/python-mode', { 'for': 'python'}
 " bash tab completion
 Plug 'WolfgangMehner/bash-support'
 

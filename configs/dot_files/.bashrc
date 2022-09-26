@@ -81,10 +81,10 @@ if [[ $(uname) == *"Darwin"* ]]; then
     if [ $(uname -a | grep arm > /dev/null ; echo $?) -eq 0 ]; then
         # On M1/M2: brew default installs here
         export PATH=/opt/homebrew/bin:$PATH
-        pip_packages="/opt/homebrew/lib/python3.10/site-packages" 
+        pip_packages="/opt/homebrew/lib/python3.10/site-packages"
     else
         # For older macs before the M1, pre-2020
-        pip_packages="/usr/local/lib/python3.10/site-packages" 
+        pip_packages="/usr/local/lib/python3.10/site-packages"
     fi
 
     # Load GNU sed, called gsed, instead of MacOS's POSIX sed
@@ -98,7 +98,7 @@ fi
 #                                 ALIASES                                    #
 # -------------------------------------------------------------------------- #
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Typos <3 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ # 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Typos <3 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 alias gtop='gotop'
 # can never spell clear
 alias celar='clear'
