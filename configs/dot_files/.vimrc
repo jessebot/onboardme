@@ -67,7 +67,10 @@ set wildmode=longest,list
 " make tab completion for files/buffers act like bash ?
 set wildmenu
 
-" still don't know what a leader is ?
+" https://medium.com/usevim/vim-101-what-is-the-leader-key-f2f5c1fa610f
+" The <Leader> key is a reference to a specific key defined by the mapleader
+" variable. A lot of ppl change to comma because they find it easier to type.
+"
 let mapleader=","
 
 " unsure what this does and afraid to remove it...?
@@ -146,8 +149,6 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                              MISC KEY MAPS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" not sure what this does :shrug:
-map <leader>y "*y
 " Move around splits with ctrl + nav key(hjkl)
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
@@ -243,11 +244,11 @@ command! InsertTime :normal a<c-r>=strftime('%F %H:%M:%S.0 %z')<cr>
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                    :w!!
+"                             <Leader>w
 " Sudo vim trick with less key strokes - allow saving of files as sudo when I
 "                      forgot to start vim using sudo.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-cmap w!! w !sudo tee > /dev/null %
+noremap <Leader>w :w !sudo tee % > /dev/null
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                              Airline

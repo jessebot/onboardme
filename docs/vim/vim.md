@@ -1,16 +1,11 @@
 ---
 layout: default
 title: Vim
-parent: Command Line Interface
-permalink: /cli/vim
+permalink: /vim
+has_children: true
 ---
 
 # Vim Tips and Tricks
-
-## Guides and helpful answers
-- [How does the vim write with sudo trick work?](https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
-- [Setting up vim for yaml](https://www.arthurkoziel.com/setting-up-vim-for-yaml/).
-- [How to change the highlight color for search hits and quickfix selection](https://stackoverflow.com/questions/7103173/vim-how-to-change-the-highlight-color-for-search-hits-and-quickfix-selection)
 
 ## Vim tutor
 
@@ -134,9 +129,8 @@ In command mode...
 |`wl`| takes you right a window |
 
 
-## Plugins
-### NerdTree
-
-While in vim, start typing `:nerd` and tab, and it will autocomplete to `:NERDTreeToggle`, which will bring up a file tree, that you can then navigate with `j`(down) and `k`(up), and then either:
-- hit `return` to either open directories
-- hit `s` to open a file side by side
+## Guides and helpful answers
+- [How does the vim write with sudo trick work?](https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
+- [Setting up vim for yaml](https://www.arthurkoziel.com/setting-up-vim-for-yaml/).
+- [How to change the highlight color for search hits and quickfix selection](https://stackoverflow.com/questions/7103173/vim-how-to-change-the-highlight-color-for-search-hits-and-quickfix-selection)
+- [Solving merge conflicts with vim](https://medium.com/prodopsio/solving-git-merge-conflicts-with-vim-c8a8617e3633)
