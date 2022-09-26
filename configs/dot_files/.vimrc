@@ -80,7 +80,6 @@ set nocompatible
 set cmdheight=2
 set switchbuf=useopen
 set numberwidth=5
-set showtabline=2
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -266,6 +265,17 @@ function! LinePercent()
     return line('.') * 100 / line('$') . '%'
 endfunction
 let g:airline_section_z = ':%l (%{LinePercent()}) :%v'
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                           TAB LINE - TOP STATUS LINE        
+" By default tabline does not appear unless there is more then one tab. This 
+" behavior is controlled by showtabline option which defaults to 1. 0 switches 
+" off tabline even if there is more then one tab, 2 makes tabline to be shown 
+" even if there is only one tab. To find out what script set the variable use
+" :verbose set showtabline? 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" set showtabline=1
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
