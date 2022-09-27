@@ -267,6 +267,9 @@ Plug 'WolfgangMehner/bash-support'
 " linter - will use shellcheck for bash and highlight broken code
 Plug 'dense-analysis/ale'
 
+" terraform linter
+Plug 'hashivim/vim-terraform' 
+
 call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
