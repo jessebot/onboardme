@@ -347,6 +347,13 @@ Plug 'WolfgangMehner/bash-support'
 " linter - will use shellcheck for bash and highlight broken code
 Plug 'dense-analysis/ale'
 
+
+" terraform linter
+Plug 'hashivim/vim-terraform' 
+
+call plug#end()
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+=======
 " ------------------------- k8s -------------------------------
 "
 " For the current buffer (including modifications not on disk)
@@ -354,6 +361,7 @@ Plug 'dense-analysis/ale'
 " And for the current directory (read from disk)
 " :KubeApplyDir :KubeDeleteDir
 Plug 'andrewstuart/vim-kubernetes'
+
 
 " helm yaml specifically (includes go support) doesn't seem to work for
 " auto-indenting, so it's off for now
