@@ -29,17 +29,21 @@ chmod 0500 ./setup.sh
 ```
 
 ### macOS
-macOS uses zsh as the default shell, and I don't currently support zsh, so type bash to get this ancient verison of bash to run the setup and onboardme, which will install a current version of bash. **The script will not run properly in zsh**
+macOS uses zsh as the default shell, and I don't currently support zsh, so type bash to get this ancient verison of bash to run the setup and onboardme, which will install a current version of bash. **The script will *not* run properly in zsh**.
 
 ```bash
 bash
 ```
+
 ## run the setup.sh script
 This is to install dependencies and clone the onboardme repo.
 
 ```bash
 # NOTE THE . before the script! *Very* important!
 . ./setup.sh
+
+# just in case you didn't run the above script with .
+source ~/.bash_profile || source ~/.bashrc
 ```
 
 Now you can run the actual script that does the heavy lifting. If you can `setup.sh` above without errors, it will be installed in `~/repos/onboardme`:

@@ -37,6 +37,9 @@ brew "neofetch"
 # prettier du/df outputs: https://github.com/muesli/duf
 brew "duf"
 
+# pretty formatting and syntax highlighting
+brew "rich"
+
 # make fun text in the terminal
 brew "lolcat"
 brew "figlet"

@@ -1,5 +1,5 @@
 {
-	"segments": {
+    "segments": {
         "above": [{
                 "left": [
                     {
@@ -8,7 +8,7 @@
                     },
                     {
                         "function": "powerline.segments.common.env.cwd",
-                        "before": " ",
+                        "before": "  ",
                         "priority": 30,
                         "args": {
                             "use_shortened_path": true
@@ -16,25 +16,27 @@
                     },
                     {
                         "function": "powerline_gitstatus.gitstatus",
+                        "draw_soft_divider": false,
+                        "draw_hard_divider": false,
                         "priority": 40
-                    },
-                    {
-                        "function": "powerline_kubernetes.kubernetes",
-                        "priority": 50,
-                        "args": {
-                            "show_kube_logo": true, 
-                            "show_cluster": false, 
-                            "show_namespace": true, 
-                            "show_default_namespace": false, 
-                            "alerts": ["live", "cluster:live"]
-                        }
                     },
                     {
                         "type": "string",
                         "highlight_groups": ["background"],
                         "draw_soft_divider": false,
-                        "draw_hard_divider": false,
+                        "draw_hard_divider": true,
                         "width": "auto"
+                    },
+                    {
+                        "function": "powerline_kubernetes.kubernetes",
+                        "priority": 50,
+                        "args": {
+                            "show_kube_logo": true,
+                            "show_cluster": false,
+                            "show_namespace": true,
+                            "show_default_namespace": false,
+                            "alerts": ["live", "cluster:live"]
+                        }
                     },
                     {
                         "function": "powerline.segments.common.time.date",

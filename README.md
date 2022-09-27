@@ -46,15 +46,15 @@ If you want to see the exact packages being installed, you can check out `config
 ### Current Ecoscape of Personal Tech
 
 Category | App | Replaces
-:---:|:---:|:---:
-|Backups - local|Restic to minio|Google Drive, iCloud|
-|Backups - remote |Restic to b2|Google Drive, iCloud, S3|
-|Email|Protonmail and Bridge for Linux/MacOS|Gmail|
-|Launcher|Albert?|Alfred|
-|Photo/file Storage|NextCloud - not tested|Google Photos/Drive|
-|Passwords|Bitwarden|LastPass|
-|News - RSS|Fluent Reader|Facebook/Twitter news company feeds|
-|Video|FreeTube,Peertube|YouTube|
+|:---:|:---:|:---:|
+| Backups - local  | Restic to minio                       | Google Drive, iCloud                |
+| Backups - remote | Restic to b2                          | Google Drive, iCloud, S3            |
+| Email            | Protonmail and Bridge for Linux/MacOS | Gmail                               |
+| Launcher         | ???                                   | Alfred                              |
+| File Storage     | NextCloud Files/Photos                | Google Photos/Drive                 |
+| Passwords        | Bitwarden                             | LastPass                            |
+| News - RSS       | Fluent Reader                         | Facebook/Twitter news company feeds |
+| Internet Videos  | FreeTube,Peertube                     | YouTube (Google)                    |
 
 #### Docs
 You can find the bulk of my notes under the `docs/` directory in this repo, but I've also recently setup a justthedocs page [here](https://jessebot.github.io/onboardme/).
@@ -69,7 +69,7 @@ We've had good luck with [Awesome Humane Tech](https://github.com/humanetech-com
 
 #### Language
 We are currently using the philosophy of this RFC draft:
-[Terminology, Power, & Exclusionary Language...](https://datatracker.ietf.org/doc/html/draft-knodel-terminology-09)
+[Terminology, Power, & Exclusionary Language...](https://datatracker.ietf.org/doc/html/draft-knodel-terminology-10)
 
 ### Tips
 Contact your local datacenters and see if they offer an object storage service, because they might, and it could be really cheap. Don't give your money to AWS, Microsoft, or Google.

@@ -3,21 +3,9 @@
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" GENERAL - stuff like line numbers and syntax highlighting
+"                                 GENERAL
+"            stuff like line numbers and syntax highlighting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" NERD FONTS - fonts with free glyphs require utf-8 on & specific guifont var
-set encoding=utf-8
-set guifont=Hack\ Nerd\ Font:h15
-
-" line numbers for debugging and screen sharing 
-set number
-
-" highlight current line - very useful, shouldn't turn off, you will be lost
-set cursorline
-
-" fix window to be 80 characters at start, I think
-set winwidth=80
 
 " Use 24-bit (true-color) mode in Neovim 0.1.5+ and Vim 7.4+
 if (has("termguicolors"))
@@ -27,20 +15,76 @@ endif
 " setting default colorscheme
 set background=dark
 
-" Enable syntax highlighting by default 
-syntax on
+" NERD FONTS - fonts with free glyphs require utf-8
+set encoding=utf-8
+" use specific font with the glyphs patched in
+set guifont=Hack\ Nerd\ Font:h15
 
-" allow unsaved background buffers and remember marks/undo for them
-set hidden
+" line numbers for debugging and screen sharing
+set number
+
+" highlight current line - very useful, shouldn't turn off, you will be lost
+set cursorline
+
+" fix window to be 80 characters at start
+set winwidth=80
+
+" Enable syntax highlighting by default
+syntax on
 
 " remember more commands and search history
 set history=10000
 
-" unsure what this does and afraid to remove it...
-set nocompatible
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" INDENT ZONE - define tabs and spaces
+"                            GENERAL - Part 2
+"                     stuff I need to research more
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" allow unsaved background buffers and remember marks/undo for them
+set hidden
+set scrolloff=3
+" Prevent Vim from clobbering the scrollback buffer. See
+" http://www.shallowsky.com/linux/noaltscreen.html
+set t_ti= t_te=
+
+" This makes RVM work inside Vim. I have no idea why. ? RVM?
+set shell=bash
+
+" Store temporary files in a central spot ?
+set backup
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+
+" display incomplete commands ?
+set showcmd
+
+" use emacs-style tab completion when selecting files, etc ?
+set wildmode=longest,list
+" make tab completion for files/buffers act like bash ?
+set wildmenu
+
+" https://medium.com/usevim/vim-101-what-is-the-leader-key-f2f5c1fa610f
+" The <Leader> key is a reference to a specific key defined by the mapleader
+" variable. A lot of ppl change to comma because they find it easier to type.
+"
+let mapleader=","
+
+" unsure what this does and afraid to remove it...?
+set nocompatible
+
+" other stuff that I don't know if it matters...?
+set cmdheight=2
+set switchbuf=useopen
+set numberwidth=5
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                INDENT ZONE
+"                          define tabs and spaces
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set expandtab
 set tabstop=4
@@ -52,8 +96,23 @@ set autoindent
 " Also load indent files, to automatically do language-dependent indenting.
 filetype plugin indent on
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" SEARCHING - how we highlight search results and the like
+"                               YAML
+"                does proper linting w/o leaving vim
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+  set foldlevelstart=20
+
+  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+  let g:ale_sign_error = '✘'
+  let g:ale_sign_warning = '⚠'
+  let g:ale_lint_on_text_changed = 'never'
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                SEARCHING
+"                how we highlight search results and the like
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set laststatus=2
 set showmatch
@@ -65,35 +124,9 @@ set ignorecase smartcase
 hi Search ctermbg=White
 hi Search ctermfg=DarkBlue
 
-set cmdheight=2
-set switchbuf=useopen
-set numberwidth=5
-set showtabline=2
-
-" This makes RVM work inside Vim. I have no idea why.
-set shell=bash
-
-" Prevent Vim from clobbering the scrollback buffer. See
-" http://www.shallowsky.com/linux/noaltscreen.html
-set t_ti= t_te=
-" keep more context when scrolling off the end of a buffer
-set scrolloff=3
-" Store temporary files in a central spot
-set backup
-set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
-" display incomplete commands
-set showcmd
-" use emacs-style tab completion when selecting files, etc
-set wildmode=longest,list
-" make tab completion for files/buffers act like bash
-set wildmenu
-let mapleader=","
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" CUSTOM AUTOCMDS
+"                            CUSTOM AUTOCMDS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup vimrcEx
 " Clear all autocmds in the group
@@ -111,17 +144,10 @@ augroup vimrcEx
   autocmd! CmdwinLeave * :call MapCR()
 augroup END
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" STATUS LINE - left : filename, program, if the file has been modified
-"             - right: line, coloumn
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-:set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" MISC KEY MAPS
+"                              MISC KEY MAPS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" not sure what this does :shrug:
-map <leader>y "*y
 " Move around splits with ctrl + nav key(hjkl)
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
@@ -134,9 +160,12 @@ endfunction
 call MapCR()
 nnoremap <leader><leader> <c-^>
 
+" let spacebar take me into command mode
+noremap <space> :
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" MULTIPURPOSE TAB KEY
-" Indent if we're at the beginning of a line. Else, do completion.
+"                         MULTIPURPOSE TAB KEY
+"     Indent if we're at the beginning of a line. Else, do completion.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! InsertTabWrapper()
     let col = col('.') - 1
@@ -149,23 +178,27 @@ endfunction
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <s-tab> <c-n>
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" ARROW KEYS ARE UNACCEPTABLE :P (really though, you should learn hjkl for vi)
+"                    ARROW KEYS ARE UNACCEPTABLE :P
+"              (really though, you should learn hjkl for vi)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <Left> <Nop>
 map <Right> <Nop>
 map <Up> <Nop>
 map <Down> <Nop>
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" OPEN FILES IN DIRECTORY OF CURRENT FILE
+"                  OPEN FILES IN DIRECTORY OF CURRENT FILE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 map <leader>e :edit %%
 map <leader>v :view %%
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" RENAME CURRENT FILE
+"                            RENAME CURRENT FILE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! RenameFile()
     let old_name = expand('%')
@@ -178,14 +211,17 @@ function! RenameFile()
 endfunction
 map <leader>n :call RenameFile()<cr>
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Md5 COMMAND - Show the MD5 of the current buffer
+"                               Md5 COMMAND
+"                   Show the MD5 of the current buffer
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 command! -range Md5 :echo system('echo '.shellescape(join(getline(<line1>, <line2>), '\n')) . '| md5')
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" OpenChangedFiles COMMAND
-" Open a split for each dirty file in git
+"                          OpenChangedFiles COMMAND
+"                  Open a split for each dirty file in git
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! OpenChangedFiles()
   only " Close all windows, unless they're modified
@@ -198,42 +234,89 @@ function! OpenChangedFiles()
 endfunction
 command! OpenChangedFiles :call OpenChangedFiles()
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" InsertTime COMMAND - Insert the current time
+"                         InsertTime COMMAND
+"                       Insert the current time
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 command! InsertTime :normal a<c-r>=strftime('%F %H:%M:%S.0 %z')<cr>
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                             <Leader>w
 " Sudo vim trick with less key strokes - allow saving of files as sudo when I
-" forgot to start vim using sudo. it's now :w!!
+"                      forgot to start vim using sudo.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-cmap w!! w !sudo tee > /dev/null %
+noremap <Leader>w :w !sudo tee % > /dev/null
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" YAML documents are weird, but this does proper linting w/o leaving vim
+"                              Airline
+"               A pure vim script status line for vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-  set foldlevelstart=20
+" use powerline fonts
+let g:airline_powerline_fonts = 1
+" use softer colors
+let g:airline_theme='murmur'
+" changing separators to match personal powerline for shell
+let g:airline_left_sep=' '
+let g:airline_right_sep=''
+" this is a smaller more consise final section
+function! LinePercent()
+    return line('.') * 100 / line('$') . '%'
+endfunction
+let g:airline_section_z = ':%l (%{LinePercent()}) :%v'
 
-  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-  let g:ale_sign_error = '✘'
-  let g:ale_sign_warning = '⚠'
-  let g:ale_lint_on_text_changed = 'never'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Vim-plug - plugin manager for vim: https://github.com/junegunn/vim-plug
-"            plugin directory will be (on Linux/macOS): '~/.vim/plugged'
+"                           TAB LINE - TOP STATUS LINE        
+" By default tabline does not appear unless there is more then one tab. This 
+" behavior is controlled by showtabline option which defaults to 1. 0 switches 
+" off tabline even if there is more then one tab, 2 makes tabline to be shown 
+" even if there is only one tab. To find out what script set the variable use
+" :verbose set showtabline? 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" set showtabline=1
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               vim-gitgutter
+"  git gutter is a vim plugin that puts a symbol in a column before the line #
+"  We need to do a little configuring to make it less ugly
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-gitgutter used to do this by default:
+highlight! link SignColumn LineNr
+" change sign color color
+highlight SignColumn guibg=#1d1d1d ctermbg=black
+
+" change the colors back to what they should be when there are changes
+highlight GitGutterAdd    guifg=#009900 ctermfg=2
+highlight GitGutterChange guifg=#bbbb00 ctermfg=3
+highlight GitGutterDelete guifg=#ff2222 ctermfg=1
+
+" use the nerdfont symbols inst4ead of -,+
+let g:gitgutter_sign_added = ''
+let g:gitgutter_sign_modified = ''
+let g:gitgutter_sign_removed = ''
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                 Vim-plug
+"         plugin manager for vim: https://github.com/junegunn/vim-plug
+"          plugin directory will be (on Linux/macOS): '~/.vim/plugged'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin()
 
-" adds a pretty status line that uses powerline, might try airline as well...
-Plug 'powerline/powerline'
+" this is a modern fuzzy searcher
+Plug 'liuchengxu/vim-clap'
+
+" adds a pretty status line
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " git plugin for running git commands with :git
 Plug 'tpope/vim-fugitive'
-
-" indents lines and adds a line to show blocks of code
-Plug 'Yggdroot/indentLine'
+" puts a git + or - in side line to show git changes in file
+Plug 'airblade/vim-gitgutter'
 
 " NerdTree - Tree explorer plugin - use :NERDTreeToggle to try it out
 "          - after nerdtree is on visible, use ? for help
@@ -249,34 +332,39 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 "
 " END NerdTree
 
-" this is a modern fuzzy searcher
-Plug 'liuchengxu/vim-clap'
+" indents lines and adds a line to show blocks of code
+Plug 'Yggdroot/indentLine'
 
 " yaml syntax highlighting better
 Plug 'stephpy/vim-yaml'
-" helm yaml specifically (includes go support)
-Plug 'towolf/vim-helm'
-
 " python tab completion - I actually find this kind of annoying :shrug:
 Plug 'davidhalter/jedi-vim'
 " I don't actually remember what this does...
-Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+Plug 'python-mode/python-mode', { 'for': 'python'}
 " bash tab completion
 Plug 'WolfgangMehner/bash-support'
 
 " linter - will use shellcheck for bash and highlight broken code
 Plug 'dense-analysis/ale'
 
+
 " terraform linter
 Plug 'hashivim/vim-terraform' 
 
 call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+=======
+" ------------------------- k8s -------------------------------
+"
+" For the current buffer (including modifications not on disk)
+" :KubeApply :KubeDelete :KubeCreate
+" And for the current directory (read from disk)
+" :KubeApplyDir :KubeDeleteDir
+Plug 'andrewstuart/vim-kubernetes'
 
-set rtp+=~/.local/lib/python3.9/site-packages/powerline/bindings/vim
 
-" uncomment these below to install powerline for vim for the first time
-" python3 from powerline import vim
-" python3 from vim import setup as powerline_setup
-" python3 powerline_setup()
-" python3 del powerline_setup
+" helm yaml specifically (includes go support) doesn't seem to work for
+" auto-indenting, so it's off for now
+" Plug 'towolf/vim-helm'
+
+call plug#end()
