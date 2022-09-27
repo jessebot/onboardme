@@ -69,7 +69,7 @@ We've had good luck with [Awesome Humane Tech](https://github.com/humanetech-com
 
 #### Language
 We are currently using the philosophy of this RFC draft:
-[Terminology, Power, & Exclusionary Language...](https://datatracker.ietf.org/doc/html/draft-knodel-terminology-09)
+[Terminology, Power, & Exclusionary Language...](https://datatracker.ietf.org/doc/html/draft-knodel-terminology-10)
 
 ### Tips
 Contact your local datacenters and see if they offer an object storage service, because they might, and it could be really cheap. Don't give your money to AWS, Microsoft, or Google.
