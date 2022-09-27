@@ -88,3 +88,5 @@ brew "fzf"
 brew "openssl"
 # password management
 brew "bitwarden-cli"
+# anti virus
+brew "clamav"

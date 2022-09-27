@@ -49,6 +49,7 @@ def install_fonts():
         old_pwd = PWD
         os.chdir(fonts_dir)
         subproc('./install.sh Hack')
+        subproc('./install.sh mononoki')
         os.chdir(old_pwd)
 
         bitmap_conf = '/etc/fonts/conf.d/70-no-bitmaps.conf'

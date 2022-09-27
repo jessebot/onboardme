@@ -11,6 +11,8 @@ cask "rectangle"
 cask "alfred"
 # Default browser
 cask "firefox"
+# Default email client
+cask "thunderbird"
 # File server
 cask "nextcloud"
 

@@ -6,8 +6,8 @@ has_children: true
 permalink: /onboardme
 ---
 
-## OnBoardMe
-[A project](https://github.com/jessebot/onboardme) to store config files, as well as programatically install core packages accross several package managers that I need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping I'd remember why it was there later, so this is now a renewed effort in remembering all the thing™️s, and automating as much as possible. The idea is that it's faster, smaller, and easier to configure than it's ansible equivalent. Here's an example of the terminal after the script has run:
+# OnBoardMe
+A [A project](https://github.com/jessebot/onboardme) to store config files, as well as programatically install core packages across several package managers that I need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping I'd remember why it was there later, so this is now a renewed effort in remembering all the thing™️s, and automating as much as possible. The idea is that it's faster, smaller, and easier to configure than it's ansible equivalent. Here's an example of the terminal after the script has run:
 
 <img src='https://raw.githubusercontent.com/jessebot/onboardme/main/screenshots/terminal_screenshot.png' width='800'>
 
@@ -35,33 +35,44 @@ options:
 Looking for a project to get a fresh OS entirely, on a machine that has no OS? Check out [pxeless](https://github.com/cloudymax/pxeless).
 
 ## Under the hood
-- Installs files are in the directory `configs/rc_files`: `.bashrc` files, `.vimrc`, `.zshrc`, and `.hyper.js`.
-- Installs apt, snap, and flatpak packages from `./configs/installers/packages.yml`
-- Installs gaming related packages via apt if you pass in `--extras gaming`.
-- Installs brew files from `./configs/installers/brew/Brewfile_*` depending on OS
-- Installs vim-plug, a vim plugin manager to setup things like nerdtree, indentations lines, and fuzzysearch
-- Configures iptables to block traffic on most ports except for HTTPS as well as ICMP/SSH for a single IP
 
-If you want to see the exact packages being installed, you can check out `configs/installers/packages.yml` for an easy to absorb yaml list of packages per installer. I bias towards brew fo cross-platform usage, and those packages are avavailble as Brewfiles in `configs/installers/brew/`.
-
+|       Step                                  | Config Location in repo | location installed into     | OS           |
+| Installs fonts                              | n/a | ? | macOS/Debian |
+| Installs dot files                          | `configs/dot_files`     | `~` (user's home directory) | macOS/Debian |
+| Installs brew/pip3.10 packages              | `./package_managers/brew/Brewfile_standard` `./package_managers/brew/Brewfile_$OS`, `./package_managers/pip3.10/requirements.txt` | macOS/Debian |
+| Installs apt, snap, flatpak packages        | `./package_managers/packages.yml`     | Debian |
+| Installs gaming related packages via apt if you pass in `--extras gaming`. | `./package_managers/packages.yml` | Debian |
+| Installs vim-plug, a vim plugin manager  | `configs/dot_files/.vimrc` | macOS/Debian
+| Configures iptables to block traffic on most ports except for HTTPS as well as ICMP/SSH for a single IP | `configs` | Debian |
+| Setups up iTerm2 fonts and colors | `configs/iterm2` | macOS |
+| Adds user to the docker group | n/a | Debian |
 
 ### Current Ecoscape of Personal Tech
 
-| Category | App | Replaces |
-:---:|:---|:---
-| Backups - local    | Restic to minio     | Google Drive, iCloud |
-| Backups - remote   | Restic to b2        | Google Drive, iCloud, S3 |
-| Email              | Protonmail + Bridge for Linux/MacOS | Gmail |
-| Launcher           | Undecided           | Alfred |
-| Photo/file Storage | NextCloud - testing | Google Photos/Drive |
-| Passwords          | Bitwarden           | LastPass |
-| News - RSS         | Fluent Reader       | Facebook/Twitter news/company feeds |
-| Video              | FreeTube,Peertube   | YouTube |
+These are all Linux Desktop and macOS applications I use. 
+OnBoardMe doesn't officially support phones yet, but for what I use on my phone, check out my [doc](/onboardme/os/android).
 
-## Important Notes on FOSS and Ethics
+| Category | App | Replaces |
+|:---:|:---|:---|
+| Backups - local/remote | Restic to minio and b2              | GDrive, iCloud, S3                |
+| Web Browser            | Firefox, Lynx/w3m (terminal only)   | Chrome/Safari/Edge                |
+| Email Client           | Thunderbird + Protonmail + Bridge for Linux/MacOS | Gmail               |
+| IDE                    | Vim + Plugins                       | Vscode/JetBrains/etc              |
+| Document Editor        | LibreOffice                         | Microsoft Word                    |
+| Launcher               | Undecided                           | Alfred                            |
+| Photo/file Storage     | NextCloud Files/Photos (testing)    | Google Photos/Drive               |
+| Passwords              | Bitwarden                           | LastPass, Apple/Google            |
+| News - RSS             | Fluent Reader                       | Facebook/Twitter/news/brand feeds |
+| Video                  | FreeTube, Peertube                  | YouTube                           |
+| Antivirus              | ClamAV                              | MalwareBytes                      |
+
+
+## Important Notes on Ethics
+
+### FOSS
 Here at this humble OnBoardMe repo, we try really hard to do the right thing. We're doing our best to get off of the giants like Google, Microsoft, Apple, Amazon, Samsung, etc... but we've still got a long way to go! Check back here for alternatives as we go on the journey ourselves! We'll link back to any orgs or projects we learn about, but feel free to open an issue with anything else we should link back to. :)
 
-  *Living ethically under late stage capitalism is not easy, but we believe generally that software should be [Free and Open Source](https://www.gnu.org/philosophy/free-sw.en.html).*
+  *Living ethically under late stage capitalism is not easy, but we believe generally that software should be [Free and Open Source](https://www.gnu.org/philosophy/free-sw.en.html). If we can't have that, we'll take as close as possible.*
 
 #### Humane Tech Lists
 We've had good luck with [Awesome Humane Tech](https://github.com/humanetech-community/awesome-humane-tech) for guides and checking out alternatives to tech from the Giants you previously used.
@@ -70,12 +81,7 @@ We've had good luck with [Awesome Humane Tech](https://github.com/humanetech-com
 We are currently using the philosophy of this RFC draft:
 [Terminology, Power, & Exclusionary Language...](https://datatracker.ietf.org/doc/html/draft-knodel-terminology-10)
 
+That same RFC also references a few tools you can use to fix your current environments, such as linters to be maintain inclusive language. TODO: pull them all and put them here.
+
 ### Tips
-Contact your local datacenters and see if they offer an object storage service, because they might, and it could be really cheap. Don't give your money to AWS, Microsoft, or Google.
-
-### Special Thanks
-Thank you to @cloudymax for all their direct contributions for gaming on Linux, virtualization, and the hyper terminal configs. Also great engineer to rubberduck with generally. Couldn't have polished a lot of this without their patience during my late night ramblings about my 8 different package managers and why utf-8 isn't called utf-14 :3 :blue_heart:
-
-### Status
-Currently in beta :3 Tested on macOS Monterey 12.4-12.5, and Debian 11 (Bullseye). Please report 🐛 in the GitHub issues, and I will get them as I have time.
-I'm using github issues to track future work on this thing.
+Contact your local datacenters and see if they offer an object storage service, because they might, and it could be really cheap. Don't give your money to AWS, Microsoft, or Google if you don't absolutely have to.

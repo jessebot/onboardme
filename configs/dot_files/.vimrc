@@ -38,6 +38,13 @@ set history=10000
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
+" for writing custom commands
+" https://medium.com/usevim/vim-101-what-is-the-leader-key-f2f5c1fa610f
+" The <Leader> key is a reference to a specific key defined by the mapleader
+" variable. A lot of ppl change to comma because they find it easier to type.
+"
+let mapleader=","
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                            GENERAL - Part 2
@@ -66,12 +73,6 @@ set showcmd
 set wildmode=longest,list
 " make tab completion for files/buffers act like bash ?
 set wildmenu
-
-" https://medium.com/usevim/vim-101-what-is-the-leader-key-f2f5c1fa610f
-" The <Leader> key is a reference to a specific key defined by the mapleader
-" variable. A lot of ppl change to comma because they find it easier to type.
-"
-let mapleader=","
 
 " unsure what this does and afraid to remove it...?
 set nocompatible
@@ -298,6 +299,8 @@ let g:gitgutter_sign_added = ''
 let g:gitgutter_sign_modified = ''
 let g:gitgutter_sign_removed = ''
 
+" clap
+let g:clap_theme = 'material_design_dark'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                 Vim-plug
