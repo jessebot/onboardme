@@ -124,26 +124,26 @@ fi
 
 echo -e "--------------------------\033[94m Checking for Python3 and pip3\033[00m -------------------------"
 # check to make sure we have python3 and pip3 installed
-which python3 > /dev/null
+which python3.10 > /dev/null
 py_return_code=$?
 if [ $py_return_code -ne 0 ]; then
-    echo "Installing Python3..."
-    brew install python3
-    echo -e "\033[92mPython installed :3 \033[00m"
+    echo "Installing Python3.10..."
+    brew install python3.10
+    echo -e "\033[92mPython3.10 installed :3 \033[00m"
 else
-    echo -e "\033[92mPython already installed :3 \033[00m"
+    echo -e "\033[92mPython3.10 already installed :3 \033[00m"
 fi
 
-which pip3 > /dev/null
+which pip3.10 > /dev/null
 pip_return_code=$?
 if [ $pip_return_code -ne 0 ]; then
     echo "Installing Pip3..." 
     if [[ "$OS" == *"Linux"* ]]; then
         sudo apt install python3-pip
-        echo -e "\033[92mPip3 installed :3 \033[00m"
+        echo -e "\033[92mPip3.10 installed :3 \033[00m"
     fi
 else
-    echo -e "\033[92mPip3 already installed :3 \033[00m"
+    echo -e "\033[92mPip3.10 already installed :3 \033[00m"
 fi
 
 # I always put my projects in a directory called repos, idk why I can't stop...

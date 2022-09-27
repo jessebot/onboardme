@@ -1,5 +1,5 @@
-#!/usr/bin/env python3
-# Generic onboarding script for macOS and Debian by jessebot@linux.com
+#!/usr/bin/env python3.10
+# Onboarding script for macOS and Debian by jessebot@linux.com
 from argparse import ArgumentParser
 from configparser import ConfigParser
 import fileinput
@@ -182,7 +182,10 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
                     if package in installed_pkgs:
                         print(f'  {package} is already installed, continuing.')
                     else:
-                        subproc(f'{install_cmd}' + package, True)
+                        cmd = f'{install_cmd}{package}'
+                        if installer == 'pip3.10':
+                            cmd += ' --upgrade'
+                        subproc(cmd, True)
 
 
 def configure_feeds():
@@ -397,6 +400,15 @@ def confirm_os_supported():
         print(Panel("Operating System and Architechure [green]supported ♥",
                     title="[purple]Compatibility Check"))
         print("\n")
+
+
+def setup_cronjobs():
+    """
+    setup any important cronjobs/alarms. Currently just adds nightly updates
+    """
+    print("\n")
+    CONSOLE.rule("⏰ Installing new cronjobs...")
+    print("\n")
 
 
 def main():
