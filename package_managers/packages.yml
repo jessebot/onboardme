@@ -44,12 +44,12 @@ brew:
   install_cmd: "brew bundle --file="
   default_packages:
     - Brewfile_standard
-  mac_packages:
+  🍎_macOS_packages:
     - Brewfile_mac
-  k8s_packages:
+  ☸️_k8s_packages:
     - Brewfile_k8s
-  work_packages:
-    - Brewfile_work
+  🧑‍💻_devops_packages:
+    - Brewfile_devops
 
 flatpak:
   emoji: "🫓 "

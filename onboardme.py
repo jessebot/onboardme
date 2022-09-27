@@ -7,60 +7,27 @@ from git import Repo
 import os
 from pathlib import Path
 from random import randint
+from rich import print
+from rich.console import Console
+from rich.panel import Panel
+from rich.prompt import Confirm
+from rich.table import Table
+# from rich.text import Text
 import shutil
 import subprocess
-import sys
 import yaml
 import wget
 
 
-# Constants
-OS = sys.platform
-HOME_DIR = os.getenv("HOME")
+# run uname to get operating system and hardware info
+SYSINFO = os.uname()
+# this will be something like
+OS = f"{SYSINFO.sysname}_{SYSINFO.machine}"
 PWD = os.path.dirname(__file__)
-
-
-def run_installers(installers=['brew'], pkg_groups=['default']):
-    """
-    Installs packages with apt, brew, snap, flatpak. If no installers list
-    passed in, only use brew for mac. Takes optional variable, pkg_group_lists
-    to install optional packages.
-    """
-    pkg_manager_dir = f'{PWD}/package_managers/'
-    with open(pkg_manager_dir + 'packages.yml', 'r') as yaml_file:
-        installers_list = yaml.safe_load(yaml_file)
-
-    # just in case we got any duplicates, we iterate through this as a set
-    for installer in set(installers):
-        installer_dict = installers_list[installer]
-        emoji = installer_dict['emoji']
-        print_head(f'{emoji} {installer} apps installing')
-
-        install_cmd = installer_dict['install_cmd']
-        installed_pkgs = subproc(installer_dict['list_cmd'], True, True)
-
-        # Brew and python: still using bundle files, and requirements.txt
-        for special_pkg in ['brew', 'pip3.10']:
-            if installer == special_pkg:
-                file_path = os.path.join(PWD, pkg_manager_dir, special_pkg)
-                install_cmd += file_path + '/'
-                if OS == 'darwin' and special_pkg == 'brew':
-                    pkg_groups.append('mac')
-
-        # Flatpak: requires us add flathub remote repo manually
-        if installer == 'flatpak':
-            subproc('sudo flatpak remote-add --if-not-exists flathub '
-                    'https://flathub.org/repo/flathub.flatpakrepo')
-
-        for pkg_group in pkg_groups:
-            if pkg_group + '_packages' in installer_dict:
-                if pkg_group != 'default':
-                    print_head(f'Installing {pkg_group} {installer} packages')
-                for package in installer_dict[pkg_group + '_packages']:
-                    if package in installed_pkgs:
-                        print(f'  {package} is already installed, continuing.')
-                    else:
-                        subproc(f'{install_cmd}' + package, True)
+HOME_DIR = os.getenv("HOME")
+USER = os.getlogin()
+# this is for rich text, to pretty print things
+CONSOLE = Console()
 
 
 def install_fonts():
@@ -70,7 +37,7 @@ def install_fonts():
     config, but you should still reboot when you're done :shrug:
     """
     if 'linux' in OS:
-        print_head('✍️  Installing fonts...')
+        CONSOLE.rule('✍️  Installing fonts...')
         fonts_dir = f'{HOME_DIR}/repos/nerd-fonts'
 
         # do a shallow clone of the repo
@@ -99,17 +66,24 @@ def install_fonts():
               'your terminal font to the new font. I rebooted too.')
 
 
-def hard_link_dot_files(delete=False,
+def hard_link_dot_files(OS="", delete=False,
                         dot_files_dir=f'{PWD}/configs/dot_files'):
     """
-    Creates hardlinks to rc files for vim, zsh, bash, and hyper in user's
-    home dir. Uses hardlinks, so that if the target file is removed, the data
+    Creates hard links to rc files for vim, zsh, bash, and hyper in user's
+    home dir. Uses hard links, so that if the target file is removed, the data
     will remain. If delete is True, we delete files before beginning.
     Takes optional dot_files_dir for special directory to grab files from
     """
+    # table to print the results of all the files
+    table = Table(title=":shell: Linking dot files...", expand=True)
+    table.add_column("File", style="cyan")
+    table.add_column("Result", justify="center")
 
-    print_head(' 🐚 Shell and vim rc files installing...')
-    existing_files = []
+    # we only print this msg if we got the file exists error
+    print_msg = False
+    help_msg = ("[i][yellow]Failures are likely due to the files already ."
+                "If you want to override the existing files, rerun script "
+                "with the --delete flag")
 
     # loop through the dot_files and hard link them all to the user's home dir
     for root, dirs, files in os.walk(dot_files_dir):
@@ -133,24 +107,26 @@ def hard_link_dot_files(delete=False,
                         os.remove(hard_link)
 
                 os.link(src_dot_file, hard_link)
-                print(f'  Hard linked {hard_link}')
+                table.add_row(f"[green]{hard_link}",
+                              "[green]Success :green_heart:")
 
             except FileExistsError:
                 # keep till loop ends, to notify user that no action was taken
-                existing_files.append(hard_link)
+                table.add_row(f"[magenta]{hard_link}",
+                              "[magenta]File already exists")
+                print_msg = True
 
-    if existing_files:
-        print('Looks like the following file(s) already exist:')
-        for file in existing_files:
-            print(f' - {file}')
-        print('\n If you want the links anyway, rerun script with --delete')
+    print(table)
+    if print_msg:
+        print(help_msg)
 
 
 def configure_vim():
     """
     Installs vim-plug, vim plugin manager, and then installs vim plugins
     """
-    print_head('Installing vim-plug, for vim plugins')
+    print("\n")
+    CONSOLE.rule('Installing vim-plug, for vim plugins')
 
     autoload_dir = f'{HOME_DIR}/.vim/autoload'
     url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
@@ -164,18 +140,86 @@ def configure_vim():
     subproc(plugin_cmd)
 
 
+def run_installers(installers=['brew'], pkg_groups=['default']):
+    """
+    Installs packages with apt, brew, snap, flatpak. If no installers list
+    passed in, only use brew for mac. Takes optional variable, pkg_group_lists
+    to install optional packages.
+    """
+    pkg_manager_dir = f'{PWD}/package_managers/'
+    with open(pkg_manager_dir + 'packages.yml', 'r') as yaml_file:
+        installers_list = yaml.safe_load(yaml_file)
+
+    # just in case we got any duplicates, we iterate through this as a set
+    for installer in set(installers):
+        installer_dict = installers_list[installer]
+        pkg_emoji = installer_dict['emoji']
+        print("\n")
+        CONSOLE.rule(f'{pkg_emoji} {installer} apps installing')
+
+        install_cmd = installer_dict['install_cmd']
+        installed_pkgs = subproc(installer_dict['list_cmd'], True, True)
+
+        # Brew and python: still using bundle files, and requirements.txt
+        for special_pkg in ['brew', 'pip3.10']:
+            if installer == special_pkg:
+                file_path = os.path.join(PWD, pkg_manager_dir, special_pkg)
+                install_cmd += file_path + '/'
+                if 'Darwin' in OS and special_pkg == 'brew':
+                    pkg_groups.append('🍎_macOS')
+
+        # Flatpak: requires us add flathub remote repo manually
+        if installer == 'flatpak':
+            subproc('sudo flatpak remote-add --if-not-exists flathub '
+                    'https://flathub.org/repo/flathub.flatpakrepo')
+
+        for pkg_group in pkg_groups:
+            if pkg_group + '_packages' in installer_dict:
+                if pkg_group != 'default':
+                    print("\n")
+                    CONSOLE.rule(f"Installing {pkg_group.replace('_', ' ')} "
+                                 f"{pkg_emoji} {installer} packages")
+                for package in installer_dict[pkg_group + '_packages']:
+                    if package in installed_pkgs:
+                        print(f'  {package} is already installed, continuing.')
+                    else:
+                        subproc(f'{install_cmd}' + package, True)
+
+
+def configure_feeds():
+    """
+    configures feeds like freetube and RSS readers
+    """
+    # freeTube is weird, requires this name and directory to work smoothly
+    subs_db = '{PWD}/configs/feeds/freetube/subscriptions.db'
+    shutil.copy(subs_db, f'{HOME_DIR}/Downloads/subscriptions.db')
+
+
+def configure_terminal(OS='Darwin'):
+    """
+    configure colorschemes and dynamic profiles for iterm2 if we're on macOS
+    """
+    if "Darwin" in OS:
+        print("\n")
+        print(Panel("Installing default Dynamic Profile...",
+                    title="[green]iTerm2"))
+        p = os.path.join(HOME_DIR,
+                         'Library/Application Support/iTerm2/DynamicProfiles')
+        shutil.copy(f'{PWD}/configs/iterm2/Profiles.json', p)
+
+
 def configure_firefox():
     """
     Copies over default firefox settings and addons
     """
     # different OS will have firefox profile info in different paths
-    if 'linux' in OS:
+    if 'Linux' in OS:
         ini_dir = f'{HOME_DIR}/.mozilla/firefox/'
     elif OS == 'darwin':
         # hate apple for their capitalized directories
         ini_dir = f'{HOME_DIR}/Library/Application Support/Firefox/'
 
-    print_head('🦊 Installing Firefox preferences and addons')
+    CONSOLE.rule('🦊 Installing Firefox preferences and addons')
 
     print('  Checking Firefox profiles.ini for correct profile...')
     profile_dir = ''
@@ -206,7 +250,7 @@ def map_caps_to_control():
     """
     Maps capslock to control. This is ugly and awful
     """
-    print_head("⌨️  Mapping capslock to control...")
+    CONSOLE.rule("⌨️  Mapping capslock to control...")
     cmd = "setxkbmap -layout us -option ctrl:nocaps"
     subproc(cmd, True, True)
 
@@ -239,7 +283,7 @@ def configure_firewall(remote_hosts=[]):
     configure iptables
     TODO: Add Lulu configuration
     """
-    print_head('🛡️ Configuring Firewall...')
+    CONSOLE.rule('🛡️ Configuring Firewall...')
     if remote_hosts:
         remote_ips = ' '.join(remote_hosts)
         subproc(f'{PWD}/configs/firewall/iptables.sh {remote_ips}')
@@ -249,11 +293,18 @@ def configure_firewall(remote_hosts=[]):
 
 def setup_nix_groups():
     """
-    Set up any groups and add current user to them
+    Set up any groups, at this time just docker, and add current user to them
     """
-    USER = os.getlogin()
-    subproc(f'sudo usermod -a -G docker {USER}')
-    print('  User added to docker group, but you may still need to restart')
+    # mac is weird...
+    # cmd = f"sudo dseditgroup -o edit -a {USER} -t user docker"
+
+    if "Linux" in OS:
+        print("\n")
+        CONSOLE.rule(f'[bright_cyan]🐳 Adding {USER} to docker group')
+        # default way for linux systems
+        cmd = f'sudo usermod -a -G docker {USER}'
+        subproc(cmd)
+        print('[i]User added to docker group, but you still need to reboot.')
 
 
 def subproc(command="", error_ok=False, suppress_output=False):
@@ -261,13 +312,12 @@ def subproc(command="", error_ok=False, suppress_output=False):
     Takes a str commmand to run in BASH, as well as optionals bools to pass on
     errors in stderr/stdout and suppress_output
     """
-    print(f'\033[92m Running cmd:\033[00m {command}')
     cmd = command.split()
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     return_code = p.returncode
     res = p.communicate()
-    res_stdout = '  ' + res[0].decode('UTF-8').replace('\n', '\n  ')
-    res_stderr = '  ' + res[1].decode('UTF-8').replace('\n', '\n  ')
+    res_stdout = res[0].decode('UTF-8')
+    res_stderr = res[1].decode('UTF-8')
 
     if not error_ok:
         # check return code, raise error if failure
@@ -281,39 +331,9 @@ def subproc(command="", error_ok=False, suppress_output=False):
     for output in [res_stdout, res_stderr]:
         if output:
             if not suppress_output:
-                print(output.rstrip())
+                print(Panel(output, title='[green]Run cmd:[normal] ' +
+                            command))
             return output
-
-
-def print_head(status=""):
-    """
-    takes a string and prints it pretty
-    """
-    print('\n')
-    print(f'\033[92m {status} \033[00m'.center(80, '-'))
-    print('\n')
-
-
-def configure_feeds():
-    """
-    configures feeds like freetube and RSS readers
-    """
-    # freeTube is weird, requires this name and directory to work smoothly
-    subs_db = '{PWD}/configs/feeds/freetube/subscriptions.db'
-    shutil.copy(subs_db, f'{HOME_DIR}/Downloads/subscriptions.db')
-
-
-def configure_terminal(OS='darwin'):
-    """
-    configure colorschemes and dynamic profiles for iterm2 if we're on macOS
-    """
-    if OS == "darwin":
-        print_head("Configuring iTerm2 settings...")
-        print_head
-        p = os.path.join(HOME_DIR,
-                         'Library/Application Support/iTerm2/DynamicProfiles')
-        shutil.copy(f'{PWD}/configs/iterm2/Profiles.json', p)
-    print("Finished installing default Dynamic Profile.")
 
 
 def parse_local_configs():
@@ -350,12 +370,34 @@ def parse_args():
     p.add_argument('-f', '--firefox', action='store_true', default=False,
                    help='Opt into experimental firefox configuring')
     p.add_argument('-i', '--installers', default=None, nargs='+', help=i_help)
-    p.add_argument('-o', '--only', default=None, nargs='+', help=i_help)
+    p.add_argument('-o', '--only', default=None, nargs='+', help=o_help)
     p.add_argument('-r', '--remote', action='store_true', default=False,
                    help='Setup SSH on a random port and add it to firewall.')
     p.add_argument('-H', '--host', nargs='+', default=None, help=h_help)
 
     return p.parse_args()
+
+
+def confirm_os_supported():
+    """
+    verify we're on a supported OS and ask to quit if not.
+    """
+    if SYSINFO.sysname != 'Linux' and SYSINFO.sysname != 'Darwin':
+        print(Panel(f"[magenta]{SYSINFO.sysname}[normal] isn't officially "
+                    "supported. We haven't tested anything outside of Debian,"
+                    "Ubuntu, and macOS.", title="⚠️  [yellow]WARNING"))
+
+        quit_y = Confirm.ask("You're in uncharted waters. Do you wanna quit?")
+        if quit_y:
+            print(Panel("That's probably safer. Have a safe day, friend."))
+            quit()
+        else:
+            print(Panel("[red]Yeehaw, I guess.", title="¯\\_(ツ)_/¯"))
+    else:
+        print("\n")
+        print(Panel("Operating System and Architechure [green]supported ♥",
+                    title="[purple]Compatibility Check"))
+        print("\n")
 
 
 def main():
@@ -365,11 +407,16 @@ def main():
     install brew, apt, flatpak, and snap packages. On mac, only brew.
     coming soon: config via env variables and config files.
     """
+    # before we do anything, we need to make sure this OS is supported
+    confirm_os_supported()
+
+    # then procress all the options passed in
     opt = parse_args()
 
-    print('\n 🥱 This could take a while on a fresh install. Settle in & get '
-          'comfy 🛋️ ')
-    hard_link_dot_files(opt.delete)
+    hard_link_dot_files(OS, opt.delete)
+    if opt.only and 'dot_files' in opt.only:
+        if len(opt.only) == 1:
+            exit()
 
     # fonts are brew installed unless we're on linux
     if 'linux' in OS:
@@ -393,6 +440,11 @@ def main():
     if opt.installers:
         default_installers = opt.installers
 
+    print("\n")
+    msg = ":yawning_face: This could take a while on a fresh install."
+    print(Panel(msg, title="[purple]Beginning Package Installations",
+                subtitle="[purple][bold]Settle In & Get Comfy"))
+
     run_installers(default_installers, package_groups)
 
     # will also configure ssh if you specify --remote
@@ -410,7 +462,8 @@ def main():
     # will add your user to linux groups such as docker
     setup_nix_groups()
 
-    print_head('❇️  SUCCESS ❇️ ')
+    print("\n")
+    CONSOLE.rule('❇️  SUCCESS ❇️ ')
     print("Here's some stuff you gotta do manually:")
     print(' 📰: Import RSS feeds config into FluentReader or wherever')
     print(' 📺: Import subscriptions into FreeTube')
