@@ -194,8 +194,7 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
                         if installer == 'pip3.10':
                             cmd += ' --upgrade'
                         subproc(cmd, True, True)
-                CONSOLE.print('[dim][i]Installations completed.',
-                              justify='center')
+                CONSOLE.print('[dim][i]Completed.', justify='center')
 
 
 def configure_feeds():
