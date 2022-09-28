@@ -1,10 +1,13 @@
 #!/usr/bin/env python3.10
 # Onboarding script for macOS and Debian by jessebot@linux.com
-from argparse import ArgumentParser
+from click import option, command
+# from click import argument
 from configparser import ConfigParser
 import fileinput
 from git import Repo
 import os
+from lib.util import subproc
+from lib.rich_click import RichCommand
 from pathlib import Path
 from random import randint
 from rich import print
@@ -13,7 +16,6 @@ from rich.panel import Panel
 from rich.prompt import Confirm
 from rich.table import Table
 import shutil
-import subprocess
 import yaml
 import wget
 
@@ -70,7 +72,7 @@ def hard_link_dot_files(OS="", delete=False,
                         dot_files_dir=f'{PWD}/configs/dot_files'):
     """
     Creates hard links to rc files for vim, zsh, bash, and hyper in user's
-    home dir. Uses hard links, so that if the target file is removed, the data
+    home dir. Uses hard links, so that if the tt file is removed, the data
     will remain. If delete is True, we delete files before beginning.
     Takes optional dot_files_dir for special directory to grab files from
     """
@@ -81,9 +83,8 @@ def hard_link_dot_files(OS="", delete=False,
 
     # we only print this msg if we got the file exists error
     print_msg = False
-    help_msg = ("[i][yellow]Failures are likely due to the files already ."
-                "If you want to override the existing files, rerun script "
-                "with the --delete flag")
+    help_msg = ("[yellow]If you want to override the existing files, rerun"
+                " script with the [b]--delete[/b] flag.")
 
     # loop through the dot_files and hard link them all to the user's home dir
     for root, dirs, files in os.walk(dot_files_dir):
@@ -108,17 +109,17 @@ def hard_link_dot_files(OS="", delete=False,
 
                 os.link(src_dot_file, hard_link)
                 table.add_row(f"[green]{hard_link}",
-                              "[green]Success :green_heart:")
+                              "[green]Success ♥")
 
             except FileExistsError:
                 # keep till loop ends, to notify user that no action was taken
                 table.add_row(f"[magenta]{hard_link}",
-                              "[magenta]File already exists")
+                              "[magenta]File already exists 💔")
                 print_msg = True
 
     print(table)
     if print_msg:
-        print(help_msg)
+        CONSOLE.print(help_msg, justify='center')
 
 
 def configure_vim():
@@ -126,18 +127,22 @@ def configure_vim():
     Installs vim-plug, vim plugin manager, and then installs vim plugins
     """
     print("\n")
-    CONSOLE.rule('Installing vim-plug, for vim plugins')
+    CONSOLE.rule('Installing [b]vim-plug[/b], for [green][i]Vim[/i][/green]'
+                 ' plugins', style="royal_blue1")
 
     autoload_dir = f'{HOME_DIR}/.vim/autoload'
     url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     if not os.path.exists(autoload_dir):
-        print('  Creating directory structure and downloading vim-plug...')
+        CONSOLE.print('[i]Creating directory structure and downloading ' +
+                      '[b]vim-plug[/b]...', justify='center')
         Path(autoload_dir).mkdir(parents=True, exist_ok=True)
         wget.download(url, autoload_dir)
 
     # this installs the vim plugins, can also use :PlugInstall in vim
-    plugin_cmd = ('vim +PlugInstall +qall')
-    subproc(plugin_cmd)
+    subproc('vim +PlugInstall +qall!', False, True)
+    CONSOLE.print('[i]Successfully ran:[/i] ' +
+                  '[green]vim +PlugInstall +qall![/green]',
+                  justify='center')
 
 
 def run_installers(installers=['brew'], pkg_groups=['default']):
@@ -155,7 +160,8 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
         installer_dict = installers_list[installer]
         pkg_emoji = installer_dict['emoji']
         print("\n")
-        CONSOLE.rule(f'{pkg_emoji} {installer} apps installing')
+        CONSOLE.rule(f'{pkg_emoji} [b]{installer}[/b] apps installing',
+                     style="royal_blue1")
 
         install_cmd = installer_dict['install_cmd']
         installed_pkgs = subproc(installer_dict['list_cmd'], True, True)
@@ -186,7 +192,9 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
                         cmd = f'{install_cmd}{package}'
                         if installer == 'pip3.10':
                             cmd += ' --upgrade'
-                        subproc(cmd, True)
+                        subproc(cmd, True, True)
+                        CONSOLE.print('[i]Installations completed.[/i] ',
+                                      justify='center')
 
 
 def configure_feeds():
@@ -303,40 +311,14 @@ def setup_nix_groups():
 
     if "Linux" in OS:
         print("\n")
-        CONSOLE.rule(f'[bright_cyan]🐳 Adding {USER} to docker group')
+        CONSOLE.rule(f'[turquoise2]🐳 [dim]Adding[/dim] [b]{USER}[/b] '
+                     '[dim]to[/dim] [b]docker[/b] [dim]group[/dim]')
         # default way for linux systems
         cmd = f'sudo usermod -a -G docker {USER}'
-        subproc(cmd)
-        print('[i]User added to docker group, but you still need to reboot.')
-
-
-def subproc(command="", error_ok=False, suppress_output=False):
-    """
-    Takes a str commmand to run in BASH, as well as optionals bools to pass on
-    errors in stderr/stdout and suppress_output
-    """
-    cmd = command.split()
-    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    return_code = p.returncode
-    res = p.communicate()
-    res_stdout = res[0].decode('UTF-8')
-    res_stderr = res[1].decode('UTF-8')
-
-    if not error_ok:
-        # check return code, raise error if failure
-        if not return_code or return_code != 0:
-            # also scan both stdout and stdin for weird errors
-            for output in [res_stdout.lower(), res_stderr.lower()]:
-                if 'error' in output:
-                    err = f'Return code not zero! Return code: {return_code}'
-                    raise Exception(f'\033[0;33m {err} \n {output} \033[00m')
-
-    for output in [res_stdout, res_stderr]:
-        if output:
-            if not suppress_output:
-                print(Panel(output, title='[green]Run cmd:[normal] ' +
-                            command))
-            return output
+        subproc(cmd, False, False, False)
+        print("")
+        CONSOLE.print(f'[i][b]{USER}[/b] added to [b]docker[/b] group, but ' +
+                      'you may still need to [b]reboot.', justify="center")
 
 
 def parse_local_configs():
@@ -348,37 +330,6 @@ def parse_local_configs():
         with open(local_config_dir, 'r') as yaml_file:
             config = yaml.safe_load(yaml_file)
     return config
-
-
-def parse_args():
-    """
-    Parse arguments and return dict
-    """
-    d_help = 'Deletes existing rc files before creating hardlinks. BE CAREFUL!'
-    df_help = ('COMING SOON. Git url to clone for dot files, assumes dot files'
-               'are in root directory for now')
-    e_help = ('Extra package groups to install. Accepts multiple args, e.g. '
-              '--extra gaming')
-    i_help = ('Installers to run. Accepts multiple args. Defaults to only run '
-              'brew, pip3, and apt(if linux). example: --installers brew apt')
-    o_help = ('Experimental. Only run these steps in the script, e.g. --only '
-              'dot_files. Steps include dot_files, and package_managers.')
-    h_help = 'Add IP to firewall for remote access'
-    p = ArgumentParser(description=main.__doc__)
-
-    p.add_argument('--dot_files', default=None, nargs='+', help=df_help)
-    p.add_argument('-d', '--delete', action='store_true', default=False,
-                   help=d_help)
-    p.add_argument('-e', '--extra', default=None, nargs='+', help=e_help)
-    p.add_argument('-f', '--firefox', action='store_true', default=False,
-                   help='Opt into experimental firefox configuring')
-    p.add_argument('-i', '--installers', default=None, nargs='+', help=i_help)
-    p.add_argument('-o', '--only', default=None, nargs='+', help=o_help)
-    p.add_argument('-r', '--remote', action='store_true', default=False,
-                   help='Setup SSH on a random port and add it to firewall.')
-    p.add_argument('-H', '--host', nargs='+', default=None, help=h_help)
-
-    return p.parse_args()
 
 
 def confirm_os_supported():
@@ -399,8 +350,7 @@ def confirm_os_supported():
     else:
         print("\n")
         print(Panel("Operating System and Architechure [green]supported ♥",
-                    title="[purple]Compatibility Check"))
-        print("\n")
+                    title="[cornflower_blue]Compatibility Check"))
 
 
 def setup_cronjobs():
@@ -412,7 +362,33 @@ def setup_cronjobs():
     print("\n")
 
 
-def main():
+d_help = 'Deletes existing rc files before creating hardlinks. BE CAREFUL!'
+e_help = ('Extra package groups to install. Accepts multiple , e.g. '
+          '--extra gaming')
+p_help = ('Package managers to run. Defaults to only run brew, pip3, and '
+          'apt/snap/flatpak(if linux).\n example: -p brew -p apt')
+o_help = ('[i]Beta[/i]. Only run these steps in the script, e.g. --only '
+          'dot_files.\n Steps include: dot_files, package_managers.')
+h_help = 'Add IP to firewall for remote access'
+
+
+@command(cls=RichCommand)
+@option('--delete', '-d', is_flag=True, help=d_help)
+@option('--extra', '-e', default=None, multiple=True, help=e_help)
+@option('--firefox', '-f', is_flag=True,
+        help='Opt into [i]experimental[/i] firefox configuring')
+@option('--package_managers', '-p', default=None, multiple=True, help=p_help)
+@option('--only', '-o', default=None, multiple=True, help=o_help)
+@option('--remote', '-r', is_flag=True,
+        help='Setup SSH on a random port and add it to firewall.')
+@option('--remote_host', '-H', multiple=True, default=None, help=h_help)
+def main(delete: bool = False,
+         extra: str = "",
+         firefox: bool = False,
+         package_managers: str = "",
+         only: str = "",
+         remote: bool = False,
+         remote_host: str = ""):
     """
     Onboarding script for macOS and debian. Uses config in the script repo in
     package_managers/packages.yml. If run with no options on Linux it will
@@ -422,48 +398,52 @@ def main():
     # before we do anything, we need to make sure this OS is supported
     confirm_os_supported()
 
-    # then procress all the options passed in
-    opt = parse_args()
-
-    hard_link_dot_files(OS, opt.delete)
-    if opt.only and 'dot_files' in opt.only:
-        if len(opt.only) == 1:
+    if not only or 'dot_files' in only:
+        hard_link_dot_files(OS, delete)
+        if len(only) == 1:
             exit()
 
     # fonts are brew installed unless we're on linux
     if 'linux' in OS:
         install_fonts()
 
+    if only and 'install_fonts' in only:
+        if len(only) == 1:
+            exit()
+
     # process additional package lists, if any
     package_groups = ['default']
-    if opt.extra:
-        package_groups.extend(opt.extra)
+    if extra:
+        package_groups.extend(extra)
 
-    # Pip currently just gets you powerline :)
-    default_installers = ['brew', 'pip3.10']
-    if 'linux' in OS:
-        default_installers.extend(['apt', 'snap', 'flatpak'])
-        # this is broken
-        # map_caps_to_control()
-        if opt.firefox:
-            configure_firefox()
-
-    # if user specifies, only do packages passed into --installers
-    if opt.installers:
-        default_installers = opt.installers
+    # if user specifies, only do packages passed into --package_managers
+    if package_managers:
+        default_installers = package_managers
+    else:
+        # Pip currently just gets you powerline :)
+        default_installers = ['brew', 'pip3.10']
+        if 'linux' in OS:
+            default_installers.extend(['apt', 'snap', 'flatpak'])
+            # this is broken
+            # map_caps_to_control()
+            if firefox:
+                configure_firefox()
 
     print("\n")
     msg = ":yawning_face: This could take a while on a fresh install."
-    print(Panel(msg, title="[purple]Beginning Package Installations",
-                subtitle="[purple][bold]Settle In & Get Comfy"))
+    print(Panel(msg, title="[cornflower_blue]Beginning Package Installations",
+                subtitle="[cornflower_blue][bold]Settle In & Get Comfy"))
 
     run_installers(default_installers, package_groups)
+    if only and 'package_managers' in only:
+        if len(only) == 1:
+            exit()
 
     # will also configure ssh if you specify --remote
-    if opt.remote and 'linux' in OS:
+    if remote and 'linux' in OS:
         # not sure what's up with this...
         # configure_ssh()
-        configure_firewall(opt.host)
+        configure_firewall(remote_host)
 
     # configure the iterm2 if we're on macOS
     configure_terminal(OS)
@@ -477,12 +457,12 @@ def main():
     print("\n")
     CONSOLE.rule('❇️  SUCCESS ❇️ ')
     print("Here's some stuff you gotta do manually:")
-    print(' 📰: Import RSS feeds config into FluentReader or wherever')
+    print(' 📰: Import RSS feeds config into FluentReader')
     print(' 📺: Import subscriptions into FreeTube')
-    print(' ⌨️ : Set capslock to control!')
+    print(' ⌨️ : Set CAPSLOCK to control!')
     print(' ⏰: Install any cronjobs you need from the cron dir!')
-    print(' 💲: Source your bash config: source .bashrc')
-    print(' 🐋: Reboot, as the whale demands it \n')
+    CONSOLE.print('  : Source your bash config: [green]source .bashrc')
+    print(' 🐳: Reboot, as [turquoise2]docker[/] demands it \n')
 
     print("If there's anything else you need help with, check the docs here:")
     print("https://jessebot.github.io/onboardme/")

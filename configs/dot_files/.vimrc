@@ -356,7 +356,7 @@ Plug 'hashivim/vim-terraform'
 
 call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-=======
+
 " ------------------------- k8s -------------------------------
 "
 " For the current buffer (including modifications not on disk)
