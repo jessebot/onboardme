@@ -159,7 +159,7 @@ alias gerp='grep'
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ cat ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 
-# TODO: Write those docs with links to all 3 apps (vim, rich, and batcat)
+# TODO: Write those docs with links to both apps (rich, and batcat)
 # Function to use the best syntax highlighting app for the job
 function dog {
     # if file has more lines than legnth of the terminal use app with pager
@@ -182,14 +182,9 @@ function dog {
         if [[ $(uname) == *"Linux"* ]]; then
             batcat $1
         else
-            if $too_long; then
-                # if it's not a markdown file, go directly into vim in readonly
-                vim -R $1
-            else
-                # add line numbers
-                rich -n $1
-                echo ""
-            fi
+            # add line numbers
+            rich -n $1
+            echo ""
         fi
     fi
 }
