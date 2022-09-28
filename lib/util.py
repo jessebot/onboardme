@@ -11,6 +11,7 @@ def subproc(command="", error_ok=False, suppress_output=False, spinner=True):
     if not spinner:
         output = actual_subproc(command, error_ok)
     else:
+        print("")
         console = Console()
         tasks = [command]
 
@@ -18,9 +19,7 @@ def subproc(command="", error_ok=False, suppress_output=False, spinner=True):
         with console.status(status_line) as status:
             while tasks:
                 output = actual_subproc(command, error_ok)
-
                 tasks.pop(0)
-                print("\n")
 
     if output:
         if not suppress_output:

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.10
-# Onboarding script for macOS and Debian by jessebot@linux.com
+# Onboarding script for macOS and Debian by jessebot@Linux.com
 from click import option, command
 # from click import argument
 from configparser import ConfigParser
@@ -37,7 +37,7 @@ def install_fonts():
     them into the user's local font directory. Runs fc-cache -fv to generate
     config, but you should still reboot when you're done :shrug:
     """
-    if 'linux' in OS:
+    if 'Linux' in OS:
         CONSOLE.rule('✍️  Installing fonts...')
         fonts_dir = f'{HOME_DIR}/repos/nerd-fonts'
 
@@ -117,6 +117,7 @@ def hard_link_dot_files(OS="", delete=False,
                               "[magenta]File already exists 💔")
                 print_msg = True
 
+    print("")
     print(table)
     if print_msg:
         CONSOLE.print(help_msg, justify='center')
@@ -140,9 +141,7 @@ def configure_vim():
 
     # this installs the vim plugins, can also use :PlugInstall in vim
     subproc('vim +PlugInstall +qall!', False, True)
-    CONSOLE.print('[i]Successfully ran:[/i] ' +
-                  '[green]vim +PlugInstall +qall![/green]',
-                  justify='center')
+    CONSOLE.print('[i][dim]Plugins installed.', justify='center')
 
 
 def run_installers(installers=['brew'], pkg_groups=['default']):
@@ -151,6 +150,11 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
     passed in, only use brew for mac. Takes optional variable, pkg_group_lists
     to install optional packages.
     """
+    print("\n")
+    msg = ("[dim] :yawning_face: This could take a while on a fresh install, "
+           "so settle in and get comfy 🛋")
+    print(Panel(msg, title="[cornflower_blue]Beginning Package Installations"))
+
     pkg_manager_dir = f'{PWD}/package_managers/'
     with open(pkg_manager_dir + 'packages.yml', 'r') as yaml_file:
         installers_list = yaml.safe_load(yaml_file)
@@ -183,8 +187,9 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
             if pkg_group + '_packages' in installer_dict:
                 if pkg_group != 'default':
                     print("\n")
-                    CONSOLE.rule(f"Installing {pkg_group.replace('_', ' ')} "
-                                 f"{pkg_emoji} {installer} packages")
+                    msg = (f"Installing {pkg_group.replace('_', ' ')} "
+                           f"{pkg_emoji} [b]{installer}[/b] packages")
+                    CONSOLE.rule(msg, style="cornflower_blue")
                 for package in installer_dict[pkg_group + '_packages']:
                     if package in installed_pkgs:
                         print(f'  {package} is already installed, continuing.')
@@ -193,7 +198,7 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
                         if installer == 'pip3.10':
                             cmd += ' --upgrade'
                         subproc(cmd, True, True)
-                        CONSOLE.print('[i]Installations completed.[/i] ',
+                        CONSOLE.print('[dim][i]Installations completed.',
                                       justify='center')
 
 
@@ -212,11 +217,13 @@ def configure_terminal(OS='Darwin'):
     """
     if "Darwin" in OS:
         print("\n")
-        print(Panel("Installing default Dynamic Profile...",
-                    title="[green]iTerm2"))
+        CONSOLE.rule("Installing default iTerm2 Dynamic Profile...",
+                     style="royal_blue1")
         p = os.path.join(HOME_DIR,
                          'Library/Application Support/iTerm2/DynamicProfiles')
         shutil.copy(f'{PWD}/configs/iterm2/Profiles.json', p)
+        print("")
+        CONSOLE.print('[dim][i]Dynamic profile installed.', justify='center')
 
 
 def configure_firefox():
@@ -313,7 +320,7 @@ def setup_nix_groups():
         print("\n")
         CONSOLE.rule(f'[turquoise2]🐳 [dim]Adding[/dim] [b]{USER}[/b] '
                      '[dim]to[/dim] [b]docker[/b] [dim]group[/dim]')
-        # default way for linux systems
+        # default way for Linux systems
         cmd = f'sudo usermod -a -G docker {USER}'
         subproc(cmd, False, False, False)
         print("")
@@ -348,7 +355,7 @@ def confirm_os_supported():
         else:
             print(Panel("[red]Yeehaw, I guess.", title="¯\\_(ツ)_/¯"))
     else:
-        print("\n")
+        print("")
         print(Panel("Operating System and Architechure [green]supported ♥",
                     title="[cornflower_blue]Compatibility Check"))
 
@@ -366,7 +373,7 @@ d_help = 'Deletes existing rc files before creating hardlinks. BE CAREFUL!'
 e_help = ('Extra package groups to install. Accepts multiple , e.g. '
           '--extra gaming')
 p_help = ('Package managers to run. Defaults to only run brew, pip3, and '
-          'apt/snap/flatpak(if linux).\n example: -p brew -p apt')
+          'apt/snap/flatpak(if Linux).\n example: -p brew -p apt')
 o_help = ('[i]Beta[/i]. Only run these steps in the script, e.g. --only '
           'dot_files.\n Steps include: dot_files, package_managers.')
 h_help = 'Add IP to firewall for remote access'
@@ -403,8 +410,8 @@ def main(delete: bool = False,
         if len(only) == 1:
             exit()
 
-    # fonts are brew installed unless we're on linux
-    if 'linux' in OS:
+    # fonts are brew installed unless we're on Linux
+    if 'Linux' in OS:
         install_fonts()
 
     if only and 'install_fonts' in only:
@@ -422,17 +429,12 @@ def main(delete: bool = False,
     else:
         # Pip currently just gets you powerline :)
         default_installers = ['brew', 'pip3.10']
-        if 'linux' in OS:
+        if 'Linux' in OS:
             default_installers.extend(['apt', 'snap', 'flatpak'])
             # this is broken
             # map_caps_to_control()
             if firefox:
                 configure_firefox()
-
-    print("\n")
-    msg = ":yawning_face: This could take a while on a fresh install."
-    print(Panel(msg, title="[cornflower_blue]Beginning Package Installations",
-                subtitle="[cornflower_blue][bold]Settle In & Get Comfy"))
 
     run_installers(default_installers, package_groups)
     if only and 'package_managers' in only:
@@ -440,7 +442,7 @@ def main(delete: bool = False,
             exit()
 
     # will also configure ssh if you specify --remote
-    if remote and 'linux' in OS:
+    if remote and 'Linux' in OS:
         # not sure what's up with this...
         # configure_ssh()
         configure_firewall(remote_host)
@@ -451,21 +453,20 @@ def main(delete: bool = False,
     # this is SUPPOSED to install the vim plugins, but sometimes does not
     configure_vim()
 
-    # will add your user to linux groups such as docker
+    # will add your user to Linux groups such as docker
     setup_nix_groups()
 
     print("\n")
-    CONSOLE.rule('❇️  SUCCESS ❇️ ')
-    print("Here's some stuff you gotta do manually:")
-    print(' 📰: Import RSS feeds config into FluentReader')
-    print(' 📺: Import subscriptions into FreeTube')
-    print(' ⌨️ : Set CAPSLOCK to control!')
-    print(' ⏰: Install any cronjobs you need from the cron dir!')
-    CONSOLE.print('  : Source your bash config: [green]source .bashrc')
-    print(' 🐳: Reboot, as [turquoise2]docker[/] demands it \n')
-
-    print("If there's anything else you need help with, check the docs here:")
-    print("https://jessebot.github.io/onboardme/")
+    end_msg = ("[i]Here's some stuff you gotta do manually (for now)[/i]: \n"
+               " 📰: Import RSS feeds config into FluentReader\n"
+               " 📺: Import subscriptions into FreeTube \n"
+               " ⌨️ : Set CAPSLOCK to control!\n"
+               " ⏰: Install any cronjobs you need from the cron dir!\n"
+               "  : Source your bash config: [green]source .bashrc[/]\n"
+               " 🐳: Reboot, as [turquoise2]docker[/] demands it.\n\n"
+               "If there's anything else you need help with, check the docs:\n"
+               "[dim]https://jessebot.github.io/onboardme")
+    print(Panel(end_msg, title='[green]Success ♥'))
 
 
 if __name__ == '__main__':
