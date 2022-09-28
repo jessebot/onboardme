@@ -12,25 +12,7 @@ A [A project](https://github.com/jessebot/onboardme) to store config files, as w
 <img src='https://raw.githubusercontent.com/jessebot/onboardme/main/screenshots/terminal_screenshot.png' width='800'>
 
 And here's an example of the cli:
-```
-# ./onboardme.py --help
-usage: onboardme.py [-h] [--delete] [-e EXTRA [EXTRA ...]] [-f] [-i INSTALLERS [INSTALLERS ...]] [-r] [-H HOST [HOST ...]]
-
-Onboarding script for macOS and debian. Uses config in the script repo in package_managers/packages.yml. If run with no options on
-Linux it will install brew, apt, flatpak, and snap packages. On mac, only brew.
-
-options:
-  -h, --help            show this help message and exit
-  --delete              Deletes existing rc files before creating hardlinks. BE CAREFUL!
-  -e EXTRA [EXTRA ...], --extra EXTRA [EXTRA ...]
-                        Extra package groups to install. Accepts multiple args, e.g. --extra gaming
-  -f, --firefox         Opt into experimental firefox configuring
-  -i INSTALLERS [INSTALLERS ...], --installers INSTALLERS [INSTALLERS ...]
-                        Installers to run. Accepts multiple args. Defaults to only run brew, pip3, and apt(if linux). example: --installers brew apt
-  -r, --remote          Setup SSH on a random port and add it to firewall.
-  -H HOST [HOST ...], --host HOST [HOST ...]
-                        Add IP to firewall for remote access
-```
+<img src='https://raw.githubusercontent.com/jessebot/onboardme/main/screenshots/help_text.png' width='800'>
 
 Looking for a project to get a fresh OS entirely, on a machine that has no OS? Check out [pxeless](https://github.com/cloudymax/pxeless).
 

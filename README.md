@@ -4,27 +4,9 @@ A project to store config files, as well as programatically install core package
 <img src='./screenshots/terminal_screenshot.png' width='800'>
 
 And here's an example of the cli:
-```
-# ./onboardme.py --help
-usage: onboardme.py [-h] [--delete] [-e EXTRA [EXTRA ...]] [-f] [-i INSTALLERS [INSTALLERS ...]] [-r] [-H HOST [HOST ...]]
+<img src='./screenshots/help_text.png' width='800'>
 
-Onboarding script for macOS and debian. Uses config in the script repo in package_managers/packages.yml. If run with no options on
-Linux it will install brew, apt, flatpak, and snap packages. On mac, only brew.
-
-options:
-  -h, --help            show this help message and exit
-  --delete              Deletes existing rc files before creating hardlinks. BE CAREFUL!
-  -e EXTRA [EXTRA ...], --extra EXTRA [EXTRA ...]
-                        Extra package groups to install. Accepts multiple args, e.g. --extra gaming
-  -f, --firefox         Opt into experimental firefox configuring
-  -i INSTALLERS [INSTALLERS ...], --installers INSTALLERS [INSTALLERS ...]
-                        Installers to run. Accepts multiple args, e.g. only run brew and apt: --installers brew apt
-  -r, --remote          Setup SSH on a random port and add it to firewall.
-  -H HOST [HOST ...], --host HOST [HOST ...]
-                        Add IP to firewall for remote access
-```
-
-Currently in beta :3 Tested on macOS Monterey 12.5-12.6, and Debian 11 (Bullseye). Please report 🐛 in the GitHub issues, and I will get them as I have time. You can also open a pull request, and I can review it :blue_heart:
+Currently in late beta :3 Tested on macOS Monterey 12.5-12.6, and Debian 11 (Bullseye) and related Ubuntu downstream. Please report 🐛 in the GitHub issues, and I will get them as I have time. You can also open a pull request, and I can review it :blue_heart:
 
 Looking for a project to get a fresh OS entirely, on a machine that has no OS? Check out [pxeless](https://github.com/cloudymax/pxeless).
 
