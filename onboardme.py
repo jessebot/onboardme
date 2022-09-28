@@ -38,34 +38,37 @@ def install_fonts():
     config, but you should still reboot when you're done :shrug:
     """
     if 'Linux' in OS:
-        CONSOLE.rule('✍️  Installing fonts...')
+        print('')
+        CONSOLE.rule('📝 [i]font[/i] installations', style='royal_blue1')
         fonts_dir = f'{HOME_DIR}/repos/nerd-fonts'
 
         # do a shallow clone of the repo
         if not os.path.exists(fonts_dir):
-            print('  Downloading installer and font sets...  (can take a bit)')
+            CONSOLE.print('[i]Downloading installer and font sets... ' +
+                          '(can take a bit)')
             Path(fonts_dir).mkdir(parents=True, exist_ok=True)
             fonts_repo = 'https://github.com/ryanoasis/nerd-fonts.git'
             Repo.clone_from(fonts_repo, fonts_dir, depth=1)
 
         old_pwd = PWD
         os.chdir(fonts_dir)
-        subproc('./install.sh Hack')
-        subproc('./install.sh mononoki')
+        subproc('./install.sh Hack', False, True)
+        subproc('./install.sh Mononoki', False, True)
         os.chdir(old_pwd)
 
+        # debug: print(f'Going to remove {bitmap_conf} and link a yes map...')
         bitmap_conf = '/etc/fonts/conf.d/70-no-bitmaps.conf'
-        print(f'  Going to remove {bitmap_conf} and link a yes map...')
 
         # we do all of this with subprocess because I want the sudo prompt
         if os.path.exists(bitmap_conf):
-            subproc(f'sudo rm {bitmap_conf}')
+            subproc(f'sudo rm {bitmap_conf}', False, True, False)
 
         subproc('sudo ln -s /etc/fonts/conf.avail/70-yes-bitmaps.conf '
-                '/etc/fonts/conf.d/70-yes-bitmaps.conf', True, False)
+                '/etc/fonts/conf.d/70-yes-bitmaps.conf', True, True, False)
 
-        print('\n  The fonts should be installed, however, you have to set '
-              'your terminal font to the new font. I rebooted too.')
+        CONSOLE.print('[i][dim]The fonts should be installed, however, you ' +
+                      'have to set your terminal font to the new font. ' +
+                      'I rebooted too.', justify='center')
 
 
 def hard_link_dot_files(OS="", delete=False,
@@ -150,11 +153,6 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
     passed in, only use brew for mac. Takes optional variable, pkg_group_lists
     to install optional packages.
     """
-    print("\n")
-    msg = ("[dim] :yawning_face: This could take a while on a fresh install, "
-           "so settle in and get comfy 🛋")
-    print(Panel(msg, title="[cornflower_blue]Beginning Package Installations"))
-
     pkg_manager_dir = f'{PWD}/package_managers/'
     with open(pkg_manager_dir + 'packages.yml', 'r') as yaml_file:
         installers_list = yaml.safe_load(yaml_file)
@@ -164,8 +162,8 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
         installer_dict = installers_list[installer]
         pkg_emoji = installer_dict['emoji']
         print("\n")
-        CONSOLE.rule(f'{pkg_emoji} [b]{installer}[/b] apps installing',
-                     style="royal_blue1")
+        msg = f'{pkg_emoji} [green][b]{installer}[/b][/] app installations'
+        CONSOLE.rule(msg, style="royal_blue1")
 
         install_cmd = installer_dict['install_cmd']
         installed_pkgs = subproc(installer_dict['list_cmd'], True, True)
@@ -191,15 +189,13 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
                            f"{pkg_emoji} [b]{installer}[/b] packages")
                     CONSOLE.rule(msg, style="cornflower_blue")
                 for package in installer_dict[pkg_group + '_packages']:
-                    if package in installed_pkgs:
-                        print(f'  {package} is already installed, continuing.')
-                    else:
+                    if package not in installed_pkgs:
                         cmd = f'{install_cmd}{package}'
                         if installer == 'pip3.10':
                             cmd += ' --upgrade'
                         subproc(cmd, True, True)
-                        CONSOLE.print('[dim][i]Installations completed.',
-                                      justify='center')
+                CONSOLE.print('[dim][i]Installations completed.',
+                              justify='center')
 
 
 def configure_feeds():
@@ -319,13 +315,14 @@ def setup_nix_groups():
     if "Linux" in OS:
         print("\n")
         CONSOLE.rule(f'[turquoise2]🐳 [dim]Adding[/dim] [b]{USER}[/b] '
-                     '[dim]to[/dim] [b]docker[/b] [dim]group[/dim]')
+                     '[dim]to[/dim] [b]docker[/b] [dim]group[/dim]',
+                     style='royal_blue1')
         # default way for Linux systems
         cmd = f'sudo usermod -a -G docker {USER}'
         subproc(cmd, False, False, False)
         print("")
-        CONSOLE.print(f'[i][b]{USER}[/b] added to [b]docker[/b] group, but ' +
-                      'you may still need to [b]reboot.', justify="center")
+        CONSOLE.print(f'[dim][i][b]{USER}[/b] added to [b]docker[/b] group, ' +
+                      'but you may still need to [b]reboot.', justify="center")
 
 
 def parse_local_configs():
