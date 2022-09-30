@@ -391,13 +391,13 @@ def print_manual_steps():
     Just prints out the final steps to be done manually, til we automate them
     """
     print("")
-    end_msg = ("\n[i]Here's some stuff you gotta do manually (for now)[/i]:\n"
-               " 📰: Import RSS feeds config into FluentReader\n"
-               " 📺: Import subscriptions into FreeTube \n"
-               " ⌨️ : Set CAPSLOCK to control!\n"
-               " ⏰: Install any cronjobs you need from the cron dir!\n"
-               "  : Source your bash config: [green]source .bashrc[/]\n"
-               " 🐳: Reboot, as [turquoise2]docker[/] demands it.\n\n"
+    end_msg = ("\n[i]Here's some stuff you gotta do manually (for now)[/]:\n\n"
+               " 📰 - Import RSS feeds config into FluentReader\n"
+               " 📺 [dim]- Import subscriptions into FreeTube \n[/]"
+               " ⌨️  - Set CAPSLOCK to control!\n"
+               " ⏰ [dim]- Install any cronjobs you need from the cron dir!\n"
+               "   [/]- Source your bash config: [green]source .bashrc[/]\n"
+               " 🐳 [dim]- Reboot, as [turquoise2]docker[/] demands it.\n\n[/]"
                "If there's anything else you need help with, check the docs:\n"
                "[dim]https://jessebot.github.io/onboardme")
 
