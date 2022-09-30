@@ -24,15 +24,15 @@ class RichCommand(click.Command):
 
         highlighter = OptionHighlighter()
 
-        console = Console(theme=Theme({"option": "bold light_steel_blue",
-                                       "switch": "bold royal_blue1"}),
+        console = Console(theme=Theme({"option": "bold cornflower_blue",
+                                       "switch": "bold light_sky_blue1"}),
                           highlighter=highlighter)
 
-        title = "[cornflower_blue]☁ OnBoard[b]Me[/b][/cornflower_blue]\n"
+        title = "☁ [cornflower_blue]OnBoard[b]Me[/b][/]\n"
         desc = ("[steel_blue]Get your daily driver just the way I like it, "
-                "from [b]text[/b] [i]formatting[/i], and dot files to "
-                "opensource package installation, this script intends to save"
-                " you time setting up or upgrading your pc")
+                "from [b]text[/] [i]formatting[/], and dot files to opensource"
+                "package installation, this script intends to save you time "
+                "setting up or upgrading your environment.")
 
         console.print(title + desc, justify="center")
 
@@ -52,7 +52,8 @@ class RichCommand(click.Command):
                 opt1 = Text("")
 
             if param.metavar:
-                opt2 += Text(f" {param.metavar}", style="bold yellow")
+                opt2 += Text(f" {param.metavar}",
+                             style="bold light_steel_blue")
 
             options = Text(" ".join(reversed(param.opts)))
             help_record = param.get_help_record(ctx)
@@ -67,5 +68,6 @@ class RichCommand(click.Command):
 
             options_table.add_row(opt1, opt2, highlighter(help))
 
-        console.print(Panel(options_table, border_style="dim", title="Options",
+        console.print(Panel(options_table, border_style="dim light_steel_blue",
+                            title="Options",
                             title_align="left"))

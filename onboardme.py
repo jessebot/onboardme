@@ -1,13 +1,13 @@
 #!/usr/bin/env python3.10
 # Onboarding script for macOS and Debian by jessebot@Linux.com
-from click import option, command
+from click import option, command, Choice
 # from click import argument
 from configparser import ConfigParser
 import fileinput
 from git import Repo
 import os
-from lib.util import subproc
-from lib.rich_click import RichCommand
+from util.subproc_wrapper import subproc
+from util.rich_click import RichCommand
 from pathlib import Path
 from random import randint
 from rich import print
@@ -71,8 +71,8 @@ def install_fonts():
                       'I rebooted too.', justify='center')
 
 
-def hard_link_dot_files(OS="", delete=False,
-                        dot_files_dir=f'{PWD}/configs/dot_files'):
+def link_dot_files(OS=OS, delete=False,
+                   dot_files_dir=f'{PWD}/configs/dot_files'):
     """
     Creates hard links to rc files for vim, zsh, bash, and hyper in user's
     home dir. Uses hard links, so that if the tt file is removed, the data
@@ -131,8 +131,8 @@ def configure_vim():
     Installs vim-plug, vim plugin manager, and then installs vim plugins
     """
     print("\n")
-    CONSOLE.rule('Installing [b]vim-plug[/b], for [green][i]Vim[/i][/green]'
-                 ' plugins', style="royal_blue1")
+    CONSOLE.rule('[b]vim-plug[/b] and [green][i]Vim[/i][/green] plugins '
+                 'installation [dim]and[/dim] upgrades', style="royal_blue1")
 
     autoload_dir = f'{HOME_DIR}/.vim/autoload'
     url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
@@ -142,8 +142,9 @@ def configure_vim():
         Path(autoload_dir).mkdir(parents=True, exist_ok=True)
         wget.download(url, autoload_dir)
 
-    # this installs the vim plugins, can also use :PlugInstall in vim
-    subproc('vim +PlugInstall +qall!', False, True)
+    # installs the vim plugins if not installed, updates vim-plug, and then
+    # updates all currently installed plugins
+    subproc('vim +PlugInstall +PlugUpgrade +PlugUpdate +qall!', False, True)
     CONSOLE.print('[i][dim]Plugins installed.', justify='center')
 
 
@@ -365,93 +366,10 @@ def setup_cronjobs():
     print("\n")
 
 
-d_help = 'Deletes existing rc files before creating hardlinks. BE CAREFUL!'
-e_help = ('Extra package groups to install. Accepts multiple , e.g. '
-          '--extra gaming')
-p_help = ('Package managers to run. Defaults to only run brew, pip3, and '
-          'apt/snap/flatpak(if Linux).\n example: -p brew -p apt')
-o_help = ('[i]Beta[/i]. Only run these steps in the script, e.g. --only '
-          'dot_files.\n Steps include: dot_files, package_managers.')
-h_help = 'Add IP to firewall for remote access'
-
-
-@command(cls=RichCommand)
-@option('--delete', '-d', is_flag=True, help=d_help)
-@option('--extra', '-e', default=None, multiple=True, help=e_help)
-@option('--firefox', '-f', is_flag=True,
-        help='Opt into [i]experimental[/i] firefox configuring')
-@option('--package_managers', '-p', default=None, multiple=True, help=p_help)
-@option('--only', '-o', default=None, multiple=True, help=o_help)
-@option('--remote', '-r', is_flag=True,
-        help='Setup SSH on a random port and add it to firewall.')
-@option('--remote_host', '-H', multiple=True, default=None, help=h_help)
-def main(delete: bool = False,
-         extra: str = "",
-         firefox: bool = False,
-         package_managers: str = "",
-         only: str = "",
-         remote: bool = False,
-         remote_host: str = ""):
+def print_manual_steps():
     """
-    Onboarding script for macOS and debian. Uses config in the script repo in
-    package_managers/packages.yml. If run with no options on Linux it will
-    install brew, apt, flatpak, and snap packages. On mac, only brew.
-    coming soon: config via env variables and config files.
+    Just prints out the final steps to be done manually, til we automate them
     """
-    # before we do anything, we need to make sure this OS is supported
-    confirm_os_supported()
-
-    if not only or 'dot_files' in only:
-        hard_link_dot_files(OS, delete)
-        if len(only) == 1:
-            exit()
-
-    # fonts are brew installed unless we're on Linux
-    if 'Linux' in OS:
-        install_fonts()
-
-    if only and 'install_fonts' in only:
-        if len(only) == 1:
-            exit()
-
-    # process additional package lists, if any
-    package_groups = ['default']
-    if extra:
-        package_groups.extend(extra)
-
-    # if user specifies, only do packages passed into --package_managers
-    if package_managers:
-        default_installers = package_managers
-    else:
-        # Pip currently just gets you powerline :)
-        default_installers = ['brew', 'pip3.10']
-        if 'Linux' in OS:
-            default_installers.extend(['apt', 'snap', 'flatpak'])
-            # this is broken
-            # map_caps_to_control()
-            if firefox:
-                configure_firefox()
-
-    run_installers(default_installers, package_groups)
-    if only and 'package_managers' in only:
-        if len(only) == 1:
-            exit()
-
-    # will also configure ssh if you specify --remote
-    if remote and 'Linux' in OS:
-        # not sure what's up with this...
-        # configure_ssh()
-        configure_firewall(remote_host)
-
-    # configure the iterm2 if we're on macOS
-    configure_terminal(OS)
-
-    # this is SUPPOSED to install the vim plugins, but sometimes does not
-    configure_vim()
-
-    # will add your user to Linux groups such as docker
-    setup_nix_groups()
-
     print("\n")
     end_msg = ("[i]Here's some stuff you gotta do manually (for now)[/i]: \n"
                " 📰: Import RSS feeds config into FluentReader\n"
@@ -463,6 +381,143 @@ def main(delete: bool = False,
                "If there's anything else you need help with, check the docs:\n"
                "[dim]https://jessebot.github.io/onboardme")
     print(Panel(end_msg, title='[green]Success ♥'))
+
+
+def process_steps(only_steps=[], firewall=False, browser=False):
+    """
+    process which steps to run for which OS, which steps the user passed in,
+    and then make sure dependent steps are always run.
+
+    Returns a list of str type steps to run.
+    """
+    if only_steps:
+        steps = list(only_steps)
+        # setting up vim is useless if we don't have a .vimrc
+        if 'vim_setup' in steps and 'dot_files' not in steps:
+            steps.append('dot_files')
+    else:
+        steps = ['dot_files', 'install_upgrade_packages', 'vim_setup']
+
+        # this is broken
+        # if 'capslock_to_control' in steps:
+        #     map_caps_to_control()
+
+        # fonts are brew installed on macOS, docker group only applies to linux
+        # currently don't have a great firewall on macOS outside of lulu
+        if 'Linux' in OS:
+            steps.extend(['font_installation', 'groups_setup'])
+            if firewall:
+                steps.append('firewall_setup')
+            if browser:
+                steps.append('browser_setup')
+        # still use primarily iterm2 on macOS, and only macOS
+        else:
+            steps.append('iterm2_setup')
+
+    return steps
+
+
+# Click is so ugly, and I'm sorry we're using it for cli parameters here, but
+# this allows us to use rich.click for pretty prettying the help interface
+@command(cls=RichCommand)
+@option('--delete', '-d',
+        is_flag=True,
+        help='Deletes existing rc files before creating hardlinks.')
+@option('--extra_packages', '-e',
+        type=Choice(['gaming', 'work']), multiple=True,
+        help='Extra package groups to install. Accepts multiple groups.\n'
+             'Ex: -e [cornflower_blue]work[/] -e [cornflower_blue]gaming')
+@option('--browser', '-b',
+        is_flag=True,
+        help='Opt into [i]experimental[/i] Firefox configuruation.')
+@option('--pkg_managers', '-p',
+        default=None,
+        multiple=True,
+        metavar='PKG_MANAGER',
+        type=Choice(['brew', 'pip3.10', 'apt', 'snap', 'flatpak']),
+        help='Specific [light_steel_blue]PKG_MANAGER[/] to run. Defaults to '
+             'only run brew, pip3, & ([i]if linux[/]) apt/snap/flatpak.\n'
+             'Accepts multiple package managers. '
+             'Ex: -p [cornflower_blue]brew[/] -p [cornflower_blue]apt')
+@option('--only_steps', '-o',
+        default=None,
+        multiple=True,
+        metavar='STEP',
+        type=Choice(['dot_files', 'install_upgrade_packages', 'vim_setup']),
+        help='[i]Beta[/i]. Only run [light_steel_blue]STEP[/] in the script. '
+             'Accepts multiple steps.'
+             '\nSteps include: dot_files, install_upgrade_packages, vim_setup.'
+             '\nEx: -o [cornflower_blue]dot_files[/] -o '
+             '[cornflower_blue]install_upgrade_packages')
+@option('--firewall', '-f',
+        is_flag=True,
+        help='Setup SSH on a random port and add it to firewall.')
+@option('--remote_host', '-H',
+        multiple=True,
+        metavar="IP_ADDRESS",
+        default=None,
+        help='Setup SSH on a random port and add [cornflower_blue]IP_ADDRESS'
+             '[/] to firewall')
+def main(delete: bool = False,
+         extra_packages: str = "",
+         browser: bool = False,
+         pkg_managers: str = "",
+         only_steps: str = "",
+         firewall: bool = False,
+         remote_host: str = ""):
+    """
+    Onboarding script for macOS and debian. Uses config in the script repo in
+    package_managers/packages.yml. If run with no options on Linux it will
+    install brew, apt, flatpak, and snap packages. On mac, only brew.
+    coming soon: config via env variables and config files.
+    """
+    # before we do anything, we need to make sure this OS is supported
+    confirm_os_supported()
+
+    # figure out which steps to run:
+    steps = process_steps(only_steps, firewall, browser)
+
+    if 'dot_files' in steps:
+        link_dot_files(delete)
+
+    if 'font_installation' in steps:
+        install_fonts()
+
+    # if user specifies, only do packages passed into --package_managers
+    if 'install_upgrade_packages' in steps:
+        if pkg_managers:
+            default_installers = pkg_managers
+        else:
+            default_installers = ['brew', 'pip3.10']
+            if 'Linux' in OS:
+                default_installers.extend(['apt', 'snap', 'flatpak'])
+
+        # process additional package lists, if any
+        package_groups = ['default']
+        if extra_packages:
+            package_groups.extend(extra_packages)
+
+        run_installers(default_installers, package_groups)
+
+    if 'firewall_setup' in steps:
+        if remote_host:
+            # will also configure ssh if you specify --remote
+            # configure_ssh()
+            configure_firewall(remote_host)
+
+    if 'iterm2' in steps:
+        # configure the iterm2 if we're on macOS
+        configure_terminal(OS)
+
+    if 'vim_setup' in steps:
+        # this installs the vim plugins
+        configure_vim()
+
+    if 'groups_setup' in steps:
+        # will add your user to docker group
+        setup_nix_groups()
+
+    print_manual_steps()
 
 
 if __name__ == '__main__':
