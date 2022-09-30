@@ -6,7 +6,6 @@ permalink: /onboardme/todo
 ---
 
 ## TODOs and sort of Roadmap
-- allow to only update rc files
 - add ci/cd and automatic releases/release notes
 - fix jekyll site to look less gross
 
