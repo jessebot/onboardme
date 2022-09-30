@@ -17,7 +17,7 @@ Looking for a project to get a fresh OS entirely, on a machine that has no OS? C
 ## Under the hood
 
 |       Step                                  | Config Location in repo | OS           |
-|:---:|:---:|:---:|
+|:---|:---|:---:|
 | Installs fonts                              | n/a                     | macOS/Debian |
 | Installs dot files                          | `configs/dot_files`     | macOS/Debian |
 | Installs brew/pip3.10 packages              | `./package_managers/brew/Brewfile_standard`, `./package_managers/brew/Brewfile_$OS`, `./package_managers/pip3.10/requirements.txt` | macOS/Debian |
