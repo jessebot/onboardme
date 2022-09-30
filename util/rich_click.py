@@ -31,7 +31,7 @@ class RichCommand(click.Command):
         title = "☁ [cornflower_blue]OnBoard[b]Me[/b][/]\n"
         desc = ("[steel_blue]Get your daily driver just the way I like it, "
                 "from [b]text[/] [i]formatting[/], and dot files to opensource"
-                "package installation, this script intends to save you time "
+                " package installation, this script intends to save you time "
                 "setting up or upgrading your environment.")
 
         console.print(title + desc, justify="center")
