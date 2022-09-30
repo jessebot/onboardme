@@ -12,7 +12,7 @@ if (has("termguicolors"))
     set termguicolors
 endif
 
-" custom colorscheme to be more pastel and pretty 
+" custom colorscheme to be more pastel and pretty
 colorscheme chalky
 
 " setting default colorscheme
@@ -62,7 +62,7 @@ set scrolloff=3
 set t_ti= t_te=
 
 " This makes RVM work inside Vim. I have no idea why. ? RVM?
-set shell=bash\ --login 
+set shell=bash\ --login
 
 " Store temporary files in a central spot ?
 set backup
@@ -272,12 +272,12 @@ let g:airline_section_z = ':%l (%{LinePercent()}) :%v'
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                           TAB LINE - TOP STATUS LINE        
-" By default tabline does not appear unless there is more then one tab. This 
-" behavior is controlled by showtabline option which defaults to 1. 0 switches 
-" off tabline even if there is more then one tab, 2 makes tabline to be shown 
+"                           TAB LINE - TOP STATUS LINE
+" By default tabline does not appear unless there is more then one tab. This
+" behavior is controlled by showtabline option which defaults to 1. 0 switches
+" off tabline even if there is more then one tab, 2 makes tabline to be shown
 " even if there is only one tab. To find out what script set the variable use
-" :verbose set showtabline? 
+" :verbose set showtabline?
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " set showtabline=1
 
@@ -355,7 +355,7 @@ Plug 'dense-analysis/ale'
 
 
 " terraform linter
-Plug 'hashivim/vim-terraform' 
+Plug 'hashivim/vim-terraform'
 
 call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
