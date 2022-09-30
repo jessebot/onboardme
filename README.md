@@ -1,8 +1,8 @@
-<img src='./screenshots/help_text.png' width='850'>
+<img src='./screenshots/help_text.png' width='850' alt='screenshot of full output of onboardme.py --help'>
 
 This is a project to store config files, as well as programatically install core packages across several package managers that I need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping I'd remember why it was there later, so this is now a renewed effort in remembering all the thing™️s, and automating as much as possible. The idea is that it's faster, smaller, and easier to configure than it's ansible equivalent. Here's an example of the terminal after the script has run:
 
-<img src='./screenshots/terminal_screenshot.png' width='850'>
+<img src='./screenshots/terminal_screenshot.png' width='850' alt='screenshot of terminal after runnign onboardme. includes colortest-256, powerline prompt, icons for files in ls output, and syntax highlighting examples with cat command.'>
 
 
 Looking for a project to get a fresh OS entirely, on a machine that has no OS? Check out [pxeless](https://github.com/cloudymax/pxeless).
