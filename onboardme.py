@@ -10,12 +10,14 @@ from util.subproc_wrapper import subproc
 from util.rich_click import RichCommand
 from pathlib import Path
 from random import randint
-from rich import print
+# rich helps pretty print everything
+from rich import box, print
 from rich.console import Console
 from rich.panel import Panel
 from rich.prompt import Confirm
 from rich.table import Table
 import shutil
+import stat
 import yaml
 import wget
 
@@ -80,14 +82,19 @@ def link_dot_files(OS=OS, delete=False,
     Takes optional dot_files_dir for special directory to grab files from
     """
     # table to print the results of all the files
-    table = Table(title=":shell: Linking dot files...", expand=True)
-    table.add_column("File", style="cyan")
+    table = Table(expand=True,
+                  box=box.MINIMAL_DOUBLE_HEAD,
+                  row_styles=["", "dim"],
+                  border_style="dim",
+                  header_style="cornflower_blue",
+                  title_style="light_steel_blue")
+    table.add_column("File")
     table.add_column("Result", justify="center")
 
     # we only print this msg if we got the file exists error
     print_msg = False
-    help_msg = ("[yellow]If you want to override the existing files, rerun"
-                " script with the [b]--delete[/b] flag.")
+    help_msg = ("If you want to [yellow]override[/yellow] the existing "
+                "file, rerun script with the [b]--delete[/b] flag.")
 
     # loop through the dot_files and hard link them all to the user's home dir
     for root, dirs, files in os.walk(dot_files_dir):
@@ -103,26 +110,39 @@ def link_dot_files(OS=OS, delete=False,
             src_dot_file = os.path.join(root, config_file)
             hard_link = src_dot_file.replace(dot_files_dir, HOME_DIR)
 
-            # try to hard link here, but catch errors if delete set to False
-            try:
-                # if delete has been passed in, delete the existing file first
-                if delete and os.path.exists(hard_link):
-                    if not os.path.islink(hard_link):
+            if os.path.exists(hard_link):
+                # we may have already created the link :)
+                s1 = os.stat(src_dot_file)
+                s2 = os.stat(hard_link)
+                is_hard_linked = (s1[stat.ST_INO], s1[stat.ST_DEV]) == \
+                    (s2[stat.ST_INO], s2[stat.ST_DEV])
+                if is_hard_linked or os.path.islink(src_dot_file):
+                    table.add_row(f"[green]{hard_link}",
+                                  "[green]Already linked ♥")
+                else:
+                    # if --delete was passed in, delete existing file first
+                    if delete:
                         os.remove(hard_link)
-
-                os.link(src_dot_file, hard_link)
-                table.add_row(f"[green]{hard_link}",
-                              "[green]Success ♥")
-
-            except FileExistsError:
-                # keep till loop ends, to notify user that no action was taken
-                table.add_row(f"[magenta]{hard_link}",
-                              "[magenta]File already exists 💔")
-                print_msg = True
+                        os.link(src_dot_file, hard_link)
+            else:
+                # try to hard link, but catch errors if delete set to False
+                try:
+                    os.link(src_dot_file, hard_link)
+                except FileExistsError:
+                    # keep till loop ends, to notify user no action was taken
+                    table.add_row(f"[yellow]{hard_link}",
+                                  "[yellow]File already exists 💔")
+                    print_msg = True
+                else:
+                    table.add_row(f"[green]{hard_link}",
+                                  "[green]Success ♥")
 
     print("")
-    print(table)
+    CONSOLE.print(Panel(table, border_style="light_steel_blue",
+                        title=":shell: Check if dot files are up to date",
+                        title_align="left"))
     if print_msg:
+        print("")
         CONSOLE.print(help_msg, justify='center')
 
 
@@ -370,8 +390,8 @@ def print_manual_steps():
     """
     Just prints out the final steps to be done manually, til we automate them
     """
-    print("\n")
-    end_msg = ("[i]Here's some stuff you gotta do manually (for now)[/i]: \n"
+    print("")
+    end_msg = ("\n[i]Here's some stuff you gotta do manually (for now)[/i]:\n"
                " 📰: Import RSS feeds config into FluentReader\n"
                " 📺: Import subscriptions into FreeTube \n"
                " ⌨️ : Set CAPSLOCK to control!\n"
@@ -380,7 +400,8 @@ def print_manual_steps():
                " 🐳: Reboot, as [turquoise2]docker[/] demands it.\n\n"
                "If there's anything else you need help with, check the docs:\n"
                "[dim]https://jessebot.github.io/onboardme")
-    print(Panel(end_msg, title='[green]Success ♥'))
+
+    print(Panel(end_msg, title='[green]Success ♥', expand=True))
 
 
 def process_steps(only_steps=[], firewall=False, browser=False):
