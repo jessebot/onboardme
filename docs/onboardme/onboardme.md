@@ -16,25 +16,28 @@ Looking for a project to get a fresh OS entirely, on a machine that has no OS? C
 
 ## Under the hood
 
-|       Step                                  | Config Location in repo | OS           |
-|:---|:---|:---:|
-| Installs fonts                              | n/a                     | macOS/Debian |
-| Installs dot files                          | `configs/dot_files`     | macOS/Debian |
-| Installs brew/pip3.10 packages              | `./package_managers/brew/Brewfile_standard`, `./package_managers/brew/Brewfile_$OS`, `./package_managers/pip3.10/requirements.txt` | macOS/Debian |
-| Installs apt, snap, flatpak packages        | `./package_managers/packages.yml`     | Debian |
-| Installs gaming related packages via apt if you pass in `--extras gaming`. | `./package_managers/packages.yml` | Debian |
-| Installs vim-plug, a vim plugin manager  | `configs/dot_files/.vimrc` | macOS/Debian
-| Configures iptables to block traffic on most ports except for HTTPS as well as ICMP/SSH for a single IP | `configs` | Debian |
-| Setups up iTerm2 fonts and colors | `configs/iterm2` | macOS |
-| Adds user to the docker group | n/a | Debian |
+|       Step                                   | Config Location in repo                          | OS           |
+|:---------------------------------------------|:-------------------------------------------------|:------------:|
+| Installs dot files                           | `./configs/dot_files`                            | macOS/Debian |
+| Installs brew packages                       | `./package_managers/brew/Brewfile_[standard/OS]` | macOS/Debian |
+| Installs brew/pip3.10 packages               | `./package_managers/pip3.10/requirements.txt`    | macOS/Debian |
+| Installs fonts                               | n/a                                              | macOS/Debian |
+| Installs apt, snap, flatpak packages         | `./package_managers/packages.yml`                | Debian       |
+| (OPTIONAL) Installs gaming related packages. | `./package_managers/packages.yml`                | Debian       |
+| Installs vim-plug, a vim plugin manager      | `./configs/dot_files/.vimrc`                     | macOS/Debian |
+| Configures iptables*                         | `configs`                                        | Debian       |
+| Setups up iTerm2 fonts and colors            | `./configs/iterm2`                               | macOS        |
+| Adds user to the docker group                | n/a                                              | Debian       |
+
+*to block traffic on most ports except for HTTPS as well as ICMP/SSH for a single IP
 
 ### Current Ecoscape of Personal Tech
 
 These are all Linux Desktop and macOS applications I use. 
 OnBoardMe doesn't officially support phones yet, but for what I use on my phone, check out my [doc](/onboardme/os/android).
 
-| Category | App | Replaces |
-|:---:|:---|:---|
+|        Category        |               App                   |            Replaces               |
+|:-----------------------|:------------------------------------|:----------------------------------|
 | Backups - local/remote | Restic to minio and b2              | GDrive, iCloud, S3                |
 | Web Browser            | Firefox, Lynx/w3m (terminal only)   | Chrome/Safari/Edge                |
 | Email Client           | Thunderbird + Protonmail + Bridge for Linux/MacOS | Gmail               |
