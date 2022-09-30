@@ -12,6 +12,9 @@ if (has("termguicolors"))
     set termguicolors
 endif
 
+" custom colorscheme to be more pastel and pretty 
+colorscheme chalky
+
 " setting default colorscheme
 set background=dark
 
@@ -59,7 +62,7 @@ set scrolloff=3
 set t_ti= t_te=
 
 " This makes RVM work inside Vim. I have no idea why. ? RVM?
-set shell=bash
+set shell=bash\ --login 
 
 " Store temporary files in a central spot ?
 set backup
