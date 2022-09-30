@@ -23,7 +23,7 @@ colortest-16   colortest-16b  colortest-256  colortest-8
 
 Thanks to this [person on askubuntu.com](https://askubuntu.com/a/396569) for showing me the `colortest-256` command. Really pretty stuff :)
 
-<img src="https://raw.githubusercontent.com/jessebot/onboardme/main/screenshots/terminal_palete.png" width="600">
+<img src="https://raw.githubusercontent.com/jessebot/onboardme/main/screenshots/terminal_palete.png" width="600" alt="Screenshot of colortest-256 command running in BASH, which shows a color pallete for all colors a terminal emulator can render.">
 
 ## Test colors with BASH
 If you just want the base terminal colors and all you got is bash, you can try this:
@@ -39,7 +39,7 @@ echo -e "\033[0;35mPURPLE\t\033[1;35mLIGHT_PURPLE"
 echo -e "\033[0;33mYELLOW\t\033[1;33mLIGHT_YELLOW"
 echo -e "\033[1;30mGRAY\t\033[0;37mLIGHT_GRAY"
 ```
-<img src="https://i.stack.imgur.com/i2zcd.png">
+<img src="https://i.stack.imgur.com/i2zcd.png" alt="example output of the above bash echo with colors example.">
 
 # Printing colors with BASH
 
