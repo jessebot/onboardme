@@ -135,7 +135,7 @@ def link_dot_files(OS=OS, delete=False,
                     print_msg = True
                 else:
                     table.add_row(f"[green]{hard_link}",
-                                  "[green]Success ♥")
+                                  "[green]Successfully linked ♥")
 
     print("")
     CONSOLE.print(Panel(table, border_style="light_steel_blue",
