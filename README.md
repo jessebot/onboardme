@@ -10,7 +10,7 @@ Looking for a project to get a fresh OS entirely, on a machine that has no OS? C
 Actually looking for a project to get started with self hosting k8s stuff? Check out [smol k8s homelab](https://github.com/jessebot/smol_k8s_homelab).
 
 ## Quick Start
-[Get Started here :blue_heart:!](https://jessebot.github.io/onboardme/onboardme/quickstart)
+[Get Started here](https://jessebot.github.io/onboardme/onboardme/quickstart) :blue_heart:!
 
 #### Docs
 You can find the bulk of my notes under the `docs/` directory in this repo, but I've also recently setup a justthedocs page [here](https://jessebot.github.io/onboardme/).
