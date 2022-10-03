@@ -443,7 +443,7 @@ def process_steps(only_steps=[], firewall=False, browser=False):
         metavar='PKG_MANAGER',
         type=Choice(['brew', 'pip3.10', 'apt', 'snap', 'flatpak']),
         help='Specific [light_steel_blue]PKG_MANAGER[/] to run. Defaults to '
-             'only run brew, pip3, & ([i]if linux[/]) apt/snap/flatpak.\n'
+             'only run brew, pip3.10, & ([i]if linux[/]) apt/snap/flatpak.\n'
              'Accepts multiple package managers. '
              'Ex: -p [cornflower_blue]brew[/] -p [cornflower_blue]apt')
 @option('--only_steps', '-o',

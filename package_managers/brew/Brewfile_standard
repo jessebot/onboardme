@@ -8,6 +8,9 @@
 brew "curl"
 brew "wget"
 
+# making things
+brew "cmake"
+
 # terminal based web browser
 brew "lynx"
 

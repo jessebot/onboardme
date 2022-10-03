@@ -10,7 +10,7 @@ if (has("termguicolors"))
 endif
 
 " custom colorscheme to be more pastel and pretty
-colorscheme chalky
+colorscheme koehler
 
 " setting default colorscheme
 set background=dark
@@ -44,6 +44,8 @@ set backspace=indent,eol,start
 " variable. A lot of ppl change to comma because they find it easier to type.
 "
 let mapleader=","
+
+set pythonhome=/home/linuxbrew/.linuxbrew/bin/python3.10
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -352,6 +354,12 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 " allow collapsing of functions for python and other supported languages
 Plug 'tmhedberg/SimpylFold'
 
+" python tab completion maybe
+Plug 'ycm-core/YouCompleteMe'
+
+" this is for pep8 (linting in python)
+Plug 'nvie/vim-flake8'
+
 " indents lines and adds a line to show blocks of code
 Plug 'Yggdroot/indentLine'
 
@@ -360,9 +368,6 @@ Plug 'stephpy/vim-yaml'
 
 " bash tab completion
 Plug 'WolfgangMehner/bash-support'
-
-" python completion
-" Plug 'Valloric/YouCompleteMe'
 
 " linter - will use shellcheck for bash and highlight broken code
 Plug 'dense-analysis/ale'
