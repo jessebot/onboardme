@@ -8,12 +8,11 @@ from git import Repo
 import os
 from util.subproc_wrapper import subproc
 from util.rich_click import RichCommand
+from util.console_logging import print_panel, print_header, print_msg
 from pathlib import Path
 from random import randint
 # rich helps pretty print everything
 from rich import box, print
-from rich.console import Console
-from rich.panel import Panel
 from rich.prompt import Confirm
 from rich.table import Table
 import shutil
@@ -29,8 +28,6 @@ OS = f"{SYSINFO.sysname}_{SYSINFO.machine}"
 PWD = os.path.dirname(__file__)
 HOME_DIR = os.getenv("HOME")
 USER = os.getlogin()
-# this is for rich text, to pretty print things
-CONSOLE = Console()
 
 
 def install_fonts():
@@ -40,14 +37,13 @@ def install_fonts():
     config, but you should still reboot when you're done :shrug:
     """
     if 'Linux' in OS:
-        print('')
-        CONSOLE.rule('📝 [i]font[/i] installations', style='royal_blue1')
+        print_header('📝 [i]font[/i] installations')
         fonts_dir = f'{HOME_DIR}/repos/nerd-fonts'
 
         # do a shallow clone of the repo
         if not os.path.exists(fonts_dir):
-            CONSOLE.print('[i]Downloading installer and font sets... ' +
-                          '(can take a bit)')
+            print_msg('[i]Downloading installer and font sets... ' +
+                      '(can take a bit)')
             Path(fonts_dir).mkdir(parents=True, exist_ok=True)
             fonts_repo = 'https://github.com/ryanoasis/nerd-fonts.git'
             Repo.clone_from(fonts_repo, fonts_dir, depth=1)
@@ -68,9 +64,8 @@ def install_fonts():
         subproc('sudo ln -s /etc/fonts/conf.avail/70-yes-bitmaps.conf '
                 '/etc/fonts/conf.d/70-yes-bitmaps.conf', True, True, False)
 
-        CONSOLE.print('[i][dim]The fonts should be installed, however, you ' +
-                      'have to set your terminal font to the new font. ' +
-                      'I rebooted too.', justify='center')
+        print_msg('[i][dim]The fonts should be installed, however, you have ' +
+                  'to set your terminal font to the new font. I rebooted too.')
 
 
 def link_dot_files(OS=OS, delete=False,
@@ -92,7 +87,7 @@ def link_dot_files(OS=OS, delete=False,
     table.add_column("Result", justify="center")
 
     # we only print this msg if we got the file exists error
-    print_msg = False
+    file_msg = False
     help_msg = ("If you want to [yellow]override[/yellow] the existing "
                 "file, rerun script with the [b]--delete[/b] flag.")
 
@@ -111,16 +106,17 @@ def link_dot_files(OS=OS, delete=False,
             hard_link = src_dot_file.replace(dot_files_dir, HOME_DIR)
 
             if os.path.exists(hard_link):
+                # we check the inodes to see if the correct link has been made
+                repo_stat = os.stat(src_dot_file)
+                repo_inode = (repo_stat[stat.ST_INO], repo_stat[stat.ST_DEV])
+                host_stat = os.stat(hard_link)
+                host_inode = (host_stat[stat.ST_INO], host_stat[stat.ST_DEV])
                 # we may have already created the link :)
-                s1 = os.stat(src_dot_file)
-                s2 = os.stat(hard_link)
-                is_hard_linked = (s1[stat.ST_INO], s1[stat.ST_DEV]) == \
-                    (s2[stat.ST_INO], s2[stat.ST_DEV])
-                if is_hard_linked or os.path.islink(src_dot_file):
+                if repo_inode == host_inode or os.path.islink(src_dot_file):
                     table.add_row(f"[green]{hard_link}",
                                   "[green]Already linked ♥")
                 else:
-                    # if --delete was passed in, delete existing file first
+                    # if --delete was passed in to script
                     if delete:
                         os.remove(hard_link)
                         os.link(src_dot_file, hard_link)
@@ -132,40 +128,37 @@ def link_dot_files(OS=OS, delete=False,
                     # keep till loop ends, to notify user no action was taken
                     table.add_row(f"[yellow]{hard_link}",
                                   "[yellow]File already exists 💔")
-                    print_msg = True
+                    file_msg = True
                 else:
                     table.add_row(f"[green]{hard_link}",
                                   "[green]Successfully linked ♥")
 
-    print("")
-    CONSOLE.print(Panel(table, border_style="light_steel_blue",
-                        title=":shell: Check if dot files are up to date",
-                        title_align="left"))
-    if print_msg:
-        print("")
-        CONSOLE.print(help_msg, justify='center')
+    print_panel(table, ":shell: Check if dot files are up to date", "left",
+                "light_steel_blue")
+    if file_msg:
+        print('')
+        print_msg(help_msg)
 
 
 def configure_vim():
     """
     Installs vim-plug, vim plugin manager, and then installs vim plugins
     """
-    print("\n")
-    CONSOLE.rule('[b]vim-plug[/b] and [green][i]Vim[/i][/green] plugins '
-                 'installation [dim]and[/dim] upgrades', style="royal_blue1")
+    print_header('[b]vim-plug[/b] and [green][i]Vim[/i][/green] plugins '
+                 'installation [dim]and[/dim] upgrades')
 
     autoload_dir = f'{HOME_DIR}/.vim/autoload'
     url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     if not os.path.exists(autoload_dir):
-        CONSOLE.print('[i]Creating directory structure and downloading ' +
-                      '[b]vim-plug[/b]...', justify='center')
+        print_msg('[i]Creating directory structure and downloading [b]' +
+                  'vim-plug[/b]...')
         Path(autoload_dir).mkdir(parents=True, exist_ok=True)
         wget.download(url, autoload_dir)
 
     # installs the vim plugins if not installed, updates vim-plug, and then
     # updates all currently installed plugins
     subproc('vim +PlugInstall +PlugUpgrade +PlugUpdate +qall!', False, True)
-    CONSOLE.print('[i][dim]Plugins installed.', justify='center')
+    print_msg('[i][dim]Plugins installed.')
 
 
 def run_installers(installers=['brew'], pkg_groups=['default']):
@@ -182,9 +175,8 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
     for installer in set(installers):
         installer_dict = installers_list[installer]
         pkg_emoji = installer_dict['emoji']
-        print("\n")
         msg = f'{pkg_emoji} [green][b]{installer}[/b][/] app installations'
-        CONSOLE.rule(msg, style="royal_blue1")
+        print_header(msg)
 
         install_cmd = installer_dict['install_cmd']
         installed_pkgs = subproc(installer_dict['list_cmd'], True, True)
@@ -203,19 +195,20 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
                     'https://flathub.org/repo/flathub.flatpakrepo')
 
         for pkg_group in pkg_groups:
-            if pkg_group + '_packages' in installer_dict:
+            if f'{pkg_group}_packages' in installer_dict:
+
                 if pkg_group != 'default':
-                    print("\n")
                     msg = (f"Installing {pkg_group.replace('_', ' ')} "
                            f"{pkg_emoji} [b]{installer}[/b] packages")
-                    CONSOLE.rule(msg, style="cornflower_blue")
+                    print_header(msg, "cornflower_blue")
+
                 for package in installer_dict[pkg_group + '_packages']:
                     if package not in installed_pkgs:
                         cmd = f'{install_cmd}{package}'
                         if installer == 'pip3.10':
                             cmd += ' --upgrade'
                         subproc(cmd, True, True)
-                CONSOLE.print('[dim][i]Completed.', justify='center')
+                print_msg('[dim][i]Completed.')
 
 
 def configure_feeds():
@@ -232,14 +225,12 @@ def configure_terminal(OS='Darwin'):
     configure colorschemes and dynamic profiles for iterm2 if we're on macOS
     """
     if "Darwin" in OS:
-        print("\n")
-        CONSOLE.rule("Installing default iTerm2 Dynamic Profile...",
-                     style="royal_blue1")
+        print_header("Installing default iTerm2 Dynamic Profile...")
         p = os.path.join(HOME_DIR,
                          'Library/Application Support/iTerm2/DynamicProfiles')
         shutil.copy(f'{PWD}/configs/iterm2/Profiles.json', p)
         print("")
-        CONSOLE.print('[dim][i]Dynamic profile installed.', justify='center')
+        print_msg('[dim][i]Dynamic profile installed.')
 
 
 def configure_firefox():
@@ -253,7 +244,7 @@ def configure_firefox():
         # hate apple for their capitalized directories
         ini_dir = f'{HOME_DIR}/Library/Application Support/Firefox/'
 
-    CONSOLE.rule('🦊 Installing Firefox preferences and addons')
+    print_header('🦊 Installing Firefox preferences and addons')
 
     print('  Checking Firefox profiles.ini for correct profile...')
     profile_dir = ''
@@ -284,7 +275,7 @@ def map_caps_to_control():
     """
     Maps capslock to control. This is ugly and awful
     """
-    CONSOLE.rule("⌨️  Mapping capslock to control...")
+    print_header("⌨️  Mapping capslock to control...")
     cmd = "setxkbmap -layout us -option ctrl:nocaps"
     subproc(cmd, True, True)
 
@@ -317,7 +308,7 @@ def configure_firewall(remote_hosts=[]):
     configure iptables
     TODO: Add Lulu configuration
     """
-    CONSOLE.rule('🛡️ Configuring Firewall...')
+    print_header('🛡️ Configuring Firewall...')
     if remote_hosts:
         remote_ips = ' '.join(remote_hosts)
         subproc(f'{PWD}/configs/firewall/iptables.sh {remote_ips}')
@@ -333,16 +324,14 @@ def setup_nix_groups():
     # cmd = f"sudo dseditgroup -o edit -a {USER} -t user docker"
 
     if "Linux" in OS:
-        print("\n")
-        CONSOLE.rule(f'[turquoise2]🐳 [dim]Adding[/dim] [b]{USER}[/b] '
-                     '[dim]to[/dim] [b]docker[/b] [dim]group[/dim]',
-                     style='royal_blue1')
+        print_header(f'[turquoise2]🐳 [dim]Adding[/dim] [b]{USER}[/b] '
+                     '[dim]to[/dim] [b]docker[/b] [dim]group[/dim]')
         # default way for Linux systems
         cmd = f'sudo usermod -a -G docker {USER}'
         subproc(cmd, False, False, False)
         print("")
-        CONSOLE.print(f'[dim][i][b]{USER}[/b] added to [b]docker[/b] group, ' +
-                      'but you may still need to [b]reboot.', justify="center")
+        print_msg(f'[dim][i][b]{USER}[/b] added to [b]docker[/b] group, but ' +
+                  'you may still need to [b]reboot.')
 
 
 def parse_local_configs():
@@ -361,28 +350,27 @@ def confirm_os_supported():
     verify we're on a supported OS and ask to quit if not.
     """
     if SYSINFO.sysname != 'Linux' and SYSINFO.sysname != 'Darwin':
-        print(Panel(f"[magenta]{SYSINFO.sysname}[normal] isn't officially "
+        print_panel(f"[magenta]{SYSINFO.sysname}[normal] isn't officially "
                     "supported. We haven't tested anything outside of Debian,"
-                    "Ubuntu, and macOS.", title="⚠️  [yellow]WARNING"))
+                    "Ubuntu, and macOS.", "⚠️  [yellow]WARNING")
 
         quit_y = Confirm.ask("You're in uncharted waters. Do you wanna quit?")
         if quit_y:
-            print(Panel("That's probably safer. Have a safe day, friend."))
+            print_panel("That's probably safer. Have a safe day, friend.",
+                        "Safety Award ☆")
             quit()
         else:
-            print(Panel("[red]Yeehaw, I guess.", title="¯\\_(ツ)_/¯"))
+            print_panel("[red]Yeehaw, I guess.", "¯\\_(ツ)_/¯")
     else:
-        print("")
-        print(Panel("Operating System and Architechure [green]supported ♥",
-                    title="[cornflower_blue]Compatibility Check"))
+        print_panel("Operating System and Architechure [green]supported ♥",
+                    "[cornflower_blue]Compatibility Check")
 
 
 def setup_cronjobs():
     """
     setup any important cronjobs/alarms. Currently just adds nightly updates
     """
-    print("\n")
-    CONSOLE.rule("⏰ Installing new cronjobs...")
+    print_header("⏰ Installing new cronjobs...")
     print("\n")
 
 
@@ -390,7 +378,6 @@ def print_manual_steps():
     """
     Just prints out the final steps to be done manually, til we automate them
     """
-    print("")
     end_msg = ("\n[i]Here's some stuff you gotta do manually (for now)[/]:\n\n"
                " 📰 - Import RSS feeds config into FluentReader\n"
                " 📺 [dim]- Import subscriptions into FreeTube \n[/]"
@@ -401,7 +388,7 @@ def print_manual_steps():
                "If there's anything else you need help with, check the docs:\n"
                "[dim]https://jessebot.github.io/onboardme")
 
-    print(Panel(end_msg, title='[green]Success ♥', expand=True))
+    print_panel(end_msg, '[green]Success ♥')
 
 
 def process_steps(only_steps=[], firewall=False, browser=False):
