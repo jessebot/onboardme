@@ -1,3 +1,4 @@
+#!/usr/bin/env python3.10
 # Onboarding script for macOS and Debian by jessebot@Linux.com
 from click import option, command, Choice
 # from click import argument
@@ -67,8 +68,7 @@ def install_fonts():
                   'to set your terminal font to the new font. I rebooted too.')
 
 
-def link_dot_files(OS=OS, delete=False,
-                   dot_files_dir=f'{PWD}/dot_files'):
+def link_dot_files(OS=OS, delete=False, dot_files_dir=f'{PWD}/dot_files'):
     """
     Creates hard links to rc files for vim, zsh, bash, and hyper in user's
     home dir. Uses hard links, so that if the tt file is removed, the data

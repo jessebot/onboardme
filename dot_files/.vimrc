@@ -1,8 +1,5 @@
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                          @jessebot's personal .vimrc
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                 GENERAL
 "            stuff like line numbers and syntax highlighting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -87,6 +84,19 @@ set numberwidth=5
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               FOLDING ZONE
+"                    collapse an entire block or function
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Enable folding on base indent
+set foldmethod=indent
+set foldlevel=99
+" let spacebar allow me to fold the code 
+nnoremap <space> za
+" also allow me to see the doc strings
+let g:SimpylFold_docstring_preview=1
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                INDENT ZONE
 "                          define tabs and spaces
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -105,13 +115,17 @@ filetype plugin indent on
 "                               YAML
 "                does proper linting w/o leaving vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-  set foldlevelstart=20
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab foldlevelstart=20
 
-  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-  let g:ale_sign_error = '✘'
-  let g:ale_sign_warning = '⚠'
-  let g:ale_lint_on_text_changed = 'never'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               Ale
+"                    linter warning and errors
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
+let g:ale_lint_on_text_changed = 'never'
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -163,9 +177,6 @@ function! MapCR()
 endfunction
 call MapCR()
 nnoremap <leader><leader> <c-^>
-
-" let spacebar take me into command mode
-noremap <space> :
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                         MULTIPURPOSE TAB KEY
@@ -338,17 +349,20 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 "
 " END NerdTree
 
+" allow collapsing of functions for python and other supported languages
+Plug 'tmhedberg/SimpylFold'
+
 " indents lines and adds a line to show blocks of code
 Plug 'Yggdroot/indentLine'
 
 " yaml syntax highlighting better
 Plug 'stephpy/vim-yaml'
-" python tab completion - I actually find this kind of annoying :shrug:
-Plug 'davidhalter/jedi-vim'
-" I don't actually remember what this does...
-Plug 'python-mode/python-mode', { 'for': 'python'}
+
 " bash tab completion
 Plug 'WolfgangMehner/bash-support'
+
+" python completion
+" Plug 'Valloric/YouCompleteMe'
 
 " linter - will use shellcheck for bash and highlight broken code
 Plug 'dense-analysis/ale'
