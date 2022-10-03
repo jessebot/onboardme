@@ -1,4 +1,3 @@
-#!/usr/bin/env python3.10
 # this is for rich text, to pretty print things
 from rich.console import Console
 from rich.panel import Panel

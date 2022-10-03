@@ -1,4 +1,3 @@
-#!/usr/bin/env python3.10
 # Onboarding script for macOS and Debian by jessebot@Linux.com
 from click import option, command, Choice
 # from click import argument
