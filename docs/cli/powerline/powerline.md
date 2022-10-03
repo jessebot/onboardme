@@ -7,7 +7,7 @@ permalink: /cli/powerline
 
 [Powerline](https://github.com/powerline/powerline/tree/master) is a configurable status line for use in the terminal. It has plugins for common shells, to create beautiful prompts for shells such as BASH or ZSH, but it can also work with vim, tmux, and other apps. You can check out the docs [here](https://powerline.readthedocs.io/en/master/index.html).
 
-Here's an example of [my personal powerline setup](https://github.com/jessebot/onboardme/tree/main/configs/dot_files/.config/powerline):
+Here's an example of [my personal powerline setup](https://github.com/jessebot/onboardme/tree/main/dot_files/.config/powerline):
 
 <img src="https://raw.githubusercontent.com/jessebot/onboardme/main/screenshots/ssh_powerline_example.png" width="800" alt="screenshot of onboardme powerline setup, shows multiline bash prompt with first line showing time, hostname, current directory and then second line showing an arrow coming from above and pointing right toward the input field.">
 
@@ -79,6 +79,6 @@ ps aux | grep powerline | awk '{print $2}' | xargs kill
 ```
 Then just hit `ctrl`+`c` and you should be back on your merry way.
 
-Not sure where to start? Try [my config](https://github.com/jessebot/onboardme/tree/main/configs/dot_files/.config/powerline) for inspiration :3
+Not sure where to start? Try [my config](https://github.com/jessebot/onboardme/tree/main/dot_files/.config/powerline) for inspiration :3
 
 Good luck out there, friend!

@@ -74,7 +74,7 @@ def install_fonts():
 
 
 def link_dot_files(OS=OS, delete=False,
-                   dot_files_dir=f'{PWD}/configs/dot_files'):
+                   dot_files_dir=f'{PWD}/dot_files'):
     """
     Creates hard links to rc files for vim, zsh, bash, and hyper in user's
     home dir. Uses hard links, so that if the tt file is removed, the data
