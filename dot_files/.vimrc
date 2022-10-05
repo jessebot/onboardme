@@ -45,7 +45,10 @@ set backspace=indent,eol,start
 "
 let mapleader=","
 
-set pythonhome=/home/linuxbrew/.linuxbrew/bin/python3.10
+" gray line on the 80 character line, so you know when you're over 80 char
+" unsure why it is still red though :shrug: will fix later
+highlight ColorColumn ctermbg=gray
+set colorcolumn=80
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -92,7 +95,7 @@ set numberwidth=5
 " Enable folding on base indent
 set foldmethod=indent
 set foldlevel=99
-" let spacebar allow me to fold the code 
+" let spacebar allow me to fold the code
 nnoremap <space> za
 " also allow me to see the doc strings
 let g:SimpylFold_docstring_preview=1

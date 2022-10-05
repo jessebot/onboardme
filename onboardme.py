@@ -68,12 +68,15 @@ def install_fonts():
                   'to set your terminal font to the new font. I rebooted too.')
 
 
-def link_dot_files(OS=OS, delete=False, dot_files_dir=f'{PWD}/dot_files'):
+def link_dot_files(OS='Linux', delete=False, dot_files_dir=f'{PWD}/dot_files'):
     """
     Creates hard links to rc files for vim, zsh, bash, and hyper in user's
     home dir. Uses hard links, so that if the tt file is removed, the data
     will remain. If delete is True, we delete files before beginning.
     Takes optional dot_files_dir for special directory to grab files from
+
+    note on how we're going to do things in future, seperate dot files repo:
+    https://probablerobot.net/2021/05/keeping-'live'-dotfiles-in-a-git-repo/
     """
     # table to print the results of all the files
     table = Table(expand=True,
@@ -104,21 +107,24 @@ def link_dot_files(OS=OS, delete=False, dot_files_dir=f'{PWD}/dot_files'):
             src_dot_file = os.path.join(root, config_file)
             hard_link = src_dot_file.replace(dot_files_dir, HOME_DIR)
 
+            succesfully_linked = False
+            # check if the file already exists first
             if os.path.exists(hard_link):
-                # we check the inodes to see if the correct link has been made
-                repo_stat = os.stat(src_dot_file)
-                repo_inode = (repo_stat[stat.ST_INO], repo_stat[stat.ST_DEV])
-                host_stat = os.stat(hard_link)
-                host_inode = (host_stat[stat.ST_INO], host_stat[stat.ST_DEV])
-                # we may have already created the link :)
-                if repo_inode == host_inode or os.path.islink(src_dot_file):
-                    table.add_row(f"[green]{hard_link}",
-                                  "[green]Already linked ♥")
+                # if --delete was passed in to script, delete the existing file
+                if delete:
+                    os.remove(hard_link)
+                    os.link(src_dot_file, hard_link)
+                    succesfully_linked = True
                 else:
-                    # if --delete was passed in to script
-                    if delete:
-                        os.remove(hard_link)
-                        os.link(src_dot_file, hard_link)
+                    # check the inodes to see if the correct link was made
+                    repo_stat = os.stat(src_dot_file)
+                    repo_ind = (repo_stat[stat.ST_INO], repo_stat[stat.ST_DEV])
+                    host_stat = os.stat(hard_link)
+                    host_ind = (host_stat[stat.ST_INO], host_stat[stat.ST_DEV])
+                    # we may have already created the link :)
+                    if repo_ind == host_ind or os.path.islink(src_dot_file):
+                        table.add_row(f"[green]{hard_link}",
+                                      "[green]Already linked ♥")
             else:
                 # try to hard link, but catch errors if delete set to False
                 try:
@@ -129,8 +135,11 @@ def link_dot_files(OS=OS, delete=False, dot_files_dir=f'{PWD}/dot_files'):
                                   "[yellow]File already exists 💔")
                     file_msg = True
                 else:
-                    table.add_row(f"[green]{hard_link}",
-                                  "[green]Successfully linked ♥")
+                    succesfully_linked = True
+
+            if succesfully_linked:
+                table.add_row(f"[green]{hard_link}",
+                              "[green]Successfully linked ♥")
 
     print_panel(table, ":shell: Check if dot files are up to date", "left",
                 "light_steel_blue")
@@ -485,7 +494,7 @@ def main(delete: bool = False,
     steps = process_steps(only_steps, firewall, browser)
 
     if 'dot_files' in steps:
-        link_dot_files(delete)
+        link_dot_files(OS, delete)
 
     if 'font_installation' in steps:
         install_fonts()
