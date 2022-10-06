@@ -1,14 +1,10 @@
 #!/usr/bin/env python3.10
 # Onboarding script for macOS and Debian by jessebot@Linux.com
 from click import option, command, Choice
-# from click import argument
 from configparser import ConfigParser
 import fileinput
 from git import Repo
 import os
-from util.subproc_wrapper import subproc
-from util.rich_click import RichCommand
-from util.console_logging import print_panel, print_header, print_msg
 from pathlib import Path
 from random import randint
 # rich helps pretty print everything
@@ -17,6 +13,9 @@ from rich.prompt import Confirm
 from rich.table import Table
 import shutil
 import stat
+from util.subproc_wrapper import subproc
+from util.rich_click import RichCommand
+from util.console_logging import print_panel, print_header, print_msg
 import yaml
 import wget
 

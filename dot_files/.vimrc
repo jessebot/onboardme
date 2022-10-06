@@ -328,59 +328,55 @@ let g:clap_theme = 'material_design_dark'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin()
 
-" this is a modern fuzzy searcher
-Plug 'liuchengxu/vim-clap'
-
+" -------------------- General IDE stuff ------------------------
 " adds a pretty status line
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-
-" git plugin for running git commands with :git
-Plug 'tpope/vim-fugitive'
-" puts a git + or - in side line to show git changes in file
-Plug 'airblade/vim-gitgutter'
+" allow collapsing of functions for python and other supported languages
+Plug 'tmhedberg/SimpylFold'
+" indents lines and adds a line to show blocks of code
+Plug 'Yggdroot/indentLine'
+" this is a modern fuzzy searcher
+Plug 'liuchengxu/vim-clap'
 
 " NerdTree - Tree explorer plugin - use :NERDTreeToggle to try it out
 "          - after nerdtree is on visible, use ? for help
 "
 " On-demand loading of nerdtree
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-" syntax highlighing for nerdtree
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " puts little glyphs for different file types
 Plug 'ryanoasis/vim-devicons'
+" syntax highlighing for nerdtree
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " add git awareness to see modified, merged, etc status of file in nerdtree
 Plug 'Xuyuanp/nerdtree-git-plugin'
-"
-" END NerdTree
 
-" allow collapsing of functions for python and other supported languages
-Plug 'tmhedberg/SimpylFold'
+" git plugin for running git commands with :git
+Plug 'tpope/vim-fugitive'
+" puts a git + or - in side line to show git changes in file
+Plug 'airblade/vim-gitgutter'
 
-" python tab completion maybe
-Plug 'ycm-core/YouCompleteMe'
-
-" this is for pep8 (linting in python)
-Plug 'nvie/vim-flake8'
-
-" indents lines and adds a line to show blocks of code
-Plug 'Yggdroot/indentLine'
+" ---------- Language Specific/File type Specific Stuff -------------
+" bash tab completion
+Plug 'WolfgangMehner/bash-support'
 
 " yaml syntax highlighting better
 Plug 'stephpy/vim-yaml'
 
-" bash tab completion
-Plug 'WolfgangMehner/bash-support'
+" make jinja templates prettier
+Plug 'lepture/vim-jinja'
 
-" linter - will use shellcheck for bash and highlight broken code
-Plug 'dense-analysis/ale'
+" python tab completion maybe
+Plug 'ycm-core/YouCompleteMe'
 
+" python pep8 (style guide)
+Plug 'nvie/vim-flake8'
 
 " terraform linter
 Plug 'hashivim/vim-terraform'
 
-call plug#end()
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" general linter - will use shellcheck for bash and highlight broken code
+Plug 'dense-analysis/ale'
 
 " ------------------------- k8s -------------------------------
 "
@@ -389,7 +385,6 @@ call plug#end()
 " And for the current directory (read from disk)
 " :KubeApplyDir :KubeDeleteDir
 Plug 'andrewstuart/vim-kubernetes'
-
 
 " helm yaml specifically (includes go support) doesn't seem to work for
 " auto-indenting, so it's off for now
