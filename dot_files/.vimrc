@@ -42,13 +42,25 @@ set backspace=indent,eol,start
 " https://medium.com/usevim/vim-101-what-is-the-leader-key-f2f5c1fa610f
 " The <Leader> key is a reference to a specific key defined by the mapleader
 " variable. A lot of ppl change to comma because they find it easier to type.
-"
 let mapleader=","
 
 " gray line on the 80 character line, so you know when you're over 80 char
 " unsure why it is still red though :shrug: will fix later
 highlight ColorColumn ctermbg=gray
 set colorcolumn=80
+
+" Make * search the file for text when you highlight it in visual mode
+" From this user: https://stackoverflow.com/a/42776237
+xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
+xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<C-R>=@/<CR><CR>
+
+function! s:VSetSearch()
+    let temp = @s
+    norm! gv"sy
+    let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n','g')
+    let @s = temp
+endfunction
+
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
