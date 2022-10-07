@@ -20,9 +20,15 @@ brew "tmux"
 # recording a shell session to share with others
 brew "asciinema"
 
+# main terminal based text editor
+brew "vim"
+
+# fuzzy search, helps with completion and searching
+brew "fzf"
+
 ###########################################################
 #  ===-----------------------------------------------===  #
-#            Prettier outputs / Decorations               #
+#           Prettier cli outputs / Decorations            #
 #  ===-----------------------------------------------===  #
 ###########################################################
 
@@ -53,7 +59,7 @@ brew "sl"
 
 ###########################################################
 #  ===-----------------------------------------------===  #
-#                      Programming                        #
+#                      Git                                #
 #  ===-----------------------------------------------===  #
 ###########################################################
 
@@ -63,23 +69,32 @@ brew "git"
 brew "gh"
 # gitlab cli
 brew "glab"
-# main terminal based text editor
-brew "vim"
-# linter for YAML
-brew "yamllint"
+
+###########################################################
+#  ===-----------------------------------------------===  #
+#                      Programming                        #
+#  ===-----------------------------------------------===  #
+###########################################################
+
 # programming languages and their package managers
 brew "python3"
 brew "go"
 brew "npm"
-# search for all sorts of stuff e.g. howdoi extend a dictionary in python
-brew "howdoi"
-brew "tldr"
+
+# linter for YAML
+brew "yamllint"
+# linter for html5
+brew "tidy-html5"
+
 # mardown rendering
 brew "pandoc"
 # for parsing json via cli
 brew "jq"
-# fuzzy search, helps with completion and searching
-brew "fzf"
+
+# search stackoverflow for stuff e.g. howdoi extend a dictionary in python
+brew "howdoi"
+# get the quick, nicely formatted, short text of how to use various commands
+brew "tldr"
 
 ###########################################################
 #  ===-----------------------------------------------===  #
