@@ -197,16 +197,16 @@ def brew_install_upgrade(OS="Darwin", devops=False):
     install_cmd = "brew bundle --quiet"
 
     # this installs the ~/.Brewfile
-    subproc(install_cmd + ' --global', True, True)
+    subproc(install_cmd + ' --global', True)
 
     # install os specific brew stuff
     brewfile = os.path.join(PWD, 'package_managers/brew/Brewfile_')
     install_cmd += f" --file={brewfile}"
-    subproc(install_cmd + OS, True, True)
+    subproc(install_cmd + OS, True)
 
     # install devops related packages
     if devops:
-        subproc(install_cmd + 'devops', True, True)
+        subproc(install_cmd + 'devops', True)
 
     # cleanup operation doesn't seem to happen automagically :shrug:
     subproc('brew cleanup --quiet')

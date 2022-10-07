@@ -390,6 +390,9 @@ Plug 'hashivim/vim-terraform'
 " general linter - will use shellcheck for bash and highlight broken code
 Plug 'dense-analysis/ale'
 
+" CSS color, a multi-syntax context-sensitive color name highlighter
+Plug 'ap/vim-css-color'
+
 " ------------------------- k8s -------------------------------
 "
 " For the current buffer (including modifications not on disk)
