@@ -1,3 +1,0 @@
-powerline-status
-powerline-gitstatus
-powerline-kubernetes

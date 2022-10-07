@@ -16,20 +16,19 @@ Looking for a project to get a fresh OS entirely, on a machine that has no OS? C
 
 ## Under the hood
 
-|       Step                                   | Config Location in repo                          | OS           |
-|:---------------------------------------------|:-------------------------------------------------|:------------:|
-| Installs dot files                           | `./dot_files`                            | macOS/Debian |
-| Installs brew packages                       | `./package_managers/brew/Brewfile_[standard/OS]` | macOS/Debian |
-| Installs brew/pip3.10 packages               | `./package_managers/pip3.10/requirements.txt`    | macOS/Debian |
-| Installs fonts                               | n/a                                              | macOS/Debian |
-| Installs apt, snap, flatpak packages         | `./package_managers/packages.yml`                | Debian       |
-| (OPTIONAL) Installs gaming related packages. | `./package_managers/packages.yml`                | Debian       |
-| Installs vim-plug, a vim plugin manager      | `./dot_files/.vimrc`                     | macOS/Debian |
-| Configures iptables*                         | `configs`                                        | Debian       |
-| Setups up iTerm2 fonts and colors            | `./configs/iterm2`                               | macOS        |
-| Adds user to the docker group                | n/a                                              | Debian       |
+|       Step                                    | Config Location in repo                          | OS           |
+|:----------------------------------------------|:-------------------------------------------------|:------------:|
+| Installs dot files                            | `./dot_files`                                    | macOS/Debian |
+| Installs brew packages                        | `./package_managers/brew/Brewfile_[standard/OS]` | macOS/Debian |
+| Installs pip3.10, apt, snap, flatpak packages | `./package_managers/packages.yml`                | Debian       |
+| Installs fonts                                | n/a                                              | macOS/Debian |
+| (OPTIONAL) Installs gaming related packages.  | `./package_managers/packages.yml`                | Debian       |
+| Installs vim-plug, a vim plugin manager       | `./dot_files/.vimrc`                             | macOS/Debian |
+| Configures iptables (see note)                | `configs`                                        | Debian       |
+| Setups up iTerm2 fonts and colors             | `./configs/iterm2`                               | macOS        |
+| Adds user to the docker group                 | n/a                                              | Debian       |
 
-*to block traffic on most ports except for HTTPS as well as ICMP/SSH for a single IP
+*iptables note: to block traffic on most ports except for HTTPS as well as ICMP/SSH for a single IP*
 
 ### Current Ecoscape of Personal Tech
 

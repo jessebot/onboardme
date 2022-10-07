@@ -1,6 +1,7 @@
 ---
+layout: default
 title: Git
-parent: cli
+parent: Command Line Interface
 permalink: /cli/git
 ---
 

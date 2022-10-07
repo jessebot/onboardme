@@ -38,19 +38,6 @@ apt:
     # to format disks to exFAT; FAT is too thin for modern windows 10 ISOs
     # - exfat-utils
 
-brew:
-  emoji: "🍺"
-  list_cmd: "brew list -1"
-  install_cmd: "brew bundle --file="
-  default_packages:
-    - Brewfile_standard
-  🍎_macOS_packages:
-    - Brewfile_mac
-  ☸️_k8s_packages:
-    - Brewfile_k8s
-  🧑‍💻_devops_packages:
-    - Brewfile_devops
-
 flatpak:
   emoji: "🫓 "
   list_cmd: "flatpak list --columns=application"
@@ -72,6 +59,8 @@ snap:
 pip3.10:
   emoji: "🐍"
   list_cmd: "pip3.10 list"
-  install_cmd: "pip3.10 install -r "
+  install_cmd: "pip3.10 install -U "
   default_packages:
-    - requirements.txt
+    - powerline-status
+    - powerline-gitstatus
+    - powerline-kubernetes

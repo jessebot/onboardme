@@ -22,7 +22,7 @@ import wget
 
 # run uname to get operating system and hardware info
 SYSINFO = os.uname()
-# this will be something like
+# this will be something like Darwin_x86_64
 OS = f"{SYSINFO.sysname}_{SYSINFO.machine}"
 PWD = os.path.dirname(__file__)
 HOME_DIR = os.getenv("HOME")
@@ -147,13 +147,19 @@ def link_dot_files(OS='Linux', delete=False, dot_files_dir=f'{PWD}/dot_files'):
         print_msg(help_msg)
 
 
-def configure_vim():
+def vim_setup():
     """
     Installs vim-plug, vim plugin manager, and then installs vim plugins
     """
     print_header('[b]vim-plug[/b] and [green][i]Vim[/i][/green] plugins '
                  'installation [dim]and[/dim] upgrades')
 
+    # trick to not run youcompleteme init every single time
+    init_ycm = False
+    if not os.path.exists(f'{HOME_DIR}/.vim/plugged/YouCompleteMe/install.py'):
+        init_ycm = True
+
+    # this is for installing vim-plug
     autoload_dir = f'{HOME_DIR}/.vim/autoload'
     url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     if not os.path.exists(autoload_dir):
@@ -167,13 +173,62 @@ def configure_vim():
     subproc('vim +PlugInstall +PlugUpgrade +PlugUpdate +qall!', False, True)
     print_msg('[i][dim]Plugins installed.')
 
+    if init_ycm:
+        # This is for you complete me, which is a python completion module
+        subproc(f'{HOME_DIR}/.vim/plugged/YouCompleteMe/install.py')
 
-def run_installers(installers=['brew'], pkg_groups=['default']):
+    return
+
+
+def brew_install_upgrade(OS="Darwin", devops=False):
+    """
+    Run the install/upgrade of packages managed by brew, also updates brew
+    Always installs the .Brewfile (which has libs that work on both mac/linux)
+    Accepts args:
+        * OS     - string arg of either Darwin or Linux
+        * devops - bool, installs devops brewfile, defaults to false
+    """
+    msg = f'🍺 [green][b]brew[/b][/] app Installations/Upgrades'
+    print_header(msg)
+
+    # first, make sure brew is up to date, before we do anything
+    subproc('brew update --quiet')
+
+    install_cmd = "brew bundle --quiet"
+
+    # this installs the ~/.Brewfile
+    subproc(install_cmd + ' --global', True, True)
+
+    # install os specific brew stuff
+    brewfile = os.path.join(PWD, 'package_managers/brew/Brewfile_')
+    install_cmd += f" --file={brewfile}"
+    subproc(install_cmd + OS, True, True)
+
+    # install devops related packages
+    if devops:
+        subproc(install_cmd + 'devops', True, True)
+
+    # cleanup operation doesn't seem to happen automagically :shrug:
+    subproc('brew cleanup --quiet')
+
+    print_msg('[dim][i]Completed.')
+    return
+
+
+def run_installers(installers=['brew', 'pip3.10'], pkg_groups=['default']):
     """
     Installs packages with apt, brew, snap, flatpak. If no installers list
     passed in, only use brew for mac. Takes optional variable, pkg_group_lists
     to install optional packages.
     """
+    # brew has a special flow with brew files
+    if 'brew' in installers:
+        if 'devops' in pkg_groups:
+            brew_install_upgrade(SYSINFO.sysname, True)
+        else:
+            brew_install_upgrade(SYSINFO.sysname, False)
+        installers.remove('brew')
+
     pkg_manager_dir = f'{PWD}/package_managers/'
     with open(pkg_manager_dir + 'packages.yml', 'r') as yaml_file:
         installers_list = yaml.safe_load(yaml_file)
@@ -187,14 +242,6 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
 
         install_cmd = installer_dict['install_cmd']
         installed_pkgs = subproc(installer_dict['list_cmd'], True, True)
-
-        # Brew and python: still using bundle files, and requirements.txt
-        for special_pkg in ['brew', 'pip3.10']:
-            if installer == special_pkg:
-                file_path = os.path.join(PWD, pkg_manager_dir, special_pkg)
-                install_cmd += file_path + '/'
-                if 'Darwin' in OS and special_pkg == 'brew':
-                    pkg_groups.append('🍎_macOS')
 
         # Flatpak: requires us add flathub remote repo manually
         if installer == 'flatpak':
@@ -211,9 +258,7 @@ def run_installers(installers=['brew'], pkg_groups=['default']):
 
                 for package in installer_dict[pkg_group + '_packages']:
                     if package not in installed_pkgs:
-                        cmd = f'{install_cmd}{package}'
-                        if installer == 'pip3.10':
-                            cmd += ' --upgrade'
+                        cmd = install_cmd + package
                         subproc(cmd, True, True)
                 print_msg('[dim][i]Completed.')
 
@@ -247,7 +292,7 @@ def configure_firefox():
     # different OS will have firefox profile info in different paths
     if 'Linux' in OS:
         ini_dir = f'{HOME_DIR}/.mozilla/firefox/'
-    elif OS == 'darwin':
+    elif 'Darwin' in OS:
         # hate apple for their capitalized directories
         ini_dir = f'{HOME_DIR}/Library/Application Support/Firefox/'
 
@@ -439,9 +484,9 @@ def process_steps(only_steps=[], firewall=False, browser=False):
         is_flag=True,
         help='Deletes existing rc files before creating hardlinks.')
 @option('--extra_packages', '-e',
-        type=Choice(['gaming', 'work']), multiple=True,
+        type=Choice(['gaming', 'devops']), multiple=True,
         help='Extra package groups to install. Accepts multiple groups.\n'
-             'Ex: -e [cornflower_blue]work[/] -e [cornflower_blue]gaming')
+             'Ex: -e [cornflower_blue]devops[/] -e [cornflower_blue]gaming')
 @option('--browser', '-b',
         is_flag=True,
         help='Opt into [i]experimental[/i] Firefox configuruation.')
@@ -526,7 +571,7 @@ def main(delete: bool = False,
 
     if 'vim_setup' in steps:
         # this installs the vim plugins
-        configure_vim()
+        vim_setup()
 
     if 'groups_setup' in steps:
         # will add your user to docker group
