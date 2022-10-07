@@ -10,7 +10,7 @@ if (has("termguicolors"))
 endif
 
 " custom colorscheme to be more pastel and pretty
-colorscheme koehler
+colorscheme chalky
 
 " setting default colorscheme
 set background=dark
