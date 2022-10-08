@@ -4,33 +4,37 @@
 " Maintainer:   @jessebot - Jesse Hitch
 " Last Change:  2022-10-08 08:18:29.0 +0200
 " License:      GPLv3
-" Notes: you can use http://bytefluent.com/vivify/ to find variables of colors
+" Notes: Use this command to check vim help on what variables are called
+"         :help 
+"        can also use http://bytefluent.com/vivify/ to find variables of colors
+"        
 
 " Colours in use
 " --------------
 " #f289f9 dark magenta
-" #fdcd36 cute orange
+" #ff8d87 soft redish orange
+" #fdcd36 light orange
 " #f7fb53 soft yellow
 " #a8fd57 lime green
+" #5ac4b9 teal
 " #5cc9fd light blue
 " #a3a8f8 medium purple
 "
 " #232336 blueish black
 " #2569aa darker blue
-" #C23621 harsh red
+" #f2748a pale red
 
 set background=dark
+
 hi clear
 
 if exists("syntax_on")
    syntax reset
 endif
+hi Search ctermbg=White
+hi Search ctermfg=DarkBlue
 
 let g:colors_name = "chalky"
-
-" Use 24-bit (true-color) mode in Neovim 0.1.5+ and Vim 7.4+
-" if exists("termguicolors")
-" endif
 
 " GUI Colors
 highlight Normal      guifg=White   guibg=#232336
@@ -39,6 +43,7 @@ highlight CursorLine  guibg=#191E2F
 highlight LineNr      guibg=#323232 guifg=#888888
 highlight Folded      guifg=#1d2652 guibg=#232336
 highlight Visual      guibg=#283A76
+
 " this one controls the column over 80 characters
 highlight ColorColumn guibg=#2569aa
 
@@ -51,6 +56,9 @@ highlight Comment    guifg=#a3a8f8
 highlight Constant   guifg=#f7fb53
 highlight Keyword    guifg=#fdcd36
 highlight String     guifg=#a8fd57
+highlight Bool       guifg=#ff8d87
+highlight Number     guifg=#5ac4b9
+highlight Float      guifg=#5ac4b9
 highlight Type       guifg=#5cc9fd
 highlight Identifier guifg=#a8fd57 gui=NONE
 highlight Function   guifg=#5cc9fd gui=NONE
@@ -102,8 +110,8 @@ highlight link markdownCodeBlock markdownCode
 
 " Git colors
 highlight gitcommitSelectedFile  guifg=#a8fd57
-highlight gitcommitDiscardedFile guifg=#C23621
-highlight gitcommitWarning       guifg=#C23621
+highlight gitcommitDiscardedFile guifg=#f2748a
+highlight gitcommitWarning       guifg=#f2748a
 highlight gitcommitBranch        guifg=#fdcd36
 highlight gitcommitHeader        guifg=#5cc9fd
 
@@ -114,4 +122,4 @@ highlight SignColumn guibg=#1d1d1d ctermbg=black
 " change the colors back to what they should be when there are changes
 highlight GitGutterAdd    guifg=#a8fd57 ctermfg=2
 highlight GitGutterChange guifg=#f7fb53 ctermfg=3
-highlight GitGutterDelete guifg=#C23621 ctermfg=1
+highlight GitGutterDelete guifg=#f2748a ctermfg=1

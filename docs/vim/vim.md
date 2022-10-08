@@ -117,6 +117,21 @@ This is a colorscheme editor for vim: http://bytefluent.com/vivify/
 
 I've used it to work on the chalky colorscheme.
 
+## Tabs
+
+```vim
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"                        "TAB LINE - TOP STATUS LINE"
+" By default tabline does not appear unless there is more then one tab. This
+" behavior is controlled by showtabline option which defaults to 1. 0 switches
+" off tabline even if there is more then one tab, 2 makes tabline to be shown
+" even if there is only one tab. To find out what script set the variable use
+" :verbose set showtabline?
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" set showtabline=1
+```
+
+
 ## Help
 
 If there's something you want to do in vim, but you don't know how,
