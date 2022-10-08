@@ -384,8 +384,8 @@ Plug 'ap/vim-css-color'
 " --------------------------- python --------------------------------
 " tab completion maybe
 Plug 'ycm-core/YouCompleteMe'
-" pep8 (style guide)
-Plug 'nvie/vim-flake8'
+" auto linting, docs, etc
+Plug 'python-mode/python-mode'
 " requirements.text syntax highlighting
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 
