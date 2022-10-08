@@ -188,7 +188,7 @@ def brew_install_upgrade(OS="Darwin", devops=False):
         * OS     - string arg of either Darwin or Linux
         * devops - bool, installs devops brewfile, defaults to false
     """
-    msg = f'🍺 [green][b]brew[/b][/] app Installations/Upgrades'
+    msg = '🍺 [green][b]brew[/b][/] app Installations/Upgrades'
     print_header(msg)
 
     # first, make sure brew is up to date, before we do anything
