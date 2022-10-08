@@ -108,6 +108,15 @@ In command mode...
 | `wl` | takes you right a window |
 | `ww` | cycle though all windows (I actually just use this one all the time and nothing else) |
 
+## Colors
+
+You can change the colorscheme with `:colorscheme `, do a tab after that
+and it will list all the available color schemes.
+
+This is a colorscheme editor for vim: http://bytefluent.com/vivify/
+
+I've used it to work on the chalky colorscheme.
+
 ## Help
 
 If there's something you want to do in vim, but you don't know how,
@@ -183,3 +192,11 @@ available, use the two-letter language code.  For French:
 - [Setting up vim for yaml](https://www.arthurkoziel.com/setting-up-vim-for-yaml/).
 - [How to change the highlight color for search hits and quickfix selection](https://stackoverflow.com/questions/7103173/vim-how-to-change-the-highlight-color-for-search-hits-and-quickfix-selection)
 - [Solving merge conflicts with vim](https://medium.com/prodopsio/solving-git-merge-conflicts-with-vim-c8a8617e3633)
+
+### Awesome Lists and other neat stuff
+
+- https://vimawesome.com/
+- https://github.com/akrawchyk/awesome-vim
+
+This is a vim bootstrapper: https://vim-bootstrap.com
+

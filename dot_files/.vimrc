@@ -62,6 +62,9 @@ function! s:VSetSearch()
 endfunction
 
 
+" remove trailing whitespaces
+command! FixWhitespace :%s/\s\+$//e
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                            GENERAL - Part 2
@@ -273,7 +276,6 @@ command! OpenChangedFiles :call OpenChangedFiles()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 command! InsertTime :normal a<c-r>=strftime('%F %H:%M:%S.0 %z')<cr>
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                             <Leader>w
 " Sudo vim trick with less key strokes - allow saving of files as sudo when I
@@ -356,6 +358,8 @@ Plug 'liuchengxu/vim-clap'
 "
 " On-demand loading of nerdtree
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+" add tabs to nerdtree - experimental
+Plug 'jistr/vim-nerdtree-tabs'
 " puts little glyphs for different file types
 Plug 'ryanoasis/vim-devicons'
 " syntax highlighing for nerdtree
