@@ -361,30 +361,33 @@ Plug 'tpope/vim-fugitive'
 " puts a git + or - in side line to show git changes in file
 Plug 'airblade/vim-gitgutter'
 
+" general linter - will use common linters and highlight broken code
+Plug 'dense-analysis/ale'
+
 " ---------- Language Specific/File type Specific Stuff -------------
+
+" terraform linter
+Plug 'hashivim/vim-terraform'
+
 " bash tab completion
 Plug 'WolfgangMehner/bash-support'
 
 " yaml syntax highlighting better
 Plug 'stephpy/vim-yaml'
 
+" --------------------------- HTML / CSS ----------------------------
 " make jinja templates prettier
 Plug 'lepture/vim-jinja'
-
-" python tab completion maybe
-Plug 'ycm-core/YouCompleteMe'
-
-" python pep8 (style guide)
-Plug 'nvie/vim-flake8'
-
-" terraform linter
-Plug 'hashivim/vim-terraform'
-
-" general linter - will use shellcheck for bash and highlight broken code
-Plug 'dense-analysis/ale'
-
 " CSS color, a multi-syntax context-sensitive color name highlighter
 Plug 'ap/vim-css-color'
+
+" --------------------------- python --------------------------------
+" tab completion maybe
+Plug 'ycm-core/YouCompleteMe'
+" pep8 (style guide)
+Plug 'nvie/vim-flake8'
+" requirements.text syntax highlighting
+Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 
 " ------------------------- k8s -------------------------------
 "
