@@ -375,6 +375,9 @@ Plug 'WolfgangMehner/bash-support'
 " yaml syntax highlighting better
 Plug 'stephpy/vim-yaml'
 
+" Golang, for future proofing
+" Plug "fatih/vim-go"
+
 " --------------------------- HTML / CSS ----------------------------
 " make jinja templates prettier
 Plug 'lepture/vim-jinja'

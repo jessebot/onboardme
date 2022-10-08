@@ -271,7 +271,8 @@ def configure_feeds():
     subs_db = '{PWD}/configs/feeds/freetube/subscriptions.db'
     shutil.copy(subs_db, f'{HOME_DIR}/Downloads/subscriptions.db')
 
-
+# TODO: Check into this thing, it might be good to delete now
+'''
 def configure_terminal(OS='Darwin'):
     """
     configure colorschemes and dynamic profiles for iterm2 if we're on macOS
@@ -283,6 +284,7 @@ def configure_terminal(OS='Darwin'):
         shutil.copy(f'{PWD}/configs/iterm2/Profiles.json', p)
         print("")
         print_msg('[dim][i]Dynamic profile installed.')
+'''
 
 
 def configure_firefox():
