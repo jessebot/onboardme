@@ -1,9 +1,23 @@
 " Vim color scheme
 "
 " Name:         chalky.vim
-" Maintainer:   @jessebot 
+" Maintainer:   @jessebot - Jesse Hitch
 " Last Change:  2022-10-08 08:18:29.0 +0200
 " License:      GPLv3
+" Notes: you can use http://bytefluent.com/vivify/ to find variables of colors
+
+" Colours in use
+" --------------
+" #f289f9 dark magenta
+" #fdcd36 cute orange
+" #f7fb53 soft yellow
+" #a8fd57 lime green
+" #5cc9fd light blue
+" #a3a8f8 medium purple
+"
+" #232336 blueish black
+" #2569aa darker blue
+" #C23621 harsh red
 
 set background=dark
 hi clear
@@ -14,57 +28,55 @@ endif
 
 let g:colors_name = "chalky"
 
-" Colours in use
-" --------------
-" #CC77D2 dark magenta
-" #FFDE00 yolk yellow
-" #D8FA3C lime green
-" #87ce6a green
-" #4ea9ff light blue
-" #95adef faded blueish purple
+" Use 24-bit (true-color) mode in Neovim 0.1.5+ and Vim 7.4+
+" if exists("termguicolors")
+" endif
 
 " GUI Colors
-highlight Normal guifg=White   guibg=#2A2A40
-highlight Cursor guifg=Black   guibg=Yellow
-highlight CursorLine guibg=#191E2F
-highlight LineNr guibg=#323232 guifg=#888888
-highlight Folded guifg=#1d2652 guibg=#2A2A40
-highlight Pmenu guibg=#4ea9ff guifg=#000000
-highlight Visual guibg=#283A76
+highlight Normal      guifg=White   guibg=#232336
+highlight Cursor      guifg=Black   guibg=Yellow
+highlight CursorLine  guibg=#191E2F
+highlight LineNr      guibg=#323232 guifg=#888888
+highlight Folded      guifg=#1d2652 guibg=#232336
+highlight Visual      guibg=#283A76
+" this one controls the column over 80 characters
+highlight ColorColumn guibg=#2569aa
+
+" these are for little popup dropdown menus, for things like tab complete
+highlight Pmenu    guibg=#5cc9fd guifg=#000000
+highlight PMenuSel guibg=#2569aa guifg=white
 
 " General Colors
-highlight Comment guifg=#95adef
-highlight Constant guifg=#D8FA3C
-highlight Keyword guifg=#FFDE00
-highlight String guifg=#87ce6a
-highlight Type guifg=#4ea9ff
-highlight Identifier guifg=#87ce6a gui=NONE
-highlight Function guifg=#CC77D2 gui=NONE
-highlight clear Search
-highlight Search guibg=#1C3B79
-highlight PreProc guifg=#CC77D2
+highlight Comment    guifg=#a3a8f8
+highlight Constant   guifg=#f7fb53
+highlight Keyword    guifg=#fdcd36
+highlight String     guifg=#a8fd57
+highlight Type       guifg=#5cc9fd
+highlight Identifier guifg=#a8fd57 gui=NONE
+highlight Function   guifg=#5cc9fd gui=NONE
+highlight PreProc    guifg=#f289f9
 
-" StatusLine
-" highlight StatusLine  guifg=#000000 guibg=#ffffaf gui=italic
-" highlight StatusLineNC  guifg=#000000 guibg=#ffffff gui=NONE
+" Searching
+highlight clear Search
+highlight Search     guibg=#f7fb53 guifg=Black
 
 " Invisible character colors
-highlight NonText guifg=#4a4a59
+highlight NonText    guifg=#4a4a59
 highlight SpecialKey guifg=#4a4a59
 
 " HTML Colors
-highlight link htmlTag Type
-highlight link htmlEndTag htmlTag
+highlight link htmlTag     Type
+highlight link htmlEndTag  htmlTag
 highlight link htmlTagName htmlTag
 
 " Ruby Colors
-highlight link rubyClass Keyword
-highlight link rubyDefine Keyword
-highlight link rubyConstant Type
-highlight link rubySymbol Constant
-highlight link rubyStringDelimiter rubyString
-highlight link rubyInclude Keyword
-highlight link rubyAttribute Keyword
+highlight link rubyClass            Keyword
+highlight link rubyDefine           Keyword
+highlight link rubyConstant         Type
+highlight link rubySymbol           Constant
+highlight link rubyStringDelimiter  rubyString
+highlight link rubyInclude          Keyword
+highlight link rubyAttribute        Keyword
 highlight link rubyInstanceVariable Normal
 
 " Rails Colors
@@ -75,22 +87,31 @@ highlight link sassMixin Keyword
 highlight link sassMixing Constant
 
 " Outliner colors
-highlight OL1 guifg=#CC77D2
-highlight OL2 guifg=#87ce6a
-highlight OL3 guifg=#4ea9ff
-highlight OL4 guifg=#D8FA3C
-highlight BT1 guifg=#95adef
+highlight OL1 guifg=#f289f9
+highlight OL2 guifg=#a8fd57
+highlight OL3 guifg=#5cc9fd
+highlight OL4 guifg=#f7fb53
+highlight BT1 guifg=#a3a8f8
 highlight link BT2 BT1
 highlight link BT3 BT1
 highlight link BT4 BT1
 
 " Markdown colors
-highlight markdownCode guifg=#87ce6a guibg=#2A2A40
+highlight markdownCode guifg=#a8fd57 guibg=#232336
 highlight link markdownCodeBlock markdownCode
 
 " Git colors
-highlight gitcommitSelectedFile guifg=#87ce6a
+highlight gitcommitSelectedFile  guifg=#a8fd57
 highlight gitcommitDiscardedFile guifg=#C23621
-highlight gitcommitWarning guifg=#C23621
-highlight gitcommitBranch guifg=#FFDE00
-highlight gitcommitHeader guifg=#4ea9ff
+highlight gitcommitWarning       guifg=#C23621
+highlight gitcommitBranch        guifg=#fdcd36
+highlight gitcommitHeader        guifg=#5cc9fd
+
+" Gitgutter stuff
+highlight! link SignColumn LineNr
+" change sign color color
+highlight SignColumn guibg=#1d1d1d ctermbg=black
+" change the colors back to what they should be when there are changes
+highlight GitGutterAdd    guifg=#a8fd57 ctermfg=2
+highlight GitGutterChange guifg=#f7fb53 ctermfg=3
+highlight GitGutterDelete guifg=#C23621 ctermfg=1

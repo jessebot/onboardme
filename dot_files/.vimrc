@@ -45,8 +45,6 @@ set backspace=indent,eol,start
 let mapleader=","
 
 " gray line on the 80 character line, so you know when you're over 80 char
-" unsure why it is still red though :shrug: will fix later
-highlight ColorColumn ctermbg=gray
 set colorcolumn=80
 
 " Make * search the file for text when you highlight it in visual mode
@@ -317,15 +315,6 @@ let g:airline_section_z = ':%l (%{LinePercent()}) :%v'
 "  git gutter is a vim plugin that puts a symbol in a column before the line #
 "  We need to do a little configuring to make it less ugly
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vim-gitgutter used to do this by default:
-highlight! link SignColumn LineNr
-" change sign color color
-highlight SignColumn guibg=#1d1d1d ctermbg=black
-
-" change the colors back to what they should be when there are changes
-highlight GitGutterAdd    guifg=#009900 ctermfg=2
-highlight GitGutterChange guifg=#bbbb00 ctermfg=3
-highlight GitGutterDelete guifg=#ff2222 ctermfg=1
 
 " use the nerdfont symbols inst4ead of -,+
 let g:gitgutter_sign_added = ''
