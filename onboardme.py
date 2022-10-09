@@ -461,9 +461,6 @@ def process_steps(only_steps=[], firewall=False, browser=False):
                 steps.append('firewall_setup')
             if browser:
                 steps.append('browser_setup')
-        # still use primarily iterm2 on macOS, and only macOS
-        else:
-            steps.append('iterm2_setup')
 
     return steps
 
