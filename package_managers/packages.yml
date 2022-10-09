@@ -64,3 +64,4 @@ pip3.10:
     - powerline-status
     - powerline-gitstatus
     - powerline-kubernetes
+    - autoimport

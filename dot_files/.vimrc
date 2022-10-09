@@ -74,7 +74,7 @@ map <Up> <Nop>
 map <Down> <Nop>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                 Colors:
+"                             Syntax And Colors:
 "                  "Syntax highlighting and colorscheme"
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -90,6 +90,7 @@ syntax on
 set colorcolumn=80
 " custom colorscheme to be more pastel and pretty
 colorscheme chalky
+
 " clap
 let g:clap_theme = 'material_design_dark'
 
@@ -314,7 +315,6 @@ let g:gitgutter_sign_added = ''
 let g:gitgutter_sign_modified = ''
 let g:gitgutter_sign_removed = ''
 
-
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "                                "vim-plug"
 "         "plugin manager for vim: https://github.com/junegunn/vim-plug
@@ -381,6 +381,8 @@ Plug 'ap/vim-css-color'
 " --------------------------- python --------------------------------
 " tab completion maybe
 Plug 'ycm-core/YouCompleteMe'
+" should provide better python syntax highlighting :)
+
 " auto linting, docs, etc
 Plug 'python-mode/python-mode'
 " requirements.text syntax highlighting
