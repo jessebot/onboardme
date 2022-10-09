@@ -368,6 +368,7 @@ Plug 'stephpy/vim-yaml'
 
 " Unclear why json highlighting sucks without this
 
+
 " Golang, for future proofing
 " Plug 'fatih/vim-go'
 
