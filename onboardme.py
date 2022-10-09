@@ -202,7 +202,7 @@ def brew_install_upgrade(OS="Darwin", devops=False):
     # install os specific brew stuff
     brewfile = os.path.join(PWD, 'package_managers/brew/Brewfile_')
     # sometimes the there isn't an OS brewfile, but there always is for mac
-    if brewfile:
+    if os.path.exists(brewfile):
         msg = f'{OS} specific [green][b]brew[/b][/] app Installations/Upgrades'
         print_header(msg)
         install_cmd += f" --file={brewfile}"
