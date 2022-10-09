@@ -201,8 +201,12 @@ def brew_install_upgrade(OS="Darwin", devops=False):
 
     # install os specific brew stuff
     brewfile = os.path.join(PWD, 'package_managers/brew/Brewfile_')
-    install_cmd += f" --file={brewfile}"
-    subproc(install_cmd + OS, True)
+    # sometimes the there isn't an OS brewfile, but there always is for mac
+    if brewfile:
+        msg = f'{OS} specific [green][b]brew[/b][/] app Installations/Upgrades'
+        print_header(msg)
+        install_cmd += f" --file={brewfile}"
+        subproc(install_cmd + OS, True)
 
     # install devops related packages
     if devops:
@@ -270,21 +274,6 @@ def configure_feeds():
     # freeTube is weird, requires this name and directory to work smoothly
     subs_db = '{PWD}/configs/feeds/freetube/subscriptions.db'
     shutil.copy(subs_db, f'{HOME_DIR}/Downloads/subscriptions.db')
-
-# TODO: Check into this thing, it might be good to delete now
-'''
-def configure_terminal(OS='Darwin'):
-    """
-    configure colorschemes and dynamic profiles for iterm2 if we're on macOS
-    """
-    if "Darwin" in OS:
-        print_header("Installing default iTerm2 Dynamic Profile...")
-        p = os.path.join(HOME_DIR,
-                         'Library/Application Support/iTerm2/DynamicProfiles')
-        shutil.copy(f'{PWD}/configs/iterm2/Profiles.json', p)
-        print("")
-        print_msg('[dim][i]Dynamic profile installed.')
-'''
 
 
 def configure_firefox():
@@ -482,6 +471,7 @@ def process_steps(only_steps=[], firewall=False, browser=False):
 # Click is so ugly, and I'm sorry we're using it for cli parameters here, but
 # this allows us to use rich.click for pretty prettying the help interface
 @command(cls=RichCommand)
+# each of these is an option in the cli and variable we use later on
 @option('--delete', '-d',
         is_flag=True,
         help='Deletes existing rc files before creating hardlinks.')
@@ -566,10 +556,6 @@ def main(delete: bool = False,
             # will also configure ssh if you specify --remote
             # configure_ssh()
             configure_firewall(remote_host)
-
-    if 'iterm2' in steps:
-        # configure the iterm2 if we're on macOS
-        configure_terminal(OS)
 
     if 'vim_setup' in steps:
         # this installs the vim plugins

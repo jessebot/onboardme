@@ -52,3 +52,10 @@ account    required       pam_permit.so
 password   required       pam_deny.so
 session    required       pam_permit.so
 ```
+
+## iTerm2
+
+```bash
+# the dynamic profiles are stored here
+ls ~/Library/Application Support/iTerm2/DynamicProfiles
+```
