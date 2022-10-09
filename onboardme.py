@@ -206,14 +206,17 @@ def brew_install_upgrade(OS="Darwin", devops=False):
         msg = f'{OS} specific [green][b]brew[/b][/] app Installations/Upgrades'
         print_header(msg)
         install_cmd += f" --file={brewfile}"
+        print(install_cmd)
         subproc(install_cmd + OS, True)
 
     # install devops related packages
     if devops:
         subproc(install_cmd + 'devops', True)
 
-    # cleanup operation doesn't seem to happen automagically :shrug:
-    subproc('brew cleanup --quiet')
+    # Todo: this is broken on linux
+    if 'Linux' not in OS:
+        # cleanup operation doesn't seem to happen automagically :shrug:
+        subproc('brew cleanup')
 
     print_msg('[dim][i]Completed.')
     return
