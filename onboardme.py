@@ -180,7 +180,7 @@ def vim_setup():
     return
 
 
-def brew_install_upgrade(OS="Darwin", devops=False):
+def brew_install_upgrade(OS="Darwin", devops_brewfile=False):
     """
     Run the install/upgrade of packages managed by brew, also updates brew
     Always installs the .Brewfile (which has libs that work on both mac/linux)
@@ -188,8 +188,8 @@ def brew_install_upgrade(OS="Darwin", devops=False):
         * OS     - string arg of either Darwin or Linux
         * devops - bool, installs devops brewfile, defaults to false
     """
-    msg = '🍺 [green][b]brew[/b][/] app Installations/Upgrades'
-    print_header(msg)
+    brew_msg = '🍺 [green][b]brew[/b][/] app Installs/Upgrades'
+    print_header(brew_msg)
 
     # first, make sure brew is up to date, before we do anything
     subproc('brew update --quiet')
@@ -199,24 +199,30 @@ def brew_install_upgrade(OS="Darwin", devops=False):
     # this installs the ~/.Brewfile
     subproc(install_cmd + ' --global', True)
 
-    # install os specific brew stuff
+    # install os specific or package group specific brew stuff
     brewfile = os.path.join(PWD, 'package_managers/brew/Brewfile_')
     # sometimes the there isn't an OS brewfile, but there always is for mac
-    if os.path.exists(brewfile):
-        msg = f'{OS} specific [green][b]brew[/b][/] app Installations/Upgrades'
-        print_header(msg)
+    os_brewfile = os.path.exists(brewfile + OS)
+    if os_brewfile or devops_brewfile:
         install_cmd += f" --file={brewfile}"
-        print(install_cmd)
-        subproc(install_cmd + OS, True)
 
-    # install devops related packages
-    if devops:
-        subproc(install_cmd + 'devops', True)
+        if os_brewfile:
+            os_msg = f'{OS} specific ' + brew_msg
+            print_header(os_msg)
+            subproc(install_cmd + OS, True)
 
-    # Todo: this is broken on linux
-    if 'Linux' not in OS:
-        # cleanup operation doesn't seem to happen automagically :shrug:
-        subproc('brew cleanup')
+        # install devops related packages
+        if devops_brewfile:
+            devops_msg = 'DevOps specific ' + brew_msg
+            print_header(devops_msg)
+            subproc(install_cmd + 'devops', True)
+
+    final_msg = '🍺 [green][b]brew[/b][/] final upgrade/cleanup'
+    print_header(final_msg)
+    # just in case you have anything locally not in onboardme
+    subproc('brew upgrade')
+    # cleanup operation doesn't seem to happen automagically :shrug:
+    subproc('brew cleanup')
 
     print_msg('[dim][i]Completed.')
     return
@@ -244,7 +250,7 @@ def run_installers(installers=['brew', 'pip3.10'], pkg_groups=['default']):
     for installer in set(installers):
         installer_dict = installers_list[installer]
         pkg_emoji = installer_dict['emoji']
-        msg = f'{pkg_emoji} [green][b]{installer}[/b][/] app installations'
+        msg = f'{pkg_emoji} [green][b]{installer}[/b][/] app Installs'
         print_header(msg)
 
         install_cmd = installer_dict['install_cmd']
@@ -538,7 +544,7 @@ def main(delete: bool = False,
     # if user specifies, only do packages passed into --package_managers
     if 'install_upgrade_packages' in steps:
         if pkg_managers:
-            default_installers = pkg_managers
+            default_installers = list(pkg_managers)
         else:
             default_installers = ['brew', 'pip3.10']
             if 'Linux' in OS:
