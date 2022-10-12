@@ -37,18 +37,20 @@ hi Search ctermfg=DarkBlue
 let g:colors_name = "chalky"
 
 " GUI Colors
+"
+" this is the general background of the whole editor and the plain text color
 highlight Normal      guifg=White   guibg=#232336
-highlight Cursor      guifg=Black   guibg=Yellow
+highlight Cursor      guifg=Black   guibg=#a3a8f8
 highlight CursorLine  guibg=#191E2F
 highlight LineNr      guibg=#323232 guifg=#888888
-highlight Folded      guifg=#1d2652 guibg=#232336
-highlight Visual      guibg=#283A76
+highlight Folded      guifg=#1d2652 guibg=#5cc9fd
+highlight Visual      guibg=#5ac4b9
 
 " this one controls the column over 80 characters
 highlight ColorColumn guibg=#2569aa
 
 " these are for little popup dropdown menus, for things like tab complete
-highlight Pmenu    guibg=#5cc9fd guifg=#000000
+highlight Pmenu    guibg=#5cc9fd guifg=#f7fb53 
 highlight PMenuSel guibg=#2569aa guifg=white
 
 " General Colors
@@ -63,6 +65,8 @@ highlight Type       guifg=#5cc9fd
 highlight Identifier guifg=#a8fd57 gui=NONE
 highlight Function   guifg=#5cc9fd gui=NONE
 highlight PreProc    guifg=#f289f9
+
+highlight StatusLine guibg=#5cc9fd
 
 " Searching
 highlight clear Search
