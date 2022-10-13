@@ -13,10 +13,10 @@ permalink: /terminals/iterm2
 I use the Chalk and ChalkBoard color schemes:
 
 #### Chalk
-<img src="https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/screenshots/chalk.png">
+<img src="https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/docs/screenshots/chalk.png">
 
 #### ChalkBoard
-<img src="https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/screenshots/chalkboard.png">
+<img src="https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/docs/screenshots/chalkboard.png">
 
 ### Other Colorschemes
 You can configure your own, or download other color schemes here:

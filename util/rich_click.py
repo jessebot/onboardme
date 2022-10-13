@@ -26,7 +26,9 @@ class RichCommand(click.Command):
 
         console = Console(theme=Theme({"option": "bold cornflower_blue",
                                        "switch": "bold light_sky_blue1"}),
-                          highlighter=highlighter)
+        # , record=True)
+
+                         highlighter=highlighter)
 
         title = "☁ [cornflower_blue]OnBoard[b]Me[/b][/]\n"
         desc = ("[steel_blue]Get your daily driver just the way I like it, "
@@ -71,3 +73,6 @@ class RichCommand(click.Command):
         console.print(Panel(options_table, border_style="dim light_steel_blue",
                             title="Options",
                             title_align="left"))
+
+        # I use this to print a pretty svg at the end sometimes
+        # console.save_svg("docs/screenshots/help_text.svg")

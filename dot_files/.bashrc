@@ -278,3 +278,5 @@ fi
 echo ""
 neofetch
 echo -e "\n"
+export KUBECONFIG=~/.kube/kubeconfig
+export KUBECONFIG=~/.kube/kubeconfig

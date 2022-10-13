@@ -14,7 +14,7 @@ Vim is my daily driver for text editing. It serves as my [IDE](https://wikiless.
 
 Here's a peak at what it looks like to work in vim:
 
-<img src="https://raw.githubusercontent.com/jessebot/onboardme/main/screenshots/vim_example_1.png" alt="screenshot of vim open with the nerdtree plugin that shows a file tree on the left handside. Also displays syntaxhighlighting and useful bottom status bar" width="800">
+<img src="https://raw.githubusercontent.com/jessebot/onboardme/main/docs/screenshots/vim_example_1.png" alt="screenshot of vim open with the nerdtree plugin that shows a file tree on the left handside. Also displays syntaxhighlighting and useful bottom status bar" width="800">
 
 (Fun fact: typing `:term` will make a terminal appear without leaving vim)
 
