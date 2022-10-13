@@ -4,6 +4,7 @@ from click import option, command, Choice
 from configparser import ConfigParser
 import fileinput
 from git import Repo
+import logging
 import os
 from pathlib import Path
 from random import randint
@@ -11,15 +12,22 @@ from random import randint
 from rich import box, print
 from rich.prompt import Confirm
 from rich.table import Table
+from rich.logging import RichHandler
 import shutil
 import stat
-from util.subproc_wrapper import subproc
+from util.subproc import subproc
 from util.rich_click import RichCommand
 from util.console_logging import print_panel, print_header, print_msg
 import yaml
 import wget
 
 
+# for console AND file logging
+FORMAT = "%(message)s"
+logging.basicConfig(
+    level="INFO", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
+)
+log = logging.getLogger("rich")
 # run uname to get operating system and hardware info
 SYSINFO = os.uname()
 # this will be something like Darwin_x86_64
@@ -27,44 +35,6 @@ OS = f"{SYSINFO.sysname}_{SYSINFO.machine}"
 PWD = os.path.dirname(__file__)
 HOME_DIR = os.getenv("HOME")
 USER = os.getlogin()
-
-
-def install_fonts():
-    """
-    This installs nerd fonts by wgetting the source archive and unextracting
-    them into the user's local font directory. Runs fc-cache -fv to generate
-    config, but you should still reboot when you're done :shrug:
-    """
-    if 'Linux' in OS:
-        print_header('📝 [i]font[/i] installations')
-        fonts_dir = f'{HOME_DIR}/repos/nerd-fonts'
-
-        # do a shallow clone of the repo
-        if not os.path.exists(fonts_dir):
-            print_msg('[i]Downloading installer and font sets... ' +
-                      '(can take a bit)')
-            Path(fonts_dir).mkdir(parents=True, exist_ok=True)
-            fonts_repo = 'https://github.com/ryanoasis/nerd-fonts.git'
-            Repo.clone_from(fonts_repo, fonts_dir, depth=1)
-
-        old_pwd = PWD
-        os.chdir(fonts_dir)
-        subproc('./install.sh Hack', False, True)
-        subproc('./install.sh Mononoki', False, True)
-        os.chdir(old_pwd)
-
-        # debug: print(f'Going to remove {bitmap_conf} and link a yes map...')
-        bitmap_conf = '/etc/fonts/conf.d/70-no-bitmaps.conf'
-
-        # we do all of this with subprocess because I want the sudo prompt
-        if os.path.exists(bitmap_conf):
-            subproc(f'sudo rm {bitmap_conf}', False, True, False)
-
-        subproc('sudo ln -s /etc/fonts/conf.avail/70-yes-bitmaps.conf '
-                '/etc/fonts/conf.d/70-yes-bitmaps.conf', True, True, False)
-
-        print_msg('[i][dim]The fonts should be installed, however, you have ' +
-                  'to set your terminal font to the new font. I rebooted too.')
 
 
 def link_dot_files(OS='Linux', delete=False, dot_files_dir=f'{PWD}/dot_files'):
@@ -145,6 +115,143 @@ def link_dot_files(OS='Linux', delete=False, dot_files_dir=f'{PWD}/dot_files'):
     if file_msg:
         print('')
         print_msg(help_msg)
+    return
+
+
+def brew_install_upgrade(OS="Darwin", devops_brewfile=False):
+    """
+    Run the install/upgrade of packages managed by brew, also updates brew
+    Always installs the .Brewfile (which has libs that work on both mac/linux)
+    Accepts args:
+        * OS     - string arg of either Darwin or Linux
+        * devops - bool, installs devops brewfile, defaults to false
+    """
+    brew_msg = '🍺 [green][b]brew[/b][/] app Installs/Upgrades'
+    print_header(brew_msg)
+
+    # first, make sure brew is up to date, before we do anything
+    subproc('brew update --quiet')
+    # just in case you have anything locally not in onboardme
+    subproc('brew upgrade --quiet')
+
+    install_cmd = "brew bundle --quiet"
+
+    # this installs the ~/.Brewfile
+    subproc(install_cmd + ' --global', True)
+
+    # install os specific or package group specific brew stuff
+    brewfile = os.path.join(PWD, 'package_managers/brew/Brewfile_')
+    # sometimes the there isn't an OS brewfile, but there always is for mac
+    os_brewfile = os.path.exists(brewfile + OS)
+    if os_brewfile or devops_brewfile:
+        install_cmd += f" --file={brewfile}"
+
+        if os_brewfile:
+            os_msg = f'{OS} specific ' + brew_msg
+            print_header(os_msg)
+            subproc(install_cmd + OS, True)
+
+        # install devops related packages
+        if devops_brewfile:
+            devops_msg = 'DevOps specific ' + brew_msg
+            print_header(devops_msg)
+            subproc(install_cmd + 'devops', True)
+
+    cleanup_msg = '🍺 [green][b]brew[/b][/] final upgrade/cleanup'
+    print_header(cleanup_msg)
+    # cleanup operation doesn't seem to happen automagically :shrug:
+    subproc('brew cleanup')
+
+    print_msg('[dim][i]Completed.')
+    return
+
+
+def run_pkg_mngrs(pkg_mngrs=['brew', 'pip3.10'], pkg_groups=['default']):
+    """
+    Installs packages with apt, brew, snap, flatpak. If no pkg_mngrs list
+    passed in, only use brew for mac. Takes optional variable, pkg_group_lists
+    to install optional packages.
+    """
+    # brew has a special flow with brew files
+    if 'brew' in pkg_mngrs:
+        if 'devops' in pkg_groups:
+            brew_install_upgrade(SYSINFO.sysname, True)
+        else:
+            brew_install_upgrade(SYSINFO.sysname, False)
+        pkg_mngrs.remove('brew')
+
+    with open(f'{PWD}/package_managers/packages.yml', 'r') as yaml_file:
+        pkg_mngrs_list = yaml.safe_load(yaml_file)
+
+    # just in case we got any duplicates, we iterate through pkg_mngrs as a set
+    for pkg_mngr in set(pkg_mngrs):
+        pkg_mngr_dict = pkg_mngrs_list[pkg_mngr]
+        pkg_emoji = pkg_mngr_dict['emoji']
+        msg = f'{pkg_emoji} [green][b]{pkg_mngr}[/b][/] app Installs'
+        print_header(msg)
+
+        # run package manager specific setup if needed, and updates/upgrades
+        pkg_cmds = pkg_mngr_dict['commands']
+        for pre_cmd in ['setup', 'update', 'upgrade']:
+            if pre_cmd in pkg_cmds:
+                subproc(pkg_cmds[pre_cmd], False, True)
+
+        # This is the list of currently installed packages
+        installed_pkgs = subproc(pkg_cmds['list'], True, True)
+        # this is the list of should be installed packages
+        required_pkgs = pkg_mngr_dict['packages']
+
+        # iterate through package groups, such as: default, gaming, devops...
+        for pkg_group in pkg_groups:
+            if required_pkgs[pkg_group]:
+                if pkg_group != 'default':
+                    msg = (f"Installing {pkg_group.replace('_', ' ')} "
+                           f"{pkg_emoji} [b]{pkg_mngr}[/b] packages")
+                    print_header(msg, "cornflower_blue")
+
+                for package in required_pkgs[pkg_group]:
+                    if package not in installed_pkgs:
+                        cmd = pkg_cmds['install'] + package
+                        subproc(cmd, True, True)
+                print_msg('[dim][i]Completed.')
+
+
+def install_fonts():
+    """
+    This installs nerd fonts by wgetting the source archive and unextracting
+    them into the user's local font directory. Runs fc-cache -fv to generate
+    config, but you should still reboot when you're done :shrug:
+    """
+    if 'Linux' in OS:
+        print_header('📝 [i]font[/i] installations')
+        fonts_dir = f'{HOME_DIR}/repos/nerd-fonts'
+
+        # do a shallow clone of the repo
+        if not os.path.exists(fonts_dir):
+            print_msg('[i]Downloading installer and font sets... ' +
+                      '(can take a bit)')
+            Path(fonts_dir).mkdir(parents=True, exist_ok=True)
+            fonts_repo = 'https://github.com/ryanoasis/nerd-fonts.git'
+            Repo.clone_from(fonts_repo, fonts_dir, depth=1)
+
+        old_pwd = PWD
+        os.chdir(fonts_dir)
+        subproc('./install.sh Hack', False, True)
+        subproc('./install.sh Mononoki', False, True)
+        os.chdir(old_pwd)
+
+        # debug: print(f'Going to remove {bitmap_conf} and link a yes map...')
+        bitmap_conf = '/etc/fonts/conf.d/70-no-bitmaps.conf'
+
+        # we do all of this with subprocess because I want the sudo prompt
+        if os.path.exists(bitmap_conf):
+            subproc(f'sudo rm {bitmap_conf}', False, True, False)
+
+        subproc('sudo ln -s /etc/fonts/conf.avail/70-yes-bitmaps.conf '
+                '/etc/fonts/conf.d/70-yes-bitmaps.conf', True, True, False)
+
+        print_msg('[i][dim]The fonts should be installed, however, you have ' +
+                  'to set your terminal font to the new font. I rebooted too.')
 
 
 def vim_setup():
@@ -178,102 +285,6 @@ def vim_setup():
         subproc(f'{HOME_DIR}/.vim/plugged/YouCompleteMe/install.py')
 
     return
-
-
-def brew_install_upgrade(OS="Darwin", devops_brewfile=False):
-    """
-    Run the install/upgrade of packages managed by brew, also updates brew
-    Always installs the .Brewfile (which has libs that work on both mac/linux)
-    Accepts args:
-        * OS     - string arg of either Darwin or Linux
-        * devops - bool, installs devops brewfile, defaults to false
-    """
-    brew_msg = '🍺 [green][b]brew[/b][/] app Installs/Upgrades'
-    print_header(brew_msg)
-
-    # first, make sure brew is up to date, before we do anything
-    subproc('brew update --quiet')
-
-    install_cmd = "brew bundle --quiet"
-
-    # this installs the ~/.Brewfile
-    subproc(install_cmd + ' --global', True)
-
-    # install os specific or package group specific brew stuff
-    brewfile = os.path.join(PWD, 'package_managers/brew/Brewfile_')
-    # sometimes the there isn't an OS brewfile, but there always is for mac
-    os_brewfile = os.path.exists(brewfile + OS)
-    if os_brewfile or devops_brewfile:
-        install_cmd += f" --file={brewfile}"
-
-        if os_brewfile:
-            os_msg = f'{OS} specific ' + brew_msg
-            print_header(os_msg)
-            subproc(install_cmd + OS, True)
-
-        # install devops related packages
-        if devops_brewfile:
-            devops_msg = 'DevOps specific ' + brew_msg
-            print_header(devops_msg)
-            subproc(install_cmd + 'devops', True)
-
-    final_msg = '🍺 [green][b]brew[/b][/] final upgrade/cleanup'
-    print_header(final_msg)
-    # just in case you have anything locally not in onboardme
-    subproc('brew upgrade')
-    # cleanup operation doesn't seem to happen automagically :shrug:
-    subproc('brew cleanup')
-
-    print_msg('[dim][i]Completed.')
-    return
-
-
-def run_installers(installers=['brew', 'pip3.10'], pkg_groups=['default']):
-    """
-    Installs packages with apt, brew, snap, flatpak. If no installers list
-    passed in, only use brew for mac. Takes optional variable, pkg_group_lists
-    to install optional packages.
-    """
-    # brew has a special flow with brew files
-    if 'brew' in installers:
-        if 'devops' in pkg_groups:
-            brew_install_upgrade(SYSINFO.sysname, True)
-        else:
-            brew_install_upgrade(SYSINFO.sysname, False)
-        installers.remove('brew')
-
-    pkg_manager_dir = f'{PWD}/package_managers/'
-    with open(pkg_manager_dir + 'packages.yml', 'r') as yaml_file:
-        installers_list = yaml.safe_load(yaml_file)
-
-    # just in case we got any duplicates, we iterate through this as a set
-    for installer in set(installers):
-        installer_dict = installers_list[installer]
-        pkg_emoji = installer_dict['emoji']
-        msg = f'{pkg_emoji} [green][b]{installer}[/b][/] app Installs'
-        print_header(msg)
-
-        install_cmd = installer_dict['install_cmd']
-        installed_pkgs = subproc(installer_dict['list_cmd'], True, True)
-
-        # Flatpak: requires us add flathub remote repo manually
-        if installer == 'flatpak':
-            subproc('sudo flatpak remote-add --if-not-exists flathub '
-                    'https://flathub.org/repo/flathub.flatpakrepo')
-
-        for pkg_group in pkg_groups:
-            if f'{pkg_group}_packages' in installer_dict:
-
-                if pkg_group != 'default':
-                    msg = (f"Installing {pkg_group.replace('_', ' ')} "
-                           f"{pkg_emoji} [b]{installer}[/b] packages")
-                    print_header(msg, "cornflower_blue")
-
-                for package in installer_dict[pkg_group + '_packages']:
-                    if package not in installed_pkgs:
-                        cmd = install_cmd + package
-                        subproc(cmd, True, True)
-                print_msg('[dim][i]Completed.')
 
 
 def configure_feeds():
@@ -555,7 +566,7 @@ def main(delete: bool = False,
         if extra_packages:
             package_groups.extend(extra_packages)
 
-        run_installers(default_installers, package_groups)
+        run_pkg_mngrs(default_installers, package_groups)
 
     if 'firewall_setup' in steps:
         if remote_host:

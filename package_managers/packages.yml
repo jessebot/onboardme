@@ -1,67 +1,77 @@
 ---
 apt:
   emoji: "🙃"
-  list_cmd: "apt list --installed"
-  install_cmd: "sudo apt-get install -y "
-  default_packages:
-    - terminator
-    - openssl
-    - sysstat
-    - silversearcher-ag
-    # this should let you use the a yubikey for auth
-    - libpam-yubico
-    - finger
-    - ssh
-    - nextcloud-desktop
-    - screen
-    - youtube-dl
-    - bash-completion
-    # networking
-    - iptables
-    - gufw
-    - net-tools
-    # package managers
-    - snapd
-    - flatpak
-    - gnome-software-plugin-flatpak
-    # cat images in the terminal :) works in tmux
-    - catimg
-    # pretty syntaxhighlighted cat files with git diff support
-    - batcat
-    # print a very pretty pallete to see all the colors the terminal can render
-    - colortest
-
-  gaming_packages:
-    - lutris
-    - winehq-staging
-    - steam
-    # to format disks to exFAT; FAT is too thin for modern windows 10 ISOs
-    # - exfat-utils
+  commands:
+    list: "apt list --installed"
+    install: "sudo apt-get install -y "
+    update: "sudo apt-get update -y"
+    upgrade: "sudo apt-get upgrade -y"
+  packages:
+    default:
+      - terminator
+      - openssl
+      - sysstat
+      - silversearcher-ag
+      # this should let you use the a yubikey for auth
+      - libpam-yubico
+      - finger
+      - ssh
+      - nextcloud-desktop
+      - screen
+      - youtube-dl
+      - bash-completion
+      # networking
+      - iptables
+      - gufw
+      - net-tools
+      # package managers installing package managers... this is terrible.
+      - snapd
+      - flatpak
+      - gnome-software-plugin-flatpak
+      # cat images in the terminal :) works in tmux
+      - catimg
+      # pretty syntaxhighlighted cat files with git diff support
+      - batcat
+      # print a very pretty pallete to see all the colors the terminal can render
+      - colortest
+    gaming:
+      - lutris
+      - winehq-staging
+      - steam
+      # to format disks to exFAT; FAT is too thin for modern windows 10 ISOs
+      # - exfat-utils
 
 flatpak:
   emoji: "🫓 "
-  list_cmd: "flatpak list --columns=application"
-  install_cmd: "sudo flatpak install -y flathub "
-  default_packages:
-    - "org.freedesktop.Platform/x86_64/21.08"
-    - io.freetubeapp.FreeTube
-    - com.bitwarden.desktop
+  commands:
+    setup: "sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
+    list: "flatpak list --columns=application"
+    install: "sudo flatpak install -y flathub "
+  packages:
+    default:
+      - "org.freedesktop.Platform/x86_64/21.08"
+      - io.freetubeapp.FreeTube
+      - com.bitwarden.desktop
 
 snap:
   emoji: "🫰 "
-  list_cmd: "snap list"
-  install_cmd: "sudo snap install "
-  default_packages:
-    - core
-    - fluent-reader
-    - scrcpy
+  commands:
+    list: "snap list"
+    install: "sudo snap install "
+  packages:
+    default:
+      - core
+      - fluent-reader
+      - scrcpy
 
 pip3.10:
   emoji: "🐍"
-  list_cmd: "pip3.10 list"
-  install_cmd: "pip3.10 install -U "
-  default_packages:
-    - powerline-status
-    - powerline-gitstatus
-    - powerline-kubernetes
-    - autoimport
+  commands:
+    list: "pip3.10 list"
+    install: "pip3.10 install --upgrade"
+  packages:
+    default:
+      - powerline-status
+      - powerline-gitstatus
+      - powerline-kubernetes
+      - autoimport

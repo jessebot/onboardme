@@ -3,9 +3,17 @@ Using Textualize's rich library to pretty print subprocess outputs,
 so during long running commands, the user isn't wondering what's going on,
 even if you don't actually output anything from stdout/stderr of the command.
 """
+import logging
 import subprocess
 from rich import print
 from rich.console import Console
+from rich.logging import RichHandler
+# for console AND file logging
+FORMAT = "%(message)s"
+logging.basicConfig(
+    level="INFO", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
+)
+log = logging.getLogger("rich")
 
 
 def subproc(command="", error_ok=False, suppress_output=False, spinner=True):
@@ -34,7 +42,7 @@ def subproc(command="", error_ok=False, suppress_output=False, spinner=True):
 
     if output:
         if not suppress_output:
-            print(output)
+            log.info(output)
         return output
 
 
@@ -60,7 +68,7 @@ def run_subprocess(command, error_ok=False):
             # also scan both stdout and stdin for weird errors
             for output in [res_stdout.lower(), res_stderr.lower()]:
                 if 'error' in output:
-                    err = ('Return code not zero! Return code: ' + return_code)
+                    err = f'Return code not zero! Return code: "{return_code}"'
                     raise Exception(f'\033[0;33m {err} \n {output} '
                                     '\033[00m')
 
