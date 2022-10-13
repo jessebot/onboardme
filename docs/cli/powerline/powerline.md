@@ -16,7 +16,7 @@ Above you can see I use a multiline prompt in order to have space for a full com
 <img src="https://raw.githubusercontent.com/jessebot/onboardme/main/docs/screenshots/git_powerline_example.png" width="800" alt="Screenshot of onboardme powerline when in a git initialized directory. Shows powerline prompt segment changing colors and symbols depending on if there are files modified, commited, or out of sync with origin.">
 
 # Get Started
-*Quick note, that at the base directory of this repo, there is a script called onboardme.py that will do all of this for you, but it's still useful to know what it's doing :) Onto the tutorial!*
+*Quick note, that at the base directory of this repo, there is a script called onboardme that will do all of this for you, but it's still useful to know what it's doing :) Onto the tutorial!*
 
 Before you do anything, you should [install a nerdfont](https://github.com/ryanoasis/nerd-fonts#font-installation), if you haven't already. This will really help you to customize the icons. It's easiest for macOS with:
 ```bash

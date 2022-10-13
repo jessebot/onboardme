@@ -24,24 +24,23 @@ class RichCommand(click.Command):
 
         highlighter = OptionHighlighter()
 
-        console = Console(theme=Theme({"option": "bold cornflower_blue",
-                                       "switch": "bold light_sky_blue1"}),
-        # , record=True)
+        console = Console(theme=Theme({"option": "cornflower_blue",
+                                       "switch": "light_sky_blue1"}),
+                          highlighter=highlighter)
 
-                         highlighter=highlighter)
-
-        title = "☁ [cornflower_blue]OnBoard[b]Me[/b][/]\n"
-        desc = ("[steel_blue]Get your daily driver just the way I like it, "
+        title = "☁ [cornflower_blue]OnBoard[i]Me[/]\n"
+        desc = ("[steel_blue]Get your daily driver just the way I like it,\n"
                 "from [b]text[/] [i]formatting[/], and dot files to opensource"
-                " package installation, this script intends to save you time "
-                "setting up or upgrading your environment.")
+                " package installation, this script\n intends to save you time"
+                " with setting up or upgrading your environment.")
 
         console.print(title + desc, justify="center")
 
-        console.print("\nUsage: [b]onboardme.py[/b] [OPTIONS]\n")
+        console.print("\n[b]Usage[/]: [cornflower_blue] onboardme[/]" +
+                      " [royal_blue1][OPTIONS]\n")
 
         options_table = Table(highlight=True, box=None, show_header=False,
-                              row_styles=["bold", ""],
+                              row_styles=["", "dim"],
                               padding=(1, 1, 0, 0))
 
         for param in self.get_params(ctx)[1:]:
@@ -55,7 +54,7 @@ class RichCommand(click.Command):
 
             if param.metavar:
                 opt2 += Text(f" {param.metavar}",
-                             style="bold light_steel_blue")
+                             style="light_steel_blue")
 
             options = Text(" ".join(reversed(param.opts)))
             help_record = param.get_help_record(ctx)
@@ -70,9 +69,13 @@ class RichCommand(click.Command):
 
             options_table.add_row(opt1, opt2, highlighter(help))
 
-        console.print(Panel(options_table, border_style="dim light_steel_blue",
-                            title="Options",
-                            title_align="left"))
+        url = "♥ https://jessebot.github.io/onboardme/onboardme"
+        console.print(Panel(options_table,
+                            border_style="dim light_steel_blue",
+                            title="❀ Options",
+                            title_align="left",
+                            subtitle=url,
+                            subtitle_align="right"))
 
         # I use this to print a pretty svg at the end sometimes
         # console.save_svg("docs/screenshots/help_text.svg")

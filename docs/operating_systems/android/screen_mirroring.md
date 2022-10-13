@@ -19,7 +19,7 @@ sudo snap install scrcpy
 Make sure your phone is also in debug mode:
 
 ```bash
-# alias already present in onboardme.py .bashrc
+# alias already present in onboardme .bashrc
 alias adb='scrcpy.adb'
 
 # Start the server with scrcpy's bundled adb

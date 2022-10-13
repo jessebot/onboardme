@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Contributing 
-parent: onboardme.py
+parent: onboardme
 permalink: /onboardme/contributing
 ---
 

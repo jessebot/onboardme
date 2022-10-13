@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Quick Start
-parent: onboardme.py
+parent: onboardme
 permalink: /onboardme/quickstart
 ---
 
@@ -50,10 +50,10 @@ Now you can run the actual script that does the heavy lifting. If you can `setup
 
 ```bash
 # This will display a help
-./repos/onboardme/onboardme.py --help
+./repos/onboardme/onboardme --help
 
 # this will run the script with no options
-./repos/onboardme/onboardme.py
+./repos/onboardme/onboardme
 ```
 
 When the script completes, it'll output a number of other steps to take manually that aren't yet, or can't be, automated.

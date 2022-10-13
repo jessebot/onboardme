@@ -1,7 +1,7 @@
 ---
 layout: default
 title: TODOs
-parent: onboardme.py
+parent: onboardme
 permalink: /onboardme/todo
 ---
 

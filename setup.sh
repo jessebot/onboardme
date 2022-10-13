@@ -174,6 +174,6 @@ else
         echo -e "\033[92mPlease run:\033[00m source .bash_profile"
     fi
     echo -e "✨ Then you can try running the following:"
-    echo "~/repos/onboardme/onboardme.py --help"
+    echo "~/repos/onboardme/onboardme --help"
     echo ""
 fi
