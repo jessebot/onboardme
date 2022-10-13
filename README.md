@@ -9,7 +9,7 @@ Here's an example of the terminal after the script has run:
 
 Looking for a project to get a fresh OS entirely, on a machine that has no OS? Check out [pxeless](https://github.com/cloudymax/pxeless).
 
-Actually looking for a project to get started with self hosting k8s stuff? Check out [smol k8s lab](https://github.com/jessebot/smol_k8s_homelab).
+Actually looking for a project to get started with self hosting k8s stuff? Check out [smol k8s lab](https://github.com/jessebot/smol_k8s_lab).
 
 ## Quick Start
 [Get Started here](https://jessebot.github.io/onboardme/onboardme/quickstart) :blue_heart:!
