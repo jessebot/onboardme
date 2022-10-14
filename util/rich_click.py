@@ -26,7 +26,7 @@ class RichCommand(click.Command):
 
         console = Console(theme=Theme({"option": "cornflower_blue",
                                        "switch": "light_sky_blue1"}),
-                          highlighter=highlighter)
+                          highlighter=highlighter, record=True)
 
         title = "☁️  [cornflower_blue]OnBoard[i]Me[/] 💻\n"
         desc = ("[steel_blue]Get your daily driver just the way I like it,\n"
@@ -68,7 +68,8 @@ class RichCommand(click.Command):
                 options += f" {param.metavar}"
 
             options_table.add_row(opt1, opt2, highlighter(help))
-        url = "♥ https://jessebot.github.io/onboardme/onboardme"
+        url = ("♥ [link=https://jessebot.github.io/onboardme/]jessebot.github"
+               ".io/onboardme[/link]")
         console.print(Panel(options_table,
                             border_style="dim light_steel_blue",
                             title="⌥ Options",
@@ -77,4 +78,4 @@ class RichCommand(click.Command):
                             subtitle_align="right"))
 
         # I use this to print a pretty svg at the end sometimes
-        # console.save_svg("docs/screenshots/help_text.svg")
+        console.save_svg("docs/screenshots/help_text.svg")

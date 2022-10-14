@@ -24,9 +24,8 @@ import wget
 
 # for console AND file logging
 FORMAT = "%(message)s"
-logging.basicConfig(
-    level="INFO", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
-)
+logging.basicConfig(level="INFO", format=FORMAT, datefmt="[%X]",
+                    handlers=[RichHandler()])
 log = logging.getLogger("rich")
 # run uname to get operating system and hardware info
 SYSINFO = os.uname()
@@ -449,9 +448,10 @@ def print_manual_steps():
                "   [/]- Source your bash config: [green]source .bashrc[/]\n"
                " 🐳 [dim]- Reboot, as [turquoise2]docker[/] demands it.\n\n[/]"
                "If there's anything else you need help with, check the docs:\n"
-               "[dim]https://jessebot.github.io/onboardme")
+               "[cyan][link=https://jessebot.github.io/onboardme]"
+               "jessebot.github.io/onboardme[/link]")
 
-    print_panel(end_msg, '[green]Success ♥')
+    print_panel(end_msg, '[green]♥ ˖⁺‧Success‧⁺˖♥')
 
 
 def process_steps(only_steps=[], firewall=False, browser=False):
