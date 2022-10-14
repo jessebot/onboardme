@@ -4,10 +4,8 @@
 " Maintainer:   @jessebot - Jesse Hitch
 " Last Change:  2022-10-08 08:18:29.0 +0200
 " License:      GPLv3
-" Notes: Use this command to check vim help on what variables are called
-"         :help 
+" Notes: Use :help command to check vim help on what variables are called
 "        can also use http://bytefluent.com/vivify/ to find variables of colors
-"        
 
 " Colours in use
 " --------------
@@ -50,7 +48,7 @@ highlight Visual      guibg=#5ac4b9
 highlight ColorColumn guibg=#2569aa
 
 " these are for little popup dropdown menus, for things like tab complete
-highlight Pmenu    guibg=#5cc9fd guifg=#f7fb53 
+highlight Pmenu    guibg=#5cc9fd guifg=#f7fb53
 highlight PMenuSel guibg=#2569aa guifg=white
 
 " General Colors
@@ -65,6 +63,8 @@ highlight Type       guifg=#5cc9fd
 highlight Identifier guifg=#a8fd57 gui=NONE
 highlight Function   guifg=#5cc9fd gui=NONE
 highlight PreProc    guifg=#f289f9
+highlight Todo       guifg=#fdcd36 guibg=#2569aa
+
 
 highlight StatusLine guibg=#5cc9fd
 
