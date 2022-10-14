@@ -1,4 +1,4 @@
-## onboardme
+## ☁️  onboard**me** 💻
 
 [<img src='./docs/screenshots/help_text.svg' alt='screenshot of full output of onboardme --help'>](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/screenshots/help_text.svg)
 

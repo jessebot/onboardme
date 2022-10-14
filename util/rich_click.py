@@ -28,7 +28,7 @@ class RichCommand(click.Command):
                                        "switch": "light_sky_blue1"}),
                           highlighter=highlighter)
 
-        title = "☁ [cornflower_blue]OnBoard[i]Me[/]\n"
+        title = "☁️  [cornflower_blue]OnBoard[i]Me[/] 💻\n"
         desc = ("[steel_blue]Get your daily driver just the way I like it,\n"
                 "from [b]text[/] [i]formatting[/], and dot files to opensource"
                 " package installation, this script\n intends to save you time"
@@ -68,11 +68,10 @@ class RichCommand(click.Command):
                 options += f" {param.metavar}"
 
             options_table.add_row(opt1, opt2, highlighter(help))
-
         url = "♥ https://jessebot.github.io/onboardme/onboardme"
         console.print(Panel(options_table,
                             border_style="dim light_steel_blue",
-                            title="❀ Options",
+                            title="⌥ Options",
                             title_align="left",
                             subtitle=url,
                             subtitle_align="right"))
