@@ -37,19 +37,19 @@ let g:colors_name = "chalky"
 " GUI Colors
 "
 " this is the general background of the whole editor and the plain text color
-highlight Normal      guifg=White   guibg=#232336
-highlight Cursor      guifg=Black   guibg=#a3a8f8
+highlight Normal      guibg=#232336 guifg=#E8FBFF
+highlight Cursor      guibg=#a3a8f8 guifg=Black  
 highlight CursorLine  guibg=#191E2F
 highlight LineNr      guibg=#323232 guifg=#888888
-highlight Folded      guifg=#1d2652 guibg=#5cc9fd
+highlight Folded      guibg=#5cc9fd guifg=#1d2652
 highlight Visual      guibg=#5ac4b9
 
 " this one controls the column over 80 characters
 highlight ColorColumn guibg=#2569aa
 
 " these are for little popup dropdown menus, for things like tab complete
-highlight Pmenu    guibg=#5cc9fd guifg=#f7fb53
-highlight PMenuSel guibg=#2569aa guifg=white
+highlight Pmenu    guibg=#1d2652 guifg=#5cc9fd
+highlight PMenuSel guibg=#323232 guifg=#fdcd36
 
 " General Colors
 highlight Comment    guifg=#a3a8f8
@@ -57,11 +57,13 @@ highlight Constant   guifg=#f7fb53
 highlight Keyword    guifg=#fdcd36
 highlight String     guifg=#a8fd57
 highlight Boolean    guifg=#5ac4b9
-highlight Number     guifg=#5ac4b9
-highlight Float      guifg=#5ac4b9
+highlight Number     guifg=#f289f9
+highlight Float      guifg=#f289f9
 highlight Type       guifg=#5cc9fd
-highlight Identifier guifg=#a8fd57 gui=NONE
-highlight Function   guifg=#5cc9fd gui=NONE
+" highlight Identifier guifg=#a8fd57 gui=NONE
+" highlight Function   guifg=#5cc9fd gui=NONE
+highlight Identifier guifg=#fdcd36
+highlight Function   guifg=#5cc9fd
 highlight PreProc    guifg=#f289f9
 highlight Todo       guifg=#fdcd36 guibg=#2569aa
 
