@@ -458,7 +458,7 @@ def print_manual_steps():
                "[cyan][link=https://jessebot.github.io/onboardme]"
                "jessebot.github.io/onboardme[/link]")
 
-    print_panel(end_msg, '[green]♥ ˖⁺‧Success‧⁺˖♥')
+    print_panel(end_msg, '[green]♥ ˖⁺‧Success‧⁺˖ ♥')
 
 
 def process_steps(only_steps=[], firewall=False, browser=False):
