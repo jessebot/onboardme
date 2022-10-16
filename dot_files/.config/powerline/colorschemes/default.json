@@ -1,7 +1,7 @@
 {
 	"name": "Default",
 	"groups": {
-		"information:additional":     { "fg": "light_green_gray", "bg": "gray4", "attrs": [] },
+		"information:additional":     { "fg": "brightgreen", "bg": "gray4", "attrs": [] },
 		"information:regular":        { "fg": "gray10", "bg": "gray4", "attrs": ["bold"] },
 		"information:highlighted":    { "fg": "white", "bg": "gray4", "attrs": [] },
 		"information:priority":       { "fg": "brightyellow", "bg": "mediumorange", "attrs": [] },
