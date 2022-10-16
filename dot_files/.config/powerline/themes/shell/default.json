@@ -55,7 +55,7 @@
             {
                 "type": "string",
                 "name": "newline_prompt",
-                "contents": "﬌",
+                "contents": "",
                 "highlight_groups": ["newline_prompt"],
                 "priority": 30
             }

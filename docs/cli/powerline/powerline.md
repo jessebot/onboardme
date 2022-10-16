@@ -88,11 +88,11 @@ Not sure where to start? Try [my config](https://github.com/jessebot/onboardme/t
 
 Good luck out there, friend!
 
-P.S.
+**P.S.**
 These are some of my favorite nerdfont icons:
 ﯀     ﲵ      ﲖ      ﭬ  
   ﳝ ﳞ 
      ﲎ ﴱ  ﮭ 
-ﲾ         ﯙ  﫸ﴪ ﴫ ﯧ ﯦ    
+ﲾ         ﯙ  﫸ﴪ ﴫ ﯧ ﯦ   
 ﳣ ﳤ ﳥ ﮧ          ﳇ  
 

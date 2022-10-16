@@ -1,7 +1,7 @@
 {
 	"name": "Default color scheme for shell prompts",
 	"groups": {
-		"hostname":         { "fg": "gray0", "bg": "mediumcyan", "attrs": [] }
+		"hostname":         { "fg": "gray0", "bg": "cornflowerblue", "attrs": [] }
 	},
 	"mode_translations": {
 		"vicmd": {
