@@ -1,5 +1,11 @@
 {
 	"segments": {
+        "left": [
+			{
+				"function": "powerline.segments.common.net.hostname",
+				"priority": 50
+			}
+        ],
 		"right": [
 			{
 				"function": "powerline.segments.common.sys.uptime",
@@ -15,9 +21,6 @@
 				"args": {
 					"format": " %Y-%m-%d  %H:%M"
 				}
-			},
-			{
-				"function": "powerline.segments.common.net.hostname"
 			}
 		]
 	}

@@ -19,6 +19,7 @@ Above you can see I use a multiline prompt in order to have space for a full com
 *Quick note, that at the base directory of this repo, there is a script called onboardme that will do all of this for you, but it's still useful to know what it's doing :) Onto the tutorial!*
 
 Before you do anything, you should [install a nerdfont](https://github.com/ryanoasis/nerd-fonts#font-installation), if you haven't already. This will really help you to customize the icons. It's easiest for macOS with:
+
 ```bash
 brew tap homebrew/cask-fonts
 brew install --cask font-hack-nerd-font
@@ -75,6 +76,10 @@ If you edit anything, make sure you copy it into your local config location, whi
 
 ⚠️ *If you edit anything: You may need to restart powerline to see the changes take effect.* To restart powerline, just kill the process:
 ```bash
+# Try this
+/home/linuxbrew/.linuxbrew/bin/powerline-daemon --kill
+
+# if the above doesn't work, try this
 ps aux | grep powerline | awk '{print $2}' | xargs kill
 ```
 Then just hit `ctrl`+`c` and you should be back on your merry way.
@@ -82,3 +87,12 @@ Then just hit `ctrl`+`c` and you should be back on your merry way.
 Not sure where to start? Try [my config](https://github.com/jessebot/onboardme/tree/main/dot_files/.config/powerline) for inspiration :3
 
 Good luck out there, friend!
+
+P.S.
+These are some of my favorite nerdfont icons:
+﯀     ﲵ      ﲖ      ﭬ  
+  ﳝ ﳞ 
+     ﲎ ﴱ  ﮭ 
+ﲾ         ﯙ  﫸ﴪ ﴫ ﯧ ﯦ    
+ﳣ ﳤ ﳥ ﮧ          ﳇ  
+

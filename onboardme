@@ -220,6 +220,12 @@ def install_fonts():
     This installs nerd fonts by wgetting the source archive and unextracting
     them into the user's local font directory. Runs fc-cache -fv to generate
     config, but you should still reboot when you're done :shrug:
+
+    Should switch to this for the clone:
+        git clone --filter=blob:none \
+            --sparse git@github.com:ryanoasis/nerd-fonts
+        cd nerd-fonts
+        git sparse-checkout add patched-fonts/JetBrainsMono
     """
     if 'Linux' in OS:
         print_header('📝 [i]font[/i] installations')
@@ -229,6 +235,7 @@ def install_fonts():
         if not os.path.exists(fonts_dir):
             print_msg('[i]Downloading installer and font sets... ' +
                       '(can take a bit)')
+
             Path(fonts_dir).mkdir(parents=True, exist_ok=True)
             fonts_repo = 'https://github.com/ryanoasis/nerd-fonts.git'
             Repo.clone_from(fonts_repo, fonts_dir, depth=1)
