@@ -67,10 +67,10 @@
         "gitstatus_untracked":        { "fg": "brightyellow", "bg": "gray2", "attrs": [] },
         "gitstatus_stashed":          { "fg": "steelblue",    "bg": "gray2", "attrs": [] },
         "gitstatus:divider":          { "fg": "gray2",        "bg": "gray1", "attrs": [] },
-        "kubernetes_cluster":         { "fg": "gray10", "bg": "darkestblue", "attrs": [] },
-        "kubernetes_cluster:alert":   { "fg": "gray10", "bg": "darkestred",  "attrs": [] },
-        "kubernetes_namespace":       { "fg": "gray10", "bg": "darkestblue", "attrs": [] },
-        "kubernetes_namespace:alert": { "fg": "gray10", "bg": "darkred",     "attrs": [] },
-        "kubernetes:divider":         { "fg": "gray4",  "bg": "darkestblue", "attrs": [] }
+        "kubernetes_cluster":         { "fg": "gray2", "bg": "darkestblue", "attrs": [] },
+        "kubernetes_cluster:alert":   { "fg": "gray2", "bg": "darkestred",  "attrs": [] },
+        "kubernetes_namespace":       { "fg": "gray2", "bg": "blue", "attrs": [] },
+        "kubernetes_namespace:alert": { "fg": "gray2", "bg": "darkred",     "attrs": [] },
+        "kubernetes:divider":         { "fg": "gray2",  "bg": "blue", "attrs": [] }
 	}
 }
