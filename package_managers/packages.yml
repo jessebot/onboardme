@@ -68,13 +68,11 @@ pip3.10:
   emoji: "🐍"
   commands:
     list: "pip3.10 list"
-    install: "pip3.10 install --upgrade"
+    install: "pip3.10 install --upgrade "
   packages:
     default:
+      - netifaces
       - autoimport
-      # all of this is powerline stuff
       - powerline-status
       - powerline-gitstatus
       - powerline-kubernetes
-      - netifaces
-
