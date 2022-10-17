@@ -3,6 +3,10 @@
         "above": [{
                 "left": [
                     {
+                        "function": "powerline.segments.common.net.internal_ip",
+                        "priority": 10
+                    },
+                    {
                         "function": "powerline.segments.common.net.hostname",
                         "priority": 20
                     },
@@ -17,7 +21,7 @@
                     {
                         "function": "powerline_gitstatus.gitstatus",
                         "draw_soft_divider": false,
-                        "draw_hard_divider": false,
+                        "draw_hard_divider": true,
                         "priority": 40,
                         "args": {
                             "show_tag": "exact",

@@ -71,7 +71,10 @@ pip3.10:
     install: "pip3.10 install --upgrade"
   packages:
     default:
+      - autoimport
+      # all of this is powerline stuff
       - powerline-status
       - powerline-gitstatus
       - powerline-kubernetes
-      - autoimport
+      - netifaces
+
