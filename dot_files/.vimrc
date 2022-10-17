@@ -24,6 +24,7 @@ set shell=bash\ --login
 " remember more commands and search history
 set history=10000
 
+let g:ycm_enable_semantic_highlighting=1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                              MISC KEY MAPS:

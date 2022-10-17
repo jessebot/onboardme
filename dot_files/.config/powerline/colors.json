@@ -9,16 +9,18 @@
 		"mediumgreen": 70,
 		"brightgreen": 148,
 
+		"skyblue1": 117,
+		"steelblue": 67,
+		"brightcyan": 159,
+		"mediumcyan": 117,
 		"darkestcyan": 23,
 		"darkcyan": 74,
-		"mediumcyan": 117,
-		"brightcyan": 159,
 
 		"darkestblue": 24,
 		"darkblue": 31,
-		"steelblue": 67,
         "cornflowerblue": [69, "5f87ff"],
-		"skyblue1": 117,
+
+        "magenta": [170, "f289f9"],
 
 		"red": 1,
 		"darkestred": 52,

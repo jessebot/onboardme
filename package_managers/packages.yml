@@ -16,7 +16,7 @@ apt:
       - libpam-yubico
       - finger
       - ssh
-      - nextcloud-desktop
+      # - nextcloud-desktop
       - screen
       - youtube-dl
       - bash-completion

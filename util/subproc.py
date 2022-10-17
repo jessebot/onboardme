@@ -4,21 +4,21 @@ so during long running commands, the user isn't wondering what's going on,
 even if you don't actually output anything from stdout/stderr of the command.
 """
 import logging
-import subprocess
+from subprocess import PIPE, Popen
 from rich import print
 from rich.console import Console
 from rich.logging import RichHandler
 # for console AND file logging
 FORMAT = "%(message)s"
-logging.basicConfig(
-    level="INFO", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
-)
+logging.basicConfig(level="INFO", format=FORMAT, datefmt="[%X]",
+                    handlers=[RichHandler()])
 log = logging.getLogger("rich")
 
 
-def subproc(command="", error_ok=False, suppress_output=False, spinner=True):
+def subproc(commands=[], error_ok=False, suppress_output=False, spinner=True,
+            directory=""):
     """
-    Takes a command string to run in a subprocess.
+    Takes a list of str type commands to run in a subprocess.
     Optional vars:
         error_ok        - bool, catch errors, defaults to False
         suppress_output - bool, don't output anything form stderr, or stdout
@@ -26,37 +26,43 @@ def subproc(command="", error_ok=False, suppress_output=False, spinner=True):
     Takes a str commmand to run in BASH, as well as optionals bools to pass on
     errors in stderr/stdout and suppress_output
     """
-    # Sometimes we nee
-    if not spinner:
-        output = run_subprocess(command, error_ok)
-    else:
-        print("")
-        console = Console()
-        tasks = [command]
+    for command in commands:
+        if not spinner:
+            output = run_subprocess(command, error_ok, directory)
+        else:
+            print("")
+            console = Console()
+            tasks = [command]
 
-        status_line = f"[bold green]Running cmd:[/bold green] {command}"
-        with console.status(status_line) as status:
-            while tasks:
-                output = run_subprocess(command, error_ok)
-                tasks.pop(0)
+            status_line = f"[bold green]Running cmd:[/bold green] {command}"
+            with console.status(status_line) as status:
+                while tasks:
+                    output = run_subprocess(command, error_ok, directory)
+                    tasks.pop(0)
+
+        if output:
+            if not suppress_output:
+                log.info(output)
 
     if output:
-        if not suppress_output:
-            log.info(output)
         return output
 
 
-def run_subprocess(command, error_ok=False):
+def run_subprocess(command, error_ok=False, directory=""):
     """
     Takes a str commmand to run in BASH in a subprocess.
     Typically run from subproc, which handles output printing
 
     Optional vars:
-        error_ok - bool, catch errors, defaults to False
+        error_ok   - bool, catch errors, defaults to False
+        directory  - current working dir, directory to run command in
     """
     # subprocess expects a list
     cmd = command.split()
-    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    if directory:
+        p = Popen(cmd, stdout=PIPE, stderr=PIPE, cwd=directory)
+    else:
+        p = Popen(cmd, stdout=PIPE, stderr=PIPE)
     return_code = p.returncode
     res = p.communicate()
     res_stdout = res[0].decode('UTF-8')

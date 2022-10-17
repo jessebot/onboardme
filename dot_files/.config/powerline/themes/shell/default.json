@@ -18,7 +18,16 @@
                         "function": "powerline_gitstatus.gitstatus",
                         "draw_soft_divider": false,
                         "draw_hard_divider": false,
-                        "priority": 40
+                        "priority": 40,
+                        "args": {
+                            "show_tag": "exact",
+                            "formats": {
+                                "branch": "  {}",
+                                "tag": " ﮉ {}",
+                                "untracked": "  {}",
+                                "stash": " {}"
+                            }
+                        }
                     },
                     {
                         "type": "string",

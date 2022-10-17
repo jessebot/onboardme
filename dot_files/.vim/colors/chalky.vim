@@ -16,6 +16,7 @@
 " #a8fd57 lime green
 " #5ac4b9 teal
 " #5cc9fd light blue
+" #5f87ff cornflower blue
 " #a3a8f8 medium purple
 "
 " #232336 blueish black
@@ -64,7 +65,7 @@ highlight Type       guifg=#5cc9fd
 " highlight Function   guifg=#5cc9fd gui=NONE
 highlight Identifier guifg=#fdcd36
 highlight Function   guifg=#5cc9fd
-highlight PreProc    guifg=#f289f9
+highlight PreProc    guifg=#5f87ff
 highlight Todo       guifg=#fdcd36 guibg=#2569aa
 
 
@@ -82,6 +83,12 @@ highlight SpecialKey guifg=#4a4a59
 highlight link htmlTag     Type
 highlight link htmlEndTag  htmlTag
 highlight link htmlTagName htmlTag
+
+highlight pythonParameters      ctermfg=147 guifg=#AAAAFF
+highlight pythonParam           ctermfg=175 guifg=#f289f9
+highlight pythonBrackets        ctermfg=183 guifg=#d7afff
+highlight pythonLambdaExpr      ctermfg=105 guifg=#8787ff
+highlight pythonBrackets        guifg=#5ac4b9
 
 " Ruby Colors
 highlight link rubyClass            Keyword

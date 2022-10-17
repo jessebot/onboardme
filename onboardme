@@ -4,6 +4,7 @@ from click import option, command, Choice
 from configparser import ConfigParser
 import fileinput
 from git import Repo
+from git import RemoteProgress
 import logging
 import os
 from pathlib import Path
@@ -128,38 +129,34 @@ def brew_install_upgrade(OS="Darwin", devops_brewfile=False):
     brew_msg = '🍺 [green][b]brew[/b][/] app Installs/Upgrades'
     print_header(brew_msg)
 
-    # first, make sure brew is up to date, before we do anything
-    subproc('brew update --quiet')
-    # just in case you have anything locally not in onboardme
-    subproc('brew upgrade --quiet')
-
     install_cmd = "brew bundle --quiet"
 
-    # this installs the ~/.Brewfile
-    subproc(install_cmd + ' --global', True)
+    subproc(['brew update --quiet',
+             'brew upgrade --quiet',
+             f'{install_cmd} --global'])
 
     # install os specific or package group specific brew stuff
     brewfile = os.path.join(PWD, 'package_managers/brew/Brewfile_')
-    # sometimes the there isn't an OS brewfile, but there always is for mac
+    # sometimes there isn't an OS specific brewfile, but there always is 4 mac
     os_brewfile = os.path.exists(brewfile + OS)
     if os_brewfile or devops_brewfile:
         install_cmd += f" --file={brewfile}"
 
         if os_brewfile:
-            os_msg = f'{OS} specific ' + brew_msg
-            print_header(os_msg)
-            subproc(install_cmd + OS, True)
+            os_msg = f'[i][dim][b]{OS}[/b] specific ' + brew_msg
+            print_msg(os_msg)
+            subproc([f'{install_cmd}{OS}'], True)
 
         # install devops related packages
         if devops_brewfile:
             devops_msg = 'DevOps specific ' + brew_msg
             print_header(devops_msg)
-            subproc(install_cmd + 'devops', True)
+            subproc([f'{install_cmd}devops'], True)
 
-    cleanup_msg = '🍺 [green][b]brew[/b][/] final upgrade/cleanup'
-    print_header(cleanup_msg)
     # cleanup operation doesn't seem to happen automagically :shrug:
-    subproc('brew cleanup')
+    cleanup_msg = '[i][dim]🍺 [green][b]brew[/b][/] final upgrade/cleanup'
+    print_msg(cleanup_msg)
+    subproc(['brew cleanup'])
 
     print_msg('[dim][i]Completed.')
     return
@@ -193,10 +190,10 @@ def run_pkg_mngrs(pkg_mngrs=['brew', 'pip3.10'], pkg_groups=['default']):
         pkg_cmds = pkg_mngr_dict['commands']
         for pre_cmd in ['setup', 'update', 'upgrade']:
             if pre_cmd in pkg_cmds:
-                subproc(pkg_cmds[pre_cmd], False, True)
+                subproc([pkg_cmds[pre_cmd]], False, True)
 
         # This is the list of currently installed packages
-        installed_pkgs = subproc(pkg_cmds['list'], True, True)
+        installed_pkgs = subproc([pkg_cmds['list']], True, True)
         # this is the list of should be installed packages
         required_pkgs = pkg_mngr_dict['packages']
 
@@ -211,21 +208,15 @@ def run_pkg_mngrs(pkg_mngrs=['brew', 'pip3.10'], pkg_groups=['default']):
                 for package in required_pkgs[pkg_group]:
                     if package not in installed_pkgs:
                         cmd = pkg_cmds['install'] + package
-                        subproc(cmd, True, True)
+                        subproc([cmd], True, True)
                 print_msg('[dim][i]Completed.')
 
 
 def install_fonts():
     """
-    This installs nerd fonts by wgetting the source archive and unextracting
-    them into the user's local font directory. Runs fc-cache -fv to generate
-    config, but you should still reboot when you're done :shrug:
-
-    Should switch to this for the clone:
-        git clone --filter=blob:none \
-            --sparse git@github.com:ryanoasis/nerd-fonts
-        cd nerd-fonts
-        git sparse-checkout add patched-fonts/JetBrainsMono
+    Clones nerd-fonts repo and does a sparse checkout on only mononoki and
+    hack fonts. Also removes 70-no-bitmaps.conf and links 70-yes-bitmaps.conf
+    Then runs install.sh from nerd-fonts repo
     """
     if 'Linux' in OS:
         print_header('📝 [i]font[/i] installations')
@@ -233,31 +224,42 @@ def install_fonts():
 
         # do a shallow clone of the repo
         if not os.path.exists(fonts_dir):
-            print_msg('[i]Downloading installer and font sets... ' +
-                      '(can take a bit)')
+            # log.debug('Nerdfonts require some setup on Linux...')
+            bitmap_conf = '/etc/fonts/conf.d/70-no-bitmaps.conf'
+            # log.debug(f'Going to remove {bitmap_conf} and link a yes map...')
+            # we do all of this with subprocess because I want the sudo prompt
+            if os.path.exists(bitmap_conf):
+                subproc([f'sudo rm {bitmap_conf}'], False, True, False)
+
+            subproc(['sudo ln -s /etc/fonts/conf.avail/70-yes-bitmaps.conf ' +
+                    '/etc/fonts/conf.d/70-yes-bitmaps.conf'],
+                    True, True, False)
+
+            print_msg('[i]Downloading installer and font sets... ')
 
             Path(fonts_dir).mkdir(parents=True, exist_ok=True)
             fonts_repo = 'https://github.com/ryanoasis/nerd-fonts.git'
-            Repo.clone_from(fonts_repo, fonts_dir, depth=1)
 
-        old_pwd = PWD
-        os.chdir(fonts_dir)
-        subproc('./install.sh Hack', False, True)
-        subproc('./install.sh Mononoki', False, True)
-        os.chdir(old_pwd)
+            class CloneProgress(RemoteProgress):
+                def update(self, op_code, cur_count, max_count=None,
+                           message=''):
+                    if message:
+                        log.info(message)
 
-        # debug: print(f'Going to remove {bitmap_conf} and link a yes map...')
-        bitmap_conf = '/etc/fonts/conf.d/70-no-bitmaps.conf'
+            Repo.clone_from(fonts_repo, fonts_dir, progress=CloneProgress(),
+                            multi_options=['--sparse', '--filter=blob:none'])
+            subproc(["git sparse-checkout add patched-fonts/Mononoki",
+                     "git sparse-checkout add patched-fonts/Hack"], False,
+                    False, True, fonts_dir)
+        else:
+            subproc(["git pull"], False, False, True, fonts_dir)
 
-        # we do all of this with subprocess because I want the sudo prompt
-        if os.path.exists(bitmap_conf):
-            subproc(f'sudo rm {bitmap_conf}', False, True, False)
-
-        subproc('sudo ln -s /etc/fonts/conf.avail/70-yes-bitmaps.conf '
-                '/etc/fonts/conf.d/70-yes-bitmaps.conf', True, True, False)
+        subproc(['./install.sh Hack', './install.sh Mononoki'], False, True,
+                True, fonts_dir)
 
         print_msg('[i][dim]The fonts should be installed, however, you have ' +
                   'to set your terminal font to the new font. I rebooted too.')
+        return
 
 
 def vim_setup():
@@ -283,7 +285,7 @@ def vim_setup():
 
     # installs the vim plugins if not installed, updates vim-plug, and then
     # updates all currently installed plugins
-    subproc('vim +PlugInstall +PlugUpgrade +PlugUpdate +qall!', False, True)
+    subproc(['vim +PlugInstall +PlugUpgrade +PlugUpdate +qall!'], False, True)
     print_msg('[i][dim]Plugins installed.')
 
     if init_ycm:
@@ -345,8 +347,7 @@ def map_caps_to_control():
     Maps capslock to control. This is ugly and awful
     """
     print_header("⌨️  Mapping capslock to control...")
-    cmd = "setxkbmap -layout us -option ctrl:nocaps"
-    subproc(cmd, True, True)
+    subproc(["setxkbmap -layout us -option ctrl:nocaps"])
 
 
 def configure_ssh():
@@ -380,9 +381,10 @@ def configure_firewall(remote_hosts=[]):
     print_header('🛡️ Configuring Firewall...')
     if remote_hosts:
         remote_ips = ' '.join(remote_hosts)
-        subproc(f'{PWD}/configs/firewall/iptables.sh {remote_ips}')
+        cmd = f'{PWD}/configs/firewall/iptables.sh {remote_ips}'
     else:
-        subproc(f'{PWD}/configs/firewall/no_ssh_iptables.sh')
+        cmd = f'{PWD}/configs/firewall/no_ssh_iptables.sh'
+    subproc([cmd])
 
 
 def setup_nix_groups():
@@ -397,7 +399,7 @@ def setup_nix_groups():
                      '[dim]to[/dim] [b]docker[/b] [dim]group[/dim]')
         # default way for Linux systems
         cmd = f'sudo usermod -a -G docker {USER}'
-        subproc(cmd, False, False, False)
+        subproc([cmd], False, False, False)
         print("")
         print_msg(f'[dim][i][b]{USER}[/b] added to [b]docker[/b] group, but ' +
                   'you may still need to [b]reboot.')
