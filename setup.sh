@@ -122,6 +122,7 @@ else
 fi
 
 
+
 echo -e "--------------------------\033[94m Checking for Python3 and pip3\033[00m -------------------------"
 # check to make sure we have python3 and pip3 installed
 which python3.10 > /dev/null
