@@ -9,7 +9,7 @@ Here's an example of the terminal after the script has run:
 <img src='./docs/screenshots/terminal_screenshot.png' width='850' alt='screenshot of terminal after runnign onboardme. includes colortest-256, powerline prompt, icons for files in ls output, and syntax highlighting examples with cat command.'>
 
 
-Looking for a project to get running on a machine that has no OS?
+Looking for a project to get running on a machine that has no OS at all?
 Check out [pxeless](https://github.com/cloudymax/pxeless).
 
 Looking for a project to get started with self hosting k8s stuff?
