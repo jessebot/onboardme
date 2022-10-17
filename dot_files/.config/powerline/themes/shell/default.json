@@ -25,7 +25,11 @@
                                 "branch": "  {}",
                                 "tag": " ﮉ {}",
                                 "untracked": "  {}",
-                                "stash": " {}"
+                                "changed": "  {}",
+                                "staged": "  {}",
+                                "stashed": "  {}",
+                                "ahead": "  {}",
+                                "behind": "  {}"
                             }
                         }
                     },
