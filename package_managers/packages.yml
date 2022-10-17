@@ -64,6 +64,7 @@ snap:
       - fluent-reader
       - scrcpy
 
+# most of this is actually for powerline, my shell prompt
 pip3.10:
   emoji: "🐍"
   commands:
@@ -72,6 +73,7 @@ pip3.10:
   packages:
     default:
       - netifaces
+      - dbus
       - autoimport
       - powerline-status
       - powerline-gitstatus
