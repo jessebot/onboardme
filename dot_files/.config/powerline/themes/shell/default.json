@@ -54,7 +54,7 @@
                     {
                         "function": "powerline.segments.common.time.date",
                         "args": {
-                            "format": " %H:%M"
+                            "format": " %H:%M"
                         }
                     }
                 ]
@@ -68,7 +68,7 @@
             {
                 "type": "string",
                 "name": "newline_prompt",
-                "contents": "",
+                "contents": " ",
                 "highlight_groups": ["newline_prompt"],
                 "priority": 30
             }
