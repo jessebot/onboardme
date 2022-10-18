@@ -56,7 +56,7 @@
                         }
                     },
                     {
-                        "function": "powerline.segments.common.players.spotify",
+                        "function": "powerline.segments.common.players.spotify_dbus",
                         "priority": 60,
                         "name": "player",
                         "args": {
