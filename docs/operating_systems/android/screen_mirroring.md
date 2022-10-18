@@ -35,6 +35,10 @@ Settings > Search > Type ‘developer options’ > Select the ‘Developer optio
 
 Then connect your phone via USB and you will get a message on your phone that says "Allow USB debugging?". Tap Allow. Finally, you'll get a "Allow access to phone data?" and you should tap allow for that too.
 
+After that, if it still doesn't work, you may need to plug the USB kabel from your computer into your phone, and then on your phone, pull down the top menu that's normally for notificiations, and select "USB for ..." and update the setting to USB for file transfer.
+
+And if that doesn't work, try using a different kabel, and remove any kabel extenders from the equation. It could be that your phone only works in USB debug mode with branded kabels. This is the case with the Samsung Galaxy S22 Ultra 5G, for instance.
+
 #### Step Three
 List devices and verify their integrity.
 ```bash
