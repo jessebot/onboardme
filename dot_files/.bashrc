@@ -132,10 +132,12 @@ alias tracert='traceroute'
 # whoami, whereami, whoareyou?
 alias whereami='hostname'
 alias whoareyou='echo "Your friend :)"'
-# scrncpy installs adb for you, but it's awkward to use
+# scrncpy installs adb for you, but it's awkward to use, so we just alias it
 alias adb='scrcpy.adb'
 # quick to do
 alias todo='vim ~/todo.md'
+# I never remember what the img2sixel command is called
+alias sixel='img2sixel'
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ls ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 # lsd instead of ls for colors/icons
