@@ -43,6 +43,8 @@ cask "font-hack-nerd-font"
 cask "font-mononoki-nerd-font"
 # cat images in the terminal (e.g. img2sixel imagename.png)
 brew "libsixel"
+# for working with images and making lsimg work
+brew "imagemagick"
 
 # remap keys... not working yet though :<
 # cask "karabiner-elements"
