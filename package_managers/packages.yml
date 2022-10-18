@@ -30,6 +30,8 @@ apt:
       - gnome-software-plugin-flatpak
       # cat images in the terminal :) works in tmux
       - catimg
+      # this lets you ls images as thumbnails, which is helpful sometimes
+      - imagemagick
       # pretty syntaxhighlighted cat files with git diff support
       - batcat
       # print a very pretty pallete to see all the colors the terminal can render
