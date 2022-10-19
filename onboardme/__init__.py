@@ -15,19 +15,14 @@ from rich.prompt import Confirm
 from rich.table import Table
 from rich.logging import RichHandler
 import shutil
-import stat
 from .util.subproc import subproc
 from .util.rich_click import RichCommand
 from .util.console_logging import print_panel, print_header, print_msg
 import yaml
 import wget
 
-
-# for console AND file logging
+# logging
 FORMAT = "%(message)s"
-logging.basicConfig(level="INFO", format=FORMAT, datefmt="[%X]",
-                    handlers=[RichHandler()])
-log = logging.getLogger("rich")
 # run uname to get operating system and hardware info
 SYSINFO = os.uname()
 # this will be something like Darwin_x86_64
@@ -37,16 +32,32 @@ HOME_DIR = os.getenv("HOME")
 USER = os.getlogin()
 
 
-def link_dot_files(OS='Linux', delete=False, dot_files_dir=f'{PWD}/dot_files'):
+def setup_dot_files(OS='Linux', delete=False, dot_files_git_url=""):
     """
-    Creates hard links to rc files for vim, zsh, bash, and hyper in user's
-    home dir. Uses hard links, so that if the tt file is removed, the data
-    will remain. If delete is True, we delete files before beginning.
-    Takes optional dot_files_dir for special directory to grab files from
-
-    note on how we're going to do things in future, seperate dot files repo:
+    note on how we're doing things, seperate dot files repo:
     https://probablerobot.net/2021/05/keeping-'live'-dotfiles-in-a-git-repo/
     """
+    if not dot_files_git_url:
+        dot_files_git_url = "https://github.com/jessebot/dot_files"
+
+    git_dir = os.path.join(HOME_DIR, '.git_dot_files')
+    cmds = [f'git --git-dir="{git_dir}" --work-tree="{HOME_DIR}" init',
+            f'git --git-dir="{git_dir}" config status.showUntrackedFiles no',
+            f'git --git-dir="{git_dir}" remote add origin {dot_files_git_url}',
+            f'git --git-dir="{git_dir}" fetch']
+
+    if delete:
+        # WARN: The next command will overwrite local files with remote files
+        cmds.append(f'git --git-dir="{git_dir}" reset --hard origin/main')
+        file_msg = False
+    else:
+        file_msg = True
+        # we only print this msg if we got the file exists error
+        help_msg = ("If you want to [yellow]override[/yellow] the existing "
+                    "file(s), rerun script with the [b]--delete[/b] flag.")
+
+    subproc(cmds, False, False, True, HOME_DIR)
+
     # table to print the results of all the files
     table = Table(expand=True,
                   box=box.MINIMAL_DOUBLE_HEAD,
@@ -54,61 +65,12 @@ def link_dot_files(OS='Linux', delete=False, dot_files_dir=f'{PWD}/dot_files'):
                   border_style="dim",
                   header_style="cornflower_blue",
                   title_style="light_steel_blue")
-    table.add_column("File")
-    table.add_column("Result", justify="center")
 
-    # we only print this msg if we got the file exists error
-    file_msg = False
-    help_msg = ("If you want to [yellow]override[/yellow] the existing "
-                "file, rerun script with the [b]--delete[/b] flag.")
+    table.add_column("Remote Dot Files")
 
-    # loop through the dot_files and hard link them all to the user's home dir
-    for root, dirs, files in os.walk(dot_files_dir):
-
-        # make sure the directory structure matches in ~/.config
-        for config_dir in dirs:
-            full_path = os.path.join(root, config_dir)
-            full_home_path = full_path.replace(dot_files_dir, HOME_DIR)
-            Path(full_home_path).mkdir(parents=True, exist_ok=True)
-
-        # then add each file to the list of files to hardlink
-        for config_file in files:
-            src_dot_file = os.path.join(root, config_file)
-            hard_link = src_dot_file.replace(dot_files_dir, HOME_DIR)
-
-            succesfully_linked = False
-            # check if the file already exists first
-            if os.path.exists(hard_link):
-                # if --delete was passed in to script, delete the existing file
-                if delete:
-                    os.remove(hard_link)
-                    os.link(src_dot_file, hard_link)
-                    succesfully_linked = True
-                else:
-                    # check the inodes to see if the correct link was made
-                    repo_stat = os.stat(src_dot_file)
-                    repo_ind = (repo_stat[stat.ST_INO], repo_stat[stat.ST_DEV])
-                    host_stat = os.stat(hard_link)
-                    host_ind = (host_stat[stat.ST_INO], host_stat[stat.ST_DEV])
-                    # we may have already created the link :)
-                    if repo_ind == host_ind or os.path.islink(src_dot_file):
-                        table.add_row(f"[green]{hard_link}",
-                                      "[green]Already linked ♥")
-            else:
-                # try to hard link, but catch errors if delete set to False
-                try:
-                    os.link(src_dot_file, hard_link)
-                except FileExistsError:
-                    # keep till loop ends, to notify user no action was taken
-                    table.add_row(f"[yellow]{hard_link}",
-                                  "[yellow]File already exists 💔")
-                    file_msg = True
-                else:
-                    succesfully_linked = True
-
-            if succesfully_linked:
-                table.add_row(f"[green]{hard_link}",
-                              "[green]Successfully linked ♥")
+    table.add_row("[green]", "[green]Already linked ♥")
+    # keep till loop ends, to notify user no action was taken
+    table.add_row("[yellow]", "[yellow]File already exists 💔")
 
     print_panel(table, ":shell: Check if dot files are up to date", "left",
                 "light_steel_blue")
@@ -118,7 +80,7 @@ def link_dot_files(OS='Linux', delete=False, dot_files_dir=f'{PWD}/dot_files'):
     return
 
 
-def brew_install_upgrade(OS="Darwin", devops_brewfile=False):
+def brew_install_upgrade(OS="Darwin", pkg_groups=['default']):
     """
     Run the install/upgrade of packages managed by brew, also updates brew
     Always installs the .Brewfile (which has libs that work on both mac/linux)
@@ -131,15 +93,17 @@ def brew_install_upgrade(OS="Darwin", devops_brewfile=False):
 
     install_cmd = "brew bundle --quiet"
 
-    subproc(['brew update --quiet',
-             'brew upgrade --quiet',
+    subproc(['brew update --quiet', 'brew upgrade --quiet',
              f'{install_cmd} --global'])
 
+    # the above is basically our default
+    pkg_groups.remove('default')
+
     # install os specific or package group specific brew stuff
-    brewfile = os.path.join(PWD, 'package_managers/brew/Brewfile_')
+    brewfile = os.path.join(PWD, 'config/brew/Brewfile_')
     # sometimes there isn't an OS specific brewfile, but there always is 4 mac
     os_brewfile = os.path.exists(brewfile + OS)
-    if os_brewfile or devops_brewfile:
+    if os_brewfile or pkg_groups:
         install_cmd += f" --file={brewfile}"
 
         if os_brewfile:
@@ -147,11 +111,11 @@ def brew_install_upgrade(OS="Darwin", devops_brewfile=False):
             print_msg(os_msg)
             subproc([f'{install_cmd}{OS}'], True)
 
-        # install devops related packages
-        if devops_brewfile:
-            devops_msg = 'DevOps specific ' + brew_msg
-            print_header(devops_msg)
-            subproc([f'{install_cmd}devops'], True)
+        if pkg_groups:
+            for group in pkg_groups:
+                msg = group.title + ' specific ' + brew_msg
+                print_header(msg)
+                subproc([f'{install_cmd}{group}'], True)
 
     # cleanup operation doesn't seem to happen automagically :shrug:
     cleanup_msg = '[i][dim]🍺 [green][b]brew[/b][/] final upgrade/cleanup'
@@ -162,7 +126,8 @@ def brew_install_upgrade(OS="Darwin", devops_brewfile=False):
     return
 
 
-def run_pkg_mngrs(pkg_mngrs=['brew', 'pip3.10'], pkg_groups=['default']):
+def run_pkg_mngrs(pkg_mngrs=['brew', 'pip3.10', 'apt', 'snap', 'flatpak'],
+                  pkg_groups=['default']):
     """
     Installs packages with apt, brew, snap, flatpak. If no pkg_mngrs list
     passed in, only use brew for mac. Takes optional variable, pkg_group_lists
@@ -170,13 +135,16 @@ def run_pkg_mngrs(pkg_mngrs=['brew', 'pip3.10'], pkg_groups=['default']):
     """
     # brew has a special flow with brew files
     if 'brew' in pkg_mngrs:
-        if 'devops' in pkg_groups:
-            brew_install_upgrade(SYSINFO.sysname, True)
-        else:
-            brew_install_upgrade(SYSINFO.sysname, False)
+        brew_install_upgrade(SYSINFO.sysname, pkg_groups)
         pkg_mngrs.remove('brew')
 
-    with open(f'{PWD}/package_managers/packages.yml', 'r') as yaml_file:
+    if 'Darwin' in OS:
+        if 'pip3.10' not in pkg_mngrs:
+            return
+        else:
+            pkg_mngrs = ['pip3.10']
+
+    with open(f'{PWD}/config/packages.yml', 'r') as yaml_file:
         pkg_mngrs_list = yaml.safe_load(yaml_file)
 
     # just in case we got any duplicates, we iterate through pkg_mngrs as a set
@@ -210,6 +178,7 @@ def run_pkg_mngrs(pkg_mngrs=['brew', 'pip3.10'], pkg_groups=['default']):
                         cmd = pkg_cmds['install'] + package
                         subproc([cmd], True, True)
                 print_msg('[dim][i]Completed.')
+    return
 
 
 def install_fonts():
@@ -376,12 +345,13 @@ def configure_ssh():
 def configure_firewall(remote_hosts=[]):
     """
     configure iptables
-    TODO: Add Lulu configuration
+    TODO: Add Lulu configuration!
     """
     print_header('🛡️ Configuring Firewall...')
     if remote_hosts:
         remote_ips = ' '.join(remote_hosts)
         cmd = f'{PWD}/configs/firewall/iptables.sh {remote_ips}'
+        configure_ssh()
     else:
         cmd = f'{PWD}/configs/firewall/no_ssh_iptables.sh'
     subproc([cmd])
@@ -494,6 +464,46 @@ def process_steps(only_steps=[], firewall=False, browser=False):
     return steps
 
 
+def process_user_config(delete_existing, git_clone_url, log_level,
+                        pkg_managers, pkg_groups, silent, remote_host):
+    """
+    process the config in ~/.config/onboardme/config.yml if it exists
+    and return variables as a dict for use in script, else return default opts
+    """
+    cli_dict = {'dot_files': {'delete_existing': delete_existing,
+                              'git_clone_url': git_clone_url},
+                'pkg_managers': {'enabled': pkg_managers,
+                                 'pkg_groups': pkg_groups},
+                'log_level': log_level,
+                'silent': silent,
+                'remote_host': remote_host}
+
+    # cli options are more important, but if none passed in, we check .config
+    usr_cfg_file = os.path.join(HOME_DIR, '.config/onboardme/config.yml')
+
+    if not os.path.exists(usr_cfg_file):
+        return cli_dict
+    else:
+        with open(usr_cfg_file, 'r') as yaml_file:
+            user_prefs = yaml.safe_load(yaml_file)
+
+        for key in cli_dict.keys():
+            if key not in user_prefs.keys():
+                user_prefs[key] = cli_dict[key]
+            elif cli_dict[key]:
+                user_prefs[key] = cli_dict[key]
+
+            # make sure the dict is not nested...
+            if type(user_prefs[key]) == dict:
+                for nested_key in user_prefs[key].keys():
+                    if nested_key not in user_prefs[key].keys():
+                        user_prefs[key][nested_key] = cli_dict[key][nested_key]
+                    elif cli_dict[key][nested_key]:
+                        user_prefs[key][nested_key] = cli_dict[key][nested_key]
+
+        return user_prefs
+
+
 # Click is so ugly, and I'm sorry we're using it for cli parameters here, but
 # this allows us to use rich.click for pretty prettying the help interface
 @command(cls=RichCommand)
@@ -501,17 +511,17 @@ def process_steps(only_steps=[], firewall=False, browser=False):
 @option('--browser', '-b',
         is_flag=True,
         help='Opt into [i]experimental[/i] Firefox configuruation.')
-@option('--delete', '-d',
+@option('--delete_existing', '-d',
         is_flag=True,
         help='Deletes existing rc files before creating hardlinks.')
-@option('--extra_packages', '-e',
-        type=Choice(['gaming', 'devops']), multiple=True,
-        help='Extra package groups to install. Accepts multiple groups.\n'
-             'Ex: -e [cornflower_blue]devops[/] -e [cornflower_blue]gaming')
 @option('--firewall', '-f',
         is_flag=True,
         help='Setup SSH on a random port and add it to firewall.')
-@option('--log' '-l',
+@option('--git_clone_url', '-g',
+        metavar='GIT_URL',
+        help='personal git URL for your dot files, defaults to '
+             'https://github.com/jessebot/dot_files')
+@option('--log_level' '-l',
         metavar='LOGLEVEL',
         type=Choice(['debug', 'info', 'warn', 'error']),
         help='Logging level to use with the script (debug, info, warn, error).'
@@ -535,6 +545,12 @@ def process_steps(only_steps=[], firewall=False, browser=False):
              'only run brew, pip3.10, & ([i]if linux[/]) apt/snap/flatpak.'
              ' Accepts multiple package managers.\n'
              'Ex: -p [cornflower_blue]brew[/] -p [cornflower_blue]apt')
+@option('--pkg_groups', '-e',
+        metavar='PKG_GROUP',
+        multiple=True,
+        type=Choice(['default', 'gaming', 'devops']),
+        help='Extra package groups to install. Accepts multiple groups.\n'
+             'Ex: -e [cornflower_blue]devops[/] -e [cornflower_blue]gaming')
 @option('--remote_host', '-H',
         multiple=True,
         metavar="IP_ADDRESS",
@@ -546,52 +562,59 @@ def process_steps(only_steps=[], firewall=False, browser=False):
         help='[i]Experimental[/i]. Do no output anything to the console. (can '
              'still output to file.)')
 def main(browser: bool = False,
-         delete: bool = False,
-         extra_packages: str = "",
+         delete_existing: bool = False,
          firewall: bool = False,
-         log: str = "",
+         git_clone_url: str = "",
+         log_level: str = "",
          only_steps: str = "",
          pkg_managers: str = "",
+         pkg_groups: str = "",
          remote_host: str = "",
          silent: bool = False):
     """
-    Onboarding script for macOS and debian. Uses config in the script repo in
-    package_managers/packages.yml. If run with no options on Linux it will
-    install brew, apt, flatpak, and snap packages. On mac, only brew.
-    coming soon: config via env variables and config files.
+    Uses config in the script repo in config/packages.yml and config/config.yml
+    If run with no options on Linux, it will install brew, pip3.10, apt,
+    flatpak, and snap packages. On mac, it only installs brew/pip3.10 packages.
+    config loading tries to load: cli options and then .config/onboardme/*
     """
+
     # before we do anything, we need to make sure this OS is supported
     confirm_os_supported()
+
+    # then process any local user config files in ~/.config/onboardme
+    user_prefs = process_user_config(delete_existing, git_clone_url, log_level,
+                                     only_steps, pkg_managers, pkg_groups,
+                                     silent, remote_host)
+
+    # for console AND file logging
+    if not log_level:
+        log_level = "info"
+    logging.basicConfig(level=log_level.upper, format=FORMAT,
+                        datefmt="[%X]", handlers=[RichHandler()])
+    global log
+    log = logging.getLogger("rich")
 
     # figure out which steps to run:
     steps = process_steps(only_steps, firewall, browser)
 
     if 'dot_files' in steps:
-        link_dot_files(OS, delete)
+        delete_existing = user_prefs['dot_files'].get('delete_existing')
+        git_clone_url = user_prefs['dot_files'].get('git_clone_url')
+        # this creates a live git repo out of your home directory
+        setup_dot_files(OS, delete_existing, git_clone_url)
 
     if 'font_installation' in steps:
         install_fonts()
 
-    # if user specifies, only do packages passed into --package_managers
-    if 'install_upgrade_packages' in steps:
-        if pkg_managers:
-            default_installers = list(pkg_managers)
-        else:
-            default_installers = ['brew', 'pip3.10']
-            if 'Linux' in OS:
-                default_installers.extend(['apt', 'snap', 'flatpak'])
-
-        # process additional package lists, if any
-        package_groups = ['default']
-        if extra_packages:
-            package_groups.extend(extra_packages)
-
-        run_pkg_mngrs(default_installers, package_groups)
+    if 'install_pkgs' in steps:
+        # these are the package managers we'll be running e.g. brew, pip, etc
+        installers = user_prefs['pkg_managers'].get('enabled', [])
+        # process additional package lists, if any, such as "gaming" packages
+        pkg_groups = user_prefs['pkg_managers'].get('pkg_groups', [])
+        run_pkg_mngrs(installers, set(pkg_groups))
 
     if 'firewall_setup' in steps:
         if remote_host:
-            # will also configure ssh if you specify --remote
-            # configure_ssh()
             configure_firewall(remote_host)
 
     if 'vim_setup' in steps:
