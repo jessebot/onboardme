@@ -20,11 +20,6 @@ setup(name='onboardme',
           'Intended Audience :: End Users/Desktop',
           'License :: OSI Approved :: GPL3'
       ],
-      classifiers=[
-          'Development Status :: 3 - Alpha'
-          'Programming Language :: Python :: 3.10'
-          'Topic :: Environment Setup',
-      ],
       keywords='onboardme onboarding desktop-setup',
       version='v0.12.23',
       url='http://github.com/jessebot/onboardme',
