@@ -15,7 +15,10 @@ setup(name='onboardme',
       classifiers=[
           'Development Status :: 3 - Alpha'
           'Programming Language :: Python :: 3.10'
-          'Topic :: Image Processing :: Display',
+          'Operating System :: MacOS :: MacOS X',
+          'Environment :: Console',
+          'Intended Audience :: End Users/Desktop',
+          'License :: OSI Approved :: GPL3'
       ],
       classifiers=[
           'Development Status :: 3 - Alpha'
@@ -23,7 +26,7 @@ setup(name='onboardme',
           'Topic :: Environment Setup',
       ],
       keywords='onboardme onboarding desktop-setup',
-      version='0.1',
+      version='v0.12.23',
       url='http://github.com/jessebot/onboardme',
       author='Jesse Hitch',
       author_email='jessebot@linux.com',
@@ -31,5 +34,6 @@ setup(name='onboardme',
       packages=['onboardme'],
       install_requires=['wget', 'GitPython', 'PyYAML', 'rich', 'click'],
       scripts=['bin/onboardme'],
+      data_files=[('config', ['config/'])],
       include_package_data=True,
       zip_safe=False)

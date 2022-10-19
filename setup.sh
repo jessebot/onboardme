@@ -45,7 +45,9 @@ fi
 echo -e "-------------------------------- \033[94m Checking for Git \033[00m ------------------------------"
 which git > /dev/null
 git_return_code=$?
-if [ $git_return_code -ne 0 ]; then
+if [ $git_return_code -eq 0 ]; then
+    echo -e "\033[92mGit already installed :3 \033[00m"
+else
     echo "Git not installed or in path, attempting to install git..."
     # we use *"linux"* because linux2 is a possibility, and who knows what else
     if [[ "$OS" == "Linux"* ]]; then
@@ -63,8 +65,6 @@ if [ $git_return_code -ne 0 ]; then
         brew install git
     fi
     echo -e "\033[92mGit Installed :3 \033[00m"
-else
-    echo -e "\033[92mGit already installed :3 \033[00m"
 fi
 
 echo "running: git config --global init.defaultBranch main"
@@ -137,7 +137,7 @@ fi
 which pip3.10 > /dev/null
 pip_return_code=$?
 if [ $pip_return_code -ne 0 ]; then
-    echo "Installing Pip3..." 
+    echo "Installing Pip3.10..." 
     if [[ "$OS" == *"Linux"* ]]; then
         sudo apt install python3-pip
         echo -e "\033[92mPip3.10 installed :3 \033[00m"
@@ -158,7 +158,8 @@ fi
 
 # make sure we have wget and pyyaml
 echo "Now installing python reqs..."
-pip3 install -r ~/repos/onboardme/requirements.txt
+# pip3.10 install -e .
+pip3.10 install -r ~/repos/onboardme/requirements.txt
 pip_install_return_code=$?
 if [ $pip_install_return_code -ne 0 ]; then
     echo "Something went wrong with the installation of the python dependencies with pip3."

@@ -1,2 +1,0 @@
-{:main [{:des   "caps_lock to esc when pressed alone, to ctrl as modifier"
-         :rules [[:##caps_lock :left_control nil {:alone :escape}]]}]}

@@ -1,0 +1,42 @@
+---
+# # This is the config for onboardme.
+# # If this files exists as: ~/.config/onboardme/config.yml
+# # then its loaded instead of the default config
+
+
+dot_files:
+  # delete any existing dot files we see in the home dir that conflict
+  delete_existing: false
+  # Your personal git URL for your dot files, defaults to jessebot/dot_files
+  git_clone_url: "https://github.com/jessebot/dot_files"
+
+
+# whether or not to configure remote access to additional hosts
+remote_access:
+  enabled: false
+  # known safe remote hosts that you expect to be able to ping and SSH into
+  hosts:
+  #  - 192.168.42.42
+
+
+### TODO: make this work
+# any URL we can curl to download a folder from
+wallpapers_download_url: ""
+
+# this is the basic cli config, for the specific packages installed by each
+# package maanger, check in packages.yml. To override the defaults, create a
+# ~/.config/onboardme/packages.yml
+package_managers:
+  # Remove any of the below pkg managers to only run the remaining pkg managers
+  enabled:
+    - brew
+    - pip3.10
+    - snap
+    - flatpak
+    - apt
+  # list of extra existing packages groups to install
+  package_groups:
+    - default
+    # uncomment these to add them as default installed package groups
+    # - gaming
+    # - work

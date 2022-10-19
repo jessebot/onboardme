@@ -1,0 +1,83 @@
+# This file is macOS specific. Won't work with LinuxBrew  #
+###########################################################
+#  ===-----------------------------------------------===  #
+#                         General                         #
+#  ===-----------------------------------------------===  #
+###########################################################
+
+# this lets us resize windows
+cask "rectangle"
+# productivity search and command bar
+cask "alfred"
+# Default browser
+cask "firefox"
+# Default email client
+cask "thunderbird"
+# File server
+cask "nextcloud"
+
+###########################################################
+#  ===-----------------------------------------------===  #
+#               Making the terminal better                #
+#  ===-----------------------------------------------===  #
+###########################################################
+
+# Default terminal used by most macOS users, standard
+cask "iterm2"
+# cross platform terminal written in rust :shrug:
+tap "wez/wezterm"
+cask "wez/wezterm/wezterm"
+# backup terminal written in javascript :shrug:
+cask "hyper"
+
+# gives us the default gnu/linux sed we all know and love
+brew "gnu-sed"
+# current version of bash :)
+brew "bash"
+# so that bash completion stuff works
+brew "bash-completion@2"
+
+# tap special cask for various terminal fonts
+tap "homebrew/cask-fonts"
+cask "font-hack-nerd-font"
+cask "font-mononoki-nerd-font"
+# cat images in the terminal (e.g. img2sixel imagename.png)
+brew "libsixel"
+# for working with images and making lsimg work
+brew "imagemagick"
+
+# remap keys... not working yet though :<
+# cask "karabiner-elements"
+
+###########################################################
+#  ===-----------------------------------------------===  #
+#               Mac specific DevOpsing                    #
+#  ===-----------------------------------------------===  #
+###########################################################
+
+# This should be docker desktop
+cask "docker"
+
+###########################################################
+#  ===-----------------------------------------------===  #
+#               Media and Entertainment                   #
+#  ===-----------------------------------------------===  #
+###########################################################
+
+# primary media player
+cask "vlc"
+# youtube replacement
+cask "freetube"
+
+###########################################################
+#  ===-----------------------------------------------===  #
+#                       Security                          #
+#  ===-----------------------------------------------===  #
+###########################################################
+
+# firewall
+cask "lulu"
+# password manager
+cask "bitwarden"
+# VPN
+cask "protonvpn"

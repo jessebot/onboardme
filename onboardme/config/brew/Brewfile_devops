@@ -1,0 +1,33 @@
+# aws work stuff
+# brew "aws-cli"
+# aws credentials switcher
+# cask "aws-vault"
+
+# terraform for building stuff
+brew "terraform"
+# this lets you manage multiple versions of terraform
+# brew "tfenv"
+
+# cli for k8s (kubernetes)
+brew "kubectl"
+
+# kubectl plugin manager
+brew "krew"
+
+# terminal based dashbaord for k8s
+brew "k9s"
+
+# package manager for k8s
+brew "helm"
+
+# manages helm files
+# brew "helmfile"
+
+# cli for Bitnami sealed-secrets, encrypting secrets in yaml files for gitops
+brew "kubeseal"
+
+# gitops continuous delivery for k8s configs
+brew "argocd"
+
+# KinD (Kubernetes in Docker), for small k8s clusters for testing
+brew "kind"

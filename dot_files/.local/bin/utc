@@ -1,3 +1,0 @@
-#!/bin/bash
-# Display the time in UTC
-date -u +%H:%M
