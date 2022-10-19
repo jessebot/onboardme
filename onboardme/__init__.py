@@ -49,12 +49,11 @@ def setup_dot_files(OS='Linux', delete=False, dot_files_git_url=""):
     if delete:
         # WARN: The next command will overwrite local files with remote files
         cmds.append(f'git --git-dir="{git_dir}" reset --hard origin/main')
-        file_msg = False
     else:
-        file_msg = True
         # we only print this msg if we got the file exists error
-        help_msg = ("If you want to [yellow]override[/yellow] the existing "
-                    "file(s), rerun script with the [b]--delete[/b] flag.")
+        print_msg(":warning: There may be overwrites. If you want to [yellow]"
+                  "override[/yellow] the existing file(s), rerun script with "
+                  "the [b]--delete[/b] flag.")
 
     subproc(cmds, False, False, True, HOME_DIR)
 
@@ -65,18 +64,15 @@ def setup_dot_files(OS='Linux', delete=False, dot_files_git_url=""):
                   border_style="dim",
                   header_style="cornflower_blue",
                   title_style="light_steel_blue")
-
     table.add_column("Remote Dot Files")
 
-    table.add_row("[green]", "[green]Already linked ♥")
-    # keep till loop ends, to notify user no action was taken
-    table.add_row("[yellow]", "[yellow]File already exists 💔")
+    git_files = subproc("git ls-tree --full-tree -r --name-only HEAD", False,
+                        False, True, git_dir)
+    for dot_file in git_files:
+        table.add_row(f"[green]{dot_file} ♥")
 
     print_panel(table, ":shell: Check if dot files are up to date", "left",
                 "light_steel_blue")
-    if file_msg:
-        print('')
-        print_msg(help_msg)
     return
 
 
