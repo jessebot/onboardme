@@ -11,28 +11,34 @@ from pathlib import Path
 from random import randint
 # rich helps pretty print everything
 from rich import box, print
+from rich.console import Console
 from rich.prompt import Confirm
 from rich.table import Table
 from rich.logging import RichHandler
 import shutil
 from .util.subproc import subproc
-from .util.rich_click import RichCommand
+from .util.rich_click import RichCommand, help_text
 from .util.console_logging import print_panel, print_header, print_msg
 import yaml
 import wget
 
-# logging
-FORMAT = "%(message)s"
+
+PWD = os.path.dirname(__file__)
+HELP = help_text()
+with open(f'{PWD}/config/config.yml', 'r') as yaml_file:
+    OPTS = yaml.safe_load(yaml_file)
+
+# user env info
+HOME_DIR = os.getenv("HOME")
+USER = os.getlogin()
 # run uname to get operating system and hardware info
 SYSINFO = os.uname()
 # this will be something like Darwin_x86_64
 OS = f"{SYSINFO.sysname}_{SYSINFO.machine}"
-PWD = os.path.dirname(__file__)
-HOME_DIR = os.getenv("HOME")
-USER = os.getlogin()
 
 
-def setup_dot_files(OS='Linux', delete=False, dot_files_git_url=""):
+def setup_dot_files(OS='Linux', delete=False, dot_files_git_url="",
+                    branch="main"):
     """
     note on how we're doing things, seperate dot files repo:
     https://probablerobot.net/2021/05/keeping-'live'-dotfiles-in-a-git-repo/
@@ -41,21 +47,24 @@ def setup_dot_files(OS='Linux', delete=False, dot_files_git_url=""):
         dot_files_git_url = "https://github.com/jessebot/dot_files"
 
     git_dir = os.path.join(HOME_DIR, '.git_dot_files')
+    Path(git_dir).mkdir(exist_ok=True)
+
     cmds = [f'git --git-dir="{git_dir}" --work-tree="{HOME_DIR}" init',
-            f'git --git-dir="{git_dir}" config status.showUntrackedFiles no',
-            f'git --git-dir="{git_dir}" remote add origin {dot_files_git_url}',
-            f'git --git-dir="{git_dir}" fetch']
+            'git config status.showUntrackedFiles no',
+            f'git remote add origin {dot_files_git_url}',
+            'git fetch']
+    print(cmds[0])
 
     if delete:
         # WARN: The next command will overwrite local files with remote files
-        cmds.append(f'git --git-dir="{git_dir}" reset --hard origin/main')
+        cmds.append(f'git reset --hard origin/{branch}')
     else:
         # we only print this msg if we got the file exists error
         print_msg(":warning: There may be overwrites. If you want to [yellow]"
                   "override[/yellow] the existing file(s), rerun script with "
                   "the [b]--delete[/b] flag.")
 
-    subproc(cmds, False, False, True, HOME_DIR)
+    subproc([cmds[0]], False, False, False, git_dir)
 
     # table to print the results of all the files
     table = Table(expand=True,
@@ -66,12 +75,12 @@ def setup_dot_files(OS='Linux', delete=False, dot_files_git_url=""):
                   title_style="light_steel_blue")
     table.add_column("Remote Dot Files")
 
-    git_files = subproc("git ls-tree --full-tree -r --name-only HEAD", False,
-                        False, True, git_dir)
-    for dot_file in git_files:
-        table.add_row(f"[green]{dot_file} ♥")
+    git_files = subproc(["git ls-tree --full-tree -r --name-only HEAD"], False,
+                        False, False, git_dir)
+    for dot_file in git_files.rstrip().split('\n'):
+        table.add_row(f"♥ [green]{dot_file}")
 
-    print_panel(table, ":shell: Check if dot files are up to date", "left",
+    print_panel(table, "Check if dot files are up to date ", "left",
                 "light_steel_blue")
     return
 
@@ -415,34 +424,49 @@ def print_manual_steps():
     """
     Just prints out the final steps to be done manually, til we automate them
     """
-    end_msg = ("\n[i]Here's some stuff you gotta do manually (for now)[/]:\n\n"
-               " 📰 - Import RSS feeds config into FluentReader\n"
-               " 📺 [dim]- Import subscriptions into FreeTube \n[/]"
-               " ⌨️  - Set CAPSLOCK to control!\n"
-               " ⏰ [dim]- Install any cronjobs you need from the cron dir!\n"
-               "   [/]- Source your bash config: [green]source .bashrc[/]\n"
-               " 🐳 [dim]- Reboot, as [turquoise2]docker[/] demands it.\n\n[/]"
-               "If there's anything else you need help with, check the docs:\n"
-               "[cyan][link=https://jessebot.github.io/onboardme]"
-               "jessebot.github.io/onboardme[/link]")
+    # table to print the results of all the files
+    table = Table(expand=True, box=None,
+                  title=" ",
+                  row_styles=["", "dim"],
+                  border_style="dim",
+                  header_style="cornflower_blue",
+                  title_style="light_steel_blue")
+    # table.add_column("                                                 ")
+    table.add_column("Don't forget these (currently) manual tasks",
+                     justify="center")
+    # table.add_column("                                                 ")
 
-    print_panel(end_msg, '[green]♥ ˖⁺‧Success‧⁺˖ ♥')
+    table.add_row(" ")
+    table.add_row("Import RSS feeds config into FluentReader")
+    table.add_row("Import subscriptions into FreeTube")
+    table.add_row("⌨️  Set CAPSLOCK to control")
+    table.add_row("Install cronjobs you need from ~/.cron")
+    table.add_row("Load your BASH config: [green]source .bashrc[/]")
+    table.add_row("Reboot, as [turquoise2]docker[/] demands it")
+    table.add_row(" ")
+    table.add_row("If you need any help, check the docs:")
+    table.add_row("[cyan][link=https://jessebot.github.io/onboardme]"
+                  "jessebot.github.io/onboardme[/link]")
+    table.add_row(" ")
+
+    print_panel(table, '[green]♥ ˖⁺‧Success‧⁺˖ ♥')
+    return True
 
 
-def process_steps(only_steps=[], firewall=False, browser=False):
+def process_steps(steps=[], firewall=False, browser=False):
     """
     process which steps to run for which OS, which steps the user passed in,
     and then make sure dependent steps are always run.
 
     Returns a list of str type steps to run.
     """
-    if only_steps:
-        steps = list(only_steps)
+    if steps:
+        steps = list(steps)
         # setting up vim is useless if we don't have a .vimrc
         if 'vim_setup' in steps and 'dot_files' not in steps:
             steps.append('dot_files')
     else:
-        steps = ['dot_files', 'install_upgrade_packages', 'vim_setup']
+        steps = ['dot_files', 'manage_pkgs', 'vim_setup']
 
         # this is broken
         # if 'capslock_to_control' in steps:
@@ -456,23 +480,25 @@ def process_steps(only_steps=[], firewall=False, browser=False):
                 steps.append('firewall_setup')
             if browser:
                 steps.append('browser_setup')
-
     return steps
 
 
-def process_user_config(delete_existing, git_clone_url, log_level,
-                        pkg_managers, pkg_groups, silent, remote_host):
+def process_user_config(delete_existing, git_clone_url, pkg_managers,
+                        pkg_groups, log_level, log_file, quiet, remote_host,
+                        steps):
     """
     process the config in ~/.config/onboardme/config.yml if it exists
     and return variables as a dict for use in script, else return default opts
     """
-    cli_dict = {'dot_files': {'delete_existing': delete_existing,
-                              'git_clone_url': git_clone_url},
-                'pkg_managers': {'enabled': pkg_managers,
-                                 'pkg_groups': pkg_groups},
-                'log_level': log_level,
-                'silent': silent,
-                'remote_host': remote_host}
+    if not log_level:
+        log_level = "warn"
+
+    cli_dict = {'package': {'managers': pkg_managers, 'groups': pkg_groups},
+                'log': {'file': log_file, 'level': log_level, 'quiet': quiet},
+                'remote_host': remote_host,
+                'steps': steps,
+                'dot_files': {'delete_existing': delete_existing,
+                              'git_clone_url': git_clone_url}}
 
     # cli options are more important, but if none passed in, we check .config
     usr_cfg_file = os.path.join(HOME_DIR, '.config/onboardme/config.yml')
@@ -502,71 +528,33 @@ def process_user_config(delete_existing, git_clone_url, log_level,
 
 # Click is so ugly, and I'm sorry we're using it for cli parameters here, but
 # this allows us to use rich.click for pretty prettying the help interface
-@command(cls=RichCommand)
 # each of these is an option in the cli and variable we use later on
-@option('--browser', '-b',
-        is_flag=True,
-        help='Opt into [i]experimental[/i] Firefox configuruation.')
-@option('--delete_existing', '-d',
-        is_flag=True,
-        help='Deletes existing rc files before creating hardlinks.')
-@option('--firewall', '-f',
-        is_flag=True,
-        help='Setup SSH on a random port and add it to firewall.')
-@option('--git_clone_url', '-g',
-        metavar='GIT_URL',
-        help='personal git URL for your dot files, defaults to '
-             'https://github.com/jessebot/dot_files')
-@option('--log_level' '-l',
-        metavar='LOGLEVEL',
-        type=Choice(['debug', 'info', 'warn', 'error']),
-        help='Logging level to use with the script (debug, info, warn, error).'
-             ' Defaults to error.')
-@option('--only_steps', '-o',
-        default=None,
-        multiple=True,
-        metavar='STEP',
-        type=Choice(['dot_files', 'install_upgrade_packages', 'vim_setup']),
-        help='[i]Beta[/i]. Only run [light_steel_blue]STEP[/] in the script. '
-             'Accepts multiple steps.'
-             '\nSteps include: dot_files, install_upgrade_packages, vim_setup.'
-             '\nEx: -o [cornflower_blue]dot_files[/] -o '
-             '[cornflower_blue]install_upgrade_packages')
-@option('--pkg_managers', '-p',
-        default=None,
-        multiple=True,
-        metavar='PKG_MANAGER',
-        type=Choice(['brew', 'pip3.10', 'apt', 'snap', 'flatpak']),
-        help='Specific [light_steel_blue]PKG_MANAGER[/] to run. Defaults to '
-             'only run brew, pip3.10, & ([i]if linux[/]) apt/snap/flatpak.'
-             ' Accepts multiple package managers.\n'
-             'Ex: -p [cornflower_blue]brew[/] -p [cornflower_blue]apt')
-@option('--pkg_groups', '-e',
-        metavar='PKG_GROUP',
-        multiple=True,
-        type=Choice(['default', 'gaming', 'devops']),
-        help='Extra package groups to install. Accepts multiple groups.\n'
-             'Ex: -e [cornflower_blue]devops[/] -e [cornflower_blue]gaming')
-@option('--remote_host', '-H',
-        multiple=True,
-        metavar="IP_ADDRESS",
-        default=None,
-        help='Setup SSH on a random port and add [cornflower_blue]IP_ADDRESS'
-             '[/] to firewall')
-@option('--silent', '-s',
-        is_flag=True,
-        help='[i]Experimental[/i]. Do no output anything to the console. (can '
-             'still output to file.)')
-def main(browser: bool = False,
+@command(cls=RichCommand)
+@option('--clone_url', '-c', metavar='GIT_URL', help=HELP['clone_url'])
+@option('--delete_existing', '-d', is_flag=True, help=HELP['delete_existing'])
+@option('--log_level', '-l', metavar='LOGLEVEL', help=HELP['log_level'],
+        type=Choice(['debug', 'info', 'warn', 'error']))
+@option('--log_file', '-f', metavar='LOGFILE', help=HELP['log_file'])
+@option('--pkg_managers', '-p', metavar='PKG_MANAGER', multiple=True,
+        type=Choice(OPTS['package']['managers']), help=HELP['pkg_managers'])
+@option('--pkg_groups', '-g', metavar='PKG_GROUP', multiple=True,
+        type=Choice(['default', 'gaming', 'devops']), help=HELP['pkg_groups'])
+@option('--remote_host', '-r', metavar="IP_ADDRESS", multiple=True,
+        help=HELP['remote_host'])
+@option('--steps', '-s', metavar='STEP', multiple=True,
+        type=Choice(OPTS['steps']), help=HELP['steps'])
+@option('--quiet', '-q', is_flag=True, help=HELP['quiet'])
+@option('--web_browser', '-w', is_flag=True, help=HELP['web_browser'])
+def main(clone_url: str = "",
          delete_existing: bool = False,
-         firewall: bool = False,
-         git_clone_url: str = "",
          log_level: str = "",
-         only_steps: str = "",
+         log_file: str = "",
          pkg_managers: str = "",
          pkg_groups: str = "",
          remote_host: str = "",
-         silent: bool = False):
+         steps: str = "",
+         quiet: bool = False,
+         web_browser: bool = False):
     """
     Uses config in the script repo in config/packages.yml and config/config.yml
     If run with no options on Linux, it will install brew, pip3.10, apt,
@@ -578,40 +566,45 @@ def main(browser: bool = False,
     confirm_os_supported()
 
     # then process any local user config files in ~/.config/onboardme
-    user_prefs = process_user_config(delete_existing, git_clone_url, log_level,
-                                     only_steps, pkg_managers, pkg_groups,
-                                     silent, remote_host)
+    user_prefs = process_user_config(delete_existing, clone_url,
+                                     pkg_managers, pkg_groups, log_level,
+                                     log_file, quiet, remote_host, steps)
 
     # for console AND file logging
-    if not log_level:
-        log_level = "info"
-    logging.basicConfig(level=log_level.upper, format=FORMAT,
-                        datefmt="[%X]", handlers=[RichHandler()])
+    log_file = user_prefs['log']['file']
+    log_level = user_prefs['log']['level']
+    if log_file:
+        console_file = Console(file=log_file)
+        logging.basicConfig(level=log_level.upper, format="%(message)s",
+                            datefmt="[%X]", console=console_file,
+                            handlers=[RichHandler(rich_tracebacks=True)])
+    else:
+        logging.basicConfig(level=log_level.upper, format="%(message)s",
+                            datefmt="[%X]",
+                            handlers=[RichHandler(rich_tracebacks=True)])
     global log
     log = logging.getLogger("rich")
 
     # figure out which steps to run:
-    steps = process_steps(only_steps, firewall, browser)
+    steps = process_steps(steps, remote_host, web_browser)
 
     if 'dot_files' in steps:
-        delete_existing = user_prefs['dot_files'].get('delete_existing')
-        git_clone_url = user_prefs['dot_files'].get('git_clone_url')
         # this creates a live git repo out of your home directory
-        setup_dot_files(OS, delete_existing, git_clone_url)
+        setup_dot_files(OS, user_prefs['dot_files']['delete_existing'],
+                        user_prefs['dot_files']['git_clone_url'])
 
     if 'font_installation' in steps:
         install_fonts()
 
     if 'install_pkgs' in steps:
         # these are the package managers we'll be running e.g. brew, pip, etc
-        installers = user_prefs['pkg_managers'].get('enabled', [])
+        installers = user_prefs['package'].get('managers', [])
         # process additional package lists, if any, such as "gaming" packages
-        pkg_groups = user_prefs['pkg_managers'].get('pkg_groups', [])
+        pkg_groups = user_prefs['package'].get('groups', [])
         run_pkg_mngrs(installers, set(pkg_groups))
 
     if 'firewall_setup' in steps:
-        if remote_host:
-            configure_firewall(remote_host)
+        configure_firewall(remote_host)
 
     if 'vim_setup' in steps:
         # this installs the vim plugins
