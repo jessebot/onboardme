@@ -1,33 +1,61 @@
 ---
-# # This is the config for onboardme.
-# # If this files exists as: ~/.config/onboardme/config.yml
-# # then its loaded instead of the default config
+# ______________________________________________________________ #
+#         Config file for the onboardme cli command.             #
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+#   - If this files exists as: ~/.config/onboardme/config.yml    #
+#     then its loaded instead of the default config              #
+# -------------------------------------------------------------- #
 
 
 dot_files:
   # delete any existing dot files we see in the home dir that conflict
   delete_existing: false
-  # Your personal git URL for your dot files, defaults to jessebot/dot_files
+  # personal git repo URL for your dot files, defaults to jessebot/dot_files
   git_clone_url: "https://github.com/jessebot/dot_files"
+  # the branch to use for the git repo above, defaults to main
+  git_branch: "main"
 
 
-# this is the basic cli config, for the specific packages installed by each
-# package maanger, check in packages.yml. To override the defaults, create a
+# this is the basic package config. to edit the specific packages, edit
 # ~/.config/onboardme/packages.yml
-pkg_managers:
+package:
   # Remove any of the below pkg managers to only run the remaining pkg managers
-  enabled:
+  managers:
     - brew
     - pip3.10
     - snap
     - flatpak
     - apt
   # list of extra existing packages groups to install
-  pkg_groups:
+  groups:
     - default
     # uncomment these to add them as default installed package groups
     # - gaming
     # - work
+
+
+log:
+  # Full path to a file you'd like to log to. Creates file if it doesn't exist
+  file: ""
+  # what level of logs to output (debug,info, warn, error)
+  level: "INFO"
+  # don't output anything to the console, if set and log file passed in, still
+  # creates a log file
+  quiet: false
+
+
+# steps refer to a specific function in the list of functions we run
+steps:
+  # these are mac specific steps
+  Darwin:
+    - vim_setup
+    - dot_files
+    - manage_pkgs
+  # these are linux specific steps
+  Linux:
+    - vim_setup
+    - dot_files
+    - manage_pkgs
 
 
 # whether or not to configure remote access to additional hosts
@@ -41,6 +69,3 @@ remote_access:
 ### TODO: make this work
 # any URL we can curl to download a folder from
 wallpapers_download_url: ""
-
-log_level: "INFO"
-silent: false
