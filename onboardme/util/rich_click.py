@@ -95,7 +95,7 @@ class RichCommand(click.Command):
                               row_styles=["", "dim"],
                               padding=(1, 1, 0, 0))
 
-        # for param in self.get_params(ctx)[1:]:
+        # this used to be self.get_params(ctx)[1:] and I don't know why
         for param in self.get_params(ctx):
 
             if len(param.opts) == 2:
