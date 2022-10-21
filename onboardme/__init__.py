@@ -37,19 +37,17 @@ SYSINFO = os.uname()
 OS = f"{SYSINFO.sysname}_{SYSINFO.machine}"
 
 
-def setup_dot_files(OS='Linux', delete=False, dot_files_git_url="",
+def setup_dot_files(OS='Linux', delete=False,
+                    dot_files_git_url="https://github.com/jessebot/dot_files",
                     branch="main"):
     """
     note on how we're doing things, seperate dot files repo:
     https://probablerobot.net/2021/05/keeping-'live'-dotfiles-in-a-git-repo/
     """
-    if not dot_files_git_url:
-        dot_files_git_url = "https://github.com/jessebot/dot_files"
-
     git_dir = os.path.join(HOME_DIR, '.git_dot_files')
     Path(git_dir).mkdir(exist_ok=True)
 
-    cmds = [f'git --git-dir="{git_dir}" --work-tree="{HOME_DIR}" init',
+    cmds = [f'git --git-dir={git_dir} --work-tree={HOME_DIR} init',
             'git config status.showUntrackedFiles no',
             f'git remote add origin {dot_files_git_url}',
             'git fetch']
@@ -542,7 +540,7 @@ def process_user_config(delete_existing, git_clone_url, pkg_managers,
 @option('--remote_host', '-r', metavar="IP_ADDRESS", multiple=True,
         help=HELP['remote_host'])
 @option('--steps', '-s', metavar='STEP', multiple=True,
-        type=Choice(OPTS['steps']), help=HELP['steps'])
+        type=Choice(OPTS['steps'][SYSINFO.sysname]), help=HELP['steps'])
 @option('--quiet', '-q', is_flag=True, help=HELP['quiet'])
 @option('--web_browser', '-w', is_flag=True, help=HELP['web_browser'])
 def main(clone_url: str = "",
