@@ -1,0 +1,12 @@
+# python 0.13.9
+
+🎈 We have a pypi package now! :D onboardme wasn't taken! You can do a `pip3.10 install onboardme` now 💙
+
+- there is a solid `config.yml` that is used for both user config and core config. You can install it into `~/onboardme/config.yml`
+- ripped out most of the untested or not working code around browsers, cron, and email for now.
+- new options:
+  - `--overwrite`  -  allows you to overwrite existing files in your home directory that may conflict with the dot files in the remote git repo that's been configured
+  - `--git_url`    -  url of git repo to use for dot files
+  - `--git_branch` -  branch of the configured git repo to use
+  - `--log_level`  - set the logging level for the script
+  - `--log_file`   - log to a file to check the results later
