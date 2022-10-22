@@ -9,8 +9,7 @@ def readme():
         return f.read()
 
 
-lic_class = ('License :: OSI Approved :: GNU Affero General Public License v3'
-             'or later (AGPLv3+)')
+lic_class = ('License :: OSI Approved :: GNU Affero General Public License v3')
 
 setup(name='onboardme',
       description='An onboarding tool to install dot files and packages',
@@ -21,7 +20,7 @@ setup(name='onboardme',
                    'Operating System :: MacOS :: MacOS X',
                    'Operating System :: POSIX :: Linux',
                    'Intended Audience :: End Users/Desktop',
-                   'TOPIC :: SYSTEM :: INSTALLATION/SETUP',
+                   'SYSTEM :: INSTALLATION/SETUP',
                    lic_class],
       python_requires='>3.10',
       keywords='onboardme, onboarding, desktop-setup, setuptools, development',
