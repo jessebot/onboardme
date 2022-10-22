@@ -22,7 +22,7 @@ def help_text():
         ' Defaults to [meta]warn[/meta].',
 
         'log_file':
-        'Full path to a file to log to. Only logs to file if set.',
+        'Full path to a file to log to, if set.',
 
         'steps':
         'beta. [b]Only[b] run [meta]STEP[/] in the script.\nSteps: dot_files, '
