@@ -15,17 +15,16 @@ TLDR; your repo setup should be this:
 
 ├──  .gitignore
 │
-├──  bin
-│   └──  lsimg
-│
 ├──  config.yaml
 │
-├──  lsimg
+├──  onboardme
 │   └──  __init__.py
 │
 ├──  MANIFEST.in
 │
 ├──  README.md
+│
+├──  setup.cfg
 │
 └──  setup.py
 ```
@@ -53,50 +52,69 @@ lsimg.main()
 ```
 
 ### `__init__.py`
-file that has your actual script.
+File that has your actual script.
+
+### `setup.cfg`
+toml file for you to define various data about your project, but this is
+where I put the license info. additional license info.
+
+```toml
+[metadata]
+# This includes the license file(s) in the wheel.
+# https://wheel.readthedocs.io/en/stable/user_guide.html#including-license-files-in-the-generated-wheel-file
+license_files = LICENSE.txt
+```
 
 ### `setup.py`
 
 You need this for creating packages. Here's my basic `setup.py` for a package
- called `lsimg` that I wrote. You can see that the only function is the readme
+ called `onboardme` that I wrote. You can see that the only function is the readme
  function, which adds the readme as the longer description for pypi usage.
 
 Other things to note that many forget are `keywords` and `classifiers`, which
  help other users find your package.
 
 ```python
-from setuptools import setup
-
 def readme():
     """
-    this adds the README.md file in this repo as the long description
-    for the package
+    grab and return contents of README.md for use in long description
     """
     with open('README.md') as f:
         return f.read()
 
-setup(name='lsimg',
-      version='0.1.2',
-      description='a cli tool written in python to ls images in a directory',
+
+lic_class = ('License :: OSI Approved :: GNU Affero General Public License v3'
+             'or later (AGPLv3+)')
+
+setup(name='onboardme',
+      description='An onboarding tool to install dot files and packages',
       long_description=readme(),
-      classifiers=[
-          'Development Status :: 3 - Alpha'
-          'Programming Language :: Python :: 3.10'
-          'Topic :: Image Processing',
-      ],
-      keywords='lsimg img image ls',
-      url='http://github.com/jessebot/lsimg',
-      author='Jesse Hitch',
+      long_description_content_type='text/markdown',
+      classifiers=['Development Status :: 3 - Alpha',
+                   'Programming Language :: Python :: 3.10',
+                   'Operating System :: MacOS :: MacOS X',
+                   'Operating System :: POSIX :: Linux',
+                   'Intended Audience :: End Users/Desktop',
+                   'TOPIC :: SYSTEM :: INSTALLATION/SETUP',
+                   lic_class],
+      python_requires='>3.10',
+      keywords='onboardme, onboarding, desktop-setup, setuptools, development',
+      version='0.13.7',
+      project_urls={
+          'Documentation': 'https://jessebot.github.io/onboardme/onboardme',
+          'Source': 'http://github.com/jessebot/onboardme',
+          'Tracker': 'http://github.com/jessebot/onboardme/issues'},
+      author='jessebot',
       author_email='jessebot@linux.com',
       license='GPL version 3 or later',
-      packages=['lsimg'],
-      install_requires=[
-          'click',
-          'PyYAML',
-          'rich',
-          'wget',
-      ],
-      scripts=['bin/lsimg'],
+      packages=['onboardme'],
+      install_requires=['wget', 'GitPython', 'PyYAML', 'rich', 'click'],
+      data_files=[('config', ['config/config.yml',
+                              'config/packages.yml',
+                              'config/brew/Brewfile_Darwin',
+                              'config/brew/Brewfile_Linux',
+                              'config/brew/Brewfile_devops'])],
+      entry_points={'console_scripts': ['onboardme = onboardme:main']},
       include_package_data=True,
       zip_safe=False)
 ```
@@ -108,17 +126,23 @@ my default `MANIFEST.in` file:
 
 ```in
 include README.md
-include config.yaml
+include LICENSE.txt
 ```
 
 You don't have to include config.yaml. I just typically have a default config
 file and it's always yaml.
 
+
 ## packaging command line scripts
-Just make sure in your call to `setup()` in `setup.py` that you supply the
-keyword argument `scripts=['bin/CLI_NAME']`, where `CLI_NAME` is the name of
-the command you want users to run.
-Then you structure your things like:
+
+That's where this bit from the above `setup.py` comes in:
+
+```python
+entry_points={'console_scripts': ['onboardme = onboardme:main']},
+```
+
+It translates to: Create a command called `onboardme` that calls the `main`
+function of the `onboardme` package.
 
 
 # Other helpful guides
@@ -128,3 +152,4 @@ A lot of things I learned and mention here are from reading that.
 
 I also read [this pypa guide](https://github.com/pypa/sampleproject) recently
 and it has comments in each file to explain what's going on.
+from setuptools import setup
