@@ -80,6 +80,7 @@ pip3.10:
     default:
       # this is for python development
       - build
+      - twine
       - autoimport
       # this is all powerline
       - powerline-status
