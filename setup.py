@@ -9,30 +9,37 @@ def readme():
         return f.read()
 
 
+lic_class = ('License :: OSI Approved :: GNU Affero General Public License v3'
+             'or later (AGPLv3+)')
+
 setup(name='onboardme',
       description='An onboarding tool to install dot files and packages',
       long_description=readme(),
-      classifiers=[
-          'Development Status :: 3 - Alpha'
-          'Programming Language :: Python :: 3.10'
-          'Operating System :: MacOS :: MacOS X',
-          'Environment :: Console',
-          'Intended Audience :: End Users/Desktop',
-          'License :: OSI Approved :: GPL3'
-      ],
-      keywords='onboardme onboarding desktop-setup',
-      version='0.13.6',
-      url='http://github.com/jessebot/onboardme',
-      author='Jesse Hitch',
+      long_description_content_type='text/markdown',
+      classifiers=['Development Status :: 3 - Alpha',
+                   'Programming Language :: Python :: 3.10',
+                   'Operating System :: MacOS :: MacOS X',
+                   'Operating System :: POSIX :: Linux',
+                   'Intended Audience :: End Users/Desktop',
+                   'TOPIC :: SYSTEM :: INSTALLATION/SETUP',
+                   lic_class],
+      python_requires='>3.10',
+      keywords='onboardme, onboarding, desktop-setup, setuptools, development',
+      version='0.13.7',
+      project_urls={
+          'Documentation': 'https://jessebot.github.io/onboardme/onboardme',
+          'Source': 'http://github.com/jessebot/onboardme',
+          'Tracker': 'http://github.com/jessebot/onboardme/issues'},
+      author='jessebot',
       author_email='jessebot@linux.com',
       license='GPL version 3 or later',
       packages=['onboardme'],
       install_requires=['wget', 'GitPython', 'PyYAML', 'rich', 'click'],
-      scripts=['bin/onboardme'],
       data_files=[('config', ['config/config.yml',
                               'config/packages.yml',
                               'config/brew/Brewfile_Darwin',
                               'config/brew/Brewfile_Linux',
                               'config/brew/Brewfile_devops'])],
+      entry_points={'console_scripts': ['onboardme = onboardme:main']},
       include_package_data=True,
       zip_safe=False)
