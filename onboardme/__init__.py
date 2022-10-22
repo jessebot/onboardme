@@ -11,16 +11,18 @@ from random import randint
 # rich helps pretty print everything
 from rich import print
 from rich.console import Console
-from rich.prompt import Confirm
 from rich.table import Table
 from rich.logging import RichHandler
 import shutil
-from .util.subproc import subproc
-from .util.rich_click import RichCommand, help_text
-from .util.console_logging import (print_panel, print_header, print_msg,
-                                   print_git_file_table)
 import yaml
 import wget
+# custom libs
+from .util.env_config import (confirm_os_supported, process_steps,
+                              process_user_config)
+from .util.console_logging import (print_panel, print_header, print_msg,
+                                   print_git_file_table)
+from .util.subproc import subproc
+from .util.rich_click import RichCommand, help_text
 
 
 PWD = path.dirname(__file__)
@@ -150,23 +152,23 @@ def brew_install_upgrade(OS="Darwin", pkg_groups=['default']):
     return
 
 
-def run_pkg_mngrs(pkg_mngrs=['brew', 'pip3.10', 'apt', 'snap', 'flatpak'],
-                  pkg_groups=['default']):
+def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
     """
-    Installs packages with apt, brew, snap, flatpak. If no pkg_mngrs list
-    passed in, only use brew for mac. Takes optional variable, pkg_group_lists
-    to install optional packages.
+    Installs packages with apt, brew, pip3.10, snap, flatpak. If no pkg_mngrs
+    list passed in, only use brew/pip3.10 for mac. Takes optional variable,
+    pkg_group_lists to install optional packages.
     """
     # brew has a special flow with brew files
     if 'brew' in pkg_mngrs:
         brew_install_upgrade(SYSINFO.sysname, pkg_groups)
         pkg_mngrs.remove('brew')
 
-    if 'Darwin' in OS:
-        if 'pip3.10' not in pkg_mngrs:
-            return
-        else:
+    # if macOS, only do brew and pip3.10
+    if "Darwin" in OS:
+        if 'pip3.10' in pkg_mngrs:
             pkg_mngrs = ['pip3.10']
+        else:
+            return
 
     with open(f'{PWD}/config/packages.yml', 'r') as yaml_file:
         pkg_mngrs_list = yaml.safe_load(yaml_file)
@@ -399,38 +401,6 @@ def setup_nix_groups():
                   'you may still need to [b]reboot.')
 
 
-def parse_local_configs():
-    """
-    parse the local config yaml file if it exists
-    """
-    local_config_dir = f'{HOME_DIR}/.config/onboardme/config.yaml'
-    if path.exists(local_config_dir):
-        with open(local_config_dir, 'r') as yaml_file:
-            config = yaml.safe_load(yaml_file)
-    return config
-
-
-def confirm_os_supported():
-    """
-    verify we're on a supported OS and ask to quit if not.
-    """
-    if SYSINFO.sysname != 'Linux' and SYSINFO.sysname != 'Darwin':
-        print_panel(f"[magenta]{SYSINFO.sysname}[normal] isn't officially "
-                    "supported. We haven't tested anything outside of Debian,"
-                    "Ubuntu, and macOS.", "⚠️  [yellow]WARNING")
-
-        quit_y = Confirm.ask("You're in uncharted waters. Do you wanna quit?")
-        if quit_y:
-            print_panel("That's probably safer. Have a safe day, friend.",
-                        "Safety Award ☆")
-            quit()
-        else:
-            print_panel("[red]Yeehaw, I guess.", "¯\\_(ツ)_/¯")
-    else:
-        print_panel("Operating System and Architechure [green]supported ♥",
-                    "[cornflower_blue]Compatibility Check")
-
-
 def setup_cronjobs():
     """
     setup any important cronjobs/alarms. Currently just adds nightly updates
@@ -470,103 +440,6 @@ def print_manual_steps():
 
     print_panel(table, '[green]♥ ˖⁺‧Success‧⁺˖ ♥')
     return True
-
-
-def process_steps(steps=[], firewall=False, browser=False):
-    """
-    process which steps to run for which OS, which steps the user passed in,
-    and then make sure dependent steps are always run.
-
-    Returns a list of str type steps to run.
-    """
-    if steps:
-        steps = list(steps)
-        # setting up vim is useless if we don't have a .vimrc
-        if 'vim_setup' in steps and 'dot_files' not in steps:
-            steps.append('dot_files')
-    else:
-        steps = ['dot_files', 'manage_pkgs', 'vim_setup']
-
-        # this is broken
-        # if 'capslock_to_control' in steps:
-        #     map_caps_to_control()
-
-        # fonts are brew installed on macOS, docker group only applies to linux
-        # currently don't have a great firewall on macOS outside of lulu
-        if 'Linux' in OS:
-            steps.extend(['font_installation', 'groups_setup'])
-            if firewall:
-                steps.append('firewall_setup')
-            if browser:
-                steps.append('browser_setup')
-    return steps
-
-
-def determine_logging_level(logging_string=""):
-    """
-    returns logging object
-    """
-    log_level = logging_string.upper()
-
-    if log_level == "DEBUG":
-        return logging.DEBUG
-    elif log_level == "INFO":
-        return logging.INFO
-    elif log_level == "WARN":
-        return logging.WARN
-    elif log_level == "ERROR":
-        return logging.ERROR
-    else:
-        raise Exception(f"Invalid log level: {logging_string}")
-
-
-def process_user_config(delete_existing=False, git_url="", git_branch="",
-                        pkg_managers=[], pkg_groups=[], log_level="",
-                        log_file="", quiet=False, remote_host="", steps=[]):
-    """
-    process the config in ~/.config/onboardme/config.yml if it exists
-    and return variables as a dict for use in script, else return default opts
-    """
-    if not log_level:
-        log_level = "warn"
-    level = determine_logging_level(log_level)
-
-    cli_dict = {'package': {'managers': pkg_managers, 'groups': pkg_groups},
-                'log': {'file': log_file, 'level': level, 'quiet': quiet},
-                'remote_host': remote_host,
-                'steps': steps,
-                'dot_files': {'delete_existing': delete_existing,
-                              'git_url': git_url,
-                              'git_branch': git_branch}}
-
-    # cli options are more important, but if none passed in, we check .config
-    usr_cfg_file = path.join(HOME_DIR, '.config/onboardme/config.yml')
-
-    if not path.exists(usr_cfg_file):
-        if not git_url:
-            git_url = "https://github.com/jessebot/dot_files.git"
-            cli_dict['dot_files']['git_url'] = git_url
-            cli_dict['dot_files']['git_branch'] = "main"
-        return cli_dict
-    else:
-        with open(usr_cfg_file, 'r') as yaml_file:
-            user_prefs = yaml.safe_load(yaml_file)
-
-        for key in cli_dict.keys():
-            if key not in user_prefs.keys():
-                user_prefs[key] = cli_dict[key]
-            elif cli_dict[key]:
-                user_prefs[key] = cli_dict[key]
-
-            # make sure the dict is not nested...
-            if type(user_prefs[key]) == dict:
-                for nested_key in user_prefs[key].keys():
-                    if nested_key not in user_prefs[key].keys():
-                        user_prefs[key][nested_key] = cli_dict[key][nested_key]
-                    elif cli_dict[key][nested_key]:
-                        user_prefs[key][nested_key] = cli_dict[key][nested_key]
-
-        return user_prefs
 
 
 # Click is so ugly, and I'm sorry we're using it for cli parameters here, but
@@ -611,9 +484,10 @@ def main(delete_existing: bool = False,
     confirm_os_supported()
 
     # then process any local user config files in ~/.config/onboardme
-    user_prefs = process_user_config(delete_existing, git_url, git_branch,
-                                     pkg_managers, pkg_groups, log_level,
-                                     log_file, quiet, remote_host, steps)
+    user_prefs = process_user_config(OPTS, delete_existing, git_url,
+                                     git_branch, pkg_managers, pkg_groups,
+                                     log_level, log_file, quiet, remote_host,
+                                     steps)
 
     # for console AND file logging
     log_file = user_prefs['log']['file']
@@ -642,12 +516,9 @@ def main(delete_existing: bool = False,
     if 'font_installation' in steps:
         install_fonts()
 
-    if 'install_pkgs' in steps:
-        # these are the package managers we'll be running e.g. brew, pip, etc
-        installers = user_prefs['package'].get('managers', [])
-        # process additional package lists, if any, such as "gaming" packages
-        pkg_groups = user_prefs['package'].get('groups', [])
-        run_pkg_mngrs(installers, set(pkg_groups))
+    if 'manage_pkgs' in steps:
+        pkg_groups = user_prefs['package'].get('groups')
+        run_pkg_mngrs(user_prefs['package'].get('managers'), pkg_groups)
 
     if 'firewall_setup' in steps:
         configure_firewall(remote_host)
