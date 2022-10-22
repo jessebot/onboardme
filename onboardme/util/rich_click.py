@@ -26,27 +26,27 @@ def help_text():
 
         'steps':
         'unstable. [b]Only[b] run [meta]STEP[/] in the script.\nSteps: '
-        'dot_files, manage_pkgs, vim_setup.\nExample: [switch]-o[/] [meta]'
-        'dot_files[/] [switch]-o[/] [meta]manage_pkgs',
+        'dot_files, manage_pkgs, vim_setup.\nExample: [switch]-s[/] [meta]'
+        'dot_files[/] [switch]-s[/] [meta]manage_pkgs',
 
         'git_url':
         f'A git repo URL for your dot files. Default: {dot_file_url}',
 
         'git_branch':
-        'Branch to use for the git repo url we use. Default: main.',
+        'Branch to use for the git repo url we use. Default: main',
 
         'overwrite':
-        '[b]Overwrites existing dot files with files from configured '
+        '[b]Overwrites[/b] existing dot files with files from configured '
         '[option]--git_url[/option] repo.',
 
         'pkg_managers':
-        'Specific [meta]PKG_MANAGER[/] to run. Defaults to only run [meta]brew'
-        '[/], [meta]pip3.10[/meta], & ([i]if linux[/]) [meta]apt, snap, '
-        'flatpak[/]. Accepts multiple package managers.\nEx: [switch]-p[/] '
-        '[meta]brew[/] [switch]-p[/] [meta]apt',
+        'Specific [meta]PKG_MANAGER[/] to run. Default: [meta]brew[/], [meta]'
+        'pip3.10[/meta], & ([i]on linux[/]) [meta]apt, snap, flatpak[/]. '
+        'Accepts multiple.\nEx: [switch]-p[/] [meta]brew[/] [switch]-p[/] '
+        '[meta]apt',
 
         'pkg_groups':
-        'Extra package groups to install. Accepts multiple groups.\nEx: '
+        'Extra package groups to install. Accepts multiple.\nEx: '
         '[switch]-e[/] [meta]devops[/] [switch]-e[/switch] [meta]gaming',
 
         'remote_host':
