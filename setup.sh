@@ -146,24 +146,14 @@ else
     echo -e "\033[92mPip3.10 already installed :3 \033[00m"
 fi
 
-# I always put my projects in a directory called repos, idk why I can't stop...
-echo -e "--------------------- \033[94mCreating directories and cloning repo...\033[00m ---------------------"
-mkdir -p ~/repos
-git clone https://github.com/jessebot/onboardme.git ~/repos/onboardme
 
-# we do this for Debian, to download custom fonts during onboardme
-if [[ "$OS" == *"Linux"* ]]; then
-    mkdir -p ~/.local/share/fonts
-fi
+echo -e "--------------------------\033[94m Installing OnBoardMe :D \033[00m -------------------------"
 
-# make sure we have wget and pyyaml
-echo "Now installing python reqs..."
-# pip3.10 install -e .
-pip3.10 install -r ~/repos/onboardme/requirements.txt
+pip3.10 install onboardme 
 pip_install_return_code=$?
+
 if [ $pip_install_return_code -ne 0 ]; then
-    echo "Something went wrong with the installation of the python dependencies with pip3."
-    echo "You cannot run onboardme in this state :("
+    echo "Something went wrong with the installation of onboardme. :("
 else
     echo ""
     echo -e "------------------------------ \033[92mSuccess~! ^O^\033[00m -----------------------------------"
@@ -175,6 +165,6 @@ else
         echo -e "\033[92mPlease run:\033[00m source .bash_profile"
     fi
     echo -e "✨ Then you can try running the following:"
-    echo "~/repos/onboardme/onboardme --help"
+    echo "onboardme --help"
     echo ""
 fi
