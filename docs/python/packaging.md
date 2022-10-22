@@ -8,7 +8,7 @@ permalink: /python/packaging
 ---
 
 # How to package your Python programs
-TLDR; your repo setup should be this:
+Your repo setup should be this:
 
 ```sh
 # This is a tree of my repo for lsimg, a python program I wrote
@@ -119,6 +119,9 @@ setup(name='onboardme',
       zip_safe=False)
 ```
 
+Quick note on versioning (the `setup(version='')` bit above): Please use
+[semantic versioning](https://semver.org/).
+
 ### `MANIFEST.in` - For Including non-python files
 This file lets you specify files that aren't python files for your package,
 otherwise only files ending in `.py` will be included in your package. Here's
@@ -144,6 +147,33 @@ entry_points={'console_scripts': ['onboardme = onboardme:main']},
 It translates to: Create a command called `onboardme` that calls the `main`
 function of the `onboardme` package.
 
+## Testing the package
+
+Build locally first for general testing:
+
+```bash
+# this will install locally and then you can test your package and cli tools
+pip3.10 install -e .
+```
+
+Then do the more important build for files to uplaod to pypi:
+
+```bash
+# this generates a wheel file, the thing you want to upload
+python -m build --wheel
+
+# this checks to make sure it's probably built correctly
+twine check dist/*
+```
+
+Assuming the above all worked, then you can finally upload to pypi (make sure you have a `.pypirc` with your token in it as described [here](https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/#create-an-account).
+
+```bash
+# this does a final check before upload and will fail if you have an incorrect classifer
+twine upload dist/*
+```
+
+_Note: if the classifers broke, you can check them against [the official page](https://pypi.org/classifiers/)._
 
 # Other helpful guides
 
