@@ -52,7 +52,9 @@ flatpak:
   packages:
     default:
       - "org.freedesktop.Platform/x86_64/21.08"
+      # youtube alternative
       - io.freetubeapp.FreeTube
+      # password manager
       - com.bitwarden.desktop
 
 snap:
@@ -63,7 +65,9 @@ snap:
   packages:
     default:
       - core
+      # rss feed reader
       - fluent-reader
+      # screen debugger/sharing tool for android
       - scrcpy
 
 # most of this is actually for powerline, my shell prompt
@@ -74,9 +78,15 @@ pip3.10:
     install: "pip3.10 install --upgrade "
   packages:
     default:
-      - netifaces
-      - dbus
+      # this is for python development
+      - build
       - autoimport
+      # this is all powerline
       - powerline-status
       - powerline-gitstatus
       - powerline-kubernetes
+      # for the internal ip address powerline shell prompt
+      - netifaces
+      # supposed to work with powerline for spotify info
+      - dbus
+      # this does some magic with imports when developing
