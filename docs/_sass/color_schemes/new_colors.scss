@@ -15,3 +15,8 @@ $feedback-color: darken($sidebar-color, 3%);
 @import "./vendor/OneDarkJekyll/syntax-one-dark-vivid";
 
 $code-background-color: #31343f;
+
+@font-face {
+  font-family: "Mononoki";
+  src: url("../fonts/mononoki-Regular-Nerd-Font-Complete.ttf");
+}
