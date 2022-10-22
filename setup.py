@@ -21,7 +21,7 @@ setup(name='onboardme',
           'License :: OSI Approved :: GPL3'
       ],
       keywords='onboardme onboarding desktop-setup',
-      version='v0.13.5',
+      version='0.13.6',
       url='http://github.com/jessebot/onboardme',
       author='Jesse Hitch',
       author_email='jessebot@linux.com',
