@@ -421,7 +421,7 @@ def print_manual_steps():
         type=Choice(OPTS['package']['managers']), help=HELP['pkg_managers'])
 @option('--pkg_groups', '-g', metavar='PKG_GROUP', multiple=True,
         type=Choice(['default', 'gaming', 'devops']), help=HELP['pkg_groups'])
-@option('--firewall', '-f', is_flag=True, multiple=True, help=HELP['firewall'])
+@option('--firewall', '-f', is_flag=True, help=HELP['firewall'])
 @option('--remote_host', '-r', metavar="IP_ADDRESS", multiple=True,
         help=HELP['remote_host'])
 def main(log_level: str = "",
@@ -467,7 +467,7 @@ def main(log_level: str = "",
     log = logging.getLogger("rich")
 
     # figure out which steps to run:
-    steps = process_steps(steps, remote_host, web_browser)
+    steps = process_steps(steps, remote_host)
 
     if 'dot_files' in steps:
         # this creates a live git repo out of your home directory

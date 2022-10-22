@@ -51,6 +51,10 @@ def help_text():
 
         'remote_host':
         'Setup SSH on a random port and add [meta]IP_ADDRESS[/] to firewall',
+
+        'firewall':
+        'setup iptables on linux only.'
+
     }
 
 
