@@ -147,9 +147,11 @@ function of the `onboardme` package.
 
 # Other helpful guides
 
-Checkout [this guide by Scott Torborg](https://python-packaging.readthedocs.io/en/latest/). 
-A lot of things I learned and mention here are from reading that.
+- This is probably the most official guide, and where you should start:
+  [packaging.python.org/.../packaging-your-project](https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/#packaging-your-project)
 
-I also read [this pypa guide](https://github.com/pypa/sampleproject) recently
-and it has comments in each file to explain what's going on.
-from setuptools import setup
+- Checkout [this guide by Scott Torborg](https://python-packaging.readthedocs.io/en/latest/). 
+  A lot of things I learned and mention here are from reading that.
+
+- I also read [this pypa guide](https://github.com/pypa/sampleproject) recently
+  and it has comments in each file to explain what's going on.
