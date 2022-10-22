@@ -37,5 +37,5 @@ Optimized for:
 [![made-with-python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)](https://www.python.org/)
 [![made-with-bash](https://img.shields.io/badge/GNU%20Bash-4EAA25?style=for-the-badge&logo=GNU%20Bash&logoColor=white)](https://www.gnu.org/software/bash/)
 
-Currently in late beta :D
-Please report 🐛 in the GitHub issues, and we will get them as we have time. You can also open a pull request, and we can review it asap :blue_heart:
+Currently in later alpha :D
+Please report 🐛 in the GitHub issues, and we will get them as we have time. You can also open a pull request, and we can review it asap! :blue_heart: We love contributors!
