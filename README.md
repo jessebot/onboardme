@@ -22,7 +22,7 @@ Check out [smol k8s lab](https://github.com/jessebot/smol_k8s_lab).
 You can find the bulk of my notes under the `docs/` directory in this repo, but I've also recently setup a justthedocs page [here](https://jessebot.github.io/onboardme/).
 
 ### Special Thanks
-Thank you to @cloudymax for all their direct contributions for gaming on Linux, virtualization, rc file edits, and the hyper terminal configs. Also great engineer to rubberduck with generally. Couldn't have polished a lot of this without their patience during my late night ramblings about my 8 different package managers and why utf-8 isn't called utf-14 :3 :blue_heart:
+Thank you to [@cloudymax](https://github.com/cloudymax) for all their direct contributions for gaming on Linux, virtualization, rc file edits, and the hyper terminal configs. Also great engineer to rubberduck with generally. Couldn't have polished a lot of this without their patience during my late night ramblings about my 8 different package managers and why utf-8 isn't called utf-14 :3 :blue_heart:
 
 ### Status
 Made for the following OS (lastest stable):
