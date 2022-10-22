@@ -1,11 +1,10 @@
 #!/usr/bin/env python3.10
 # Onboarding script for macOS and Debian by jessebot@Linux.com
 from click import option, command, Choice
-from configparser import ConfigParser
 import fileinput
 from git import Repo, RemoteProgress
 import logging
-from os import getenv, getlogin, listdir, path, uname
+from os import getenv, getlogin, path, uname
 from pathlib import Path
 from random import randint
 # rich helps pretty print everything
@@ -13,7 +12,6 @@ from rich import print
 from rich.console import Console
 from rich.table import Table
 from rich.logging import RichHandler
-import shutil
 import yaml
 import wget
 # custom libs
@@ -39,7 +37,7 @@ SYSINFO = uname()
 OS = f"{SYSINFO.sysname}_{SYSINFO.machine}"
 
 
-def setup_dot_files(OS='Linux', delete=False,
+def setup_dot_files(OS='Linux', overwrite=False,
                     git_url="https://github.com/jessebot/dot_files.git",
                     branch="main"):
     """
@@ -84,12 +82,12 @@ def setup_dot_files(OS='Linux', delete=False,
         remote_git_files = git.ls_files("-m", "-d", HOME_DIR)
         git_action = "[b]differ[/b] from"
 
-        if delete:
+        if overwrite:
             # WARN: this command will overwrite local files with remote files
             # git reset --hard origin/{branch}
             git.reset("--hard", f"origin/{branch}")
 
-        if delete or not remote_git_files:
+        if overwrite or not remote_git_files:
             # remote files: git ls-tree --full-tree -r --name-only origin/main
             remote_git_files = git.ls_tree("--full-tree", "-r", "--name-only",
                                            "origin/main")
@@ -97,11 +95,11 @@ def setup_dot_files(OS='Linux', delete=False,
 
         print_git_file_table(remote_git_files, git_action, branch, git_url)
 
-    if not delete and "differ" in git_action:
+    if not overwrite and "differ" in git_action:
         # we only print this msg if we got the file exists error
         msg = ("To [warn]:warning: overwrite[/warn] the existing dot files in "
                f"{HOME_DIR}/ with the file(s) listed in the above table, run:"
-               "\n[green]onboardme [warn]--delete[/warn]")
+               "\n[green]onboardme [warn]--overwrite[/warn]")
         print_msg(msg)
     return
 
@@ -296,56 +294,9 @@ def vim_setup():
     return
 
 
-def configure_feeds():
-    """
-    configures feeds like freetube and RSS readers
-    """
-    # freeTube is weird, requires this name and directory to work smoothly
-    subs_db = '{PWD}/configs/feeds/freetube/subscriptions.db'
-    shutil.copy(subs_db, f'{HOME_DIR}/Downloads/subscriptions.db')
-
-
-def configure_firefox():
-    """
-    Copies over default firefox settings and addons
-    """
-    # different OS will have firefox profile info in different paths
-    if 'Linux' in OS:
-        ini_dir = f'{HOME_DIR}/.mozilla/firefox/'
-    elif 'Darwin' in OS:
-        # hate apple for their capitalized directories
-        ini_dir = f'{HOME_DIR}/Library/Application Support/Firefox/'
-
-    print_header('🦊 Installing Firefox preferences and addons')
-
-    print('  Checking Firefox profiles.ini for correct profile...')
-    profile_dir = ''
-    prof_config = ConfigParser()
-    prof_config.read(ini_dir + 'profiles.ini')
-
-    sections = prof_config.sections()
-    for section in sections:
-        if section.startswith('Install'):
-            profile_dir = ini_dir + prof_config.get(section, 'Default')
-            print('  Current firefox profile is in: ' + profile_dir)
-
-    repo_config_dir = f'{PWD}/configs/browser/firefox/extensions/'
-
-    print('\n  Configuring Firefox user preferences...')
-    usr_prefs = repo_config_dir.replace('extensions/', 'user.js')
-    shutil.copy(usr_prefs, profile_dir)
-    print('  Finished copying over firefox settings :3')
-
-    print('\n  Copying over firefox addons...')
-    for addon_xpi in listdir(repo_config_dir):
-        shutil.copy(repo_config_dir + addon_xpi,
-                    f'{profile_dir}/extensions/')
-    print('  Firefox extensions installed, but they need to be enabled.')
-
-
 def map_caps_to_control():
     """
-    Maps capslock to control. This is ugly and awful
+    Maps capslock to control. This is ugly and awful and untested
     """
     print_header("⌨️  Mapping capslock to control...")
     subproc(["setxkbmap -layout us -option ctrl:nocaps"])
@@ -354,6 +305,7 @@ def map_caps_to_control():
 def configure_ssh():
     """
     This will setup SSH for you on a semi-random port that probably isn't taken
+    Not tested recently.
     """
     # it's not a huge list right now, but it's better than just 22 or 2222
     random_port = randint(2224, 2260)
@@ -376,7 +328,7 @@ def configure_ssh():
 
 def configure_firewall(remote_hosts=[]):
     """
-    configure iptables
+    configure iptables for linux
     TODO: Add Lulu configuration!
     """
     print_header('🛡️ Configuring Firewall...')
@@ -409,10 +361,14 @@ def setup_nix_groups():
 
 def setup_cronjobs():
     """
-    setup any important cronjobs/alarms. Currently just adds nightly updates
+    setup any important cronjobs/alarms.
+    Currently just adds nightly updates and reminders to take breaks
     """
     print_header("⏰ Installing new cronjobs...")
     print("\n")
+    # TODO: is there a python cron library 🤔 install .cron dir? (is there a
+    # standard in where cronjobs live for users [preferably in the home dir?)
+    # that works on both macos and debian?
 
 
 def print_manual_steps():
@@ -452,7 +408,6 @@ def print_manual_steps():
 # this allows us to use rich.click for pretty prettying the help interface
 # each of these is an option in the cli and variable we use later on
 @command(cls=RichCommand)
-@option('--delete_existing', '-d', is_flag=True, help=HELP['delete_existing'])
 @option('--log_level', '-l', metavar='LOGLEVEL', help=HELP['log_level'],
         type=Choice(['debug', 'info', 'warn', 'error']))
 @option('--log_file', '-f', metavar='LOGFILE', help=HELP['log_file'])
@@ -464,11 +419,12 @@ def print_manual_steps():
         help=HELP['remote_host'])
 @option('--steps', '-s', metavar='STEP', multiple=True,
         type=Choice(OPTS['steps'][SYSINFO.sysname]), help=HELP['steps'])
+@option('--overwrite', '-o', is_flag=True, help=HELP['overwrite'])
 @option('--quiet', '-q', is_flag=True, help=HELP['quiet'])
 @option('--git_url', '-u', metavar='URL', help=HELP['git_url'])
 @option('--git_branch', '-b', metavar='BRANCH', help=HELP['git_branch'])
 @option('--web_browser', '-w', is_flag=True, help=HELP['web_browser'])
-def main(delete_existing: bool = False,
+def main(overwrite: bool = False,
          log_level: str = "",
          log_file: str = "",
          pkg_managers: str = "",
@@ -490,7 +446,7 @@ def main(delete_existing: bool = False,
     confirm_os_supported()
 
     # then process any local user config files in ~/.config/onboardme
-    user_prefs = process_user_config(OPTS, delete_existing, git_url,
+    user_prefs = process_user_config(OPTS, overwrite, git_url,
                                      git_branch, pkg_managers, pkg_groups,
                                      log_level, log_file, quiet, remote_host,
                                      steps)
@@ -516,7 +472,7 @@ def main(delete_existing: bool = False,
     if 'dot_files' in steps:
         # this creates a live git repo out of your home directory
         df_prefs = user_prefs['dot_files']
-        setup_dot_files(OS, df_prefs['delete_existing'], df_prefs['git_url'],
+        setup_dot_files(OS, df_prefs['overwrite'], df_prefs['git_url'],
                         df_prefs['git_branch'])
 
     if 'font_installation' in steps:

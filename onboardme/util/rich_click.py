@@ -14,20 +14,30 @@ def help_text():
     """
     dot_file_url = '[meta]https://github.com/jessebot/dot_files[/meta]'
     return {
-        'delete_existing':
-        'Deletes existing rc files before creating hardlinks.',
-
         'log_level':
-        'Logging level to use with the script (debug, info, warn, error).'
-        ' Defaults to [meta]warn[/meta].',
+        'Logging level to use with the script (DEBUG, INFO, WARN, ERROR).'
+        ' Default: [meta]WARN[/meta].',
 
         'log_file':
         'Full path to a file to log to, if set.',
 
+        'quiet':
+        "unstable. Don't output to stdout. Logging to file will still work.",
+
         'steps':
-        'beta. [b]Only[b] run [meta]STEP[/] in the script.\nSteps: dot_files, '
-        'manage_pkgs, vim_setup.\nExample: [switch]-o[/] [meta]dot_files[/] '
-        '[switch]-o[/] [meta]manage_pkgs',
+        'unstable. [b]Only[b] run [meta]STEP[/] in the script.\nSteps: '
+        'dot_files, manage_pkgs, vim_setup.\nExample: [switch]-o[/] [meta]'
+        'dot_files[/] [switch]-o[/] [meta]manage_pkgs',
+
+        'git_url':
+        f'A git repo URL for your dot files. Default: {dot_file_url}',
+
+        'git_branch':
+        'Branch to use for the git repo url we use. Default: main.',
+
+        'overwrite':
+        '[b]Overwrites existing dot files with files from configured '
+        '[option]--git_url[/option] repo.',
 
         'pkg_managers':
         'Specific [meta]PKG_MANAGER[/] to run. Defaults to only run [meta]brew'
@@ -41,21 +51,6 @@ def help_text():
 
         'remote_host':
         'Setup SSH on a random port and add [meta]IP_ADDRESS[/] to firewall',
-
-        'ssh':
-        'beta. Setup SSH on a random port and add it to firewall.',
-
-        'quiet':
-        "beta. Don't output to stdout. Logging to file will still work.",
-
-        'git_url':
-        f'Personal git URL for your dot files. Default: {dot_file_url}',
-
-        'git_branch':
-        'Branch to use with your for the git repo we use. Default: main.',
-
-        'web_browser':
-        'beta. Opt into Firefox configuruation.'
     }
 
 
@@ -72,14 +67,14 @@ class RichCommand(click.Command):
         class OptionHighlighter(RegexHighlighter):
             highlights = [r"(?P<switch>\-\w)",
                           r"(?P<option>\-\-[\w\-]+)",
-                          r"(?P<beta>[b][e][t][a])"]
+                          r"(?P<unstable>[b][e][t][a])"]
 
         highlighter = OptionHighlighter()
 
         console = Console(theme=Theme({"option": "cornflower_blue",
                                        "switch": "deep_sky_blue1",
                                        "meta": "light_steel_blue",
-                                       "beta": "italic cyan"}),
+                                       "unstable": "italic cyan"}),
                           highlighter=highlighter)
 
         title = "☁️  [cornflower_blue]OnBoard[i]Me[/] 💻\n"

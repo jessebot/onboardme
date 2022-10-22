@@ -8,12 +8,15 @@
 
 
 dot_files:
-  # delete any existing dot files we see in the home dir that conflict
-  delete_existing: false
   # personal git repo URL for your dot files, defaults to jessebot/dot_files
   git_url: "https://github.com/jessebot/dot_files.git"
   # the branch to use for the git repo above, defaults to main
   git_branch: "main"
+  # !CAREFUL: runs a `git reset --hard`, which will overwite/delete files in ~
+  # that conflict with the above defined git repo url and branch.
+  # You should run the following to get the files that would be overwritten:
+  # onboardme -s dot_files
+  overwrite: false
 
 
 # this is the basic package config. to edit the specific packages, edit
