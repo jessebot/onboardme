@@ -2,7 +2,6 @@
 layout: default
 title: Python
 description: "Python tips and tricks"
-parent: Welcome
 has_children: true
 permalink: /python
 ---

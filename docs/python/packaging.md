@@ -1,10 +1,10 @@
 ---
 layout: default
-title: Python
+title: Packaging
 description: "Python tips and tricks"
-parent: Welcome
+parent: Python
 has_children: true
-permalink: /python
+permalink: /python/packaging
 ---
 
 # How to package your Python programs
