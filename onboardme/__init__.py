@@ -410,31 +410,31 @@ def print_manual_steps():
 @command(cls=RichCommand)
 @option('--log_level', '-l', metavar='LOGLEVEL', help=HELP['log_level'],
         type=Choice(['debug', 'info', 'warn', 'error']))
-@option('--log_file', '-f', metavar='LOGFILE', help=HELP['log_file'])
+@option('--log_file', '-o', metavar='LOGFILE', help=HELP['log_file'])
+@option('--quiet', '-q', is_flag=True, help=HELP['quiet'])
+@option('--steps', '-s', metavar='STEP', multiple=True,
+        type=Choice(OPTS['steps'][SYSINFO.sysname]), help=HELP['steps'])
+@option('--git_url', '-u', metavar='URL', help=HELP['git_url'])
+@option('--git_branch', '-b', metavar='BRANCH', help=HELP['git_branch'])
+@option('--overwrite', '-O', is_flag=True, help=HELP['overwrite'])
 @option('--pkg_managers', '-p', metavar='PKG_MANAGER', multiple=True,
         type=Choice(OPTS['package']['managers']), help=HELP['pkg_managers'])
 @option('--pkg_groups', '-g', metavar='PKG_GROUP', multiple=True,
         type=Choice(['default', 'gaming', 'devops']), help=HELP['pkg_groups'])
+@option('--firewall', '-f', is_flag=True, multiple=True, help=HELP['firewall'])
 @option('--remote_host', '-r', metavar="IP_ADDRESS", multiple=True,
         help=HELP['remote_host'])
-@option('--steps', '-s', metavar='STEP', multiple=True,
-        type=Choice(OPTS['steps'][SYSINFO.sysname]), help=HELP['steps'])
-@option('--overwrite', '-o', is_flag=True, help=HELP['overwrite'])
-@option('--quiet', '-q', is_flag=True, help=HELP['quiet'])
-@option('--git_url', '-u', metavar='URL', help=HELP['git_url'])
-@option('--git_branch', '-b', metavar='BRANCH', help=HELP['git_branch'])
-@option('--web_browser', '-w', is_flag=True, help=HELP['web_browser'])
-def main(overwrite: bool = False,
-         log_level: str = "",
+def main(log_level: str = "",
          log_file: str = "",
-         pkg_managers: str = "",
-         pkg_groups: str = "",
-         remote_host: str = "",
-         steps: str = "",
          quiet: bool = False,
+         steps: str = "",
          git_url: str = "",
          git_branch: str = "",
-         web_browser: bool = False):
+         overwrite: bool = False,
+         pkg_managers: str = "",
+         pkg_groups: str = "",
+         firewall: bool = False,
+         remote_host: str = ""):
     """
     Uses config in the script repo in config/packages.yml and config/config.yml
     If run with no options on Linux, it will install brew, pip3.10, apt,
@@ -448,8 +448,8 @@ def main(overwrite: bool = False,
     # then process any local user config files in ~/.config/onboardme
     user_prefs = process_user_config(OPTS, overwrite, git_url,
                                      git_branch, pkg_managers, pkg_groups,
-                                     log_level, log_file, quiet, remote_host,
-                                     steps)
+                                     log_level, log_file, quiet, firewall,
+                                     remote_host, steps)
 
     # for console AND file logging
     log_file = user_prefs['log']['file']

@@ -61,14 +61,14 @@ steps:
     - manage_pkgs
 
 
-# whether or not to configure remote access to additional hosts
-remote_access:
-  enabled: false
-  # known safe remote hosts that you expect to be able to ping and SSH into
-  hosts:
-  #  - 192.168.42.42
+# known safe remote hosts that you expect to be able to ping and SSH into
+remote_hosts: []
+  # - 192.168.42.42
+
+# setup iptable on Linux only
+firewall: false
 
 
-### TODO: make this work
+### TODO: make this work, it's a nice dream though.
 # any URL we can curl to download a folder from
 wallpapers_download_url: ""

@@ -113,8 +113,8 @@ def fill_in_defaults(defaults={}, user_config={}):
 
 def process_user_config(defaults={}, delete_existing=False, git_url="",
                         git_branch="", pkg_managers=[], pkg_groups=[],
-                        log_level="", log_file="", quiet=False, remote_host="",
-                        steps=[]):
+                        log_level="", log_file="", quiet=False, firewall=False,
+                        remote_host="", steps=[]):
     """
     process the config in ~/.config/onboardme/config.yml if it exists
     and return variables as a dict for use in script, else return default opts
@@ -124,16 +124,14 @@ def process_user_config(defaults={}, delete_existing=False, git_url="",
     level = determine_logging_level(log_level)
 
     if remote_host:
-        enabled = True
+        firewall = True
         if type(remote_host) is str:
             remote_host = [remote_host]
-    else:
-        enabled = False
 
     cli_dict = {'package': {'managers': pkg_managers, 'groups': pkg_groups},
                 'log': {'file': log_file, 'level': level, 'quiet': quiet},
-                'remote_access': {'enabled': enabled,
-                                  'hosts': remote_host},
+                'remote_hosts': remote_host,
+                'firewall': firewall,
                 'steps': steps,
                 'dot_files': {'delete_existing': delete_existing,
                               'git_url': git_url,
