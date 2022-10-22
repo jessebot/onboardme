@@ -5,11 +5,11 @@ from configparser import ConfigParser
 import fileinput
 from git import Repo, RemoteProgress
 import logging
-import os
+from os import getenv, getlogin, listdir, path, uname
 from pathlib import Path
 from random import randint
 # rich helps pretty print everything
-from rich import box, print
+from rich import print
 from rich.console import Console
 from rich.prompt import Confirm
 from rich.table import Table
@@ -17,21 +17,22 @@ from rich.logging import RichHandler
 import shutil
 from .util.subproc import subproc
 from .util.rich_click import RichCommand, help_text
-from .util.console_logging import print_panel, print_header, print_msg
+from .util.console_logging import (print_panel, print_header, print_msg,
+                                   print_git_file_table)
 import yaml
 import wget
 
 
-PWD = os.path.dirname(__file__)
+PWD = path.dirname(__file__)
 HELP = help_text()
 with open(f'{PWD}/config/config.yml', 'r') as yaml_file:
     OPTS = yaml.safe_load(yaml_file)
 
 # user env info
-HOME_DIR = os.getenv("HOME")
-USER = os.getlogin()
+HOME_DIR = getenv("HOME")
+USER = getlogin()
 # run uname to get operating system and hardware info
-SYSINFO = os.uname()
+SYSINFO = uname()
 # this will be something like Darwin_x86_64
 OS = f"{SYSINFO.sysname}_{SYSINFO.machine}"
 
@@ -43,25 +44,30 @@ def setup_dot_files(OS='Linux', delete=False,
     note on how we're doing things, seperate dot files repo:
     https://probablerobot.net/2021/05/keeping-'live'-dotfiles-in-a-git-repo/
     """
-    git_dir = os.path.join(HOME_DIR, '.git_dot_files')
-    Path(git_dir).mkdir(exist_ok=True)
     repo = Repo()
 
+    # this is to make sure the default branch is always main, no matter what
     if not repo.config_reader("global").has_section("init"):
-        repo.config_writer("global").add_section("init")
-        repo.config_writer("global").add_value("init", "defaultBranch", "main")
+        with repo.config_writer("global") as repo_cfg_writer:
+            repo_cfg_writer.add_section("init")
+            # git config --global init.defaultBranch {branch}
+            repo_cfg_writer.add_value("init", "defaultBranch", "main")
 
-    # git config --global init.defaultBranch {branch}
+    git_dir = path.join(HOME_DIR, '.git_dot_files')
+    # create ~/.git_dot_files if it does not exist
+    Path(git_dir).mkdir(exist_ok=True)
     with repo.git.custom_environment(GIT_DIR=git_dir, GIT_WORK_TREE=HOME_DIR):
-        # git --git-dir={git_dir} --work-tree={HOME_DIR} init
         git = repo.git()
+
+        # git --git-dir={git_dir} --work-tree={HOME_DIR} init
         git.init(HOME_DIR)
 
         # make sure that the correct git url is in place
-        # git remote add origin {git_url}
         try:
+            # git remote add origin {git_url}
             repo.create_remote("origin", git_url)
         except Exception as e:
+            # this is almost always because it already exists
             log.debug(e)
             pass
 
@@ -70,37 +76,31 @@ def setup_dot_files(OS='Linux', delete=False,
 
         # git fetch
         git.fetch()
+        # git reset origin/{branch}
+        git.reset(f"origin/{branch}")
+        # git ls-files -m -d ~
+        remote_git_files = git.ls_files("-m", "-d", HOME_DIR)
+        git_action = "[b]differ[/b] from"
 
         if delete:
             # WARN: this command will overwrite local files with remote files
             # git reset --hard origin/{branch}
             git.reset("--hard", f"origin/{branch}")
 
-    git_files = subproc(["git ls-tree --full-tree -r --name-only HEAD"],
-                        False, True, False, git_dir)
-    if "Not a valid object name HEAD" in git_files:
-        git_files = "Whoops, we don't have a HEAD yet. Try: [b]onboardme -d[/]"
+        if delete or not remote_git_files:
+            # remote files: git ls-tree --full-tree -r --name-only origin/main
+            remote_git_files = git.ls_tree("--full-tree", "-r", "--name-only",
+                                           "origin/main")
+            git_action = "are up to date with"
 
-    # table to print the results of all the files
-    table = Table(expand=True,
-                  box=box.MINIMAL_DOUBLE_HEAD,
-                  row_styles=["", "dim"],
-                  border_style="dim",
-                  header_style="cornflower_blue",
-                  title_style="light_steel_blue")
-    table.add_column("Remote Dot Files")
+        print_git_file_table(remote_git_files, git_action, branch, git_url)
 
-    for dot_file in git_files.rstrip().split('\n'):
-        table.add_row(f"♥ [green]{dot_file}")
-
-    print_panel(table, "Check if dot files are up to date ", "left",
-                "light_steel_blue")
-
-    if not delete:
+    if not delete and "differ" in git_action:
         # we only print this msg if we got the file exists error
-        print_msg("If you want to [yellow]override[/yellow] the existing file"
-                  "(s), rerun script with the [b]--delete[/b] flag.")
-
+        msg = ("To [warn]:warning: overwrite[/warn] the existing dot files in "
+               f"{HOME_DIR}/ with the file(s) listed in the above table, run:"
+               "\n[green]onboardme [warn]--delete[/warn]")
+        print_msg(msg)
     return
 
 
@@ -124,9 +124,9 @@ def brew_install_upgrade(OS="Darwin", pkg_groups=['default']):
     pkg_groups.remove('default')
 
     # install os specific or package group specific brew stuff
-    brewfile = os.path.join(PWD, 'config/brew/Brewfile_')
+    brewfile = path.join(PWD, 'config/brew/Brewfile_')
     # sometimes there isn't an OS specific brewfile, but there always is 4 mac
-    os_brewfile = os.path.exists(brewfile + OS)
+    os_brewfile = path.exists(brewfile + OS)
     if os_brewfile or pkg_groups:
         install_cmd += f" --file={brewfile}"
 
@@ -216,12 +216,12 @@ def install_fonts():
         fonts_dir = f'{HOME_DIR}/repos/nerd-fonts'
 
         # do a shallow clone of the repo
-        if not os.path.exists(fonts_dir):
+        if not path.exists(fonts_dir):
             # log.debug('Nerdfonts require some setup on Linux...')
             bitmap_conf = '/etc/fonts/conf.d/70-no-bitmaps.conf'
             # log.debug(f'Going to remove {bitmap_conf} and link a yes map...')
             # we do all of this with subprocess because I want the sudo prompt
-            if os.path.exists(bitmap_conf):
+            if path.exists(bitmap_conf):
                 subproc([f'sudo rm {bitmap_conf}'], False, True, False)
 
             subproc(['sudo ln -s /etc/fonts/conf.avail/70-yes-bitmaps.conf ' +
@@ -264,13 +264,13 @@ def vim_setup():
 
     # trick to not run youcompleteme init every single time
     init_ycm = False
-    if not os.path.exists(f'{HOME_DIR}/.vim/plugged/YouCompleteMe/install.py'):
+    if not path.exists(f'{HOME_DIR}/.vim/plugged/YouCompleteMe/install.py'):
         init_ycm = True
 
     # this is for installing vim-plug
     autoload_dir = f'{HOME_DIR}/.vim/autoload'
     url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-    if not os.path.exists(autoload_dir):
+    if not path.exists(autoload_dir):
         print_msg('[i]Creating directory structure and downloading [b]' +
                   'vim-plug[/b]...')
         Path(autoload_dir).mkdir(parents=True, exist_ok=True)
@@ -329,7 +329,7 @@ def configure_firefox():
     print('  Finished copying over firefox settings :3')
 
     print('\n  Copying over firefox addons...')
-    for addon_xpi in os.listdir(repo_config_dir):
+    for addon_xpi in listdir(repo_config_dir):
         shutil.copy(repo_config_dir + addon_xpi,
                     f'{profile_dir}/extensions/')
     print('  Firefox extensions installed, but they need to be enabled.')
@@ -404,7 +404,7 @@ def parse_local_configs():
     parse the local config yaml file if it exists
     """
     local_config_dir = f'{HOME_DIR}/.config/onboardme/config.yaml'
-    if os.path.exists(local_config_dir):
+    if path.exists(local_config_dir):
         with open(local_config_dir, 'r') as yaml_file:
             config = yaml.safe_load(yaml_file)
     return config
@@ -540,9 +540,9 @@ def process_user_config(delete_existing=False, git_url="", git_branch="",
                               'git_branch': git_branch}}
 
     # cli options are more important, but if none passed in, we check .config
-    usr_cfg_file = os.path.join(HOME_DIR, '.config/onboardme/config.yml')
+    usr_cfg_file = path.join(HOME_DIR, '.config/onboardme/config.yml')
 
-    if not os.path.exists(usr_cfg_file):
+    if not path.exists(usr_cfg_file):
         if not git_url:
             git_url = "https://github.com/jessebot/dot_files.git"
             cli_dict['dot_files']['git_url'] = git_url
