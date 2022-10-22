@@ -14,9 +14,6 @@ def help_text():
     """
     dot_file_url = '[meta]https://github.com/jessebot/dot_files[/meta]'
     return {
-        'clone_url':
-        f'Personal git URL for your dot files. Default: {dot_file_url}',
-
         'delete_existing':
         'Deletes existing rc files before creating hardlinks.',
 
@@ -51,6 +48,12 @@ def help_text():
         'quiet':
         "beta. Don't output to stdout. Logging to file will still work.",
 
+        'git_url':
+        f'Personal git URL for your dot files. Default: {dot_file_url}',
+
+        'git_branch':
+        'Branch to use with your for the git repo we use. Default: main.',
+
         'web_browser':
         'beta. Opt into Firefox configuruation.'
     }
@@ -68,8 +71,8 @@ class RichCommand(click.Command):
 
         class OptionHighlighter(RegexHighlighter):
             highlights = [r"(?P<switch>\-\w)",
-                          r"(?P<option>\-\-[\w\-]+)"]
-            # r"(?P<beta>[b][e][t][a])"]
+                          r"(?P<option>\-\-[\w\-]+)",
+                          r"(?P<beta>[b][e][t][a])"]
 
         highlighter = OptionHighlighter()
 

@@ -3,8 +3,7 @@
 from click import option, command, Choice
 from configparser import ConfigParser
 import fileinput
-from git import Repo
-from git import RemoteProgress
+from git import Repo, RemoteProgress
 import logging
 import os
 from pathlib import Path
@@ -38,7 +37,7 @@ OS = f"{SYSINFO.sysname}_{SYSINFO.machine}"
 
 
 def setup_dot_files(OS='Linux', delete=False,
-                    dot_files_git_url="https://github.com/jessebot/dot_files",
+                    git_url="https://github.com/jessebot/dot_files.git",
                     branch="main"):
     """
     note on how we're doing things, seperate dot files repo:
@@ -46,23 +45,41 @@ def setup_dot_files(OS='Linux', delete=False,
     """
     git_dir = os.path.join(HOME_DIR, '.git_dot_files')
     Path(git_dir).mkdir(exist_ok=True)
+    repo = Repo()
 
-    cmds = [f'git --git-dir={git_dir} --work-tree={HOME_DIR} init',
-            'git config status.showUntrackedFiles no',
-            f'git remote add origin {dot_files_git_url}',
-            'git fetch']
-    print(cmds[0])
+    if not repo.config_reader("global").has_section("init"):
+        repo.config_writer("global").add_section("init")
+        repo.config_writer("global").add_value("init", "defaultBranch", "main")
 
-    if delete:
-        # WARN: The next command will overwrite local files with remote files
-        cmds.append(f'git reset --hard origin/{branch}')
-    else:
-        # we only print this msg if we got the file exists error
-        print_msg(":warning: There may be overwrites. If you want to [yellow]"
-                  "override[/yellow] the existing file(s), rerun script with "
-                  "the [b]--delete[/b] flag.")
+    # git config --global init.defaultBranch {branch}
+    with repo.git.custom_environment(GIT_DIR=git_dir, GIT_WORK_TREE=HOME_DIR):
+        # git --git-dir={git_dir} --work-tree={HOME_DIR} init
+        git = repo.git()
+        git.init(HOME_DIR)
 
-    subproc([cmds[0]], False, False, False, git_dir)
+        # make sure that the correct git url is in place
+        # git remote add origin {git_url}
+        try:
+            repo.create_remote("origin", git_url)
+        except Exception as e:
+            log.debug(e)
+            pass
+
+        # git config status.showUntrackedFiles no
+        git.config("status.showUntrackedFiles", "no")
+
+        # git fetch
+        git.fetch()
+
+        if delete:
+            # WARN: this command will overwrite local files with remote files
+            # git reset --hard origin/{branch}
+            git.reset("--hard", f"origin/{branch}")
+
+    git_files = subproc(["git ls-tree --full-tree -r --name-only HEAD"],
+                        False, True, False, git_dir)
+    if "Not a valid object name HEAD" in git_files:
+        git_files = "Whoops, we don't have a HEAD yet. Try: [b]onboardme -d[/]"
 
     # table to print the results of all the files
     table = Table(expand=True,
@@ -73,13 +90,17 @@ def setup_dot_files(OS='Linux', delete=False,
                   title_style="light_steel_blue")
     table.add_column("Remote Dot Files")
 
-    git_files = subproc(["git ls-tree --full-tree -r --name-only HEAD"], False,
-                        False, False, git_dir)
     for dot_file in git_files.rstrip().split('\n'):
         table.add_row(f"♥ [green]{dot_file}")
 
     print_panel(table, "Check if dot files are up to date ", "left",
                 "light_steel_blue")
+
+    if not delete:
+        # we only print this msg if we got the file exists error
+        print_msg("If you want to [yellow]override[/yellow] the existing file"
+                  "(s), rerun script with the [b]--delete[/b] flag.")
+
     return
 
 
@@ -481,27 +502,51 @@ def process_steps(steps=[], firewall=False, browser=False):
     return steps
 
 
-def process_user_config(delete_existing, git_clone_url, pkg_managers,
-                        pkg_groups, log_level, log_file, quiet, remote_host,
-                        steps):
+def determine_logging_level(logging_string=""):
+    """
+    returns logging object
+    """
+    log_level = logging_string.upper()
+
+    if log_level == "DEBUG":
+        return logging.DEBUG
+    elif log_level == "INFO":
+        return logging.INFO
+    elif log_level == "WARN":
+        return logging.WARN
+    elif log_level == "ERROR":
+        return logging.ERROR
+    else:
+        raise Exception(f"Invalid log level: {logging_string}")
+
+
+def process_user_config(delete_existing=False, git_url="", git_branch="",
+                        pkg_managers=[], pkg_groups=[], log_level="",
+                        log_file="", quiet=False, remote_host="", steps=[]):
     """
     process the config in ~/.config/onboardme/config.yml if it exists
     and return variables as a dict for use in script, else return default opts
     """
     if not log_level:
         log_level = "warn"
+    level = determine_logging_level(log_level)
 
     cli_dict = {'package': {'managers': pkg_managers, 'groups': pkg_groups},
-                'log': {'file': log_file, 'level': log_level, 'quiet': quiet},
+                'log': {'file': log_file, 'level': level, 'quiet': quiet},
                 'remote_host': remote_host,
                 'steps': steps,
                 'dot_files': {'delete_existing': delete_existing,
-                              'git_clone_url': git_clone_url}}
+                              'git_url': git_url,
+                              'git_branch': git_branch}}
 
     # cli options are more important, but if none passed in, we check .config
     usr_cfg_file = os.path.join(HOME_DIR, '.config/onboardme/config.yml')
 
     if not os.path.exists(usr_cfg_file):
+        if not git_url:
+            git_url = "https://github.com/jessebot/dot_files.git"
+            cli_dict['dot_files']['git_url'] = git_url
+            cli_dict['dot_files']['git_branch'] = "main"
         return cli_dict
     else:
         with open(usr_cfg_file, 'r') as yaml_file:
@@ -528,7 +573,6 @@ def process_user_config(delete_existing, git_clone_url, pkg_managers,
 # this allows us to use rich.click for pretty prettying the help interface
 # each of these is an option in the cli and variable we use later on
 @command(cls=RichCommand)
-@option('--clone_url', '-c', metavar='GIT_URL', help=HELP['clone_url'])
 @option('--delete_existing', '-d', is_flag=True, help=HELP['delete_existing'])
 @option('--log_level', '-l', metavar='LOGLEVEL', help=HELP['log_level'],
         type=Choice(['debug', 'info', 'warn', 'error']))
@@ -542,9 +586,10 @@ def process_user_config(delete_existing, git_clone_url, pkg_managers,
 @option('--steps', '-s', metavar='STEP', multiple=True,
         type=Choice(OPTS['steps'][SYSINFO.sysname]), help=HELP['steps'])
 @option('--quiet', '-q', is_flag=True, help=HELP['quiet'])
+@option('--git_url', '-u', metavar='URL', help=HELP['git_url'])
+@option('--git_branch', '-b', metavar='BRANCH', help=HELP['git_branch'])
 @option('--web_browser', '-w', is_flag=True, help=HELP['web_browser'])
-def main(clone_url: str = "",
-         delete_existing: bool = False,
+def main(delete_existing: bool = False,
          log_level: str = "",
          log_file: str = "",
          pkg_managers: str = "",
@@ -552,6 +597,8 @@ def main(clone_url: str = "",
          remote_host: str = "",
          steps: str = "",
          quiet: bool = False,
+         git_url: str = "",
+         git_branch: str = "",
          web_browser: bool = False):
     """
     Uses config in the script repo in config/packages.yml and config/config.yml
@@ -564,7 +611,7 @@ def main(clone_url: str = "",
     confirm_os_supported()
 
     # then process any local user config files in ~/.config/onboardme
-    user_prefs = process_user_config(delete_existing, clone_url,
+    user_prefs = process_user_config(delete_existing, git_url, git_branch,
                                      pkg_managers, pkg_groups, log_level,
                                      log_file, quiet, remote_host, steps)
 
@@ -573,11 +620,11 @@ def main(clone_url: str = "",
     log_level = user_prefs['log']['level']
     if log_file:
         console_file = Console(file=log_file)
-        logging.basicConfig(level=log_level.upper, format="%(message)s",
+        logging.basicConfig(level=log_level, format="%(message)s",
                             datefmt="[%X]", console=console_file,
                             handlers=[RichHandler(rich_tracebacks=True)])
     else:
-        logging.basicConfig(level=log_level.upper, format="%(message)s",
+        logging.basicConfig(level=log_level, format="%(message)s",
                             datefmt="[%X]",
                             handlers=[RichHandler(rich_tracebacks=True)])
     global log
@@ -588,8 +635,9 @@ def main(clone_url: str = "",
 
     if 'dot_files' in steps:
         # this creates a live git repo out of your home directory
-        setup_dot_files(OS, user_prefs['dot_files']['delete_existing'],
-                        user_prefs['dot_files']['git_clone_url'])
+        df_prefs = user_prefs['dot_files']
+        setup_dot_files(OS, df_prefs['delete_existing'], df_prefs['git_url'],
+                        df_prefs['git_branch'])
 
     if 'font_installation' in steps:
         install_fonts()
