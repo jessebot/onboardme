@@ -46,14 +46,22 @@ This is to install dependencies and clone the onboardme repo.
 source ~/.bash_profile || source ~/.bashrc
 ```
 
-Now you can run the actual script that does the heavy lifting. If you can `setup.sh` above without errors, it will be installed in `~/repos/onboardme`:
+Recently, I started moving to actually package this, so you should be able to
+do:
+```bash
+cd ~/repos/onboardme && pip install -e .
+```
+
+Now you can run the actual script that does the heavy lifting. If you ran the
+above `setup.sh` and `pip install` without errors, you can start using onboardme
+now:
 
 ```bash
 # This will display a help
-./repos/onboardme/onboardme --help
+onboardme --help
 
 # this will run the script with no options
-./repos/onboardme/onboardme
+onboardme
 ```
 
 When the script completes, it'll output a number of other steps to take manually that aren't yet, or can't be, automated.
