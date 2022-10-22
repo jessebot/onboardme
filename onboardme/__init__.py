@@ -212,6 +212,12 @@ def install_fonts():
     Clones nerd-fonts repo and does a sparse checkout on only mononoki and
     hack fonts. Also removes 70-no-bitmaps.conf and links 70-yes-bitmaps.conf
     Then runs install.sh from nerd-fonts repo
+
+    ripped out of setup.sh recently:
+        # we do this for Debian, to download custom fonts during onboardme
+        if [[ "$OS" == *"Linux"* ]]; then
+            mkdir -p ~/.local/share/fonts
+        fi
     """
     if 'Linux' in OS:
         print_header('📝 [i]font[/i] installations')
