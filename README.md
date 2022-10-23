@@ -16,12 +16,6 @@ Here's an example of the terminal after the script has run:
 ### Docs
 We've recently setup a justthedocs page [here](https://jessebot.github.io/onboardme/).
 
-Looking for a project to get running on a machine that has no OS at all?
-Check out [pxeless](https://github.com/cloudymax/pxeless).
-
-Looking for a project to get started with self hosting k8s stuff?
-Check out [smol k8s lab](https://github.com/jessebot/smol_k8s_lab).
-
 
 ## Status
 Made for the following OS (lastest stable):
@@ -49,3 +43,12 @@ You can also open a pull request, and we can review it asap!
 
 ### Special Thanks
 Thank you to [@cloudymax](https://github.com/cloudymax) for all their direct contributions for gaming on Linux, virtualization, rc file edits, and the hyper terminal configs. Also great engineer to rubberduck with generally. Couldn't have polished a lot of this without their patience during my late night ramblings about my 8 different package managers and why utf-8 isn't called utf-14 :3 💙
+
+
+#### Shameless plugs for other projects
+Looking for a project to get running on a machine that has no OS at all?
+Check out [pxeless](https://github.com/cloudymax/pxeless).
+
+Looking for a project to get started with self hosting k8s stuff?
+Check out [smol k8s lab](https://github.com/jessebot/smol_k8s_lab).
+
