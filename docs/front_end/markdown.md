@@ -30,7 +30,7 @@ commonmark:
   extensions: ["strikethrough", "autolink", "table", "tagfilter"]
 ```
 
-then at last this worked in my markdown file:
+Then at last this worked in my markdown file:
 
 <details>
   <summary>Python3.10</summary>
@@ -42,6 +42,8 @@ then at last this worked in my markdown file:
   ```
 
 </details>
+
+Mardown for the above example:
 
 ```markdown
   <details>
