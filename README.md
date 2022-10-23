@@ -6,7 +6,7 @@ This is a project to store config files, as well as programatically install core
 
 Here's an example of the terminal after the script has run:
 
-[![./docs/screenshots/terminal_screenshot.png alt='screenshot of terminal after runnign onboardme. includes colortest-256, powerline prompt, icons for files in ls output, and syntax highlighting examples with cat command.'](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/screenshots/help_text.svg)](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/screenshots/help_text.svg)
+[![./docs/screenshots/terminal_screenshot.png alt='screenshot of terminal after runnign onboardme. includes colortest-256, powerline prompt, icons for files in ls output, and syntax highlighting examples with cat command.'](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/screenshots/terminal_screenshot.png)](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/screenshots/terminal_screenshot.png)
 
 
 Looking for a project to get running on a machine that has no OS at all?
