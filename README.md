@@ -1,12 +1,12 @@
 ## ☁️  onboard**me** 💻
 
-[![./docs/screenshots/help_text.svg alt='screenshot of full output of onboardme --help](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/screenshots/help_text.svg)](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/screenshots/help_text.svg)
+[![./docs/onboardme/screenshots/help_text.svg alt='screenshot of full output of onboardme --help](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/help_text.svg)](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/help_text.svg)
 
 This is a project to store config files, as well as programatically install core packages across several package managers that we need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping we'd remember why it was there later, so this is now a renewed effort in remembering all the thing™️s, and automating as much as possible. The idea is that it's faster, smaller, and easier to configure than it's ansible equivalent.
 
 Here's an example of the terminal after the script has run:
 
-[![./docs/screenshots/terminal_screenshot.png alt='screenshot of terminal after runnign onboardme. includes colortest-256, powerline prompt, icons for files in ls output, and syntax highlighting examples with cat command.'](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/screenshots/terminal_screenshot.png)](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/screenshots/terminal_screenshot.png)
+[![./docs/onboardme/screenshots/terminal_screenshot.png alt='screenshot of terminal after runnign onboardme. includes colortest-256, powerline prompt, icons for files in ls output, and syntax highlighting examples with cat command.'](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/terminal_screenshot.png)](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/terminal_screenshot.png)
 
 
 Looking for a project to get running on a machine that has no OS at all?
