@@ -8,9 +8,8 @@ from .console_logging import print_panel
 import yaml
 
 
-# user env info
+# user system env info
 HOME_DIR = getenv("HOME")
-# run uname to get operating system and hardware info
 SYSINFO = uname()
 # this will be something like Darwin_x86_64
 OS = f"{SYSINFO.sysname}_{SYSINFO.machine}"
@@ -63,15 +62,14 @@ def process_steps(steps=[], firewall=False, browser=False):
     else:
         steps = ['dot_files', 'manage_pkgs', 'vim_setup']
 
-        # this is broken
         # if 'capslock_to_control' in steps:
-        #     map_caps_to_control()
+        # TODO:  map_caps_to_control()
 
-        # fonts are brew installed on macOS, docker group only applies to linux
-        # currently don't have a great firewall on macOS outside of lulu
         if 'Linux' in OS:
+            # fonts are brew installed on macOS, docker grp only setup on linux
             steps.extend(['font_installation', 'groups_setup'])
             if firewall:
+                # currently don't have a great firewall on macOS, sans lulu
                 steps.append('firewall_setup')
             if browser:
                 steps.append('browser_setup')
@@ -111,10 +109,9 @@ def fill_in_defaults(defaults={}, user_config={}):
     return user_config
 
 
-def process_user_config(defaults={}, delete_existing=False, git_url="",
-                        git_branch="", pkg_managers=[], pkg_groups=[],
-                        log_level="", log_file="", quiet=False, firewall=False,
-                        remote_host="", steps=[]):
+def process_user_config(defaults={}, overwrite=False, repo="", git_branch="",
+                        pkg_mngrs=[], pkg_groups=[], log_level="", log_file="",
+                        quiet=False, firewall=False, remote_host="", steps=[]):
     """
     process the config in ~/.config/onboardme/config.yml if it exists
     and return variables as a dict for use in script, else return default opts
@@ -128,14 +125,13 @@ def process_user_config(defaults={}, delete_existing=False, git_url="",
         if type(remote_host) is str:
             remote_host = [remote_host]
 
-    cli_dict = {'package': {'managers': pkg_managers, 'groups': pkg_groups},
+    cli_dict = {'package': {'managers': pkg_mngrs, 'groups': pkg_groups},
                 'log': {'file': log_file, 'level': level, 'quiet': quiet},
                 'remote_hosts': remote_host,
                 'firewall': firewall,
                 'steps': steps,
-                'dot_files': {'delete_existing': delete_existing,
-                              'git_url': git_url,
-                              'git_branch': git_branch}}
+                'dot_files': {'overwrite': overwrite,
+                              'git_url': repo, 'git_branch': git_branch}}
 
     # cli options are more important, but if none passed in, we check .config
     usr_cfg_file = path.join(HOME_DIR, '.config/onboardme/config.yml')
