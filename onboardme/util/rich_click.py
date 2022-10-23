@@ -15,7 +15,7 @@ def help_text():
     dot_file_url = '[meta]https://github.com/jessebot/dot_files[/meta]'
     return {
         'log_level':
-        'Logging level to use with the script (DEBUG, INFO, WARN, ERROR).'
+        'Logging level to use with the script (DEBUG,INFO,WARN,ERROR).'
         ' Default: [meta]WARN[/meta].',
 
         'log_file':
@@ -33,7 +33,7 @@ def help_text():
         f'A git repo URL for your dot files. Default: {dot_file_url}',
 
         'git_branch':
-        'Branch to use for the git repo url we use. Default: main',
+        'Branch to use for the git repo url. Default: main',
 
         'overwrite':
         '[b]Overwrites[/b] existing dot files with files from configured '
@@ -46,14 +46,14 @@ def help_text():
         '[meta]apt',
 
         'pkg_groups':
-        'Extra package groups to install. Accepts multiple.\nEx: '
-        '[switch]-e[/] [meta]devops[/] [switch]-e[/switch] [meta]gaming',
+        "Package groups to install. Default: 'default'. Accepts multiple.\nEx:"
+        " [switch]-g[/] [meta]devops[/] [switch]-g[/switch] [meta]gaming",
 
         'remote_host':
-        'Setup SSH on a random port and add [meta]IP_ADDRESS[/] to firewall',
+        'Setup SSH on a random port & add [meta]IP_ADDR[/] to firewall',
 
         'firewall':
-        'setup iptables on linux only.'
+        'Setup iptables (on [i]linux[/] only).'
 
     }
 
@@ -83,7 +83,7 @@ class RichCommand(click.Command):
 
         title = "☁️  [cornflower_blue]OnBoard[i]Me[/] 💻\n"
         desc = (
-            "[steel_blue]Get your daily driver just the way I like it,\n from "
+            "[steel_blue]Get your daily driver just the way I like it, from "
             "[b]text[/] [i]formatting[/], and dot files to opensource package "
             "installation, this script\n intends to save you time with setting"
             "up or upgrading your environment.")

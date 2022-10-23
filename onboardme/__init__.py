@@ -422,7 +422,7 @@ def print_manual_steps():
 @option('--pkg_groups', '-g', metavar='PKG_GROUP', multiple=True,
         type=Choice(['default', 'gaming', 'devops']), help=HELP['pkg_groups'])
 @option('--firewall', '-f', is_flag=True, help=HELP['firewall'])
-@option('--remote_host', '-r', metavar="IP_ADDRESS", multiple=True,
+@option('--remote_host', '-r', metavar="IP_ADDR", multiple=True,
         help=HELP['remote_host'])
 def main(log_level: str = "",
          log_file: str = "",
