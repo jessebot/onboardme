@@ -11,7 +11,7 @@ permalink: /onboardme/quickstart
 
 <details><summary>curl</summary>
 
-```bash
+```
 # First, make sure you have curl, but it *should* be there already be on macOS.
 # if this doesn't return anything, you need to install curl
 which curl

@@ -14,3 +14,7 @@ markdown: CommonMarkGhPages
 plugins:
   - jekyll-seo-tag
   - jemoji
+
+commonmark:
+  options: ["UNSAFE", "SMART", "FOOTNOTES"]
+  extensions: ["strikethrough", "autolink", "table", "tagfilter"]
