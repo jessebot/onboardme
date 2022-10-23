@@ -79,6 +79,7 @@ pip3.10:
   packages:
     default:
       # this is for python development
+      - pip
       - build
       - twine
       - autoimport
