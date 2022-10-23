@@ -9,17 +9,19 @@ Here's an example of the terminal after the script has run:
 [![./docs/onboardme/screenshots/terminal_screenshot.png alt='screenshot of terminal after runnign onboardme. includes colortest-256, powerline prompt, icons for files in ls output, and syntax highlighting examples with cat command.'](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/terminal_screenshot.png)](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/terminal_screenshot.png)
 
 
+## Quick Start
+[Get Started here](https://jessebot.github.io/onboardme/onboardme/quickstart) 💙!
+
+
+### Docs
+We've recently setup a justthedocs page [here](https://jessebot.github.io/onboardme/).
+
 Looking for a project to get running on a machine that has no OS at all?
 Check out [pxeless](https://github.com/cloudymax/pxeless).
 
 Looking for a project to get started with self hosting k8s stuff?
 Check out [smol k8s lab](https://github.com/jessebot/smol_k8s_lab).
 
-## Quick Start
-[Get Started here](https://jessebot.github.io/onboardme/onboardme/quickstart) 💙!
-
-### Docs
-We've recently setup a justthedocs page [here](https://jessebot.github.io/onboardme/).
 
 ## Status
 Made for the following OS (lastest stable):
@@ -34,9 +36,16 @@ Optimized for:
 [![made-with-python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)](https://www.python.org/)
 [![made-with-bash](https://img.shields.io/badge/GNU%20Bash-4EAA25?style=for-the-badge&logo=GNU%20Bash&logoColor=white)](https://www.gnu.org/software/bash/)
 
+And incorporating these great projects:
+
+- [rich](https://github.com/Textualize/rich/tree/master)
+- [nerd-fonts](https://github.com/ryanoasis/nerd-fonts)
+- [powerline](https://powerline.readthedocs.io/en/master/overview.html)
+
 Currently in later alpha :D
-Please report 🐛 in the GitHub issues, and we will get them as we have time. You can also open a pull request, and we can review it asap! 💙 We love contributors!
+Please report 🐛 in the GitHub issues, and we will get them as we have time.
+You can also open a pull request, and we can review it asap!
+💙 We love contributors!
 
 ### Special Thanks
 Thank you to [@cloudymax](https://github.com/cloudymax) for all their direct contributions for gaming on Linux, virtualization, rc file edits, and the hyper terminal configs. Also great engineer to rubberduck with generally. Couldn't have polished a lot of this without their patience during my late night ramblings about my 8 different package managers and why utf-8 isn't called utf-14 :3 💙
-
