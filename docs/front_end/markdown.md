@@ -32,19 +32,17 @@ commonmark:
 
 then at last this worked in my markdown file:
 
-    ```markdown
-    <details>
-      <summary>Python3.10</summary>
+```markdown
+<details>
+  <summary>Python3.10</summary>
 
-      This is a test of every markdown style I know.
+  This is a test of every markdown style I know.
 
-      ```bash
-        brew install python@3.10
-      ```
-
-    </details>
-
-    ```
+  ```bash
+    brew install python@3.10
+  ```
+</details>
+```
 
 See the example [`_config.yml`](https://github.com/jessebot/onboardme/blob/main/docs/_config.yml#L17) and then here's it working below:
 
