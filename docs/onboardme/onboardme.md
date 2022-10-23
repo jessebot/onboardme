@@ -17,17 +17,17 @@ Looking for a project to get a fresh OS entirely, on a machine that has no OS? C
 
 ## Under the hood
 
-|       Step                                    | Config Location in repo                          | OS           |
-|:----------------------------------------------|:-------------------------------------------------|:------------:|
-| Installs dot files                            | `./dot_files`                                    | macOS/Debian |
-| Installs brew packages                        | `./package_managers/brew/Brewfile_[standard/OS]` | macOS/Debian |
-| Installs pip3.10, apt, snap, flatpak packages | `./package_managers/packages.yml`                | Debian       |
-| Installs fonts                                | n/a                                              | macOS/Debian |
-| (OPTIONAL) Installs gaming related packages.  | `./package_managers/packages.yml`                | Debian       |
-| Installs vim-plug, a vim plugin manager       | `./dot_files/.vimrc`                             | macOS/Debian |
-| Configures iptables (see note)                | `configs`                                        | Debian       |
-| Setups up iTerm2 fonts and colors             | `./configs/iterm2`                               | macOS        |
-| Adds user to the docker group                 | n/a                                              | Debian       |
+|       Step                                    | Config Location in repo                           | OS           |
+|:----------------------------------------------|:--------------------------------------------------|:------------:|
+| Git fetch dot files                           | n/a: fetched from a configured git repo           | macOS/Debian |
+| Installs cross-OS brew packages               | n/a: installs `.Brewfile` from configured git repo| macOS/Debian |
+| Installs brew packages                        | `./onboardme/config/brew/Brewfile_{OS}`           | macOS/Debian |
+| Installs pip3.10, apt, snap, flatpak packages | `./onboardme/config/packages.yml`                 | Debian       |
+| (OPTIONAL) Installs gaming related packages.  | `./onboardme/config/packages.yml`                 | Debian       |
+| Installs fonts                                | n/a                                               | macOS/Debian |
+| Installs vim-plug, a vim plugin manager       | n/a: plugins fetched from a configured git repo   | macOS/Debian |
+| Configures iptables (see note)                | `./onbaordme/config`                              | Debian       |
+| Adds user to the docker group                 | n/a                                               | Debian       |
 
 *iptables note: to block traffic on most ports except for HTTPS as well as ICMP/SSH for a single IP*
 
@@ -39,7 +39,7 @@ OnBoardMe doesn't officially support phones yet, but for what I use on my phone,
 |        Category        |               App                   |            Replaces               |
 |:-----------------------|:------------------------------------|:----------------------------------|
 | Backups - local/remote | Restic to minio and b2              | GDrive, iCloud, S3                |
-| Web Browser            | Firefox, Lynx/w3m (terminal only)   | Chrome/Safari/Edge                |
+| Web Browser            | Firefox, w3m (terminal only)        | Chrome/Safari/Edge                |
 | Email Client           | Thunderbird + Protonmail + Bridge for Linux/MacOS | Gmail               |
 | IDE                    | Vim + Plugins                       | Vscode/JetBrains/etc              |
 | Document Editor        | LibreOffice                         | Microsoft Word                    |
@@ -49,6 +49,7 @@ OnBoardMe doesn't officially support phones yet, but for what I use on my phone,
 | News - RSS             | Fluent Reader                       | Facebook/Twitter/news/brand feeds |
 | Video                  | FreeTube, Peertube                  | YouTube                           |
 | Antivirus              | ClamAV                              | MalwareBytes                      |
+| Firewall               | Lulu/iptables                       | ???                               |
 
 
 ## Important Notes on Ethics

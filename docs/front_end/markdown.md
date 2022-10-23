@@ -43,7 +43,7 @@ Then at last this worked in my markdown file:
 
 </details>
 
-Mardown for the above example:
+Markdown for the above example:
 
 ```markdown
   <details>
@@ -59,8 +59,9 @@ Mardown for the above example:
   </details>
 ```
 
-And finally, the sources to this page specifically if you want to look at the raw:
+Sources to this page specifically if you want to look at the raw:
 
 - [docs/front_end/markdown.md on github.com](https://github.com/jessebot/onboardme/blob/main/docs/front_end/markdown.md)
 - [RAW docs/front_end/markdown.md](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/front_end/markdown.md)
 - [`_config.yml`](https://github.com/jessebot/onboardme/blob/main/docs/_config.yml#L17).
+- Finally, the link to [this jekyll page](https://jessebot.github.io/onboardme/frontend-stuff/markdown).
