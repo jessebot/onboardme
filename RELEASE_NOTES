@@ -1,6 +1,14 @@
-# python 0.13.9
+# python 0.13.10a4
 
-🎈 We have a pypi package now! :D onboardme wasn't taken! You can do a `pip3.10 install onboardme` now 💙
+🎈 We have a pypi package now! :D onboardme wasn't taken!
+
+You can now view the project at:
+[pypi.org/project/onboardme](https://pypi.org/project/onboardme)
+
+And install with: `pip3.10 install onboardme` 💙
+
+We've also introduced more proper semantic versioning, so you will see `a[0-99]` at the end of many of our versions until we are sure
+that the API is legitmately stable enough to move to proper beta.
 
 - there is a solid `config.yml` that is used for both user config and core config. You can install it into `~/onboardme/config.yml`
 - ripped out most of the untested or not working code around browsers, cron, and email for now.
@@ -10,3 +18,8 @@
   - `--git_branch` -  branch of the configured git repo to use
   - `--log_level`  - set the logging level for the script
   - `--log_file`   - log to a file to check the results later
+- updated docs to have more recent screenshots
+- updated python syntax highlighting files for vim as well as the custom colorscheme
+- moved complicated user config processing to it's own file for maintanability
+- updated the jekyll docs to use github pages markdown formatting
+- updated the license from GPLv3 to Affero.
