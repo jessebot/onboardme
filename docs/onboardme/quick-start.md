@@ -26,33 +26,28 @@ permalink: /onboardme/quickstart
 
 </details>
 
-From here, you can run my setup script, or you can manually install the
-remaining prerequisites.
+Now you can run the `setup.sh` script, or manually install the remaining prereqs.
 
 <details>
-  <summary>`setup.sh`</summary>
+  <summary>setup.sh script</summary>
 
   Download and run the setup script to install git, brew, python, and python dependencies. The `setup.sh` will ask for your password to install things. Run the following from your home directory:
 
+  <pre>
   ```bash
   # Download the setup.sh; you may have to install curl, see above codeblock
   curl -O https://raw.githubusercontent.com/jessebot/onboardme/main/setup.sh
 
   # give it execute permissions
   chmod 0500 ./setup.sh
-  ```
 
-  ## run the setup.sh script
-  This is to install dependencies and clone the onboardme repo.
-
-  ```bash
   # NOTE THE . before the script! *Very* important!
   . ./setup.sh
 
   # just in case you didn't run the above script with .
   source ~/.bash_profile || source ~/.bashrc
   ```
-  
+  </pre>
 </details>
 
 
