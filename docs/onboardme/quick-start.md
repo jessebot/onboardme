@@ -10,25 +10,24 @@ permalink: /onboardme/quickstart
 ## Prerequisites
 
 <details>
-        <summary>curl</summary>
-        <pre>
+    <summary>curl</summary>
+    <pre>
 
-        First, make sure you have curl, but it *should* be there already be on macOS.
+    First, make sure you have curl, but it *should* be there already be on macOS.
 
-        ~~~ bash
-        # if this doesn't return anything, you need to install curl
-        which curl
-        ~~~
+    ```bash
+    # if this doesn't return anything, you need to install curl
+    which curl
+    ```
 
-        If it's not there on Linux, you can install it with `apt` or use any default package manager like yum, or whatever people who use gentoo use
+    If it's not there on Linux, you can install it with `apt` or use any default package manager like yum, or whatever people who use gentoo use
 
-        ```bash
-          # Debian/Ubuntu
-          sudo apt install -y curl
-        ```
+    ```bash
+      # Debian/Ubuntu
+      sudo apt install -y curl
+    ```
 
-        </pre>
-
+    </pre>
 </details>
 
 From here, you can run my setup script, or you can manually install the
