@@ -60,6 +60,7 @@ else
             exit
         fi
     fi
+    # wait.... how can this work if brew doesn't work yet.... 🤔
     if [ "$OS" == "Darwin" ]; then
         echo "running: brew install git"
         brew install git

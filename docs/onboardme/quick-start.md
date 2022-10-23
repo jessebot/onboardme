@@ -35,6 +35,12 @@ Now you can run the `setup.sh` script, or manually install the remaining prereqs
 
   <pre>
   ```bash
+  # macOS uses zsh as the default shell, type bash to get this ancient verison
+  # of bash to run the setup and and then onboardme, which will install a 
+  # current version of bash. **The script will *not* run properly in zsh**.
+  chsh -s /bin/bash
+  bash
+
   # Download the setup.sh; you may have to install curl, see above codeblock
   curl -O https://raw.githubusercontent.com/jessebot/onboardme/main/setup.sh
 
@@ -65,21 +71,29 @@ Now you can run the `setup.sh` script, or manually install the remaining prereqs
 <details>
   <summary>Python3.10</summary>
 
+  This is a test of every markdown style I know.
+
+      ```bash
+        brew install python@3.10
+      ```
+
   ```bash
-  brew install python@3.10
+    brew install python@3.10
   ```
 
+  ```
+    brew install python@3.10
+  ```
+
+  ~~~
+    brew install python@3.10
+  ~~~
+
+  ~~~
+    brew install python@3.10
+  ~~~
 </details>
 
-### macOS
-macOS uses zsh as the default shell, and I don't currently support zsh, so type
-`bash` to get this ancient verison of bash to run the setup and and then
-onboardme, which will install a current version of bash. **The script will *not* 
-run properly in zsh**.
-
-```bash
-bash
-```
 
 ## Actual installation
 
