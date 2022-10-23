@@ -10,11 +10,12 @@ url: "https://jessebot.github.io/onboardme"
 aux_links:
   "OnBoardMe on GitHub":
     - "//github.com/jessebot/onboardme"
-markdown: CommonMarkGhPages
-plugins:
-  - jekyll-seo-tag
-  - jemoji
 
+markdown: CommonMarkGhPages
 commonmark:
   options: ["UNSAFE", "SMART", "FOOTNOTES"]
   extensions: ["strikethrough", "autolink", "table", "tagfilter"]
+
+plugins:
+  - jekyll-seo-tag
+  - jemoji
