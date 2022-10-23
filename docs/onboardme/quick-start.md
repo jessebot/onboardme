@@ -8,22 +8,30 @@ permalink: /onboardme/quickstart
 # OnBoardMe Quick Start
 
 ## Prerequisites
-- curl
+
+<details>
+  <summary>curl</summary>
+  
+    First, make sure you have curl, but it *should* be there already be on macOS.
+
+    ```bash
+    # if this doesn't return anything, you need to install curl
+    which curl
+    ```
+
+    If it's not there on Linux, you can install it with `apt` or use any default package manager like yum, or whatever people who use gentoo use
+
+    ```bash
+    # Debian/Ubuntu
+    sudo apt install -y curl
+    ```
+
+</details>
+
+
 - python3.10.*
 - brew
 
-First, make sure you have curl, but it *should* be there **already be on macOS**:
-
-```bash
-# if this doesn't return anything, you need to install curl
-which curl
-```
-If it's not there on Linux, you can install it with `apt` or use any default package manager like yum, or whatever people who use gentoo use
-
-```bash
-# Debian/Ubuntu
-sudo apt install -y curl
-```
 Download and run the setup script to install git, brew, python, and python dependencies. The `setup.sh` will ask for your password to install things. Run the following from your home directory:
 
 ```bash
