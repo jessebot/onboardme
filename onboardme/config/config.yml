@@ -71,4 +71,4 @@ firewall: false
 
 ### TODO: make this work, it's a nice dream though.
 # any URL we can curl to download a folder from
-wallpapers_download_url: ""
+# wallpapers_download_url: ""
