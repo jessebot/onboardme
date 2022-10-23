@@ -27,19 +27,19 @@ def parse_local_configs():
     return config
 
 
-def confirm_os_supported():
+def check_os_support():
     """
     verify we're on a supported OS and ask to quit if not.
     """
     if SYSINFO.sysname != 'Linux' and SYSINFO.sysname != 'Darwin':
-        print_panel(f"[magenta]{SYSINFO.sysname}[normal] isn't officially "
-                    "supported. We haven't tested anything outside of Debian,"
-                    "Ubuntu, and macOS.", "⚠️  [yellow]WARNING")
+        msg = (f"[ohno]{SYSINFO.sysname}[/ohno] isn't officially supported. We"
+               " have only tested Debian, Ubuntu, and macOS.")
+        print_panel(msg, "⚠️  [warn]WARNING")
 
-        quit_y = Confirm.ask("You're in uncharted waters. Do you wanna quit?")
+        quit_y = Confirm.ask("🌊 You're in uncharted waters. Wanna quit?")
         if quit_y:
             print_panel("That's probably safer. Have a safe day, friend.",
-                        "Safety Award ☆")
+                        "Safety Award ☆ ")
             quit()
         else:
             print_panel("[red]Yeehaw, I guess.", "¯\\_(ツ)_/¯")

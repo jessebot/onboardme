@@ -15,6 +15,15 @@ logging.basicConfig(level="INFO", format=FORMAT, datefmt="[%X]",
 log = logging.getLogger("rich")
 
 
+class multi_subproc():
+    """
+    A small class to pretty printy subprocess calls and log them
+    """
+    def __init__():
+        """
+        """
+
+
 def subproc(commands=[], error_ok=False, suppress_output=False, spinner=True,
             directory=""):
     """

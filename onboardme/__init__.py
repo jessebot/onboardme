@@ -1,30 +1,38 @@
 #!/usr/bin/env python3.10
-# Onboarding script for macOS and Debian by jessebot@Linux.com
+"""
+NAME:    Onboardme
+DESC:    Program to take care of a bunch of onboarding tasks for new
+         machines running macOS and/or Debian.
+AUTHOR:  Jesse Hitch
+LICENSE: GNU AFFERO GENERAL PUBLIC LICENSE
+"""
+
 from click import option, command, Choice
 import fileinput
 from git import Repo, RemoteProgress
 import logging
 from os import getenv, getlogin, path, uname
 from pathlib import Path
-from random import randint
 # rich helps pretty print everything
 from rich import print
 from rich.console import Console
 from rich.table import Table
 from rich.logging import RichHandler
-import yaml
+from random import randint
 import wget
+import yaml
+
+
 # custom libs
-from .util.env_config import (confirm_os_supported, process_steps,
-                              process_user_config)
-from .util.console_logging import (print_panel, print_header, print_msg,
-                                   print_git_file_table)
-from .util.subproc import subproc
-from .util.rich_click import RichCommand, help_text
+from .help_text import RichCommand, options_help
+from .env_config import check_os_support, process_steps, process_user_config
+from .console_logging import (print_panel, print_header, print_msg,
+                              print_git_file_table)
+from .subproc import subproc
 
 
 PWD = path.dirname(__file__)
-HELP = help_text()
+HELP = options_help()
 with open(f'{PWD}/config/config.yml', 'r') as yaml_file:
     OPTS = yaml.safe_load(yaml_file)
 
@@ -443,7 +451,7 @@ def main(log_level: str = "",
     """
 
     # before we do anything, we need to make sure this OS is supported
-    confirm_os_supported()
+    check_os_support()
 
     # then process any local user config files in ~/.config/onboardme
     user_prefs = process_user_config(OPTS, overwrite, git_url,

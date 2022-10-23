@@ -8,7 +8,7 @@ from rich.text import Text
 from rich.theme import Theme
 
 
-def help_text():
+def options_help():
     """
     help text for all the options for main()
     """

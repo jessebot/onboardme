@@ -8,13 +8,15 @@ from rich.table import Table
 from rich.theme import Theme
 
 CONSOLE = Console(theme=Theme({"warn": "bold yellow",
-                               "grn": "medium_spring_green"}))
+                               "grn": "medium_spring_green",
+                               "ohno": "magenta",
+                               "header": "cornflower_blue"}))
 
 
 def print_panel(content='', title_txt='', title_alignment='center',
                 border_style="light_steel_blue1"):
     """
-    prints content text in a box with title_txt
+    prints text in a box with a light_steel_blue1 border and title_txt
     """
     print('')
     panel = Panel(content, title=title_txt, title_align=title_alignment,
@@ -49,7 +51,7 @@ def print_git_file_table(remote_git_files=[], file_verb="", branch="",
         branch           - "", git branch we're looking at
         git_url          - "", url of git repo we're working with
     """
-    emote = "[cornflower_blue]ʕ ･ᴥ･ʔ[/cornflower_blue][sky_blue1]"
+    emote = "[header]ʕ ･ᴥ･ʔ[/header][sky_blue1]"
     if "differ" in file_verb:
         emote = "[yellow]:warning: ʕ ⚈ᴥ⚈ʔ"
     # table to print the results of all the files
