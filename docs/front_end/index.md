@@ -30,12 +30,3 @@ I love a good icon/glyph for TUIs and webpages. Some of my favorites are:
 - [boxicons](https://boxicons.com/)
 
 All of the above are open source and free of charge.
-
-
-## Collapsable sections in markdown
-
-This gist is helpful for github.com and gist.github.com specifically:
-[markdown-details-collapsible.md](https://gist.github.com/pierrejoubert73/902cc94d79424356a8d20be2b382e1ab)
-
-But the above doesn't work on my jekyll based github pages docs, so I found this:
-[Jekyll Text Expand or Collapsible Markdown](https://www.tomordonez.com/jekyll-text-expand-collapsible-markdown/)
