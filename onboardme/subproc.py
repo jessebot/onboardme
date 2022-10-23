@@ -72,20 +72,24 @@ def run_subprocess(command, error_ok=False, directory=""):
         p = Popen(cmd, stdout=PIPE, stderr=PIPE, cwd=directory)
     else:
         p = Popen(cmd, stdout=PIPE, stderr=PIPE)
-    return_code = p.returncode
+    ret_code = p.returncode
     res = p.communicate()
     res_stdout = res[0].decode('UTF-8')
     res_stderr = res[1].decode('UTF-8')
 
     if not error_ok:
         # check return code, raise error if failure
-        if not return_code or return_code != 0:
-            # also scan both stdout and stdin for weird errors
-            for output in [res_stdout.lower(), res_stderr.lower()]:
-                if 'error' in output:
-                    err = f'Return code not zero! Return code: "{return_code}"'
-                    raise Exception(f'\033[0;33m {err} \n {output} '
-                                    '\033[00m')
+        if not ret_code:
+            if res_stderr:
+                log.debug(res_stderr)
+        else:
+            if ret_code != 0:
+                # also scan both stdout and stdin for weird errors
+                for output in [res_stdout.lower(), res_stderr.lower()]:
+                    if 'error' in output:
+                        err = "Return code not zero! Return code: " + ret_code
+                        raise Exception(f'\033[0;33m {err} \n {output} '
+                                        '\033[00m')
 
     # sometimes stderr is empty, but sometimes stdout is empty
     for output in [res_stdout, res_stderr]:
