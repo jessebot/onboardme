@@ -32,6 +32,17 @@ commonmark:
 
 then at last this worked in my markdown file:
 
+<details>
+  <summary>Python3.10</summary>
+
+  Check out this bash syntax highlighted block:
+
+  ```bash
+    brew install python@3.10
+  ```
+
+</details>
+
 ```markdown
   <details>
     <summary>Python3.10</summary>
@@ -46,22 +57,8 @@ then at last this worked in my markdown file:
   </details>
 ```
 
-
-See the example [`_config.yml`](https://github.com/jessebot/onboardme/blob/main/docs/_config.yml#L17) and then here's it working below:
-
-
-<details>
-  <summary>Python3.10</summary>
-
-  Check out this bash syntax highlighted block:
-
-  ```bash
-    brew install python@3.10
-  ```
-
-</details>
-
-And finally, the source to this page specifically if you want to look at the raw:
+And finally, the sources to this page specifically if you want to look at the raw:
 
 - [docs/front_end/markdown.md on github.com](https://github.com/jessebot/onboardme/blob/main/docs/front_end/markdown.md)
 - [RAW docs/front_end/markdown.md](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/front_end/markdown.md)
+- [`_config.yml`](https://github.com/jessebot/onboardme/blob/main/docs/_config.yml#L17).
