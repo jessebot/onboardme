@@ -36,14 +36,16 @@ then at last this worked in my markdown file:
   <details>
     <summary>Python3.10</summary>
 
-    This is a test of every markdown style I know.
+    Below, you can change the first ``` to ```bash for syntax highlighting :)
+    Checkout this regular code block:
 
-    ```bash
-      brew install python@3.10
+    ```
+    brew install python@3.10
     ```
 
   </details>
 ```
+
 
 See the example [`_config.yml`](https://github.com/jessebot/onboardme/blob/main/docs/_config.yml#L17) and then here's it working below:
 
@@ -51,7 +53,7 @@ See the example [`_config.yml`](https://github.com/jessebot/onboardme/blob/main/
 <details>
   <summary>Python3.10</summary>
 
-  This is a test of every markdown style I know.
+  Check out this bash syntax highlighted block:
 
   ```bash
     brew install python@3.10
@@ -59,7 +61,7 @@ See the example [`_config.yml`](https://github.com/jessebot/onboardme/blob/main/
 
 </details>
 
-And finally, the source to this page specifically:
+And finally, the source to this page specifically if you want to look at the raw:
 
-- [docs/front_end/markdown.md](https://github.com/jessebot/onboardme/blob/main/docs/front_end/markdown.md)
+- [docs/front_end/markdown.md on github.com](https://github.com/jessebot/onboardme/blob/main/docs/front_end/markdown.md)
 - [RAW docs/front_end/markdown.md](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/front_end/markdown.md)
