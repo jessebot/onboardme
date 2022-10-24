@@ -87,16 +87,15 @@ def setup_dot_files(OS='Linux', overwrite=False,
         git_cmd = f"git ls-tree --full-tree -r --name-only origin/{branch}"
         git_files = subproc([git_cmd], directory=git_dir)
         git_action = "are up to date with"
-    else:
-        # we only print this msg if we got the file exists error
-        msg = ("To [warn]:warning: overwrite[/warn] the existing dot files in "
-               f"{HOME_DIR}/ with the file(s) listed in the above table, run:"
-               "\n[green]onboardme [warn]--overwrite[/warn]")
 
     print_git_file_table(git_files, git_action, branch, git_url)
     chdir(old_dir)
 
-    if msg:
+    if not overwrite and git_files:
+        # we only print this msg if we got the file exists error
+        msg = ("To [warn]:warning: overwrite[/warn] the existing dot files in "
+               f"{HOME_DIR}/ with the file(s) listed in the above table, run:"
+               "\n[green]onboardme [warn]--overwrite[/warn]")
         print_msg(msg)
     return
 
