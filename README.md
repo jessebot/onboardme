@@ -10,7 +10,7 @@ Here's an example of the terminal after the script has run:
 
 
 ## Quick Start
-[Get Started here](https://jessebot.github.io/onboardme/onboardme/quickstart) 💙!
+[Get Started here](https://jessebot.github.io/onboardme/onboardme/getting-started) 💙!
 
 
 ### Docs
