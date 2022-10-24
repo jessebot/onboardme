@@ -38,7 +38,10 @@ with open(f'{PWD}/config/config.yml', 'r') as yaml_file:
 
 # user env info
 HOME_DIR = getenv("HOME")
-USER = getlogin()
+try:
+    USER = getlogin()
+except OSError:
+    pass
 # run uname to get operating system and hardware info
 SYSINFO = uname()
 # this will be something like Darwin_x86_64
