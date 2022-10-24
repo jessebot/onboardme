@@ -17,8 +17,3 @@ $mono-font-family: "Mononoki", "SFMono-Regular", menlo, consolas, monospace !def
 @import "./vendor/OneDarkJekyll/syntax-one-dark-vivid";
 
 $code-background-color: #31343f;
-
-@font-face {
-  font-family: "Mononoki";
-  src: url("../fonts/mononoki-Regular-Nerd-Font-Complete.ttf");
-}
