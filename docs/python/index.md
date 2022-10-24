@@ -28,3 +28,11 @@ I do love a good table.
 | rich    | Colored and stylized/formatting of text for the terminal     |
 | pyyaml  | process easy yaml config files                               |
 | wget    | consistently just download a file without bells and whistles |
+
+## Key-Value Store
+
+[TIL—Python has a built-in persistent key-value store](https://remusao.github.io/posts/python-dbm-module.html).
+
+## What is everyone else doing tho?
+Jetbrains and the Python org regularly survey their user base and then publish
+an [open report of the survey results.](https://lp.jetbrains.com/python-developers-survey-2021/)

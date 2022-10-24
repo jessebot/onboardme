@@ -175,7 +175,7 @@ twine upload dist/*
 
 _Note: if the classifers broke, you can check them against [the official page](https://pypi.org/classifiers/)._
 
-# Other helpful guides
+## Other helpful guides
 
 - This is probably the most official guide, and where you should start:
   [packaging.python.org/.../packaging-your-project](https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/#packaging-your-project)
@@ -185,3 +185,10 @@ _Note: if the classifers broke, you can check them against [the official page](h
 
 - I also read [this pypa guide](https://github.com/pypa/sampleproject) recently
   and it has comments in each file to explain what's going on.
+
+# What about brew?
+Well, that's a rabbit hole that I haven't had a chance to go down yet, but you
+probably want to start here:
+= [Adding Software To Homebrew](https://docs.brew.sh/Adding-Software-to-Homebrew#formulae)
+- [https://docs.brew.sh/Formula-Cookbook](https://docs.brew.sh/Formula-Cookbook)
+- [https://docs.brew.sh/Python-for-Formula-Authors](https://docs.brew.sh/Python-for-Formula-Authors)
