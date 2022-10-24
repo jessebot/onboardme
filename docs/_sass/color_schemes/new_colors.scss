@@ -11,8 +11,7 @@ $base-button-color: $grey-dk-250;
 $search-background-color: $grey-dk-250;
 $table-background-color: $grey-dk-250;
 $feedback-color: darken($sidebar-color, 3%);
-
-$mono-font-family: "Mononoki", "SFMono-Regular", menlo, consolas, monospace !default;
+$mono-font-family: "Mononoki", consolas, monospace;
 
 @import "./vendor/OneDarkJekyll/syntax-one-dark-vivid";
 
