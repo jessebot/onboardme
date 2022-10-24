@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Quick Start
+title: Installation
 parent: onboardme
-permalink: /onboardme/quickstart
+permalink: /onboardme/installation
 ---
 
-# OnBoardMe Quick Start
+# OnBoardMe Installation
 
 ## Prerequisites
 
@@ -52,6 +52,8 @@ Now you can run the `setup.sh` script, or manually install the remaining prereqs
   source ~/.bash_profile || source ~/.bashrc
   ```
 
+  If you finished the steps above, you can jump down to the [Actual installation](#actual-installation) section 😃
+
 </details>
 
 
@@ -86,7 +88,7 @@ do:
 pip3.10 install onboardme
 ```
 
-## Running `onboardme`
+## Quick test of `onboardme`
 Now you can run the actual script that does the heavy lifting. If you ran the
 above `setup.sh` and `pip install` without errors, you can start using
 `onboardme` now:
@@ -94,11 +96,10 @@ above `setup.sh` and `pip install` without errors, you can start using
 ```bash
 # This will display a help
 onboardme --help
-
-# this will run the script with no options
-onboardme
 ```
 
-When the script completes, it'll output a number of other steps to take manually that aren't yet, or can't be, automated.
+🎉 You're done! We're so proud of you. 🥹
+_(and not in a sarcastic way, like we legitmately are proud of you for getting thorugh this awful alpha project doc)_
 
-🎉 You're done! We're so proud of you. 🥹 _(and not in a sarcastic way, like we legitmately are proud of you for getting thorugh this awful alpha project doc)_
+Now head over to the [Quickstart](https://jessebot.github.io/onbaordme/getting-started#quickstart)
+to get rolling!
