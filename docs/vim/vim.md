@@ -202,7 +202,49 @@ available, use the two-letter language code.  For French:
         vimtutor fr
 ```
 
+### Templates
+
+```vim
+:help template.
+```
+
+You can place a template file in `~/.vim/templates/` for use when you make a new
+file. You just need to edit your `.vimrc` first. Example with python:
+
+```vim
+" Use ~/.vim/templates/skeleton.py as a template for NEW python files
+if has("autocmd")
+  augroup templates
+    autocmd BufNewFile *.sh 0r ~/.vim/templates/skeleton.sh
+  augroup END
+endif
+```
+
+and here's my basic python template:
+
+```python
+#!/usr/bin/env python3.10
+"""
+       Name:
+DESCRIPTION:
+     AUTHOR:
+    LICENSE: GNU AFFERO GENERAL PUBLIC LICENSE Version 3
+"""
+
+
+def main():
+    """
+    """
+
+    return
+
+
+if __name__ == '__main__':
+    main()
+```
+
 ### Guides and helpful answers
+- [using-templates-in-vim](https://shapeshed.com/vim-templates/#using-templates-in-vim)
 - [How does the vim write with sudo trick work?](https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
 - [Setting up vim for yaml](https://www.arthurkoziel.com/setting-up-vim-for-yaml/).
 - [How to change the highlight color for search hits and quickfix selection](https://stackoverflow.com/questions/7103173/vim-how-to-change-the-highlight-color-for-search-hits-and-quickfix-selection)

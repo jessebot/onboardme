@@ -24,6 +24,7 @@ I really do love certain libraries for being really useful, and I made a table.
 I do love a good table.
 
 | library | Why it's great                                               |
+|:-------:|:-------------------------------------------------------------|
 | rich    | Colored and stylized/formatting of text for the terminal     |
 | pyyaml  | process easy yaml config files                               |
 | wget    | consistently just download a file without bells and whistles |
