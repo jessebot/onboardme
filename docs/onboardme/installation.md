@@ -102,5 +102,5 @@ onboardme --help
 🎉 You're done! We're so proud of you. 🥹
 _(and not in a sarcastic way, like we legitmately are proud of you for getting thorugh this awful alpha project doc)_
 
-Now head over to the [Quickstart](https://jessebot.github.io/onbaordme/getting-started#quickstart)
+Now head over to the [Quickstart](https://jessebot.github.io/onboardme/getting-started#quickstart)
 to get rolling!
