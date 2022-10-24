@@ -2,6 +2,7 @@
 layout: default
 title: Getting Started
 parent: onboardme
+has_children: true
 permalink: /onboardme/getting-started
 ---
 
