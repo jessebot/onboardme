@@ -7,6 +7,30 @@
 # -------------------------------------------------------------- #
 
 
+log:
+  # Full path to a file you'd like to log to. Creates file if it doesn't exist
+  file: ""
+  # what level of logs to output (debug,info, warn, error)
+  level: "INFO"
+  # don't output anything to the console, if set and log file passed in, still
+  # creates a log file
+  quiet: false
+
+
+# steps refer to a specific function in the list of functions we run
+steps:
+  # these are mac specific steps
+  Darwin:
+    - vim_setup
+    - dot_files
+    - manage_pkgs
+  # these are linux specific steps
+  Linux:
+    - vim_setup
+    - dot_files
+    - manage_pkgs
+
+
 dot_files:
   # personal git repo URL for your dot files, defaults to jessebot/dot_files
   git_url: "https://github.com/jessebot/dot_files.git"
@@ -35,30 +59,6 @@ package:
     # uncomment these to add them as default installed package groups
     # - gaming
     # - work
-
-
-log:
-  # Full path to a file you'd like to log to. Creates file if it doesn't exist
-  file: ""
-  # what level of logs to output (debug,info, warn, error)
-  level: "INFO"
-  # don't output anything to the console, if set and log file passed in, still
-  # creates a log file
-  quiet: false
-
-
-# steps refer to a specific function in the list of functions we run
-steps:
-  # these are mac specific steps
-  Darwin:
-    - vim_setup
-    - dot_files
-    - manage_pkgs
-  # these are linux specific steps
-  Linux:
-    - vim_setup
-    - dot_files
-    - manage_pkgs
 
 
 # known safe remote hosts that you expect to be able to ping and SSH into
