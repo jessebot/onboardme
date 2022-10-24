@@ -1,4 +1,6 @@
 @font-face {
-  font-family: "Mononoki";
+  font-family: "mononoki";
   src: url("../../docs/fonts/mononoki-Regular-Nerd-Font-Complete.ttf");
 }
+
+$mono-font-family: "mononoki", consolas, monospace;
