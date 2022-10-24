@@ -39,3 +39,11 @@ An optional prefix ! which negates the pattern; any matching file excluded by a 
 ## Keeping all your dot files in a git repo
 
 Thank you to [probable robot](https://probablerobot.net/2021/05/keeping-'live'-dotfiles-in-a-git-repo/) for this.
+
+## Deleting all commits before a certain date
+
+[How can I delete all commits before a given date in Git history?](https://stackoverflow.com/q/29042783)
+
+## Remove file from git
+
+[How Remove Files completely from git repository history](https://myopswork.com/how-remove-files-completely-from-git-repository-history-47ed3e0c4c35)
