@@ -211,7 +211,7 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
                 for package in required_pkgs[pkg_group]:
                     if package not in installed_pkgs:
                         cmd = pkg_cmds['install'] + package
-                        subproc([cmd], True, True)
+                        subproc([cmd], True, True, False)
                 print_msg('[dim][i]Completed.')
     return
 
