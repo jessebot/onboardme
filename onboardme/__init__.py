@@ -55,62 +55,48 @@ def setup_dot_files(OS='Linux', overwrite=False,
     note on how we're doing things, seperate dot files repo:
     https://probablerobot.net/2021/05/keeping-'live'-dotfiles-in-a-git-repo/
     """
-    repo = Repo()
-
-    # this is to make sure the default branch is always main, no matter what
-    if not repo.config_reader("global").has_section("init"):
-        with repo.config_writer("global") as repo_cfg_writer:
-            repo_cfg_writer.add_section("init")
-            # git config --global init.defaultBranch {branch}
-            repo_cfg_writer.add_value("init", "defaultBranch", "main")
-
     git_dir = path.join(HOME_DIR, '.git_dot_files')
     # create ~/.git_dot_files if it does not exist
     Path(git_dir).mkdir(exist_ok=True)
-    with repo.git.custom_environment(GIT_DIR=git_dir, GIT_WORK_TREE=HOME_DIR):
-        git = repo.git()
 
-        # git --git-dir={git_dir} --work-tree={HOME_DIR} init
-        git.init(HOME_DIR)
+    # we'll need this for all the dot files home dir repo commands we run
+    git = f"--git-dir={git_dir} --work-tree={HOME_DIR}"
 
-        # make sure that the correct git url is in place
-        try:
-            # git remote add origin {git_url}
-            repo.create_remote("origin", git_url)
-        except Exception as e:
-            # this is almost always because it already exists
-            log.debug(e)
-            pass
+    # global command: use main instead of master as default branch
+    subproc(['git config --global init.defaultBranch main',
+             f'{git} config status.showUntrackedFiles no'])
 
-        # git config status.showUntrackedFiles no
-        git.config("status.showUntrackedFiles", "no")
+    # this one needs to be allowed to fail because it might already exist
+    subproc([f"{git} remote add origin {git_url}"], True)
 
-        # git fetch
-        git.fetch()
-        # git reset origin/{branch}
-        git.reset(f"origin/{branch}")
-        # git ls-files -m -d ~
-        remote_git_files = git.ls_files("-m", "-d", HOME_DIR)
+    if overwrite:
+        # WARN: this command will overwrite local files with remote files
+        # git reset --hard origin/{branch}
+        reset_cmd = f"{git} reset --hard origin/{branch}"
+    else:
+        reset_cmd = f"{git} reset origin/{branch}"
         git_action = "[b]differ[/b] from"
 
-        if overwrite:
-            # WARN: this command will overwrite local files with remote files
-            # git reset --hard origin/{branch}
-            git.reset("--hard", f"origin/{branch}")
+    # fetch the latest changes, then reset to main, w/o overwriting anything
+    subproc([f'{git} fetch', reset_cmd])
 
-        if overwrite or not remote_git_files:
-            # remote files: git ls-tree --full-tree -r --name-only origin/main
-            remote_git_files = git.ls_tree("--full-tree", "-r", "--name-only",
-                                           "origin/main")
-            git_action = "are up to date with"
+    # get the latest remote modified and deleted files, if there are any
+    git_files = subproc([f'{git} ls-files -m -d {HOME_DIR}'])
 
-        print_git_file_table(remote_git_files, git_action, branch, git_url)
-
-    if not overwrite and "differ" in git_action:
+    if overwrite or not git_files:
+        # if all the files are updated, just print them all as confirmation :)
+        git_cmd = f"{git} ls-tree --full-tree -r --name-only origin/{branch}"
+        git_files = subproc([git_cmd])
+        git_action = "are up to date with"
+    else:
         # we only print this msg if we got the file exists error
         msg = ("To [warn]:warning: overwrite[/warn] the existing dot files in "
                f"{HOME_DIR}/ with the file(s) listed in the above table, run:"
                "\n[green]onboardme [warn]--overwrite[/warn]")
+
+    print_git_file_table(git_files, git_action, branch, git_url)
+
+    if msg:
         print_msg(msg)
     return
 
