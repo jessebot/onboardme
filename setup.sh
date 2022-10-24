@@ -129,7 +129,7 @@ which python3.10 > /dev/null
 py_return_code=$?
 if [ $py_return_code -ne 0 ]; then
     echo "Installing Python3.10..."
-    brew install python3.10
+    brew install python@3.10
     echo -e "\033[92mPython3.10 installed :3 \033[00m"
 else
     echo -e "\033[92mPython3.10 already installed :3 \033[00m"
