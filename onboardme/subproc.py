@@ -36,6 +36,9 @@ def subproc(commands=[], error_ok=False, suppress_output=False, spinner=True,
     errors in stderr/stdout and suppress_output
     """
     for command in commands:
+        status_line = f"• [bold green]Running cmd:[/bold green] {command}"
+        log.info(status_line, extra={'markup': True})
+
         if not spinner:
             output = run_subprocess(command, error_ok, directory)
         else:
@@ -43,7 +46,6 @@ def subproc(commands=[], error_ok=False, suppress_output=False, spinner=True,
             console = Console()
             tasks = [command]
 
-            status_line = f"[bold green]Running cmd:[/bold green] {command}"
             with console.status(status_line) as status:
                 while tasks:
                     output = run_subprocess(command, error_ok, directory)

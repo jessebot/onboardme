@@ -11,7 +11,7 @@ from click import option, command, Choice
 import fileinput
 from git import Repo, RemoteProgress
 import logging
-from os import getenv, getlogin, path, uname
+from os import getenv, getlogin, path, uname, chdir
 from pathlib import Path
 # rich helps pretty print everything
 from rich import print
@@ -21,7 +21,6 @@ from rich.logging import RichHandler
 from random import randint
 import wget
 import yaml
-
 
 # custom libs
 from .help_text import RichCommand, options_help
@@ -55,38 +54,38 @@ def setup_dot_files(OS='Linux', overwrite=False,
     note on how we're doing things, seperate dot files repo:
     https://probablerobot.net/2021/05/keeping-'live'-dotfiles-in-a-git-repo/
     """
+    old_dir = PWD
     git_dir = path.join(HOME_DIR, '.git_dot_files')
     # create ~/.git_dot_files if it does not exist
     Path(git_dir).mkdir(exist_ok=True)
-
-    # we'll need this for all the dot files home dir repo commands we run
-    git = f"--git-dir={git_dir} --work-tree={HOME_DIR}"
+    chdir(git_dir)
 
     # global command: use main instead of master as default branch
     subproc(['git config --global init.defaultBranch main',
-             f'{git} config status.showUntrackedFiles no'])
+             f'git --git-dir={git_dir} --work-tree={HOME_DIR} init',
+             'git config status.showUntrackedFiles no'], directory=git_dir)
 
     # this one needs to be allowed to fail because it might already exist
-    subproc([f"{git} remote add origin {git_url}"], True)
+    subproc([f"git remote add origin {git_url}"], True, directory=git_dir)
 
     if overwrite:
         # WARN: this command will overwrite local files with remote files
         # git reset --hard origin/{branch}
-        reset_cmd = f"{git} reset --hard origin/{branch}"
+        reset_cmd = f"git reset --hard origin/{branch}"
     else:
-        reset_cmd = f"{git} reset origin/{branch}"
+        reset_cmd = f"git reset origin/{branch}"
         git_action = "[b]differ[/b] from"
 
     # fetch the latest changes, then reset to main, w/o overwriting anything
-    subproc([f'{git} fetch', reset_cmd])
+    subproc(['git fetch', reset_cmd], directory=git_dir)
 
     # get the latest remote modified and deleted files, if there are any
-    git_files = subproc([f'{git} ls-files -m -d {HOME_DIR}'])
+    git_files = subproc([f'git ls-files -m -d {HOME_DIR}'], directory=git_dir)
 
     if overwrite or not git_files:
         # if all the files are updated, just print them all as confirmation :)
-        git_cmd = f"{git} ls-tree --full-tree -r --name-only origin/{branch}"
-        git_files = subproc([git_cmd])
+        git_cmd = f"git ls-tree --full-tree -r --name-only origin/{branch}"
+        git_files = subproc([git_cmd], directory=git_dir)
         git_action = "are up to date with"
     else:
         # we only print this msg if we got the file exists error
@@ -95,6 +94,7 @@ def setup_dot_files(OS='Linux', overwrite=False,
                "\n[green]onboardme [warn]--overwrite[/warn]")
 
     print_git_file_table(git_files, git_action, branch, git_url)
+    chdir(old_dir)
 
     if msg:
         print_msg(msg)
