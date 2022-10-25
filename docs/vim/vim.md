@@ -10,7 +10,7 @@ Welcome to the wacky world of [Vim](https://www.vim.org/),
 
 > a highly configurable text editor built to make creating and changing any kind of text very efficient. It is included as "vi" with most UNIX systems and with Apple OS X.
 
-Vim is my daily driver for text editing. It serves as my [IDE](https://wikiless.org/wiki/Integrated_development_environment) which includes most bells and whistles of any other editor, but with a WAY smaller footprint. Vim can do anything that _x_ IDE can do, where x is visual studio or atom or pycharm or whatever the kids are using these days, but vim is generally going to be more barebones, and that's a good thing, because you don't need a new computer every other year to keep up with how bloated your current IDE is. You need a better IDE.
+Vim is my daily driver for text editing. It serves as my [IDE](https://wikiless.org/wiki/Integrated_development_environment) which includes most bells and whistles of any other editor, but with a WAY smaller footprint. Vim can do anything that _x_ IDE can do, where _x_ is visual studio or atom or pycharm or whatever the kids are using these days, but vim is generally going to be more barebones, and that's a good thing, because you don't need a new computer every other year to keep up with how bloated your current IDE is. You need a better IDE.
 
 Here's a peak at what it looks like to work in vim:
 
@@ -243,12 +243,17 @@ if __name__ == '__main__':
     main()
 ```
 
+### Collaborative editing
+I've actually never used this but it seems really neat, albeit not really updated in many years:
+[Floobits](https://github.com/Floobits/floobits-vim) (also, what an adorable name)
+
 ### Guides and helpful answers
 - [using-templates-in-vim](https://shapeshed.com/vim-templates/#using-templates-in-vim)
 - [How does the vim write with sudo trick work?](https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
 - [Setting up vim for yaml](https://www.arthurkoziel.com/setting-up-vim-for-yaml/).
 - [How to change the highlight color for search hits and quickfix selection](https://stackoverflow.com/questions/7103173/vim-how-to-change-the-highlight-color-for-search-hits-and-quickfix-selection)
 - [Solving merge conflicts with vim](https://medium.com/prodopsio/solving-git-merge-conflicts-with-vim-c8a8617e3633)
+- [Writing a Toggle Function in vim](https://stackoverflow.com/questions/20579142/toggle-function-in-vim)
 
 ### Awesome Lists and other neat stuff
 
