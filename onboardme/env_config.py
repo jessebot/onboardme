@@ -13,6 +13,8 @@ HOME_DIR = getenv("HOME")
 SYSINFO = uname()
 # this will be something like Darwin_x86_64
 OS = f"{SYSINFO.sysname}_{SYSINFO.machine}"
+with open(f"{path.dirname(__file__)}/config/config.yml", 'r') as yaml_file:
+    OPTS = yaml.safe_load(yaml_file)
 
 
 def parse_local_configs():
@@ -106,6 +108,9 @@ def fill_in_defaults(defaults={}, user_config={}):
             for nested_key, nested_value in user_config[key].items():
                 if not nested_value:
                     user_config[key][nested_key] = defaults[key][nested_key]
+
+    steps = process_steps(user_config['steps'], user_config['remote_host'])
+    user_config['steps'] = steps
     return user_config
 
 

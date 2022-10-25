@@ -11,8 +11,9 @@ from click import option, command, Choice
 import fileinput
 from git import Repo, RemoteProgress
 import logging
-from os import getenv, getlogin, path, uname, chdir
+from os import getlogin, path, uname, chdir
 from pathlib import Path
+
 # rich helps pretty print everything
 from rich import print
 from rich.console import Console
@@ -20,27 +21,22 @@ from rich.table import Table
 from rich.logging import RichHandler
 from random import randint
 import wget
-import yaml
 
 # custom libs
 from .help_text import RichCommand, options_help
-from .env_config import check_os_support, process_steps, process_user_config
+from .env_config import check_os_support, process_user_config, OPTS, HOME_DIR
 from .console_logging import (print_panel, print_header, print_msg,
                               print_git_file_table)
 from .pkg_management import run_pkg_mngrs
 from .subproc import subproc
 
 
-PWD = path.dirname(__file__)
 HELP = options_help()
-# TODO: move this to .env_config
-with open(f'{PWD}/config/config.yml', 'r') as yaml_file:
-    OPTS = yaml.safe_load(yaml_file)
-
 # user env info
-HOME_DIR = getenv("HOME")
+PWD = path.dirname(__file__)
 try:
     USER = getlogin()
+# this errors in docker containers for github actions and I don't know why
 except OSError:
     pass
 # run uname to get operating system and hardware info
@@ -364,7 +360,7 @@ def main(log_level: str = "",
     log = logging.getLogger("rich")
 
     # figure out which steps to run:
-    steps = process_steps(steps, remote_host)
+    steps = user_prefs['steps']
 
     if 'dot_files' in steps:
         # this creates a live git repo out of your home directory
@@ -375,7 +371,7 @@ def main(log_level: str = "",
     if 'font_installation' in steps:
         install_fonts()
 
-    if 'manage_pkgs' in steps:
+    if 'packages' in steps:
         pkg_groups = user_prefs['package'].get('groups')
         run_pkg_mngrs(user_prefs['package'].get('managers'), pkg_groups)
 

@@ -157,7 +157,7 @@ These sections are grouped together, because many plugins in any one of these ca
 Plug 'Yggdroot/indentLine'
 ```
 
-### YAML
+### YAML Syntax highlighting
 
 ```vim
 " yaml syntax highlighting better
@@ -167,7 +167,7 @@ Plug 'stephpy/vim-yaml'
 ### Python support
 
 ```vim
-" python tab completion - I actually find this kind of annoying :shrug:
+" python tab completion - I actually find this kind of annoying 🤷
 Plug 'davidhalter/jedi-vim'
 " I don't actually remember what this does...
 Plug 'python-mode/python-mode', { 'for': 'python'}
@@ -181,6 +181,12 @@ Plug 'WolfgangMehner/bash-support'
 
 " linter - will use shellcheck for bash and highlight broken code
 Plug 'dense-analysis/ale'
+```
+
+### Limelight
+For distraction free writing
+```vim
+Plug 'junegunn/limelight'
 ```
 
 ## Kubernetes plugins
@@ -206,4 +212,4 @@ I like the of this one, but it breaks all my auto-indents and I dont' know why, 
 " Plug 'towolf/vim-helm'
 ```
 
-If you have a better solution, email me :shrug:
+If you have a better solution, email me, please 🤷
