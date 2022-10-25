@@ -27,7 +27,7 @@ def options_help():
         'steps':
         'unstable. [b]Only[b] run [meta]STEP[/] in the script.\nSteps: '
         'dot_files, manage_pkgs, vim_setup.\nExample: [switch]-s[/] [meta]'
-        'dot_files[/] [switch]-s[/] [meta]manage_pkgs',
+        'dot_files[/] [switch]-s[/] [meta]packages',
 
         'git_url':
         f'A git repo URL for your dot files. Default: {dot_file_url}',

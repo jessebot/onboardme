@@ -23,12 +23,12 @@ steps:
   Darwin:
     - vim_setup
     - dot_files
-    - manage_pkgs
+    - packages
   # these are linux specific steps
   Linux:
     - vim_setup
     - dot_files
-    - manage_pkgs
+    - packages
 
 
 dot_files:

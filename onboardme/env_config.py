@@ -60,7 +60,7 @@ def process_steps(steps=[], firewall=False, browser=False):
         if 'vim_setup' in steps and 'dot_files' not in steps:
             steps.append('dot_files')
     else:
-        steps = ['dot_files', 'manage_pkgs', 'vim_setup']
+        steps = ['dot_files', 'packages', 'vim_setup']
 
         # if 'capslock_to_control' in steps:
         # TODO:  map_caps_to_control()

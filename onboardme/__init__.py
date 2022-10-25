@@ -33,6 +33,7 @@ from .subproc import subproc
 
 PWD = path.dirname(__file__)
 HELP = options_help()
+# TODO: move this to .env_config
 with open(f'{PWD}/config/config.yml', 'r') as yaml_file:
     OPTS = yaml.safe_load(yaml_file)
 
