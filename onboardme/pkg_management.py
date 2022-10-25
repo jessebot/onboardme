@@ -1,8 +1,6 @@
 #!/usr/bin/env python3.10
-import logging
 from os import getenv, path, uname
 # rich helps pretty print everything
-from rich.logging import RichHandler
 import yaml
 
 # custom libs
@@ -118,6 +116,6 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
                 for package in required_pkgs[pkg_group]:
                     if package not in installed_pkgs:
                         cmd = pkg_cmds['install'] + package
-                        subproc([cmd], True, True, False)
+                        subproc([cmd], True, False, False)
                 print_msg('[dim][i]Completed.')
     return
