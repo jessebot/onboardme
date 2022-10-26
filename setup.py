@@ -25,7 +25,7 @@ setup(name='onboardme',
                    lic_class],
       python_requires='>3.10',
       keywords='onboardme, onboarding, desktop-setup, setuptools, development',
-      version='0.13.10_a16',
+      version='0.13.10_a17',
       project_urls={
           'Documentation': 'https://jessebot.github.io/onboardme/onboardme',
           'Source': 'http://github.com/jessebot/onboardme',

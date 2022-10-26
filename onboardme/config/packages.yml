@@ -6,6 +6,7 @@ apt:
     install: "sudo apt-get install -y "
     update: "sudo apt-get update -y"
     upgrade: "sudo apt-get upgrade -y"
+    cleanup: "sudo apt-get autoremove"
   packages:
     default:
       - terminator
