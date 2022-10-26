@@ -109,7 +109,7 @@ def fill_in_defaults(defaults={}, user_config={}):
                 if not nested_value:
                     user_config[key][nested_key] = defaults[key][nested_key]
 
-    steps = process_steps(user_config['steps'], user_config['remote_host'])
+    steps = process_steps(user_config['steps'], user_config['remote_hosts'])
     user_config['steps'] = steps
     return user_config
 
