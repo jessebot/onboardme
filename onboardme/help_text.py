@@ -10,7 +10,8 @@ from rich.theme import Theme
 
 def options_help():
     """
-    help text for all the options for main()
+    Help text for all the options/switches for main()
+    Returns a dict.
     """
     dot_file_url = '[meta]https://github.com/jessebot/dot_files[/meta]'
     return {
