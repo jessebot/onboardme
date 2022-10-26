@@ -248,6 +248,7 @@ I've actually never used this but it seems really neat, albeit not really update
 [Floobits](https://github.com/Floobits/floobits-vim) (also, what an adorable name)
 
 ### Guides and helpful answers
+
 - [using-templates-in-vim](https://shapeshed.com/vim-templates/#using-templates-in-vim)
 - [How does the vim write with sudo trick work?](https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
 - [Setting up vim for yaml](https://www.arthurkoziel.com/setting-up-vim-for-yaml/).
@@ -255,10 +256,11 @@ I've actually never used this but it seems really neat, albeit not really update
 - [Solving merge conflicts with vim](https://medium.com/prodopsio/solving-git-merge-conflicts-with-vim-c8a8617e3633)
 - [Writing a Toggle Function in vim](https://stackoverflow.com/questions/20579142/toggle-function-in-vim)
 
+For users that know enough to edit a vimrc, you should check out this [vimrc checklist](https://www.reddit.com/r/vim/wiki/vimrctips/#wiki_vimrc_checklist.3A) from r/vim.
+
 ### Awesome Lists and other neat stuff
 
 - https://vimawesome.com/
 - https://github.com/akrawchyk/awesome-vim
 
 This is a vim bootstrapper: https://vim-bootstrap.com
-
