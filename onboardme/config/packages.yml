@@ -46,9 +46,9 @@ apt:
 flatpak:
   emoji: "🫓 "
   commands:
-    setup: "sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
-    list: "flatpak list --columns=application"
-    install: "sudo flatpak install -y flathub "
+    setup: "flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
+    list: "flatpak list --user --columns=application"
+    install: "flatpak install --user -y flathub "
   packages:
     default:
       - "org.freedesktop.Platform/x86_64/21.08"
@@ -76,6 +76,7 @@ pip3.10:
   commands:
     list: "pip3.10 list"
     install: "pip3.10 install --upgrade "
+    update: "python3.10 -m pip install --upgrade pip"
   packages:
     default:
       # this is for python development
