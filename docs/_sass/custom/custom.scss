@@ -1,6 +1,8 @@
 @font-face {
-  font-family: "mononoki";
-  src: url("../onboardme/docs/fonts/mononoki-Regular-Nerd-Font-Complete.ttf") format('truetype');
+  font-family: "Mononoki";
+  src: url("../fonts/mononoki-Regular-Nerd-Font-Complete.ttf") format('truetype');
 }
 
-$mono-font-family: mononoki, consolas, monospace;
+$body-font-family: "Mononoki" !default;
+
+$mono-font-family: "Mononoki" !default;

@@ -30,10 +30,12 @@ Optimized for:
 [![made-with-python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)](https://www.python.org/)
 [![made-with-bash](https://img.shields.io/badge/GNU%20Bash-4EAA25?style=for-the-badge&logo=GNU%20Bash&logoColor=white)](https://www.gnu.org/software/bash/)
 
-And incorporating these great projects:
+And built using these great projects. Please go check them out:
 
-- [rich](https://github.com/Textualize/rich/tree/master)
-- [nerd-fonts](https://github.com/ryanoasis/nerd-fonts)
+- [![rich](https://github.com/textualize/rich/raw/master/imgs/logo.svg)](https://github.com/Textualize/rich/tree/master)
+
+- [![nerd-fonts: Iconic font aggregator, collection, and patcher](https://raw.githubusercontent.com/ryanoasis/nerd-fonts/raw/master/images/nerd-fonts-logo.svg)](https://github.com/ryanoasis/nerd-fonts)
+
 - [powerline](https://powerline.readthedocs.io/en/master/overview.html)
 
 Currently in later alpha :D
@@ -41,8 +43,9 @@ Please report 🐛 in the GitHub issues, and we will get them as we have time.
 You can also open a pull request, and we can review it asap!
 💙 We love contributors!
 
+
 ### Special Thanks
-Thank you to [@cloudymax](https://github.com/cloudymax) for all their direct contributions for gaming on Linux, virtualization, rc file edits, and the hyper terminal configs. Also great engineer to rubberduck with generally. Couldn't have polished a lot of this without their patience during my late night ramblings about my 8 different package managers and why utf-8 isn't called utf-14 :3 💙
+Thank you to [@cloudymax](https://github.com/cloudymax) for all their direct contributions for gaming on Linux, virtualization, rc file edits, and the hyper terminal configs. Also, couldn't have polished a lot of this without their patience during my late night ramblings about my 8 different package managers and why utf-8 isn't called utf-14 :3 💙
 
 
 #### Shameless plugs for other projects
