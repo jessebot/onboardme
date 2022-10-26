@@ -8,6 +8,8 @@ from subprocess import PIPE, Popen
 from rich import print
 from rich.console import Console
 from rich.logging import RichHandler
+
+
 # for console AND file logging
 FORMAT = "%(message)s"
 logging.basicConfig(level="INFO", format=FORMAT, datefmt="[%X]",
