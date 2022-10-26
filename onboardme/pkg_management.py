@@ -98,7 +98,7 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
         pkg_cmds = pkg_mngr_dict['commands']
         for pre_cmd in ['setup', 'update', 'upgrade']:
             if pre_cmd in pkg_cmds:
-                subproc([pkg_cmds[pre_cmd]], False, True)
+                subproc([pkg_cmds[pre_cmd]], False, True, False)
 
         # This is the list of currently installed packages
         installed_pkgs = subproc([pkg_cmds['list']], True, True)
@@ -113,9 +113,9 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
                            f"{pkg_emoji} [b]{pkg_mngr}[/b] packages")
                     print_header(msg, "cornflower_blue")
 
-                for package in required_pkgs[pkg_group]:
-                    if package not in installed_pkgs:
-                        cmd = pkg_cmds['install'] + package
-                        subproc([cmd], True, False, False)
+                for pkg in required_pkgs[pkg_group]:
+                    install_cmd = pkg_cmds['install'] + pkg
+                    if pkg not in installed_pkgs or 'upgrade' in install_cmd:
+                        subproc([install_cmd], True, False, False)
                 print_msg('[dim][i]Completed.')
     return

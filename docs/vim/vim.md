@@ -113,7 +113,7 @@ In command mode...
 You can change the colorscheme with `:colorscheme `, do a tab after that
 and it will list all the available color schemes.
 
-This is a colorscheme editor for vim: http://bytefluent.com/vivify/
+This is a colorscheme editor for vim: [vivify](http://bytefluent.com/vivify/)
 
 I've used it to work on the chalky colorscheme.
 
@@ -258,9 +258,13 @@ I've actually never used this but it seems really neat, albeit not really update
 
 For users that know enough to edit a vimrc, you should check out this [vimrc checklist](https://www.reddit.com/r/vim/wiki/vimrctips/#wiki_vimrc_checklist.3A) from r/vim.
 
-### Awesome Lists and other neat stuff
 
-- https://vimawesome.com/
-- https://github.com/akrawchyk/awesome-vim
+### Awesome Lists
+
+- [vimawesome.com](https://vimawesome.com/)
+- [awesome-vim](https://github.com/akrawchyk/awesome-vim)
+
+### Other neat stuff
+- kindaVim: Vim moves for the whole macOS now in native apps[](https://www.reddit.com/r/vim/comments/rmowhk/kindavim_vim_moves_for_the_whole_macos_now_in/)
 
 This is a vim bootstrapper: https://vim-bootstrap.com
