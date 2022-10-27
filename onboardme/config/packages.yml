@@ -2,11 +2,11 @@
 apt:
   emoji: "🙃"
   commands:
+    setup: "sudo apt-get autoremove"
     list: "apt list --installed"
     install: "sudo apt-get install -y "
     update: "sudo apt-get update -y"
     upgrade: "sudo apt-get upgrade -y"
-    cleanup: "sudo apt-get autoremove"
   packages:
     default:
       - terminator
@@ -61,6 +61,7 @@ flatpak:
 snap:
   emoji: "🫰 "
   commands:
+    upgrade: "sudo snap refresh"
     list: "snap list"
     install: "sudo snap install "
   packages:
@@ -76,8 +77,7 @@ pip3.10:
   emoji: "🐍"
   commands:
     list: "pip3.10 list"
-    update: "python3.10 -m pip install --upgrade pip"
-    install: "pip3.10 install --upgrade "
+    install: "python3.10 -m pip install --upgrade "
   packages:
     default:
       # this is for python development
