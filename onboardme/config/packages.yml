@@ -76,8 +76,8 @@ pip3.10:
   emoji: "🐍"
   commands:
     list: "pip3.10 list"
-    install: "pip3.10 install --upgrade "
     update: "python3.10 -m pip install --upgrade pip"
+    install: "pip3.10 install --upgrade "
   packages:
     default:
       # this is for python development
