@@ -95,13 +95,13 @@ def determine_logging_level(logging_string=""):
         raise Exception(f"Invalid log level: {logging_string}")
 
 
-def fill_in_defaults(defaults={}, user_config={}):
+def fill_in_defaults(defaults={}, user_config={}, always_prefer_default=False):
     """
     comparse a default dict and another dict and prefer default values
     if the value is empty in the the second dict, then return new dict
     """
     for key, value in user_config.items():
-        if not value:
+        if not value or always_prefer_default:
             user_config[key] = defaults[key]
         if type(value) is dict:
             for nested_key, nested_value in user_config[key].items():
@@ -145,7 +145,7 @@ def process_user_config(defaults={}, overwrite=False, repo="", git_branch="",
         with open(usr_cfg_file, 'r') as yaml_file:
             user_config_file = yaml.safe_load(yaml_file)
 
-        usr_cfgs = fill_in_defaults(cli_dict, user_config_file)
+        usr_cfgs = fill_in_defaults(cli_dict, user_config_file, True)
         print(usr_cfgs)
         return fill_in_defaults(defaults, usr_cfgs)
     else:
