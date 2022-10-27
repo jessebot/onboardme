@@ -18,13 +18,12 @@ My main daily drivers are iTerm2 and terminator right now, but I'm trying to pha
 |:---:|---|---|---|
 | [iTerm2](https://iterm2.com/) | [~/Library/ApplicationSupport/iTerm2/DynamicProfiles/Profiles.json](https://github.com/jessebot/onboardme/blob/main/configs/iterm2/Profiles.json) | configurable, highly supported | macOS only |
 | [hyper.js](https://hyper.is/) | [~/.hyper.js](https://github.com/jessebot/onboardme/blob/main/dot_files/.hyper.js) | modern feel, configurable, cross platform | Slow, Javascript :( |
-| [wezterm](https://wezfurlong.org/wezterm)| [~/.wezterm.lua](https://github.com/jessebot/onboardme/blob/main/dot_files/.wezterm.lua) | cross-platform, configurable, | not sure yet |
 | [tilix](https://gnunn1.github.io/tilix-web/)| [???](https://github.com/jessebot/onboardme/blob/main/configs) | configurable | linux only |
 | [cmder](https://cmder.net/) | None yet | terminal for windows that scales, splits, and supports config | kinda buggy |
 
 You can find more Hyper.js docs [here](./hyper/README.md), thanks to @cloudymax :)
 
-I'm still experimenting with wezterm and tilix.
+I'm still experimenting with tilix.
 
 ## Tips and Tricks
 When you're using nerdfonts, you want to set the font in the terminal config itself, and you want to set the encodeing to UTF-8

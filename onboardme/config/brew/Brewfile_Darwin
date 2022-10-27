@@ -24,9 +24,6 @@ cask "nextcloud"
 
 # Default terminal used by most macOS users, standard
 cask "iterm2"
-# cross platform terminal written in rust :shrug:
-tap "wez/wezterm"
-cask "wez/wezterm/wezterm"
 # backup terminal written in javascript :shrug:
 cask "hyper"
 
