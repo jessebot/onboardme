@@ -101,7 +101,7 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
                 subproc([pkg_cmds[pre_cmd]], False, True, False)
 
         # This is the list of currently installed packages
-        installed_pkgs = subproc([pkg_cmds['list']], True, True)
+        installed_pkgs = subproc([pkg_cmds['list']], True, False)
         # this is the list of should be installed packages
         required_pkgs = pkg_mngr_dict['packages']
 

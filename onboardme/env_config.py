@@ -143,9 +143,10 @@ def process_user_config(defaults={}, overwrite=False, repo="", git_branch="",
 
     if path.exists(usr_cfg_file):
         with open(usr_cfg_file, 'r') as yaml_file:
-            user_prefs = yaml.safe_load(yaml_file)
+            user_config_file = yaml.safe_load(yaml_file)
 
-        usr_cfgs = fill_in_defaults(cli_dict, user_prefs)
+        usr_cfgs = fill_in_defaults(cli_dict, user_config_file)
+        print(usr_cfgs)
         return fill_in_defaults(defaults, usr_cfgs)
     else:
         return fill_in_defaults(defaults, cli_dict)
