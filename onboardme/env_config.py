@@ -55,17 +55,16 @@ def process_steps(steps=[], firewall=False, browser=False):
     and then make sure dependent steps are always run.
 
     Returns a list of str type steps to run.
+
+    # TODO: if 'capslock_to_control' in steps: map_caps_to_control()
     """
     if steps:
-        steps = list(steps)
+        steps = set(steps)
         # setting up vim is useless if we don't have a .vimrc
         if 'vim_setup' in steps and 'dot_files' not in steps:
             steps.append('dot_files')
     else:
-        steps = ['dot_files', 'packages', 'vim_setup']
-
-        # if 'capslock_to_control' in steps:
-        # TODO:  map_caps_to_control()
+        steps = OPTS['steps'][SYSINFO.sysname]
 
         if 'Linux' in OS:
             # fonts are brew installed on macOS, docker grp only setup on linux
@@ -75,7 +74,7 @@ def process_steps(steps=[], firewall=False, browser=False):
                 steps.append('firewall_setup')
             if browser:
                 steps.append('browser_setup')
-    return steps
+    return list(steps)
 
 
 def determine_logging_level(logging_string=""):
@@ -109,8 +108,9 @@ def fill_in_defaults(defaults={}, user_config={}):
                 if not nested_value:
                     user_config[key][nested_key] = defaults[key][nested_key]
 
-    steps = process_steps(user_config['steps'], user_config['remote_hosts'])
-    user_config['steps'] = steps
+    current_steps = user_config['steps'][SYSINFO.sysname]
+    steps = process_steps(current_steps, user_config['remote_hosts'])
+    user_config['steps'][SYSINFO.sysname] = steps
     return user_config
 
 
@@ -134,7 +134,7 @@ def process_user_config(defaults={}, overwrite=False, repo="", git_branch="",
                 'log': {'file': log_file, 'level': level, 'quiet': quiet},
                 'remote_hosts': remote_host,
                 'firewall': firewall,
-                'steps': steps,
+                'steps': {SYSINFO.sysname: steps},
                 'dot_files': {'overwrite': overwrite,
                               'git_url': repo, 'git_branch': git_branch}}
 

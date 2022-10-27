@@ -34,4 +34,9 @@ Most things I would be doing via the command line to make it more pleasant.
 *°˖✧ﾟ・✧ﾟ˖°*
 
  ︵‿୨❤ ୧‿︵
+
 ```
+
+## Colors in the terminal
+
+![https://upload.wikimedia.org/wikipedia/commons/1/15/Xterm_256color_chart.svg](https://upload.wikimedia.org/wikipedia/commons/1/15/Xterm_256color_chart.svg)

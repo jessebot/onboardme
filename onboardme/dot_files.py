@@ -96,7 +96,7 @@ def print_git_file_table(remote_git_files=[], file_verb="", branch="",
     # then we make this a list so that zip_longest doesn't complain about sets
     f_list = list(files)
     if len(files) < 2:
-        table.add_row(files[0])
+        table.add_row(f_list[0])
     else:
         table.add_column(" ", style="green")
 

@@ -21,13 +21,13 @@ log:
 steps:
   # these are mac specific steps
   Darwin:
-    - vim_setup
     - dot_files
+    - vim_setup
     - packages
   # these are linux specific steps
   Linux:
-    - vim_setup
     - dot_files
+    - vim_setup
     - packages
 
 

@@ -57,7 +57,7 @@ Those defaults can be altered per machine by creating a config file like:
   log:
     # Full path to a file you'd like to log to. Creates file if it doesn't exist
     file: ""
-    # what level of logs to output (debug,info, warn, error)
+    # what level of logs to output (debug, info, warn, error)
     level: "INFO"
     # don't output anything to the console, if set and log file passed in, still
     # creates a log file
@@ -68,14 +68,14 @@ Those defaults can be altered per machine by creating a config file like:
   steps:
     # these are mac specific steps
     Darwin:
-      - vim_setup
       - dot_files
-      - manage_pkgs
+      - vim_setup
+      - packages 
     # these are linux specific steps
     Linux:
-      - vim_setup
       - dot_files
-      - manage_pkgs
+      - vim_setup
+      - packages 
   
   
   dot_files:

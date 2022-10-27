@@ -11,7 +11,7 @@ from click import option, command, Choice
 import fileinput
 from git import Repo, RemoteProgress
 import logging
-from os import getlogin, path, uname, chdir
+from os import getlogin, path, uname
 from pathlib import Path
 
 # rich helps pretty print everything
@@ -307,7 +307,8 @@ def main(log_level: str = "",
     log = logging.getLogger("rich")
 
     # figure out which steps to run:
-    steps = user_prefs['steps']
+    steps = user_prefs['steps'][SYSINFO.sysname]
+    print(steps)
 
     if 'dot_files' in steps:
         # this creates a live git repo out of your home directory
