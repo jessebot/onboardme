@@ -36,8 +36,8 @@ brew "bash-completion@2"
 
 # tap special cask for various terminal fonts
 tap "homebrew/cask-fonts"
-cask "font-hack-nerd-font"
-cask "font-mononoki-nerd-font"
+cask "font-mononoki"
+cask "font-symbols-only-nerd-font"
 # cat images in the terminal (e.g. img2sixel imagename.png)
 brew "libsixel"
 # for working with images and making lsimg work
