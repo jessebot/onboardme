@@ -103,7 +103,9 @@ def install_fonts():
 
 def vim_setup():
     """
-    Installs vim-plug, vim plugin manager, and then installs vim plugins
+    Installs vim-plug: does a wget on plug.vim
+    Installs vim plugins: calls vim with +PlugInstall/Upgrade/Upgrade
+    Returns True
     """
     print_header('[b]vim-plug[/b] and [green][i]Vim[/i][/green] plugins '
                  'installation [dim]and[/dim] upgrades')
@@ -131,7 +133,30 @@ def vim_setup():
         # This is for you complete me, which is a python completion module
         subproc(f'{HOME_DIR}/.vim/plugged/YouCompleteMe/install.py')
 
-    return
+    return True
+
+
+def neovim_setup():
+    """
+    neovim plugins have a different setup path entirely:
+    git clone --depth 1 https://github.com/wbthomason/packer.nvim  \
+            {HOME_DIR}/.local/share/nvim/site/pack/packer/start/packer.nvim
+    """
+    local_share = ".local/share/nvim/site/pack/packer/start/packer.nvim"
+    packer_dir = os.path.join(HOME_DIR, local_share)
+
+    if not os.path.exists(packer_dir):
+        cmd = 'git clone --depth 1 https://github.com/wbthomason/packer.nvim '
+        cmd += packer_dir
+        subproc([cmd])
+
+    # installs the vim plugins if not installed, updates vim-plug, and then
+    # updates all currently installed plugins
+    subproc(['nvim +PackerInstall +PackerCompile +PlugUpdate +qall!'], False,
+            True)
+    print_msg('[i][dim]Plugins installed.')
+
+    return True
 
 
 def map_caps_to_control():
