@@ -226,7 +226,8 @@ def print_manual_steps():
 @option('--git_branch', '-b', metavar='BRANCH', help=HELP['git_branch'])
 @option('--overwrite', '-O', is_flag=True, help=HELP['overwrite'])
 @option('--pkg_managers', '-p', metavar='PKG_MANAGER', multiple=True,
-        type=Choice(OPTS['package']['managers']), help=HELP['pkg_managers'])
+        type=Choice(OPTS['package']['managers'][SYSINFO.sysname]),
+        help=HELP['pkg_managers'])
 @option('--pkg_groups', '-g', metavar='PKG_GROUP', multiple=True,
         type=Choice(['default', 'gaming', 'devops']), help=HELP['pkg_groups'])
 @option('--firewall', '-f', is_flag=True, help=HELP['firewall'])

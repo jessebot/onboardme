@@ -39,7 +39,8 @@ def subproc(commands=[], error_ok=False, suppress_output=False, spinner=True,
     """
     for command in commands:
         status_line = f"[bold green]❤ Running command:[/bold green] {command}"
-        log.info(status_line, extra={'markup': True})
+        if not suppress_output:
+            log.info(status_line, extra={'markup': True})
 
         if not spinner:
             output = run_subprocess(command, error_ok, directory)

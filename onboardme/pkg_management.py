@@ -92,7 +92,7 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
                 subproc([pkg_cmds[pre_cmd]], False, False, False)
 
         # list of actually installed packages
-        installed_pkgs = subproc([pkg_cmds['list']], False, False, False)
+        installed_pkgs = subproc([pkg_cmds['list']], False, True)
         # list of SHOULD BE installed packages
         required_pkgs = pkg_mngr_dict['packages']
 
@@ -104,9 +104,12 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
                            f"{pkg_emoji} [b]{pkg_mngr}[/b] packages")
                     print_header(msg, "cornflower_blue")
 
+                spinner = True
+                if 'sudo' in  pkg_cmds['install']:
+                    spinner = False
                 for pkg in required_pkgs[pkg_group]:
                     install_cmd = pkg_cmds['install'] + pkg
                     if pkg not in installed_pkgs or 'upgrade' in install_cmd:
-                        subproc([install_cmd], False, False, False)
+                        subproc([install_cmd], False, True, spinner)
                 print_msg('[dim][i]Completed.')
     return

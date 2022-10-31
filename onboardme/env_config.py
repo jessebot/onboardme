@@ -135,7 +135,8 @@ def process_user_config(defaults={}, overwrite=False, repo="", git_branch="",
         if type(remote_host) is str:
             remote_host = [remote_host]
 
-    cli_dict = {'package': {'managers': pkg_mngrs, 'groups': pkg_groups},
+    cli_dict = {'package': {'managers': {SYSINFO.sysname: pkg_mngrs},
+                            'groups': pkg_groups},
                 'log': {'file': log_file, 'level': level, 'quiet': quiet},
                 'remote_hosts': remote_host,
                 'firewall': firewall,
