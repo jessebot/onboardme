@@ -292,9 +292,9 @@ def main(log_level: str = "",
         install_fonts()
 
     if 'packages' in steps:
-        print("🤷 Here's package_managers, package_groups :")
         pkg_mngrs = user_prefs['package']['managers'][SYSINFO.sysname]
         pkg_groups = user_prefs['package']['groups']
+        print("🤷 Here's package_managers, package_groups before run_pkg_mngrs:")
         print(pkg_mngrs, pkg_groups)
         run_pkg_mngrs(pkg_mngrs, pkg_groups)
 

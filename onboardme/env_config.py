@@ -94,28 +94,26 @@ def determine_logging_level(logging_string=""):
 
 def fill_in_defaults(defaults={}, user_config={}, always_prefer_default=False):
     """
-    comparse a default dict and another dict and prefer default values
-    if the value is empty in the the second dict, then return new dict
+    Compares/Combines a default dict and another dict. Prefer default values
+    only if the value is empty in the second dict. Then return new dict.
     """
+    # TODO: make this a debug output
+    # print("fill_in_defaults defaults:", defaults)
+    # print("fill_in_defaults user_config:", user_config)
+
     for key, value in user_config.items():
-        print(key, value)
+        # we have to iterate through the entire config file, and who knows how
+        # many levels there are, so we use recursion of this function
+        if type(value) is dict:
+            result_config = fill_in_defaults(defaults[key], user_config[key],
+                                             always_prefer_default)
+            # TODO: make this a debug output
+            print("fill_in_defaults result_config:", result_config)
+            user_config[key] = result_config
+
         if not value or always_prefer_default:
             user_config[key] = defaults[key]
 
-        if type(value) is dict:
-            for nested_key, nested_value in user_config[key].items():
-                print(nested_key, nested_value)
-                if not nested_value or always_prefer_default:
-                    user_config[key][nested_key] = defaults[key][nested_key]
-            if type(nested_value) is dict:
-                for n2_key, n2_value in user_config[nested_key].items():
-                    if not n2_value or always_prefer_default:
-                        user_config[key][nested_key][n2_key] = \
-                                defaults[key][nested_key][n2_key]
-
-    current_steps = user_config['steps'][SYSINFO.sysname]
-    steps = process_steps(current_steps, user_config['remote_hosts'])
-    user_config['steps'][SYSINFO.sysname] = steps
     return user_config
 
 
@@ -126,10 +124,6 @@ def process_user_config(overwrite=False, repo="", git_branch="",
     process the config in ~/.config/onboardme/config.yml if it exists
     Returns variables as a dict for use in script, else return default opts
     """
-    if not log_level:
-        log_level = "warn"
-    level = determine_logging_level(log_level)
-
     if remote_host:
         firewall = True
         if type(remote_host) is str:
@@ -137,24 +131,39 @@ def process_user_config(overwrite=False, repo="", git_branch="",
 
     cli_dict = {'package': {'managers': {SYSINFO.sysname: pkg_mngrs},
                             'groups': pkg_groups},
-                'log': {'file': log_file, 'level': level, 'quiet': quiet},
+                'log': {'file': log_file, 'level': log_level, 'quiet': quiet},
                 'remote_hosts': remote_host,
                 'firewall': firewall,
                 'steps': {SYSINFO.sysname: steps},
                 'dot_files': {'overwrite': overwrite,
                               'git_url': repo, 'git_branch': git_branch}}
 
+    print("cli_dict is: ", cli_dict)
+
     if USER_CONFIG_FILE_OPTS:
-        print("user_config_file is", USER_CONFIG_FILE_OPTS)
-        usr_cfgs = fill_in_defaults(cli_dict, USER_CONFIG_FILE_OPTS, True)
-        print("config after cli_dict vs USER_CONFIG_FILE_OPTS in " + \
-              "process_user_config:", usr_cfgs)
-        final_defaults = fill_in_defaults(DEFAULT_OPTS, usr_cfgs)
+        # TODO: make this a debug output
+        print("🗂 ⚙️  user_config_file is", USER_CONFIG_FILE_OPTS)
+
+        usr_cfgs = fill_in_defaults(DEFAULT_OPTS, USER_CONFIG_FILE_OPTS, True)
+        # TODO: make this a debug output
+        print("config after USER_CONFIG_FILE_OPTS filled in with defaults " + \
+              "in process_user_config:", usr_cfgs)
+
+        final_defaults = fill_in_defaults(cli_dict, usr_cfgs)
+        # TODO: make this a debug output
         print("final config after filling cli_dict in with defaults for " + \
               "entire script in process_user_config:", final_defaults)
     else:
         final_defaults = fill_in_defaults(DEFAULT_OPTS, cli_dict)
-        print("final config after filling cli_dict in with defaults in "
+        # TODO: make this a debug output
+        print(" final config after filling cli_dict in with defaults in "
               "process_user_config:", final_defaults)
+
+    valid_steps = process_steps(final_defaults['steps'][SYSINFO.sysname],
+                                final_defaults['remote_hosts'])
+    final_defaults['steps'][SYSINFO.sysname] = valid_steps 
+
+    log_level = determine_logging_level(final_defaults['log']['level'])
+    final_defaults['log']['level'] = log_level
 
     return final_defaults
