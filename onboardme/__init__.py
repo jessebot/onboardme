@@ -29,6 +29,7 @@ from .console_logging import print_panel, print_header, print_msg
 from .subproc import subproc
 from .dot_files import setup_dot_files
 from .pkg_management import run_pkg_mngrs
+from .ide_setup import vim_setup, neovim_setup
 
 
 HELP = options_help()
@@ -99,64 +100,6 @@ def install_fonts():
         print_msg('[i][dim]The fonts should be installed, however, you have ' +
                   'to set your terminal font to the new font. I rebooted too.')
         return
-
-
-def vim_setup():
-    """
-    Installs vim-plug: does a wget on plug.vim
-    Installs vim plugins: calls vim with +PlugInstall/Upgrade/Upgrade
-    Returns True
-    """
-    print_header('[b]vim-plug[/b] and [green][i]Vim[/i][/green] plugins '
-                 'installation [dim]and[/dim] upgrades')
-
-    # trick to not run youcompleteme init every single time
-    init_ycm = False
-    if not path.exists(f'{HOME_DIR}/.vim/plugged/YouCompleteMe/install.py'):
-        init_ycm = True
-
-    # this is for installing vim-plug
-    autoload_dir = f'{HOME_DIR}/.vim/autoload'
-    url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-    if not path.exists(autoload_dir):
-        print_msg('[i]Creating directory structure and downloading [b]' +
-                  'vim-plug[/b]...')
-        Path(autoload_dir).mkdir(parents=True, exist_ok=True)
-        wget.download(url, autoload_dir)
-
-    # installs the vim plugins if not installed, updates vim-plug, and then
-    # updates all currently installed plugins
-    subproc(['vim +PlugInstall +PlugUpgrade +PlugUpdate +qall!'], False, True)
-    print_msg('[i][dim]Plugins installed.')
-
-    if init_ycm:
-        # This is for you complete me, which is a python completion module
-        subproc(f'{HOME_DIR}/.vim/plugged/YouCompleteMe/install.py')
-
-    return True
-
-
-def neovim_setup():
-    """
-    neovim plugins have a different setup path entirely:
-    git clone --depth 1 https://github.com/wbthomason/packer.nvim  \
-            {HOME_DIR}/.local/share/nvim/site/pack/packer/start/packer.nvim
-    """
-    local_share = ".local/share/nvim/site/pack/packer/start/packer.nvim"
-    packer_dir = os.path.join(HOME_DIR, local_share)
-
-    if not os.path.exists(packer_dir):
-        cmd = 'git clone --depth 1 https://github.com/wbthomason/packer.nvim '
-        cmd += packer_dir
-        subproc([cmd])
-
-    # installs the vim plugins if not installed, updates vim-plug, and then
-    # updates all currently installed plugins
-    subproc(['nvim +PackerInstall +PackerCompile +PlugUpdate +qall!'], False,
-            True)
-    print_msg('[i][dim]Plugins installed.')
-
-    return True
 
 
 def map_caps_to_control():
@@ -354,6 +297,7 @@ def main(log_level: str = "",
     if 'vim_setup' in steps:
         # this installs the vim plugins
         vim_setup()
+        neovim_setup()
 
     if 'groups_setup' in steps:
         # will add your user to docker group
