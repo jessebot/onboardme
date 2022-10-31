@@ -1,7 +1,7 @@
  #!/usr/bin/env python3.10
  """
- NAME:    Onboardme.vim_neovim_setup
- DESC:    install vim and neovim
+ NAME:    Onboardme.ide_setup
+ DESC:    install vim AND neovim
  AUTHOR:  Jesse Hitch
  LICENSE: GNU AFFERO GENERAL PUBLIC LICENSE
  """
@@ -48,7 +48,7 @@
      # installs the vim plugins if not installed, updates vim-plug, and then
      # updates all currently installed plugins
      subproc(['vim +PlugInstall +PlugUpgrade +PlugUpdate +qall!'], False, True)
-     print_msg('[i][dim]Plugins installed.')
+     print_msg('[i][dim]Vim Plugins installed.')
  
      if init_ycm:
          # This is for you complete me, which is a python completion module
@@ -59,22 +59,17 @@
  
  def neovim_setup():
      """
-     neovim plugins have a different setup path entirely:
-     git clone --depth 1 https://github.com/wbthomason/packer.nvim  \
-             {HOME_DIR}/.local/share/nvim/site/pack/packer/start/packer.nvim
+     neovim plugins have a setup mostly already handled in your plugins.lua:
+     https://github.com/wbthomason/packer.nvim#bootstrapping
+
+     uses special command (with packer bootstrapped) to have packer setup your
+     your configuration (or simply run updates) and close once all operations
+     are completed
      """
-     local_share = ".local/share/nvim/site/pack/packer/start/packer.nvim"
-     packer_dir = os.path.join(HOME_DIR, local_share)
- 
-     if not os.path.exists(packer_dir):
-         cmd = 'git clone --depth 1 https://github.com/wbthomason/packer.nvim '
-         cmd += packer_dir
-         subproc([cmd])
- 
-     # installs the vim plugins if not installed, updates vim-plug, and then
      # updates all currently installed plugins
-     subproc(['nvim +PackerInstall +PackerCompile +PlugUpdate +qall!'], False,
-             True)
-     print_msg('[i][dim]Plugins installed.')
+     cmd = ("nvim --headless -c 'autocmd User PackerComplete quitall' "
+            "-c 'PackerSync'")
+     subproc([cmd], False, True)
+     print_msg('[i][dim]NeoVim Plugins installed.')
  
      return True
