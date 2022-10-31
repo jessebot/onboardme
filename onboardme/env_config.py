@@ -107,6 +107,11 @@ def fill_in_defaults(defaults={}, user_config={}, always_prefer_default=False):
             for nested_key, nested_value in user_config[key].items():
                 if not nested_value:
                     user_config[key][nested_key] = defaults[key][nested_key]
+            if type(nested_value) is dict:
+                for n2_key, n2_value in user_config[nested_key].items():
+                    if not n2_value:
+                        user_config[key][nested_key][n2_key] = \
+                                defaults[key][nested_key][n2_key]
 
     current_steps = user_config['steps'][SYSINFO.sysname]
     steps = process_steps(current_steps, user_config['remote_hosts'])
@@ -146,7 +151,6 @@ def process_user_config(defaults={}, overwrite=False, repo="", git_branch="",
             user_config_file = yaml.safe_load(yaml_file)
 
         usr_cfgs = fill_in_defaults(cli_dict, user_config_file, True)
-        print(usr_cfgs)
         return fill_in_defaults(defaults, usr_cfgs)
     else:
         return fill_in_defaults(defaults, cli_dict)

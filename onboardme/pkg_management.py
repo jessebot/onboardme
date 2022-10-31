@@ -20,7 +20,7 @@ SYSINFO = uname()
 OS = f"{SYSINFO.sysname}_{SYSINFO.machine}"
 
 
-def brew_install_upgrade(OS="Darwin", pkg_groups=['default']):
+def brew_install_upgrade(OS="Darwin", package_groups=['default']):
     """
     Run the install/upgrade of packages managed by brew, also updates brew
     Always installs the .Brewfile (which has libs that work on both mac/linux)
@@ -36,14 +36,11 @@ def brew_install_upgrade(OS="Darwin", pkg_groups=['default']):
     subproc(['brew update --quiet', 'brew upgrade --quiet',
              f'{install_cmd} --global'])
 
-    # the above is basically our default
-    pkg_groups.remove('default')
-
     # install os specific or package group specific brew stuff
     brewfile = path.join(PWD, 'config/brew/Brewfile_')
     # sometimes there isn't an OS specific brewfile, but there always is 4 mac
     os_brewfile = path.exists(brewfile + OS)
-    if os_brewfile or pkg_groups:
+    if os_brewfile or package_groups:
         install_cmd += f" --file={brewfile}"
 
         if os_brewfile:
@@ -51,11 +48,12 @@ def brew_install_upgrade(OS="Darwin", pkg_groups=['default']):
             print_msg(os_msg)
             subproc([f'{install_cmd}{OS}'], True)
 
-        if pkg_groups:
-            for group in pkg_groups:
-                msg = group.title + ' specific ' + brew_msg
-                print_header(msg)
-                subproc([f'{install_cmd}{group}'], True)
+        if package_groups:
+            for group in package_groups:
+                if group != "default":
+                    msg = group.title + ' specific ' + brew_msg
+                    print_header(msg)
+                    subproc([f'{install_cmd}{group}'], True)
 
     # cleanup operation doesn't seem to happen automagically :shrug:
     cleanup_msg = '[i][dim]🍺 [green][b]brew[/b][/] final upgrade/cleanup'
@@ -77,13 +75,6 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
         brew_install_upgrade(SYSINFO.sysname, pkg_groups)
         pkg_mngrs.remove('brew')
 
-    # if macOS, only do brew and pip3.10
-    if "Darwin" in OS:
-        if 'pip3.10' in pkg_mngrs:
-            pkg_mngrs = ['pip3.10']
-        else:
-            return
-
     with open(f'{PWD}/config/packages.yml', 'r') as yaml_file:
         pkg_mngrs_list = yaml.safe_load(yaml_file)
 
@@ -100,9 +91,9 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
             if pre_cmd in pkg_cmds:
                 subproc([pkg_cmds[pre_cmd]], False, False, False)
 
-        # This is the list of currently installed packages
+        # list of actually installed packages
         installed_pkgs = subproc([pkg_cmds['list']], False, False, False)
-        # this is the list of should be installed packages
+        # list of SHOULD BE installed packages
         required_pkgs = pkg_mngr_dict['packages']
 
         # iterate through package groups, such as: default, gaming, devops...

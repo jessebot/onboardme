@@ -276,7 +276,6 @@ def main(log_level: str = "",
 
     # figure out which steps to run:
     steps = user_prefs['steps'][SYSINFO.sysname]
-    print(steps)
 
     if 'dot_files' in steps:
         # this creates a live git repo out of your home directory
@@ -288,8 +287,9 @@ def main(log_level: str = "",
         install_fonts()
 
     if 'packages' in steps:
-        pkg_groups = user_prefs['package'].get('groups')
-        run_pkg_mngrs(user_prefs['package'].get('managers'), pkg_groups)
+        pkg_groups = user_prefs['package']['groups']
+        pkg_mngrs = user_prefs['package']['managers'][SYSINFO.sysname]
+        run_pkg_mngrs(pkg_mngrs, pkg_groups)
 
     if 'firewall_setup' in steps:
         configure_firewall(remote_host)

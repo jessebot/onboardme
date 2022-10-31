@@ -30,7 +30,6 @@ steps:
     - vim_setup
     - packages
 
-
 dot_files:
   # personal git repo URL for your dot files, defaults to jessebot/dot_files
   git_url: "https://github.com/jessebot/dot_files.git"
@@ -42,17 +41,22 @@ dot_files:
   # onboardme -s dot_files
   overwrite: false
 
-
 # this is the basic package config. to edit the specific packages, edit
 # ~/.config/onboardme/packages.yml
 package:
   # Remove any of the below pkg managers to only run the remaining pkg managers
   managers:
-    - brew
-    - pip3.10
-    - snap
-    - flatpak
-    - apt
+    # these are mac specific steps
+    Darwin:
+      - brew
+      - pip3.10
+    # these are linux specific steps
+    Linux:
+      - brew
+      - pip3.10
+      - snap
+      - flatpak
+      - apt
   # list of extra existing packages groups to install
   groups:
     - default
@@ -60,14 +64,12 @@ package:
     # - gaming
     # - work
 
-
 # known safe remote hosts that you expect to be able to ping and SSH into
 remote_hosts: []
   # - 192.168.42.42
 
 # setup iptable on Linux only
 firewall: false
-
 
 ### TODO: make this work, it's a nice dream though.
 # any URL we can curl to download a folder from

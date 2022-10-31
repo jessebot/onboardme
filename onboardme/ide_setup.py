@@ -67,10 +67,12 @@ def neovim_setup():
     your configuration (or simply run updates) and close once all operations
     are completed
     """
+    print_header('[b]packer[/b] and [green][i]NeoVim[/i][/green] plugins '
+                 'installation [dim]and[/dim] upgrades')
     # updates all currently installed plugins
     cmd = ("nvim --headless -c 'autocmd User PackerComplete quitall' "
            "-c 'PackerSync'")
-    subproc([cmd], False, True)
+    subproc([cmd], False, False, False)
     print_msg('[i][dim]NeoVim Plugins installed.')
 
     return True
