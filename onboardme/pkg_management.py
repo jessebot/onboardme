@@ -98,10 +98,10 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
         pkg_cmds = pkg_mngr_dict['commands']
         for pre_cmd in ['setup', 'update', 'upgrade']:
             if pre_cmd in pkg_cmds:
-                subproc([pkg_cmds[pre_cmd]], False, True, False)
+                subproc([pkg_cmds[pre_cmd]], False, False, False)
 
         # This is the list of currently installed packages
-        installed_pkgs = subproc([pkg_cmds['list']], True, False)
+        installed_pkgs = subproc([pkg_cmds['list']], False, False, False)
         # this is the list of should be installed packages
         required_pkgs = pkg_mngr_dict['packages']
 
@@ -116,6 +116,6 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
                 for pkg in required_pkgs[pkg_group]:
                     install_cmd = pkg_cmds['install'] + pkg
                     if pkg not in installed_pkgs or 'upgrade' in install_cmd:
-                        subproc([install_cmd], True, False, False)
+                        subproc([install_cmd], False, False, False)
                 print_msg('[dim][i]Completed.')
     return
