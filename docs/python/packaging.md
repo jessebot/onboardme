@@ -157,6 +157,9 @@ pip3.10 install -e .
 ```
 
 Then do the more important build for files to uplaod to pypi:
+_Make sure you have the wheel, and twine module installed:_
+- `pip3.10 install wheel`
+- `pip3.10 install twine`
 
 ```bash
 # this generates a wheel file, the thing you want to upload
