@@ -20,11 +20,11 @@ from rich.console import Console
 from rich.table import Table
 from rich.logging import RichHandler
 from random import randint
-import wget
 
 # custom libs
 from .help_text import RichCommand, options_help
-from .env_config import check_os_support, process_user_config, OPTS, HOME_DIR
+from .env_config import check_os_support, process_user_config, HOME_DIR
+from .env_config import DEFAULT_OPTS as OPTS
 from .console_logging import print_panel, print_header, print_msg
 from .subproc import subproc
 from .dot_files import setup_dot_files
@@ -255,10 +255,10 @@ def main(log_level: str = "",
     check_os_support()
 
     # then process any local user config files in ~/.config/onboardme
-    user_prefs = process_user_config(OPTS, overwrite, git_url,
-                                     git_branch, pkg_managers, pkg_groups,
-                                     log_level, log_file, quiet, firewall,
-                                     remote_host, steps)
+    user_prefs = process_user_config(overwrite, git_url, git_branch,
+                                     pkg_managers, pkg_groups, log_level,
+                                     log_file, quiet, firewall, remote_host,
+                                     steps)
 
     # for console AND file logging
     log_file = user_prefs['log']['file']
@@ -275,8 +275,12 @@ def main(log_level: str = "",
     global log
     log = logging.getLogger("rich")
 
+    log.debug(f"User, {USER} passed in the following preferences: ")
+    log.debug(user_prefs)
+
     # figure out which steps to run:
     steps = user_prefs['steps'][SYSINFO.sysname]
+    print(steps)
 
     if 'dot_files' in steps:
         # this creates a live git repo out of your home directory
@@ -288,8 +292,10 @@ def main(log_level: str = "",
         install_fonts()
 
     if 'packages' in steps:
-        pkg_groups = user_prefs['package']['groups']
+        print("🤷 Here's package_managers, package_groups :")
         pkg_mngrs = user_prefs['package']['managers'][SYSINFO.sysname]
+        pkg_groups = user_prefs['package']['groups']
+        print(pkg_mngrs, pkg_groups)
         run_pkg_mngrs(pkg_mngrs, pkg_groups)
 
     if 'firewall_setup' in steps:

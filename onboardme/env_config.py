@@ -13,19 +13,16 @@ HOME_DIR = getenv("HOME")
 SYSINFO = uname()
 # this will be something like Darwin_x86_64
 OS = f"{SYSINFO.sysname}_{SYSINFO.machine}"
+
+# these are the default options for the script
 with open(f"{path.dirname(__file__)}/config/config.yml", 'r') as yaml_file:
-    OPTS = yaml.safe_load(yaml_file)
+    DEFAULT_OPTS = yaml.safe_load(yaml_file)
 
-
-def parse_local_configs():
-    """
-    parse the local config yaml file if it exists
-    """
-    local_config_dir = f'{HOME_DIR}/.config/onboardme/config.yaml'
-    if path.exists(local_config_dir):
-        with open(local_config_dir, 'r') as yaml_file:
-            config = yaml.safe_load(yaml_file)
-    return config
+USER_CONFIG_FILE_OPTS = None
+local_config_file = f'{HOME_DIR}/.config/onboardme/config.yaml'
+if path.exists(local_config_file):
+    with open(local_config_file, 'r') as yaml_file:
+        USER_CONFIG_FILE_OPTS = yaml.safe_load(yaml_file)
 
 
 def check_os_support():
@@ -101,15 +98,18 @@ def fill_in_defaults(defaults={}, user_config={}, always_prefer_default=False):
     if the value is empty in the the second dict, then return new dict
     """
     for key, value in user_config.items():
+        print(key, value)
         if not value or always_prefer_default:
             user_config[key] = defaults[key]
+
         if type(value) is dict:
             for nested_key, nested_value in user_config[key].items():
-                if not nested_value:
+                print(nested_key, nested_value)
+                if not nested_value or always_prefer_default:
                     user_config[key][nested_key] = defaults[key][nested_key]
             if type(nested_value) is dict:
                 for n2_key, n2_value in user_config[nested_key].items():
-                    if not n2_value:
+                    if not n2_value or always_prefer_default:
                         user_config[key][nested_key][n2_key] = \
                                 defaults[key][nested_key][n2_key]
 
@@ -119,12 +119,12 @@ def fill_in_defaults(defaults={}, user_config={}, always_prefer_default=False):
     return user_config
 
 
-def process_user_config(defaults={}, overwrite=False, repo="", git_branch="",
+def process_user_config(overwrite=False, repo="", git_branch="",
                         pkg_mngrs=[], pkg_groups=[], log_level="", log_file="",
                         quiet=False, firewall=False, remote_host="", steps=[]):
     """
     process the config in ~/.config/onboardme/config.yml if it exists
-    and return variables as a dict for use in script, else return default opts
+    Returns variables as a dict for use in script, else return default opts
     """
     if not log_level:
         log_level = "warn"
@@ -144,14 +144,17 @@ def process_user_config(defaults={}, overwrite=False, repo="", git_branch="",
                 'dot_files': {'overwrite': overwrite,
                               'git_url': repo, 'git_branch': git_branch}}
 
-    # cli options are more important, but if none passed in, we check .config
-    usr_cfg_file = path.join(HOME_DIR, '.config/onboardme/config.yml')
-
-    if path.exists(usr_cfg_file):
-        with open(usr_cfg_file, 'r') as yaml_file:
-            user_config_file = yaml.safe_load(yaml_file)
-
-        usr_cfgs = fill_in_defaults(cli_dict, user_config_file, True)
-        return fill_in_defaults(defaults, usr_cfgs)
+    if USER_CONFIG_FILE_OPTS:
+        print("user_config_file is", USER_CONFIG_FILE_OPTS)
+        usr_cfgs = fill_in_defaults(cli_dict, USER_CONFIG_FILE_OPTS, True)
+        print("config after cli_dict vs USER_CONFIG_FILE_OPTS in " + \
+              "process_user_config:", usr_cfgs)
+        final_defaults = fill_in_defaults(DEFAULT_OPTS, usr_cfgs)
+        print("final config after filling cli_dict in with defaults for " + \
+              "entire script in process_user_config:", final_defaults)
     else:
-        return fill_in_defaults(defaults, cli_dict)
+        final_defaults = fill_in_defaults(DEFAULT_OPTS, cli_dict)
+        print("final config after filling cli_dict in with defaults in "
+              "process_user_config:", final_defaults)
+
+    return final_defaults
