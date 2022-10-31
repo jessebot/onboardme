@@ -25,7 +25,8 @@ Looking for a project to get a fresh OS entirely, on a machine that has no OS? C
 | Installs pip3.10, apt, snap, flatpak packages | `./onboardme/config/packages.yml`                 | Debian       |
 | (OPTIONAL) Installs gaming related packages.  | `./onboardme/config/packages.yml`                 | Debian       |
 | Installs fonts                                | n/a                                               | macOS/Debian |
-| Installs vim-plug, a vim plugin manager       | n/a: plugins fetched from a configured git repo   | macOS/Debian |
+| Installs vim-plug + vim plugins               | n/a: plugins fetched from a configured git repo   | macOS/Debian |
+| Installs packer.nvm + neovim plugins          | n/a: plugins fetched from a configured git repo   | macOS/Debian |
 | Configures iptables (see note)                | `./onbaordme/config`                              | Debian       |
 | Adds user to the docker group                 | n/a                                               | Debian       |
 
@@ -41,8 +42,8 @@ OnBoardMe doesn't officially support phones yet, but for what I use on my phone,
 | Backups - local/remote | Restic to minio and b2              | GDrive, iCloud, S3                |
 | Web Browser            | Firefox, w3m (terminal only)        | Chrome/Safari/Edge                |
 | Email Client           | Thunderbird + Protonmail + Bridge for Linux/MacOS | Gmail               |
-| IDE                    | Vim + Plugins                       | Vscode/JetBrains/etc              |
-| Document Editor        | LibreOffice                         | Microsoft Word                    |
+| IDE                    | Vim + Plugins, NeoVim + Plugins     | Vscode/Pycharm etc                |
+| Document Editor        | LibreOffice                         | Microsoft Word, Google Docs       |
 | Launcher               | Undecided                           | Alfred                            |
 | Photo/file Storage     | NextCloud Files/Photos (testing)    | Google Photos/Drive               |
 | Passwords              | Bitwarden                           | LastPass, Apple/Google            |
