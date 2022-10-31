@@ -76,7 +76,8 @@ def process_steps(steps=[], firewall=False, browser=False):
 
 def determine_logging_level(logging_string=""):
     """
-    returns logging object
+    returns logging object for given logging string of one of the following:
+    info, warn, error, debug
     """
     log_level = logging_string.upper()
 
@@ -108,7 +109,6 @@ def fill_in_defaults(defaults={}, user_config={}, always_prefer_default=False):
             result_config = fill_in_defaults(defaults[key], user_config[key],
                                              always_prefer_default)
             # TODO: make this a debug output
-            print("fill_in_defaults result_config:", result_config)
             user_config[key] = result_config
 
         if not value or always_prefer_default:
@@ -138,26 +138,27 @@ def process_user_config(overwrite=False, repo="", git_branch="",
                 'dot_files': {'overwrite': overwrite,
                               'git_url': repo, 'git_branch': git_branch}}
 
-    print("cli_dict is: ", cli_dict)
+    # TODO: make this a debug output
+    # print("cli_dict is: ", cli_dict)
 
     if USER_CONFIG_FILE_OPTS:
         # TODO: make this a debug output
-        print("🗂 ⚙️  user_config_file is", USER_CONFIG_FILE_OPTS)
+        # print("🗂 ⚙️  user_config_file is", USER_CONFIG_FILE_OPTS)
 
         usr_cfgs = fill_in_defaults(DEFAULT_OPTS, USER_CONFIG_FILE_OPTS, True)
         # TODO: make this a debug output
-        print("config after USER_CONFIG_FILE_OPTS filled in with defaults " + \
-              "in process_user_config:", usr_cfgs)
+        # print("config after USER_CONFIG_FILE_OPTS filled in with defaults " + \
+        #       "in process_user_config:", usr_cfgs)
 
         final_defaults = fill_in_defaults(cli_dict, usr_cfgs)
         # TODO: make this a debug output
-        print("final config after filling cli_dict in with defaults for " + \
-              "entire script in process_user_config:", final_defaults)
+        # print("final config after filling cli_dict in with defaults for " + \
+        #       "entire script in process_user_config:", final_defaults)
     else:
         final_defaults = fill_in_defaults(DEFAULT_OPTS, cli_dict)
         # TODO: make this a debug output
-        print(" final config after filling cli_dict in with defaults in "
-              "process_user_config:", final_defaults)
+        # print(" final config after filling cli_dict in with defaults in "
+        #       "process_user_config:", final_defaults)
 
     valid_steps = process_steps(final_defaults['steps'][SYSINFO.sysname],
                                 final_defaults['remote_hosts'])
