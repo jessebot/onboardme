@@ -280,7 +280,8 @@ def main(log_level: str = "",
 
     # figure out which steps to run:
     steps = user_prefs['steps'][SYSINFO.sysname]
-    print(steps)
+    # TODO: make debug
+    # print("Steps to be run: ", steps)
 
     if 'dot_files' in steps:
         # this creates a live git repo out of your home directory
@@ -294,8 +295,9 @@ def main(log_level: str = "",
     if 'packages' in steps:
         pkg_mngrs = user_prefs['package']['managers'][SYSINFO.sysname]
         pkg_groups = user_prefs['package']['groups']
-        print("🤷 Here's package_managers, package_groups before run_pkg_mngrs:")
-        print(pkg_mngrs, pkg_groups)
+        # TODO: make debug
+        # print("🤷 package_managers, package_groups before run_pkg_mngrs:")
+        # print(pkg_mngrs, pkg_groups)
         run_pkg_mngrs(pkg_mngrs, pkg_groups)
 
     if 'firewall_setup' in steps:
