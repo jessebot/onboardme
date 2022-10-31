@@ -148,9 +148,9 @@ It translates to: Create a command called `onboardme` that calls the `main`
 function of the `onboardme` package.
 
 ## Testing the package
+__**Note**: I'm using python/pip version 3.10 explicitly here, but you could use any version you're testing/releasing.__
 
 Build locally first for general testing:
-
 ```bash
 # this will install locally and then you can test your package and cli tools
 pip3.10 install -e .
@@ -163,7 +163,7 @@ _Make sure you have the wheel, and twine module installed:_
 
 ```bash
 # this generates a wheel file, the thing you want to upload
-python -m build --wheel
+python3.10 -m build --wheel
 
 # this checks to make sure it's probably built correctly
 twine check dist/*
