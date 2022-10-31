@@ -16,6 +16,7 @@ import wget
 # custom libs
 from .console_logging import print_panel, print_header, print_msg
 from .subproc import subproc
+from .env_config import HOME_DIR
 
 
 # user env info
