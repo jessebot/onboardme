@@ -51,56 +51,9 @@ and release them into the wild, because we are vegan and nice.
 ## Collaborators
 
 <!-- readme: collaborators -start -->
-<table>
-<tr>
-    <td align="center">
-        <a href="https://github.com/jessebot">
-            <img src="https://avatars.githubusercontent.com/u/2389292?v=4" width="100;" alt="jessebot"/>
-            <br />
-            <sub><b>JesseBot</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/cloudymax">
-            <img src="https://avatars.githubusercontent.com/u/84841307?v=4" width="100;" alt="cloudymax"/>
-            <br />
-            <sub><b>Max!</b></sub>
-        </a>
-    </td></tr>
-</table>
 <!-- readme: collaborators -end -->
 
-## Contributors
-
-<!-- readme: contributors -start -->
-<table>
-<tr>
-    <td align="center">
-        <a href="https://github.com/jessebot">
-            <img src="https://avatars.githubusercontent.com/u/2389292?v=4" width="100;" alt="jessebot"/>
-            <br />
-            <sub><b>JesseBot</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/cloudymax">
-            <img src="https://avatars.githubusercontent.com/u/84841307?v=4" width="100;" alt="cloudymax"/>
-            <br />
-            <sub><b>Max!</b></sub>
-        </a>
-    </td></tr>
-</table>
-<!-- readme: contributors -end -->
-
-## Bots we're also proud of
-
-<!-- readme: bots -start -->
-<table>
-</table>
-<!-- readme: bots -end -->
-
-
-#### Shameless plugs for other projects
+## Shameless plugs for other projects
 Looking for a project to get running on a machine that has no OS at all?
 Check out [pxeless](https://github.com/cloudymax/pxeless).
 
