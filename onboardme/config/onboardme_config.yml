@@ -2,15 +2,18 @@
 # ______________________________________________________________ #
 #         Config file for the onboardme cli command.             #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-#   - If this files exists as: ~/.config/onboardme/config.yml    #
-#     then its loaded instead of the default config              #
+#  - This is the default config file that pip will install into: #
+#    $PYTHON_PATH/lib/onboardme/config/onboardme_config.yml      #
+#                                                                #
+#  - If this files exists as: ~/.config/onboardme/config.yaml    #
+#    then its loaded instead of the default config               #
 # -------------------------------------------------------------- #
 
 
 log:
   # Full path to a file you'd like to log to. Creates file if it doesn't exist
   file: ""
-  # what level of logs to output (debug,info, warn, error)
+  # what level of logs to output (DEBUG, INFO, WARN, ERROR)
   level: "INFO"
   # don't output anything to the console, if set and log file passed in, still
   # creates a log file
@@ -22,13 +25,15 @@ steps:
   # these are mac specific steps
   Darwin:
     - dot_files
-    - vim_setup
     - packages
+    - vim_setup
   # these are linux specific steps
   Linux:
     - dot_files
-    - vim_setup
     - packages
+    - vim_setup
+    - font_setup
+    - group_setup
 
 dot_files:
   # personal git repo URL for your dot files, defaults to jessebot/dot_files
@@ -41,12 +46,11 @@ dot_files:
   # onboardme -s dot_files
   overwrite: false
 
-# this is the basic package config. to edit the specific packages, edit
-# ~/.config/onboardme/packages.yml
+# This is the basic package config.
 package:
   # Remove any of the below pkg managers to only run the remaining pkg managers
   managers:
-    # these are mac specific steps
+    # these are macOS specific steps
     Darwin:
       - brew
       - pip3.10
@@ -63,6 +67,8 @@ package:
     # uncomment these to add them as default installed package groups
     # - gaming
     # - work
+    #
+# Coming soon: to edit the specific packages: ~/.config/onboardme/packages.yaml
 
 # known safe remote hosts that you expect to be able to ping and SSH into
 remote_hosts: []

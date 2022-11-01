@@ -6,21 +6,15 @@ AUTHOR:  Jesse Hitch
 LICENSE: GNU AFFERO GENERAL PUBLIC LICENSE
 """
 
+from git import Repo, RemoteProgress
 from os import path
 from pathlib import Path
-
-# rich helps pretty print everything
-from rich import print
 import wget
 
 # custom libs
-from .console_logging import print_panel, print_header, print_msg
+from .console_logging import print_header, print_msg
 from .subproc import subproc
-from .env_config import HOME_DIR
-
-
-# user env info
-PWD = path.dirname(__file__)
+from .env_config import HOME_DIR, OS
 
 
 def vim_setup():
@@ -76,3 +70,62 @@ def neovim_setup():
     print_msg('[i][dim]NeoVim Plugins installed.')
 
     return True
+
+
+def font_setup():
+    """
+    Clones nerd-fonts repo and does a sparse checkout on only mononoki and
+    hack fonts. Also removes 70-no-bitmaps.conf and links 70-yes-bitmaps.conf
+
+    Then runs install.sh from nerd-fonts repo
+
+    ripped out of setup.sh recently:
+        # we do this for Debian, to download custom fonts during onboardme
+        if [[ "$OS" == *"Linux"* ]]; then
+            mkdir -p ~/.local/share/fonts
+        fi
+    """
+    if 'Linux' in OS:
+        print_header('📝 [i]font[/i] installations')
+        fonts_dir = f'{HOME_DIR}/repos/nerd-fonts'
+
+        # do a shallow clone of the repo
+        if not path.exists(fonts_dir):
+            # log.debug('Nerdfonts require some setup on Linux...')
+            bitmap_conf = '/etc/fonts/conf.d/70-no-bitmaps.conf'
+            # log.debug(f'Going to remove {bitmap_conf} and link a yes map...')
+            # we do all of this with subprocess because I want the sudo prompt
+            if path.exists(bitmap_conf):
+                subproc([f'sudo rm {bitmap_conf}'], False, True, False)
+
+            subproc(['sudo ln -s /etc/fonts/conf.avail/70-yes-bitmaps.conf ' +
+                    '/etc/fonts/conf.d/70-yes-bitmaps.conf'],
+                    True, True, False)
+
+            print_msg('[i]Downloading installer and font sets... ')
+
+            Path(fonts_dir).mkdir(parents=True, exist_ok=True)
+            fonts_repo = 'https://github.com/ryanoasis/nerd-fonts.git'
+
+            class CloneProgress(RemoteProgress):
+                def update(self, op_code, cur_count, max_count=None,
+                           message=''):
+                    if message:
+                        log.info(message)
+
+            Repo.clone_from(fonts_repo, fonts_dir, progress=CloneProgress(),
+                            multi_options=['--sparse', '--filter=blob:none'])
+            subproc(["git sparse-checkout add patched-fonts/Mononoki",
+                     "git sparse-checkout add patched-fonts/Hack"], False,
+                    False, True, fonts_dir)
+        else:
+            subproc(["git pull"], False, False, True, fonts_dir)
+
+        subproc(['./install.sh Hack', './install.sh Mononoki'], False, True,
+                True, fonts_dir)
+
+        print_msg('[i][dim]The fonts should be installed, however, you have ' +
+                  'to set your terminal font to the new font. I rebooted too.')
+        return
+
+    return

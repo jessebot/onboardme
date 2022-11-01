@@ -3,27 +3,27 @@ Using Textualize's rich library to pretty print subprocess outputs,
 so during long running commands, the user isn't wondering what's going on,
 even if you don't actually output anything from stdout/stderr of the command.
 """
+import dbm
 import logging
 from subprocess import PIPE, Popen
+
 from rich import print
 from rich.console import Console
 from rich.logging import RichHandler
 
+log_opts = {'format': "%(message)s",
+            'datefmt': "[%X]",
+            'handlers': [RichHandler(rich_tracebacks=True)]}
 
-# for console AND file logging
-FORMAT = "%(message)s"
-logging.basicConfig(level="INFO", format=FORMAT, datefmt="[%X]",
-                    handlers=[RichHandler()])
+# set the logger opts for all files
+with dbm.open('obm_cache', 'r') as db:
+    log_opts['level'] = int(db['level'].decode())
+    log_file = db['file']
+    if log_file:
+        log_opts['console'] = Console(file=log_file.decode())
+
+logging.basicConfig(**log_opts)
 log = logging.getLogger("rich")
-
-
-class multi_subproc():
-    """
-    A small class to pretty printy subprocess calls and log them
-    """
-    def __init__():
-        """
-        """
 
 
 def subproc(commands=[], error_ok=False, suppress_output=False, spinner=True,
@@ -49,7 +49,7 @@ def subproc(commands=[], error_ok=False, suppress_output=False, spinner=True,
             console = Console()
             tasks = [command]
 
-            with console.status(status_line) as status:
+            with console.status(status_line):
                 while tasks:
                     output = run_subprocess(command, error_ok, directory)
                     tasks.pop(0)

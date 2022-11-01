@@ -49,7 +49,7 @@ flatpak:
   commands:
     setup: "flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
     list: "flatpak list --user --columns=application"
-    install: "flatpak install --user -y flathub "
+    install: "flatpak install --user --app -y "
   packages:
     default:
       - "org.freedesktop.Platform/x86_64/21.08"
