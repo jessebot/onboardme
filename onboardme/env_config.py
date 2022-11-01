@@ -67,7 +67,6 @@ def process_steps(steps=[], firewall=False, browser=False):
     """
     if steps:
         steps_list = list(steps)
-        print(steps_list)
         # setting up vim is useless if we don't have a .vimrc
         if 'vim_setup' in steps_list and 'dot_files' not in steps_list:
             steps_list.append('dot_files')
