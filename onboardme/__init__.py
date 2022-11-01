@@ -21,7 +21,6 @@ from .env_config import check_os_support, process_configs, OS
 from .env_config import DEFAULTS as OPTS
 from .console_logging import print_panel
 
-print(OPTS)
 
 HELP = options_help()
 

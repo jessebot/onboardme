@@ -16,7 +16,7 @@ log_opts = {'format': "%(message)s",
             'handlers': [RichHandler(rich_tracebacks=True)]}
 
 # set the logger opts for all files
-with dbm.open('obm_cache', 'r') as db:
+with dbm.open('log_cache', 'r') as db:
     log_opts['level'] = int(db['level'].decode())
     log_file = db['file']
     if log_file:

@@ -23,7 +23,7 @@ def load_yaml(yaml_config_file=""):
         with open(yaml_config_file, 'r') as yaml_file:
             return yaml.safe_load(yaml_file)
     else:
-        print(f"Config file we got was not present: {yaml_config_file}")
+        # print(f"Config file we got was not present: {yaml_config_file}")
         return None
 
 
