@@ -8,7 +8,9 @@
 """
 from click import option, command, Choice
 import dbm
+import importlib
 import logging
+import sys
 
 # rich helps pretty print everything
 from rich.console import Console
@@ -147,8 +149,10 @@ def main(log_level: str = "",
             run_pkg_mngrs(pkg_mngrs, pkg_groups)
 
         elif step in ['vim_setup', 'neovim_setup', 'font_setup']:
-            __import__('.ide_setup', globals(), locals(), [step])
-            locals()[step]()
+            # import step from ide_setup.py in same directory
+            importlib.import_module(f'onboardme.ide_setup', package=f'.{step}')
+            func = getattr(ide_setup, step)
+            func()
 
     if 'firewall_setup' in steps:
         from .firewall import configure_firewall

@@ -66,20 +66,19 @@ def process_steps(steps=[], firewall=False, browser=False):
     # TODO: if 'capslock_to_control' in steps: map_caps_to_control()
     """
     if steps:
-        if len(steps) > 1:
-            steps = set(steps)
+        steps_list = list(steps)
+        print(steps_list)
         # setting up vim is useless if we don't have a .vimrc
-        if 'vim_setup' in steps and 'dot_files' not in steps:
-            steps.append('dot_files')
+        if 'vim_setup' in steps_list and 'dot_files' not in steps_list:
+            steps_list.append('dot_files')
         if browser:
-            steps.append('browser_setup')
+            steps_list.append('browser_setup')
         if firewall and 'Linux' in OS:
             # currently don't have a great firewall on macOS, sans lulu
-            steps.append('firewall_setup')
+            steps_list.append('firewall_setup')
 
-    if type(steps) is set:
-        steps = list(steps)
-
+    removed_duplicates = set(steps_list)
+    steps = list(removed_duplicates)
     default_order = DEFAULTS['steps'][OS[0]]
 
     # Rearrange list by other list order Using list comprehension
