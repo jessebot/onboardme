@@ -82,9 +82,6 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
         # list of SHOULD BE installed packages
         required_pkgs = pkg_mngr_dict['packages']
 
-        # iterate through package groups, such as: default, gaming, devops...
-        print("package manager in run_pkg_mngrs before iterating:", pkg_mngr)
-        print("package groups in run_pkg_mngrs before iterating:", pkg_groups)
         for pkg_group in pkg_groups:
             if required_pkgs[pkg_group]:
                 if pkg_group != 'default':
@@ -92,17 +89,30 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
                            f"{pkg_emoji} [b]{pkg_mngr}[/b] packages")
                     print_header(msg, "cornflower_blue")
 
-                print("This is pkg_group: ", pkg_group)
+                install_pkg_group(installed_pkgs, required_pkgs[pkg_group],
+                                  pkg_cmds['install'])
+    return
 
-                spinner = True
-                if 'sudo' in pkg_cmds['install']:
-                    spinner = False
-                print("this is required_pkgs[pkg_group]:",
-                      required_pkgs[pkg_group])
-                print("this is installed_pkgs:", installed_pkgs)
-                for pkg in required_pkgs[pkg_group]:
-                    install_cmd = pkg_cmds['install'] + pkg
-                    if pkg not in installed_pkgs or 'upgrade' in install_cmd:
-                        subproc([install_cmd], False, True, spinner)
-                print_msg('[dim][i]Completed.')
+
+def install_pkg_group(installed_pkgs=[], pkgs_to_install=[], install_cmd=""):
+    """
+    installs packages if they are not already intalled with intall_cmd
+    """
+    install_pkg = False
+    spinner = True
+    # the spinner status thing rich provides breaks with input
+    if 'sudo' in install_cmd:
+        spinner = False
+
+    if 'upgrade' in install_cmd:
+        install_pkg = True
+
+    for pkg in pkgs_to_install:
+        if installed_pkgs:
+            if pkg in installed_pkgs:
+                install_pkg = True
+        if install_pkg:
+            subproc([install_cmd + pkg], False, True, spinner)
+    print_msg('[dim][i]Completed.')
+
     return
