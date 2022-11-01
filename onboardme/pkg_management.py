@@ -97,6 +97,8 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
         required_pkgs = pkg_mngr_dict['packages']
 
         # iterate through package groups, such as: default, gaming, devops...
+        print("package manager in run_pkg_mngrs before iterating:", pkg_mngr)
+        print("package groups in run_pkg_mngrs before iterating:", pkg_groups)
         for pkg_group in pkg_groups:
             if required_pkgs[pkg_group]:
                 if pkg_group != 'default':
