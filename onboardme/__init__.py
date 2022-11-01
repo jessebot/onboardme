@@ -46,6 +46,7 @@ def setup_logger(log_level, log_file=""):
     if log_file:
         log_opts['console'] = Console(file=log_file)
 
+    # this uses the log_opts dictionary as parameters to logging.basicConfig()
     logging.basicConfig(**log_opts)
     return logging.getLogger("rich")
 
@@ -98,7 +99,8 @@ def print_manual_steps():
         type=Choice(OPTS['package']['managers'][OS[0]]),
         help=HELP['pkg_managers'])
 @option('--pkg_groups', '-g', metavar='PKG_GROUP', multiple=True,
-        type=Choice(['default', 'gaming', 'devops']), help=HELP['pkg_groups'])
+        type=Choice(['default', 'gaming', 'media', 'devops']),
+        help=HELP['pkg_groups'])
 @option('--firewall', '-f', is_flag=True, help=HELP['firewall'])
 @option('--remote_host', '-r', metavar="IP_ADDR", multiple=True,
         help=HELP['remote_host'])

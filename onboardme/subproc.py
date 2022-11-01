@@ -18,7 +18,7 @@ log_opts = {'format': "%(message)s",
 # set the logger opts for all files
 with dbm.open('log_cache', 'r') as db:
     log_opts['level'] = int(db['level'].decode())
-    log_file = db['file']
+    log_file = db['file'].decode()
     if log_file:
         log_opts['console'] = Console(file=log_file.decode())
 

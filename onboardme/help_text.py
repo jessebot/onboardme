@@ -7,6 +7,9 @@ from rich.table import Table
 from rich.text import Text
 from rich.theme import Theme
 
+# custom local module
+from .env_config import DEFAULTS, OS
+
 
 def options_help():
     """
@@ -14,6 +17,7 @@ def options_help():
     Returns a dict.
     """
     dot_file_url = '[meta]https://github.com/jessebot/dot_files[/meta]'
+    default_steps = ", ".join(DEFAULTS['steps'][OS[0]])
     return {
         'log_level':
         'Logging level to use with the script (DEBUG,INFO,WARN,ERROR).'
@@ -26,9 +30,9 @@ def options_help():
         "unstable. Don't output to stdout. Logging to file will still work.",
 
         'steps':
-        'unstable. [b]Only[b] run [meta]STEP[/] in the script.\nSteps: '
-        'dot_files, packages, vim_setup.\nExample: [switch]-s[/] [meta]'
-        'dot_files[/] [switch]-s[/] [meta]packages',
+        'unstable. [b]Only[b] run [meta]STEP[/] in the script. Steps:\n'
+        f'{default_steps}.\nExample: [switch]-s[/] [meta]dot_files[/] '
+        '[switch]-s[/] [meta]packages',
 
         'git_url':
         f'A git repo URL for your dot files. Default: {dot_file_url}',
