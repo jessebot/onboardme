@@ -44,7 +44,7 @@ def group_setup():
                      '[dim]to[/dim] [b]docker[/b] [dim]group[/dim]')
         # default way for Linux systems
         cmd = f'sudo usermod -a -G docker {USER}'
-        subproc([cmd], False, False, False)
+        subproc([cmd], spinner=False)
         print("")
         print_msg(f'[dim][i][b]{USER}[/b] added to [b]docker[/b] group, but ' +
                   'you may still need to [b]reboot.')

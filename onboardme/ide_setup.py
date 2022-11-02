@@ -42,7 +42,8 @@ def vim_setup():
 
     # installs the vim plugins if not installed, updates vim-plug, and then
     # updates all currently installed plugins
-    subproc(['vim +PlugInstall +PlugUpgrade +PlugUpdate +qall!'], False, True)
+    subproc(['vim +PlugInstall +PlugUpgrade +PlugUpdate +qall!'],
+            quiet=True)
     print_msg('[i][dim]Vim Plugins installed.')
 
     if init_ycm:
@@ -66,7 +67,7 @@ def neovim_setup():
     # updates all currently installed plugins
     cmd = ("nvim --headless -c 'autocmd User PackerComplete quitall' "
            "-c 'PackerSync'")
-    subproc([cmd], False, False, False)
+    subproc([cmd], spinner=False)
     print_msg('[i][dim]NeoVim Plugins installed.')
 
     return True
@@ -96,11 +97,12 @@ def font_setup():
             # log.debug(f'Going to remove {bitmap_conf} and link a yes map...')
             # we do all of this with subprocess because I want the sudo prompt
             if path.exists(bitmap_conf):
-                subproc([f'sudo rm {bitmap_conf}'], False, True, False)
+                subproc([f'sudo rm {bitmap_conf}'],
+                        quiet=True, spinner=False)
 
             subproc(['sudo ln -s /etc/fonts/conf.avail/70-yes-bitmaps.conf ' +
                     '/etc/fonts/conf.d/70-yes-bitmaps.conf'],
-                    True, True, False)
+                    error_ok=True, quiet=True, spinner=False)
 
             print_msg('[i]Downloading installer and font sets... ')
 
@@ -116,13 +118,13 @@ def font_setup():
             Repo.clone_from(fonts_repo, fonts_dir, progress=CloneProgress(),
                             multi_options=['--sparse', '--filter=blob:none'])
             subproc(["git sparse-checkout add patched-fonts/Mononoki",
-                     "git sparse-checkout add patched-fonts/Hack"], False,
-                    False, True, fonts_dir)
+                     "git sparse-checkout add patched-fonts/Hack"], 
+                    spinner=True, cwd=fonts_dir)
         else:
-            subproc(["git pull"], False, False, True, fonts_dir)
+            subproc(["git pull"], spinner=True, cwd=fonts_dir)
 
-        subproc(['./install.sh Hack', './install.sh Mononoki'], False, True,
-                True, fonts_dir)
+        subproc(['./install.sh Hack', './install.sh Mononoki'],
+                quiet=True, cwd=fonts_dir)
 
         print_msg('[i][dim]The fonts should be installed, however, you have ' +
                   'to set your terminal font to the new font. I rebooted too.')
