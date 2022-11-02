@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.10
 # Onboarding script for macOS and Debian by jessebot@Linux.com
-import logging
+import logging as log
 from os import getenv, path, uname
 # rich helps pretty print everything
 from rich.prompt import Confirm
@@ -9,10 +9,6 @@ from .console_logging import print_panel
 import yaml
 # this is the only logger that needs to updated manually if you are
 # troubleshooting. set to logging.DEBUG to see errors
-logging.basicConfig(level=logging.ERROR, format="%(message)s",
-                    datefmt="[%X]",
-                    handlers=[RichHandler(rich_tracebacks=True)])
-log = logging.getLogger("rich")
 
 
 def load_yaml(yaml_config_file=""):
@@ -26,10 +22,15 @@ def load_yaml(yaml_config_file=""):
         # print(f"Config file we got was not present: {yaml_config_file}")
         return None
 
-
+# pathing
 PWD = path.dirname(__file__)
-DEFAULTS = load_yaml(f"{PWD}/config/onboardme_config.yml")
 HOME_DIR = getenv("HOME")
+
+# defaults
+DEFAULTS = load_yaml(f"{PWD}/config/onboardme_config.yml")
+USR_CONFIG_FILE = load_yaml(f'{HOME_DIR}/.config/onboardme/config.yaml')
+
+# env
 SYSINFO = uname()
 # this will be something like ('Darwin', 'x86_64')
 OS = (SYSINFO.sysname, SYSINFO.machine)
@@ -86,33 +87,11 @@ def process_steps(steps=[], firewall=False, browser=False):
     return result_steps
 
 
-def determine_logging_level(logging_string=""):
-    """
-    returns logging object for given logging string of one of the following:
-    info, warn, error, debug
-    """
-    log_level = logging_string.upper()
-
-    if log_level == "DEBUG":
-        return logging.DEBUG
-    elif log_level == "INFO":
-        return logging.INFO
-    elif log_level == "WARN":
-        return logging.WARN
-    elif log_level == "ERROR":
-        return logging.ERROR
-    else:
-        raise Exception(f"Invalid log level: {logging_string}")
-
-
 def fill_in_defaults(defaults={}, user_config={}, always_prefer_default=False):
     """
     Compares/Combines a default dict and another dict. Prefer default values
     only if the value is empty in the second dict. Then return new dict.
     """
-    # log.debug("fill_in_defaults defaults:", defaults)
-    # log.debug("fill_in_defaults user_config:", user_config)
-
     for key, value in user_config.items():
         # we have to iterate through the entire config file, and who knows how
         # many levels there are, so we use recursion of this function
@@ -128,8 +107,8 @@ def fill_in_defaults(defaults={}, user_config={}, always_prefer_default=False):
 
 
 def process_configs(overwrite=False, repo="", git_branch="", pkg_mngrs=[],
-                    pkg_groups=[], log_level="", log_file="", quiet=False,
-                    firewall=False, remote_host="", steps=[]):
+                    pkg_groups=[], quiet=False, firewall=False, remote_host="",
+                    steps=[]):
     """
     process the config in ~/.config/onboardme/config.yaml if it exists,
     then process the cli dict, and fill in defaults for anything not explicitly
@@ -142,35 +121,31 @@ def process_configs(overwrite=False, repo="", git_branch="", pkg_mngrs=[],
 
     cli_dict = {'package': {'managers': {OS[0]: pkg_mngrs},
                             'groups': pkg_groups},
-                'log': {'file': log_file, 'level': log_level, 'quiet': quiet},
+                'log': {'file': None, 'level': "", 'quiet': quiet},
                 'remote_hosts': remote_host,
                 'firewall': firewall,
                 'steps': {OS[0]: steps},
                 'dot_files': {'overwrite': overwrite,
                               'git_url': repo, 'git_branch': git_branch}}
 
-    # log.debug("cli_dict is: ", cli_dict)
+    log.debug(f"cli_dict is: {cli_dict}", extra={"markup": True})
+    if USR_CONFIG_FILE:
+        log.debug(f"🗂 ⚙️  user_config_file is {USR_CONFIG_FILE}",
+                  extra={"markup": True})
 
-    user_config_file = load_yaml(f'{HOME_DIR}/.config/onboardme/config.yaml')
-    if user_config_file:
-        # log.debug("🗂 ⚙️  user_config_file is", user_config_file)
-
-        usr_cfgs = fill_in_defaults(DEFAULTS, user_config_file)
-        # log.debug("after user_config_file filled in with defaults" + \
-        #           " in process_user_config:", usr_cfgs)
+        usr_cfgs = fill_in_defaults(DEFAULTS, USR_CONFIG_FILE)
+        log.debug("after user_config_file filled in with defaults: " + \
+                  f"{usr_cfgs}", extra={"markup": True})
 
         final_defaults = fill_in_defaults(cli_dict, usr_cfgs, True)
     else:
         final_defaults = fill_in_defaults(DEFAULTS, cli_dict)
 
-    # log.debug(" final config after filling cli_dict in with defaults in "
-    #           "process_user_config:", final_defaults)
+    log.debug(" final config after filling cli_dict in with defaults: "
+              f"{final_defaults}", extra={"markup": True})
 
     valid_steps = process_steps(final_defaults['steps'][OS[0]],
                                 final_defaults['remote_hosts'])
     final_defaults['steps'][OS[0]] = valid_steps
-
-    log_level = determine_logging_level(final_defaults['log']['level'])
-    final_defaults['log']['level'] = log_level
 
     return final_defaults

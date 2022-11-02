@@ -1,12 +1,45 @@
 # this is for rich text, to pretty print things
 from rich.console import Console
 from rich.panel import Panel
+from rich.table import Table
 from rich.theme import Theme
+
 
 CONSOLE = Console(theme=Theme({"warn": "bold yellow",
                                "grn": "medium_spring_green",
                                "ohno": "magenta",
                                "header": "cornflower_blue"}))
+
+
+def print_manual_steps():
+    """
+    Just prints out the final steps to be done manually, til we automate them
+    """
+    # table to print the results of all the files
+    table = Table(expand=True, box=None,
+                  title=" ",
+                  row_styles=["", "dim"],
+                  border_style="dim",
+                  header_style="cornflower_blue",
+                  title_style="light_steel_blue")
+    table.add_column("Don't forget these (currently) manual tasks",
+                     justify="center")
+
+    table.add_row(" ")
+    table.add_row("Import RSS feeds config into FluentReader")
+    table.add_row("Import subscriptions into FreeTube")
+    table.add_row("⌨️  Set CAPSLOCK to control")
+    table.add_row("Install cronjobs you need from ~/.cron")
+    table.add_row("Load your BASH config: [green]source .bashrc[/]")
+    table.add_row("Reboot, as [turquoise2]docker[/] demands it")
+    table.add_row(" ")
+    table.add_row("If you need any help, check the docs:")
+    table.add_row("[cyan][link=https://jessebot.github.io/onboardme]"
+                  "jessebot.github.io/onboardme[/link]")
+    table.add_row(" ")
+
+    print_panel(table, '[green]♥ ˖⁺‧Success‧⁺˖ ♥')
+    return True
 
 
 def print_panel(content='', title_txt='', title_alignment='center',
