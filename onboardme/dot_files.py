@@ -58,7 +58,7 @@ def setup_dot_files(OS='Linux', overwrite=False,
     print_git_file_table(git_files, git_action, branch, git_url)
     chdir(PWD)
 
-    if not overwrite and git_files:
+    if not overwrite and 'differ' in git_action:
         # we only print this msg if we got the file exists error
         msg = ("To [warn]:warning: overwrite[/warn] the existing dot files in "
                f"{HOME_DIR}/ with the file(s) listed in the above table, run:"
