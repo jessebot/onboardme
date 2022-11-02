@@ -65,8 +65,8 @@ def neovim_setup():
     print_header('[b]packer[/b] and [green][i]NeoVim[/i][/green] plugins '
                  'installation [dim]and[/dim] upgrades')
     # updates all currently installed plugins
-    cmd = ("nvim --headless -c 'autocmd User PackerComplete quitall' "
-           "-c 'PackerSync'")
+    cmd = ("nvim --headless -c 'autocmd User PackerComplete quitall'")
+    # "-c 'PackerSync'")
     subproc([cmd], spinner=False)
     print_msg('[i][dim]NeoVim Plugins installed.')
 
@@ -92,9 +92,9 @@ def font_setup():
 
         # do a shallow clone of the repo
         if not path.exists(fonts_dir):
-            # log.debug('Nerdfonts require some setup on Linux...')
+            log.info('Nerdfonts require some setup on Linux...')
             bitmap_conf = '/etc/fonts/conf.d/70-no-bitmaps.conf'
-            # log.debug(f'Going to remove {bitmap_conf} and link a yes map...')
+            log.info(f'Going to remove {bitmap_conf} and link a yes map...')
             # we do all of this with subprocess because I want the sudo prompt
             if path.exists(bitmap_conf):
                 subproc([f'sudo rm {bitmap_conf}'],

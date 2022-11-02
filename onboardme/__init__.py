@@ -14,72 +14,52 @@ import sys
 
 # rich helps pretty print everything
 from rich.console import Console
-from rich.table import Table
 from rich.logging import RichHandler
 
 # custom libs
 from .help_text import RichCommand, options_help
-from .env_config import check_os_support, process_configs, OS
+from .env_config import check_os_support, OS, process_configs, USR_CONFIG_FILE
 from .env_config import DEFAULTS as OPTS
-from .console_logging import print_panel
+from .console_logging import print_panel, print_manual_steps
 
 
 HELP = options_help()
 
 
-def setup_logger(log_level, log_file=""):
+def setup_logger(level="", log_file=""):
     """
     Sets up rich logger and stores the values for it in a db for future import
     in other files. Returns logging.getLogger("rich")
     """
-    # set the logger opts for all files
-    with dbm.open('log_cache', 'c') as db:
-        db['level'] = str(log_level)
-        db['file'] = log_file
+    if not level:
+        if USR_CONFIG_FILE and 'log' in USR_CONFIG_FILE:
+            level = USR_CONFIG_FILE['log']['level']
+        else:
+            level = 'warn'
 
+    if not log_file:
+        if USR_CONFIG_FILE:
+            log_file = USR_CONFIG_FILE['log'].get('file', None)
+
+    log_level = getattr(logging, level.upper(), None)
+    # these are params to be passed into logging.basicConfig
     log_opts = {'level': log_level,
                 'format': "%(message)s",
                 'datefmt': "[%X]",
                 'handlers': [RichHandler(rich_tracebacks=True)]}
 
+    if log_level == 10:
+        # log the name of the function if we're in debug mode :)
+        log_opts['format'] = "[bold]%(funcName)s()[/bold]: %(message)s"
+
     # we only log to a file if one was passed into config.yaml or the cli
     if log_file:
-        log_opts['console'] = Console(file=log_file)
+        log_opts['handlers'] = [RichHandler(console=Console(file=log_file),
+                                            rich_tracebacks=True)]
 
     # this uses the log_opts dictionary as parameters to logging.basicConfig()
     logging.basicConfig(**log_opts)
     return logging.getLogger("rich")
-
-
-def print_manual_steps():
-    """
-    Just prints out the final steps to be done manually, til we automate them
-    """
-    # table to print the results of all the files
-    table = Table(expand=True, box=None,
-                  title=" ",
-                  row_styles=["", "dim"],
-                  border_style="dim",
-                  header_style="cornflower_blue",
-                  title_style="light_steel_blue")
-    table.add_column("Don't forget these (currently) manual tasks",
-                     justify="center")
-
-    table.add_row(" ")
-    table.add_row("Import RSS feeds config into FluentReader")
-    table.add_row("Import subscriptions into FreeTube")
-    table.add_row("⌨️  Set CAPSLOCK to control")
-    table.add_row("Install cronjobs you need from ~/.cron")
-    table.add_row("Load your BASH config: [green]source .bashrc[/]")
-    table.add_row("Reboot, as [turquoise2]docker[/] demands it")
-    table.add_row(" ")
-    table.add_row("If you need any help, check the docs:")
-    table.add_row("[cyan][link=https://jessebot.github.io/onboardme]"
-                  "jessebot.github.io/onboardme[/link]")
-    table.add_row(" ")
-
-    print_panel(table, '[green]♥ ˖⁺‧Success‧⁺˖ ♥')
-    return True
 
 
 # Click is so ugly, and I'm sorry we're using it for cli parameters here, but
@@ -124,30 +104,30 @@ def main(log_level: str = "",
     # before we do anything, we need to make sure this OS is supported
     check_os_support()
 
+    # setup logging immediately
+    log = setup_logger(log_level, log_file)
+
     # then process any local user config files, cli opts, and defaults
-    user_prefs = process_configs(overwrite, git_url, git_branch, pkg_managers,
-                                 pkg_groups, log_level, log_file, quiet,
-                                 firewall, remote_host, steps)
+    usr_pref = process_configs(overwrite, git_url, git_branch, pkg_managers,
+                               pkg_groups, quiet, firewall, remote_host, steps)
 
-    log = setup_logger(user_prefs['log']['level'], user_prefs['log']['file'])
-
-    log.debug("User passed in the following preferences:", user_prefs)
+    log.debug(f"User passed in the following preferences: {usr_pref}",
+              extra={"markup": True})
 
     # actual heavy lifting of onboardme happens in these
-    for step in user_prefs['steps'][OS[0]]:
+    for step in usr_pref['steps'][OS[0]]:
 
         if step == 'dot_files':
             from .dot_files import setup_dot_files
             # this creates a live git repo out of your home directory
-            df_prefs = user_prefs['dot_files']
+            df_prefs = usr_pref['dot_files']
             setup_dot_files(OS, df_prefs['overwrite'],
                             df_prefs['git_url'], df_prefs['git_branch'])
 
         elif step == 'packages':
             from .pkg_management import run_pkg_mngrs
-            pkg_mngrs = user_prefs['package']['managers'][OS[0]]
-            pkg_groups = user_prefs['package']['groups']
-            log.debug(pkg_mngrs, pkg_groups)
+            pkg_mngrs = usr_pref['package']['managers'][OS[0]]
+            pkg_groups = usr_pref['package']['groups']
             run_pkg_mngrs(pkg_mngrs, pkg_groups)
 
         elif step in ['vim_setup', 'neovim_setup', 'font_setup']:

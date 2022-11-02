@@ -3,27 +3,11 @@ Using Textualize's rich library to pretty print subprocess outputs,
 so during long running commands, the user isn't wondering what's going on,
 even if you don't actually output anything from stdout/stderr of the command.
 """
-import dbm
-import logging
+import logging as log
 from subprocess import PIPE, Popen
 
 from rich import print
 from rich.console import Console
-from rich.logging import RichHandler
-
-log_opts = {'format': "%(message)s",
-            'datefmt': "[%X]",
-            'handlers': [RichHandler(rich_tracebacks=True)]}
-
-# set the logger opts for all files
-with dbm.open('log_cache', 'r') as db:
-    log_opts['level'] = int(db['level'].decode())
-    log_file = db['file'].decode()
-    if log_file:
-        log_opts['console'] = Console(file=log_file.decode())
-
-logging.basicConfig(**log_opts)
-log = logging.getLogger("rich")
 
 
 def subproc(commands=[], **kwargs):
@@ -31,7 +15,7 @@ def subproc(commands=[], **kwargs):
     Takes a list of BASH commands to run in a subprocess sequentially.
     Optional keyword arguments:
         error_ok        - catch Exceptions and log them, default: False
-        quiet - don't output from stderr/stdout, Default: False
+        quiet           - don't output from stderr/stdout, Default: False
         spinner         - show an animated progress spinner. can break sudo
                           prompts and should be turned off. Default: True
         cwd             - path to run commands in. Default: pwd of user
@@ -53,13 +37,12 @@ def subproc(commands=[], **kwargs):
     for command in commands:
         status = f"{status_line}: {command}"
 
-        if not quiet:
-            log.info(status, extra={'markup': True})
-
         if spinner:
             with console.status(status):
                 output = run_subprocess(command, **kwargs)
         else:
+            if not quiet:
+                log.info(status, extra={'markup': True})
             output = run_subprocess(command, **kwargs)
 
         if output and not quiet:
@@ -99,7 +82,7 @@ def run_subprocess(command, **kwargs):
         # check return code, raise error if failure
         if not ret_code:
             if res_stderr:
-                log.debug(res_stderr)
+                log.debug(res_stderr, extra={"markup": True})
         else:
             if ret_code != 0:
                 # also scan both stdout and stdin for weird errors
