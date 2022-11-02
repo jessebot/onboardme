@@ -26,57 +26,76 @@ logging.basicConfig(**log_opts)
 log = logging.getLogger("rich")
 
 
-def subproc(commands=[], error_ok=False, suppress_output=False, spinner=True,
-            directory=""):
+def subproc(commands=[], **kwargs):
     """
-    Takes a list of str type commands to run in a subprocess.
-    Optional vars:
-        error_ok        - bool, catch errors, defaults to False
-        suppress_output - bool, don't output anything form stderr, or stdout
-        spinner         - bool, show an animated progress spinner
+    Takes a list of BASH commands to run in a subprocess sequentially.
+    Optional keyword arguments:
+        error_ok        - catch Exceptions and log them, default: False
+        quiet - don't output from stderr/stdout, Default: False
+        spinner         - show an animated progress spinner. can break sudo
+                          prompts and should be turned off. Default: True
+        cwd             - path to run commands in. Default: pwd of user
+        shell           - use shell with subprocess or not. Default: False 
+        env             - dictionary of env variables for BASH. Default: None
+
     Takes a str commmand to run in BASH, as well as optionals bools to pass on
-    errors in stderr/stdout and suppress_output
+    errors in stderr/stdout and quiet
     """
-    for command in commands:
-        status_line = f"[bold green]❤ Running command:[/bold green] {command}"
-        if not suppress_output:
-            log.info(status_line, extra={'markup': True})
+    output = None
+    spinner = kwargs.get('spinner', True)
+    quiet = kwargs.get('quiet', False)
+    # removes the 2 output specific args from the key word args dict so then
+    # we can use the rest to pass into subprocess.Popen later on
+    for value in ['spinner', 'quiet']:
+        if value  in kwargs:
+            kwargs.pop(value)
 
-        if not spinner:
-            output = run_subprocess(command, error_ok, directory)
-        else:
-            print("")
-            console = Console()
-            tasks = [command]
-
-            with console.status(status_line):
-                while tasks:
-                    output = run_subprocess(command, error_ok, directory)
-                    tasks.pop(0)
-
-        if output:
-            if not suppress_output:
-                log.info(output)
-
+    status_line = "[bold green]♥ Running command[/bold green]"
+    if not spinner:
+        for command in commands:
+            status_line = f"{status_line}: {command}"
+            if not quiet:
+                log.info(status_line, extra={'markup': True})
+                output = run_subprocess(command, **kwargs)
+                if output:
+                    if not quiet:
+                        log.info(output)
+    else:
+        print("")
+        console = Console()
+        with console.status(status_line):
+            for command in commands:
+                status_line = f"{status_line}: {command}"
+                output = run_subprocess(command, **kwargs)
+                if output:
+                    if not quiet:
+                        log.info(output)
+                commands.pop(0)
     if output:
         return output
 
 
-def run_subprocess(command, error_ok=False, directory=""):
+def run_subprocess(command, **kwargs):
     """
     Takes a str commmand to run in BASH in a subprocess.
-    Typically run from subproc, which handles output printing
-
-    Optional vars:
-        error_ok   - bool, catch errors, defaults to False
-        directory  - current working dir, directory to run command in
+    Typically run from subproc, which handles output printing.
+    error_ok=False, directory="", shell=False
+    Optional keyword vars:
+        error_ok  - bool, catch errors, defaults to False
+        cwd       - str, current working dir which is the dir to run command in
+        shell     - bool, run shell or not 
+        env       - environment variables you'd like to pass in
     """
-    # subprocess expects a list
+    # subprocess expects a list if there are spaces in the command
     cmd = command.split()
-    if directory:
-        p = Popen(cmd, stdout=PIPE, stderr=PIPE, cwd=directory)
-    else:
-        p = Popen(cmd, stdout=PIPE, stderr=PIPE)
+
+    error_ok = False
+    if 'error_ok' in kwargs:
+        error_ok = kwargs.pop('error_ok')
+
+    # this passes in the other optional args such as cwd, shell, and env
+    p = Popen(cmd, stdout=PIPE, stderr=PIPE, **kwargs)
+
     ret_code = p.returncode
     res = p.communicate()
     res_stdout = res[0].decode('UTF-8')

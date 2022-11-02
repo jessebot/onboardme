@@ -24,36 +24,35 @@ def setup_dot_files(OS='Linux', overwrite=False,
     # create ~/.git_dot_files if it does not exist
     Path(git_dir).mkdir(exist_ok=True)
     chdir(git_dir)
+    opts = {'quiet': True, 'cwd': git_dir}
 
     # global command: use main instead of master as default branch
-    subproc(['git config --global init.defaultBranch main',
-             f'git --git-dir={git_dir} --work-tree={HOME_DIR} init',
-             'git config status.showUntrackedFiles no'], False, True, False,
-            directory=git_dir)
+    cmds = ['git config --global init.defaultBranch main',
+            f'git --git-dir={git_dir} --work-tree={HOME_DIR} init',
+            'git config status.showUntrackedFiles no']
+    subproc(cmds, spinner=False, **opts)
 
     # this one needs to be allowed to fail because it might already exist
-    subproc([f"git remote add origin {git_url}"], True, True, False,
-            directory=git_dir)
+    cmds = [f"git remote add origin {git_url}"]
+    subproc(cmds, error_ok=True, spinner=False, **opts)
 
     if overwrite:
         # WARN: this command will overwrite local files with remote files
-        # git reset --hard origin/{branch}
         reset_cmd = f"git reset --hard origin/{branch}"
     else:
         reset_cmd = f"git reset origin/{branch}"
         git_action = "[b]differ[/b] from"
 
     # fetch the latest changes, then reset to main, w/o overwriting anything
-    subproc(['git fetch', reset_cmd], False, True, False, directory=git_dir)
+    subproc(['git fetch', reset_cmd], spinner=False, **opts)
 
     # get the latest remote modified and deleted files, if there are any
-    git_files = subproc([f'git ls-files -m -d {HOME_DIR}'], False, True, True,
-                        directory=git_dir)
+    git_files = subproc([f'git ls-files -m -d {HOME_DIR}'], **opts)
 
     if overwrite or not git_files:
         # if all the files are updated, just print them all as confirmation :)
         git_cmd = f"git ls-tree --full-tree -r --name-only origin/{branch}"
-        git_files = subproc([git_cmd], False, True, False, directory=git_dir)
+        git_files = subproc([git_cmd], spinner=False, **opts)
         git_action = "are up to date with"
 
     print_git_file_table(git_files, git_action, branch, git_url)

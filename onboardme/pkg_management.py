@@ -33,14 +33,14 @@ def brew_install_upgrade(os="Darwin", package_groups=['default']):
         if os_brewfile:
             os_msg = f'[i][dim][b]{os}[/b] specific ' + brew_msg
             print_msg(os_msg)
-            subproc([f'{install_cmd}{os}'], True)
+            subproc([f'{install_cmd}{os}'], error_ok=True)
 
         if package_groups:
             for group in package_groups:
                 if group != "default":
                     msg = group.title + ' specific ' + brew_msg
                     print_header(msg)
-                    subproc([f'{install_cmd}{group}'], True)
+                    subproc([f'{install_cmd}{group}'], error_ok=True)
 
     # cleanup operation doesn't seem to happen automagically :shrug:
     cleanup_msg = '[i][dim]🍺 [green][b]brew[/b][/] final upgrade/cleanup'
@@ -75,10 +75,10 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
         pkg_cmds = pkg_mngr_dict['commands']
         for pre_cmd in ['setup', 'update', 'upgrade']:
             if pre_cmd in pkg_cmds:
-                subproc([pkg_cmds[pre_cmd]], False, False, False)
+                subproc([pkg_cmds[pre_cmd]], spinner=False) 
 
         # list of actually installed packages
-        installed_pkgs = subproc([pkg_cmds['list']], False, True)
+        installed_pkgs = subproc([pkg_cmds['list']], quiet=True)
         # list of SHOULD BE installed packages
         required_pkgs = pkg_mngr_dict['packages']
 
@@ -112,7 +112,7 @@ def install_pkg_group(installed_pkgs=[], pkgs_to_install=[], install_cmd=""):
             if pkg in installed_pkgs:
                 install_pkg = True
         if install_pkg:
-            subproc([install_cmd + pkg], False, True, spinner)
+            subproc([install_cmd + pkg], quiet=True, spinner=spinner)
     print_msg('[dim][i]Completed.')
 
     return
