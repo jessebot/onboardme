@@ -37,40 +37,34 @@ def subproc(commands=[], **kwargs):
         cwd             - path to run commands in. Default: pwd of user
         shell           - use shell with subprocess or not. Default: False 
         env             - dictionary of env variables for BASH. Default: None
-
-    Takes a str commmand to run in BASH, as well as optionals bools to pass on
-    errors in stderr/stdout and quiet
     """
-    output = None
-    spinner = kwargs.get('spinner', True)
-    quiet = kwargs.get('quiet', False)
-    # removes the 2 output specific args from the key word args dict so then
-    # we can use the rest to pass into subprocess.Popen later on
-    for value in ['spinner', 'quiet']:
-        if value  in kwargs:
-            kwargs.pop(value)
+
+    # get/set defaults and remove the 2 output specific args from the key word
+    # args dict so we can use the rest to pass into subproc.Popen later on
+    spinner = kwargs.pop('spinner', True)
+    quiet = kwargs.pop('quiet', False)
+
+    if spinner:
+        # we don't actually need this if we're not doing a progress spinner
+        console = Console()
 
     status_line = "[bold green]♥ Running command[/bold green]"
-    if not spinner:
-        for command in commands:
-            status_line = f"{status_line}: {command}"
-            if not quiet:
-                log.info(status_line, extra={'markup': True})
+
+    for command in commands:
+        status = f"{status_line}: {command}"
+
+        if not quiet:
+            log.info(status, extra={'markup': True})
+
+        if spinner:
+            with console.status(status):
                 output = run_subprocess(command, **kwargs)
-                if output:
-                    if not quiet:
-                        log.info(output)
-    else:
-        print("")
-        console = Console()
-        with console.status(status_line):
-            for command in commands:
-                status_line = f"{status_line}: {command}"
-                output = run_subprocess(command, **kwargs)
-                if output:
-                    if not quiet:
-                        log.info(output)
-                commands.pop(0)
+        else:
+            output = run_subprocess(command, **kwargs)
+
+        if output and not quiet:
+            log.info(output)
+
     if output:
         return output
 

@@ -15,8 +15,8 @@ def brew_install_upgrade(os="Darwin", package_groups=['default']):
         * os     - string arg of either Darwin or Linux
         * devops - bool, installs devops brewfile, defaults to false
     """
-    brew_msg = '🍺 [green][b]brew[/b][/] app Installs/Upgrades'
-    print_header(brew_msg)
+    brew_msg = '[green][b]brew[/b][/] app Installs/Upgrades'
+    print_header('🍺 ' + brew_msg)
 
     install_cmd = "brew bundle --quiet"
 
@@ -43,7 +43,7 @@ def brew_install_upgrade(os="Darwin", package_groups=['default']):
                     subproc([f'{install_cmd}{group}'], error_ok=True)
 
     # cleanup operation doesn't seem to happen automagically :shrug:
-    cleanup_msg = '[i][dim]🍺 [green][b]brew[/b][/] final upgrade/cleanup'
+    cleanup_msg = '[i][dim][green][b]brew[/b][/] final upgrade/cleanup'
     print_msg(cleanup_msg)
     subproc(['brew cleanup'])
 
