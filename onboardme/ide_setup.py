@@ -41,8 +41,8 @@ def vim_setup():
         wget.download(url, autoload_dir)
 
     # installs the vim plugins if not installed, updates vim-plug, and then
-    # updates all currently installed plugins, finally removes unused plugins
-    subproc(['vim +PlugInstall +PlugUpgrade +PlugUpdate +PlugClean +qall!'],
+    # updates all currently installed plugins
+    subproc(['vim +PlugInstall +PlugUpgrade +PlugUpdate +qall!'],
             quiet=True)
     print_msg('[i][dim]Vim Plugins installed.')
 
