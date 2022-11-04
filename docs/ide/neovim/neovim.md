@@ -50,9 +50,11 @@ source ~/.vimrc
 
 After that, launch neovim with `nvim` and then do your normal plugin manager flow.
 
+## Plugins 
+
 Most plugins will work out of the box, but you'll probably have issues with
 Python plugins. You can learn more about those and other things to do with vim-plug
-and packer [here](/neovim/plugins).
+and packer [here](https://jessebot.github.io/onboardme/neovim/plugins).
 
 ## Known issues between vim and neovim
 

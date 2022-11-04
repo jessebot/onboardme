@@ -11,13 +11,15 @@ description: "Plugins for neovim and how to install them"
 # Neovim plugins
 This got long enough it needed it's own page
 
+## Know issues
 <details>
-  <summary>## Python / Python3 Plugins</summary>
+  <summary>Python3 Plugins</summary>
 
   If you run into a bunch of errors about vim not being compiled with python3,
   then you probably need to first install `pynvim`, which helps with this:
 
   ```bash
+  # I use python3.10 everywhere right now, but you probably don't need to specify
   python3.10 -m pip install --user --upgrade pynvim
   ```
 
@@ -25,8 +27,12 @@ This got long enough it needed it's own page
 
 </details>
 
+## vim-plug
+I have a [whole section on vim-plug under vim](https://jessebot.github.io/onboardme/vim/vim-plugins), but we have a few caveats if we
+want to use it in neovim.
+
 <details>
-  <summary># Continuing to use vim-plug from vim</summary>
+  <summary>Continuing to use vim-plug from vim</summary>
 
   ## Source Plugins for vim/neovim in the same location
   Having to install a package twice in two different locations is silly and makes
