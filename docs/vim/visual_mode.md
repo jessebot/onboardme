@@ -2,6 +2,7 @@
 layout: default
 title: Visual Mode
 parent: Vim
+grand_parent: IDE
 permalink: /vim/visual
 ---
 
