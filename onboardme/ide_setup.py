@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.10
 """
 NAME:    Onboardme.ide_setup
-DESC:    install vim AND neovim
+DESC:    install vim, neovim, and fonts
 AUTHOR:  Jesse Hitch
 LICENSE: GNU AFFERO GENERAL PUBLIC LICENSE
 """
@@ -41,8 +41,8 @@ def vim_setup():
         wget.download(url, autoload_dir)
 
     # installs the vim plugins if not installed, updates vim-plug, and then
-    # updates all currently installed plugins, finally removes unused plugins
-    subproc(['vim +PlugInstall +PlugUpgrade +PlugUpdate +PlugClean +qall!'],
+    # updates all currently installed plugins
+    subproc(['vim +PlugInstall +PlugUpgrade +PlugUpdate +qall!'],
             quiet=True)
     print_msg('[i][dim]Vim Plugins installed.')
 
@@ -57,6 +57,8 @@ def neovim_setup():
     """
     neovim plugins have a setup mostly already handled in your plugins.lua:
     https://github.com/wbthomason/packer.nvim#bootstrapping
+    This is the command that works via the cli:
+    nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 
     uses special command (with packer bootstrapped) to have packer setup your
     your configuration (or simply run updates) and close once all operations
@@ -64,10 +66,10 @@ def neovim_setup():
     """
     print_header('[b]packer[/b] and [green][i]NeoVim[/i][/green] plugins '
                  'installation [dim]and[/dim] upgrades')
+
     # updates all currently installed plugins
-    cmd = ("nvim --headless -c 'autocmd User PackerComplete quitall'"
-           "-c 'PackerSync'")
-    subproc([cmd], spinner=False)
+    subproc(["nvim --headless +PackerSync", "nvim --headless +PackerClean"],
+            spinner=False)
     print_msg('[i][dim]NeoVim Plugins installed.')
 
     return True
