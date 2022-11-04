@@ -1,39 +1,47 @@
 #!/usr/bin/env python3.10
 # Onboarding script for macOS and Debian by jessebot@Linux.com
-import logging
+import logging as log
 from os import getenv, path, uname
 # rich helps pretty print everything
 from rich.prompt import Confirm
+from rich.logging import RichHandler
 from .console_logging import print_panel
 import yaml
+# this is the only logger that needs to updated manually if you are
+# troubleshooting. set to logging.DEBUG to see errors
 
 
-# user system env info
+def load_yaml(yaml_config_file=""):
+    """
+    load config yaml files for onboardme and return as dicts
+    """
+    if path.exists(yaml_config_file):
+        with open(yaml_config_file, 'r') as yaml_file:
+            return yaml.safe_load(yaml_file)
+    else:
+        # print(f"Config file we got was not present: {yaml_config_file}")
+        return None
+
+# pathing
+PWD = path.dirname(__file__)
 HOME_DIR = getenv("HOME")
+
+# defaults
+DEFAULTS = load_yaml(f"{PWD}/config/onboardme_config.yml")
+USR_CONFIG_FILE = load_yaml(f'{HOME_DIR}/.config/onboardme/config.yaml')
+
+# env
 SYSINFO = uname()
-# this will be something like Darwin_x86_64
-OS = f"{SYSINFO.sysname}_{SYSINFO.machine}"
-with open(f"{path.dirname(__file__)}/config/config.yml", 'r') as yaml_file:
-    OPTS = yaml.safe_load(yaml_file)
-
-
-def parse_local_configs():
-    """
-    parse the local config yaml file if it exists
-    """
-    local_config_dir = f'{HOME_DIR}/.config/onboardme/config.yaml'
-    if path.exists(local_config_dir):
-        with open(local_config_dir, 'r') as yaml_file:
-            config = yaml.safe_load(yaml_file)
-    return config
+# this will be something like ('Darwin', 'x86_64')
+OS = (SYSINFO.sysname, SYSINFO.machine)
 
 
 def check_os_support():
     """
     verify we're on a supported OS and ask to quit if not.
     """
-    if SYSINFO.sysname != 'Linux' and SYSINFO.sysname != 'Darwin':
-        msg = (f"[ohno]{SYSINFO.sysname}[/ohno] isn't officially supported. We"
+    if OS[0] not in ('Linux', 'Darwin'):
+        msg = (f"[ohno]{OS}[/ohno] isn't officially supported. We"
                " have only tested Debian, Ubuntu, and macOS.")
         print_panel(msg, "⚠️  [warn]WARNING")
 
@@ -59,99 +67,84 @@ def process_steps(steps=[], firewall=False, browser=False):
     # TODO: if 'capslock_to_control' in steps: map_caps_to_control()
     """
     if steps:
-        steps = set(steps)
+        steps_list = list(steps)
         # setting up vim is useless if we don't have a .vimrc
-        if 'vim_setup' in steps and 'dot_files' not in steps:
-            steps.append('dot_files')
-    else:
-        steps = OPTS['steps'][SYSINFO.sysname]
+        if 'vim_setup' in steps_list and 'dot_files' not in steps_list:
+            steps_list.append('dot_files')
+        if browser:
+            steps_list.append('browser_setup')
+        if firewall and 'Linux' in OS:
+            # currently don't have a great firewall on macOS, sans lulu
+            steps_list.append('firewall_setup')
 
-        if 'Linux' in OS:
-            # fonts are brew installed on macOS, docker grp only setup on linux
-            steps.extend(['font_installation', 'groups_setup'])
-            if firewall:
-                # currently don't have a great firewall on macOS, sans lulu
-                steps.append('firewall_setup')
-            if browser:
-                steps.append('browser_setup')
-    return list(steps)
+    removed_duplicates = set(steps_list)
+    steps = list(removed_duplicates)
+    default_order = DEFAULTS['steps'][OS[0]]
 
+    # Rearrange list by other list order Using list comprehension
+    result_steps = [ele for ele in default_order if ele in steps]
 
-def determine_logging_level(logging_string=""):
-    """
-    returns logging object
-    """
-    log_level = logging_string.upper()
-
-    if log_level == "DEBUG":
-        return logging.DEBUG
-    elif log_level == "INFO":
-        return logging.INFO
-    elif log_level == "WARN":
-        return logging.WARN
-    elif log_level == "ERROR":
-        return logging.ERROR
-    else:
-        raise Exception(f"Invalid log level: {logging_string}")
+    return result_steps
 
 
 def fill_in_defaults(defaults={}, user_config={}, always_prefer_default=False):
     """
-    comparse a default dict and another dict and prefer default values
-    if the value is empty in the the second dict, then return new dict
+    Compares/Combines a default dict and another dict. Prefer default values
+    only if the value is empty in the second dict. Then return new dict.
     """
     for key, value in user_config.items():
+        # we have to iterate through the entire config file, and who knows how
+        # many levels there are, so we use recursion of this function
+        if type(value) is dict:
+            result_config = fill_in_defaults(defaults[key], user_config[key],
+                                             always_prefer_default)
+            user_config[key] = result_config
+
         if not value or always_prefer_default:
             user_config[key] = defaults[key]
-        if type(value) is dict:
-            for nested_key, nested_value in user_config[key].items():
-                if not nested_value:
-                    user_config[key][nested_key] = defaults[key][nested_key]
-            if type(nested_value) is dict:
-                for n2_key, n2_value in user_config[nested_key].items():
-                    if not n2_value:
-                        user_config[key][nested_key][n2_key] = \
-                                defaults[key][nested_key][n2_key]
 
-    current_steps = user_config['steps'][SYSINFO.sysname]
-    steps = process_steps(current_steps, user_config['remote_hosts'])
-    user_config['steps'][SYSINFO.sysname] = steps
     return user_config
 
 
-def process_user_config(defaults={}, overwrite=False, repo="", git_branch="",
-                        pkg_mngrs=[], pkg_groups=[], log_level="", log_file="",
-                        quiet=False, firewall=False, remote_host="", steps=[]):
+def process_configs(overwrite=False, repo="", git_branch="", pkg_mngrs=[],
+                    pkg_groups=[], firewall=False, remote_host="", steps=[]):
     """
-    process the config in ~/.config/onboardme/config.yml if it exists
-    and return variables as a dict for use in script, else return default opts
+    process the config in ~/.config/onboardme/config.yaml if it exists,
+    then process the cli dict, and fill in defaults for anything not explicitly
+    defined. Returns full final config as dict for use in script.
     """
-    if not log_level:
-        log_level = "warn"
-    level = determine_logging_level(log_level)
-
     if remote_host:
         firewall = True
         if type(remote_host) is str:
             remote_host = [remote_host]
 
-    cli_dict = {'package': {'managers': {SYSINFO.sysname: pkg_mngrs},
+    cli_dict = {'package': {'managers': {OS[0]: pkg_mngrs},
                             'groups': pkg_groups},
-                'log': {'file': log_file, 'level': level, 'quiet': quiet},
+                'log': {'file': None, 'level': ""},
                 'remote_hosts': remote_host,
                 'firewall': firewall,
-                'steps': {SYSINFO.sysname: steps},
+                'steps': {OS[0]: steps},
                 'dot_files': {'overwrite': overwrite,
                               'git_url': repo, 'git_branch': git_branch}}
 
-    # cli options are more important, but if none passed in, we check .config
-    usr_cfg_file = path.join(HOME_DIR, '.config/onboardme/config.yml')
+    log.debug(f"cli_dict is: {cli_dict}", extra={"markup": True})
+    if USR_CONFIG_FILE:
+        log.debug(f"🗂 ⚙️  user_config_file is {USR_CONFIG_FILE}",
+                  extra={"markup": True})
 
-    if path.exists(usr_cfg_file):
-        with open(usr_cfg_file, 'r') as yaml_file:
-            user_config_file = yaml.safe_load(yaml_file)
+        usr_cfgs = fill_in_defaults(DEFAULTS, USR_CONFIG_FILE)
+        log.debug("after user_config_file filled in with defaults: " + \
+                  f"{usr_cfgs}", extra={"markup": True})
 
-        usr_cfgs = fill_in_defaults(cli_dict, user_config_file, True)
-        return fill_in_defaults(defaults, usr_cfgs)
+        final_defaults = fill_in_defaults(cli_dict, usr_cfgs, True)
     else:
-        return fill_in_defaults(defaults, cli_dict)
+        final_defaults = fill_in_defaults(DEFAULTS, cli_dict)
+
+    log.debug(" final config after filling cli_dict in with defaults: "
+              f"{final_defaults}", extra={"markup": True})
+
+    valid_steps = process_steps(final_defaults['steps'][OS[0]],
+                                final_defaults['remote_hosts'])
+    final_defaults['steps'][OS[0]] = valid_steps
+
+    return final_defaults

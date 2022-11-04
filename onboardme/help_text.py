@@ -7,6 +7,20 @@ from rich.table import Table
 from rich.text import Text
 from rich.theme import Theme
 
+# custom local module
+from .env_config import DEFAULTS, OS
+
+
+def pretty_choices(default_list):
+    """
+    Takes a list of default choices and surrounds them with a meta markup tag
+    and join them with a comma for a pretty return "Choices" string.
+    Example: pretty_choices(['beep', 'boop']) returns:
+             'Choices: [meta]beep[/meta], [meta]boop[/meta]'
+    """
+    defaults = '[/meta], [meta]'.join(default_list)
+    return 'Choices: [meta]' + defaults + '[/meta]'
+
 
 def options_help():
     """
@@ -14,21 +28,23 @@ def options_help():
     Returns a dict.
     """
     dot_file_url = '[meta]https://github.com/jessebot/dot_files[/meta]'
+    steps = pretty_choices(DEFAULTS['steps'][OS[0]])
+    pkg_mngrs = pretty_choices(DEFAULTS['package']['managers'][OS[0]])
+    logging_choices = pretty_choices(['DEBUG', 'INFO', 'WARN', 'ERROR'])
+
     return {
         'log_level':
-        'Logging level to use with the script (DEBUG,INFO,WARN,ERROR).'
-        ' Default: [meta]WARN[/meta].',
+        f'Logging level. {logging_choices} Default: [meta]WARN[/meta].',
 
         'log_file':
-        'Full path to a file to log to, if set.',
+        'Full path to file to log to, if set.',
 
         'quiet':
-        "unstable. Don't output to stdout. Logging to file will still work.",
+        "unstable. Don't output to stdout. ",
 
         'steps':
-        'unstable. [b]Only[b] run [meta]STEP[/] in the script.\nSteps: '
-        'dot_files, packages, vim_setup.\nExample: [switch]-s[/] [meta]'
-        'dot_files[/] [switch]-s[/] [meta]packages',
+        f'[b]Only[/b] run [meta]STEP[/] in the script.\n{steps}\nExample: '
+        '[switch]-s[/] [meta]dot_files[/] [switch]-s[/] [meta]packages',
 
         'git_url':
         f'A git repo URL for your dot files. Default: {dot_file_url}',
@@ -41,13 +57,11 @@ def options_help():
         '[option]--git_url[/option] repo.',
 
         'pkg_managers':
-        'Specific [meta]PKG_MANAGER[/] to run. Default: [meta]brew[/], [meta]'
-        'pip3.10[/meta], & ([i]on linux[/]) [meta]apt, snap, flatpak[/]. '
-        'Accepts multiple.\nEx: [switch]-p[/] [meta]brew[/] [switch]-p[/] '
-        '[meta]apt',
+        f'Specific [meta]PKG_MANAGER[/] to run. {pkg_mngrs}'
+        '\nExample: [switch]-p[/] [meta]brew[/] [switch]-p[/] [meta]pip3.10',
 
         'pkg_groups':
-        "Package groups to install. Default: 'default'. Accepts multiple.\nEx:"
+        "Package groups to install. Example:"
         " [switch]-g[/] [meta]devops[/] [switch]-g[/switch] [meta]gaming",
 
         'remote_host':
@@ -84,10 +98,10 @@ class RichCommand(click.Command):
 
         title = "☁️  [cornflower_blue]OnBoard[i]Me[/] 💻\n"
         desc = (
-            "[steel_blue]Get your daily driver just the way I like it, from "
+            "[steel_blue]Get your daily driver just the way you like it, from "
             "[b]text[/] [i]formatting[/], and dot files to opensource package "
-            "installation, this script\n intends to save you time with setting"
-            "up or upgrading your environment.")
+            "installation, onboardme intends to save you time with initializing"
+            " or upgrading your environment.")
 
         console.print(title + desc, justify="center")
 

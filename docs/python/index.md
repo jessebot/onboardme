@@ -33,6 +33,11 @@ I do love a good table.
 
 [TIL—Python has a built-in persistent key-value store](https://remusao.github.io/posts/python-dbm-module.html).
 
+## Notebooks
+Jupyter notebooks are web based program to interactively demo/test code.
+I stopped using them a long time ago, but recently I saw `nbterm` announced,
+which is basically a [TUI Notebook](https://blog.jupyter.org/nbterm-jupyter-notebooks-in-the-terminal-6a2b55d08b70).
+
 ## What is everyone else doing tho?
 Jetbrains and the Python org regularly survey their user base and then publish
 an [open report of the survey results.](https://lp.jetbrains.com/python-developers-survey-2021/)

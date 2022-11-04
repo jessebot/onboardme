@@ -49,35 +49,36 @@ Those defaults can be altered per machine by creating a config file like:
   # ______________________________________________________________ #
   #         Config file for the onboardme cli command.             #
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-  #   - If this files exists as: ~/.config/onboardme/config.yml    #
-  #     then its loaded instead of the default config              #
+  #  - This is the default config file that pip will install into: #
+  #    $PYTHON_PATH/lib/onboardme/config/onboardme_config.yml      #
+  #                                                                #
+  #  - If this files exists as: ~/.config/onboardme/config.yaml    #
+  #    then its loaded instead of the default config               #
   # -------------------------------------------------------------- #
-  
-  
+
   log:
     # Full path to a file you'd like to log to. Creates file if it doesn't exist
     file: ""
-    # what level of logs to output (debug, info, warn, error)
+    # what level of logs to output (DEBUG, INFO, WARN, ERROR)
     level: "INFO"
-    # don't output anything to the console, if set and log file passed in, still
-    # creates a log file
-    quiet: false
-  
-  
+
   # steps refer to a specific function in the list of functions we run
   steps:
     # these are mac specific steps
     Darwin:
       - dot_files
+      - packages
       - vim_setup
-      - packages 
+      - neovim_setup
     # these are linux specific steps
     Linux:
       - dot_files
+      - packages
+      - font_setup
       - vim_setup
-      - packages 
-  
-  
+      - neovim_setup
+      - group_setup
+
   dot_files:
     # personal git repo URL for your dot files, defaults to jessebot/dot_files
     git_url: "https://github.com/jessebot/dot_files.git"
@@ -88,37 +89,37 @@ Those defaults can be altered per machine by creating a config file like:
     # You should run the following to get the files that would be overwritten:
     # onboardme -s dot_files
     overwrite: false
-  
-  
-  # this is the basic package config. to edit the specific packages, edit
-  # ~/.config/onboardme/packages.yml
+
+  # This is the basic package config.
   package:
     # Remove any of the below pkg managers to only run the remaining pkg managers
     managers:
-      - brew
-      - pip3.10
-      - snap
-      - flatpak
-      - apt
+      # these are macOS specific steps
+      Darwin:
+        - brew
+        - pip3.10
+      # these are linux specific steps
+      Linux:
+        - brew
+        - pip3.10
+        - snap
+        - flatpak
+        - apt
     # list of extra existing packages groups to install
     groups:
       - default
       # uncomment these to add them as default installed package groups
       # - gaming
       # - work
-  
-  
+      #
+  # Coming soon: to edit the specific packages: ~/.config/onboardme/packages.yaml
+
   # known safe remote hosts that you expect to be able to ping and SSH into
   remote_hosts: []
     # - 192.168.42.42
-  
+
   # setup iptable on Linux only
   firewall: false
-  
-  
-  ### TODO: make this work, it's a nice dream though.
-  # any URL we can curl to download a folder from
-  # wallpapers_download_url: ""
   ```
 
   If the comments in this configuration file are unclear, please feel free to 

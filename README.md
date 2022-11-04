@@ -17,7 +17,7 @@ Here's an example of the terminal after the script has run:
 We've recently setup a justthedocs page [here](https://jessebot.github.io/onboardme/).
 
 
-## Status
+## Features
 Made for the following OS (lastest stable):
 
 [![made-for-macOS](https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=apple&logoColor=white)](https://wikiless.org/wiki/MacOS?lang=en)
@@ -38,20 +38,41 @@ And built using these great projects. Please go check them out:
 
 - [powerline](https://powerline.readthedocs.io/en/master/overview.html)
 
-Currently in later alpha :D
-Please report 🐛 in the GitHub issues, and we will get them as we have time.
-You can also open a pull request, and we can review it asap!
-💙 We love contributors!
+## Status
 
+🎉 Active project! Currently in later alpha :D (*But not yet stable. There be 🐛.*)
 
-### Special Thanks
-Thank you to [@cloudymax](https://github.com/cloudymax) for all their direct contributions for gaming on Linux, virtualization, rc file edits, and the hyper terminal configs. Also, couldn't have polished a lot of this without their patience during my late night ramblings about my 8 different package managers and why utf-8 isn't called utf-14 :3 💙
+Please report 🐛 in the GitHub issues, and we will collect them, 
+and release them into the wild, because we are vegan and nice.
+(Kidding, we will help! 😌)
 
+💙 We love contributors! Open a pull request, and we will review it asap!
 
-#### Shameless plugs for other projects
+## Collaborators
+
+<!-- readme: collaborators -start -->
+<table>
+<tr>
+    <td align="center">
+        <a href="https://github.com/jessebot">
+            <img src="https://avatars.githubusercontent.com/u/2389292?v=4" width="100;" alt="jessebot"/>
+            <br />
+            <sub><b>JesseBot</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/cloudymax">
+            <img src="https://avatars.githubusercontent.com/u/84841307?v=4" width="100;" alt="cloudymax"/>
+            <br />
+            <sub><b>Max!</b></sub>
+        </a>
+    </td></tr>
+</table>
+<!-- readme: collaborators -end -->
+
+## Shameless plugs for other projects
 Looking for a project to get running on a machine that has no OS at all?
 Check out [pxeless](https://github.com/cloudymax/pxeless).
 
 Looking for a project to get started with self hosting k8s stuff?
 Check out [smol k8s lab](https://github.com/jessebot/smol_k8s_lab).
-

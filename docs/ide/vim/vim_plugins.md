@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Vim Plugins
+grand_parent: IDE
 parent: Vim
 permalink: /vim/vim-plugins
 ---
