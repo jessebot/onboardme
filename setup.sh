@@ -71,6 +71,13 @@ fi
 echo "running: git config --global init.defaultBranch main"
 git config --global init.defaultBranch main
 
+# Make sure xcode is present on Macs since it needs to be re-installed when upgrading from 12.x -> 13.0
+if [ "$OS" == "Darwin" ]; then
+    echo -e "-------------------------------- \033[94m Ensuring Xcode is present \033[00m ------------------------------"
+    echo "running: xcode-select --install"
+    xcode-select --install
+fi
+    
 
 echo -e "------------------------------- \033[94m Checking for Brew \033[00m ------------------------------\n"
 
