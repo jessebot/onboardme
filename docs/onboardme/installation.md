@@ -86,7 +86,8 @@ Now you can run the `setup.sh` script, or manually install the remaining prereqs
 Recently, I started moving to actually package this, so you should be able to
 do:
 ```bash
-pip3.10 install onboardme
+# not really sure why it doesn't install without --user :shrug:
+pip3.10 install --user onboardme
 ```
 
 ## Quick test of `onboardme`
