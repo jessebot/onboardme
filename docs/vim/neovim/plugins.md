@@ -100,10 +100,10 @@ local ensure_packer = function()
   return false
 end
 
-" this calls the above function
+-- this calls the above function
 local packer_bootstrap = ensure_packer()
 
-" this manages your actual plugins
+-- this manages your actual plugins
 return require('packer').startup(function(use)
 
     -- Packer can manage itself

@@ -87,6 +87,7 @@ still source vimscript files.
 To start converting, you can fist grab all your variables, for instance:
 
 ```vim 
+" enable line number column
 set number = true
 ```
 
@@ -95,6 +96,7 @@ to update them to lua's vim interface like this, `:%s/set number /vim.opt./`,
 which should then give you this:
 
 ```lua
+-- enable line number column
 vim.opt.number = true
 ```
 
