@@ -16,8 +16,8 @@ log:
   # what level of logs to output (DEBUG, INFO, WARN, ERROR)
   level: "INFO"
   # don't output anything to the console, if set and log file passed in, still
-  # creates a log file
-  quiet: false
+  # creates a log file. unstable.
+  # quiet: false
 
 
 # steps refer to a specific function in the list of functions we run

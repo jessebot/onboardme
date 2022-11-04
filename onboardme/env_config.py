@@ -107,8 +107,7 @@ def fill_in_defaults(defaults={}, user_config={}, always_prefer_default=False):
 
 
 def process_configs(overwrite=False, repo="", git_branch="", pkg_mngrs=[],
-                    pkg_groups=[], quiet=False, firewall=False, remote_host="",
-                    steps=[]):
+                    pkg_groups=[], firewall=False, remote_host="", steps=[]):
     """
     process the config in ~/.config/onboardme/config.yaml if it exists,
     then process the cli dict, and fill in defaults for anything not explicitly
@@ -121,7 +120,7 @@ def process_configs(overwrite=False, repo="", git_branch="", pkg_mngrs=[],
 
     cli_dict = {'package': {'managers': {OS[0]: pkg_mngrs},
                             'groups': pkg_groups},
-                'log': {'file': None, 'level': "", 'quiet': quiet},
+                'log': {'file': None, 'level': ""},
                 'remote_hosts': remote_host,
                 'firewall': firewall,
                 'steps': {OS[0]: steps},

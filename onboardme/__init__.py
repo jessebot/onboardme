@@ -62,6 +62,7 @@ def setup_logger(level="", log_file=""):
     return logging.getLogger("rich")
 
 
+# @option('--quiet', '-q', is_flag=True, help=HELP['quiet'])
 # Click is so ugly, and I'm sorry we're using it for cli parameters here, but
 # this allows us to use rich.click for pretty prettying the help interface
 # each of these is an option in the cli and variable we use later on
@@ -69,7 +70,6 @@ def setup_logger(level="", log_file=""):
 @option('--log_level', '-l', metavar='LOGLEVEL', help=HELP['log_level'],
         type=Choice(['debug', 'info', 'warn', 'error']))
 @option('--log_file', '-o', metavar='LOGFILE', help=HELP['log_file'])
-@option('--quiet', '-q', is_flag=True, help=HELP['quiet'])
 @option('--steps', '-s', metavar='STEP', multiple=True,
         type=Choice(OPTS['steps'][OS[0]]), help=HELP['steps'])
 @option('--git_url', '-u', metavar='URL', help=HELP['git_url'])
@@ -86,7 +86,6 @@ def setup_logger(level="", log_file=""):
         help=HELP['remote_host'])
 def main(log_level: str = "",
          log_file: str = "",
-         quiet: bool = False,
          steps: str = "",
          git_url: str = "",
          git_branch: str = "",
@@ -109,7 +108,7 @@ def main(log_level: str = "",
 
     # then process any local user config files, cli opts, and defaults
     usr_pref = process_configs(overwrite, git_url, git_branch, pkg_managers,
-                               pkg_groups, quiet, firewall, remote_host, steps)
+                               pkg_groups, firewall, remote_host, steps)
 
     log.debug(f"User passed in the following preferences: {usr_pref}",
               extra={"markup": True})
