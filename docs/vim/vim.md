@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Vim
-permalink: /vim
+parent: IDE
 has_children: true
+permalink: /vim
 ---
 
 # Vim
