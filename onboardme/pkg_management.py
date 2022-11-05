@@ -39,13 +39,14 @@ def brew_install_upgrade(os="Darwin", package_groups=['default']):
         if package_groups:
             for group in package_groups:
                 group_file = brewfile + group
-                if group != "default" and os.path.exists(group_file):
-                    msg = group.title + ' specific ' + brew_msg
+                if group != "default" and path.exists(group_file):
+                    # Installing devops specific brew app Installs/Upgrades
+                    msg = f"{group.title()} specific {brew_msg}"
                     print_header(msg)
                     subproc([f'{install_cmd}{group}'], error_ok=True)
 
     # cleanup operation doesn't seem to happen automagically :shrug:
-    cleanup_msg = '[i][dim][green][b]brew[/b][/] final upgrade/cleanup'
+    cleanup_msg = '\n[i][dim][green][b]brew[/b][/] final cleanup'
     print_msg(cleanup_msg)
     subproc(['brew cleanup'])
 
@@ -66,34 +67,44 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
     for pkg_mngr in pkg_mngrs:
         # brew has a special flow with "Brewfile"s
         if pkg_mngr == 'brew':
-            brew_install_upgrade(OS[0], pkg_groups)
-            continue
+            if any(check in pkg_groups for check in ['devops', 'default']):
+                brew_install_upgrade(OS[0], pkg_groups)
+                continue
+            else:
+                continue
+
         pkg_mngr_dict = pkg_mngrs_list_of_dicts[pkg_mngr]
-        pkg_emoji = pkg_mngr_dict['emoji']
-        msg = f'{pkg_emoji} [green][b]{pkg_mngr}[/b][/] app Installs'
-        print_header(msg)
+        required_pkg_groups = pkg_mngr_dict['packages']
 
-        # run package manager specific setup if needed, and updates/upgrades
-        pkg_cmds = pkg_mngr_dict['commands']
-        for pre_cmd in ['setup', 'update', 'upgrade']:
-            if pre_cmd in pkg_cmds:
-                subproc([pkg_cmds[pre_cmd]], spinner=False)
+        # make sure that the package manage has any groups that were passed in
+        if any(check in pkg_groups for check in required_pkg_groups):
 
-        # list of actually installed packages
-        installed_pkgs = subproc([pkg_cmds['list']], quiet=True)
-        # list of SHOULD BE installed packages
-        required_pkgs = pkg_mngr_dict['packages']
+            pkg_emoji = pkg_mngr_dict['emoji']
+            msg = f'{pkg_emoji} [green][b]{pkg_mngr}[/b][/] app Installs'
+            print_header(msg)
 
-        for pkg_group in pkg_groups:
-            if required_pkgs[pkg_group]:
-                if pkg_group != 'default':
-                    msg = (f"Installing {pkg_group.replace('_', ' ')} "
-                           f"{pkg_emoji} [b]{pkg_mngr}[/b] packages")
-                    print_header(msg, "cornflower_blue")
+            # run package manager specific setup if needed, and updates/upgrades
+            pkg_cmds = pkg_mngr_dict['commands']
+            for pre_cmd in ['setup', 'update', 'upgrade']:
+                if pre_cmd in pkg_cmds:
+                    print_msg("\n[i][dim]{pkg_mngr} '[b]{pre_cmd}[/b]' step")
+                    subproc([pkg_cmds[pre_cmd]], spinner=True)
+                    print_msg("\n[i][dim]Completed.")
 
-                install_pkg_group(installed_pkgs, required_pkgs[pkg_group],
-                                  pkg_cmds['install'])
-    return
+            # list of actually installed packages
+            installed_pkgs = subproc([pkg_cmds['list']], quiet=True)
+
+            for pkg_group in pkg_groups:
+                if pkg_group in required_pkg_groups:
+                    if pkg_group != 'default':
+                        msg = (f"Installing [i]{pkg_group.replace('_', ' ')}[/i] "
+                               f"{pkg_emoji} [b]{pkg_mngr}[/b] packages")
+                        print_header(msg, "cornflower_blue")
+
+                    install_pkg_group(installed_pkgs,
+                                      required_pkg_groups[pkg_group],
+                                      pkg_cmds['install'])
+        return
 
 
 def install_pkg_group(installed_pkgs=[], pkgs_to_install=[], install_cmd=""):

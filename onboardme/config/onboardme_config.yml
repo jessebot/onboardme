@@ -69,7 +69,7 @@ package:
     # uncomment these to add them as default installed package groups
     # - gaming
     # - work
-    #
+
 # Coming soon: to edit the specific packages: ~/.config/onboardme/packages.yaml
 
 # known safe remote hosts that you expect to be able to ping and SSH into
