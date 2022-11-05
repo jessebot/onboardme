@@ -10,6 +10,8 @@ permalink: /onboardme/getting-started/installation
 
 ## Prerequisites
 
+Make sure you have sudo access, otherwise we won't be able to install certain things.
+
 <details>
   <summary>curl</summary>
 
