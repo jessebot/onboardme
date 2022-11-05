@@ -84,7 +84,7 @@ def process_steps(steps=[], firewall=False, browser=False):
     return result_steps
 
 
-def fix_pkg_mngr_order(package_managers_list=[]):
+def sort_pkgmngrs(package_managers_list=[]):
     """
     make sure the package managers are in the right order 🤦
     """
@@ -156,7 +156,7 @@ def process_configs(overwrite=False, repo="", git_branch="", pkg_mngrs=[],
     valid_steps = process_steps(final_defaults['steps'][OS[0]],
                                 final_defaults['remote_hosts'])
     final_defaults['steps'][OS[0]] = valid_steps
-    valid_pkg_mngrs = fix_pkg_mngr_order(final_defaults['package']['managers'])
-    final_defaults['package']['managers'] = valid_pkg_mngrs
+    sorted_mngrs = sort_pkgmngrs(final_defaults['package']['managers'][OS[0]])
+    final_defaults['package']['managers'][OS[0]] = sorted_mngrs
 
     return final_defaults
