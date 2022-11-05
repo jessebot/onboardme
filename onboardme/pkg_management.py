@@ -60,13 +60,18 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
     # brew has a special flow with brew files
     if 'brew' in pkg_mngrs:
         brew_install_upgrade(OS[0], pkg_groups)
-        pkg_mngrs.remove('brew')
+        if type(pkg_mngr) is list or type(pkg_mngr) is set:
+            pkg_mngrs.remove('brew')
 
-    pkg_mngrs_list = load_yaml(f'{PWD}/config/packages.yml')
+    pkg_mngrs_list_of_dicts = load_yaml(f'{PWD}/config/packages.yml')
+
+    # Rearrange list by other list order Using list comprehension
+    default_order = ['pip3.10', 'apt', 'snap', 'flatpak']
+    pkg_mngrs = set([ele for ele in default_order if ele in pkg_mngr])
 
     # just in case we got any duplicates, we iterate through pkg_mngrs as a set
     for pkg_mngr in set(pkg_mngrs):
-        pkg_mngr_dict = pkg_mngrs_list[pkg_mngr]
+        pkg_mngr_dict = pkg_mngrs_list_of_dicts[pkg_mngr]
         pkg_emoji = pkg_mngr_dict['emoji']
         msg = f'{pkg_emoji} [green][b]{pkg_mngr}[/b][/] app Installs'
         print_header(msg)

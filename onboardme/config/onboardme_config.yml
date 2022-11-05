@@ -60,9 +60,9 @@ package:
     Linux:
       - brew
       - pip3.10
+      - apt
       - snap
       - flatpak
-      - apt
   # list of extra existing packages groups to install
   groups:
     - default
