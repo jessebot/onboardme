@@ -38,7 +38,8 @@ def brew_install_upgrade(os="Darwin", package_groups=['default']):
 
         if package_groups:
             for group in package_groups:
-                if group != "default":
+                group_file = brewfile + group
+                if group != "default" and os.path.exists(group_file):
                     msg = group.title + ' specific ' + brew_msg
                     print_header(msg)
                     subproc([f'{install_cmd}{group}'], error_ok=True)
