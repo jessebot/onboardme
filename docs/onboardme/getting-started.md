@@ -9,7 +9,7 @@ permalink: /onboardme/getting-started
 # Quick Start
 
 If you haven't already, please refer to the
-[install instructions](https://jessebot.github.io/onboardme/onboardme/installation).
+[install instructions](https://jessebot.github.io/onboardme/getting-started/installation) 🌱.
 
 You can run `onboardme` with no options or further configuration, and it will
 not overwrite anything, but it will install packages and attempt to configure
