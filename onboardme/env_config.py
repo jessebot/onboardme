@@ -84,6 +84,19 @@ def process_steps(steps=[], firewall=False, browser=False):
     return result_steps
 
 
+def fix_pkg_mngr_order(package_managers_list=[]):
+    """
+    make sure the package managers are in the right order 🤦
+    """
+    final_list = []
+    package_managers = ['brew', 'pip3.10', 'apt', 'snap', 'flatpak']
+    for mngr in package_managers:
+        if mngr in package_managers_list:
+            final_list.append(mngr)
+
+    return final_list
+
+
 def fill_in_defaults(defaults={}, user_config={}, always_prefer_default=False):
     """
     Compares/Combines a default dict and another dict. Prefer default values
@@ -143,5 +156,7 @@ def process_configs(overwrite=False, repo="", git_branch="", pkg_mngrs=[],
     valid_steps = process_steps(final_defaults['steps'][OS[0]],
                                 final_defaults['remote_hosts'])
     final_defaults['steps'][OS[0]] = valid_steps
+    valid_pkg_mngrs = fix_pkg_mngr_order(final_defaults['package']['managers'])
+    final_defaults['package']['managers'] = valid_pkg_mngrs
 
     return final_defaults
