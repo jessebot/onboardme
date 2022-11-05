@@ -67,8 +67,8 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
 
     pkg_mngrs_list_of_dicts = load_yaml(path.join(PWD, 'config/packages.yml'))
 
-    # just in case we got any duplicates, we iterate through pkg_mngrs as a set
-    for pkg_mngr in set(pkg_mngrs):
+    # we iterate through pkg_mngrs which should already be sorted
+    for pkg_mngr in pkg_mngrs:
         pkg_mngr_dict = pkg_mngrs_list_of_dicts[pkg_mngr]
         pkg_emoji = pkg_mngr_dict['emoji']
         msg = f'{pkg_emoji} [green][b]{pkg_mngr}[/b][/] app Installs'
