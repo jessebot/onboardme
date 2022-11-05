@@ -64,7 +64,7 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
     # we iterate through pkg_mngrs which should already be sorted
     for pkg_mngr in pkg_mngrs:
         # brew has a special flow with "Brewfile"s
-        if 'brew' in pkg_mngrs:
+        if pkg_mngr == 'brew':
             brew_install_upgrade(OS[0], pkg_groups)
             continue
         pkg_mngr_dict = pkg_mngrs_list_of_dicts[pkg_mngr]
