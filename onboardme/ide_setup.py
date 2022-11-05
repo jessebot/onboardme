@@ -29,7 +29,8 @@ def vim_setup():
 
     # trick to not run youcompleteme init every single time
     init_ycm = False
-    if not path.exists(f'{HOME_DIR}/.vim/plugged/YouCompleteMe/install.py'):
+    ycm_dir = os.path.join(HOME_DIR, '.vim/plugged/YouCompleteMe/install.sh')
+    if not path.exists(ycm_dir):
         init_ycm = True
 
     # this is for installing vim-plug
@@ -49,7 +50,7 @@ def vim_setup():
 
     if init_ycm:
         # This is for you complete me, which is a python completion module
-        subproc(f'{HOME_DIR}/.vim/plugged/YouCompleteMe/install.py')
+        subproc(ycm_dir)
 
     return True
 
