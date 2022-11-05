@@ -29,7 +29,7 @@ def vim_setup():
 
     # trick to not run youcompleteme init every single time
     init_ycm = False
-    ycm_dir = os.path.join(HOME_DIR, '.vim/plugged/YouCompleteMe/install.sh')
+    ycm_dir = path.join(HOME_DIR, '.vim/plugged/YouCompleteMe/install.sh')
     if not path.exists(ycm_dir):
         init_ycm = True
 
