@@ -58,17 +58,15 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
     list passed in, only use brew/pip3.10 for mac. Takes optional variable,
     pkg_group_lists to install optional packages.
     """
-    log.debug(f"pkg_mngrs: {pkg_mngrs}", extra={"markup": True})
-    # brew has a special flow with brew files
-    if 'brew' in pkg_mngrs:
-        brew_install_upgrade(OS[0], pkg_groups)
-        if type(pkg_mngrs) is list or type(pkg_mngrs) is set:
-            pkg_mngrs.remove('brew')
-
     pkg_mngrs_list_of_dicts = load_yaml(path.join(PWD, 'config/packages.yml'))
+    log.debug(f"pkg_mngrs: {pkg_mngrs}", extra={"markup": True})
 
     # we iterate through pkg_mngrs which should already be sorted
     for pkg_mngr in pkg_mngrs:
+        # brew has a special flow with "Brewfile"s
+        if 'brew' in pkg_mngrs:
+            brew_install_upgrade(OS[0], pkg_groups)
+            continue
         pkg_mngr_dict = pkg_mngrs_list_of_dicts[pkg_mngr]
         pkg_emoji = pkg_mngr_dict['emoji']
         msg = f'{pkg_emoji} [green][b]{pkg_mngr}[/b][/] app Installs'
