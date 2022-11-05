@@ -41,3 +41,9 @@ which is basically a [TUI Notebook](https://blog.jupyter.org/nbterm-jupyter-note
 ## What is everyone else doing tho?
 Jetbrains and the Python org regularly survey their user base and then publish
 an [open report of the survey results.](https://lp.jetbrains.com/python-developers-survey-2021/)
+
+# PyScript
+I should look into pyscript, but all the demos are so slow, I'm uninterested 
+right now (Current time as of writing: 2022-11-05 15:45:42.0 +0100):
+
+[Pyscript.net](https://pyscript.net/)
