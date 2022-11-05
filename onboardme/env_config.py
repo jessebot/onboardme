@@ -4,11 +4,8 @@ import logging as log
 from os import getenv, path, uname
 # rich helps pretty print everything
 from rich.prompt import Confirm
-from rich.logging import RichHandler
 from .console_logging import print_panel
 import yaml
-# this is the only logger that needs to updated manually if you are
-# troubleshooting. set to logging.DEBUG to see errors
 
 
 def load_yaml(yaml_config_file=""):

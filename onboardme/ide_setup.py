@@ -6,6 +6,7 @@ AUTHOR:  Jesse Hitch
 LICENSE: GNU AFFERO GENERAL PUBLIC LICENSE
 """
 
+import logging as log
 from git import Repo, RemoteProgress
 from os import path
 from pathlib import Path
