@@ -36,9 +36,10 @@ def brew_install_upgrade(package_groups=['default']):
         install_cmd += f" --file={brewfile}"
 
         if os_brewfile:
-            os_msg = f'[i][dim][b]{OS[0]}[/b] specific ' + brew_msg
-            print_msg(os_msg)
+            os_msg = f'[b]{OS[0]}[/b] specific ' + brew_msg
+            print_sub_header(os_msg)
             subproc([f'{install_cmd}{OS[0]}'], error_ok=True)
+            print_msg(f'{OS[0]} specific packages installed.')
 
         if package_groups:
             for group in package_groups:
@@ -46,15 +47,14 @@ def brew_install_upgrade(package_groups=['default']):
                 if group != "default" and path.exists(group_file):
                     # Installing devops specific brew app Installs/Upgrades
                     msg = f"{group.title()} specific {brew_msg}"
-                    print_header(msg)
+                    print_sub_header(msg)
                     subproc([f'{install_cmd}{group}'], error_ok=True)
+                    print_msg('{group.title()} specific packages installed.')
 
     # cleanup operation doesn't seem to happen automagically :shrug:
-    cleanup_msg = '\n[i][dim][green][b]brew[/b][/] final cleanup'
-    print_msg(cleanup_msg)
+    print_sub_header('[green][b]brew[/b][/] final cleanup')
     subproc(['brew cleanup'])
-
-    print_msg('[dim][i]Completed.')
+    print_msg('Cleanup completed.')
     return
 
 
@@ -63,6 +63,7 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
     Installs packages with apt, brew, pip3.10, snap, flatpak. If no pkg_mngrs
     list passed in, only use brew/pip3.10 for mac. Takes optional variable,
     pkg_group_lists to install optional packages.
+    Returns True.
     """
     pkg_mngrs_list_of_dicts = load_yaml(path.join(PWD, 'config/packages.yml'))
     log.debug(f"pkg_mngrs: {pkg_mngrs}", extra={"markup": True})
@@ -91,13 +92,14 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
             msg = f'{pkg_emoji} [green][b]{pkg_mngr}[/b][/] app Installs'
             print_header(msg)
 
-            # run package manager specific setup if needed, and updates/upgrades
+            # run package manager specific setup if needed, & updates/upgrades
             pkg_cmds = pkg_mngr_dict['commands']
+            log.debug(pkg_cmds)
             for pre_cmd in ['setup', 'update', 'upgrade']:
                 if pre_cmd in pkg_cmds:
                     print_sub_header("\n{pkg_mngr} '[b]{pre_cmd}[/b]' step")
                     subproc([pkg_cmds[pre_cmd]], spinner=True)
-                    print_msg("\n[i][dim]'[b]{pre_cmd}[/b]' step Completed.")
+                    print_msg("\n'[b]{pre_cmd}[/b]' step Completed.")
 
             # list of actually installed packages
             installed_pkgs = subproc([pkg_cmds['list']], quiet=True)
@@ -105,20 +107,23 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
             for pkg_group in pkg_groups:
                 if pkg_group in required_pkg_groups:
                     if pkg_group != 'default':
-                        msg = (f"Installing [i]{pkg_group.replace('_', ' ')}[/i] "
-                               f"{pkg_emoji} [b]{pkg_mngr}[/b] packages")
+                        msg = (f"Installing [i]{pkg_group}[/i] {pkg_emoji} "
+                               f"[b]{pkg_mngr}[/b] packages")
                         print_sub_header(msg)
 
                     install_pkg_group(installed_pkgs,
                                       required_pkg_groups[pkg_group],
                                       pkg_cmds['install'])
-                    print_msg('[dim][i]{pkg_mngr} {pkg_group} completed.')
+
+                    f_msg = f'[green]{pkg_mngr}[/green] {pkg_group} '
+                    print_msg(f_msg + 'packages installed.')
         return
 
 
 def install_pkg_group(installed_pkgs=[], pkgs_to_install=[], install_cmd=""):
     """
     installs packages if they are not already intalled with intall_cmd
+    Returns True.
     """
     install_pkg = False
     spinner = True
@@ -135,4 +140,4 @@ def install_pkg_group(installed_pkgs=[], pkgs_to_install=[], install_cmd=""):
                 install_pkg = True
         if install_pkg:
             subproc([install_cmd + pkg], quiet=True, spinner=spinner)
-    return
+    return True

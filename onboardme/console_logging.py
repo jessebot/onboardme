@@ -63,18 +63,18 @@ def print_header(title='', line_style='royal_blue1'):
     return
 
 
-def print_sub_header(title='', style='cornflower_blue'):
+def print_sub_header(title='', style='light_steel_blue1', alignment='center'):
     """
     prints text centered in a line that spans the terminal
     """
     print('')
-    CONSOLE.print(title, style=style)
+    CONSOLE.print(title, style=style, justify='center')
     return
 
 
-def print_msg(text='', alignment='center'):
+def print_msg(text='', alignment='center', style='dim italic'):
     """
     prints text centered in the width of the terminal
     """
-    CONSOLE.print(text, justify=alignment)
+    CONSOLE.print(text, justify=alignment, style=style)
     return
