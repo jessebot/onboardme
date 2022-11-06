@@ -70,8 +70,9 @@ def neovim_setup():
                  'installation [dim]and[/dim] upgrades')
 
     # updates all currently installed plugins
-    # nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
-    subproc(["nvim --headless +PackerSync"], spinner=False)
+    commands = ["nvim --headless +PackerInstall",
+                "nvim --headless +PackerSync"]
+    subproc(commands, spinner=False)
 
     print_msg('[i][dim]NeoVim Plugins installed.')
 
