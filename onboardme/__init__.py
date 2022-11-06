@@ -110,7 +110,7 @@ def main(log_level: str = "",
     usr_pref = process_configs(overwrite, git_url, git_branch, pkg_managers,
                                pkg_groups, firewall, remote_host, steps)
 
-    log.debug(f"User passed in the following preferences: {usr_pref}",
+    log.debug(f"User passed in the following preferences:\n{usr_pref}\n",
               extra={"markup": True})
 
     # actual heavy lifting of onboardme happens in these
