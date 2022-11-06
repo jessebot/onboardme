@@ -43,7 +43,7 @@ def print_manual_steps():
 
 
 def print_panel(content='', title_txt='', title_alignment='center',
-                border_style="light_steel_blue1"):
+                border_style="light_steel_blue"):
     """
     prints text in a box with a light_steel_blue1 border and title_txt
     """
@@ -59,11 +59,11 @@ def print_header(title='', line_style='royal_blue1'):
     prints text centered in a line that spans the terminal
     """
     print('')
-    CONSOLE.rule(title, style=line_style)
+    CONSOLE.rule('[cornflower_blue]' + title, style=line_style)
     return
 
 
-def print_sub_header(title='', style='light_steel_blue1', alignment='center'):
+def print_sub_header(title='', style='light_steel_blue', alignment='center'):
     """
     prints text centered in a line that spans the terminal
     """

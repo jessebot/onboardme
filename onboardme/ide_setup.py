@@ -26,6 +26,7 @@ def vim_setup():
     """
     print_header('[b]vim-plug[/b] and [green][i]Vim[/i][/green] plugins '
                  'installation [dim]and[/dim] upgrades')
+    print('')
 
     # trick to not run youcompleteme init every single time
     init_ycm = False
@@ -68,6 +69,7 @@ def neovim_setup():
     """
     print_header('[b]packer[/b] and [green][i]NeoVim[/i][/green] plugins '
                  'installation [dim]and[/dim] upgrades')
+    print('')
 
     # updates all currently installed plugins
     commands = ["nvim --headless +PackerInstall",

@@ -36,7 +36,7 @@ def brew_install_upgrade(package_groups=['default']):
         install_cmd += f" --file={brewfile}"
 
         if os_brewfile:
-            os_msg = f'[b]{OS[0]}[/b] specific ' + brew_msg
+            os_msg = f'[b]{OS[0]}[/b] specific package installs...'
             print_sub_header(os_msg)
             subproc([f'{install_cmd}{OS[0]}'], error_ok=True)
             print_msg(f'{OS[0]} specific packages installed.')
@@ -46,13 +46,13 @@ def brew_install_upgrade(package_groups=['default']):
                 group_file = brewfile + group
                 if group != "default" and path.exists(group_file):
                     # Installing devops specific brew app Installs/Upgrades
-                    msg = f"{group.title()} specific {brew_msg}"
+                    msg = f"{group.title()} specific package installs..."
                     print_sub_header(msg)
                     subproc([f'{install_cmd}{group}'], error_ok=True)
-                    print_msg('{group.title()} specific packages installed.')
+                    print_msg(f'{group.title()} specific packages installed.')
 
     # cleanup operation doesn't seem to happen automagically :shrug:
-    print_sub_header('[green][b]brew[/b][/] final cleanup')
+    print_sub_header('[b]brew[/b] final cleanup')
     subproc(['brew cleanup'])
     print_msg('Cleanup completed.')
     return
