@@ -100,8 +100,8 @@ class RichCommand(click.Command):
         desc = (
             "[steel_blue]Get your daily driver just the way you like it, from "
             "[b]text[/] [i]formatting[/], and dot files to opensource package "
-            "installation, onboardme intends to save you time with initializing"
-            " or upgrading your environment.")
+            "installation, onboardme intends to save you time with "
+            "initializing or upgrading your environment.")
 
         console.print(title + desc, justify="center")
 

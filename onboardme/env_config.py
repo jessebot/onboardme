@@ -19,6 +19,7 @@ def load_yaml(yaml_config_file=""):
         # print(f"Config file we got was not present: {yaml_config_file}")
         return None
 
+
 # pathing
 PWD = path.dirname(__file__)
 HOME_DIR = getenv("HOME")
@@ -143,7 +144,7 @@ def process_configs(overwrite=False, repo="", git_branch="", pkg_mngrs=[],
                   extra={"markup": True})
 
         usr_cfgs = fill_in_defaults(DEFAULTS, USR_CONFIG_FILE)
-        log.debug("after user_config_file filled in with defaults: " + \
+        log.debug("after user_config_file filled in with defaults: " +
                   f"{usr_cfgs}", extra={"markup": True})
 
         final_defaults = fill_in_defaults(cli_dict, usr_cfgs, True)

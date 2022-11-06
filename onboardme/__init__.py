@@ -7,10 +7,8 @@
     LICENSE:        GNU AFFERO GENERAL PUBLIC LICENSE
 """
 from click import option, command, Choice
-import dbm
 import importlib
 import logging
-import sys
 
 # rich helps pretty print everything
 from rich.console import Console
@@ -20,7 +18,7 @@ from rich.logging import RichHandler
 from .help_text import RichCommand, options_help
 from .env_config import check_os_support, OS, process_configs, USR_CONFIG_FILE
 from .env_config import DEFAULTS as OPTS
-from .console_logging import print_panel, print_manual_steps
+from .console_logging import print_manual_steps
 
 
 HELP = options_help()
@@ -131,7 +129,7 @@ def main(log_level: str = "",
 
         elif step in ['vim_setup', 'neovim_setup', 'font_setup']:
             # import step from ide_setup.py in same directory
-            importlib.import_module(f'onboardme.ide_setup', package=f'.{step}')
+            importlib.import_module('onboardme.ide_setup', package=f'.{step}')
             func = getattr(ide_setup, step)
             func()
 

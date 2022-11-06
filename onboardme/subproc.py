@@ -6,7 +6,6 @@ even if you don't actually output anything from stdout/stderr of the command.
 import logging as log
 from subprocess import PIPE, Popen
 
-from rich import print
 from rich.console import Console
 
 
@@ -19,7 +18,7 @@ def subproc(commands=[], **kwargs):
         spinner         - show an animated progress spinner. can break sudo
                           prompts and should be turned off. Default: True
         cwd             - path to run commands in. Default: pwd of user
-        shell           - use shell with subprocess or not. Default: False 
+        shell           - use shell with subprocess or not. Default: False
         env             - dictionary of env variables for BASH. Default: None
     """
 
@@ -60,7 +59,7 @@ def run_subprocess(command, **kwargs):
     Optional keyword vars:
         error_ok  - bool, catch errors, defaults to False
         cwd       - str, current working dir which is the dir to run command in
-        shell     - bool, run shell or not 
+        shell     - bool, run shell or not
         env       - environment variables you'd like to pass in
     """
     # subprocess expects a list if there are spaces in the command

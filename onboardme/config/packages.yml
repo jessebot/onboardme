@@ -82,6 +82,7 @@ pip3.10:
   packages:
     default:
       # this is for python development
+      - flake8
       - pip
       - build
       - twine

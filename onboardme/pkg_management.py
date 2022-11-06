@@ -4,7 +4,8 @@ from os import path
 
 # custom libs
 from .env_config import OS, PWD, load_yaml
-from .console_logging import print_header, print_sub_header, print_msg
+from .console_logging import print_header, print_msg
+from .console_logging import print_sub_header as sub_header
 from .subproc import subproc
 
 
@@ -37,7 +38,7 @@ def brew_install_upgrade(package_groups=['default']):
 
         if os_brewfile:
             os_msg = f'[b]{OS[0]}[/b] specific package installs...'
-            print_sub_header(os_msg)
+            sub_header(os_msg)
             subproc([f'{install_cmd}{OS[0]}'], error_ok=True)
             print_msg(f'{OS[0]} specific packages installed.')
 
@@ -47,12 +48,12 @@ def brew_install_upgrade(package_groups=['default']):
                 if group != "default" and path.exists(group_file):
                     # Installing devops specific brew app Installs/Upgrades
                     msg = f"{group.title()} specific package installs..."
-                    print_sub_header(msg)
+                    sub_header(msg)
                     subproc([f'{install_cmd}{group}'], error_ok=True)
                     print_msg(f'{group.title()} specific packages installed.')
 
     # cleanup operation doesn't seem to happen automagically :shrug:
-    print_sub_header('[b]brew[/b] final cleanup')
+    sub_header('[b]brew[/b] final cleanup')
     subproc(['brew cleanup'])
     print_msg('Cleanup completed.')
     return
@@ -102,26 +103,23 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
                     if 'sudo' in pkg_cmds[pre_cmd]:
                         SPINNER = False
                     subproc([pkg_cmds[pre_cmd]], spinner=SPINNER)
-                    print_sub_header(f"[b]{pre_cmd.title()}[/b] completed.")
+                    sub_header(f"[b]{pre_cmd.title()}[/b] completed.")
 
             # list of actually installed packages
             installed_pkgs = subproc([pkg_cmds['list']], quiet=True)
 
             for pkg_group in pkg_groups:
                 if pkg_group in required_pkg_groups:
-                    if pkg_group != 'default':
-                        # msg = (f"Installing [i]{pkg_group}[/i] packages")
-                        # print_msg(msg)
-
                     install_pkg_group(installed_pkgs,
                                       required_pkg_groups[pkg_group],
                                       pkg_cmds['install'])
 
-                    print_sub_header(f'{pkg_group.title()} packages installed.')
+                    sub_header(f'{pkg_group.title()} packages installed.')
 
             if 'cleanup' in pkg_cmds:
                 subproc([pkg_cmds['cleanup']])
-                print_sub_header("[b]Cleanup[/b] step Completed.")
+                sub_header("[b]Cleanup[/b] step Completed.")
+                #
     return
 
 
