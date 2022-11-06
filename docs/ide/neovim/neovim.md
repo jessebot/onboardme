@@ -134,3 +134,6 @@ The eqivelent in my `init.lua` is this:
 ```lua
 vim.cmd [[colorscheme spacechalk]]
 ```
+
+# Helpful links
+[Floating windows in neovim](http://www.statox.fr/posts/2021/03/breaking_habits_floating_window/)

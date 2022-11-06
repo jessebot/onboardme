@@ -137,9 +137,9 @@ def process_configs(overwrite=False, repo="", git_branch="", pkg_mngrs=[],
                 'dot_files': {'overwrite': overwrite,
                               'git_url': repo, 'git_branch': git_branch}}
 
-    log.debug(f"cli_dict is: {cli_dict}", extra={"markup": True})
+    log.debug(f"cli_dict is:\n{cli_dict}\n", extra={"markup": True})
     if USR_CONFIG_FILE:
-        log.debug(f"🗂 ⚙️  user_config_file is {USR_CONFIG_FILE}",
+        log.debug(f"🗂 ⚙️  user_config_file: \n{USR_CONFIG_FILE}\n",
                   extra={"markup": True})
 
         usr_cfgs = fill_in_defaults(DEFAULTS, USR_CONFIG_FILE)
@@ -150,8 +150,8 @@ def process_configs(overwrite=False, repo="", git_branch="", pkg_mngrs=[],
     else:
         final_defaults = fill_in_defaults(DEFAULTS, cli_dict)
 
-    log.debug(" final config after filling cli_dict in with defaults: "
-              f"{final_defaults}", extra={"markup": True})
+    log.debug(" final config after filling cli_dict in with defaults:\n"
+              f"{final_defaults}\n", extra={"markup": True})
 
     valid_steps = process_steps(final_defaults['steps'][OS[0]],
                                 final_defaults['remote_hosts'])
