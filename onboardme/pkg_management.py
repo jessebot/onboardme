@@ -8,6 +8,9 @@ from .console_logging import print_header, print_sub_header, print_msg
 from .subproc import subproc
 
 
+SPINNER = True
+
+
 def brew_install_upgrade(package_groups=['default']):
     """
     Run the install/upgrade of packages managed by brew, also updates brew
@@ -67,6 +70,7 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
     """
     pkg_mngrs_list_of_dicts = load_yaml(path.join(PWD, 'config/packages.yml'))
     log.debug(f"pkg_mngrs: {pkg_mngrs}", extra={"markup": True})
+    log.debug(f"pkg_groups: {pkg_groups}", extra={"markup": True})
 
     # we iterate through pkg_mngrs which should already be sorted
     for pkg_mngr in pkg_mngrs:
@@ -81,9 +85,8 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
         pkg_mngr_dict = pkg_mngrs_list_of_dicts[pkg_mngr]
         required_pkg_groups = pkg_mngr_dict['packages']
 
-        debug_line = f"required_pkg_groups are {required_pkg_groups}"
+        debug_line = f"pkg groups for {pkg_mngr} are {required_pkg_groups}"
         log.debug(debug_line, extra={"markup": True})
-        log.debug(f"pkg_groups are {pkg_groups}", extra={"markup": True})
 
         # make sure that the package manage has any groups that were passed in
         if any(check in pkg_groups for check in required_pkg_groups):
@@ -95,12 +98,14 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
 
             # run package manager specific setup if needed, & updates/upgrades
             pkg_cmds = pkg_mngr_dict['commands']
-            log.debug(pkg_cmds)
+            log.debug(f"package manager commands are: {pkg_cmds}")
             for pre_cmd in ['setup', 'update', 'upgrade']:
                 if pre_cmd in pkg_cmds:
-                    print_sub_header("\n{pkg_mngr} '[b]{pre_cmd}[/b]' step")
-                    subproc([pkg_cmds[pre_cmd]], spinner=True)
-                    print_msg("\n'[b]{pre_cmd}[/b]' step Completed.")
+                    print_sub_header(f"{pkg_mngr} [b]{pre_cmd}[/b] step")
+                    if 'sudo' in pre_cmd:
+                        SPINNER = False
+                    subproc([pkg_cmds[pre_cmd]], spinner=SPINNER)
+                    print_msg(f"[b]{pre_cmd}[/b] step Completed.")
 
             # list of actually installed packages
             installed_pkgs = subproc([pkg_cmds['list']], quiet=True)
@@ -118,7 +123,11 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
 
                     f_msg = f'[green]{pkg_mngr}[/green] {pkg_group} '
                     print_msg(f_msg + 'packages installed.')
-        return
+
+            if 'cleanup' in pkg_cmds:
+                subproc([pkg_cmds['cleanup']])
+                print_msg("[b]Cleanup[/b] step Completed.")
+    return
 
 
 def install_pkg_group(installed_pkgs=[], pkgs_to_install=[], install_cmd=""):
@@ -127,10 +136,9 @@ def install_pkg_group(installed_pkgs=[], pkgs_to_install=[], install_cmd=""):
     Returns True.
     """
     install_pkg = False
-    spinner = True
     # the spinner status thing rich provides breaks with input
     if 'sudo' in install_cmd:
-        spinner = False
+        SPINNER = False
 
     if 'upgrade' in install_cmd:
         install_pkg = True
@@ -140,5 +148,5 @@ def install_pkg_group(installed_pkgs=[], pkgs_to_install=[], install_cmd=""):
             if pkg in installed_pkgs:
                 install_pkg = True
         if install_pkg:
-            subproc([install_cmd + pkg], quiet=True, spinner=spinner)
+            subproc([install_cmd + pkg], quiet=True, spinner=SPINNER)
     return True
