@@ -38,7 +38,6 @@ For getting your colors to match another terminal, try out
 [terminal.sexy](https://terminal.sexy/).
 
 ### other cool stuff you do in a terminal that I wasn't sure where to put
-- [qrenco.de](https://asciinema.org/a/123683)
 - [additional hyper plugins](https://medium.com/cloud-native-the-gathering/hyper-terminal-plugins-that-will-make-your-life-easier-859897df79d6)
 
 [0]: https://hyper.is/ "hyper.is"
