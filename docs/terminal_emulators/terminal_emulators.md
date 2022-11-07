@@ -15,10 +15,11 @@ My main daily drivers are iTerm2 and terminator right now, but I'm trying to pha
 ## Explanation of what, why, how when it comes to Terminals
 
 | App | Local Config | Pros | Cons |
-|:---:|---|---|---|
-| [iTerm2](https://iterm2.com/) | [~/Library/ApplicationSupport/iTerm2/DynamicProfiles/Profiles.json](https://github.com/jessebot/onboardme/blob/main/configs/iterm2/Profiles.json) | configurable, highly supported | macOS only |
-| [hyper.js](https://hyper.is/) | [~/.hyper.js](https://github.com/jessebot/onboardme/blob/main/dot_files/.hyper.js) | modern feel, configurable, cross platform | Slow, Javascript :( |
-| [tilix](https://gnunn1.github.io/tilix-web/)| [???](https://github.com/jessebot/onboardme/blob/main/configs) | configurable | linux only |
+|:---:|--------------|------|------|
+| [iTerm2][0] | [~/Library/ApplicationSupport/iTerm2/DynamicProfiles/Profiles.json](https://github.com/jessebot/dot_files/blob/main/Library/ApplicationSupport/iTerm2/DynamicProfiles/Profiles.json) | configurable, highly supported | macOS only |
+| [hyper.js](https://hyper.is/) | [~/.hyper.js](https://github.com/jessebot/dot_files/blob/main/.hyper.js) | modern feel, configurable, cross platform | Slow with a GPU/M1 or later macOS and in Javascript :( |
+| [tilix](https://gnunn1.github.io/tilix-web/)| ??? | configurable | linux only |
+| [kitty](https://sw.kovidgoyal.net/kitty/) | [`~/.config/kitty`](https://github.com/jessebot/dot_files/blob/main/.config/kitty) | configurable, cross platform | can't adjust non-ascii font size, community not welcoming |
 | [cmder](https://cmder.net/) | None yet | terminal for windows that scales, splits, and supports config | kinda buggy |
 
 You can find more Hyper.js docs [here](./hyper/README.md), thanks to @cloudymax :)
@@ -31,3 +32,5 @@ When you're using nerdfonts, you want to set the font in the terminal config its
 ### other cool stuff you do in a terminal that I wasn't sure where to put
 - [qrenco.de](https://asciinema.org/a/123683)
 - [additional hyper plugins](https://medium.com/cloud-native-the-gathering/hyper-terminal-plugins-that-will-make-your-life-easier-859897df79d6)
+
+[0]: https://iterm2.com/ "iTerm2"
