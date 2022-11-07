@@ -18,9 +18,8 @@ observation over the past year-ish (it's October 2022 at the time of writing).
 
 To be honest, I've been using vim since 2011, and even though neovim has been
 around since 2015, since I was using vi before vim, I never really gave it a
-ton of thought. But recently there finally came
-[a plugin](https://github.com/numirias/semshi#readme) that looked too good
-not to try, but was only available for neovim, so I figured, at very least,
+ton of thought. But recently there finally came [a plugin][0] that looked too
+good not to try, but was only available for neovim, so I figured, at very least,
 I should give it a go. I'll document anything interesting I learn here.
 
 # Getting Started with Neovim
@@ -94,7 +93,7 @@ set number = true
 ```
 
 and put them directory into your `init.lua` file. Then run an interactive sed
-to update them to lua's vim interface like this, `:%s/set number /vim.opt./`,
+to update them to lua's vim interface like this, `:%s/set /vim.opt./`,
 which should then give you this:
 
 ```lua
@@ -123,13 +122,13 @@ vim.keymap.set('n', '<space>', 'za')
 Sometimes you have a command that doesn't have a vim lua interface, or maybe you
 just can't find it. There's a `vim.cmd` you can call instead. Example:
 
-I have my colorscheme set to [spacechalk](https://github.com/jessebot/space-chalk) in my `.vimrc` like this:
+I have my colorscheme set to [spacechalk][1] in my `.vimrc` like this:
 
 ```vim
 colorscheme spacechalk
 ```
 
-The eqivelent in my `init.lua` is this:
+The eqivilent in my `init.lua` is this:
 
 ```lua
 vim.cmd [[colorscheme spacechalk]]
@@ -137,3 +136,6 @@ vim.cmd [[colorscheme spacechalk]]
 
 # Helpful links
 [Floating windows in neovim](http://www.statox.fr/posts/2021/03/breaking_habits_floating_window/)
+
+[0]: https://github.com/numirias/semshi#readme "semshi"
+[1]: https://github.com/jessebot/space-chalk "space-chalk"
