@@ -24,6 +24,8 @@ anyone who finds this, particularly for beginners diving in. :heart:
 
 ## Vim Tips and Tricks
 
+If you're new to vim, check out the [vim adventures game](https://vim-adventures.com/).
+
 ### Saving and Exiting
 
 |  Keys |            Description           |
@@ -42,7 +44,7 @@ anyone who finds this, particularly for beginners diving in. :heart:
 | `gg`          | top of the file    |
 | `shift` + `g` | bottom of the file |
 
-You can type a number before any of these to increase how far they go, 
+You can type a number before any of these to increase how far they go,
 e.g. `2j` will take you to down two lines.
 
 | Keys |    Description   |
