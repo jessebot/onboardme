@@ -265,6 +265,7 @@ I've actually never used this but it seems really neat, albeit not really update
 - [How to change the highlight color for search hits and quickfix selection](https://stackoverflow.com/questions/7103173/vim-how-to-change-the-highlight-color-for-search-hits-and-quickfix-selection)
 - [Solving merge conflicts with vim](https://medium.com/prodopsio/solving-git-merge-conflicts-with-vim-c8a8617e3633)
 - [Writing a Toggle Function in vim](https://stackoverflow.com/questions/20579142/toggle-function-in-vim)
+- [vim for python development](https://stackabuse.com/vim-for-python-development/)
 
 For users that know enough to edit a vimrc, you should check out this [vimrc checklist](https://www.reddit.com/r/vim/wiki/vimrctips/#wiki_vimrc_checklist.3A) from r/vim.
 
@@ -275,6 +276,5 @@ For users that know enough to edit a vimrc, you should check out this [vimrc che
 - [awesome-vim](https://github.com/akrawchyk/awesome-vim)
 
 ### Other neat stuff
-- kindaVim: Vim moves for the whole macOS now in native apps[](https://www.reddit.com/r/vim/comments/rmowhk/kindavim_vim_moves_for_the_whole_macos_now_in/)
-
-This is a vim bootstrapper: https://vim-bootstrap.com
+- [kindaVim](https://www.reddit.com/r/vim/comments/rmowhk/kindavim_vim_moves_for_the_whole_macos_now_in/): Vim moves for the whole macOS now in native apps
+- [vim bootstrapper](https://vim-bootstrap.com)
