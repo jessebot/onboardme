@@ -19,7 +19,7 @@ My main daily drivers are iTerm2 and terminator right now, but I'm trying to pha
 | [iTerm2][0] | [~/Library/ApplicationSupport/iTerm2/DynamicProfiles/Profiles.json](https://github.com/jessebot/dot_files/blob/main/Library/ApplicationSupport/iTerm2/DynamicProfiles/Profiles.json) | configurable, highly supported | macOS only |
 | [hyper.js](https://hyper.is/) | [~/.hyper.js](https://github.com/jessebot/dot_files/blob/main/.hyper.js) | modern feel, configurable, cross platform | Slow with a GPU/M1 or later macOS and in Javascript :( |
 | [tilix](https://gnunn1.github.io/tilix-web/)| ??? | configurable | linux only |
-| [kitty](https://sw.kovidgoyal.net/kitty/) | [`~/.config/kitty`](https://github.com/jessebot/dot_files/blob/main/.config/kitty) | configurable, cross platform | can't adjust non-ascii font size, run by a brilliant jerk who calls other products "inferior" and is mean in github issues |
+| [kitty](https://sw.kovidgoyal.net/kitty/) | [`~/.config/kitty`](https://github.com/jessebot/dot_files/blob/main/.config/kitty) | configurable, cross platform | can't adjust non-ascii font size, community not welcoming |
 | [cmder](https://cmder.net/) | None yet | terminal for windows that scales, splits, and supports config | kinda buggy |
 
 You can find more Hyper.js docs [here](./hyper/README.md), thanks to @cloudymax :)
