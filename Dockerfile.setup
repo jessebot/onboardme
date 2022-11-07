@@ -1,0 +1,27 @@
+# -- usage -- 
+# docker run -it \
+#   -v $(pwd):/onboardme \
+#   onboardme \
+#   /usr/bin/python3 -m build --wheel . && \
+#   twine check dist/*
+
+FROM onboardme-base as Base
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+ENV HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
+ENV HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
+ENV MANPATH="$MANPATH:/home/linuxbrew/.linuxbrew/share/man"
+ENV INFOPATH="$INFOPATH:/home/linuxbrew/.linuxbrew/share/info"
+ENV PATH="$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin"
+ENV NONINTERACTIVE=1
+ENV PATH="$PATH:/home/onboardme/.local/bin"
+
+WORKDIR /onboardme
+
+# Run setup.sh
+RUN wget https://raw.githubusercontent.com/jessebot/onboardme/main/setup.sh && \
+  chmod +x setup.sh && \
+  chmod 777 setup.sh && \
+  yes| /bin/bash setup.sh
+
