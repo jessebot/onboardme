@@ -91,6 +91,10 @@ Move your cursor over *one of the curly braces*, then hit `>` followed by `%`
 (From anywhere inside the curly brace block you can hit: `>` then `i` then `B`.)
 
 
+### Spellcheck
+Vim has a built in spellcheck that you can use by typing: `set spell`
+
+
 ### Terminal
 In command mode...
 
