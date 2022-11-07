@@ -83,6 +83,8 @@ pip3.10:
     default:
       # this is for python development
       - flake8
+      - pyflakes
+      - autoflake
       - pip
       - build
       - twine
