@@ -119,7 +119,6 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
             if 'cleanup' in pkg_cmds:
                 subproc([pkg_cmds['cleanup']])
                 sub_header("[b]Cleanup[/b] step Completed.")
-                #
     return
 
 
@@ -134,12 +133,12 @@ def install_pkg_group(installed_pkgs=[], pkgs_to_install=[], install_cmd=""):
     if 'sudo' in install_cmd:
         SPINNER = False
 
-    if 'upgrade' in install_cmd:
+    if 'upgrade' in install_cmd or not installed_pkgs:
         install_pkg = True
 
     for pkg in pkgs_to_install:
         if installed_pkgs:
-            if pkg in installed_pkgs:
+            if pkg not in installed_pkgs:
                 install_pkg = True
         if install_pkg:
             subproc([install_cmd + pkg], quiet=True, spinner=SPINNER)
