@@ -252,6 +252,7 @@ I've actually never used this but it seems really neat, albeit not really update
 
 ### Guides and helpful answers
 
+- [markdown in vim](https://www.swamphogg.com/2015/vim-setup/)
 - [using-templates-in-vim](https://shapeshed.com/vim-templates/#using-templates-in-vim)
 - [How does the vim write with sudo trick work?](https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
 - [Setting up vim for yaml](https://www.arthurkoziel.com/setting-up-vim-for-yaml/).
