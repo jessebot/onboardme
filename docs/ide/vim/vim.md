@@ -47,12 +47,14 @@ If you're new to vim, check out the [vim adventures game](https://vim-adventures
 You can type a number before any of these to increase how far they go,
 e.g. `2j` will take you to down two lines.
 
-| Keys |    Description   |
-|:----:|:-----------------|
-| `j`  | down a line      |
-| `k`  | up a line        |
-| `h`  | left a character |
-| `l`  | right a character|
+|    Keys    |    Description    |
+|:----------:|:------------------|
+| `j`        | down a line       |
+| `k`        | up a line         |
+| `h`        | left a character  |
+| `l`        | right a character |
+| `CTRL + f` | Page down scroll  |
+| `CTRL + b` | Page back scroll  |
 
 ### Copying, Pasting, Deleting
 
