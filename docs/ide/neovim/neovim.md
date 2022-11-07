@@ -8,11 +8,11 @@ description: "Neovim is vim, but with faster plugins and better syntax highlight
 ---
 
 # neovim
-[Neovim](https://neovim.io) is 
+[Neovim](https://neovim.io) is
 
-> a refactor, and sometimes redactor, in the tradition of Vim (which itself derives from Stevie). It is not a rewrite but a continuation and extension of Vim. Many clones and derivatives exist, some very clever—but none are Vim. Neovim is built for users who want the good parts of Vim, and more. 
+> a refactor, and sometimes redactor, in the tradition of Vim (which itself derives from Stevie). It is not a rewrite but a continuation and extension of Vim. Many clones and derivatives exist, some very clever—but none are Vim. Neovim is built for users who want the good parts of Vim, and more.
 
-It's supposed to be faster than vim at a lot of things, and there's more 
+It's supposed to be faster than vim at a lot of things, and there's more
 extensible plugins and active communities, it would seem anyway, from my casual
 observation over the past year-ish (it's October 2022 at the time of writing).
 
@@ -50,7 +50,7 @@ source ~/.vimrc
 
 After that, launch neovim with `nvim` and then do your normal plugin manager flow.
 
-## Plugins 
+## Plugins
 
 Most plugins will work out of the box, but you'll probably have issues with
 Python plugins. You can learn more about those and other things to do with vim-plug
@@ -88,7 +88,7 @@ still source vimscript files.
 
 To start converting, you can fist grab all your variables, for instance:
 
-```vim 
+```vim
 " enable line number column
 set number = true
 ```

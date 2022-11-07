@@ -7,7 +7,7 @@ description: "IDEs and what I think/know about them"
 ---
 
 # Quick intro
-I love vim and have been using it for ages, but resently started using neovim.
+I love vim and have been using it for ages, but recently started using neovim.
 I have both a vim section for general vim notes, and a neovim section which covers
 converting from vim to neovim and what's involved. This page is mostly for things
 that don't quite fit between the two.
@@ -24,7 +24,7 @@ I found the following links helpful, so feel free to take a look there first:
 Here's what I actually did though:
 
 ### Step one
-Open [Automator](https://support.apple.com/nl-nl/guide/automator/welcome/mac) on your mac (Should already be installed). This will open a file selector in your Applications directory. Click the "New Document" button at the bottom of the window. Select App, when it prompts you for what you want to work on. 
+Open [Automator](https://support.apple.com/nl-nl/guide/automator/welcome/mac) on your mac (Should already be installed). This will open a file selector in your Applications directory. Click the "New Document" button at the bottom of the window. Select App, when it prompts you for what you want to work on.
 
 On the left hand side of Automator, you should see a search, type "apple" and then select the Apple Script option.
 
@@ -39,11 +39,11 @@ It will not exit iterm2 when you close the file.
 
 ```applescript
 on run {input, parameters}
-    
+
     set filename to POSIX path of input
-    
+
     set cmd to "clear && 'vim' '" & filename & "'"
-    
+
     if application "iTerm" is running then
         tell application "iTerm"
             set newWindow to (create window with default profile)
@@ -63,7 +63,7 @@ on run {input, parameters}
             end tell
         end tell
     end if
-    
+
 end run
 ```
 
