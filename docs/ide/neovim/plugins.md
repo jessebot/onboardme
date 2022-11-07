@@ -39,42 +39,40 @@ want to use it in neovim.
   maintanence and updates more of a chore. Pick a location, and stick with it,
   but to do this in vimscript with both an `init.vim` from neovim and a `.vimrc`
   being sourced for regular vim, we get into slightly more complicated territory,
-  and kind of repetitive. The quick way I found was to have a section in your 
+  and kind of repetitive. The quick way I found was to have a section in your
   `.vimrc` like this:
-  
+
   ```vim
   " this means: don't run this part in if we're using neovim
   if !has('nvim')
-  
+
       call plug#begin()
-  
-      " put all your vim plugins here, but don't include anything that only works
-      " in neovim (e.g. semshi)
-  
-      " example plugin that works in vim/neovim: This is helpful for markdown
+
+      " put all your vim plugins here, but don't include anything that only
+      " works in neovim (e.g. semshi)
+
+      " plugin that works in vim/neovim: This is helpful for markdown
       Plug 'junegunn/limelight.vim'
-  
+
       call plug#end()
-  
+
   endif
   ```
-  
-  and then in your `init.vim`, have something like this AFTER you source your 
+
+  and then in your `init.vim`, have something like this AFTER you source your
   `.vimrc`, so that vim-plug knows where to source your plugin exactly:
-  
+
   ```vim
   source ~/.vimrc
-  
+
   call plug#begin()
-  " put all your vim plugins here, but don't include anything that only works
-  " in neovim (e.g. semshi)
-  
-  " example plugin that works in vim/neovim: This is helpful for markdown
+
+  " plugin that works in vim/neovim but was installed with vim-plug in vim
   Plug 'junegunn/limelight.vim', {'dir': '~/.vim/plugged/limelight.vim'}
-  
-  " Example plugin that only works in neovim: this is helpful for python highlighting
+
+  " Example plugin that only works in neovim
   Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
-  
+
   call plug#end()
   ```
 
@@ -121,7 +119,7 @@ return require('packer').startup(function(use)
 
 
     -- Example plugin where we run :Updateremoteuseins after loadin the plugin
-    -- and only run it on python filetypes. 
+    -- and only run it on python filetypes.
     use {'numirias/semshi',  run = ':UpdateRemoteuseins', ft = 'py'}
     -- this would be like running this for vim-plug:
     -- Plug 'numirias/semshi', { 'do': ':UpdateRemoteuseins', 'filetype': 'py' }
