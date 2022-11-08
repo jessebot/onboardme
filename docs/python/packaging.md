@@ -10,14 +10,26 @@ permalink: /python/packaging
 # How to package your Python programs
 
 # setup.py
-This method is largely being deprecated, but you can read about it [here](/python/packaging/setuppy).
+This method is largely deprecated, but you can read about it [here](https://jessebot.github.io/onboardme/python/packaging/setuppy).
 
 # myproject.toml
-I have only just begun to do this, which is sad, because apparently this
-[became a standard]() back in 2016 :facepalm:
+I have only just begun to do [this](https://pip.pypa.io/en/stable/reference/build-system/pyproject-toml/), which is sad, because apparently this
+[became a standard](https://peps.python.org/pep-0518/) back in 2016 🤦
 
-This stackoverflow question was helpful to get started though:
-[What is pyproject.toml file for?](https://stackoverflow.com/questions/62983756/what-is-pyproject-toml-file-for)
+Helpful reading:
+- [Brett Cannon: What the heck is pyproject.toml?](https://snarky.ca/what-the-heck-is-pyproject-toml/)
+- [Stackoverflow: What is pyproject.toml file for?](https://stackoverflow.com/questions/62983756/what-is-pyproject-toml-file-for)
+
+TLDR; basically the dict you passed into setuptools to specify everything from required python version to cli tooling, is now a prettier [toml](https://github.com/toml-lang/toml/blob/main/README.md#toml) file. That toml file is then used by not just pip, but other tooling like poetry (poetry seems to be the most popular tool).
+
+Also, I like this weird duck thing:
+[![Purple Packaging Platypus](https://monotreme.club/img/sticker.png)](https://monotreme.club/#/)
+
+## Poetry
+Poetry is
+> a tool for dependency management and packaging in Python. It allows you to declare the libraries your project depends on and it will manage (install/update) them for you. Poetry offers a lockfile to ensure repeatable installs, and can build your project for distribution.
+
+Poetry's [basic guide](https://python-poetry.org/docs/basic-usage/) is actually pretty good.
 
 # What about brew?
 Well, that's a rabbit hole that I haven't had a chance to go down yet, but you
