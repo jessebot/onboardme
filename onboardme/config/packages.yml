@@ -33,8 +33,6 @@ apt:
       - catimg
       # this lets you ls images as thumbnails, which is helpful sometimes
       - imagemagick
-      # pretty syntaxhighlighted cat files with git diff support
-      - batcat
       # print a very pretty pallete to see all colors the terminal can render
       - colortest
     gaming:
