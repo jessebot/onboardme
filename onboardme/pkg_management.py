@@ -136,7 +136,8 @@ def install_pkg_group(installed_pkgs=[], pkgs_to_install=[], install_cmd=""):
     if 'upgrade' in install_cmd or not installed_pkgs:
         install_pkg = True
 
-    log.debug(f"pkgs_to_install are {pkgs_to_install}")
+    log.debug(f"pkgs_to_install are {pkgs_to_install}",
+              extra={"markup": True})
     for pkg in pkgs_to_install:
         if installed_pkgs:
             if pkg not in installed_pkgs:
