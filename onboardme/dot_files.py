@@ -26,8 +26,9 @@ def setup_dot_files(OS='Linux', overwrite=False,
     chdir(git_dir)
     opts = {'quiet': True, 'cwd': git_dir}
 
-    # global command: use main instead of master as default branch
+    # global: use main as default branch, always push up new remote branch
     cmds = ['git config --global init.defaultBranch main',
+            'git config --global push.autoSetupRemote true',
             f'git --git-dir={git_dir} --work-tree={HOME_DIR} init',
             'git config status.showUntrackedFiles no']
     subproc(cmds, spinner=False, **opts)
