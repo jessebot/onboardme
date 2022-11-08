@@ -7,11 +7,11 @@ permalink: /python
 ---
 
 # Python
-It was inevitable I'd write a python section. I've been using python since 
+It was inevitable I'd write a python section. I've been using python since
 maybe 2012 or 2013?... and I've never been writing things down. Instead, I just
-rely on ripping out some library I've writen somewhere else and making it work 
+rely on ripping out some library I've writen somewhere else and making it work
 in a new location. Recently I decided I should break that habit, because it is
-terrible, and it is not hard to release things on PyPi, probably. I also do a 
+terrible, and it is not hard to release things on PyPi, probably. I also do a
 lot of contracting, and it would be great to just write some open source
 software and allow others to use it where ever they want, instead of rewriting
 the same few libraries for companies over and over again.
@@ -41,9 +41,3 @@ which is basically a [TUI Notebook](https://blog.jupyter.org/nbterm-jupyter-note
 ## What is everyone else doing tho?
 Jetbrains and the Python org regularly survey their user base and then publish
 an [open report of the survey results.](https://lp.jetbrains.com/python-developers-survey-2021/)
-
-# PyScript
-I should look into pyscript, but all the demos are so slow, I'm uninterested 
-right now (Current time as of writing: 2022-11-05 15:45:42.0 +0100):
-
-[Pyscript.net](https://pyscript.net/)

@@ -6,7 +6,7 @@ permalink: /cli/git
 ---
 
 # Git
-> [Git](https://www.git-scm.com/) is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency. 
+> [Git](https://www.git-scm.com/) is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
 
 I'm mostly sure that most engineers and developers are using git right now, but
 how well? Eh. Git is a massive and complex program that you don't get good at
@@ -42,7 +42,11 @@ Thank you to [probable robot](https://probablerobot.net/2021/05/keeping-'live'-d
 
 ## Deleting all commits before a certain date
 
-[How can I delete all commits before a given date in Git history?](https://stackoverflow.com/q/29042783)
+Here's a couple of stackoverflow answers that were pretty helpful:
+
+- [How can I delete all commits before a given date in Git history?](https://stackoverflow.com/q/29042783)
+
+- [How to delete the old git history](https://stackoverflow.com/questions/41953300/how-to-delete-the-old-git-history)
 
 ## Remove file from git
 
