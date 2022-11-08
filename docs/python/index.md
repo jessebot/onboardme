@@ -29,8 +29,15 @@ I do love a good table.
 | pyyaml  | process easy yaml config files                               |
 | wget    | consistently just download a file without bells and whistles |
 
-## Key-Value Store
+## Linters forever
+Honestly... flake8 is still the most consistent but ruff is fastest. Here's a bunch:
+- pycodestyle
+- pydocstyle
+- flake8
+- pyflakes
+- ruff
 
+## Key-Value Store
 [TIL—Python has a built-in persistent key-value store](https://remusao.github.io/posts/python-dbm-module.html).
 
 ## Notebooks
