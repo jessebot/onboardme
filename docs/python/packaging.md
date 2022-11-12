@@ -31,9 +31,27 @@ Poetry is
 
 Poetry's [basic guide](https://python-poetry.org/docs/basic-usage/) is actually pretty good.
 
-# What about brew?
+### Poetry
+
+Here's some basics about poetry.
+```bash
+# init a poetry project in a directory with a project already - interactive
+poetry init
+
+# builds the project for publishing
+poetry build
+
+# publish to pypi
+poetry publish
+```
+
+## What about brew?
 Well, that's a rabbit hole that I haven't had a chance to go down yet, but you
 probably want to start here:
-= [Adding Software To Homebrew](https://docs.brew.sh/Adding-Software-to-Homebrew#formulae)
+- [Adding Software To Homebrew](https://docs.brew.sh/Adding-Software-to-Homebrew#formulae)
 - [https://docs.brew.sh/Formula-Cookbook](https://docs.brew.sh/Formula-Cookbook)
 - [https://docs.brew.sh/Python-for-Formula-Authors](https://docs.brew.sh/Python-for-Formula-Authors)
+
+[0]: https://jessebot.github.io/onboardme/python/packaging/setuppy "setuppy"
+[1]: https://peps.python.org/pep-0517/ "pep-0517"
+[2]: https://stackoverflow.com/questions/62983756/what-is-pyproject-toml-file-for "What is pyproject.toml file for"
