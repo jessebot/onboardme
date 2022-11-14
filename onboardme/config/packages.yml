@@ -36,11 +36,15 @@ apt:
       # print a very pretty pallete to see all colors the terminal can render
       - colortest
     gaming:
+      # helpful for gaming on linux
       - lutris
       - winehq-staging
       - steam
       # to format disks to exFAT; FAT is too thin for modern windows 10 ISOs
       # - exfat-utils
+    media:
+      # media player
+      - vlc
 
 flatpak:
   emoji: "🫓 "
