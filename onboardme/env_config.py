@@ -34,6 +34,16 @@ SYSINFO = uname()
 OS = (SYSINFO.sysname, SYSINFO.machine)
 
 
+def get_version():
+    """
+    get the version of onboardme, print it, and return True
+    """
+    # this is hardcoded because we're about upgrade major versions & grab
+    # pyproject.toml version info with python3.11
+    print("🎉 v0.14.20")
+    return True
+
+
 def check_os_support():
     """
     verify we're on a supported OS and ask to quit if not.

@@ -16,7 +16,8 @@ from rich.logging import RichHandler
 
 # custom libs
 from .help_text import RichCommand, options_help
-from .env_config import check_os_support, OS, process_configs, USR_CONFIG_FILE
+from .env_config import check_os_support, OS, process_configs, \
+                        USR_CONFIG_FILE, get_version
 from .env_config import DEFAULTS as OPTS
 from .console_logging import print_manual_steps
 
@@ -82,6 +83,7 @@ def setup_logger(level="", log_file=""):
 @option('--firewall', '-f', is_flag=True, help=HELP['firewall'])
 @option('--remote_host', '-r', metavar="IP_ADDR", multiple=True,
         help=HELP['remote_host'])
+@option('--version', is_flag=True, help=HELP['version'])
 def main(log_level: str = "",
          log_file: str = "",
          steps: str = "",
@@ -91,13 +93,17 @@ def main(log_level: str = "",
          pkg_managers: str = "",
          pkg_groups: str = "",
          firewall: bool = False,
-         remote_host: str = ""):
+         remote_host: str = "",
+         version: bool = False):
     """
     Uses config in the script repo in config/packages.yml and config/config.yml
     If run with no options on Linux, it will install brew, pip3.10, apt,
     flatpak, and snap packages. On mac, it only installs brew/pip3.10 packages.
     config loading tries to load: cli options and then .config/onboardme/*
     """
+    # return the version if that's all they want
+    if version:
+        return get_version()
     # before we do anything, we need to make sure this OS is supported
     check_os_support()
 
