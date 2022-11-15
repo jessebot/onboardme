@@ -40,7 +40,7 @@ def get_version():
     """
     # this is hardcoded because we're about upgrade major versions & grab
     # pyproject.toml version info with python3.11
-    print("🎉 v0.14.20")
+    print("\n🎉 v0.14.21\n")
     return True
 
 

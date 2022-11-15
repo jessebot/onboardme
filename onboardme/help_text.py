@@ -69,8 +69,10 @@ def options_help():
         'Setup SSH on a random port & add [meta]IP_ADDR[/] to firewall',
 
         'firewall':
-        'Setup iptables (on [i]linux[/] only).'
+        'Setup iptables (on [i]linux[/] only).',
 
+        'version':
+        'Print the version of onboardme.'
     }
 
 
