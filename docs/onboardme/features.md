@@ -8,24 +8,38 @@ permalink: /onboardme/getting-started/features
 
 # Features
 
-
 ## Shell Prompt
 We use powerline which you can learn more about [here](/cli/powerline).
 
 ## Default dot files
-Here's where I'm putting various things that get installed if you use my default
-dot_files.
+Here's where I'm putting various aliases and tooling that get installed if you
+use my [default dot files][0].
 
-Aliases:
+### Aliases and the commands they run
+Here's some default aliases you get when you use the default `.bashrc`
 
-| command       | description   |
-|:--------------|:--------------|
-| `cat` (macOS) | `rich`, uses `rich --pager` if file is longer than terminal, this is for syntax highlighting and page numbers. |
-| `cat` (linux) | `batcat` (syntax highlighting, git features, line numbers) |
-| `gph`         | `git push && git push --tags`  |
-| `gs`          | `git status`                   |
-| `gsa`         | runs a git status for every sub directory and displays in a pager |
-| `utc`         | `date --utc` |
+| alias | command(s) the alias runs                   |
+|-------|---------------------------------------------|
+| `cat` | `rich` or `bat` (varies by file type)       |
+| `gph` | `git push && git push --tags`               |
+| `gs`  | `git status`                                |
+| `gsa` | prints `git status` for every sub directory |
+| `utc` | `date --utc`                                |
 
-### vim
+- `rich`: This adds syntax highlighting and line numbers. We use `rich --pager`,
+  for files longer than your current terminal height.
+- `bat`: (sometimes known as `batcat`) adds syntax highlighting, line numbers,
+         and git diff features.
+
+### CLI tools
+Here's some of the cli tools we install.
+
+TODO: fill this in, and make sure it doesn't conflict with other areas of the docs.
+
+### Vim
 We use vim with these plugins you can learn more about [here](/vim).
+
+### Neovim
+We use neovim alongside vim with these plugins you can learn more about [here](/neovim).
+
+[0]: https://github.com/jessebot/dot_files "default dot files"

@@ -102,9 +102,9 @@ Those defaults can be altered per machine by creating a config file like:
       Linux:
         - brew
         - pip3.10
+        - apt
         - snap
         - flatpak
-        - apt
     # list of extra existing packages groups to install
     groups:
       - default
@@ -116,13 +116,14 @@ Those defaults can be altered per machine by creating a config file like:
 
   # known safe remote hosts that you expect to be able to ping and SSH into
   remote_hosts: []
+    # has to be IP address or hostname like this example
     # - 192.168.42.42
 
   # setup iptable on Linux only
   firewall: false
   ```
 
-  If the comments in this configuration file are unclear, please feel free to 
+  If the comments in this configuration file are unclear, please feel free to
   open up [an issue](https://github.com/onboardme/issues) and we'll help! :)
 
 </details>
@@ -177,7 +178,7 @@ We also use a few package files, namely `packages.yml` and a couple of Brewfiles
         - steam
         # to format disks to exFAT; FAT is too thin for modern windows 10 ISOs
         # - exfat-utils
-  
+
   flatpak:
     emoji: "🫓 "
     commands:
@@ -191,7 +192,7 @@ We also use a few package files, namely `packages.yml` and a couple of Brewfiles
         - io.freetubeapp.FreeTube
         # password manager
         - com.bitwarden.desktop
-  
+
   snap:
     emoji: "🫰 "
     commands:
@@ -204,7 +205,7 @@ We also use a few package files, namely `packages.yml` and a couple of Brewfiles
         - fluent-reader
         # screen debugger/sharing tool for android
         - scrcpy
-  
+
   # most of this is actually for powerline, my shell prompt
   pip3.10:
     emoji: "🐍"
@@ -270,17 +271,76 @@ files conflict with the files in the repo, we will not overwrite them by default
 If you always want your local dot files overwritten, you can pass in the `-O` switch
 or `--overwrite` option or set `overwrite` in your local `~/.config/onboardme/config.yml`.
 
+### `onboardme` cli
 ```bash
 # run onboardme with a custom git url and branch that overwrites existing files
-onboardme --git_url git@github.com:jessebot/dot_files.git --git_branch main --overwrite
+onboardme --git_url https://github.com/jessebot/dot_files.git --git_branch main --overwrite
 ```
 
-### packages
+### `config.yml`
+
+```yaml
+dot_files:
+  git_url: "https://github.com/jessebot/dot_files.git"
+  git_branch: "main"
+  overwrite: true
+```
+
+
+### Package Management
 All of the packages are installed using package managers, and each package
 manager has groups of packages they can install. You can specify specific
-package managers and package groups via the `config.yml` file, or via the cli.
+package _managers_ and package _groups_ via the `config.yml` file, or via the cli.
+
+By default, we install the `default` package _groups_ for all package _managers_.
+This includes everything you need for a basic cli experience and a slim ide.
+
+The default package managers for macOS and Linux are: `brew` and `pip3.10`
+
+For Linux, we also include: `apt`, `snap`, and `flatpak`
+
+See the examples below:
+
+#### Install the "default" and "media" package groups
+This would install the default packages for the basic cli experience and a
+slim ide PLUS tools for media, like vlc.
+
+##### `onboardme` cli
 
 ```bash
-# only run the brew package manager and only use the devops package group
-onboardme -p brew -g devops
+# can also be: onboardme -g default -g media
+onboardme --pkg_groups default --pkg_groups media
+```
+
+##### `config.yml`
+
+```yaml
+package:
+  groups:
+    - default
+    - media
+```
+
+#### _Only_ install the "devops" package group for _only_ the `brew` package manager
+This will install only additional tooling for devops work.
+_Note: This will not install/upgrade the default package group._
+
+##### `onboardme` cli
+
+```bash
+# can also be: onboardme -p brew -g devops
+onboardme --pkg_managers brew --pkg_groups devops
+```
+
+##### `config.yml`
+
+```yaml
+package:
+  managers:
+      Darwin:
+        - brew
+      Linux:
+        - brew
+  groups:
+    - devops
 ```
