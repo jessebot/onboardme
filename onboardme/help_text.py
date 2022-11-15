@@ -31,6 +31,7 @@ def options_help():
     steps = pretty_choices(DEFAULTS['steps'][OS[0]])
     pkg_mngrs = pretty_choices(DEFAULTS['package']['managers'][OS[0]])
     logging_choices = pretty_choices(['DEBUG', 'INFO', 'WARN', 'ERROR'])
+    pkg_groups = pretty_choices(['devops', 'media', 'gaming'])
 
     return {
         'log_level':
@@ -57,11 +58,11 @@ def options_help():
         '[option]--git_url[/option] repo.',
 
         'pkg_managers':
-        f'Specific [meta]PKG_MANAGER[/] to run. {pkg_mngrs}'
+        f'Specific [meta]PKG_MANAGER[/] to run. Choices: {pkg_mngrs}'
         '\nExample: [switch]-p[/] [meta]brew[/] [switch]-p[/] [meta]pip3.10',
 
         'pkg_groups':
-        "Package groups to install. Example:"
+        f"Package groups to install. Choices: {pkg_groups}\nExample:"
         " [switch]-g[/] [meta]devops[/] [switch]-g[/switch] [meta]gaming",
 
         'remote_host':
@@ -139,7 +140,7 @@ class RichCommand(click.Command):
 
             options_table.add_row(opt1, opt2, highlighter(help))
 
-        url = (" ♥ [link=https://jessebot.github.io/onboardme/]"
+        url = (" ♥ docs: [link=https://jessebot.github.io/onboardme/]"
                "jessebot.github.io/onboardme[/link]")
 
         console.print(Panel(options_table,
