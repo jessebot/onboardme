@@ -42,9 +42,6 @@ apt:
       - steam
       # to format disks to exFAT; FAT is too thin for modern windows 10 ISOs
       # - exfat-utils
-    media:
-      # media player
-      - vlc
 
 flatpak:
   emoji: "🫓 "
@@ -74,6 +71,9 @@ snap:
       - fluent-reader
       # screen debugger/sharing tool for android
       - scrcpy
+    media:
+      # media player
+      - vlc
 
 # most of this is actually for powerline, my shell prompt
 pip3.10:
