@@ -51,6 +51,8 @@ poetry build
 poetry publish --username __token__ --password $PYPI_TOKEN
 ```
 
+Here's a github action that does it for you: [JRubics/poetry-publish][3]
+
 ## What about brew?
 Well, that's a rabbit hole that I haven't had a chance to go down yet, but you
 probably want to start here:
@@ -61,3 +63,4 @@ probably want to start here:
 [0]: https://jessebot.github.io/onboardme/python/packaging/setuppy "setuppy"
 [1]: https://peps.python.org/pep-0517/ "pep-0517"
 [2]: https://stackoverflow.com/questions/62983756/what-is-pyproject-toml-file-for "What is pyproject.toml file for"
+[3]: https://github.com/JRubics/poetry-publish "poetry-publish"
