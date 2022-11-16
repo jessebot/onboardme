@@ -142,19 +142,6 @@ else
     echo -e "\033[92mPython3.11 already installed :3 \033[00m"
 fi
 
-which pip3.11 > /dev/null
-pip_return_code=$?
-if [ $pip_return_code -ne 0 ]; then
-    echo "Installing Pip3.11..."
-    if [[ "$OS" == *"Linux"* ]]; then
-        sudo apt install python3-pip
-        echo -e "\033[92mPip3.11 installed :3 \033[00m"
-    fi
-else
-    echo -e "\033[92mPip3.11 already installed :3 \033[00m"
-fi
-
-
 echo -e "--------------------------\033[94m Installing OnBoardMe :D \033[00m -------------------------"
 
 pip3.11 install onboardme
