@@ -19,7 +19,7 @@ Make sure you have sudo access, otherwise we won't be able to install certain th
   # First, make sure you have curl, but it *should* be there already be on macOS.
   # if this doesn't return anything, you need to install curl
   which curl
-  
+
   # Debian/Ubuntu
   sudo apt install -y curl
   ```
@@ -37,7 +37,7 @@ Now you can run the `setup.sh` script, or manually install the remaining prereqs
 
   ```bash
   # macOS uses zsh as the default shell, type bash to get this ancient verison
-  # of bash to run the setup and and then onboardme, which will install a 
+  # of bash to run the setup and and then onboardme, which will install a
   # current version of bash. **The script will *not* run properly in zsh**.
   chsh -s /bin/bash
   bash
@@ -68,16 +68,14 @@ Now you can run the `setup.sh` script, or manually install the remaining prereqs
   ```bash
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   ```
-  
+
 </details>
 
 <details>
-  <summary>Python3.10</summary>
-
-  This is a test of every markdown style I know.
+  <summary>Python3.11</summary>
 
   ```bash
-    brew install python@3.10
+    brew install python@3.11
   ```
 
 </details>
@@ -89,7 +87,7 @@ Recently, I started moving to actually package this, so you should be able to
 do:
 ```bash
 # not really sure why it doesn't install without --user :shrug:
-pip3.10 install --user onboardme
+pip3.11 install --user onboardme
 ```
 
 ## Quick test of `onboardme`

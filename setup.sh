@@ -77,7 +77,7 @@ if [ "$OS" == "Darwin" ]; then
     echo "running: xcode-select --install"
     xcode-select --install
 fi
-    
+
 
 echo -e "------------------------------- \033[94m Checking for Brew \033[00m ------------------------------\n"
 
@@ -132,32 +132,32 @@ fi
 
 echo -e "--------------------------\033[94m Checking for Python3 and pip3\033[00m -------------------------"
 # check to make sure we have python3 and pip3 installed
-which python3.10 > /dev/null
+which python3.11 > /dev/null
 py_return_code=$?
 if [ $py_return_code -ne 0 ]; then
-    echo "Installing Python3.10..."
-    brew install python@3.10
-    echo -e "\033[92mPython3.10 installed :3 \033[00m"
+    echo "Installing Python3.11..."
+    brew install python@3.11
+    echo -e "\033[92mPython3.11 installed :3 \033[00m"
 else
-    echo -e "\033[92mPython3.10 already installed :3 \033[00m"
+    echo -e "\033[92mPython3.11 already installed :3 \033[00m"
 fi
 
-which pip3.10 > /dev/null
+which pip3.11 > /dev/null
 pip_return_code=$?
 if [ $pip_return_code -ne 0 ]; then
-    echo "Installing Pip3.10..." 
+    echo "Installing Pip3.11..."
     if [[ "$OS" == *"Linux"* ]]; then
         sudo apt install python3-pip
-        echo -e "\033[92mPip3.10 installed :3 \033[00m"
+        echo -e "\033[92mPip3.11 installed :3 \033[00m"
     fi
 else
-    echo -e "\033[92mPip3.10 already installed :3 \033[00m"
+    echo -e "\033[92mPip3.11 already installed :3 \033[00m"
 fi
 
 
 echo -e "--------------------------\033[94m Installing OnBoardMe :D \033[00m -------------------------"
 
-pip3.10 install onboardme 
+pip3.11 install onboardme
 pip_install_return_code=$?
 
 if [ $pip_install_return_code -ne 0 ]; then

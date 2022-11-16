@@ -1,4 +1,3 @@
-#!/usr/bin/env python3.10
 """
     NAME:           Onboardme
     DESCRIPTION:    Program to take care of a bunch of onboarding tasks for new
@@ -97,8 +96,8 @@ def main(log_level: str = "",
          version: bool = False):
     """
     Uses config in the script repo in config/packages.yml and config/config.yml
-    If run with no options on Linux, it will install brew, pip3.10, apt,
-    flatpak, and snap packages. On mac, it only installs brew/pip3.10 packages.
+    If run with no options on Linux, it will install brew, pip3.11, apt,
+    flatpak, and snap packages. On mac, it only installs brew/pip3.11 packages.
     config loading tries to load: cli options and then .config/onboardme/*
     """
     # return the version if that's all they want

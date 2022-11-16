@@ -1,8 +1,5 @@
-#!/usr/bin/env python3.10
 """
-       Name:
-DESCRIPTION:
-     AUTHOR:
+       Name: configuring firewall, groups, and permissions
     LICENSE: GNU AFFERO GENERAL PUBLIC LICENSE Version 3
 """
 import fileinput

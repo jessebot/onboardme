@@ -25,28 +25,28 @@ brew tap homebrew/cask-fonts
 brew install --cask font-hack-nerd-font
 ```
 
-Then install a modern version of python (like python3.10 at the time of writing this) using brew:
+Then install a modern version of python (like python3.11 at the time of writing this) using brew:
 ```bash
-brew install python3.10
+brew install python3.11
 ```
 
 Finally, let's install powerline as well as an additional project called powerline-gitstatus:
 ```bash
-pip3.10 install powerline-status
-pip3.10 install powerline-gitstatus
+pip3.11 install powerline-status
+pip3.11 install powerline-gitstatus
 ```
 
 ## Configuration
 Some notes on getting started with powerline as your BASH prompt.
 
 ### `.bashrc` updates
-You'll need to update your `.bashrc` or `.bash_profile` with the location of your powerline script. Here's an example for python3.10 for Debian and also MacOS, assuming you used brew to install python3.10:
+You'll need to update your `.bashrc` or `.bash_profile` with the location of your powerline script. Here's an example for python3.11 for Debian and also MacOS, assuming you used brew to install python3.11:
 ```bash
 if [[ $(uname) == *"Linux"* ]]; then
-    pip_packages="/home/linuxbrew/.linuxbrew/lib/python3.10/site-packages"
+    pip_packages="/home/linuxbrew/.linuxbrew/lib/python3.11/site-packages"
 else
     # for macOS which stores pip packages in a different location
-    pip_packages="/usr/local/lib/python3.10/site-packages"
+    pip_packages="/usr/local/lib/python3.11/site-packages"
 fi
 
 if [ -f $pip_packages/powerline/bindings/bash/powerline.sh ]; then
@@ -60,7 +60,7 @@ fi
 ### Config files
 The main locations you'll probably do configuration are themes and colorschemes. With themes, you can customize the segments of a powerline, and with colorschemes, you can customize the colors that those segments use. Any configs you mess with will likely be stored in your python packages location, so in linux, using homebrew to install python, I typically see the `config_files` in:
 ```bash
-ls /home/linuxbrew/.linuxbrew/lib/python3.10/site-packages/powerline/config_files/
+ls /home/linuxbrew/.linuxbrew/lib/python3.11/site-packages/powerline/config_files/
 ```
 
 Which should show you the following directories and files:
@@ -90,9 +90,8 @@ Good luck out there, friend!
 
 **P.S.**
 These are some of my favorite nerdfont icons:
-﯀     ﲵ      ﲖ      ﭬ  
-  ﳝ ﳞ 
+﯀     ﲵ      ﲖ      ﭬ 
+  ﳝ ﳞ
      ﲎ ﴱ  ﮭ 
-ﲾ         ﯙ  﫸ﴪ ﴫ ﯧ ﯦ   
-ﳣ ﳤ ﳥ ﮧ          ﳇ  
-
+ﲾ         ﯙ  﫸ﴪ ﴫ ﯧ ﯦ  
+ﳣ ﳤ ﳥ ﮧ          ﳇ 

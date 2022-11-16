@@ -1,4 +1,3 @@
-#!/usr/bin/env python3.10
 """
     Name:           onboardme.misc
     DESCRIPTION:    this is where I'm putting extra functions

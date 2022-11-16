@@ -55,11 +55,11 @@ package:
     # these are macOS specific steps
     Darwin:
       - brew
-      - pip3.10
+      - pip3.11
     # these are linux specific steps
     Linux:
       - brew
-      - pip3.10
+      - pip3.11
       - apt
       - snap
       - flatpak

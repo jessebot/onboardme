@@ -1,4 +1,3 @@
-#!/usr/bin/env python3.10
 """
 NAME:    Onboardme.ide_setup
 DESC:    install vim, neovim, and fonts
@@ -30,7 +29,7 @@ def vim_setup():
 
     # trick to not run youcompleteme init every single time
     init_ycm = False
-    ycm_dir = path.join(HOME_DIR, '.vim/plugged/YouCompleteMe/install.sh')
+    ycm_dir = path.join(HOME_DIR, '.vim/plugged/YouCompleteMe')
     if not path.exists(ycm_dir):
         init_ycm = True
 
@@ -51,7 +50,7 @@ def vim_setup():
 
     if init_ycm:
         # This is for you complete me, which is a python completion module
-        subproc(ycm_dir)
+        subproc(["chmod +x install.py", "./install.py"], cwd=ycm_dir)
 
     return True
 

@@ -76,11 +76,11 @@ snap:
       - vlc
 
 # most of this is actually for powerline, my shell prompt
-pip3.10:
+pip3.11:
   emoji: "🐍"
   commands:
-    list: "pip3.10 list"
-    install: "python3.10 -m pip install --upgrade "
+    list: "pip3.11 list"
+    install: "pip3.11 install --upgrade "
   packages:
     default:
       # this is for python development
@@ -90,15 +90,16 @@ pip3.10:
       - pip
       - build
       - twine
+      - poetry
       # this does some magic with imports when developing
       - autoimport
       # this is all powerline
-      - powerline-status
-      - powerline-gitstatus
-      - powerline-kubernetes
+      - "powerline-status"
+      - "powerline-gitstatus"
+      - "powerline-kubernetes"
       # for the internal ip address powerline shell prompt
       - netifaces
-      # supposed to work with powerline for spotify info
-      - dbus
+      # supposed to work with powerline for spotify info, python3.11 not ready
+      # - dbus
       # makes neovim work with vim's python3 interface
       - pynvim

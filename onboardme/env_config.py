@@ -1,5 +1,6 @@
-#!/usr/bin/env python3.10
-# Onboarding script for macOS and Debian by jessebot@Linux.com
+"""
+environment variable loading library for onboardme
+"""
 import logging as log
 from os import getenv, path, uname
 # rich helps pretty print everything
@@ -40,7 +41,7 @@ def get_version():
     """
     # this is hardcoded because we're about upgrade major versions & grab
     # pyproject.toml version info with python3.11
-    print("\n🎉 v0.14.21\n")
+    print("\n🎉 v0.15.0\n")
     return True
 
 
@@ -100,7 +101,7 @@ def sort_pkgmngrs(package_managers_list=[]):
     make sure the package managers are in the right order 🤦
     """
     final_list = []
-    package_managers = ['brew', 'pip3.10', 'apt', 'snap', 'flatpak']
+    package_managers = ['brew', 'pip3.11', 'apt', 'snap', 'flatpak']
     for mngr in package_managers:
         if mngr in package_managers_list:
             final_list.append(mngr)

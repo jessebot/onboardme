@@ -16,13 +16,14 @@ This is [a project](https://github.com/jessebot/onboardme) to store config files
 Looking for a project to get a fresh OS entirely, on a machine that has no OS? Check out [pxeless](https://github.com/cloudymax/pxeless).
 
 ## Under the hood
+🚧 Under construction 🚧
 
 |       Step                                    | Config Location in repo                           | OS           |
 |:----------------------------------------------|:--------------------------------------------------|:------------:|
 | Git fetch dot files                           | n/a: fetched from a configured git repo           | macOS/Debian |
 | Installs cross-OS brew packages               | n/a: installs `.Brewfile` from configured git repo| macOS/Debian |
 | Installs brew packages                        | `./onboardme/config/brew/Brewfile_{OS}`           | macOS/Debian |
-| Installs pip3.10, apt, snap, flatpak packages | `./onboardme/config/packages.yml`                 | Debian       |
+| Installs pip3.11, apt, snap, flatpak packages | `./onboardme/config/packages.yml`                 | Debian       |
 | (OPTIONAL) Installs gaming related packages.  | `./onboardme/config/packages.yml`                 | Debian       |
 | Installs fonts                                | n/a                                               | macOS/Debian |
 | Installs vim-plug + vim plugins               | n/a: plugins fetched from a configured git repo   | macOS/Debian |
@@ -34,7 +35,7 @@ Looking for a project to get a fresh OS entirely, on a machine that has no OS? C
 
 ### Current Ecoscape of Personal Tech
 
-These are all Linux Desktop and macOS applications I use. 
+These are all Linux Desktop and macOS applications I use.
 OnBoardMe doesn't officially support phones yet, but for what I use on my phone, check out my [doc](/onboardme/os/android).
 
 |        Category        |               App                   |            Replaces               |
