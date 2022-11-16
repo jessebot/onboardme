@@ -6,7 +6,7 @@ This is a project to store config files, as well as programatically install core
 
 Here's an example of the terminal after the script has run:
 
-[![./docs/onboardme/screenshots/terminal_screenshot.png alt='screenshot of terminal after runnign onboardme. includes colortest-256, powerline prompt, icons for files in ls output, and syntax highlighting examples with cat command.'](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/terminal_screenshot.png)](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/terminal_screenshot.png)
+[<img alt="screenshot of terminal after runnign onboardme. includes colortest-256, powerline prompt, icons for files in ls output, and syntax highlighting examples with cat command." width="750" src="https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/terminal_screenshot.png">](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/terminal_screenshot.png)
 
 
 ## Quick Start
@@ -45,10 +45,8 @@ Optimized for:
 
 And built using these great projects. Please go check them out:
 
-- [![rich](https://github.com/textualize/rich/raw/master/imgs/logo.svg)](https://github.com/Textualize/rich/tree/master)
-
-- [![nerd-fonts: Iconic font aggregator, collection, and patcher](https://raw.githubusercontent.com/ryanoasis/nerd-fonts/raw/master/images/nerd-fonts-logo.svg)](https://github.com/ryanoasis/nerd-fonts)
-
+[<img src="https://github.com/textualize/rich/raw/master/imgs/logo.svg" alt="rich python library logo with with yellow snake" width="200">](https://github.com/Textualize/rich/tree/master)
+[<img src="https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/images/nerd-fonts-logo.svg" width="140" alt="nerd-fonts: Iconic font aggregator, collection, and patcher">](https://www.nerdfonts.com/)
 - [powerline](https://powerline.readthedocs.io/en/master/overview.html)
 
 ## Status
