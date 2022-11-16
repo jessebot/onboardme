@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
-# just a quick script to install some reqs, works on debian based distros and macOS
-# Checks for: Brew, git, python3, and python3 requirements.txt
-
-# we make this lowercase because I don't trust it not to be random caps
+# just a quick script to install some reqs for onboardme
+# works on Debian (Bookworm) based distros and macOS (13.0.1 and later)
+# Checks for: brew, git, and python3.11
 
 # extremely simply loading bar
 function simple_loading_bar() {
@@ -71,7 +70,8 @@ fi
 echo "running: git config --global init.defaultBranch main"
 git config --global init.defaultBranch main
 
-# Make sure xcode is present on Macs since it needs to be re-installed when upgrading from 12.x -> 13.0
+# Make sure xcode is present on macOS, since it needs to be
+# re-installed when upgrading from 12.x -> 13.x
 if [ "$OS" == "Darwin" ]; then
     echo -e "-------------------------------- \033[94m Ensuring Xcode is present \033[00m ------------------------------"
     echo "running: xcode-select --install"
