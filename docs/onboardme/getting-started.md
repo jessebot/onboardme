@@ -97,11 +97,11 @@ Those defaults can be altered per machine by creating a config file like:
       # these are macOS specific steps
       Darwin:
         - brew
-        - pip3.10
+        - pip3.11
       # these are linux specific steps
       Linux:
         - brew
-        - pip3.10
+        - pip3.11
         - apt
         - snap
         - flatpak
@@ -207,11 +207,11 @@ We also use a few package files, namely `packages.yml` and a couple of Brewfiles
         - scrcpy
 
   # most of this is actually for powerline, my shell prompt
-  pip3.10:
+  pip3.11:
     emoji: "🐍"
     commands:
-      list: "pip3.10 list"
-      install: "pip3.10 install --upgrade "
+      list: "pip3.11 list"
+      install: "pip3.11 install --upgrade "
     packages:
       default:
         # this is for python development
@@ -240,7 +240,7 @@ configured for both macOS and Linux seperately. These steps include:
 
 - setting up dot files in your home directory (.bashrc, .vimrc, etc)
 - setting up vim (installing vim-plug and vim plugins)
-- managing packages using package managers (brew, pip3.10, apt, snap, flatpak)
+- managing packages using package managers (brew, pip3.11, apt, snap, flatpak)
 
 They can be configured via the `steps` parameter in the `config.yml` above,
 or via the the cli like:
@@ -295,7 +295,7 @@ package _managers_ and package _groups_ via the `config.yml` file, or via the cl
 By default, we install the `default` package _groups_ for all package _managers_.
 This includes everything you need for a basic cli experience and a slim ide.
 
-The default package managers for macOS and Linux are: `brew` and `pip3.10`
+The default package managers for macOS and Linux are: `brew` and `pip3.11`
 
 For Linux, we also include: `apt`, `snap`, and `flatpak`
 

@@ -1,4 +1,3 @@
-#!/usr/bin/env python3.10
 """
 NAME:    Onboardme.ide_setup
 DESC:    install vim, neovim, and fonts

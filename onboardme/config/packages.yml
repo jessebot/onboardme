@@ -76,11 +76,11 @@ snap:
       - vlc
 
 # most of this is actually for powerline, my shell prompt
-pip3.10:
+pip3.11:
   emoji: "🐍"
   commands:
-    list: "pip3.10 list"
-    install: "python3.10 -m pip install --upgrade "
+    list: "pip3.11 list"
+    install: "pip3.11 install --upgrade "
   packages:
     default:
       # this is for python development

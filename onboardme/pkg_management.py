@@ -1,4 +1,3 @@
-#!/usr/bin/env python3.10
 import logging as log
 from os import path
 
@@ -61,8 +60,8 @@ def brew_install_upgrade(package_groups=['default']):
 
 def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
     """
-    Installs packages with apt, brew, pip3.10, snap, flatpak. If no pkg_mngrs
-    list passed in, only use brew/pip3.10 for mac. Takes optional variable,
+    Installs packages with apt, brew, pip3.11, snap, flatpak. If no pkg_mngrs
+    list passed in, only use brew/pip3.11 for mac. Takes optional variable,
     pkg_group_lists to install optional packages.
     Returns True.
     """

@@ -1,3 +1,6 @@
+"""
+help text functions for the onboardme cli
+"""
 # file for rich printing
 import click
 from rich.console import Console
@@ -59,7 +62,7 @@ def options_help():
 
         'pkg_managers':
         f'Specific [meta]PKG_MANAGER[/] to run. Choices: {pkg_mngrs}'
-        '\nExample: [switch]-p[/] [meta]brew[/] [switch]-p[/] [meta]pip3.10',
+        '\nExample: [switch]-p[/] [meta]brew[/] [switch]-p[/] [meta]pip3.11',
 
         'pkg_groups':
         f"Package groups to install. Choices: {pkg_groups}\nExample:"

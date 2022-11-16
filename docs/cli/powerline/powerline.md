@@ -32,8 +32,8 @@ brew install python3.11
 
 Finally, let's install powerline as well as an additional project called powerline-gitstatus:
 ```bash
-pip3.10 install powerline-status
-pip3.10 install powerline-gitstatus
+pip3.11 install powerline-status
+pip3.11 install powerline-gitstatus
 ```
 
 ## Configuration

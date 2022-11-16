@@ -232,7 +232,7 @@ endif
 and here's my basic python template:
 
 ```python
-#!/usr/bin/env python3.10
+#!/usr/bin/env python3.11
 """
        Name:
 DESCRIPTION:

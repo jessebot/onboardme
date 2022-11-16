@@ -19,8 +19,8 @@ This got long enough it needed it's own page
   then you probably need to first install `pynvim`, which helps with this:
 
   ```bash
-  # I use python3.10 everywhere right now, but you probably don't need to specify
-  python3.10 -m pip install --user --upgrade pynvim
+  # I use python3.11 everywhere right now, but you probably don't need to specify
+  python3.11 -m pip install --user --upgrade pynvim
   ```
 
   After that, all my plugins worked find as they do in vim.
