@@ -10,12 +10,25 @@ Here's an example of the terminal after the script has run:
 
 
 ## Quick Start
-[Get Started here](https://jessebot.github.io/onboardme/onboardme/getting-started) 💙!
+The quickest way to get started on a fresh macOS or Debian OS is:
+```bash
+# this will download setup.sh to your current directory and run it
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/jessebot/onboardme/main/setup.sh)"
+
+# this will display the help for the onboardme cli
+onboardme --help
+```
+You can also read more in depth [Getting Started docs](https://jessebot.github.io/onboardme/onboardme/getting-started) 💙!
 
 
-### Docs
+#### More Docs
 We've recently setup a justthedocs page [here](https://jessebot.github.io/onboardme/).
 
+### Upgrading
+If you're on python3.11.0 or later, you should be able to do:
+```bash
+pip3.11 install --upgrade onboardme
+```
 
 ## Features
 Made for the following OS (lastest stable):
@@ -42,7 +55,7 @@ And built using these great projects. Please go check them out:
 
 🎉 Active project! Currently in later alpha :D (*But not yet stable. There be 🐛.*)
 
-Please report 🐛 in the GitHub issues, and we will collect them, 
+Please report 🐛 in the GitHub issues, and we will collect them,
 and release them into the wild, because we are vegan and nice.
 (Kidding, we will help! 😌)
 
