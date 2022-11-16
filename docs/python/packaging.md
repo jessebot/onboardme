@@ -38,11 +38,17 @@ Here's some basics about poetry.
 # init a poetry project in a directory with a project already - interactive
 poetry init
 
+# installs your current project, and dependencies, in a virtual env
+poetry install
+
+# sources your python virtual env for you to test your package
+poetry shell
+
 # builds the project for publishing
 poetry build
 
-# publish to pypi
-poetry publish
+# publish to pypi, $PYPI_TOKEN must be exported as your current pypi api token
+poetry publish --username __token__ --password $PYPI_TOKEN
 ```
 
 ## What about brew?
