@@ -5,7 +5,7 @@
 #   /usr/bin/python3 -m build --wheel . && \
 #   twine check dist/*
 
-FROM debian:bullseye-slim as Base
+FROM debian:bookworm-slim as Base
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
