@@ -57,7 +57,9 @@ Please report 🐛 in the GitHub issues, and we will collect them,
 and release them into the wild, because we are vegan and nice.
 (Kidding, we will help! 😌)
 
-💙 We love contributors! Open a pull request, and we will review it asap!
+We love contributors! Open a pull request, and we will review it asap! :)
+
+:star: If you like this project, please star it
 
 ## Collaborators
 
