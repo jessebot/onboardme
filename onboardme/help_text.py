@@ -61,11 +61,11 @@ def options_help():
         '[option]--git_url[/option] repo.',
 
         'pkg_managers':
-        f'Specific [meta]PKG_MANAGER[/] to run. Choices: {pkg_mngrs}'
+        f'Specific [meta]PKG_MANAGER[/] to run. {pkg_mngrs}'
         '\nExample: [switch]-p[/] [meta]brew[/] [switch]-p[/] [meta]pip3.11',
 
         'pkg_groups':
-        f"Package groups to install. Choices: {pkg_groups}\nExample:"
+        f"Package groups to install. {pkg_groups}\nExample:"
         " [switch]-g[/] [meta]devops[/] [switch]-g[/switch] [meta]gaming",
 
         'remote_host':
