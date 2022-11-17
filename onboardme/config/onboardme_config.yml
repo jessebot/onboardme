@@ -26,6 +26,7 @@ steps:
   Darwin:
     - dot_files
     - packages
+    - font_setup
     - vim_setup
     - neovim_setup
   # these are linux specific steps

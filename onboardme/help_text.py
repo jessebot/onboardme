@@ -34,7 +34,7 @@ def options_help():
     steps = pretty_choices(DEFAULTS['steps'][OS[0]])
     pkg_mngrs = pretty_choices(DEFAULTS['package']['managers'][OS[0]])
     logging_choices = pretty_choices(['DEBUG', 'INFO', 'WARN', 'ERROR'])
-    pkg_groups = pretty_choices(['devops', 'media', 'gaming'])
+    pkg_groups = pretty_choices(['default', 'devops', 'gui', 'gaming'])
 
     return {
         'log_level':
@@ -61,11 +61,11 @@ def options_help():
         '[option]--git_url[/option] repo.',
 
         'pkg_managers':
-        f'Specific [meta]PKG_MANAGER[/] to run. Choices: {pkg_mngrs}'
+        f'Specific [meta]PKG_MANAGER[/] to run. {pkg_mngrs}'
         '\nExample: [switch]-p[/] [meta]brew[/] [switch]-p[/] [meta]pip3.11',
 
         'pkg_groups':
-        f"Package groups to install. Choices: {pkg_groups}\nExample:"
+        f"Package groups to install. {pkg_groups}\nExample:"
         " [switch]-g[/] [meta]devops[/] [switch]-g[/switch] [meta]gaming",
 
         'remote_host':

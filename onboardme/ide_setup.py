@@ -82,19 +82,26 @@ def neovim_setup():
 
 def font_setup():
     """
-    Clones nerd-fonts repo and does a sparse checkout on only mononoki and
-    hack fonts. Also removes 70-no-bitmaps.conf and links 70-yes-bitmaps.conf
+    On macOS:
+      taps a brew cask and installs mononoki and hack fonts
+    On Linux:
+      Clones nerd-fonts repo and does a sparse checkout on only mononoki and
+      hack fonts. Also removes 70-no-bitmaps.conf and links 70-yes-bitmaps.conf
 
-    Then runs install.sh from nerd-fonts repo
-
-    ripped out of setup.sh recently:
-        # we do this for Debian, to download custom fonts during onboardme
-        if [[ "$OS" == *"Linux"* ]]; then
-            mkdir -p ~/.local/share/fonts
-        fi
+      Then runs install.sh from nerd-fonts repo
     """
+    print_header('📝 [i]font[/i] installations')
+
+    if 'Darwin' in OS:
+        # tap special cask for various terminal fonts
+        subproc(["brew tap homebrew/cask-fonts",
+                 "brew install --cask font-mononoki",
+                 "brew install --cask font-hack-nerd-font"])
+
     if 'Linux' in OS:
-        print_header('📝 [i]font[/i] installations')
+        # not sure if needed anymore
+        # mkdir -p ~/.local/share/fonts
+
         fonts_dir = f'{HOME_DIR}/repos/nerd-fonts'
 
         # do a shallow clone of the repo

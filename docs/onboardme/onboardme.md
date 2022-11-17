@@ -13,45 +13,39 @@ This is [a project](https://github.com/jessebot/onboardme) to store config files
 
 <img src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/terminal_screenshot.png' width='850' alt='screenshot of terminal after running onboardme. includes colortest-256, powerline prompt, icons for files in ls output, and syntax highlighting examples with cat command.'>
 
-Looking for a project to get a fresh OS entirely, on a machine that has no OS? Check out [pxeless](https://github.com/cloudymax/pxeless).
-
 ## Under the hood
-🚧 Under construction 🚧
 
-|       Step                                    | Config Location in repo                           | OS           |
-|:----------------------------------------------|:--------------------------------------------------|:------------:|
-| Git fetch dot files                           | n/a: fetched from a configured git repo           | macOS/Debian |
-| Installs cross-OS brew packages               | n/a: installs `.Brewfile` from configured git repo| macOS/Debian |
-| Installs brew packages                        | `./onboardme/config/brew/Brewfile_{OS}`           | macOS/Debian |
-| Installs pip3.11, apt, snap, flatpak packages | `./onboardme/config/packages.yml`                 | Debian       |
-| (OPTIONAL) Installs gaming related packages.  | `./onboardme/config/packages.yml`                 | Debian       |
-| Installs fonts                                | n/a                                               | macOS/Debian |
-| Installs vim-plug + vim plugins               | n/a: plugins fetched from a configured git repo   | macOS/Debian |
-| Installs packer.nvm + neovim plugins          | n/a: plugins fetched from a configured git repo   | macOS/Debian |
-| Configures iptables (see note)                | `./onbaordme/config`                              | Debian       |
-| Adds user to the docker group                 | n/a                                               | Debian       |
+| Step                                 | Config Location in repo                  | OS            |
+|--------------------------------------|------------------------------------------|---------------|
+| Git fetch dot files                  | n/a: fetched from a configured git repo  | macOS/Debian  |
+| Installs apps using package managers | `./onboardme/config/packages.yml`        | Debian, macOS |
+| Installs OPTIONAL apps               | `./onboardme/config/packages.yml`        | Debian        |
+| Installs fonts                       | n/a                                      | macOS/Debian  |
+| Installs vim-plug + vim plugins      | plugins fetched from configured git repo | macOS/Debian  |
+| Installs packer.nvm + neovim plugins | plugins fetched from configured git repo | macOS/Debian  |
+| Adds user to the docker group        | n/a                                      | Debian        |
 
-*iptables note: to block traffic on most ports except for HTTPS as well as ICMP/SSH for a single IP*
 
 ### Current Ecoscape of Personal Tech
 
-These are all Linux Desktop and macOS applications I use.
-OnBoardMe doesn't officially support phones yet, but for what I use on my phone, check out my [doc](/onboardme/os/android).
+These are all Linux Desktop and macOS applications we use.
+OnBoardMe doesn't officially support phones yet, but for what I, Jesse,
+use on my phone, check out my [doc](/onboardme/os/android).
 
-|        Category        |               App                   |            Replaces               |
-|:-----------------------|:------------------------------------|:----------------------------------|
-| Backups - local/remote | Restic to minio and b2              | GDrive, iCloud, S3                |
-| Web Browser            | Firefox, w3m (terminal only)        | Chrome/Safari/Edge                |
-| Email Client           | Thunderbird + Protonmail + Bridge for Linux/MacOS | Gmail               |
-| IDE                    | Vim + Plugins, NeoVim + Plugins     | Vscode/Pycharm etc                |
-| Document Editor        | LibreOffice                         | Microsoft Word, Google Docs       |
-| Launcher               | Undecided                           | Alfred                            |
-| Photo/file Storage     | NextCloud Files/Photos (testing)    | Google Photos/Drive               |
-| Passwords              | Bitwarden                           | LastPass, Apple/Google            |
-| News - RSS             | Fluent Reader                       | Facebook/Twitter/news/brand feeds |
-| Video                  | FreeTube, Peertube                  | YouTube                           |
-| Antivirus              | ClamAV                              | MalwareBytes                      |
-| Firewall               | Lulu/iptables                       | ???                               |
+| Category               | App                              | Replaces                          |
+|:-----------------------|:---------------------------------|:----------------------------------|
+| Backups - local/remote | Restic to minio and b2           | GDrive, iCloud, S3                |
+| Web Browser            | Firefox, w3m (terminal only)     | Chrome/Safari/Edge                |
+| Email Client           | Thunderbird, Protonmail + Bridge | Gmail                             |
+| IDE                    | Vim/NeoVim + Plugins             | Vscode/Pycharm etc                |
+| Document Editor        | LibreOffice                      | Microsoft Word, Google Docs       |
+| Launcher               | Cerebro                          | Alfred                            |
+| Photo/file Storage     | NextCloud Files/Photos (testing) | Google Photos/Drive               |
+| Passwords              | Bitwarden                        | LastPass, Apple/Google            |
+| News - RSS             | Fluent Reader                    | Facebook/Twitter/news/brand feeds |
+| Video                  | FreeTube                         | YouTube                           |
+| Antivirus              | ClamAV                           | MalwareBytes                      |
+| Firewall               | Lulu/iptables                    | ???                               |
 
 
 ## Important Notes on Ethics
@@ -72,3 +66,7 @@ That same RFC also references a few tools you can use to fix your current enviro
 
 ### Tips
 Contact your local datacenters and see if they offer an object storage service, because they might, and it could be really cheap. Don't give your money to AWS, Microsoft, or Google if you don't absolutely have to.
+
+Looking for a project to get a fresh OS entirely, on a machine that has no OS?
+Check out [pxeless](https://github.com/cloudymax/pxeless).
+It works great in combination with onboardme :)

@@ -68,6 +68,7 @@ Those defaults can be altered per machine by creating a config file like:
     Darwin:
       - dot_files
       - packages
+      - font_setup
       - vim_setup
       - neovim_setup
     # these are linux specific steps
@@ -128,110 +129,10 @@ Those defaults can be altered per machine by creating a config file like:
 
 </details>
 
-We also use a few package files, namely `packages.yml` and a couple of Brewfiles.
-
-<details>
-  <summary>`~/.config/onboardme/packages.yml`</summary>
-
-  ```yaml
-  ---
-  apt:
-    emoji: "🙃"
-    commands:
-      list: "apt list --installed"
-      install: "sudo apt-get install -y "
-      update: "sudo apt-get update -y"
-      upgrade: "sudo apt-get upgrade -y"
-    packages:
-      default:
-        - terminator
-        - openssl
-        - sysstat
-        - silversearcher-ag
-        # this should let you use the a yubikey for auth
-        - libpam-yubico
-        - finger
-        - ssh
-        # - nextcloud-desktop
-        - screen
-        - youtube-dl
-        - bash-completion
-        # networking
-        - iptables
-        - gufw
-        - net-tools
-        # package managers installing package managers... this is terrible.
-        - snapd
-        - flatpak
-        - gnome-software-plugin-flatpak
-        # cat images in the terminal :) works in tmux
-        - catimg
-        # this lets you ls images as thumbnails, which is helpful sometimes
-        - imagemagick
-        # pretty syntaxhighlighted cat files with git diff support
-        - batcat
-        # print a very pretty pallete to see all the colors the terminal can render
-        - colortest
-      gaming:
-        - lutris
-        - winehq-staging
-        - steam
-        # to format disks to exFAT; FAT is too thin for modern windows 10 ISOs
-        # - exfat-utils
-
-  flatpak:
-    emoji: "🫓 "
-    commands:
-      setup: "sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
-      list: "flatpak list --columns=application"
-      install: "sudo flatpak install -y flathub "
-    packages:
-      default:
-        - "org.freedesktop.Platform/x86_64/21.08"
-        # youtube alternative
-        - io.freetubeapp.FreeTube
-        # password manager
-        - com.bitwarden.desktop
-
-  snap:
-    emoji: "🫰 "
-    commands:
-      list: "snap list"
-      install: "sudo snap install "
-    packages:
-      default:
-        - core
-        # rss feed reader
-        - fluent-reader
-        # screen debugger/sharing tool for android
-        - scrcpy
-
-  # most of this is actually for powerline, my shell prompt
-  pip3.11:
-    emoji: "🐍"
-    commands:
-      list: "pip3.11 list"
-      install: "pip3.11 install --upgrade "
-    packages:
-      default:
-        # this is for python development
-        - pip
-        - build
-        - twine
-        - autoimport
-        # this is all powerline
-        - powerline-status
-        - powerline-gitstatus
-        - powerline-kubernetes
-        # for the internal ip address powerline shell prompt
-        - netifaces
-        # supposed to work with powerline for spotify info
-        - dbus
-        # this does some magic with imports when developing
-  ```
-
-</details>
-
+We also use a package file called
+[`packages.yml`](https://github.com/jessebot/onboardme/blob/main/onboardme/config/packages.yml)
+which you can also place in your `~/.config/onboardme` directory, to take
+precedence over our defaults.
 
 ## Config Sections and Explanations
 ### Steps
@@ -241,6 +142,9 @@ configured for both macOS and Linux seperately. These steps include:
 - setting up dot files in your home directory (.bashrc, .vimrc, etc)
 - setting up vim (installing vim-plug and vim plugins)
 - managing packages using package managers (brew, pip3.11, apt, snap, flatpak)
+- installing fonts
+- setting up basic TUI IDEs, vim/neovim
+- setting up groups
 
 They can be configured via the `steps` parameter in the `config.yml` above,
 or via the the cli like:
@@ -301,15 +205,15 @@ For Linux, we also include: `apt`, `snap`, and `flatpak`
 
 See the examples below:
 
-#### Install the "default" and "media" package groups
+#### Install the "default" and "gui" package groups
 This would install the default packages for the basic cli experience and a
-slim ide PLUS tools for media, like vlc.
+slim ide PLUS GUI tools, like vlc and freetube.
 
 ##### `onboardme` cli
 
 ```bash
-# can also be: onboardme -g default -g media
-onboardme --pkg_groups default --pkg_groups media
+# can also be: onboardme -g default -g gui
+onboardme --pkg_groups default --pkg_groups gui
 ```
 
 ##### `config.yml`
@@ -318,7 +222,7 @@ onboardme --pkg_groups default --pkg_groups media
 package:
   groups:
     - default
-    - media
+    - gui
 ```
 
 #### _Only_ install the "devops" package group for _only_ the `brew` package manager
