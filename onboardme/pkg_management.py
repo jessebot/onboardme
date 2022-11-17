@@ -3,67 +3,18 @@ from os import path
 
 # custom libs
 from .env_config import OS, PWD, load_yaml
-from .console_logging import print_header, print_msg
+from .console_logging import print_header
 from .console_logging import print_sub_header as sub_header
 from .subproc import subproc
 
 
-def brew_install_upgrade(package_groups=['default']):
-    """
-    Run the install/upgrade of packages managed by brew, also updates brew
-    Always installs the .Brewfile (which has libs that work on both mac/linux)
-    Accepts args:
-        * os     - string arg of either Darwin or Linux
-        * devops - bool, installs devops brewfile, defaults to false
-    """
-    brew_msg = '[green][b]brew[/b][/] app Installs/Upgrades'
-    print_header('🍺 ' + brew_msg)
-
-    install_cmd = "brew bundle --quiet"
-
-    if 'default' in package_groups:
-        subproc(['brew update --quiet',
-                 'brew upgrade --quiet',
-                 f'{install_cmd} --global'])
-
-    # install os specific or package group specific brew stuff
-    brewfile = path.join(PWD, 'config/brew/Brewfile_')
-
-    # sometimes there isn't an OS specific brewfile, but there always is 4 mac
-    os_brewfile = path.exists(brewfile + OS[0])
-
-    if os_brewfile or package_groups:
-        install_cmd += f" --file={brewfile}"
-
-        if os_brewfile:
-            os_msg = f'[b]{OS[0]}[/b] specific package installs...'
-            sub_header(os_msg)
-            subproc([f'{install_cmd}{OS[0]}'], error_ok=True)
-            print_msg(f'{OS[0]} specific packages installed.')
-
-        if package_groups:
-            for group in package_groups:
-                group_file = brewfile + group
-                if group != "default" and path.exists(group_file):
-                    # Installing devops specific brew app Installs/Upgrades
-                    msg = f"{group.title()} specific package installs..."
-                    sub_header(msg)
-                    subproc([f'{install_cmd}{group}'], error_ok=True)
-                    print_msg(f'{group.title()} specific packages installed.')
-
-    # cleanup operation doesn't seem to happen automagically :shrug:
-    sub_header('[b]brew[/b] final cleanup')
-    subproc(['brew cleanup'])
-    print_msg('Cleanup completed.')
-    return
-
-
 def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
     """
-    Installs packages with apt, brew, pip3.11, snap, flatpak. If no pkg_mngrs
-    list passed in, only use brew/pip3.11 for mac. Takes optional variable,
-    pkg_group_lists to install optional packages.
-    Returns True.
+    Installs brew and pip3.11 packages. Also apt, snap, and flatpak on Linux.
+    Takes optional variables:
+      - pkg_groups: list of optional package groups
+      - pkg_mngrs: list of package managers to run
+    Returns True
     """
     pkg_mngrs_list_of_dicts = load_yaml(path.join(PWD, 'config/packages.yml'))
     log.debug(f"pkg_mngrs: {pkg_mngrs}", extra={"markup": True})
@@ -72,15 +23,13 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
     # we iterate through pkg_mngrs which should already be sorted
     for pkg_mngr in pkg_mngrs:
 
-        # brew has a special flow with "Brewfile"s
-        if pkg_mngr == 'brew':
-            if any(check in pkg_groups for check in ['devops', 'default']):
-                brew_install_upgrade(pkg_groups)
-            # skip everything below because install process already covered
-            continue
-
         pkg_mngr_dict = pkg_mngrs_list_of_dicts[pkg_mngr]
         required_pkg_groups = pkg_mngr_dict['packages']
+
+        # brew has a special flow because it works on both linux and mac
+        if pkg_mngr == 'brew':
+            if 'Darwin' in OS:
+                required_pkg_groups.append("macOS")
 
         debug_line = f"pkg groups for {pkg_mngr} are {required_pkg_groups}"
         log.debug(debug_line, extra={"markup": True})

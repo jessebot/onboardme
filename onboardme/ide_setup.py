@@ -93,6 +93,11 @@ def font_setup():
             mkdir -p ~/.local/share/fonts
         fi
     """
+    if 'Darwin' in OS:
+        # tap special cask for various terminal fonts
+        subproc(["brew tap homebrew/cask-fonts",
+                 "brew install --cask font-mononoki",
+                 "brew install --cask font-symbols-only-nerd-font"])
     if 'Linux' in OS:
         print_header('📝 [i]font[/i] installations')
         fonts_dir = f'{HOME_DIR}/repos/nerd-fonts'

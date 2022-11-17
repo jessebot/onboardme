@@ -1,4 +1,154 @@
 ---
+brew:
+  emoji: "🍺"
+  commands:
+    list: "brew list"
+    update: "brew update --quiet"
+    upgrade: "brew upgrade --quiet"
+    install: "brew install "
+    cleanup: "brew cleanup"
+  packages:
+    # these are all for both macOS and Debian
+    default:
+      # for testing apis and downloading things
+      - curl
+      - wget
+      # terminal based web browser
+      - lynx
+      # screen session + sharing/splitting
+      - tmux
+      # recording a shell session to share with others
+      - asciinema
+      # main terminal based text editors
+      - vim
+      - neovim
+      # fuzzy search, helps with completion and searching
+      - fzf
+      # ls replacement written in rust: https://github.com/Peltoche/lsd
+      - lsd
+      #  A cat(1) clone with syntax highlighting and Git integration.
+      - bat
+      # pretty formatting and syntax highlighting
+      - rich
+      # file TUI: https://www.geeksforgeeks.org/ranger-a-cli-file-manager/
+      - ranger
+      # preview videos in the terminal
+      - ffmpegthumbnailer
+      # like grep or ack, but more modern, for searching file text
+      - ag
+      # diff, but with colors
+      - colordiff
+      - htop
+      - gotop
+      - neofetch
+      # prettier du/df outputs: https://github.com/muesli/duf
+      - duf
+      # rainbow text
+      - lolcat
+      # blocky fonts: https://devhints.io/figlet
+      - figlet
+      - toilet
+      # steam locamotive
+      - sl
+      # a cow that says things
+      - cowsay
+      # revision control system
+      - git
+      # github cli
+      - gh
+      # gitlab cli
+      - glab
+      # making things
+      - cmake
+      # programming languages and their package managers
+      - python@3.11
+      - poetry
+      - go
+      - npm
+      # linter for YAML
+      - yamllint
+      # linter for html5
+      - tidy-html5
+      # mardown rendering
+      - pandoc
+      # for parsing json via cli
+      - jq
+      # search stackoverflow e.g. howdoi extend a dictionary in python
+      - howdoi
+      # get the quick, short text of how to use various commands
+      - tldr
+      # generating SSL certs and random strings
+      - openssl
+      # password management
+      - bitwarden-cli
+      # anti virus
+      - clamav
+    # macOS specific stuff. Won't work with LinuxBrew
+    macOS:
+      # current version of bash :)
+      - bash
+      # so that bash completion stuff works
+      - "bash-completion@2"
+      # this lets us resize windows
+      - "--cask rectangle"
+      # productivity search and command bar
+      - "--cask alfred"
+      # Default browser
+      - "--cask firefox"
+      # Default email client
+      - "--cask thunderbird"
+      # File server
+      - "--cask nextcloud"
+      # Default terminal used by most macOS users, standard
+      - "--cask iterm2"
+      # backup terminal written in javascript :shrug:
+      - "--cask hyper"
+      # gives us the default gnu/linux sed we all know and love
+      - "gnu-sed"
+      # cat images in the terminal (e.g. img2sixel imagename.png)
+      - libsixel
+      # for working with images and making lsimg work
+      - imagemagick
+      # remap keys... not working yet though :<
+      # - "--cask karabiner-elements"
+      # This should be docker desktop
+      - "--cask docker"
+      # primary media player
+      - "--cask vlc"
+      # youtube replacement
+      - "--cask freetube"
+      # firewall
+      - "--cask lulu"
+      # password manager
+      - "--cask bitwarden"
+      # VPN
+      - "--cask protonvpn"
+    devops:
+      # terraform for building stuff
+      - terraform
+      # manage multiple versions of terraform
+      # - tfenv
+      # cli for k8s (kubernetes)
+      - kubectl
+      # kubectl plugin manager
+      - krew
+      # terminal based dashbaord for k8s
+      - k9s
+      # package manager for k8s
+      - helm
+      # manages helm files
+      # - helmfile
+      # cli for Bitnami sealed-secrets, encrypting secrets in yaml files for gitops
+      - kubeseal
+      # gitops continuous delivery for k8s configs
+      - argocd
+      # KinD (Kubernetes in Docker), for small k8s clusters for testing
+      - kind
+      # aws work stuff
+      # "aws-cli"
+      # aws credentials switcher
+      # "--cask aws-vault"
+
 apt:
   emoji: "🙃"
   commands:
@@ -9,32 +159,35 @@ apt:
     cleanup: "sudo apt-get autoremove -y"
   packages:
     default:
+      # terminal emulator for linux
       - terminator
-      - openssl
+      # troubleshooting
       - sysstat
+      # better grep alternative
       - silversearcher-ag
       # this should let you use the a yubikey for auth
       - libpam-yubico
-      - finger
-      - ssh
+      # commented out till nextcloud is working
       # - nextcloud-desktop
-      - screen
       - youtube-dl
       - bash-completion
-      # networking
+      # networking and firewall
       - iptables
-      - gufw
       - net-tools
       # package managers installing package managers... this is terrible.
       - snapd
       - flatpak
-      - gnome-software-plugin-flatpak
       # cat images in the terminal :) works in tmux
       - catimg
       # this lets you ls images as thumbnails, which is helpful sometimes
       - imagemagick
-      # print a very pretty pallete to see all colors the terminal can render
+      # print a pretty pallete to see all colors the terminal can render
       - colortest
+    gui:
+      # this lets you install flatpak packages via the gui
+      - gnome-software-plugin-flatpak
+      # gui firewall
+      - gufw
     gaming:
       # helpful for gaming on linux
       - lutris
@@ -50,11 +203,10 @@ flatpak:
     list: "flatpak list --user --columns=application"
     install: "flatpak install --user --app -y "
   packages:
-    default:
+    gui:
       - "org.freedesktop.Platform/x86_64/21.08"
       # password manager
       - com.bitwarden.desktop
-    media:
       # youtube alternative
       - io.freetubeapp.FreeTube
 
@@ -67,11 +219,11 @@ snap:
   packages:
     default:
       - core
-      # rss feed reader
-      - fluent-reader
       # screen debugger/sharing tool for android
       - scrcpy
-    media:
+    gui:
+      # rss feed reader
+      - fluent-reader
       # media player
       - vlc
 
