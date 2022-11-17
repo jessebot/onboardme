@@ -16,7 +16,14 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
       - pkg_mngrs: list of package managers to run
     Returns True
     """
-    pkg_mngrs_list_of_dicts = load_yaml(path.join(PWD, 'config/packages.yml'))
+    # check to make sure the user didn't pass in their own packages.yml
+    user_packages = path.join(HOME_DIR, '.config/onboardme/packages.yml')
+    if path.exists(user_packages):
+        pkg_mngrs_list_of_dicts = load_yaml(user_packages)
+    else:
+        default_config = path.join(PWD, 'config/packages.yml')
+        pkg_mngrs_list_of_dicts = load_yaml(default_config)
+
     log.debug(f"pkg_mngrs: {pkg_mngrs}", extra={"markup": True})
     log.debug(f"pkg_groups: {pkg_groups}", extra={"markup": True})
 
