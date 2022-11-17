@@ -2,7 +2,7 @@
 brew:
   emoji: "🍺"
   commands:
-    list: "brew list"
+    list: "brew list -1"
     update: "brew update --quiet"
     upgrade: "brew upgrade --quiet"
     install: "brew install "

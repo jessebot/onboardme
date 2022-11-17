@@ -68,7 +68,6 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
                     install_pkg_group(installed_pkgs,
                                       required_pkg_groups[pkg_group],
                                       pkg_cmds['install'])
-
                     sub_header(f'{pkg_group.title()} packages installed.')
 
             if 'cleanup' in pkg_cmds:
