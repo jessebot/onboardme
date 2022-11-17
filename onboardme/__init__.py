@@ -77,7 +77,7 @@ def setup_logger(level="", log_file=""):
         type=Choice(OPTS['package']['managers'][OS[0]]),
         help=HELP['pkg_managers'])
 @option('--pkg_groups', '-g', metavar='PKG_GROUP', multiple=True,
-        type=Choice(['default', 'gaming', 'media', 'devops']),
+        type=Choice(['default', 'gaming', 'gui', 'devops']),
         help=HELP['pkg_groups'])
 @option('--firewall', '-f', is_flag=True, help=HELP['firewall'])
 @option('--remote_host', '-r', metavar="IP_ADDR", multiple=True,

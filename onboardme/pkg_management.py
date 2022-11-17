@@ -2,7 +2,7 @@ import logging as log
 from os import path
 
 # custom libs
-from .env_config import OS, PWD, load_yaml
+from .env_config import OS, PWD, HOME_DIR, load_yaml
 from .console_logging import print_header
 from .console_logging import print_sub_header as sub_header
 from .subproc import subproc
@@ -36,7 +36,7 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
         # brew has a special flow because it works on both linux and mac
         if pkg_mngr == 'brew':
             if 'Darwin' in OS:
-                required_pkg_groups.append("macOS")
+                pkg_groups.append("macOS")
 
         debug_line = f"pkg groups for {pkg_mngr} are {required_pkg_groups}"
         log.debug(debug_line, extra={"markup": True})

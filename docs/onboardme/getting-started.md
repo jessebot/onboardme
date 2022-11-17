@@ -205,15 +205,15 @@ For Linux, we also include: `apt`, `snap`, and `flatpak`
 
 See the examples below:
 
-#### Install the "default" and "media" package groups
+#### Install the "default" and "gui" package groups
 This would install the default packages for the basic cli experience and a
-slim ide PLUS tools for media, like vlc.
+slim ide PLUS GUI tools, like vlc and freetube.
 
 ##### `onboardme` cli
 
 ```bash
-# can also be: onboardme -g default -g media
-onboardme --pkg_groups default --pkg_groups media
+# can also be: onboardme -g default -g gui
+onboardme --pkg_groups default --pkg_groups gui
 ```
 
 ##### `config.yml`
@@ -222,7 +222,7 @@ onboardme --pkg_groups default --pkg_groups media
 package:
   groups:
     - default
-    - media
+    - gui
 ```
 
 #### _Only_ install the "devops" package group for _only_ the `brew` package manager

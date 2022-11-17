@@ -34,7 +34,7 @@ def options_help():
     steps = pretty_choices(DEFAULTS['steps'][OS[0]])
     pkg_mngrs = pretty_choices(DEFAULTS['package']['managers'][OS[0]])
     logging_choices = pretty_choices(['DEBUG', 'INFO', 'WARN', 'ERROR'])
-    pkg_groups = pretty_choices(['devops', 'media', 'gaming'])
+    pkg_groups = pretty_choices(['default', 'devops', 'gui', 'gaming'])
 
     return {
         'log_level':
