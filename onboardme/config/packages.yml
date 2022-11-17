@@ -62,7 +62,6 @@ brew:
       - cmake
       # programming languages and their package managers
       - python@3.11
-      - poetry
       - go
       - npm
       # linter for YAML
