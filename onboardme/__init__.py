@@ -6,22 +6,29 @@
     AUTHOR:         Jesse Hitch
     LICENSE:        GNU AFFERO GENERAL PUBLIC LICENSE
 """
+
 from click import option, command, Choice
-# for importing modules by str names
 from importlib import import_module
-# for getting the version of onboardme
 from importlib.metadata import version as get_version
 import logging
-
-# rich helps pretty print everything
 from rich.console import Console
 from rich.logging import RichHandler
-
-# custom libs
 from .help_text import RichCommand, options_help
 from .env_config import check_os_support, OS, process_configs, USR_CONFIG_FILE
 from .env_config import DEFAULTS as OPTS
 from .console_logging import print_manual_steps
+from .dot_files import setup_dot_files
+from .pkg_management import run_pkg_mngrs
+from .sudo_setup import setup_sudo
+from .firewall import configure_firewall
+
+
+# for importing modules by str names
+# for getting the version of onboardme
+
+# rich helps pretty print everything
+
+# custom libs
 
 
 HELP = options_help()
@@ -126,14 +133,12 @@ def main(log_level: str = "",
     for step in usr_pref['steps'][OS[0]]:
 
         if step == 'dot_files':
-            from .dot_files import setup_dot_files
             # this creates a live git repo out of your home directory
             df_prefs = usr_pref['dot_files']
             setup_dot_files(OS, df_prefs['overwrite'],
                             df_prefs['git_url'], df_prefs['git_branch'])
 
         elif step == 'packages':
-            from .pkg_management import run_pkg_mngrs
             pkg_mngrs = usr_pref['package']['managers'][OS[0]]
             pkg_groups = usr_pref['package']['groups']
             run_pkg_mngrs(pkg_mngrs, pkg_groups)
@@ -144,8 +149,11 @@ def main(log_level: str = "",
             func = getattr(ide_setup, step)
             func()
 
+        elif step == 'sudo_setup':
+            # if we're not running as root, kick off another process
+            setup_sudo()
+
     if 'firewall_setup' in steps:
-        from .firewall import configure_firewall
         configure_firewall(remote_host)
 
     print_manual_steps()
