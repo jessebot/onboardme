@@ -10,7 +10,7 @@ from click import option, command, Choice
 # for importing modules by str names
 from importlib import import_module
 # for getting the version of onboardme
-from importlib.metadata import version
+from importlib.metadata import version as get_version
 import logging
 
 # rich helps pretty print everything
@@ -106,7 +106,7 @@ def main(log_level: str = "",
 
     # only return the version if --version was passed in
     if version:
-        print(f'\n🎉 v{version("onboardme")}\n')
+        print(f'\n🎉 v{get_version("onboardme")}\n')
         return True
 
     # before we do anything, we need to make sure this OS is supported
