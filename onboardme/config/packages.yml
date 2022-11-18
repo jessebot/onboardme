@@ -182,6 +182,8 @@ apt:
       - imagemagick
       # print a pretty pallete to see all colors the terminal can render
       - colortest
+      # help fix locale issues
+      - "locales-all"
     gui:
       # this lets you install flatpak packages via the gui
       - gnome-software-plugin-flatpak
