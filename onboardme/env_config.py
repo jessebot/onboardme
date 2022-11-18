@@ -2,20 +2,27 @@
 environment variable loading library for onboardme
 """
 import logging as log
+# for system data, environment data, and checking/joining paths
 from os import getenv, path, uname
 # rich helps pretty print everything
 from rich.prompt import Confirm
-from .console_logging import print_panel
 import yaml
 
+# custom libs
+from .console_logging import print_panel
 
-def load_yaml(yaml_config_file=""):
+
+def load_cfg(config_file=""):
     """
-    load config yaml files for onboardme and return as dicts
+    load yaml config files for onboardme.
+    return dict
     """
-    if path.exists(yaml_config_file):
-        with open(yaml_config_file, 'r') as yaml_file:
-            return yaml.safe_load(yaml_file)
+    # make sure the path is valid
+    if path.exists(config_file):
+        # make sure it's a yaml file extension
+        if config_file.endswith((".yaml", ".yml")):
+            with open(config_file, 'r') as yaml_file:
+                return yaml.safe_load(yaml_file)
     else:
         # print(f"Config file we got was not present: {yaml_config_file}")
         return None
@@ -26,23 +33,13 @@ PWD = path.dirname(__file__)
 HOME_DIR = getenv("HOME")
 
 # defaults
-DEFAULTS = load_yaml(f"{PWD}/config/onboardme_config.yml")
-USR_CONFIG_FILE = load_yaml(f'{HOME_DIR}/.config/onboardme/config.yaml')
+DEFAULTS = load_cfg(f"{PWD}/config/onboardme_config.yml")
+USR_CONFIG_FILE = load_cfg(f'{HOME_DIR}/.config/onboardme/config.yaml')
 
 # env
 SYSINFO = uname()
 # this will be something like ('Darwin', 'x86_64')
 OS = (SYSINFO.sysname, SYSINFO.machine)
-
-
-def get_version():
-    """
-    get the version of onboardme, print it, and return True
-    """
-    # this is hardcoded because we're about upgrade major versions & grab
-    # pyproject.toml version info with python3.11
-    print("\n🎉 v0.15.2\n")
-    return True
 
 
 def check_os_support():
@@ -99,14 +96,20 @@ def process_steps(steps=[], firewall=False, browser=False):
 def sort_pkgmngrs(package_managers_list=[]):
     """
     make sure the package managers are in the right order 🤦
+    e.g. apt installs snap and flatpak, so niether can be run until apt is run
+
+    Takes list of package manager str and reorders them be (if they exist):
+       ['brew', 'pip3.11', 'apt', 'snap', 'flatpak']
+    Returns reordered_list
     """
-    final_list = []
+    reordered_list = []
     package_managers = ['brew', 'pip3.11', 'apt', 'snap', 'flatpak']
+
     for mngr in package_managers:
         if mngr in package_managers_list:
-            final_list.append(mngr)
+            reordered_list.append(mngr)
 
-    return final_list
+    return reordered_list
 
 
 def fill_in_defaults(defaults={}, user_config={}, always_prefer_default=False):

@@ -2,7 +2,7 @@ import logging as log
 from os import path
 
 # custom libs
-from .env_config import OS, PWD, HOME_DIR, load_yaml
+from .env_config import OS, PWD, HOME_DIR, load_cfg
 from .console_logging import print_header
 from .console_logging import print_sub_header as sub_header
 from .subproc import subproc
@@ -19,10 +19,10 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
     # check to make sure the user didn't pass in their own packages.yml
     user_packages = path.join(HOME_DIR, '.config/onboardme/packages.yml')
     if path.exists(user_packages):
-        pkg_mngrs_list_of_dicts = load_yaml(user_packages)
+        pkg_mngrs_list_of_dicts = load_cfg(user_packages)
     else:
         default_config = path.join(PWD, 'config/packages.yml')
-        pkg_mngrs_list_of_dicts = load_yaml(default_config)
+        pkg_mngrs_list_of_dicts = load_cfg(default_config)
 
     log.debug(f"pkg_mngrs: {pkg_mngrs}", extra={"markup": True})
     log.debug(f"pkg_groups: {pkg_groups}", extra={"markup": True})

@@ -1,12 +1,16 @@
 """
-    NAME:           Onboardme
+    NAME:           onboardme
     DESCRIPTION:    Program to take care of a bunch of onboarding tasks for new
-                    machines running macOS and/or Debian.
+                    machines running macOS and/or Debian, including:
+                      dot_files, packages, ide_setup, and group management
     AUTHOR:         Jesse Hitch
     LICENSE:        GNU AFFERO GENERAL PUBLIC LICENSE
 """
 from click import option, command, Choice
-import importlib
+# for importing modules by str names
+from importlib import import_module
+# for getting the version of onboardme
+from importlib.metadata import version as get_version
 import logging
 
 # rich helps pretty print everything
@@ -15,8 +19,7 @@ from rich.logging import RichHandler
 
 # custom libs
 from .help_text import RichCommand, options_help
-from .env_config import check_os_support, OS, process_configs, \
-                        USR_CONFIG_FILE, get_version
+from .env_config import check_os_support, OS, process_configs, USR_CONFIG_FILE
 from .env_config import DEFAULTS as OPTS
 from .console_logging import print_manual_steps
 
@@ -100,9 +103,12 @@ def main(log_level: str = "",
     flatpak, and snap packages. On mac, it only installs brew/pip3.11 packages.
     config loading tries to load: cli options and then .config/onboardme/*
     """
-    # return the version if that's all they want
+
+    # only return the version if --version was passed in
     if version:
-        return get_version()
+        print(f'\n🎉 v{get_version("onboardme")}\n')
+        return True
+
     # before we do anything, we need to make sure this OS is supported
     check_os_support()
 
@@ -133,8 +139,8 @@ def main(log_level: str = "",
             run_pkg_mngrs(pkg_mngrs, pkg_groups)
 
         elif step in ['vim_setup', 'neovim_setup', 'font_setup']:
-            # import step from ide_setup.py in same directory
-            importlib.import_module('onboardme.ide_setup', package=f'.{step}')
+            # import step's function from ide_setup.py in same directory
+            import_module('onboardme.ide_setup', package=f'.{step}')
             func = getattr(ide_setup, step)
             func()
 
