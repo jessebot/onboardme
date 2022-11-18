@@ -63,7 +63,7 @@ def print_header(title='', line_style='royal_blue1'):
     return
 
 
-def print_sub_header(title='', style='light_steel_blue', alignment='center'):
+def print_sub_header(title='', style='italic light_steel_blue', alignment='center'):
     """
     prints text centered in a line that spans the terminal
     """

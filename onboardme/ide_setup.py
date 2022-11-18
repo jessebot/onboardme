@@ -12,7 +12,7 @@ from pathlib import Path
 import wget
 
 # custom libs
-from .console_logging import print_header, print_msg
+from .console_logging import print_header, print_sub_header, print_msg
 from .subproc import subproc
 from .env_config import HOME_DIR, OS
 
@@ -25,7 +25,6 @@ def vim_setup():
     """
     print_header('[b]vim-plug[/b] and [green][i]Vim[/i][/green] plugins '
                  'installation [dim]and[/dim] upgrades')
-    print('')
 
     # trick to not run youcompleteme init every single time
     init_ycm = False
@@ -46,7 +45,7 @@ def vim_setup():
     # updates all currently installed plugins
     subproc(['vim +PlugInstall +PlugUpgrade +PlugUpdate +qall!'],
             quiet=True)
-    print_msg('[i][dim]Vim Plugins installed.')
+    print_sub_header('Vim Plugins installed.')
 
     if init_ycm:
         # This is for you complete me, which is a python completion module
@@ -68,14 +67,13 @@ def neovim_setup():
     """
     print_header('[b]packer[/b] and [green][i]NeoVim[/i][/green] plugins '
                  'installation [dim]and[/dim] upgrades')
-    print('')
 
     # updates all currently installed plugins
     commands = ["nvim --headless +PackerInstall",
                 "nvim --headless +PackerSync"]
     subproc(commands)
 
-    print_msg('[i][dim]NeoVim Plugins installed.')
+    print_sub_header('NeoVim Plugins installed.')
 
     return True
 
@@ -97,6 +95,7 @@ def font_setup():
         subproc(["brew tap homebrew/cask-fonts",
                  "brew install --cask font-mononoki",
                  "brew install --cask font-hack-nerd-font"])
+        print_sub_header("Fonts installed/upgraded.")
 
     if 'Linux' in OS:
         # not sure if needed anymore
@@ -141,6 +140,4 @@ def font_setup():
 
         print_msg('[i][dim]The fonts should be installed, however, you have ' +
                   'to set your terminal font to the new font. I rebooted too.')
-        return
-
     return

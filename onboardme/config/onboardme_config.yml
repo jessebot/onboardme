@@ -29,6 +29,7 @@ steps:
     - font_setup
     - vim_setup
     - neovim_setup
+    - sudo_setup
   # these are linux specific steps
   Linux:
     - dot_files
