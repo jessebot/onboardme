@@ -7,15 +7,25 @@ from os import getenv, path, uname
 from rich.prompt import Confirm
 from .console_logging import print_panel
 import yaml
+# toml lib in Python 3.11
+import tomli
 
 
-def load_yaml(yaml_config_file=""):
+def load_cfg(config_file=""):
     """
-    load config yaml files for onboardme and return as dicts
+    load yaml or toml config files for onboardme.
+    return dict
     """
-    if path.exists(yaml_config_file):
-        with open(yaml_config_file, 'r') as yaml_file:
-            return yaml.safe_load(yaml_file)
+    if path.exists(config_file):
+        # yaml response
+        if config_file.endswith(("yaml", "yml"):
+            with open(config_file, 'r') as yaml_file:
+                return yaml.safe_load(yaml_file)
+
+        # toml has a seperate library to use
+        if config_file.endswith("toml"):
+            with open(config_file, 'rb') as toml_file:
+                return tomli.load(toml_file)
     else:
         # print(f"Config file we got was not present: {yaml_config_file}")
         return None
@@ -26,8 +36,8 @@ PWD = path.dirname(__file__)
 HOME_DIR = getenv("HOME")
 
 # defaults
-DEFAULTS = load_yaml(f"{PWD}/config/onboardme_config.yml")
-USR_CONFIG_FILE = load_yaml(f'{HOME_DIR}/.config/onboardme/config.yaml')
+DEFAULTS = load_cfg(f"{PWD}/config/onboardme_config.yml")
+USR_CONFIG_FILE = load_cfg(f'{HOME_DIR}/.config/onboardme/config.yaml')
 
 # env
 SYSINFO = uname()
