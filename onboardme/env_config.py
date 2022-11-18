@@ -51,7 +51,8 @@ def get_version():
     """
     # this is hardcoded because we're about upgrade major versions & grab
     # pyproject.toml version info with python3.11
-    print("\n🎉 v0.15.2\n")
+    version = load_cfg("pyproject.toml")['tool.poetry']['version']
+    print(f"\n🎉 v{version}\n")
     return True
 
 
