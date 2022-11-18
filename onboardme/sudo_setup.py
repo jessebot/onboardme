@@ -8,23 +8,27 @@ DESCRIPTION: setup pam module for sudo and add user to sudo group
 
 import logging as log
 from os import geteuid
-
-from .subproc import subproc
-
+from os import system as check_response
 
 # custom libs
-# from .env_config import OS
+from .console_logging import print_msg, print_header
+from .subproc import subproc
 
 
 def setup_sudo():
     """
-    make sure we're root and kick off setting up sudo with touchid
+    make sure we're root on mac and kick off setting up sudo with touchid
+    Returns True
     """
+    print_header("Setting up sudo")
+
     # check if running as root
     if geteuid() != 0:
         subproc(["sudo onboardme -s sudo_setup"], spinner=False)
+        print_msg("🧑‍💻 sudo using TouchId is enabled.")
     else:
         enable_sudo_with_touchid()
+    return True
 
 
 def enable_sudo_with_touchid():
@@ -35,7 +39,7 @@ def enable_sudo_with_touchid():
     return True
     """
     pam_file = "/etc/pam.d/sudo"
-    if type(subproc([f'grep "pam_tid.so" {pam_file}'])) is not str:
+    if check_response(f'grep "pam_tid.so" {pam_file}') != 0:
         log.info(f"TouchID not found in {pam_file}. Attempting to add it.")
 
         # read in the file and modify the second line to have pam_tid.so
@@ -44,11 +48,11 @@ def enable_sudo_with_touchid():
             for index, line in enumerate(file_contents.readlines()):
                 new_contents.append(line)
                 if index == 1:
-                    new_contents.append("auth       sufficient     pam_tid.so\n")
+                    touchid = "auth       sufficient     pam_tid.so\n"
+                    new_contents.append(touchid)
 
         # write back the altered file
         with open(pam_file, 'w') as new_file_contents:
             for line in new_contents:
                 new_file_contents.write(line)
-
     return True

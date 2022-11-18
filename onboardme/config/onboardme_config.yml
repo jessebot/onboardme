@@ -38,7 +38,6 @@ steps:
     - vim_setup
     - neovim_setup
     - group_setup
-    - sudo_setup
 
 dot_files:
   # personal git repo URL for your dot files, defaults to jessebot/dot_files
