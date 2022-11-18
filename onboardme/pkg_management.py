@@ -47,7 +47,6 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
             pkg_emoji = pkg_mngr_dict['emoji']
             msg = f'{pkg_emoji} [green][b]{pkg_mngr}[/b][/] app Installs'
             print_header(msg)
-            print('')
 
             # run package manager specific setup if needed, & updates/upgrades
             pkg_cmds = pkg_mngr_dict['commands']

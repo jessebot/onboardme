@@ -11,7 +11,7 @@ from os import geteuid
 from os import system as check_response
 
 # custom libs
-from .console_logging import print_msg, print_header
+from .console_logging import print_header, print_sub_header
 from .subproc import subproc
 
 
@@ -20,12 +20,12 @@ def setup_sudo():
     make sure we're root on mac and kick off setting up sudo with touchid
     Returns True
     """
-    print_header("Setting up sudo")
+    print_header("🔒 Setting up sudo")
 
     # check if running as root
     if geteuid() != 0:
         subproc(["sudo onboardme -s sudo_setup"], spinner=False)
-        print_msg("🧑‍💻 sudo using TouchId is enabled.")
+        print_sub_header("🧑‍💻 sudo using TouchId is enabled.")
     else:
         enable_sudo_with_touchid()
     return True
