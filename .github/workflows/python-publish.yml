@@ -5,7 +5,7 @@ on:
     tags:
       - "v*.*.*"
 jobs:
-  build:
+  build_and_publish_to_pypi:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -14,3 +14,35 @@ jobs:
         with:
           python_version: "3.11.0"
           pypi_token: ${{ secrets.DEPLOY_FROM_GITHUB_TO_PYPI_ONBOARDME }}
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Get Previous Tag
+        run: |
+          PREV_TAG=$(git describe --abbrev=0 --tags "${{ github.ref }}^")
+          echo "::set-env name=baseRef::$PREV_TAG"
+
+      - name: Generate Changelog
+        id: generate_changelog
+        uses: nblagoev/pull-release-notes-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          base-ref: ${{ env.baseRef }}
+          head-ref: ${{ github.ref }}
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: ${{steps.generate_changelog.outputs.result}}
+          draft: false
