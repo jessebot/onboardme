@@ -114,8 +114,8 @@ def run_gaming_specific_cmds():
     """
     sources_file = "/etc/apt/sources.list"
     fixed_line = "bookworm main contrib non-free"
-    sed = f"sed -i 's/bookworm main/{fixed_line}/g' {sources_file}"
+    sed = f"sudo sed -i 's/bookworm main$/{fixed_line}/g' {sources_file}"
 
     cmds = ["sudo dpkg --add-architecture i386", sed, "sudo apt-get update"]
-    subproc(cmds, spinner=False)
-
+    subproc(cmds)
+    return True
