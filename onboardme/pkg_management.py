@@ -48,9 +48,10 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
             msg = f'{pkg_emoji} [green][b]{pkg_mngr}[/b][/] app Installs'
             print_header(msg)
 
-            # run package manager specific setup if needed, & updates/upgrades
             pkg_cmds = pkg_mngr_dict['commands']
             log.debug(f"package manager commands are: {pkg_cmds}")
+
+            # run package manager specific setup if needed, & updates/upgrades
             for pre_cmd in ['setup', 'update', 'upgrade']:
                 if pre_cmd in pkg_cmds:
                     SPINNER = True
@@ -64,6 +65,11 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
 
             for pkg_group in pkg_groups:
                 if pkg_group in required_pkg_groups:
+
+                    # gaming has a special flow
+                    if pkg_group == "gaming" and pkg_mngr == "apt":
+                        run_gaming_specific_cmds()
+
                     install_pkg_group(installed_pkgs,
                                       required_pkg_groups[pkg_group],
                                       pkg_cmds['install'])
@@ -91,6 +97,7 @@ def install_pkg_group(installed_pkgs=[], pkgs_to_install=[], install_cmd=""):
 
     log.debug(f"pkgs_to_install are {pkgs_to_install}",
               extra={"markup": True})
+
     for pkg in pkgs_to_install:
         if installed_pkgs:
             if pkg not in installed_pkgs:
@@ -98,3 +105,17 @@ def install_pkg_group(installed_pkgs=[], pkgs_to_install=[], install_cmd=""):
         if install_pkg:
             subproc([install_cmd + pkg], quiet=True, spinner=SPINNER)
     return True
+
+
+def run_gaming_specific_cmds():
+    """
+    run commands specific to gaming package group:
+      add i386 architecture, add contrib/non-free to sources.list, and update
+    """
+    sources_file = "/etc/apt/sources.list"
+    fixed_line = "bookworm main contrib non-free"
+    sed = f"sed -i 's/bookworm main/{fixed_line}/g' {sources_file}"
+
+    cmds = ["sudo dpkg --add-architecture i386", sed, "sudo apt-get update"]
+    subproc(cmds, spinner=False)
+
