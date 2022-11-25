@@ -1,6 +1,6 @@
 [tool.poetry]
 name          = "onboardme"
-version       = "0.15.4"
+version       = "0.15.6"
 description   = "An onboarding tool to install dot files and packages including a default mode with sensible defaults to run on most Debian/macOS machines."
 authors       = ["Jesse Hitch <jessebot@linux.com>"]
 license       = "AGPL-3.0-or-later"
@@ -16,10 +16,9 @@ classifiers   = ["Development Status :: 3 - Alpha",
                  "Topic :: System :: Installation/Setup",
                  "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)"]
 packages      = [{include = "onboardme"}]
-include       = ["onboardme/config/onboardme_config.yml",
-                 "onboardme/config/packages.yml",
-                 "onboardme/config/brew/Brewfile_Darwin",
-                 "onboardme/config/brew/Brewfile_devops"]
+include       = ["onboardme/scripts/update_apt_sources.sh",
+                 "onboardme/config/onboardme_config.yml",
+                 "onboardme/config/packages.yml"]
 
 [tool.poetry.dependencies]
 python    = "^3.11"

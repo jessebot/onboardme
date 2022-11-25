@@ -2,7 +2,7 @@
     NAME:           onboardme
     DESCRIPTION:    Program to take care of a bunch of onboarding tasks for new
                     machines running macOS and/or Debian, including:
-                      dot_files, packages, ide_setup, and group management
+                      dot_files, managing packages, ide_setup, group management
     AUTHOR:         Jesse Hitch
     LICENSE:        GNU AFFERO GENERAL PUBLIC LICENSE
 """
@@ -23,14 +23,6 @@ from .sudo_setup import setup_sudo
 from .firewall import configure_firewall
 
 
-# for importing modules by str names
-# for getting the version of onboardme
-
-# rich helps pretty print everything
-
-# custom libs
-
-
 HELP = options_help()
 
 
@@ -39,35 +31,44 @@ def setup_logger(level="", log_file=""):
     Sets up rich logger and stores the values for it in a db for future import
     in other files. Returns logging.getLogger("rich")
     """
+    # determine logging level
     if not level:
         if USR_CONFIG_FILE and 'log' in USR_CONFIG_FILE:
             level = USR_CONFIG_FILE['log']['level']
         else:
             level = 'warn'
 
+    log_level = getattr(logging, level.upper(), None)
+
+    # these are params to be passed into logging.basicConfig
+    opts = {'level': log_level, 'format': "%(message)s", 'datefmt': "[%X]"}
+
+    # we only log to a file if one was passed into config.yaml or the cli
     if not log_file:
         if USR_CONFIG_FILE:
             log_file = USR_CONFIG_FILE['log'].get('file', None)
 
-    log_level = getattr(logging, level.upper(), None)
-    # these are params to be passed into logging.basicConfig
-    log_opts = {'level': log_level,
-                'format': "%(message)s",
-                'datefmt': "[%X]",
-                'handlers': [RichHandler(rich_tracebacks=True)]}
-
-    if log_level == 10:
-        # log the name of the function if we're in debug mode :)
-        log_opts['format'] = "[bold]%(funcName)s()[/bold]: %(message)s"
-
-    # we only log to a file if one was passed into config.yaml or the cli
+    # rich typically handles much of this but we don't use rich with files
     if log_file:
-        log_opts['handlers'] = [RichHandler(console=Console(file=log_file),
-                                            rich_tracebacks=True)]
+        opts['filename'] = log_file
+        opts['format'] = "%(asctime)s %(levelname)s %(funcName)s: %(message)s"
+    else:
+        rich_handler_opts = {'rich_tracebacks': True}
+        # 10 is the DEBUG logging level int value
+        if log_level == 10:
+            # log the name of the function if we're in debug mode :)
+            opts['format'] = "[bold]%(funcName)s()[/bold]: %(message)s"
+            rich_handler_opts['markup'] = True
 
-    # this uses the log_opts dictionary as parameters to logging.basicConfig()
-    logging.basicConfig(**log_opts)
-    return logging.getLogger("rich")
+        opts['handlers'] = [RichHandler(**rich_handler_opts)]
+
+    # this uses the opts dictionary as parameters to logging.basicConfig()
+    logging.basicConfig(**opts)
+
+    if log_file:
+        return None
+    else:
+        return logging.getLogger("rich")
 
 
 # @option('--quiet', '-q', is_flag=True, help=HELP['quiet'])
@@ -126,8 +127,10 @@ def main(log_level: str = "",
     usr_pref = process_configs(overwrite, git_url, git_branch, pkg_managers,
                                pkg_groups, firewall, remote_host, steps)
 
-    log.debug(f"User passed in the following preferences:\n{usr_pref}\n",
-              extra={"markup": True})
+    if log:
+        log.debug(f"User passed in the following preferences:\n{usr_pref}\n")
+    else:
+        logging.debug(f"User passed in the following preferences:\n{usr_pref}")
 
     # actual heavy lifting of onboardme happens in these
     for step in usr_pref['steps'][OS[0]]:
