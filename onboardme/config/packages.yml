@@ -58,7 +58,7 @@ brew:
       - gh
       # gitlab cli
       - glab
-      # making things
+      # for setup scripts and compiling things (e.g. YouCompleteMe)
       - cmake
       # programming languages and their package managers
       - python@3.11
@@ -239,14 +239,16 @@ pip3.11:
       # this is for python development
       - flake8
       - pyflakes
+      - ruff
       - autoflake
+      # for building and installing packages
       - pip
       - build
       - twine
       - poetry
       # this does some magic with imports when developing
       - autoimport
-      # this is all powerline
+      # this is all powerline (status line for tmux/BASH)
       - "powerline-status"
       - "powerline-gitstatus"
       - "powerline-kubernetes"
