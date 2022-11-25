@@ -41,9 +41,7 @@ def setup_logger(level="", log_file=""):
     log_level = getattr(logging, level.upper(), None)
 
     # these are params to be passed into logging.basicConfig
-    log_opts = {'level': log_level,
-                'format': "%(message)s",
-                'datefmt': "[%X]"}
+    opts = {'level': log_level, 'format': "%(message)s", 'datefmt': "[%X]"}
 
     # we only log to a file if one was passed into config.yaml or the cli
     if not log_file:
@@ -51,19 +49,20 @@ def setup_logger(level="", log_file=""):
             log_file = USR_CONFIG_FILE['log'].get('file', None)
 
     if log_file:
-        log_opts['filename'] = log_file
+        opts['filename'] = log_file
+        opts['format'] = "%(asctime)s %(levelname)s %(funcName)s: %(message)s"
     else:
         rich_handler_opts = {rich_tracebacks: True}
         # 10 is the DEBUG logging level int value
         if log_level == 10:
             # log the name of the function if we're in debug mode :)
-            log_opts['format'] = "[bold]%(funcName)s()[/bold]: %(message)s"
+            opts['format'] = "[bold]%(funcName)s()[/bold]: %(message)s"
             rich_handler_opts[markup] = True
 
-        log_opts['handlers'] = [RichHandler(**rich_handler_opts)]
+        opts['handlers'] = [RichHandler(**rich_handler_opts)]
 
 
-    # this uses the log_opts dictionary as parameters to logging.basicConfig()
+    # this uses the opts dictionary as parameters to logging.basicConfig()
     logging.basicConfig(**log_opts)
 
     if log_file:
