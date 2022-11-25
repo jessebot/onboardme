@@ -28,7 +28,7 @@ def subproc(commands=[], **kwargs):
     quiet = kwargs.pop('quiet', False)
 
     if spinner:
-        # we don't actually need this if we're not doing a progress spinner
+        # only need this if we're doing a progress spinner
         console = Console()
 
     status_line = "[bold green]♥ Running command[/bold green]"
