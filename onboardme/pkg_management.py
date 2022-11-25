@@ -113,7 +113,7 @@ def run_gaming_specific_cmds():
       add i386 architecture, add contrib/non-free to sources.list, and update
     """
     cmds = ["sudo dpkg --add-architecture i386",
-            "sudo scripts/update_apt_sources.sh",
+            f"sudo {PWD}/scripts/update_apt_sources.sh",
             "sudo apt-get update"]
     subproc(cmds)
     return True

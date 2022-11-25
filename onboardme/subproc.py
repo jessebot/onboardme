@@ -63,6 +63,7 @@ def run_subprocess(command, **kwargs):
         env       - environment variables you'd like to pass in
     """
     # subprocess expects a list if there are spaces in the command
+    log.debug(command, extra={"markup": True})
     cmd = command.split()
 
     error_ok = False
