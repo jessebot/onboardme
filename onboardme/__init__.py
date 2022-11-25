@@ -31,6 +31,7 @@ def setup_logger(level="", log_file=""):
     Sets up rich logger and stores the values for it in a db for future import
     in other files. Returns logging.getLogger("rich")
     """
+    # determine logging level
     if not level:
         if USR_CONFIG_FILE and 'log' in USR_CONFIG_FILE:
             level = USR_CONFIG_FILE['log']['level']
@@ -38,18 +39,11 @@ def setup_logger(level="", log_file=""):
             level = 'warn'
 
     log_level = getattr(logging, level.upper(), None)
+
     # these are params to be passed into logging.basicConfig
     log_opts = {'level': log_level,
                 'format': "%(message)s",
-                'datefmt': "[%X]",
-                'handlers': [RichHandler(rich_tracebacks=True)]}
-
-    # 10 is the DEBUG logging level int value
-    if log_level == 10:
-        # log the name of the function if we're in debug mode :)
-        log_opts['format'] = "[bold]%(funcName)s()[/bold]: %(message)s"
-        log_opts['handlers'] = [RichHandler(rich_tracebacks=True,
-                                            markup=True)]
+                'datefmt': "[%X]"}
 
     # we only log to a file if one was passed into config.yaml or the cli
     if not log_file:
@@ -57,11 +51,25 @@ def setup_logger(level="", log_file=""):
             log_file = USR_CONFIG_FILE['log'].get('file', None)
 
     if log_file:
-        log_opts['file'] = log_file
+        log_opts['filename'] = log_file
+    else:
+        rich_handler_opts = {rich_tracebacks: True}
+        # 10 is the DEBUG logging level int value
+        if log_level == 10:
+            # log the name of the function if we're in debug mode :)
+            log_opts['format'] = "[bold]%(funcName)s()[/bold]: %(message)s"
+            rich_handler_opts[markup] = True
+
+        log_opts['handlers'] = [RichHandler(**rich_handler_opts)]
+
 
     # this uses the log_opts dictionary as parameters to logging.basicConfig()
     logging.basicConfig(**log_opts)
-    return logging.getLogger("rich")
+
+    if log_file:
+        return None
+    else:
+        return logging.getLogger("rich")
 
 
 # @option('--quiet', '-q', is_flag=True, help=HELP['quiet'])
@@ -120,7 +128,10 @@ def main(log_level: str = "",
     usr_pref = process_configs(overwrite, git_url, git_branch, pkg_managers,
                                pkg_groups, firewall, remote_host, steps)
 
-    log.debug(f"User passed in the following preferences:\n{usr_pref}\n")
+    if log:
+        log.debug(f"User passed in the following preferences:\n{usr_pref}\n")
+    else:
+        logging.debug(f"User passed in the following preferences:\n{usr_pref}")
 
     # actual heavy lifting of onboardme happens in these
     for step in usr_pref['steps'][OS[0]]:
