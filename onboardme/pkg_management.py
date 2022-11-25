@@ -66,7 +66,7 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
                     sub_header(f"[b]{pre_cmd.title()}[/b] completed.")
 
             # list of actually installed packages
-            installed_pkgs = subproc([pkg_cmds['list'])
+            installed_pkgs = subproc([pkg_cmds['list']])
 
             for pkg_group in pkg_groups:
                 if pkg_group in available_pkg_groups:
