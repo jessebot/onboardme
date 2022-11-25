@@ -236,7 +236,7 @@ pip3.11:
     install: "pip3.11 install --upgrade "
   packages:
     default:
-      # this is for python development
+      # this is for python development - specifically linting/auto-linting
       - flake8
       - pyflakes
       - ruff
