@@ -63,7 +63,7 @@ def run_subprocess(command, **kwargs):
         env       - environment variables you'd like to pass in
     """
     # subprocess expects a list if there are spaces in the command
-    log.debug(command, extra={"markup": True})
+    log.debug(command)
     cmd = command.split()
 
     error_ok = False
@@ -82,7 +82,7 @@ def run_subprocess(command, **kwargs):
         # check return code, raise error if failure
         if not ret_code:
             if res_stderr:
-                log.debug(res_stderr, extra={"markup": True})
+                log.debug(res_stderr)
         else:
             if ret_code != 0:
                 # also scan both stdout and stdin for weird errors

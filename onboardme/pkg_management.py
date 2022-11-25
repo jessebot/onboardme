@@ -24,8 +24,8 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
         default_config = path.join(PWD, 'config/packages.yml')
         pkg_mngrs_list_of_dicts = load_cfg(default_config)
 
-    log.debug(f"pkg_mngrs: {pkg_mngrs}", extra={"markup": True})
-    log.debug(f"pkg_groups: {pkg_groups}", extra={"markup": True})
+    log.debug(f"pkg_mngrs: {pkg_mngrs}")
+    log.debug(f"pkg_groups: {pkg_groups}")
 
     # we iterate through pkg_mngrs which should already be sorted
     for pkg_mngr in pkg_mngrs:
@@ -39,7 +39,7 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
                 pkg_groups.append("macOS")
 
         debug_line = f"pkg groups for {pkg_mngr} are {available_pkg_groups}"
-        log.debug(debug_line, extra={"markup": True})
+        log.debug(debug_line)
 
         # make sure that the package manage has any groups that were passed in
         if any(check in pkg_groups for check in available_pkg_groups):
@@ -49,8 +49,7 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
             print_header(msg)
 
             pkg_cmds = pkg_mngr_dict['commands']
-            log.debug(f"{pkg_mngr} pre-install commands are: {pkg_cmds}",
-                      extra={"markup": True})
+            log.debug(f"{pkg_mngr} pre-install commands are: {pkg_cmds}")
 
             # gaming has a special flow that needs to be done before updates
             if "gaming" in pkg_groups and pkg_mngr == "apt":
@@ -96,8 +95,7 @@ def install_pkg_group(installed_pkgs=[], pkgs_to_install=[], install_cmd=""):
     if 'upgrade' in install_cmd or not installed_pkgs:
         install_pkg = True
 
-    log.debug(f"pkgs_to_install are {pkgs_to_install}",
-              extra={"markup": True})
+    log.debug(f"pkgs_to_install are {pkgs_to_install}")
 
     for pkg in pkgs_to_install:
         if installed_pkgs:
