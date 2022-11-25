@@ -151,7 +151,7 @@ brew:
 apt:
   emoji: "🙃"
   commands:
-    list: "apt list --installed"
+    list: "apt-cache pkgnames"
     update: "sudo apt-get update -y"
     upgrade: "sudo apt-get upgrade -y"
     install: "sudo apt-get install -y "
