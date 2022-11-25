@@ -65,7 +65,8 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
                     sub_header(f"[b]{pre_cmd.title()}[/b] completed.")
 
             # list of actually installed packages
-            installed_pkgs = subproc([pkg_cmds['list']])
+            list_pkgs = subproc([pkg_cmds['list']], quiet=True)
+            installed_pkgs = list_pkgs.split()
 
             for pkg_group in pkg_groups:
                 if pkg_group in available_pkg_groups:
@@ -95,12 +96,15 @@ def install_pkg_group(installed_pkgs=[], pkgs_to_install=[], install_cmd=""):
     if 'upgrade' in install_cmd or not installed_pkgs:
         install_pkg = True
 
+    log.debug(f"Currently installed packages: {installed_pkgs}")
     log.debug(f"pkgs_to_install are {pkgs_to_install}")
 
     for pkg in pkgs_to_install:
         if installed_pkgs:
-            if pkg not in installed_pkgs:
-                log.info(f"{pkg} not in installed packages. Installing...")
+            if pkg in installed_pkgs:
+                log.info(f"{pkg} already installed. Moving on...")
+            else:
+                log.info(f"{pkg} isn't installed. Installing now...")
                 install_pkg = True
         if install_pkg:
             subproc([install_cmd + pkg], quiet=True, spinner=SPINNER)
