@@ -63,7 +63,7 @@ def setup_logger(level="", log_file=""):
 
 
     # this uses the opts dictionary as parameters to logging.basicConfig()
-    logging.basicConfig(**log_opts)
+    logging.basicConfig(**opts)
 
     if log_file:
         return None
