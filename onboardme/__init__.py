@@ -2,7 +2,7 @@
     NAME:           onboardme
     DESCRIPTION:    Program to take care of a bunch of onboarding tasks for new
                     machines running macOS and/or Debian, including:
-                      dot_files, packages, ide_setup, and group management
+                      dot_files, managing packages, ide_setup, group management
     AUTHOR:         Jesse Hitch
     LICENSE:        GNU AFFERO GENERAL PUBLIC LICENSE
 """
@@ -21,14 +21,6 @@ from .dot_files import setup_dot_files
 from .pkg_management import run_pkg_mngrs
 from .sudo_setup import setup_sudo
 from .firewall import configure_firewall
-
-
-# for importing modules by str names
-# for getting the version of onboardme
-
-# rich helps pretty print everything
-
-# custom libs
 
 
 HELP = options_help()
