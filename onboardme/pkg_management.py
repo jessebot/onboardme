@@ -49,11 +49,19 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
             print_header(msg)
 
             pkg_cmds = pkg_mngr_dict['commands']
-            log.debug(f"package manager commands are: {pkg_cmds}")
+            log.debug(f"{pkg_mngr} pre-install commands are: {pkg_cmds}",
+                      extra={"markup": True})
+
+            # gaming has a special flow that needs to be done before updates
+            if "gaming" in pkg_groups and pkg_mngr == "apt":
+                run_gaming_specific_cmds()
 
             # run package manager specific setup if needed, & updates/upgrades
             for pre_cmd in ['setup', 'update', 'upgrade']:
                 if pre_cmd in pkg_cmds:
+                    
+                    subproc(sunproc_opts**)
+
                     SPINNER = True
                     if 'sudo' in pkg_cmds[pre_cmd]:
                         SPINNER = False
@@ -65,10 +73,6 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
 
             for pkg_group in pkg_groups:
                 if pkg_group in required_pkg_groups:
-
-                    # gaming has a special flow
-                    if pkg_group == "gaming" and pkg_mngr == "apt":
-                        run_gaming_specific_cmds()
 
                     install_pkg_group(installed_pkgs,
                                       required_pkg_groups[pkg_group],
@@ -113,7 +117,6 @@ def run_gaming_specific_cmds():
       add i386 architecture, add contrib/non-free to sources.list, and update
     """
     cmds = ["sudo dpkg --add-architecture i386",
-            f"sudo {PWD}/scripts/update_apt_sources.sh",
-            "sudo apt-get update"]
+            f"sudo {PWD}/scripts/update_apt_sources.sh"]
     subproc(cmds)
     return True
