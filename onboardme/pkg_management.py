@@ -31,18 +31,18 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
     for pkg_mngr in pkg_mngrs:
 
         pkg_mngr_dict = pkg_mngrs_list_of_dicts[pkg_mngr]
-        required_pkg_groups = pkg_mngr_dict['packages']
+        available_pkg_groups = pkg_mngr_dict['packages']
 
         # brew has a special flow because it works on both linux and mac
         if pkg_mngr == 'brew':
             if 'Darwin' in OS:
                 pkg_groups.append("macOS")
 
-        debug_line = f"pkg groups for {pkg_mngr} are {required_pkg_groups}"
+        debug_line = f"pkg groups for {pkg_mngr} are {available_pkg_groups}"
         log.debug(debug_line, extra={"markup": True})
 
         # make sure that the package manage has any groups that were passed in
-        if any(check in pkg_groups for check in required_pkg_groups):
+        if any(check in pkg_groups for check in available_pkg_groups):
 
             pkg_emoji = pkg_mngr_dict['emoji']
             msg = f'{pkg_emoji} [green][b]{pkg_mngr}[/b][/] app Installs'
@@ -59,9 +59,6 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
             # run package manager specific setup if needed, & updates/upgrades
             for pre_cmd in ['setup', 'update', 'upgrade']:
                 if pre_cmd in pkg_cmds:
-                    
-                    subproc(sunproc_opts**)
-
                     SPINNER = True
                     if 'sudo' in pkg_cmds[pre_cmd]:
                         SPINNER = False
@@ -69,13 +66,13 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
                     sub_header(f"[b]{pre_cmd.title()}[/b] completed.")
 
             # list of actually installed packages
-            installed_pkgs = subproc([pkg_cmds['list']], quiet=True)
+            installed_pkgs = subproc([pkg_cmds['list'])
 
             for pkg_group in pkg_groups:
-                if pkg_group in required_pkg_groups:
+                if pkg_group in available_pkg_groups:
 
                     install_pkg_group(installed_pkgs,
-                                      required_pkg_groups[pkg_group],
+                                      available_pkg_groups[pkg_group],
                                       pkg_cmds['install'])
                     sub_header(f'{pkg_group.title()} packages installed.')
 
