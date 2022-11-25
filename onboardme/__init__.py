@@ -37,10 +37,6 @@ def setup_logger(level="", log_file=""):
         else:
             level = 'warn'
 
-    if not log_file:
-        if USR_CONFIG_FILE:
-            log_file = USR_CONFIG_FILE['log'].get('file', None)
-
     log_level = getattr(logging, level.upper(), None)
     # these are params to be passed into logging.basicConfig
     log_opts = {'level': log_level,
@@ -48,14 +44,20 @@ def setup_logger(level="", log_file=""):
                 'datefmt': "[%X]",
                 'handlers': [RichHandler(rich_tracebacks=True)]}
 
+    # 10 is the DEBUG logging level int value
     if log_level == 10:
         # log the name of the function if we're in debug mode :)
         log_opts['format'] = "[bold]%(funcName)s()[/bold]: %(message)s"
+        log_opts['handlers'] = [RichHandler(rich_tracebacks=True,
+                                            markup=True)]
 
     # we only log to a file if one was passed into config.yaml or the cli
+    if not log_file:
+        if USR_CONFIG_FILE:
+            log_file = USR_CONFIG_FILE['log'].get('file', None)
+
     if log_file:
-        log_opts['handlers'] = [RichHandler(console=Console(file=log_file),
-                                            rich_tracebacks=True)]
+        log_opts['file'] = log_file
 
     # this uses the log_opts dictionary as parameters to logging.basicConfig()
     logging.basicConfig(**log_opts)
@@ -118,8 +120,7 @@ def main(log_level: str = "",
     usr_pref = process_configs(overwrite, git_url, git_branch, pkg_managers,
                                pkg_groups, firewall, remote_host, steps)
 
-    log.debug(f"User passed in the following preferences:\n{usr_pref}\n",
-              extra={"markup": True})
+    log.debug(f"User passed in the following preferences:\n{usr_pref}\n")
 
     # actual heavy lifting of onboardme happens in these
     for step in usr_pref['steps'][OS[0]]:
