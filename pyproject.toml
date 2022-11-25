@@ -1,6 +1,6 @@
 [tool.poetry]
 name          = "onboardme"
-version       = "0.15.6"
+version       = "0.15.7"
 description   = "An onboarding tool to install dot files and packages including a default mode with sensible defaults to run on most Debian/macOS machines."
 authors       = ["Jesse Hitch <jessebot@linux.com>"]
 license       = "AGPL-3.0-or-later"
