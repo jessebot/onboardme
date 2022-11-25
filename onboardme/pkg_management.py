@@ -112,10 +112,8 @@ def run_gaming_specific_cmds():
     run commands specific to gaming package group:
       add i386 architecture, add contrib/non-free to sources.list, and update
     """
-    sources_file = "/etc/apt/sources.list"
-    fixed_line = "bookworm main contrib non-free"
-    sed = f"sudo sed -i 's/bookworm main$/{fixed_line}/g' {sources_file}"
-
-    cmds = ["sudo dpkg --add-architecture i386", sed, "sudo apt-get update"]
+    cmds = ["sudo dpkg --add-architecture i386",
+            "sudo scripts/update_apt_sources.sh",
+            "sudo apt-get update"]
     subproc(cmds)
     return True
