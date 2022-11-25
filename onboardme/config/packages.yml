@@ -36,6 +36,8 @@ brew:
       - ffmpegthumbnailer
       # cat images in the terminal (e.g. img2sixel imagename.png)
       - libsixel
+      # for working with images and making lsimg work
+      - imagemagick
       # ag command: like grep or ack, but more modern, for searching file text
       - the_silver_searcher
       # diff, but with colors
@@ -93,7 +95,7 @@ brew:
       # this lets us resize windows
       - "--cask rectangle"
       # productivity search and command bar
-      - "--cask alfred"
+      # - "--cask alfred"
       # Default browser
       - "--cask firefox"
       # Default email client
@@ -106,10 +108,8 @@ brew:
       - "--cask hyper"
       # gives us the default gnu/linux sed we all know and love
       - "gnu-sed"
-      # for working with images and making lsimg work
-      - imagemagick
-      # remap keys... not working yet though :<
-      # - "--cask karabiner-elements"
+      # remap keys on macOS
+      - "--cask karabiner-elements"
       # This should be docker desktop
       - "--cask docker"
       # primary media player
