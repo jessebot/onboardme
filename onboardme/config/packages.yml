@@ -34,6 +34,8 @@ brew:
       - ranger
       # preview videos in the terminal
       - ffmpegthumbnailer
+      # cat images in the terminal (e.g. img2sixel imagename.png)
+      - libsixel
       # ag command: like grep or ack, but more modern, for searching file text
       - the_silver_searcher
       # diff, but with colors
@@ -77,7 +79,7 @@ brew:
       # get the quick, short text of how to use various commands
       - tldr
       # generating SSL certs and random strings
-      - openssl
+      - openssl@3
       # password management
       - bitwarden-cli
       # anti virus
@@ -97,15 +99,13 @@ brew:
       # Default email client
       - "--cask thunderbird"
       # File server
-      - "--cask nextcloud"
+      # - "--cask nextcloud"
       # Default terminal used by most macOS users, standard
       - "--cask iterm2"
       # backup terminal written in javascript :shrug:
       - "--cask hyper"
       # gives us the default gnu/linux sed we all know and love
       - "gnu-sed"
-      # cat images in the terminal (e.g. img2sixel imagename.png)
-      - libsixel
       # for working with images and making lsimg work
       - imagemagick
       # remap keys... not working yet though :<
