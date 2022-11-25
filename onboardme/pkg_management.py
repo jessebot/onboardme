@@ -100,6 +100,7 @@ def install_pkg_group(installed_pkgs=[], pkgs_to_install=[], install_cmd=""):
     for pkg in pkgs_to_install:
         if installed_pkgs:
             if pkg not in installed_pkgs:
+                log.info(f"{pkg} not in installed packages. Installing...")
                 install_pkg = True
         if install_pkg:
             subproc([install_cmd + pkg], quiet=True, spinner=SPINNER)
