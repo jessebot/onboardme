@@ -48,6 +48,7 @@ def setup_logger(level="", log_file=""):
         if USR_CONFIG_FILE:
             log_file = USR_CONFIG_FILE['log'].get('file', None)
 
+    # rich typically handles much of this but we don't use rich with files
     if log_file:
         opts['filename'] = log_file
         opts['format'] = "%(asctime)s %(levelname)s %(funcName)s: %(message)s"
@@ -60,7 +61,6 @@ def setup_logger(level="", log_file=""):
             rich_handler_opts['markup'] = True
 
         opts['handlers'] = [RichHandler(**rich_handler_opts)]
-
 
     # this uses the opts dictionary as parameters to logging.basicConfig()
     logging.basicConfig(**opts)
