@@ -115,5 +115,5 @@ def run_gaming_specific_cmds():
     """
     cmds = ["sudo dpkg --add-architecture i386",
             f"sudo {PWD}/scripts/update_apt_sources.sh"]
-    subproc(cmds)
+    subproc(cmds, spinner=False)
     return True
