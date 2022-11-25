@@ -52,12 +52,12 @@ def setup_logger(level="", log_file=""):
         opts['filename'] = log_file
         opts['format'] = "%(asctime)s %(levelname)s %(funcName)s: %(message)s"
     else:
-        rich_handler_opts = {rich_tracebacks: True}
+        rich_handler_opts = {'rich_tracebacks': True}
         # 10 is the DEBUG logging level int value
         if log_level == 10:
             # log the name of the function if we're in debug mode :)
             opts['format'] = "[bold]%(funcName)s()[/bold]: %(message)s"
-            rich_handler_opts[markup] = True
+            rich_handler_opts['markup'] = True
 
         opts['handlers'] = [RichHandler(**rich_handler_opts)]
 
