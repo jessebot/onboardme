@@ -29,13 +29,17 @@ brew:
       #  A cat(1) clone with syntax highlighting and Git integration.
       - bat
       # pretty formatting and syntax highlighting
-      - rich
+      - rich-cli
       # file TUI: https://www.geeksforgeeks.org/ranger-a-cli-file-manager/
       - ranger
       # preview videos in the terminal
       - ffmpegthumbnailer
-      # like grep or ack, but more modern, for searching file text
-      - ag
+      # cat images in the terminal (e.g. img2sixel imagename.png)
+      - libsixel
+      # for working with images and making lsimg work
+      - imagemagick
+      # ag command: like grep or ack, but more modern, for searching file text
+      - the_silver_searcher
       # diff, but with colors
       - colordiff
       - htop
@@ -63,7 +67,7 @@ brew:
       # programming languages and their package managers
       - python@3.11
       - go
-      - npm
+      - node
       # linter for YAML
       - yamllint
       # linter for html5
@@ -77,7 +81,7 @@ brew:
       # get the quick, short text of how to use various commands
       - tldr
       # generating SSL certs and random strings
-      - openssl
+      - openssl@3
       # password management
       - bitwarden-cli
       # anti virus
@@ -91,25 +95,21 @@ brew:
       # this lets us resize windows
       - "--cask rectangle"
       # productivity search and command bar
-      - "--cask alfred"
+      # - "--cask alfred"
       # Default browser
       - "--cask firefox"
       # Default email client
       - "--cask thunderbird"
       # File server
-      - "--cask nextcloud"
+      # - "--cask nextcloud"
       # Default terminal used by most macOS users, standard
       - "--cask iterm2"
       # backup terminal written in javascript :shrug:
       - "--cask hyper"
       # gives us the default gnu/linux sed we all know and love
       - "gnu-sed"
-      # cat images in the terminal (e.g. img2sixel imagename.png)
-      - libsixel
-      # for working with images and making lsimg work
-      - imagemagick
-      # remap keys... not working yet though :<
-      # - "--cask karabiner-elements"
+      # remap keys on macOS
+      - "--cask karabiner-elements"
       # This should be docker desktop
       - "--cask docker"
       # primary media player
@@ -191,9 +191,9 @@ apt:
       - gufw
     gaming:
       # helpful for gaming on linux
+      - "nvidia-driver-libs:i386"
       - lutris
       - "steam:i386"
-      - "nvidia-driver-libs:i386"
       # to format disks to exFAT; FAT is too thin for modern windows 10 ISOs
       # - exfat-utils
 
