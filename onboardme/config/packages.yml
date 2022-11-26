@@ -218,11 +218,10 @@ snap:
     list: "snap list"
     install: "sudo snap install "
   packages:
-    default:
+    gui:
       - core
       # screen debugger/sharing tool for android
       - scrcpy
-    gui:
       # rss feed reader
       - fluent-reader
       # media player
