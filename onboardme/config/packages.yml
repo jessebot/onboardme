@@ -191,9 +191,9 @@ apt:
       - gufw
     gaming:
       # helpful for gaming on linux
+      - "nvidia-driver-libs:i386"
       - lutris
       - "steam:i386"
-      - "nvidia-driver-libs:i386"
       # to format disks to exFAT; FAT is too thin for modern windows 10 ISOs
       # - exfat-utils
 

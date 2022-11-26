@@ -121,6 +121,7 @@ def install_pkg_group(install_cmd="", pkgs_to_install=[], installed_pkgs=[]):
             if "--cask" in pkg:
                 pkg_short_name = pkg.split(' ')[1]
 
+            log.debug(f"Checking if {pkg_short_name} is installed...")
             if pkg_short_name in installed_pkgs:
                 if 'upgrade' not in install_cmd:
                     log.info(f"{pkg} already installed. Moving on.")
