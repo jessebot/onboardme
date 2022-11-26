@@ -1,11 +1,34 @@
 import logging as log
 from os import path
 
-# custom libs
 from .env_config import OS, PWD, HOME_DIR, load_cfg
 from .console_logging import print_header
 from .console_logging import print_sub_header as sub_header
 from .subproc import subproc
+
+
+def run_preinstall_cmds(cmd_list=[], pkg_groups=[]):
+    """
+    takes a list of package manager pre-install commands and runs them
+    if second list of package groups contains gaming, runs additional commands
+    returns True
+    """
+    if 'gaming' in pkg_groups and 'apt' in cmd_list['update']:
+        log.debug("Run gaming specific commands to update /etc/apt/sources")
+        cmds = ["sudo dpkg --add-architecture i386",
+                f"sudo {PWD}/scripts/update_apt_sources.sh"]
+        subproc(cmds, spinner=False)
+
+    for pre_cmd in ['setup', 'update', 'upgrade']:
+        if pre_cmd in cmd_list:
+            SPINNER = True
+            if 'sudo' in cmd_list[pre_cmd]:
+                SPINNER = False
+
+            subproc([cmd_list[pre_cmd]], spinner=SPINNER)
+            sub_header(f"[b]{pre_cmd.title()}[/b] completed.")
+
+    return True
 
 
 def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
@@ -24,8 +47,8 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
         default_config = path.join(PWD, 'config/packages.yml')
         pkg_mngrs_list_of_dicts = load_cfg(default_config)
 
-    log.debug(f"pkg_mngrs: {pkg_mngrs}")
-    log.debug(f"pkg_groups: {pkg_groups}")
+    log.debug(f"passed in pkg_mngrs: {pkg_mngrs}")
+    log.debug(f"passed in pkg_groups: {pkg_groups}")
 
     # we iterate through pkg_mngrs which should already be sorted
     for pkg_mngr in pkg_mngrs:
@@ -38,85 +61,75 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
             if 'Darwin' in OS:
                 pkg_groups.append("macOS")
 
-        debug_line = f"pkg groups for {pkg_mngr} are {available_pkg_groups}"
-        log.debug(debug_line)
+        log.debug(f"pkg groups for {pkg_mngr} are {available_pkg_groups}")
 
-        # make sure that the package manage has any groups that were passed in
+        # make sure that the package manager has any groups that were passed in
         if any(check in pkg_groups for check in available_pkg_groups):
 
             pkg_emoji = pkg_mngr_dict['emoji']
             msg = f'{pkg_emoji} [green][b]{pkg_mngr}[/b][/] app Installs'
             print_header(msg)
 
+            # commands for listing, installing, updating, upgrading, & cleanup
             pkg_cmds = pkg_mngr_dict['commands']
-            log.debug(f"{pkg_mngr} pre-install commands are: {pkg_cmds}")
 
-            # gaming has a special flow that needs to be done before updates
-            if "gaming" in pkg_groups and pkg_mngr == "apt":
-                run_gaming_specific_cmds()
+            # run package manager specific setup if needed e.g. update/upgrade
+            run_preinstall_cmds(pkg_cmds, pkg_groups)
 
-            # run package manager specific setup if needed, & updates/upgrades
-            for pre_cmd in ['setup', 'update', 'upgrade']:
-                if pre_cmd in pkg_cmds:
-                    SPINNER = True
-                    if 'sudo' in pkg_cmds[pre_cmd]:
-                        SPINNER = False
-                    subproc([pkg_cmds[pre_cmd]], spinner=SPINNER)
-                    sub_header(f"[b]{pre_cmd.title()}[/b] completed.")
-
-            # list of actually installed packages
+            # run the list command for the given package manager
             list_pkgs = subproc([pkg_cmds['list']], quiet=True)
+            # create list of installed packages to iterate on
             installed_pkgs = list_pkgs.split()
 
+            # iterate through package groups for a given package manager
             for pkg_group in pkg_groups:
+                # if package group is in the packages.yml file
                 if pkg_group in available_pkg_groups:
-
-                    install_pkg_group(installed_pkgs,
+                    install_pkg_group(pkg_cmds['install'],
                                       available_pkg_groups[pkg_group],
-                                      pkg_cmds['install'])
+                                      installed_pkgs)
                     sub_header(f'{pkg_group.title()} packages installed.')
 
+            # run final cleanup commands, if any
             if 'cleanup' in pkg_cmds:
                 subproc([pkg_cmds['cleanup']])
                 sub_header("[b]Cleanup[/b] step Completed.")
-    return
-
-
-def install_pkg_group(installed_pkgs=[], pkgs_to_install=[], install_cmd=""):
-    """
-    installs packages if they are not already intalled with intall_cmd
-    Returns True.
-    """
-    SPINNER = True
-    install_pkg = False
-    # the spinner status thing rich provides breaks with input
-    if 'sudo' in install_cmd:
-        SPINNER = False
-
-    if 'upgrade' in install_cmd or not installed_pkgs:
-        install_pkg = True
-
-    log.debug(f"Currently installed packages: {installed_pkgs}")
-    log.debug(f"pkgs_to_install are {pkgs_to_install}")
-
-    for pkg in pkgs_to_install:
-        if installed_pkgs:
-            if pkg in installed_pkgs:
-                log.info(f"{pkg} already installed. Moving on...")
-            else:
-                log.info(f"{pkg} isn't installed. Installing now...")
-                install_pkg = True
-        if install_pkg:
-            subproc([install_cmd + pkg], quiet=True, spinner=SPINNER)
     return True
 
 
-def run_gaming_specific_cmds():
+def install_pkg_group(install_cmd="", pkgs_to_install=[], installed_pkgs=[]):
     """
-    run commands specific to gaming package group:
-      add i386 architecture, add contrib/non-free to sources.list, and update
+    Installs packages if they are not already installed.
+    provided install command string.
+    Returns True.
     """
-    cmds = ["sudo dpkg --add-architecture i386",
-            f"sudo {PWD}/scripts/update_apt_sources.sh"]
-    subproc(cmds, spinner=False)
+    log.debug(f"Currently installed packages: {installed_pkgs}")
+    log.info(f"Packages to install are: {pkgs_to_install}")
+
+    for pkg in pkgs_to_install:
+        if not installed_pkgs:
+            log.info(f"{pkg} isn't installed. Installing now...")
+        else:
+            # this variable defaults to pkg unless it has special strings in it
+            pkg_short_name = pkg
+
+            # for things like steam:i386 for apt
+            if ":" in pkg:
+                pkg_short_name = pkg.split(':')[0]
+
+            # this covers things like "--cask iterm2" for brew
+            if "--cask" in pkg:
+                pkg_short_name = pkg.split(' ')[1]
+
+            if pkg_short_name in installed_pkgs:
+                if 'upgrade' not in install_cmd:
+                    log.info(f"{pkg} already installed. Moving on.")
+                    # continues to the next pkg in the pkgs_to_install list
+                    continue
+                # if the install command has upgrade in it, we always run it
+                else:
+                    log.info(f"Upgrading {pkg} now...")
+
+        # Actual installation
+        subproc([install_cmd + pkg], quiet=True)
     return True
