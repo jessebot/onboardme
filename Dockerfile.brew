@@ -37,5 +37,5 @@ RUN apt-get update && \
   wget https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh && \
   chmod +x install.sh && \
   chmod 777 install.sh && \
-  /bin/bash install.sh && git config --global init.defaultBranch main \
+  /bin/bash install.sh && git config --global init.defaultBranch main
 
