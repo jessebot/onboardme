@@ -1,6 +1,6 @@
 [tool.poetry]
 name          = "onboardme"
-version       = "0.15.7"
+version       = "0.15.8"
 description   = "An onboarding tool to install dot files and packages including a default mode with sensible defaults to run on most Debian/macOS machines."
 authors       = ["Jesse Hitch <jessebot@linux.com>"]
 license       = "AGPL-3.0-or-later"
@@ -27,6 +27,12 @@ rich      = "^12.6.0"
 PyYAML    = "^6.0"
 GitPython = "^3.1.29"
 wget      = "^3.2"
+
+[[tool.poetry.source]]
+name = "testpypi"
+url = "https://test.pypi.org/simple/"
+default = false
+secondary = false
 
 [tools.poetry.plugins."onboardme.application.plugin"]
 "onboardme" = "onboardme:main"

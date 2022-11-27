@@ -73,8 +73,15 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
             # commands for listing, installing, updating, upgrading, & cleanup
             pkg_cmds = pkg_mngr_dict['commands']
 
-            # run package manager specific setup if needed e.g. update/upgrade
-            run_preinstall_cmds(pkg_cmds, pkg_groups)
+            if pkg_mngr == 'snap' and not shutil.which('snap'):
+                # ref: https://snapcraft.io/docs/installing-snap-on-debian
+                log.warn("snap is either not installed, or you need to log out"
+                         "and back in (or reboot) for it to be available.")
+                # continues onto the next package manager
+                continue
+            else:
+                # run package manager specific setup if needed: update/upgrade
+                run_preinstall_cmds(pkg_cmds, pkg_groups)
 
             # run the list command for the given package manager
             list_pkgs = subproc([pkg_cmds['list']], quiet=True)
