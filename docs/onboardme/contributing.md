@@ -16,6 +16,11 @@ There's no automated tests yet, but it's on the list of things to do. In the mea
 In the meantime, you should at least be making sure that you can run this in the repo root dir:
 
 ```bash
+# Build the docker files
+docker build -t onboardme-base . -f Dockerfile.brew && \
+docker build -t onboardme-setup . -f Dockerfile.setup && \
+docker run -it onboardme-setup onboardme
+
 # build a package: a python wheel
 poetry build
 
