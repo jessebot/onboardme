@@ -1,4 +1,4 @@
-# -- usage -- 
+# -- usage --
 # docker run -it \
 #   -v $(pwd):/onboardme \
 #   onboardme \
@@ -17,11 +17,11 @@ ENV PATH="$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin"
 ENV NONINTERACTIVE=1
 ENV PATH="$PATH:/home/onboardme/.local/bin"
 
-WORKDIR /onboardme
+WORKDIR /home/friend
+USER friend
 
 # Run setup.sh
 RUN wget https://raw.githubusercontent.com/jessebot/onboardme/main/setup.sh && \
   chmod +x setup.sh && \
   chmod 777 setup.sh && \
   yes| /bin/bash setup.sh
-
