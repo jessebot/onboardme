@@ -61,9 +61,9 @@ We love contributors! Feel free to open a pull request, and we will review it as
 
 :star: If you like this project, please star it to help us keep motivated :3
 
-## Collaborators
+## Contributors
 
-<!-- readme: collaborators -start -->
+<!-- readme: contributors -start -->
 <table>
 <tr>
     <td align="center">
@@ -81,7 +81,7 @@ We love contributors! Feel free to open a pull request, and we will review it as
         </a>
     </td></tr>
 </table>
-<!-- readme: collaborators -end -->
+<!-- readme: contributors -end -->
 
 ## Shameless plugs for other projects
 Looking for a project to get running on a machine that has no OS at all?
