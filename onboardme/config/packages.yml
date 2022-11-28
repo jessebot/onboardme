@@ -88,6 +88,8 @@ brew:
       - bitwarden-cli
       # anti virus
       - clamav
+      # tui browser
+      - w3m
     # macOS specific stuff. Won't work with LinuxBrew
     macOS:
       # current version of bash :)
