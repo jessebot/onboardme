@@ -22,6 +22,8 @@ brew:
       # main terminal based text editors
       - vim
       - neovim
+      # terminal based email client
+      - neomutt
       # fuzzy search, helps with completion and searching
       - fzf
       # ls replacement written in rust: https://github.com/Peltoche/lsd
@@ -98,8 +100,6 @@ brew:
       # - "--cask alfred"
       # Default browser
       - "--cask firefox"
-      # Default email client
-      - "--cask thunderbird"
       # File server
       # - "--cask nextcloud"
       # Default terminal used by most macOS users, standard
@@ -122,6 +122,8 @@ brew:
       - "--cask bitwarden"
       # VPN
       - "--cask protonvpn"
+      # email
+      - "--cask protonmail-bridge"
     devops:
       # terraform for building stuff
       - terraform

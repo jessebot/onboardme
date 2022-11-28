@@ -32,21 +32,20 @@ These are all Linux Desktop and macOS applications we use.
 OnBoardMe doesn't officially support phones yet, but for what I, Jesse,
 use on my phone, check out my [doc](/onboardme/os/android).
 
-| Category               | App                              | Replaces                          |
-|:-----------------------|:---------------------------------|:----------------------------------|
-| Backups - local/remote | Restic to minio and b2           | GDrive, iCloud, S3                |
-| Web Browser            | Firefox, w3m (terminal only)     | Chrome/Safari/Edge                |
-| Email Client           | Thunderbird, Protonmail + Bridge | Gmail                             |
-| IDE                    | Vim/NeoVim + Plugins             | Vscode/Pycharm etc                |
-| Document Editor        | LibreOffice                      | Microsoft Word, Google Docs       |
-| Launcher               | Cerebro                          | Alfred                            |
-| Photo/file Storage     | NextCloud Files/Photos (testing) | Google Photos/Drive               |
-| Passwords              | Bitwarden                        | LastPass, Apple/Google            |
-| News - RSS             | Fluent Reader                    | Facebook/Twitter/news/brand feeds |
-| Video                  | FreeTube                         | YouTube                           |
-| Antivirus              | ClamAV                           | MalwareBytes                      |
-| Firewall               | Lulu/iptables                    | ???                               |
-
+| Category               | App                                | Replaces                          |
+|:-----------------------|:-----------------------------------|:----------------------------------|
+| Backups - local/remote | [Restic] to minio and b2           | GDrive, iCloud, S3                |
+| Web Browser            | [Firefox], [w3m] (terminal only)   | Chrome/Safari/Edge                |
+| Email Client           | [NeoMutt], Protonmail + Bridge     | Gmail                             |
+| IDE                    | [Vim]/[NeoVim] + Plugins           | Vscode/Pycharm etc                |
+| Document Editor        | [LibreOffice]                      | Microsoft Word, Google Docs       |
+| Launcher               | [Cerebro]                          | Alfred                            |
+| Photo/file Storage     | [NextCloud] Files/Photos (testing) | Google Photos/Drive               |
+| Passwords              | [Bitwarden]                        | LastPass, Apple/Google            |
+| News - RSS             | [Fluent Reader]                    | Facebook/Twitter/news/brand feeds |
+| Video                  | [FreeTube], VLC                    | YouTube/Quicktime                 |
+| Antivirus              | [ClamAV]                           | MalwareBytes                      |
+| Firewall               | [Lulu]/iptables                    | ???                               |
 
 ## Important Notes on Ethics
 
@@ -70,3 +69,19 @@ Contact your local datacenters and see if they offer an object storage service, 
 Looking for a project to get a fresh OS entirely, on a machine that has no OS?
 Check out [pxeless](https://github.com/cloudymax/pxeless).
 It works great in combination with onboardme :)
+
+<!-- --------------- link references ---------------- -->
+
+[Bitwarden]: https://bitwarden.com/ "bitwarden"
+[Cerebro]: https://cerebroapp.com/ "cerebro"
+[ClamAV]: https://www.clamav.net/ "clamav"
+[Firefox]: https://www.mozilla.org/en-US/firefox "firefox"
+[Fluent Reader]: https://hyliu.me/fluent-reader/ "fluent reader"
+[FreeTube]: https://freetubeapp.io "freetube"
+[LibreOffice]: https://www.libreoffice.org/ "libreoffice"
+[Lulu]: https://objective-see.org/products/lulu.html "lulu"
+[NeoVim]: https://neovim.org/ "neovim"
+[NextCloud]: https://nextcloud.com/ "nextcloud"
+[Restic]: https://restic.net/ "restic"
+[Vim]: https://www.vim.org/ "vim"
+[w3m]: https://w3m.sourceforge.net/ "w3m"
