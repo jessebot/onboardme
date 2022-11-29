@@ -10,9 +10,11 @@ description: "How to configure neomutt and what we've learned so far"
 # NeoMutt
 [NeoMutt] is a terminal based email client.
 
-## Colorschemes
+## Colorschemes and Themes
 It's [256-xterm colors] again. TUIs can just be like that sometimes :/
 Check out an example colorscheme here: [neonwolf]
+And then checkout the one I hacked together here: [spacechalk powerline]
+It was hacked together in part from this: [neomutt powerline nerdfonts]
 
 ## Configuring NeoMutt with Protonmail
 You'll need the protonmail-bridge (which you can `brew install`).
@@ -23,9 +25,27 @@ in your `neomuttrc` which should be located in `~/.config/neomutt/neomuttrc`.
 
 You can check out an example [here](https://github.com/jessebot/dot_files/blob/main/.config/neomutt/neomuttrc).
 
+## Displaying html in the terminal
+I use w3m for this right now. You can to by creating `~/.config/neomutt/mailcap` with this line:
+
+```
+# I'm using sixel with w3m, but you could use any image renderer of your choice
+text/html; w3m -sixel -o auto_image=TRUE -o display_image=1 -T text/html %s; nametemplate=%s.html; needsterminal
+```
+
+## Displaying images in the terminal
+
+On macOS, I'm using iterm2, so I use imgcat, but can't figure out why it
+doesn't work in neomutt, so I'm instead just sixel there too:
+
+```
+image/*; (clear && img2sixel %s); needsterminal
+```
+
 ## Helpful links
 - [NeoMutt Cheatsheet](https://cheatsheets.stephane.plus/productivity/neomutt/)
 
-
 [256-xterm colors]: (https://www.ditig.com/256-colors-cheat-sheet)
 [neonwolf]: https://gitlab.com/h3xx/mutt-colors-neonwolf
+[spacechalk powerline]: https://github.com/jessebot/dot_files/blob/main/.config/neomutt/themes
+[neomutt powerline nerdfonts]: https://github.com/sheoak/neomutt-powerline-nerdfonts
