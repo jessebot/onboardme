@@ -1,4 +1,5 @@
 import logging as log
+import shutil
 from os import path
 
 from .env_config import OS, PWD, HOME_DIR, load_cfg
