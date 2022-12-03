@@ -1,5 +1,4 @@
 import logging as log
-import shutil
 from os import path
 import shutil
 
@@ -22,10 +21,11 @@ def run_preinstall_cmds(cmd_list=[], pkg_groups=[]):
     for pre_cmd in ['setup', 'update', 'upgrade']:
         if pre_cmd in cmd_list:
             if pre_cmd == 'update' and 'apt' in pre_cmd:
-                log.debug("Run gaming specific commands to update /etc/apt/sources")
-                cmds = ["sudo dpkg --add-architecture i386",
-                        f"sudo {PWD}/scripts/update_apt_sources.sh"]
-                subproc(cmds, spinner=False)
+                if run_gaming_setup:
+                    log.debug("Run gaming commands to update /etc/apt/sources")
+                    cmds = ["sudo dpkg --add-architecture i386",
+                            f"sudo {PWD}/scripts/update_apt_sources.sh"]
+                    subproc(cmds, spinner=False)
 
             SPINNER = True
             if 'sudo' in cmd_list[pre_cmd]:
@@ -90,7 +90,14 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
                 run_preinstall_cmds(pkg_cmds, pkg_groups)
 
             # run the list command for the given package manager
-            list_pkgs = subproc([pkg_cmds['list']], quiet=True)
+            list_cmd = pkg_cmds['list']
+
+            # manually expanding, b/c there's not good way 2 do fstring via yml
+            if 'PWD' in list_cmd:
+                list_cmd = list_cmd.replace("PWD", PWD)
+
+            list_pkgs = subproc([list_cmd], quiet=True)
+
             # create list of installed packages to iterate on
             installed_pkgs = list_pkgs.split()
 
