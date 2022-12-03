@@ -53,7 +53,6 @@ but much of it isn't syntax highlighted, so I'm just posting this here for peopl
   # the status bar (also when it's used by the index).
 
   # For the examples below, set some defaults
-  set index_format='%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s'
   set use_threads=yes
   set sort=last-date-received
   set sort_aux=date
