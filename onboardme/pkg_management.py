@@ -1,7 +1,6 @@
 import logging as log
 from os import path
 import shutil
-import subprocess
 
 from .env_config import OS, PWD, HOME_DIR, load_cfg
 from .console_logging import print_header
@@ -91,7 +90,13 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
                 run_preinstall_cmds(pkg_cmds, pkg_groups)
 
             # run the list command for the given package manager
-            list_pkgs = subproc([pkg_cmds['list']], quiet=True)
+            list_cmd = pkg_cmds['list']
+
+            # manually expanding, b/c there's not good way 2 do fstring via yml
+            if 'PWD' in list_cmd:
+                list_cmd = list_cmd.replace("PWD", PWD)
+
+            list_pkgs = subproc([list_cmd], quiet=True)
 
             # create list of installed packages to iterate on
             installed_pkgs = list_pkgs.split()
