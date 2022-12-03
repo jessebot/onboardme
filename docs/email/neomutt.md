@@ -8,11 +8,9 @@ description: "How to configure neomutt and what we've learned so far"
 ---
 
 # NeoMutt
-[NeoMutt] is a terminal based email client from the 1990's. It's forked from an
-even older 90's client called Mutt. They, like many ancient TUIs from the 90's,
-have a pretty rough looking config language and documentation website,
-but it's a really really solid client, and they recently (in 2017) added support
-for [lua scripting], so it ain't all bad.
+[NeoMutt] is a terminal based email client from the 1990's. It's forked from an even older 90's client called [Mutt](http://mutt.org). They, like many ancient TUIs from the 90's, have a pretty rough looking config language and documentation website, but it's a really really solid client, and they recently (in 2017) added support for [lua scripting], so it ain't all bad.
+
+A lot of people use neomutt with [notmuch].
 
 ## Colorschemes and Themes
 It's [256-xterm colors] again. TUIs can just be like that sometimes :/
@@ -20,7 +18,10 @@ Check out an example colorscheme here: [neonwolf]
 And then checkout the one I hacked together here: [spacechalk powerline]
 It was hacked together in part from this: [neomutt powerline nerdfonts]
 
+Here's [another pretty example neomutt example].
+
 ## Configuring NeoMutt with Protonmail
+
 You'll need protonmail-bridge (which you can `brew install`).
 
 Steps:
@@ -32,6 +33,10 @@ This will be your password that you can source in your `neomuttrc` which should
 be located in `~/.config/neomutt/neomuttrc`.
 
 You can check out an [example neomuttrc file](https://github.com/jessebot/dot_files/blob/main/.config/neomutt/neomuttrc) if you'd like.
+
+## Nesting virtual folders
+
+[github: Nested virtual folders #1594](https://github.com/neomutt/neomutt/issues/1594)
 
 ## Displaying html in the terminal
 
@@ -189,8 +194,12 @@ Neomutt also has a [vim syntax repo](https://github.com/neomutt/syntax) that you
 ## Helpful links
 - [Stephane: NeoMutt Cheatsheet](https://cheatsheets.stephane.plus/productivity/neomutt/)
 - [reddit neomutt megathread](https://www.reddit.com/r/commandline/comments/fsm3sj/neomutt_config_megathread/)
-- [Gideon Wolfe: Very good info to Neomutt](https://gideonwolfe.com/posts/workflow/neomutt/intro/)
+- [Gideon Wolfe: Very good intro to Neomutt](https://gideonwolfe.com/posts/workflow/neomutt/intro/)
+- [aliquote: Tips and tricks for Neomutt](https://aliquote.org/post/tipx-on-neomutt/)
 - [Macro for opening text/html attachment](https://demu.red/blog/2017/11/neomutt-macro-opening-texthtml-attachment-from-the-index-view/)
+- [notmuch docs on mutt](https://notmuchmail.org/notmuch-mutt/)
+- [Gideon Wolfe: nextcloud and mutt](https://www.gideonwolfe.com/posts/sysadmin/nextcloud/nextcloudworkflow/#files) (goes over [khard] as well)
+- [Brian Thompson: Setting up mutt client with protonmail](https://brian-thompson.medium.com/setting-up-the-mutt-mail-client-with-protonmail-49c042486b3) (goes over notably mbox and Maildir)
 
 [256-xterm colors]: (https://www.ditig.com/256-colors-cheat-sheet)
 [neonwolf]: https://gitlab.com/h3xx/mutt-colors-neonwolf
@@ -198,3 +207,7 @@ Neomutt also has a [vim syntax repo](https://github.com/neomutt/syntax) that you
 [neomutt powerline nerdfonts]: https://github.com/sheoak/neomutt-powerline-nerdfonts
 [lua scripting]: https://neomutt.org/2017/04/29/lua#algolia:p:nth-of-type(8)
 [neomutt does not support sixel]: https://github.com/neomutt/neomutt/issues/471
+
+[another pretty example neomutt example]: https://imgur.com/a/7yZbPrs
+[notmuch]: https://notmuchmail.org/
+[kard]: https://github.com/lucc/khard
