@@ -127,9 +127,14 @@ image/*; (clear && img2sixel %s); needsterminal
 
 ## neomuttrc syntax examples from neomutt.org
 
-Example neomuttrc configuration:
+neomutt.org has examples for most things and a lot of documentation generally,
+but much of it isn't syntax highlighted, so I'm just posting this here for people
+who may need to quickly check something, but with syntax highlighting.
 
-  ```rc
+<details>
+  <summary>Example neomuttrc configuration with syntax highlighting</summary>
+
+  ```conf
   # Example NeoMutt config file for the status-color feature.
 
   # The 'status-color' feature allows you to theme different parts of
@@ -176,6 +181,10 @@ Example neomuttrc configuration:
 
   # vim: syntax=neomuttrc
   ```
+
+</details>
+
+Neomutt also has a [vim syntax repo](https://github.com/neomutt/syntax) that you could could use locally when editing neomuttrc files.
 
 ## Helpful links
 - [Stephane: NeoMutt Cheatsheet](https://cheatsheets.stephane.plus/productivity/neomutt/)
