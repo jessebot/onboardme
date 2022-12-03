@@ -46,7 +46,7 @@ but much of it isn't syntax highlighted, so I'm just posting this here for peopl
 <details>
   <summary>Example neomuttrc configuration with syntax highlighting</summary>
 
-  ```conf
+```conf
   # Example NeoMutt config file for the status-color feature.
 
   # The 'status-color' feature allows you to theme different parts of
@@ -92,7 +92,7 @@ but much of it isn't syntax highlighted, so I'm just posting this here for peopl
   # Search for 'NeoMutt: ' but only highlight what comes after it
 
   # vim: syntax=neomuttrc
-  ```
+```
 
 </details>
 
