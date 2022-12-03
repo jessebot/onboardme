@@ -65,6 +65,8 @@ def run_subprocess(command, **kwargs):
     # subprocess expects a list if there are spaces in the command
     log.debug(command)
     cmd = command.split()
+    log.debug(cmd)
+    log.debug(kwargs)
 
     error_ok = False
     if 'error_ok' in kwargs:
@@ -75,6 +77,7 @@ def run_subprocess(command, **kwargs):
 
     ret_code = p.returncode
     res = p.communicate()
+    log.debug(res)
     res_stdout = res[0].decode('UTF-8')
     res_stderr = res[1].decode('UTF-8')
 
