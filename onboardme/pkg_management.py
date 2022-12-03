@@ -93,6 +93,8 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
             for pkg_group in pkg_groups:
                 # if package group is in the packages.yml file
                 if pkg_group in available_pkg_groups:
+                    if pkg_group == "macOS":
+                        check_zathura()
                     install_pkg_group(pkg_cmds['install'],
                                       available_pkg_groups[pkg_group],
                                       installed_pkgs)
@@ -147,6 +149,8 @@ def install_pkg_group(install_cmd="", pkgs_to_install=[], installed_pkgs=[]):
 def check_zathura():
     """
     make sure zathura is installed on macos
+    installs via brew if it's not installed
+    always returns True if everything was successful
     """
     if not shutil.which("zathura"):
         zathura_pdf = "$(brew --prefix zathura-pdf-mupdf)"
@@ -157,3 +161,4 @@ def check_zathura():
                 f"ln -s {zathura_pdf}/libpdf-mupdf.dylib" +
                 f"{zathura_pdf}/lib/zathura/libpdf-mupdf.dylib"]
         subproc(cmds, quiet=True)
+    return True

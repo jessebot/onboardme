@@ -265,3 +265,6 @@ pip3.11:
       # - dbus
       # makes neovim work with vim's python3 interface
       - pynvim
+    macOS:
+      # this is for hacking on the iterm2 python api
+      - iterm2
