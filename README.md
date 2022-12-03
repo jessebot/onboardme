@@ -1,10 +1,6 @@
 ## ☁️  onboard**me** 💻
 
-[![./docs/onboardme/screenshots/help_text.svg alt='screenshot of full output of onboardme --help](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/help_text.svg)][help text]
-
-Here's an example of the terminal after the script has run:
-
-[<img alt="screenshot of terminal after running onboardme. includes colortest-256, powerline prompt, icons for files in ls output, and syntax highlighting examples with cat command." width="750" src="https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/terminal_screenshot.png">][post screenshot]
+Get your daily driver just the way you like it, from textformatting, and dot files to opensource package installation, onboardme intends to save you time with initializing or upgrading your environment.
 
 ### Features
 - manage your [dot files] using a git repo
@@ -12,6 +8,19 @@ Here's an example of the terminal after the script has run:
   - supports different several package managers and a couple of operating systems
   - can group together packages for different kinds of setups, e.g. gaming, devops, gui
 - easy `yaml` config files in your `$HOME/.config/onboardme/` directory
+
+### Screenshots
+
+[![./docs/onboardme/screenshots/help_text.svg alt='screenshot of full output of onboardme --help](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/help_text.svg)][help text]
+
+<p align="center" width="100%">
+Here's an example of the terminal after the script has run:
+</p>
+
+<p align="center" width="100%">
+    <img width="90%" alt="screenshot of terminal after running onboardme. includes colortest-256, powerline prompt, icons for files in ls output, and syntax highlighting examples with cat command." src="https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/terminal_screenshot.png">
+
+</p>
 
 ## Quick Start
 The quickest way to get started on a fresh macOS or distrubtion of Debian (including Ubuntu) is:
