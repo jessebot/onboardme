@@ -21,13 +21,17 @@ And then checkout the one I hacked together here: [spacechalk powerline]
 It was hacked together in part from this: [neomutt powerline nerdfonts]
 
 ## Configuring NeoMutt with Protonmail
-You'll need the protonmail-bridge (which you can `brew install`).
+You'll need protonmail-bridge (which you can `brew install`).
 
-Launch the protonmail bridge, login with your protonmail account, and then copy
-the password it spits out. This will be your password that you're free to source
-in your `neomuttrc` which should be located in `~/.config/neomutt/neomuttrc`.
+Steps:
+1. Launch protonmail-bridge
+2. login with your protonmail account
+3. copy the password it spits out
 
-You can check out an example [here](https://github.com/jessebot/dot_files/blob/main/.config/neomutt/neomuttrc).
+This will be your password that you can source in your `neomuttrc` which should
+be located in `~/.config/neomutt/neomuttrc`.
+
+You can check out an [example neomuttrc file](https://github.com/jessebot/dot_files/blob/main/.config/neomutt/neomuttrc) if you'd like.
 
 ## Displaying html in the terminal
 
@@ -120,6 +124,58 @@ doesn't work in neomutt, so I'm instead just sixel there too:
 ```
 image/*; (clear && img2sixel %s); needsterminal
 ```
+
+## neomuttrc syntax examples from neomutt.org
+
+Example neomuttrc configuration:
+
+  ```rc
+  # Example NeoMutt config file for the status-color feature.
+
+  # The 'status-color' feature allows you to theme different parts of
+  # the status bar (also when it's used by the index).
+
+  # For the examples below, set some defaults
+  set status_format='-%r-NeoMutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? \
+  Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]---(%s/%S)-%>-(%P)---'
+  set index_format='%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s'
+  set use_threads=yes
+  set sort=last-date-received
+  set sort_aux=date
+
+  # 'status color' can take up to 2 extra parameters
+  # color status foreground background [ regex [ num ]]
+  # 0 extra parameters
+  # Set the default color for the entire status line
+  color status blue white
+
+  # 1 extra parameter
+  # Set the color for a matching pattern
+  # color status foreground background regex
+  # Highlight New, Deleted, or Flagged emails
+  color status brightred white '(New|Del|Flag):[0-9]+'
+
+  # Highlight mailbox ordering if it's different from the default
+  # First, highlight anything (*/*)
+  color status brightred default '\([^)]+/[^)]+\)'
+
+  # Then override the color for one specific case
+  color status default default '\(threads/last-date-received\)'
+
+  # 2 extra parameters
+  # Set the color for the nth submatch of a pattern
+  # color status foreground background regex num
+  # Highlight the contents of the []s but not the [] themselves
+  color status red default '\[([^]]+)\]' 1
+
+  # The '1' refers to the first regex submatch, which is the inner
+  # part in ()s
+  # Highlight the mailbox
+  color status brightwhite default 'NeoMutt: ([^ ]+)' 1
+  # Search for 'NeoMutt: ' but only highlight what comes after it
+
+  # vim: syntax=neomuttrc
+  ```
 
 ## Helpful links
 - [Stephane: NeoMutt Cheatsheet](https://cheatsheets.stephane.plus/productivity/neomutt/)
