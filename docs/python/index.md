@@ -19,6 +19,8 @@ the same few libraries for companies over and over again.
 With that in mind, below you'll find all sorts of random things I told myself
 I should tell others about as well.
 
+[new in python3.11](https://12ft.io/proxy?q=https%3A%2F%2Frealpython.com%2Fpython311-new-features%2F)
+
 ## Favorite packages
 I really do love certain libraries for being really useful, and I made a table.
 I do love a good table.

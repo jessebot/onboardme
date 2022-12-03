@@ -22,6 +22,8 @@ brew:
       # main terminal based text editors
       - vim
       - neovim
+      # terminal based email client
+      - neomutt
       # fuzzy search, helps with completion and searching
       - fzf
       # ls replacement written in rust: https://github.com/Peltoche/lsd
@@ -86,6 +88,8 @@ brew:
       - bitwarden-cli
       # anti virus
       - clamav
+      # tui browser
+      - w3m
     # macOS specific stuff. Won't work with LinuxBrew
     macOS:
       # current version of bash :)
@@ -94,13 +98,11 @@ brew:
       - "bash-completion@2"
       # this lets us resize windows
       - "--cask rectangle"
-      # productivity search and command bar
+      # productivity search and command bar: replacing with cerebro soon
       # - "--cask alfred"
       # Default browser
       - "--cask firefox"
-      # Default email client
-      - "--cask thunderbird"
-      # File server
+      # File server cloud replacement, not ready yet
       # - "--cask nextcloud"
       # Default terminal used by most macOS users, standard
       - "--cask iterm2"
@@ -122,6 +124,11 @@ brew:
       - "--cask bitwarden"
       # VPN
       - "--cask protonvpn"
+      # email
+      - "--cask protonmail-bridge"
+      # zathura is a document viewer
+      - zathura
+      - zathura-pdf-mupdf
     devops:
       # terraform for building stuff
       - terraform
@@ -158,24 +165,18 @@ apt:
     cleanup: "sudo apt-get autoremove -y"
   packages:
     default:
-      # terminal emulator for linux
-      - terminator
       # troubleshooting
       - sysstat
       # better grep alternative
       - silversearcher-ag
       # this should let you use the a yubikey for auth
       - libpam-yubico
-      # commented out till nextcloud is working
-      # - nextcloud-desktop
-      - youtube-dl
       - bash-completion
       # networking and firewall
       - iptables
       - net-tools
       # package managers installing package managers... this is terrible.
       - snapd
-      - flatpak
       # cat images in the terminal :) works in tmux
       - catimg
       # this lets you ls images as thumbnails, which is helpful sometimes
@@ -185,10 +186,17 @@ apt:
       # help fix locale issues
       - "locales-all"
     gui:
+      - flatpak
+      - youtube-dl
+      # terminal emulator for linux
+      - terminator
       # this lets you install flatpak packages via the gui
       - gnome-software-plugin-flatpak
       # gui firewall
       - gufw
+      - zathura
+      # commented out till nextcloud is working
+      # - nextcloud-desktop
     gaming:
       # helpful for gaming on linux
       - "nvidia-driver-libs:i386"
@@ -257,3 +265,6 @@ pip3.11:
       # - dbus
       # makes neovim work with vim's python3 interface
       - pynvim
+    macOS:
+      # this is for hacking on the iterm2 python api
+      - iterm2
