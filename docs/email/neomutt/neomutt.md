@@ -46,15 +46,14 @@ but much of it isn't syntax highlighted, so I'm just posting this here for peopl
 <details>
   <summary>Example neomuttrc configuration with syntax highlighting</summary>
 
-```conf
+  ```conf
   # Example NeoMutt config file for the status-color feature.
 
   # The 'status-color' feature allows you to theme different parts of
   # the status bar (also when it's used by the index).
 
   # For the examples below, set some defaults
-  set status_format='-%r-NeoMutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? \
-  Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]---(%s/%S)-%>-(%P)---'
+  set status_format='-%r-NeoMutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]---(%s/%S)-%>-(%P)---'
   set index_format='%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s'
   set use_threads=yes
   set sort=last-date-received
