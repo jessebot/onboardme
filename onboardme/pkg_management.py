@@ -1,5 +1,6 @@
 import logging as log
 from os import path
+import shutil
 
 from .env_config import OS, PWD, HOME_DIR, load_cfg
 from .console_logging import print_header
@@ -141,3 +142,18 @@ def install_pkg_group(install_cmd="", pkgs_to_install=[], installed_pkgs=[]):
         # Actual installation
         subproc([install_cmd + pkg], quiet=True)
     return True
+
+
+def check_zathura():
+    """
+    make sure zathura is installed on macos
+    """
+    if not shutil.which("zathura"):
+        zathura_pdf = "$(brew --prefix zathura-pdf-mupdf)"
+        cmds = ["brew tap zegervdv/zathura",
+                "brew install zathura",
+                "brew install zathura-pdf-mupdf",
+                "mkdir -p $(brew --prefix zathura)/lib/zathura",
+                f"ln -s {zathura_pdf}/libpdf-mupdf.dylib" +
+                f"{zathura_pdf}/lib/zathura/libpdf-mupdf.dylib"]
+        subproc(cmds, quiet=True)

@@ -98,11 +98,11 @@ brew:
       - "bash-completion@2"
       # this lets us resize windows
       - "--cask rectangle"
-      # productivity search and command bar
+      # productivity search and command bar: replacing with cerebro soon
       # - "--cask alfred"
       # Default browser
       - "--cask firefox"
-      # File server
+      # File server cloud replacement, not ready yet
       # - "--cask nextcloud"
       # Default terminal used by most macOS users, standard
       - "--cask iterm2"
@@ -126,6 +126,9 @@ brew:
       - "--cask protonvpn"
       # email
       - "--cask protonmail-bridge"
+      # zathura is a document viewer
+      - zathura
+      - zathura-pdf-mupdf
     devops:
       # terraform for building stuff
       - terraform
@@ -162,24 +165,18 @@ apt:
     cleanup: "sudo apt-get autoremove -y"
   packages:
     default:
-      # terminal emulator for linux
-      - terminator
       # troubleshooting
       - sysstat
       # better grep alternative
       - silversearcher-ag
       # this should let you use the a yubikey for auth
       - libpam-yubico
-      # commented out till nextcloud is working
-      # - nextcloud-desktop
-      - youtube-dl
       - bash-completion
       # networking and firewall
       - iptables
       - net-tools
       # package managers installing package managers... this is terrible.
       - snapd
-      - flatpak
       # cat images in the terminal :) works in tmux
       - catimg
       # this lets you ls images as thumbnails, which is helpful sometimes
@@ -189,10 +186,17 @@ apt:
       # help fix locale issues
       - "locales-all"
     gui:
+      - flatpak
+      - youtube-dl
+      # terminal emulator for linux
+      - terminator
       # this lets you install flatpak packages via the gui
       - gnome-software-plugin-flatpak
       # gui firewall
       - gufw
+      - zathura
+      # commented out till nextcloud is working
+      # - nextcloud-desktop
     gaming:
       # helpful for gaming on linux
       - "nvidia-driver-libs:i386"
