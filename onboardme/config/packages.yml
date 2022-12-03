@@ -158,7 +158,7 @@ brew:
 apt:
   emoji: "🙃"
   commands:
-    list: "{PWD}/scripts/get_apt_list.sh"
+    list: "PWD/scripts/get_apt_list.sh"
     update: "sudo apt-get update -y"
     upgrade: "sudo apt-get upgrade -y"
     install: "sudo apt-get install -y "
