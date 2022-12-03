@@ -90,7 +90,7 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
                 run_preinstall_cmds(pkg_cmds, pkg_groups)
 
             # run the list command for the given package manager
-            list_pkgs = subproc([pkg_cmds['list']], quiet=True)
+            list_pkgs = subproc([pkg_cmds['list']], quiet=True, shell=True)
             # create list of installed packages to iterate on
             installed_pkgs = list_pkgs.split()
 
