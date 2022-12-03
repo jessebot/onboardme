@@ -102,8 +102,10 @@ We love contributors! Feel free to open a pull request, and we will review it as
 Looking for a project to get running on a machine that has no OS at all?
 Check out [pxeless](https://github.com/cloudymax/pxeless).
 
-Looking for a project to get started with self hosting k8s stuff?
+Actually looking to get started with virtual machines and QEMU?
+Check out [scrap metal](https://github.com/cloudymax/Scrap-Metal).
 
+Looking for a project to get started with self hosting k8s stuff?
 Check out [smol k8s lab](https://github.com/jessebot/smol_k8s_lab).
 
 <!-- link references -->
