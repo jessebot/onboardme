@@ -2,7 +2,7 @@
 layout: default
 title: NeoMutt
 parent: Email
-has_children: false
+has_children: true
 permalink: /email/neomutt
 description: "How to configure neomutt and what we've learned so far"
 ---
@@ -29,8 +29,7 @@ Steps:
 2. login with your protonmail account
 3. copy the password it spits out
 
-This will be your password that you can source in your `neomuttrc` which should
-be located in `~/.config/neomutt/neomuttrc`.
+This will be your password that you can source in your `neomuttrc` which should be located in `~/.config/neomutt/neomuttrc`.
 
 You can check out an [example neomuttrc file](https://github.com/jessebot/dot_files/blob/main/.config/neomutt/neomuttrc) if you'd like.
 
@@ -126,15 +125,14 @@ Check this out for more info: [neomutt mimesupport](https://neomutt.org/guide/mi
 On macOS, I'm using iterm2, so I use imgcat, but can't figure out why it
 doesn't work in neomutt, so I'm instead just sixel there too:
 
-```
+```init
 image/*; (clear && img2sixel %s); needsterminal
 ```
 
 ## neomuttrc syntax examples from neomutt.org
 
 neomutt.org has examples for most things and a lot of documentation generally,
-but much of it isn't syntax highlighted, so I'm just posting this here for people
-who may need to quickly check something, but with syntax highlighting.
+but much of it isn't syntax highlighted, so I'm just posting this here for people who may need to quickly check something, but with syntax highlighting.
 
 <details>
   <summary>Example neomuttrc configuration with syntax highlighting</summary>

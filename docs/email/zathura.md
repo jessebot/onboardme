@@ -1,8 +1,7 @@
 ---
 layout: default
-title: zathura
-parent: email
-has_children: false
+parent: Email
+title: Zathura
 permalink: /email/zathura
 description: "Notes on Zathura: a hackable document viewer"
 ---
