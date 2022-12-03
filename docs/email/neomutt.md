@@ -100,7 +100,7 @@ You can check out an example [here](https://github.com/jessebot/dot_files/blob/m
   bind index,pager V  noop
 
   # quick html view macro; won't mark message as read for some reason :shrug:
-  macro index,pager V "<view-attachments><search>html<enter><view-mailcap><exit>"
+  macro index,pager V "<view-attachments><search>html<enter><view-mailcap><exit><clear-flag>N"
   ```
 
   Now when I want to view an email from the index (list of mail in mutt), I just hit shift+v , and it opens a split in iterm2 with the rendered w3m email with images working via sixel. It takes maybe 2 full seconds to open an email in the split, but it has the images and it works and that's good enough for me on macOS right now.
