@@ -15,14 +15,18 @@ def run_preinstall_cmds(cmd_list=[], pkg_groups=[]):
     if second list of package groups contains gaming, runs additional commands
     returns True
     """
-    if 'gaming' in pkg_groups and 'apt' in cmd_list['update']:
-        log.debug("Run gaming specific commands to update /etc/apt/sources")
-        cmds = ["sudo dpkg --add-architecture i386",
-                f"sudo {PWD}/scripts/update_apt_sources.sh"]
-        subproc(cmds, spinner=False)
+    run_gaming_setup = False
+    if 'gaming' in pkg_groups:
+        run_gaming_setup = True
 
     for pre_cmd in ['setup', 'update', 'upgrade']:
         if pre_cmd in cmd_list:
+            if pre_cmd == 'update' and 'apt' in pre_cmd:
+                log.debug("Run gaming specific commands to update /etc/apt/sources")
+                cmds = ["sudo dpkg --add-architecture i386",
+                        f"sudo {PWD}/scripts/update_apt_sources.sh"]
+                subproc(cmds, spinner=False)
+
             SPINNER = True
             if 'sudo' in cmd_list[pre_cmd]:
                 SPINNER = False
