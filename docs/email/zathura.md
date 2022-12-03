@@ -22,6 +22,8 @@ I found a fun little program to to generate themes from your wallpaper,
 #### macOS
 The project is mainly focused on Linux, but there's also some people maintaining [a homebrew tap] that will allow you to `brew install` it on macOS.
 
+Currently there's no way to hide the title bar on macOS, but it looks like it's maybe being worked on here: [homebrew zathura](https://github.com/zegervdv/homebrew-zathura/issues/70)
+
 ## Converting html to pdf
 https://wkhtmltopdf.org/downloads.html
 
