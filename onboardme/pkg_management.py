@@ -98,8 +98,11 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
 
             list_pkgs = subproc([list_cmd], quiet=True)
 
-            # create list of installed packages to iterate on
-            installed_pkgs = list_pkgs.split()
+            if list_pkgs:
+                # create list of installed packages to iterate on
+                installed_pkgs = list_pkgs.split()
+            else:
+                installed_pkgs = []
 
             # iterate through package groups for a given package manager
             for pkg_group in pkg_groups:
