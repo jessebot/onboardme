@@ -91,11 +91,6 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
 
             # run the list command for the given package manager
             list_cmd = pkg_cmds['list']
-
-            # manually expanding, b/c there's not good way 2 do fstring via yml
-            if pkg_mngr == 'apt':
-                list_cmd = path.join(PWD, list_cmd.replace("PWD/", ""))
-
             list_pkgs = subproc([list_cmd], quiet=True)
 
             if list_pkgs:
