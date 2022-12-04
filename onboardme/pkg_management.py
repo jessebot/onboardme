@@ -93,8 +93,8 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
             list_cmd = pkg_cmds['list']
 
             # manually expanding, b/c there's not good way 2 do fstring via yml
-            if 'PWD' in list_cmd:
-                list_cmd = list_cmd.replace("PWD", PWD)
+            if pkg_mngr == 'apt':
+                list_cmd = path.join(PWD, list_cmd.replace("PWD/", ""))
 
             list_pkgs = subproc([list_cmd], quiet=True)
 
