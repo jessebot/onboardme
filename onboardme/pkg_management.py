@@ -73,7 +73,7 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
         if any(check in pkg_groups for check in available_pkg_groups):
 
             pkg_emoji = pkg_mngr_dict['emoji']
-            msg = f'{pkg_emoji} [green][b]{pkg_mngr}[/b][/] app Installs'
+            msg = f'{pkg_emoji} [grn][b]{pkg_mngr}[/b][/grn] app management'
             print_header(msg)
 
             # commands for listing, installing, updating, upgrading, & cleanup
