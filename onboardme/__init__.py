@@ -11,7 +11,6 @@ from click import option, command, Choice
 from importlib import import_module
 from importlib.metadata import version as get_version
 import logging
-from rich.console import Console
 from rich.logging import RichHandler
 from .help_text import RichCommand, options_help
 from .env_config import check_os_support, OS, process_configs, USR_CONFIG_FILE
