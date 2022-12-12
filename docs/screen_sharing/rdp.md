@@ -26,13 +26,8 @@ brew install freerdp
 
 *Then you should reboot 🤷*
 
-Xquartz provides a telnet app which sets the `$DISPLAY` variable. Chances are you’re using iTerm in which case you will have to manually declare the variable:
+(Xquartz provides a telnet app which sets the `$DISPLAY` variable. This is why you reboot.)
 
-```bash
-export DISPLAY=:0
-# if this were SSH, then you'd do this:
-# ssh -X <hostname>
-```
 
 Finally, you can use the freerdp client:
 
