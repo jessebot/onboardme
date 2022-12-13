@@ -39,7 +39,7 @@ Create `~/.config/neomutt/mailcap` with this line:
 
 ```bash
 # I'm using sixel with w3m, but you could use any image renderer of your choice
-text/html; w3m -sixel -o auto_image=TRUE -o display_image=1 -T text/html %s; nametemplate=%s.html; needsterminal; copiousoutput
+text/html; w3m -sixel -o auto_image=TRUE -o display_image=1 -T text/html %s; nametemplate=%s.html
 ```
 
 ### Display images in neomutt, in an iterm2 split (macOS only)

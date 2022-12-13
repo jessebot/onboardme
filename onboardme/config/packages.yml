@@ -185,6 +185,10 @@ apt:
       - colortest
       # help fix locale issues
       - "locales-all"
+    devops:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
     gui:
       - flatpak
       - youtube-dl
@@ -265,6 +269,10 @@ pip3.11:
       # - dbus
       # makes neovim work with vim's python3 interface
       - pynvim
+      # keep ourselves up to date
+      - onboardme
     macOS:
       # this is for hacking on the iterm2 python api
       - iterm2
+    devops:
+      - smol-k8s-lab
