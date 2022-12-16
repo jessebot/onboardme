@@ -3,7 +3,7 @@
 #         Config file for the onboardme cli command.             #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 #  - This is the default config file that pip will install into: #
-#    $PYTHON_PATH/lib/onboardme/config/onboardme_config.yml      #
+#    $PYTHON_PATH/lib/onboardme/config/onboardme_config.yaml      #
 #                                                                #
 #  - If this files exists as: ~/.config/onboardme/config.yaml    #
 #    then its loaded instead of the default config               #

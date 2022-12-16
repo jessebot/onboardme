@@ -11,7 +11,10 @@ from rich.text import Text
 from rich.theme import Theme
 
 # custom local module
-from .env_config import DEFAULTS, OS
+from .env_config import DEFAULTS, OS, VERSION
+
+
+RECORD = False
 
 
 def pretty_choices(default_list):
@@ -31,14 +34,14 @@ def options_help():
     Returns a dict.
     """
     dot_file_url = '[meta]https://github.com/jessebot/dot_files[/meta]'
-    steps = pretty_choices(DEFAULTS['steps'][OS[0]])
-    pkg_mngrs = pretty_choices(DEFAULTS['package']['managers'][OS[0]])
-    logging_choices = pretty_choices(['DEBUG', 'INFO', 'WARN', 'ERROR'])
-    pkg_groups = pretty_choices(['default', 'devops', 'gui', 'gaming'])
+    step_choices = pretty_choices(DEFAULTS['steps'][OS[0]])
+    pkg_mngr_choices = pretty_choices(DEFAULTS['package']['managers'][OS[0]])
+    logging_choices = pretty_choices(['debug', 'info', 'warn', 'error'])
+    pkg_group_choices = pretty_choices(['default', 'devops', 'gui', 'gaming'])
 
     return {
         'log_level':
-        f'Logging level. {logging_choices} Default: [meta]WARN[/meta].',
+        f'Logging level. {logging_choices}\nDefault: [meta]warn[/meta]',
 
         'log_file':
         'Full path to file to log to, if set.',
@@ -47,8 +50,8 @@ def options_help():
         "unstable. Don't output to stdout. ",
 
         'steps':
-        f'[b]Only[/b] run [meta]STEP[/] in the script.\n{steps}\nExample: '
-        '[switch]-s[/] [meta]dot_files[/] [switch]-s[/] [meta]packages',
+        f'[b]Only[/b] run [meta]STEP[/] in the script.\n{step_choices}\nExampl'
+        'e: [switch]-s[/] [meta]dot_files[/] [switch]-s[/] [meta]packages',
 
         'git_url':
         f'A git repo URL for your dot files. Default: {dot_file_url}',
@@ -61,11 +64,11 @@ def options_help():
         '[option]--git_url[/option] repo.',
 
         'pkg_managers':
-        f'Specific [meta]PKG_MANAGER[/] to run. {pkg_mngrs}'
+        f'Specific [meta]PKG_MANAGER[/] to run. {pkg_mngr_choices}'
         '\nExample: [switch]-p[/] [meta]brew[/] [switch]-p[/] [meta]pip3.11',
 
         'pkg_groups':
-        f"Package groups to install. {pkg_groups}\nExample:"
+        f"Package groups to install.\n{pkg_group_choices}\nExample:"
         " [switch]-g[/] [meta]devops[/] [switch]-g[/switch] [meta]gaming",
 
         'remote_host':
@@ -75,7 +78,7 @@ def options_help():
         'Setup iptables (on [i]linux[/] only).',
 
         'version':
-        'Print the version of onboardme.'
+        f'Print the version of onboardme ({VERSION})'
     }
 
 
@@ -100,7 +103,7 @@ class RichCommand(click.Command):
                                        "switch": "deep_sky_blue1",
                                        "meta": "light_steel_blue",
                                        "unstable": "italic cyan"}),
-                          highlighter=highlighter)
+                          highlighter=highlighter, record=RECORD)
 
         title = "☁️  [cornflower_blue]OnBoard[i]Me[/] 💻\n"
         desc = (
@@ -156,4 +159,5 @@ class RichCommand(click.Command):
                             subtitle_align="right"))
 
         # I use this to print a pretty svg at the end sometimes
-        # console.save_svg("docs/onboardme/screenshots/help_text.svg")
+        if RECORD:
+            console.save_svg("docs/onboardme/screenshots/help_text.svg")

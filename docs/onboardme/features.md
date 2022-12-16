@@ -61,4 +61,4 @@ some dot files anyway, but we won't overwrite anything you have locally.
 </details>
 
 [default dot files]: https://github.com/jessebot/dot_files "default dot files"
-[default packages.yaml]: https://github.com/jessebot/onboardme/blob/main/onboardme/config/packages.yml "default packages.yaml"
+[default packages.yaml]: https://github.com/jessebot/onboardme/blob/main/onboardme/config/packages.yaml "default packages.yaml"

@@ -9,11 +9,11 @@
 
 from click import option, command, Choice
 from importlib import import_module
-from importlib.metadata import version as get_version
 import logging
 from rich.logging import RichHandler
 from .help_text import RichCommand, options_help
-from .env_config import check_os_support, OS, process_configs, USR_CONFIG_FILE
+from .env_config import check_os_support, process_configs
+from .env_config import VERSION, OS, USR_CONFIG_FILE
 from .env_config import DEFAULTS as OPTS
 from .console_logging import print_manual_steps
 from .dot_files import setup_dot_files
@@ -105,7 +105,7 @@ def main(log_level: str = "",
          remote_host: str = "",
          version: bool = False):
     """
-    Uses config in the script repo in config/packages.yml and config/config.yml
+    If present, config: XDG_CONFIG_HOME/onboardme/[packages.yaml, config.yaml]
     If run with no options on Linux, it will install brew, pip3.11, apt,
     flatpak, and snap packages. On mac, it only installs brew/pip3.11 packages.
     config loading tries to load: cli options and then .config/onboardme/*
@@ -113,7 +113,7 @@ def main(log_level: str = "",
 
     # only return the version if --version was passed in
     if version:
-        print(f'\n🎉 v{get_version("onboardme")}\n')
+        print(f'\n🎉 v{VERSION}\n')
         return True
 
     # before we do anything, we need to make sure this OS is supported

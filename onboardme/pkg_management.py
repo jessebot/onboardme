@@ -2,7 +2,7 @@ import logging as log
 from os import path
 import shutil
 
-from .env_config import OS, PWD, HOME_DIR, load_cfg
+from .env_config import OS, PWD, XDG_CONFIG_DIR, load_cfg
 from .console_logging import print_header
 from .console_logging import print_sub_header as sub_header
 from .subproc import subproc
@@ -45,12 +45,12 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
       - pkg_mngrs: list of package managers to run
     Returns True
     """
-    # check to make sure the user didn't pass in their own packages.yml
-    user_packages = path.join(HOME_DIR, '.config/onboardme/packages.yml')
+    # check to make sure the user didn't pass in their own packages.yaml
+    user_packages = path.join(XDG_CONFIG_DIR, 'packages.yaml')
     if path.exists(user_packages):
         pkg_mngrs_list_of_dicts = load_cfg(user_packages)
     else:
-        default_config = path.join(PWD, 'config/packages.yml')
+        default_config = path.join(PWD, 'config/packages.yaml')
         pkg_mngrs_list_of_dicts = load_cfg(default_config)
 
     log.debug(f"passed in pkg_mngrs: {pkg_mngrs}")
@@ -65,7 +65,10 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
         # brew has a special flow because it works on both linux and mac
         if pkg_mngr == 'brew':
             if 'Darwin' in OS:
-                pkg_groups.append("macOS")
+                if 'default' in pkg_groups:
+                    if type(pkg_groups) is tuple:
+                        pkg_groups = list(pkg_groups)
+                    pkg_groups.append("macOS")
 
         log.debug(f"pkg groups for {pkg_mngr} are {available_pkg_groups}")
 
@@ -101,7 +104,7 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
 
             # iterate through package groups for a given package manager
             for pkg_group in pkg_groups:
-                # if package group is in the packages.yml file
+                # if package group is in the packages.yaml file
                 if pkg_group in available_pkg_groups:
                     if pkg_group == "macOS":
                         check_zathura()
