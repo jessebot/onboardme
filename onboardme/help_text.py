@@ -14,6 +14,9 @@ from rich.theme import Theme
 from .env_config import DEFAULTS, OS, VERSION
 
 
+RECORD = False
+
+
 def pretty_choices(default_list):
     """
     Takes a list of default choices and surrounds them with a meta markup tag
@@ -100,7 +103,7 @@ class RichCommand(click.Command):
                                        "switch": "deep_sky_blue1",
                                        "meta": "light_steel_blue",
                                        "unstable": "italic cyan"}),
-                          highlighter=highlighter)
+                          highlighter=highlighter, record=RECORD)
 
         title = "☁️  [cornflower_blue]OnBoard[i]Me[/] 💻\n"
         desc = (
@@ -156,4 +159,5 @@ class RichCommand(click.Command):
                             subtitle_align="right"))
 
         # I use this to print a pretty svg at the end sometimes
-        # console.save_svg("docs/onboardme/screenshots/help_text.svg")
+        if RECORD:
+            console.save_svg("docs/onboardme/screenshots/help_text.svg")
