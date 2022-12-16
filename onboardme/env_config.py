@@ -39,7 +39,7 @@ PWD = path.dirname(__file__)
 HOME_DIR = getenv("HOME")
 
 # defaults
-DEFAULTS = load_cfg(f"{PWD}/config/onboardme_config.yml")
+DEFAULTS = load_cfg(f"{PWD}/config/onboardme_config.yaml")
 USR_CONFIG_FILE = load_cfg(path.join(XDG_CONFIG_DIR, 'config.yaml'))
 
 # env
