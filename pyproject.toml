@@ -28,6 +28,7 @@ rich      = "^12.6.0"
 PyYAML    = "^6.0"
 GitPython = "^3.1.29"
 wget      = "^3.2"
+xdg = "^5.1.1"
 
 [[tool.poetry.source]]
 name = "testpypi"

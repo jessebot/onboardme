@@ -2,7 +2,7 @@ import logging as log
 from os import path
 import shutil
 
-from .env_config import OS, PWD, HOME_DIR, load_cfg
+from .env_config import OS, PWD, XDG_CONFIG_DIR, load_cfg
 from .console_logging import print_header
 from .console_logging import print_sub_header as sub_header
 from .subproc import subproc
@@ -46,7 +46,7 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
     Returns True
     """
     # check to make sure the user didn't pass in their own packages.yml
-    user_packages = path.join(HOME_DIR, '.config/onboardme/packages.yml')
+    user_packages = path.join(XDG_CONFIG_DIR, 'packages.yaml')
     if path.exists(user_packages):
         pkg_mngrs_list_of_dicts = load_cfg(user_packages)
     else:

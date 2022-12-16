@@ -1,11 +1,13 @@
 """
 environment variable loading library for onboardme
 """
+from importlib.metadata import version as get_version
 import logging as log
 # for system data, environment data, and checking/joining paths
 from os import getenv, path, uname
 # rich helps pretty print everything
 from rich.prompt import Confirm
+from xdg import xdg_config_home
 import yaml
 
 # custom libs
@@ -28,13 +30,17 @@ def load_cfg(config_file=""):
         return None
 
 
+# version of onboardme
+VERSION = get_version('onboardme')
+
 # pathing
+XDG_CONFIG_DIR = path.join(xdg_config_home(), 'onboardme')
 PWD = path.dirname(__file__)
 HOME_DIR = getenv("HOME")
 
 # defaults
 DEFAULTS = load_cfg(f"{PWD}/config/onboardme_config.yml")
-USR_CONFIG_FILE = load_cfg(f'{HOME_DIR}/.config/onboardme/config.yaml')
+USR_CONFIG_FILE = load_cfg(path.join(XDG_CONFIG_DIR, 'config.yaml'))
 
 # env
 SYSINFO = uname()
