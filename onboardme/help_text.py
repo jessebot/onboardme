@@ -68,7 +68,7 @@ def options_help():
         '\nExample: [switch]-p[/] [meta]brew[/] [switch]-p[/] [meta]pip3.11',
 
         'pkg_groups':
-        f"Package groups to install. {pkg_group_choices}\nExample:"
+        f"Package groups to install.\n{pkg_group_choices}\nExample:"
         " [switch]-g[/] [meta]devops[/] [switch]-g[/switch] [meta]gaming",
 
         'remote_host':
