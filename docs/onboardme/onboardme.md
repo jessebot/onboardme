@@ -18,8 +18,8 @@ This is [a project](https://github.com/jessebot/onboardme) to store config files
 | Step                                 | Config Location in repo                  | OS            |
 |--------------------------------------|------------------------------------------|---------------|
 | Git fetch dot files                  | n/a: fetched from a configured git repo  | macOS/Debian  |
-| Installs apps using package managers | `./onboardme/config/packages.yml`        | Debian, macOS |
-| Installs OPTIONAL apps               | `./onboardme/config/packages.yml`        | Debian        |
+| Installs apps using package managers | `./onboardme/config/packages.yaml`        | Debian, macOS |
+| Installs OPTIONAL apps               | `./onboardme/config/packages.yaml`        | Debian        |
 | Installs fonts                       | n/a                                      | macOS/Debian  |
 | Installs vim-plug + vim plugins      | plugins fetched from configured git repo | macOS/Debian  |
 | Installs packer.nvm + neovim plugins | plugins fetched from configured git repo | macOS/Debian  |

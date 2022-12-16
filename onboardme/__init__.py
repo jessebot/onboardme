@@ -105,7 +105,7 @@ def main(log_level: str = "",
          remote_host: str = "",
          version: bool = False):
     """
-    Uses config in the script repo in config/packages.yml and config/config.yml
+    If present, config: XDG_CONFIG_HOME/onboardme/[packages.yaml, config.yaml]
     If run with no options on Linux, it will install brew, pip3.11, apt,
     flatpak, and snap packages. On mac, it only installs brew/pip3.11 packages.
     config loading tries to load: cli options and then .config/onboardme/*

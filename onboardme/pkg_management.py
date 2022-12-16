@@ -45,12 +45,12 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
       - pkg_mngrs: list of package managers to run
     Returns True
     """
-    # check to make sure the user didn't pass in their own packages.yml
+    # check to make sure the user didn't pass in their own packages.yaml
     user_packages = path.join(XDG_CONFIG_DIR, 'packages.yaml')
     if path.exists(user_packages):
         pkg_mngrs_list_of_dicts = load_cfg(user_packages)
     else:
-        default_config = path.join(PWD, 'config/packages.yml')
+        default_config = path.join(PWD, 'config/packages.yaml')
         pkg_mngrs_list_of_dicts = load_cfg(default_config)
 
     log.debug(f"passed in pkg_mngrs: {pkg_mngrs}")
@@ -103,7 +103,7 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
 
             # iterate through package groups for a given package manager
             for pkg_group in pkg_groups:
-                # if package group is in the packages.yml file
+                # if package group is in the packages.yaml file
                 if pkg_group in available_pkg_groups:
                     if pkg_group == "macOS":
                         check_zathura()

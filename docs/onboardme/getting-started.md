@@ -42,7 +42,7 @@ onboardme --help
 Those defaults can be altered per machine by creating a config file like:
 
 <details>
-  <summary>`~/.config/onboardme/config.yml`</summary>
+  <summary>`~/.config/onboardme/config.yaml`</summary>
 
   ```yaml
   ---
@@ -50,7 +50,7 @@ Those defaults can be altered per machine by creating a config file like:
   #         Config file for the onboardme cli command.             #
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
   #  - This is the default config file that pip will install into: #
-  #    $PYTHON_PATH/lib/onboardme/config/onboardme_config.yml      #
+  #    $PYTHON_PATH/lib/onboardme/config/onboardme_config.yaml      #
   #                                                                #
   #  - If this files exists as: ~/.config/onboardme/config.yaml    #
   #    then its loaded instead of the default config               #
@@ -130,7 +130,7 @@ Those defaults can be altered per machine by creating a config file like:
 </details>
 
 We also use a package file called
-[`packages.yml`](https://github.com/jessebot/onboardme/blob/main/onboardme/config/packages.yml)
+[`packages.yaml`](https://github.com/jessebot/onboardme/blob/main/onboardme/config/packages.yaml)
 which you can also place in your `~/.config/onboardme` directory, to take
 precedence over our defaults.
 
@@ -146,7 +146,7 @@ configured for both macOS and Linux seperately. These steps include:
 - setting up basic TUI IDEs, vim/neovim
 - setting up groups
 
-They can be configured via the `steps` parameter in the `config.yml` above,
+They can be configured via the `steps` parameter in the `config.yaml` above,
 or via the the cli like:
 
 ```bash
@@ -173,7 +173,7 @@ The dot files for your home directory are installed from a git URL and branch
 that you can configure either via the config file, or the cli. If your local
 files conflict with the files in the repo, we will not overwrite them by default.
 If you always want your local dot files overwritten, you can pass in the `-O` switch
-or `--overwrite` option or set `overwrite` in your local `~/.config/onboardme/config.yml`.
+or `--overwrite` option or set `overwrite` in your local `~/.config/onboardme/config.yaml`.
 
 ### `onboardme` cli
 ```bash
@@ -181,7 +181,7 @@ or `--overwrite` option or set `overwrite` in your local `~/.config/onboardme/co
 onboardme --git_url https://github.com/jessebot/dot_files.git --git_branch main --overwrite
 ```
 
-### `config.yml`
+### `config.yaml`
 
 ```yaml
 dot_files:
@@ -194,7 +194,7 @@ dot_files:
 ### Package Management
 All of the packages are installed using package managers, and each package
 manager has groups of packages they can install. You can specify specific
-package _managers_ and package _groups_ via the `config.yml` file, or via the cli.
+package _managers_ and package _groups_ via the `config.yaml` file, or via the cli.
 
 By default, we install the `default` package _groups_ for all package _managers_.
 This includes everything you need for a basic cli experience and a slim ide.
@@ -216,7 +216,7 @@ slim ide PLUS GUI tools, like vlc and freetube.
 onboardme --pkg_groups default --pkg_groups gui
 ```
 
-##### `config.yml`
+##### `config.yaml`
 
 ```yaml
 package:
@@ -236,7 +236,7 @@ _Note: This will not install/upgrade the default package group._
 onboardme --pkg_managers brew --pkg_groups devops
 ```
 
-##### `config.yml`
+##### `config.yaml`
 
 ```yaml
 package:
