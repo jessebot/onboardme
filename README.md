@@ -99,14 +99,11 @@ We love contributors! Feel free to open a pull request, and we will review it as
 <!-- readme: contributors -end -->
 
 ## Shameless plugs for other projects
-Looking for a project to get running on a machine that has no OS at all?
-Check out [pxeless](https://github.com/cloudymax/pxeless).
+Get running on a machine using a bootable USB stick with [pxeless](https://github.com/cloudymax/pxeless).
 
-Actually looking to get started with virtual machines and QEMU?
-Check out [scrap metal](https://github.com/cloudymax/Scrap-Metal).
+Get started with virtual machines and QEMU with [scrap metal](https://github.com/cloudymax/Scrap-Metal).
 
-Looking for a project to get started with self hosting k8s stuff?
-Check out [smol k8s lab](https://github.com/jessebot/smol_k8s_lab).
+Get started with testing kubernetes locally, even on metal with [smol k8s lab](https://github.com/jessebot/smol_k8s_lab).
 
 <!-- link references -->
 [documentation]: https://jessebot.github.io/onboardme/onboardme "onboardme documentation"
