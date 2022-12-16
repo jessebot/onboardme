@@ -65,6 +65,8 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
         # brew has a special flow because it works on both linux and mac
         if pkg_mngr == 'brew':
             if 'Darwin' in OS:
+                if type(pkg_groups) is tuple:
+                    pkg_groups = list(pkg_groups)
                 pkg_groups.append("macOS")
 
         log.debug(f"pkg groups for {pkg_mngr} are {available_pkg_groups}")
