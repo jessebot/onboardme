@@ -1,4 +1,4 @@
-## 💻 onboard**me** [![GitHub Release](https://img.shields.io/github/v/release/jessebot/onboardme?style=flat&labelColor=1d1d1d&color=424242&logo=GitHub&logoColor=white)](https://github.com/jessebot/onboardme/releases)
+## 💻 onboard**me** [![GitHub Release](https://img.shields.io/github/v/release/jessebot/onboardme?style=flat&labelColor=858585&color=6BF847&logo=GitHub&logoColor=white)](https://github.com/jessebot/onboardme/releases)
 
 Get your daily driver just the way you like it, from textformatting, and dot files to opensource package installation, onboardme intends to save you time with initializing or upgrading your environment.
 
