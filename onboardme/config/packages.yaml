@@ -88,8 +88,10 @@ brew:
       - bitwarden-cli
       # anti virus
       - clamav
-      # tui browser
+      # TUI browser
       - w3m
+      # TUI for gpg keys, for the lazy, like me
+      - "gpg-tui"
     # macOS specific stuff. Won't work with LinuxBrew
     macOS:
       # current version of bash :)
@@ -260,7 +262,7 @@ pip3.11:
       # this does some magic with imports when developing
       - autoimport
       # this is all powerline (status line for tmux/BASH)
-      - "powerline-status"
+      - "git+ssh://git@github.com/powerline/powerline"
       - "powerline-gitstatus"
       - "powerline-kubernetes"
       # for the internal ip address powerline shell prompt
