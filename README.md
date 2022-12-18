@@ -24,7 +24,7 @@ Get your daily driver just the way you like it, from textformatting,�
 - install and upgrade libraries and apps
   - supports different several package managers and a couple of operating systems
   - can group together packages for different kinds of setups, e.g. gaming, devops, gui
-- easy `yaml` config files in your `$HOME/.config/onboardme/` directory
+- easy `yaml` [config files](https://github.com/jessebot/onboardme#configuration) in your `$HOME/.config/onboardme/` directory
 
 #### Screenshots
 
