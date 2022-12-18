@@ -1,28 +1,57 @@
-## 💻 onboard**me** [![GitHub Release](https://img.shields.io/github/v/release/jessebot/onboardme?style=flat&labelColor=858585&color=6BF847&logo=GitHub&logoColor=white)](https://github.com/jessebot/onboardme/releases)
+<h1 align="center">
+  <img
+    src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/misc/transparent.png"
+    height="30"
+    width="0px"
+  />
+  💻 onboard<i>me</i>
+  <img
+    src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/misc/transparent.png"
+    height="30"
+    width="0px"
+  />
+</h1>
+<p align="center">
+  <a href="https://github.com/jessebot/onboardme/releases">
+    <img src="https://img.shields.io/github/v/release/jessebot/onboardme?style=plastic&labelColor=484848&color=3CA324&logo=GitHub&logoColor=white">
+  </a>
+</p>
 
+### About
 Get your daily driver just the way you like it, from textformatting, and dot files to opensource package installation, onboardme intends to save you time with initializing or upgrading your environment.
 
-### Features
+#### Features
 - manage your [dot files] using a git repo (or use [our default dot files] 😃)
 - install and upgrade libraries and apps
   - supports different several package managers and a couple of operating systems
   - can group together packages for different kinds of setups, e.g. gaming, devops, gui
 - easy `yaml` config files in your `$HOME/.config/onboardme/` directory
 
-### Screenshots
+#### Screenshots
 
-[![./docs/onboardme/screenshots/help_text.svg alt='screenshot of full output of onboardme --help](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/help_text.svg)][help text]
-
+<details>
+  <summary>Example of <code>onboardme --help</code></summary>
+  
 <p align="center" width="100%">
-Here's an example of the terminal after the script has run:
+<a href="https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/help_text.svg">
+<img src="./docs/onboardme/screenshots/help_text.svg" alt='screenshot of full output of onboardme --help'>
+</a>
 </p>
 
+</details>
+
+<details>
+  <summary>Example of the terminal after <code>onboardme</code> runs</summary>
+  
 <p align="center" width="100%">
     <img width="90%" alt="screenshot of terminal after running onboardme. includes colortest-256, powerline prompt, icons for files in ls output, and syntax highlighting examples with cat command." src="https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/terminal_screenshot.png">
-
 </p>
 
+</details>
+
 ## Quick Start
+
+### Installation
 The quickest way to get started on a fresh macOS or distrubtion of Debian (including Ubuntu) is:
 
 ```bash
@@ -37,14 +66,84 @@ You can also read more in depth [Getting Started Docs] 💙!
 
 There's also more [documentation] on basically every program that onboardme touches.
 
-### Upgrading
+### Upgrades
 If you're on python 3.11, you should be able to do:
 
 ```bash
 pip3.11 install --upgrade onboardme
 ```
 
-## Features
+### Configuration
+onboardme has lots of CLI options, but you can also use config files. You have to create these files for the time being.
+
+Config files are in `~/.config/onboardme/` (will use `$XDG_CONFIG_HOME`, if defined). Examples below:
+
+<details>
+<summary><code>config.yaml</code></summary>
+
+
+```yaml
+log:
+  # Full path to a file you'd like to log to. Creates file if it doesn't exist
+  file: ""
+  # what level of logs to output (DEBUG, INFO, WARN, ERROR)
+  level: "INFO"
+
+# steps refer to a specific function in the list of functions we run
+steps:
+  # these are mac specific steps
+  Darwin:
+    - dot_files
+    - packages
+    - font_setup
+    - vim_setup
+    - neovim_setup
+    - sudo_setup
+  # these are linux specific steps
+  Linux:
+    - dot_files
+    - packages
+    - font_setup
+    - vim_setup
+    - neovim_setup
+    - group_setup
+
+dot_files:
+  # personal git repo URL for your dot files, defaults to jessebot/dot_files
+  git_url: "https://github.com/jessebot/dot_files.git"
+  # the branch to use for the git repo above, defaults to main
+  git_branch: "main"
+  # !CAREFUL: runs a `git reset --hard`, which will overwite/delete local files in ~ that
+  # conflict with the above defined git repo url and branch. You should run 
+  # `onboardme -s dot_files` to get the files that would be overwritten
+  overwrite: false
+
+# basic package config
+package:
+  # Remove any of the below pkg managers to only run the remaining pkg managers
+  managers:
+    # these are macOS specific steps
+    Darwin:
+      - brew
+      - pip3.11
+    # these are linux specific steps
+    Linux:
+      - brew
+      - pip3.11
+      - apt
+      - snap
+      - flatpak
+  # list of extra existing packages groups to install
+  groups:
+    - default
+    # uncomment these to add them as default installed package groups
+    # - gaming
+    # - devops
+```
+
+</details>
+
+## Under the Hood
 
 #### Made for the following OS (lastest stable):
 
@@ -65,8 +164,7 @@ pip3.11 install --upgrade onboardme
 - [powerline](https://powerline.readthedocs.io/en/master/overview.html)
 
 ## Status
-
-🎉 Active project! Currently in later alpha :D (*But not yet stable. There be 🐛.*)
+Still not production ready, but reasonably stable :)
 
 Please report 🐛 in the GitHub issues, and we will collect them,
 and release them into the wild, because we are vegan and nice.
