@@ -1,4 +1,4 @@
-<h1 align="center">
+<h2 align="center">
   <img
     src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/misc/transparent.png"
     height="30"
@@ -10,17 +10,16 @@
     height="30"
     width="0px"
   />
-</h1>
+</h2>
 <p align="center">
   <a href="https://github.com/jessebot/onboardme/releases">
     <img src="https://img.shields.io/github/v/release/jessebot/onboardme?style=plastic&labelColor=484848&color=3CA324&logo=GitHub&logoColor=white">
   </a>
 </p>
 
-### About
 Get your daily driver just the way you like it, from textformatting, and dot files to opensource package installation, onboardme intends to save you time with initializing or upgrading your environment.
 
-#### Features
+### Features
 - manage your [dot files] using a git repo (or use [our default dot files] 😃)
 - install and upgrade libraries and apps
   - supports different several package managers and a couple of operating systems
