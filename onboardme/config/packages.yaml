@@ -54,6 +54,8 @@ brew:
       # blocky fonts: https://devhints.io/figlet
       - figlet
       - toilet
+      # less: b/c you get new features if you stay up2date, & brew is up2date
+      - less
       # steam locamotive
       - sl
       # a cow that says things
@@ -82,6 +84,7 @@ brew:
       - howdoi
       # get the quick, short text of how to use various commands
       - tldr
+      - tealdeer
       # generating SSL certs and random strings
       - openssl@3
       # password management
