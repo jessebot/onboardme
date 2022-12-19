@@ -169,7 +169,7 @@ GNU AFFERO GENERAL PUBLIC LICENSE Version 3:
 TLDR;
 - You are free to use and distribute the software for free, but you cannot bundle it with software that you are charging money for.
 - You are free to bundle software with other FOSS projects if you just credit us and link back to this project.
-- You may not modify the software unless you are distributing it as a FOSS project and credit us and link back to this project.
+- All derivatives of this software must be licensed as GNU AFFERO GENERAL PUBLIC LICENSE Version 3 and must open source the source code as well as credit this project and the contibutors.
 
 ## Status
 Still not production ready, but reasonably stable :)
