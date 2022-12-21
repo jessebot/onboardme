@@ -17,16 +17,32 @@
   </a>
 </p>
 
-Get your daily driver just the way you like it, from textformatting, and dot files to opensource package installation, onboardme intends to save you time with initializing or upgrading your environment.
+Get your daily driver just the way you like it, from dot files installation, to opensource package installation, to other little features you didn't know you needed, `onboardme` intends to save you time with initializing and upgrading your environment.
 
-### Features
-- manage your [dot files] using a git repo (or use [our default dot files] 😃)
-- install and upgrade libraries and apps
-  - supports different several package managers and a couple of operating systems
-  - can group together packages for different kinds of setups, e.g. gaming, devops, gui
-- easy `yaml` [config files](https://github.com/jessebot/onboardme#configuration) in your `$HOME/.config/onboardme/` directory
+## Features
 
-#### Screenshots
+#### Dot files
+- Manage your [dot files] using a git repo (or use [our default dot files] 😃)
+
+#### Package management
+- Install and upgrade libraries and apps
+  - use several package managers across Linux and macOS (you can even add your own!)
+  - group together packages for different kinds of setups, e.g. gaming, devops, gui
+  
+#### Vim/NeoVim Plugin Management
+- Keep your [vim-plug] or [packer] plugins installed and up to date in both vim and neovim.
+
+#### Easy `yaml` config files
+- [config files](https://github.com/jessebot/onboardme#configuration) in your `$HOME/.config/onboardme/` directory
+  - we also support the [XDG Base Directory Spec] and will use `$XDG_CONFIG_HOME/onboardme/` if you have `XDG_CONFIG_HOME` configured
+  
+#### Other useful (but optional) configurations
+- Enable touchID for sudo on macOS
+- Add your user to the docker group
+- Install nerdfonts (defaults to Hack and Mononoki)
+- Set capslock to control
+
+### Screenshots
 
 <details>
   <summary>Example of <code>onboardme --help</code></summary>
@@ -61,9 +77,9 @@ The quickest way to get started on a fresh macOS or distrubtion of Debian (inclu
 onboardme --help
 ```
 
-You can also read more in depth [Getting Started Docs] 💙!
+If you've already got brew and Python3.11 on your machine, you can just do `pip` install onboardme.
 
-There's also more [documentation] on basically every program that onboardme touches.
+You can read more in depth at the [Getting Started Docs] 💙! There's also more [docs] on basically every program that onboardme touches.
 
 ### Upgrades
 If you're on python 3.11, you should be able to do:
@@ -217,4 +233,7 @@ Get started with testing kubernetes locally, even on metal with [smol k8s lab](h
 [our default dot files]: https://github.com/jessebot/dot_files "default dot files for onboardme"
 [help text]: https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/help_text.svg "an svg of the command: onboardme --help"
 [Getting Started Docs]: https://jessebot.github.io/onboardme/onboardme/getting-started "getting started documentation"
+[XDG Base Directory Spec]: https://specifications.freedesktop.org/basedir-spec/latest/ar01s03.html
+[vim-plug]: https://github.com/junegunn/vim-plug
+[packer]: https://github.com/wbthomason/packer.nvim
 [post screenshot]: https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/terminal_screenshot.png "screenshot of terminal afer onboardme"
