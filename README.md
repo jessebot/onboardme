@@ -30,7 +30,7 @@ Get your daily driver just the way you like it, from textformatting,�
 
 <details>
   <summary>Example of <code>onboardme --help</code></summary>
-  
+
 <p align="center" width="100%">
 <a href="https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/help_text.svg">
 <img src="./docs/onboardme/screenshots/help_text.svg" alt='screenshot of full output of onboardme --help'>
@@ -41,7 +41,7 @@ Get your daily driver just the way you like it, from textformatting,�
 
 <details>
   <summary>Example of the terminal after <code>onboardme</code> runs</summary>
-  
+
 <p align="center" width="100%">
     <img width="90%" alt="screenshot of terminal after running onboardme. includes colortest-256, powerline prompt, icons for files in ls output, and syntax highlighting examples with cat command." src="https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/terminal_screenshot.png">
 </p>
@@ -113,7 +113,7 @@ dot_files:
   # the branch to use for the git repo above, defaults to main
   git_branch: "main"
   # !CAREFUL: runs a `git reset --hard`, which will overwite/delete local files in ~ that
-  # conflict with the above defined git repo url and branch. You should run 
+  # conflict with the above defined git repo url and branch. You should run
   # `onboardme -s dot_files` to get the files that would be overwritten
   overwrite: false
 
@@ -156,7 +156,7 @@ package:
 [![made-with-python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)](https://www.python.org/)
 [![made-with-bash](https://img.shields.io/badge/GNU%20Bash-4EAA25?style=for-the-badge&logo=GNU%20Bash&logoColor=white)](https://www.gnu.org/software/bash/)
 
-#### Built using these great projects:
+#### Built using these great tools:
 
 [<img src="https://github.com/textualize/rich/raw/master/imgs/logo.svg" alt="rich python library logo with with yellow snake" width="200">](https://github.com/Textualize/rich/tree/master)
 [<img src="https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/images/nerd-fonts-logo.svg" width="120" alt="nerd-fonts: Iconic font aggregator, collection, and patcher">](https://www.nerdfonts.com/)
