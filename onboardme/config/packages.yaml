@@ -159,8 +159,6 @@ brew:
       # "aws-cli"
       # aws credentials switcher
       # "--cask aws-vault"
-      - nbdev
-      - euporie
 
 apt:
   emoji: "🙃"
@@ -258,6 +256,8 @@ pip3.11:
     install: "pip3.11 install --upgrade "
   packages:
     default:
+      # keep ourselves up to date
+      - onboardme
       # this is for python development - specifically linting/auto-linting
       - flake8
       - pyflakes
@@ -280,10 +280,13 @@ pip3.11:
       # - dbus
       # makes neovim work with vim's python3 interface
       - pynvim
-      # keep ourselves up to date
-      - onboardme
     macOS:
       # this is for hacking on the iterm2 python api
       - iterm2
     devops:
       - smol-k8s-lab
+      # python dev work
+      - nbdev
+      - ipykernel
+      - jupyterlab
+      - euporie
