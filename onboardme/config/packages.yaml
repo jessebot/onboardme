@@ -190,6 +190,8 @@ apt:
       - colortest
       # help fix locale issues
       - "locales-all"
+      # vpn
+      - wireguard
     devops:
       - docker-ce
       - docker-ce-cli

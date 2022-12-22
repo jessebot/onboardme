@@ -6,24 +6,72 @@ has_children: true
 permalink: /onboardme
 ---
 
-## ☁️  onboard**me** 💻
-[<img src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/help_text.svg' alt='screenshot of full output of onboardme --help'>](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/help_text.svg)
+<h2 align="center">
+  <img
+    src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/misc/transparent.png"
+    height="30"
+    width="0px"
+  />
+  💻 onboard<i>me</i>
+  <img
+    src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/misc/transparent.png"
+    height="30"
+    width="0px"
+  />
+</h2>
+<p align="center">
+  <a href="https://github.com/jessebot/onboardme/releases">
+    <img src="https://img.shields.io/github/v/release/jessebot/onboardme?style=plastic&labelColor=484848&color=3CA324&logo=GitHub&logoColor=white">
+  </a>
+</p>
 
-This is [a project](https://github.com/jessebot/onboardme) to store config files, as well as programatically install core packages across several package managers that I need for development. A lot of this was amassed from many years of quickly looking into a thing™️ , jotting it down, and then just hoping I'd remember why it was there later, so this is now a renewed effort in remembering all the thing™️s, and automating as much as possible. The idea is that it's faster, smaller, and easier to configure than it's ansible equivalent. Here's an example of the terminal after the script has run:
+Get your daily driver just the way you like it, from textformatting, and dot files to opensource package installation, onboardme intends to save you time with initializing or upgrading your environment.
 
-<img src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/terminal_screenshot.png' width='850' alt='screenshot of terminal after running onboardme. includes colortest-256, powerline prompt, icons for files in ls output, and syntax highlighting examples with cat command.'>
+### Features
+- manage your [dot files] using a git repo (or use [our default dot files] 😃)
+- install and upgrade libraries and apps
+  - supports different several package managers and a couple of operating systems
+  - can group together packages for different kinds of setups, e.g. gaming, devops, gui
+- easy `yaml` [config files](https://github.com/jessebot/onboardme#configuration) in your `$HOME/.config/onboardme/` directory
+
+#### Screenshots
+
+<details>
+  <summary>Example of <code>onboardme --help</code></summary>
+
+<p align="center" width="100%">
+<a href="https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/help_text.svg">
+<img src="./docs/onboardme/screenshots/help_text.svg" alt='screenshot of full output of onboardme --help'>
+</a>
+</p>
+
+</details>
+
+<details>
+  <summary>Example of the terminal after <code>onboardme</code> runs</summary>
+
+<p align="center" width="100%">
+    <img width="90%" alt="screenshot of terminal after running onboardme. includes colortest-256, powerline prompt, icons for files in ls output, and syntax highlighting examples with cat command." src="https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/terminal_screenshot.png">
+</p>
+
+</details>
+
+Check out our [/onboardme/features] page for more info on what we can do :)
 
 ## Under the hood
 
-| Step                                 | Config Location in repo                  | OS            |
-|--------------------------------------|------------------------------------------|---------------|
-| Git fetch dot files                  | n/a: fetched from a configured git repo  | macOS/Debian  |
-| Installs apps using package managers | `./onboardme/config/packages.yaml`        | Debian, macOS |
-| Installs OPTIONAL apps               | `./onboardme/config/packages.yaml`        | Debian        |
-| Installs fonts                       | n/a                                      | macOS/Debian  |
-| Installs vim-plug + vim plugins      | plugins fetched from configured git repo | macOS/Debian  |
-| Installs packer.nvm + neovim plugins | plugins fetched from configured git repo | macOS/Debian  |
-| Adds user to the docker group        | n/a                                      | Debian        |
+Here's the steps we take depending on what OS we run on. Each step can also be configured to be skipped.
+
+| Step                                 | Config Location in repo                  |       OS      |
+|:-------------------------------------|:-----------------------------------------|:-------------:|
+| Git fetch dot files                  | n/a: fetched from a configured git repo  | Debian, macOS |
+| Installs apps using package managers | `./onboardme/config/packages.yaml`       | Debian, macOS |
+| Installs OPTIONAL apps, if any       | `./onboardme/config/packages.yaml`       | Debian, macOS |
+| Installs fonts                       | n/a                                      | Debian, macOS |
+| Installs vim-plug + vim plugins      | plugins fetched from configured git repo | Debian, macOS |
+| Installs packer.nvm + neovim plugins | plugins fetched from configured git repo | Debian, macOS |
+| Adds user to the docker group        | n/a                                      |     Debian    |
+| Set sudo to use touchID              | n/a                                      |     macOS    |
 
 
 ### Current Ecoscape of Personal Tech
@@ -42,6 +90,7 @@ use on my phone, check out my [doc](/onboardme/os/android).
 | Launcher               | [Cerebro]                          | Alfred                            |
 | Photo/file Storage     | [NextCloud] Files/Photos (testing) | Google Photos/Drive               |
 | Passwords              | [Bitwarden]                        | LastPass, Apple/Google            |
+| VPN                    | [WireGuard]                        | Cisco, OpenVPN(is FOSS, but old)  |
 | News - RSS             | [Fluent Reader]                    | Facebook/Twitter/news/brand feeds |
 | Video                  | [FreeTube], VLC                    | YouTube/Quicktime                 |
 | Antivirus              | [ClamAV]                           | MalwareBytes                      |
@@ -72,16 +121,17 @@ It works great in combination with onboardme :)
 
 <!-- --------------- link references ---------------- -->
 
-[Bitwarden]: https://bitwarden.com/ "bitwarden"
-[Cerebro]: https://cerebroapp.com/ "cerebro"
-[ClamAV]: https://www.clamav.net/ "clamav"
-[Firefox]: https://www.mozilla.org/en-US/firefox "firefox"
-[Fluent Reader]: https://hyliu.me/fluent-reader/ "fluent reader"
-[FreeTube]: https://freetubeapp.io "freetube"
-[LibreOffice]: https://www.libreoffice.org/ "libreoffice"
-[Lulu]: https://objective-see.org/products/lulu.html "lulu"
-[NeoVim]: https://neovim.org/ "neovim"
-[NextCloud]: https://nextcloud.com/ "nextcloud"
-[Restic]: https://restic.net/ "restic"
-[Vim]: https://www.vim.org/ "vim"
-[w3m]: https://w3m.sourceforge.net/ "w3m"
+[Bitwarden]: https://bitwarden.com/ "bitwarden home page"
+[Cerebro]: https://cerebroapp.com/ "cerebro home page"
+[ClamAV]: https://www.clamav.net/ "clamav home page"
+[Firefox]: https://www.mozilla.org/en-US/firefox "firefox home page"
+[Fluent Reader]: https://hyliu.me/fluent-reader/ "fluent reader home page"
+[FreeTube]: https://freetubeapp.io "freetube home page"
+[LibreOffice]: https://www.libreoffice.org/ "libreoffice hom epage"
+[Lulu]: https://objective-see.org/products/lulu.html "lulu home page"
+[NeoVim]: https://neovim.org/ "neovim home page"
+[NextCloud]: https://nextcloud.com/ "nextcloud home page"
+[Restic]: https://restic.net/ "restic home page"
+[Vim]: https://www.vim.org/ "vim home page"
+[w3m]: https://w3m.sourceforge.net/ "w3m home page"
+[WireGuard]: https://www.wireguard.com/ "wireguard home page"
