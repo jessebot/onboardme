@@ -19,14 +19,14 @@ pip3.11 install ipykernel
 Finally you need notebooks. There's a couple of different ways to get and interact with notebooks.
 
 ```bash
-# this will get you classic notebooks
+# will get you classic notebooks, lighter weight
 pip3.11 install notebook
 
-# this is jupyter's current offering
-pip3.11 install jupyterlab
-
-# this is for rendering as a web app
+# for rendering as a web app
 pip3.11 install voila
+
+# jupyter's current full IDE-esk offering
+pip3.11 install jupyterlab
 ```
 
 ## Notebooks in the terminal
@@ -41,7 +41,7 @@ pip3.11 install euporie
 ## Jupyter classic notebook
 
 ```bash
-# this is with classic notebooks
+# with classic notebooks
 jupyter notebook
 ```
 
@@ -61,11 +61,12 @@ euporie notebook
 
 # Modifying a notebook
 
-You can just open a notebook using one of the programs listsed
+You can just open a notebook using one of the programs listed above, modify it, and then save it.
 
 # Checking a notebook into git
 
-Overstory has [a blog post] on nbdev which is pretty cool.
+Overstory has [a blog post] on [nbdev] which is pretty cool.
 
 
 [a blog post]: https://www.overstory.com/blog/how-nbdev-helps-us-structure-our-data-science-workflow-in-jupyter-notebooks "overstory how nbdev helps us..."
+[nbdev]: https://nbdev.fast.ai/ "nbdev"
