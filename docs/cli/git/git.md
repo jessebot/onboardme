@@ -92,6 +92,19 @@ git update-index --no-skip-worktree fileyouwanttoignorefuturerevisionson
 git ls-files -v . | grep ^S
 ```
 
+## Clean up old remote origin branches
+
+```bash
+git fetch --prune origin
+```
+
+## Sign off on a previous commit (or range of previous commits)
+
+```bash
+# sign off on the past three commits
+git rebase --signoff HEAD~3
+```
+
 <!---------------------------- references ---------------------------->
 
 [0]: https://www.git-scm.com/ "git-scm"
