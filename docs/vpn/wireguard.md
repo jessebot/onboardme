@@ -14,7 +14,7 @@ sudo cat /etc/wireguard/private.key | wg pubkey | sudo tee /etc/wireguard/public
 Edit your vpn.conf? the name is arbitrary? 🤷 most docs call it wg0.conf
 
 ```bash
-# 🤷
+# we named this one something other than home-internal.conf
 sudo vim /etc/wireguard/home-internal.conf
 ```
 
@@ -66,8 +66,11 @@ sudo vi /etc/wireguard/wg0.conf
 
 The template is in our [smol vps config repo], under ansible, again :)
 
+# Disconnect and Reconnect to the vpn
+You also should probably check if you're connected to the VPN, if you're having VPN related issues :-)
+
 ```bash
-# restart the VPN for the changes to the config to take effect
+# restart the VPN for changes to the config to take effect
 wg-quick down wg0; wg-quick up wg0
 ```
 
