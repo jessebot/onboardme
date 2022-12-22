@@ -291,7 +291,9 @@ pip3.11:
       - notebook
       # latest jupyter notebooks
       - jupyterlab
-      # notebook dev stuff
+      # notebook-driven development platform
       - nbdev
       # notebooks in the terminal 💚
       - euporie
+      # Voilà turns Jupyter notebooks into standalone web apps
+      # - voila
