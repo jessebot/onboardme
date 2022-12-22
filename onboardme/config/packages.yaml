@@ -285,8 +285,13 @@ pip3.11:
       - iterm2
     devops:
       - smol-k8s-lab
-      # python dev work
-      - nbdev
+      # need this for python notebooks
       - ipykernel
+      # classic python notebooks
+      - notebook
+      # latest jupyter notebooks
       - jupyterlab
+      # notebook dev stuff
+      - nbdev
+      # notebooks in the terminal 💚
       - euporie
