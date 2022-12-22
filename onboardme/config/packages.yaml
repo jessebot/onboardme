@@ -193,6 +193,9 @@ apt:
       # help fix locale issues
       - "locales-all"
       - gcc
+      # vpn
+      - wireguard
+
     devops:
       - docker-ce
       - docker-ce-cli

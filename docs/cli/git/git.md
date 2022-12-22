@@ -77,6 +77,35 @@ Here's a couple of stackoverflow answers that were pretty helpful:
 
 [How Remove Files completely from git repository history][7]
 
+## Ignore *future* revisions to a file
+
+[Per StackOverFlow](https://stackoverflow.com/a/39776107/3547184):
+
+```bash
+# This will ignore changes to that file, both local and upstream
+git update-index --skip-worktree fileyouwanttoignorefuturerevisionson
+
+# when you decide to allow them again, use:
+git update-index --no-skip-worktree fileyouwanttoignorefuturerevisionson
+
+# You can get a list of files that are marked skipped with:
+git ls-files -v . | grep ^S
+```
+
+## Clean up old remote origin branches
+
+```bash
+git fetch --prune origin
+```
+
+## Sign off on a previous commit (or range of previous commits)
+
+```bash
+# sign off on the past three commits
+git rebase --signoff HEAD~3
+```
+
+<!---------------------------- references ---------------------------->
 
 [0]: https://www.git-scm.com/ "git-scm"
 [1]: https://pre-commit.com/ "pre-commit"
