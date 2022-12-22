@@ -159,6 +159,8 @@ brew:
       # "aws-cli"
       # aws credentials switcher
       # "--cask aws-vault"
+      - nbdev
+      - euporie
 
 apt:
   emoji: "🙃"
@@ -190,6 +192,7 @@ apt:
       - colortest
       # help fix locale issues
       - "locales-all"
+      - gcc
     devops:
       - docker-ce
       - docker-ce-cli
