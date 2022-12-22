@@ -38,6 +38,13 @@ pip3.11 install euporie
 
 # Running a notebook
 
+```
+# this is with classic notebooks
+jupyter notebook
+
+# this launches a whole lab :-)
+jupyter-lab
+```
 
 # Modifying a notebook
 
