@@ -299,3 +299,5 @@ pip3.11:
       - euporie
       # Voilà turns Jupyter notebooks into standalone web apps
       # - voila
+      # this is for markdown notebook docs and such
+      - quarto
