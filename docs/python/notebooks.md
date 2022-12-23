@@ -7,10 +7,12 @@ permalink: /python/notebooks
 description: "Tips and tricks for python notebooks"
 ---
 
-# Setup
+# Notebooks
+
+## Setup Notebooks
 Before you get started, if you're on Linux, you might need to install gcc, the version I installed was gcc-11.
 
-Next you need the ipykernel:
+Next you need the [ipykernel]:
 
 ```bash
 pip3.11 install ipykernel
@@ -29,44 +31,49 @@ pip3.11 install voila
 pip3.11 install jupyterlab
 ```
 
-## Notebooks in the terminal
-There's no way I wouldn't talk about getting this done in a terminal.
+### Notebooks in the terminal
+There's no way I wouldn't talk about getting this done in a terminal. First, there's [euporie]
 
 ```bash
 pip3.11 install euporie
 ```
 
-# Running a notebook
+There's also [nbterm] if you'd like to check it out.
 
-## Jupyter classic notebook
+
+## Running a notebook
+
+### Jupyter classic notebook
 
 ```bash
 # with classic notebooks
 jupyter notebook
 ```
 
-## "The Lab"
+### "The Lab"
 
 ```bash
 # this launches a whole lab :-)
 jupyter-lab
 ```
 
-## Euporie
+### Euporie
 
 ```bash
 # Running a notebook in the terminal :)
 euporie notebook
 ```
 
-# Modifying a notebook
+## Modifying a notebook
 
 You can just open a notebook using one of the programs listed above, modify it, and then save it.
 
-# Checking a notebook into git
+## Checking a notebook into git
 
-Overstory has [a blog post] on [nbdev] which is pretty cool.
+Overstory has [a blog post] on [nbdev] which is pretty cool. To sum it up, nbdev helps create a good git repo structure, and has some tooling to ensure you don't check in weird metadata, as well as help you resolve merge issues arising from having notebooks checked in.
 
 
 [a blog post]: https://www.overstory.com/blog/how-nbdev-helps-us-structure-our-data-science-workflow-in-jupyter-notebooks "overstory how nbdev helps us..."
 [nbdev]: https://nbdev.fast.ai/ "nbdev"
+[nbterm]: https://blog.jupyter.org/nbterm-jupyter-notebooks-in-the-terminal-6a2b55d08b70
+[euporie]: https://github.com/joouha/euporie
