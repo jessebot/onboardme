@@ -258,28 +258,30 @@ pip3.11:
     default:
       # keep ourselves up to date
       - onboardme
-      # this is for python development - specifically linting/auto-linting
+      # powerline: (status line for tmux/BASH)
+      - "git+ssh://git@github.com/powerline/powerline"
+      - "powerline-gitstatus"
+      - "powerline-kubernetes"
+      # powerline: for the internal ip address prompt segment
+      - netifaces
+      # powerline: supposed to work spotify info, not ready
+      # - dbus
+      # neovim: needed for vim's python3 interface
+      - pynvim
+      # this is for git pre-commits
+      - pre-commit
+      # python development: linting/auto-linting
       - flake8
       - pyflakes
       - ruff
       - autoflake
-      # for building and installing packages
+      # python: for building and installing packages
       - pip
       - build
       - twine
       - poetry
-      # this does some magic with imports when developing
+      # python: does some magic with imports when developing
       - autoimport
-      # this is all powerline (status line for tmux/BASH)
-      - "git+ssh://git@github.com/powerline/powerline"
-      - "powerline-gitstatus"
-      - "powerline-kubernetes"
-      # for the internal ip address powerline shell prompt
-      - netifaces
-      # supposed to work with powerline for spotify info, python3.11 not ready
-      # - dbus
-      # makes neovim work with vim's python3 interface
-      - pynvim
     macOS:
       # this is for hacking on the iterm2 python api
       - iterm2
