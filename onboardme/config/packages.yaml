@@ -134,6 +134,8 @@ brew:
       # zathura is a document viewer
       - zathura
       - zathura-pdf-mupdf
+      # libreoffice is a FOSS office suite that replaces Google Docs/Office365
+      - "--cask libreoffice"
     devops:
       # terraform for building stuff
       - terraform
@@ -208,6 +210,8 @@ apt:
       - zathura
       # commented out till nextcloud is working
       # - nextcloud-desktop
+      # libreoffice is a FOSS office suite that replaces Google Docs/Office365
+      - libreoffice
     gaming:
       # helpful for gaming on linux
       - "nvidia-driver-libs:i386"
