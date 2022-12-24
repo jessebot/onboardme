@@ -16,6 +16,7 @@ brew:
       # terminal based web browser
       - lynx
       # screen session + sharing/splitting
+      - zellij
       - tmux
       # recording a shell session to share with others
       - asciinema
