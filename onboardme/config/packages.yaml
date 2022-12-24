@@ -96,6 +96,10 @@ brew:
       - w3m
       # TUI for gpg keys, for the lazy, like me
       - "gpg-tui"
+      # spotify daemon
+      - spotifyd
+      # spotify TUI
+      - spotify-tui
     # macOS specific stuff. Won't work with LinuxBrew
     macOS:
       # current version of bash :)
