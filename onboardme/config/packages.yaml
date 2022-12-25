@@ -67,8 +67,6 @@ brew:
       - gh
       # gitlab cli
       - glab
-      # for setup scripts and compiling things (e.g. YouCompleteMe)
-      - cmake
       # programming languages and their package managers
       - python@3.11
       - go
@@ -104,6 +102,8 @@ brew:
     macOS:
       # current version of bash :)
       - bash
+      # for setup scripts and compiling things (e.g. YouCompleteMe)
+      - cmake
       # so that bash completion stuff works
       - "bash-completion@2"
       # this lets us resize windows
