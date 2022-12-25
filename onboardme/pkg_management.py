@@ -56,7 +56,7 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
     log.debug(f"passed in pkg_mngrs: {pkg_mngrs}")
     log.debug(f"passed in pkg_groups: {pkg_groups}")
 
-    log.debug("Rotating github.com ssh keys, just in case...")
+    log.info("Rotating github.com ssh keys, just in case...")
 
     # deletes all keys starting with github.com from ~/.ssh/known_hosts
     subproc(["ssh-keygen -R github.com"])
