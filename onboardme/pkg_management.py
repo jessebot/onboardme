@@ -2,7 +2,7 @@ import logging as log
 from os import path
 import shutil
 
-from .env_config import OS, PWD, XDG_CONFIG_DIR, load_cfg
+from .env_config import OS, PWD, XDG_CONFIG_DIR, HOME_DIR, load_cfg
 from .console_logging import print_header
 from .console_logging import print_sub_header as sub_header
 from .subproc import subproc
@@ -56,6 +56,19 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
     log.debug(f"passed in pkg_mngrs: {pkg_mngrs}")
     log.debug(f"passed in pkg_groups: {pkg_groups}")
 
+    log.info("Rotating github.com ssh keys, just in case...")
+
+    # deletes all keys starting with github.com from ~/.ssh/known_hosts
+    subproc(["ssh-keygen -R github.com"])
+
+    # gets the new public keys from github.com
+    github_keys = subproc(["ssh-keyscan github.com"])
+
+    # the new github.com keys are not automatically added :( so we do it here
+    with open(path.join(HOME_DIR, '.ssh/known_hosts'), 'a') as known_hosts:
+        for line in github_keys.split('/n'):
+            known_hosts.write(line)
+
     # we iterate through pkg_mngrs which should already be sorted
     for pkg_mngr in pkg_mngrs:
 
@@ -83,9 +96,9 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
             pkg_cmds = pkg_mngr_dict['commands']
 
             if pkg_mngr == 'snap' and not shutil.which('snap'):
-                # ref: https://snapcraft.io/docs/installing-snap-on-debian
                 log.warn("snap is either not installed, or you need to log out"
-                         "and back in (or reboot) for it to be available.")
+                         "and back in (or reboot) for it to be available. "
+                         "https://snapcraft.io/docs/installing-snap-on-debian")
                 # continues onto the next package manager
                 continue
             else:
@@ -94,6 +107,8 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
 
             # run the list command for the given package manager
             list_cmd = pkg_cmds['list']
+            if pkg_mngr == 'apt':
+                list_cmd = path.join(PWD, list_cmd)
             list_pkgs = subproc([list_cmd], quiet=True)
 
             if list_pkgs:
