@@ -59,6 +59,7 @@ Get your daily driver just the way you like it, from dot files insta
   <summary>Examples of the terminal after <code>onboardme</code> runs</summary>
 
 <p align="center" width="100%">
+
 ### vim
 <img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/vim_example_1.png' alt='screenshot of vim with colors'>
 
