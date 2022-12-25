@@ -49,7 +49,8 @@ def vim_setup():
 
     if init_ycm:
         # This is for you complete me, which is a python completion module
-        subproc(["chmod +x install.py", "./install.py"], cwd=ycm_dir)
+        subproc(["chmod +x install.py", "python3.11 install.py --all"],
+                cwd=ycm_dir)
 
     return True
 
