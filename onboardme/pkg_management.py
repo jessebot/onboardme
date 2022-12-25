@@ -34,6 +34,11 @@ def run_preinstall_cmds(cmd_list=[], pkg_groups=[]):
             subproc([cmd_list[pre_cmd]], spinner=SPINNER)
             sub_header(f"[b]{pre_cmd.title()}[/b] completed.")
 
+    github_keys = subproc(["sed -i '/^github.com/d' file"], shell=True)
+    github_keys = subproc(["ssh-keyscan github.com"])
+    for line in github_keys.split('/n'):
+
+
     return True
 
 
