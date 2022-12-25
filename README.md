@@ -70,10 +70,10 @@ Get your daily driver just the way you like it, from dot files insta
 <img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/git_powerline_example.png' alt='screenshot of powerline and git colors'>
 
 ### Image and colors
-<img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onbaordme/screenshots/image_in_terminal.png' alt='screenshot of color samples and image of dog using a computer using sixel'>
+<img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/image_in_terminal.png' alt='screenshot of color samples and image of dog using a computer using sixel'>
 
 ### Python virtual env in powerline and cat
-<img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onbaordme/screenshots/python_virtual_env_example.png' alt='screenshot of using bat and python virtual env in powerline'>
+<img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/python_virtual_env_example.png' alt='screenshot of using bat and python virtual env in powerline'>
 </p>
 
 </details>
