@@ -14,8 +14,9 @@ overnight. And even if you git good, you might forget stuff. I forget stuff all
 the time, so I have a doc here to help me remember all the little things.
 
 ## precommit hooks with `pre-commit`
-I recently learned about [pre-commit][1]. I found it when looking at [ruff][2]
-to see if it made sense for pre-commit hooks.
+I recently learned about [pre-commit][1].
+
+I found it when looking at [ruff][2] to see if it made sense for pre-commit hooks.
 
 ```yaml
 repos:
@@ -33,6 +34,18 @@ hooks:
     args: ["-f", "requirements.txt"]
     verbose: true
 ```
+
+[nbdev](https://nbdev.fast.ai/tutorials/pre_commit.html) also has pre commit hooks:
+
+```yaml
+repos:
+- repo: https://github.com/fastai/nbdev
+  rev: 2.2.10
+  hooks:
+  - id: nbdev_clean
+  - id: nbdev_export
+```
+
 
 ## Ignore everything except a few files
 Thanks to [this stackoverflow thread](https://stackoverflow.com/q/987142).
