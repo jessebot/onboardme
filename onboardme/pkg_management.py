@@ -2,7 +2,7 @@ import logging as log
 from os import path
 import shutil
 
-from .env_config import OS, PWD, XDG_CONFIG_DIR, load_cfg
+from .env_config import OS, PWD, XDG_CONFIG_DIR, HOME_DIR, load_cfg
 from .console_logging import print_header
 from .console_logging import print_sub_header as sub_header
 from .subproc import subproc
@@ -34,10 +34,17 @@ def run_preinstall_cmds(cmd_list=[], pkg_groups=[]):
             subproc([cmd_list[pre_cmd]], spinner=SPINNER)
             sub_header(f"[b]{pre_cmd.title()}[/b] completed.")
 
-    github_keys = subproc(["sed -i '/^github.com/d' file"], shell=True)
-    github_keys = subproc(["ssh-keyscan github.com"])
-    for line in github_keys.split('/n'):
+    # rotate github keys - just in case, otherwise weird prompts happen
+    # this line deletes all keys starting with github.com
+    subproc(["ssh-keygen -R github.com"], shell=True)
 
+    # this gets the new public keys from github.com
+    github_keys = subproc(["ssh-keyscan github.com"])
+
+    # the new github.com keys are not automatically added :( so we do it here
+    with open(path.join(HOME_DIR, '.ssh/known_hosts'), 'a') as known_hosts:
+        for line in github_keys.split('/n'):
+            known_hosts.write(line)
 
     return True
 
