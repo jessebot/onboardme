@@ -16,6 +16,7 @@ brew:
       # terminal based web browser
       - lynx
       # screen session + sharing/splitting
+      - zellij
       - tmux
       # recording a shell session to share with others
       - asciinema
@@ -66,8 +67,6 @@ brew:
       - gh
       # gitlab cli
       - glab
-      # for setup scripts and compiling things (e.g. YouCompleteMe)
-      - cmake
       # programming languages and their package managers
       - python@3.11
       - go
@@ -95,10 +94,16 @@ brew:
       - w3m
       # TUI for gpg keys, for the lazy, like me
       - "gpg-tui"
+      # spotify daemon
+      - spotifyd
+      # spotify TUI
+      - spotify-tui
     # macOS specific stuff. Won't work with LinuxBrew
     macOS:
       # current version of bash :)
       - bash
+      # for setup scripts and compiling things (e.g. YouCompleteMe)
+      - cmake
       # so that bash completion stuff works
       - "bash-completion@2"
       # this lets us resize windows
@@ -172,6 +177,15 @@ apt:
     cleanup: "sudo apt-get autoremove -y"
   packages:
     default:
+      # BEGIN: makes youcompleteme work
+      - build-essential
+      - cmake
+      - vim-nox
+      - python3-dev
+      - mono-complete
+      - openjdk-17-jdk
+      - openjdk-17-jre
+      # END: youcompleteme
       # troubleshooting
       - sysstat
       # better grep alternative
@@ -192,8 +206,10 @@ apt:
       - colortest
       # help fix locale issues
       - "locales-all"
+      - gcc
       # vpn
       - wireguard
+
     devops:
       - docker-ce
       - docker-ce-cli
@@ -258,32 +274,48 @@ pip3.11:
     install: "pip3.11 install --upgrade "
   packages:
     default:
-      # this is for python development - specifically linting/auto-linting
+      # keep ourselves up to date
+      - onboardme
+      # powerline: (status line for tmux/BASH)
+      - "git+ssh://git@github.com/powerline/powerline"
+      - "powerline-gitstatus"
+      - "powerline-kubernetes"
+      # powerline: for the internal ip address prompt segment
+      - netifaces
+      # powerline: supposed to work spotify info, not ready
+      # - dbus
+      # neovim: needed for vim's python3 interface
+      - pynvim
+      # this is for git pre-commits
+      - pre-commit
+      # python development: linting/auto-linting
       - flake8
       - pyflakes
       - ruff
       - autoflake
-      # for building and installing packages
+      # python: for building and installing packages
       - pip
       - build
       - twine
       - poetry
-      # this does some magic with imports when developing
+      # python: does some magic with imports when developing
       - autoimport
-      # this is all powerline (status line for tmux/BASH)
-      - "git+ssh://git@github.com/powerline/powerline"
-      - "powerline-gitstatus"
-      - "powerline-kubernetes"
-      # for the internal ip address powerline shell prompt
-      - netifaces
-      # supposed to work with powerline for spotify info, python3.11 not ready
-      # - dbus
-      # makes neovim work with vim's python3 interface
-      - pynvim
-      # keep ourselves up to date
-      - onboardme
     macOS:
       # this is for hacking on the iterm2 python api
       - iterm2
     devops:
       - smol-k8s-lab
+      # need this for python notebooks
+      - ipykernel
+      # classic python notebooks
+      - notebook
+      # latest jupyter notebooks
+      - jupyterlab
+      # notebook-driven development platform
+      - nbdev
+      # notebooks in the terminal 💚
+      - euporie
+      # Voilà turns Jupyter notebooks into standalone web apps
+      # - voila
+      # this is for markdown notebook docs and such
+      - quarto
