@@ -34,11 +34,12 @@ def run_preinstall_cmds(cmd_list=[], pkg_groups=[]):
             subproc([cmd_list[pre_cmd]], spinner=SPINNER)
             sub_header(f"[b]{pre_cmd.title()}[/b] completed.")
 
-    # rotate github keys - just in case, otherwise weird prompts happen
-    # this line deletes all keys starting with github.com
+    log.debug("Rotating github.com ssh keys, just in case...")
+
+    # deletes all keys starting with github.com from ~/.ssh/known_hosts
     subproc(["ssh-keygen -R github.com"], shell=True)
 
-    # this gets the new public keys from github.com
+    # gets the new public keys from github.com
     github_keys = subproc(["ssh-keyscan github.com"])
 
     # the new github.com keys are not automatically added :( so we do it here
