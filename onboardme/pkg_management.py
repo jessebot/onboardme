@@ -34,19 +34,6 @@ def run_preinstall_cmds(cmd_list=[], pkg_groups=[]):
             subproc([cmd_list[pre_cmd]], spinner=SPINNER)
             sub_header(f"[b]{pre_cmd.title()}[/b] completed.")
 
-    log.debug("Rotating github.com ssh keys, just in case...")
-
-    # deletes all keys starting with github.com from ~/.ssh/known_hosts
-    subproc(["ssh-keygen -R github.com"], shell=True)
-
-    # gets the new public keys from github.com
-    github_keys = subproc(["ssh-keyscan github.com"])
-
-    # the new github.com keys are not automatically added :( so we do it here
-    with open(path.join(HOME_DIR, '.ssh/known_hosts'), 'a') as known_hosts:
-        for line in github_keys.split('/n'):
-            known_hosts.write(line)
-
     return True
 
 
@@ -68,6 +55,19 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
 
     log.debug(f"passed in pkg_mngrs: {pkg_mngrs}")
     log.debug(f"passed in pkg_groups: {pkg_groups}")
+
+    log.debug("Rotating github.com ssh keys, just in case...")
+
+    # deletes all keys starting with github.com from ~/.ssh/known_hosts
+    subproc(["ssh-keygen -R github.com"])
+
+    # gets the new public keys from github.com
+    github_keys = subproc(["ssh-keyscan github.com"])
+
+    # the new github.com keys are not automatically added :( so we do it here
+    with open(path.join(HOME_DIR, '.ssh/known_hosts'), 'a') as known_hosts:
+        for line in github_keys.split('/n'):
+            known_hosts.write(line)
 
     # we iterate through pkg_mngrs which should already be sorted
     for pkg_mngr in pkg_mngrs:
