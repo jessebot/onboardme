@@ -1,9 +1,8 @@
 ---
 layout: default
 title: Features
-grand_parent: onboardme
-parent: Getting Started
-permalink: /onboardme/getting-started/features
+parent: onboardme
+permalink: /onboardme/features
 ---
 
 # Features
