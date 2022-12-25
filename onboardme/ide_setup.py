@@ -14,7 +14,7 @@ import wget
 # custom libs
 from .console_logging import print_header, print_sub_header, print_msg
 from .subproc import subproc
-from .env_config import HOME_DIR, OS
+from .env_config import HOME_DIR, OS, XDG_CONFIG_DIR
 
 
 def vim_setup():
@@ -26,9 +26,14 @@ def vim_setup():
     print_header('[b]vim-plug[/b] and [green][i]Vim[/i][/green] plugins '
                  'installation [dim]and[/dim] upgrades')
 
+    # this is to make sure we have the correct plugin directory
+    vim_dir = path.join(XDG_CONFIG_DIR, 'vim')
+    if not path.exists(vim_dir):
+        vim_dir = path.join(HOME_DIR, '.vim')
+
     # trick to not run youcompleteme init every single time
     init_ycm = False
-    ycm_dir = path.join(HOME_DIR, '.vim/plugged/YouCompleteMe')
+    ycm_dir = path.join(vim_dir, 'plugged/YouCompleteMe')
     if not path.exists(ycm_dir):
         init_ycm = True
 
@@ -47,10 +52,12 @@ def vim_setup():
             quiet=True)
     print_sub_header('Vim Plugins installed.')
 
+    # if we need to install youcompleteme, run the compile script
     if init_ycm:
-        # This is for you complete me, which is a python completion module
-        subproc(["chmod +x install.py", "python3.11 install.py --all"],
-                cwd=ycm_dir)
+        if path.exists(ycm_dir):
+            # This is for you complete me, which is a python completion module
+            subproc(["chmod +x install.py", "python3.11 install.py --all"],
+                    cwd=ycm_dir)
 
     return True
 
