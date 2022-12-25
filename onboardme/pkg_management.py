@@ -96,9 +96,9 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
             pkg_cmds = pkg_mngr_dict['commands']
 
             if pkg_mngr == 'snap' and not shutil.which('snap'):
-                # ref: https://snapcraft.io/docs/installing-snap-on-debian
                 log.warn("snap is either not installed, or you need to log out"
-                         "and back in (or reboot) for it to be available.")
+                         "and back in (or reboot) for it to be available. "
+                         "https://snapcraft.io/docs/installing-snap-on-debian")
                 # continues onto the next package manager
                 continue
             else:
@@ -107,6 +107,8 @@ def run_pkg_mngrs(pkg_mngrs=[], pkg_groups=[]):
 
             # run the list command for the given package manager
             list_cmd = pkg_cmds['list']
+            if pkg_mngr == 'apt':
+                list_cmd = path.join(PWD, list_cmd)
             list_pkgs = subproc([list_cmd], quiet=True)
 
             if list_pkgs:
