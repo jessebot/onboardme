@@ -64,7 +64,7 @@ Get your daily driver just the way you like it, from dot files insta
 <img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/vim_example_1.png' alt='screenshot of vim with colors'>
 
 ### Powerline and ls
-<img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onbaordme/screenshots/ls_tree_examples.png' alt='screenshot of powerline and lsd'>
+<img width="80%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/ls_tree_examples.png' alt='screenshot of powerline and lsd'>
 
 ### Powerline with git
 <img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/git_powerline_example.png' alt='screenshot of powerline and git colors'>
