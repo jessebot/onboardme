@@ -28,14 +28,14 @@ Get your daily driver just the way you like it, from dot files insta
 - Install and upgrade libraries and apps
   - use several package managers across Linux and macOS (you can even add your own!)
   - group together packages for different kinds of setups, e.g. gaming, devops, gui
-  
+
 #### Vim/NeoVim Plugin Management
 - Keep your [vim-plug] or [packer] plugins installed and up to date in both vim and neovim.
 
 #### Easy `yaml` config files
 - [config files](https://github.com/jessebot/onboardme#configuration) in your `$HOME/.config/onboardme/` directory
   - we also support the [XDG Base Directory Spec] and will use `$XDG_CONFIG_HOME/onboardme/` if you have `XDG_CONFIG_HOME` configured
-  
+
 #### Other useful (but optional) configurations
 - Enable touchID for sudo on macOS
 - Add your user to the docker group
@@ -56,10 +56,23 @@ Get your daily driver just the way you like it, from dot files insta
 </details>
 
 <details>
-  <summary>Example of the terminal after <code>onboardme</code> runs</summary>
+  <summary>Examples of the terminal after <code>onboardme</code> runs</summary>
 
 <p align="center" width="100%">
-    <img width="90%" alt="screenshot of terminal after running onboardme. includes colortest-256, powerline prompt, icons for files in ls output, and syntax highlighting examples with cat command." src="https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/terminal_screenshot.png">
+### vim
+<img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/vim_example_1.png' alt='screenshot of vim with colors'>
+
+### Powerline and ls
+<img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onbaordme/screenshots/ls_tree_examples.png' alt='screenshot of powerline and lsd'>
+
+### Powerline with git
+<img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/git_powerline_example.png' alt='screenshot of powerline and git colors'>
+
+### Image and colors
+<img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onbaordme/screenshots/image_in_terminal.png' alt='screenshot of color samples and image of dog using a computer using sixel'>
+
+### Python virtual env in powerline and cat
+<img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onbaordme/screenshots/python_virtual_env_example.png' alt='screenshot of using bat and python virtual env in powerline'>
 </p>
 
 </details>
@@ -236,4 +249,3 @@ Get started with testing kubernetes locally, even on metal with [smol k8s lab](h
 [XDG Base Directory Spec]: https://specifications.freedesktop.org/basedir-spec/latest/ar01s03.html
 [vim-plug]: https://github.com/junegunn/vim-plug
 [packer]: https://github.com/wbthomason/packer.nvim
-[post screenshot]: https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/terminal_screenshot.png "screenshot of terminal afer onboardme"

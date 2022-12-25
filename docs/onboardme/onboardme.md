@@ -48,10 +48,23 @@ Get your daily driver just the way you like it, from textformatting,�
 </details>
 
 <details>
-  <summary>Example of the terminal after <code>onboardme</code> runs</summary>
+  <summary>Examples of the terminal after <code>onboardme</code> runs</summary>
 
 <p align="center" width="100%">
-    <img width="90%" alt="screenshot of terminal after running onboardme. includes colortest-256, powerline prompt, icons for files in ls output, and syntax highlighting examples with cat command." src="https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/terminal_screenshot.png">
+### vim
+<img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/vim_example_1.png' alt='screenshot of vim with colors'>
+
+### Powerline and ls
+<img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onbaordme/screenshots/ls_tree_examples.png' alt='screenshot of powerline and lsd'>
+
+### Powerline with git
+<img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/git_powerline_example.png' alt='screenshot of powerline and git colors'>
+
+### Image and colors
+<img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onbaordme/screenshots/image_in_terminal.png' alt='screenshot of color samples and image of dog using a computer using sixel'>
+
+### Python virtual env in powerline and cat
+<img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onbaordme/screenshots/python_virtual_env_example.png' alt='screenshot of using bat and python virtual env in powerline'>
 </p>
 
 </details>
