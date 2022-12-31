@@ -45,9 +45,11 @@ brew:
       - the_silver_searcher
       # diff, but with colors
       - colordiff
+      # prettier top
       - htop
       - gotop
-      - neofetch
+      # quick system metrics, typically used as an MOTD
+      - fastfetch
       # prettier du/df outputs: https://github.com/muesli/duf
       - duf
       # rainbow text
