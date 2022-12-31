@@ -17,7 +17,7 @@
   </a>
 </p>
 
-Get your daily driver just the way you like it, from dot files installation, to opensource package installation, to other little features you didn't know you needed, `onboardme` intends to save you time with initializing and upgrading your environment.
+Get your daily driver just the way you like it, from dot files installation, to opensource package installation, to other little features you didn't know you needed, `onboardme` intends to save you time with initializing and upgrading your environment.
 
 ## Features
 
