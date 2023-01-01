@@ -166,6 +166,7 @@ package:
   groups:
     - default
     # uncomment these to add them as default installed package groups
+    # - gui
     # - gaming
     # - devops
 ```
