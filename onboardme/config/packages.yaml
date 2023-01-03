@@ -230,6 +230,7 @@ apt:
       # - nextcloud-desktop
       # libreoffice is a FOSS office suite that replaces Google Docs/Office365
       - libreoffice
+      - nvtop
     gaming:
       # helpful for gaming on linux
       - "nvidia-driver-libs:i386"
