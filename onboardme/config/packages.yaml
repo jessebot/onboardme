@@ -10,8 +10,6 @@ brew:
   packages:
     # these are all for both macOS and Debian
     default:
-      # for testing apis and downloading things
-      - curl
       - wget
       # terminal based web browser
       - lynx
@@ -102,6 +100,8 @@ brew:
       - spotify-tui
     # macOS specific stuff. Won't work with LinuxBrew
     macOS:
+      # for testing apis and downloading things
+      - curl
       # current version of bash :)
       - bash
       # for setup scripts and compiling things (e.g. YouCompleteMe)
@@ -179,6 +179,8 @@ apt:
     cleanup: "sudo apt-get autoremove -y"
   packages:
     default:
+      # for testing apis and downloading things
+      - curl
       # BEGIN: makes youcompleteme work
       - build-essential
       - cmake
