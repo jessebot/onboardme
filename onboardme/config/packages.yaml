@@ -143,6 +143,10 @@ brew:
       - zathura-pdf-mupdf
       # libreoffice is a FOSS office suite that replaces Google Docs/Office365
       - "--cask libreoffice"
+      # wezterm: Rust based terminal. I mostly use iterm2, but I use this on
+      # linux and sometimes need to test on macOS for whatever reason
+      # note: brew tap wez/wezterm
+      - "--cask wez/wezterm/wezterm"
     devops:
       # terraform for building stuff
       - terraform
@@ -254,6 +258,7 @@ flatpak:
       - com.bitwarden.desktop
       # youtube alternative
       - io.freetubeapp.FreeTube
+      - org.wezfurlong.wezterm
 
 snap:
   emoji: "🫰 "
