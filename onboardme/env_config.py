@@ -1,51 +1,33 @@
 """
 environment variable loading library for onboardme
 """
-from importlib.metadata import version as get_version
 import logging as log
 # for system data, environment data, and checking/joining paths
-from os import getenv, path, uname
+from os import path
 # rich helps pretty print everything
 from rich.prompt import Confirm
-from xdg import xdg_config_home
 import yaml
 
 # custom libs
+from .constants import OS, PWD, XDG_CONFIG_DIR
 from .console_logging import print_panel
 
 
-def load_cfg(config_file=""):
+def load_cfg(config_file: str) -> dict:
     """
     load yaml config files for onboardme.
     return dict
     """
     # make sure the path is valid
     if path.exists(config_file):
-        # make sure it's a yaml file extension
-        if config_file.endswith((".yaml", ".yml")):
-            with open(config_file, 'r') as yaml_file:
-                return yaml.safe_load(yaml_file)
-    else:
-        # print(f"Config file we got was not present: {yaml_config_file}")
-        return None
+        with open(config_file, 'r') as yaml_file:
+            return yaml.safe_load(yaml_file)
+    return {}
 
-
-# version of onboardme
-VERSION = get_version('onboardme')
-
-# pathing
-XDG_CONFIG_DIR = path.join(xdg_config_home(), 'onboardme')
-PWD = path.dirname(__file__)
-HOME_DIR = getenv("HOME")
 
 # defaults
 DEFAULTS = load_cfg(f"{PWD}/config/onboardme_config.yaml")
 USR_CONFIG_FILE = load_cfg(path.join(XDG_CONFIG_DIR, 'config.yaml'))
-
-# env
-SYSINFO = uname()
-# this will be something like ('Darwin', 'x86_64')
-OS = (SYSINFO.sysname, SYSINFO.machine)
 
 
 def check_os_support():

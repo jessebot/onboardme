@@ -8,9 +8,9 @@ from pathlib import Path
 from rich import box
 from rich.table import Table
 # custom libs
+from .constants import HOME_DIR, PWD
 from .console_logging import print_panel, print_msg
 from .subproc import subproc
-from .env_config import HOME_DIR, PWD
 
 
 def setup_dot_files(OS='Linux', overwrite=False,

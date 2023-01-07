@@ -12,9 +12,9 @@ from pathlib import Path
 import wget
 
 # custom libs
+from .constants import HOME_DIR, OS, XDG_CONFIG_DIR
 from .console_logging import print_header, print_sub_header, print_msg
 from .subproc import subproc
-from .env_config import HOME_DIR, OS, XDG_CONFIG_DIR
 
 
 def vim_setup():

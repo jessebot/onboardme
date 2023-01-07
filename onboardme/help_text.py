@@ -11,7 +11,8 @@ from rich.text import Text
 from rich.theme import Theme
 
 # custom local module
-from .env_config import DEFAULTS, OS, VERSION
+from .constants import OS, VERSION
+from .env_config import DEFAULTS
 
 
 RECORD = False

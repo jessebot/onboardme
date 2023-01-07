@@ -4,10 +4,10 @@
 """
 import fileinput
 from random import randint
-from .subproc import subproc
-from .console_logging import print_header, print_msg
-from .env_config import PWD, OS
 from os import getlogin
+from .constants import PWD, OS
+from .console_logging import print_header, print_msg
+from .subproc import subproc
 try:
     USER = getlogin()
 # this errors in docker containers for github actions and I don't know why
@@ -15,7 +15,7 @@ except OSError:
     pass
 
 
-def configure_firewall(remote_hosts=[]):
+def configure_firewall(remote_hosts: list):
     """
     configure iptables for linux
     """
