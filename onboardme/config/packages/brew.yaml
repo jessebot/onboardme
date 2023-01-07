@@ -7,15 +7,21 @@ brew:
     upgrade: "brew upgrade --quiet"
     install: "brew install "
     cleanup: "brew cleanup"
+  # these are essentially just extra git repos to query for installs/updates
+  taps:
+    macOS:
+      - "wez/wezterm"
+      - "zegervdv/zathura"
   packages:
     # these are all for both macOS and Debian
     default:
+      # this installs rustup which installs cargo and rust
+      - rustup
       - wget
       # terminal based web browser
       - lynx
-      # screen session + sharing/splitting
+      # screen session + sharing/splitting - replaces tmux :)
       - zellij
-      - tmux
       # recording a shell session to share with others
       - asciinema
       # main terminal based text editors
@@ -23,6 +29,8 @@ brew:
       - neovim
       # terminal based email client
       - neomutt
+      # fetch your mail locally
+      - offlineimap
       # fuzzy search, helps with completion and searching
       - fzf
       # ls replacement written in rust: https://github.com/Peltoche/lsd
@@ -33,8 +41,8 @@ brew:
       - rich-cli
       # file TUI: https://www.geeksforgeeks.org/ranger-a-cli-file-manager/
       - ranger
-      # preview videos in the terminal
-      - ffmpegthumbnailer
+      # preview videos in the terminal. commented by default because it is big
+      # - ffmpegthumbnailer
       # cat images in the terminal (e.g. img2sixel imagename.png)
       - libsixel
       # for working with images and making lsimg work
@@ -145,13 +153,12 @@ brew:
       - "--cask libreoffice"
       # wezterm: Rust based terminal. I mostly use iterm2, but I use this on
       # linux and sometimes need to test on macOS for whatever reason
-      # note: brew tap wez/wezterm
       - "--cask wez/wezterm/wezterm"
     devops:
       # terraform for building stuff
       - terraform
       # manage multiple versions of terraform
-      # - tfenv
+      - tfenv
       # cli for k8s (kubernetes)
       - kubectl
       # kubectl plugin manager
@@ -161,7 +168,7 @@ brew:
       # package manager for k8s
       - helm
       # manages helm files
-      # - helmfile
+      - helmfile
       # cli for Bitnami sealed-secrets, encrypting secrets in yaml files for gitops
       - kubeseal
       # gitops continuous delivery for k8s configs
@@ -172,160 +179,3 @@ brew:
       # "aws-cli"
       # aws credentials switcher
       # "--cask aws-vault"
-
-apt:
-  emoji: "🙃"
-  commands:
-    list: "scripts/get_apt_list.sh"
-    update: "sudo apt-get update -y"
-    upgrade: "sudo apt-get upgrade -y"
-    install: "sudo apt-get install -y "
-    cleanup: "sudo apt-get autoremove -y"
-  packages:
-    default:
-      # for testing apis and downloading things
-      - curl
-      # BEGIN: makes youcompleteme work
-      - build-essential
-      - cmake
-      - vim-nox
-      - python3-dev
-      - mono-complete
-      - openjdk-17-jdk
-      - openjdk-17-jre
-      # END: youcompleteme
-      # troubleshooting
-      - sysstat
-      # better grep alternative
-      - silversearcher-ag
-      # this should let you use the a yubikey for auth
-      - libpam-yubico
-      - bash-completion
-      # networking and firewall
-      - iptables
-      - net-tools
-      # package managers installing package managers... this is terrible.
-      - snapd
-      # cat images in the terminal :) works in tmux
-      - catimg
-      # this lets you ls images as thumbnails, which is helpful sometimes
-      - imagemagick
-      # print a pretty pallete to see all colors the terminal can render
-      - colortest
-      # help fix locale issues
-      - "locales-all"
-      - gcc
-      # vpn
-      - wireguard
-
-    devops:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-    gui:
-      - flatpak
-      - youtube-dl
-      # terminal emulator for linux
-      - terminator
-      # this lets you install flatpak packages via the gui
-      - gnome-software-plugin-flatpak
-      # gui firewall
-      - gufw
-      - zathura
-      # commented out till nextcloud is working
-      # - nextcloud-desktop
-      # libreoffice is a FOSS office suite that replaces Google Docs/Office365
-      - libreoffice
-      - nvtop
-    gaming:
-      # helpful for gaming on linux
-      - "nvidia-driver-libs:i386"
-      - lutris
-      - "steam:i386"
-      # to format disks to exFAT; FAT is too thin for modern windows 10 ISOs
-      # - exfat-utils
-
-flatpak:
-  emoji: "🫓 "
-  commands:
-    setup: "flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
-    list: "flatpak list --user --columns=application"
-    install: "flatpak install --user --app -y "
-  packages:
-    gui:
-      - "org.freedesktop.Platform/x86_64/21.08"
-      # password manager
-      - com.bitwarden.desktop
-      # youtube alternative
-      - io.freetubeapp.FreeTube
-      - org.wezfurlong.wezterm
-
-snap:
-  emoji: "🫰 "
-  commands:
-    upgrade: "sudo snap refresh"
-    list: "snap list"
-    install: "sudo snap install "
-  packages:
-    gui:
-      - core
-      # screen debugger/sharing tool for android
-      - scrcpy
-      # rss feed reader
-      - "fluent-reader --candidate"
-      # media player
-      - vlc
-
-# most of this is actually for powerline, my shell prompt
-pip3.11:
-  emoji: "🐍"
-  commands:
-    list: "pip3.11 list"
-    install: "pip3.11 install --upgrade "
-  packages:
-    default:
-      # keep ourselves up to date
-      - onboardme
-      # powerline: (status line for tmux/BASH)
-      - "git+ssh://git@github.com/powerline/powerline"
-      - "powerline-gitstatus"
-      - "powerline-kubernetes"
-      # powerline: for the internal ip address prompt segment
-      - netifaces
-      # powerline: supposed to work spotify info, not ready
-      # - dbus
-      # neovim: needed for vim's python3 interface
-      - pynvim
-      # this is for git pre-commits
-      - pre-commit
-      # python development: linting/auto-linting
-      - flake8
-      - pyflakes
-      - ruff
-      - autoflake
-      # python: for building and installing packages
-      - pip
-      - build
-      - twine
-      - poetry
-      # python: does some magic with imports when developing
-      - autoimport
-    macOS:
-      # this is for hacking on the iterm2 python api
-      - iterm2
-    devops:
-      - smol-k8s-lab
-      # need this for python notebooks
-      - ipykernel
-      # classic python notebooks
-      - notebook
-      # latest jupyter notebooks
-      - jupyterlab
-      # notebook-driven development platform
-      - nbdev
-      # notebooks in the terminal 💚
-      - euporie
-      # Voilà turns Jupyter notebooks into standalone web apps
-      # - voila
-      # this is for markdown notebook docs and such
-      - quarto

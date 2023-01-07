@@ -1,0 +1,159 @@
+---
+apt:
+  emoji: "🙃"
+  commands:
+    list: "scripts/get_apt_list.sh"
+    update: "sudo apt-get update -y"
+    upgrade: "sudo apt-get upgrade -y"
+    install: "sudo apt-get install -y "
+    cleanup: "sudo apt-get autoremove -y"
+  packages:
+    default:
+      - bash-completion
+      - curl
+      # needed for compiling things
+      - gcc
+      # BEGIN: makes youcompleteme work
+      - build-essential
+      - cmake
+      - vim-nox
+      - python3-dev
+      - mono-complete
+      - openjdk-17-jdk
+      - openjdk-17-jre
+      # END: makes youcompleteme work
+      # grep alternative
+      - silversearcher-ag
+      # this should let you use the a yubikey for auth
+      - libpam-yubico
+      # vpn
+      - wireguard
+      # troubleshooting
+      - sysstat
+      # networking and firewall
+      - iptables
+      - net-tools
+      # package manager
+      - snapd
+      # print a pretty pallete to see all colors the terminal can render
+      - colortest
+      # help fix locale issues
+      - "locales-all"
+
+    devops:
+      - docker-ce
+      - docker-ce-cli
+      - docker.io
+      - containerd.io
+      # like top but for GPUs
+      - nvtop
+    gui:
+      # package manager for gui apps
+      - flatpak
+      # needed for freetube
+      - youtube-dl
+      # terminal emulator for linux
+      - terminator
+      # this lets you install flatpak packages via the gui
+      - gnome-software-plugin-flatpak
+      # gui firewall
+      - gufw
+      # pdf viewer with themeing
+      - zathura
+      # commented out till nextcloud is working
+      # - nextcloud-desktop
+      # libreoffice is a FOSS office suite that replaces Google Docs/Office365
+      - libreoffice
+    gaming:
+      # helpful for gaming on linux
+      - "nvidia-driver-libs:i386"
+      - lutris
+      - "steam:i386"
+      # to format disks to exFAT; FAT is too thin for modern windows 10 ISOs
+      # - exfat-utils
+
+flatpak:
+  emoji: "🫓 "
+  commands:
+    setup: "flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
+    list: "flatpak list --user --columns=application"
+    install: "flatpak install --user --app -y "
+  packages:
+    gui:
+      - "org.freedesktop.Platform/x86_64/21.08"
+      # password manager
+      - com.bitwarden.desktop
+      # youtube alternative
+      - io.freetubeapp.FreeTube
+      - org.wezfurlong.wezterm
+
+snap:
+  emoji: "🫰 "
+  commands:
+    upgrade: "sudo snap refresh"
+    list: "snap list"
+    install: "sudo snap install "
+  packages:
+    gui:
+      - core
+      # screen debugger/sharing tool for android
+      - scrcpy
+      # rss feed reader
+      - "fluent-reader --candidate"
+      # media player
+      - vlc
+
+# most of this is actually for powerline, my shell prompt
+pip3.11:
+  emoji: "🐍"
+  commands:
+    list: "pip3.11 list"
+    install: "pip3.11 install --upgrade "
+  packages:
+    default:
+      # keep ourselves up to date
+      - onboardme
+      # powerline: (status line for tmux/BASH)
+      - "git+ssh://git@github.com/powerline/powerline"
+      - "powerline-gitstatus"
+      - "powerline-kubernetes"
+      # powerline: for the internal ip address prompt segment
+      - netifaces
+      # powerline: supposed to work spotify info
+      - dbus
+      # neovim: needed for vim's python3 interface
+      - pynvim
+      # this is for git pre-commits
+      - pre-commit
+      # python development: linting/auto-linting
+      - ruff
+      - flake8
+      - pyflakes
+      - autoflake
+      # python: does some magic with imports when developing
+      # - autoimport
+      # python: for building and installing packages
+      - pip
+      - poetry
+      - build
+      - twine
+    macOS:
+      # this is for hacking on the iterm2 python api
+      - iterm2
+    devops:
+      # this is a k8s tool to spin up clusters on your local machine
+      - smol-k8s-lab
+      # need this for python notebooks
+      - ipykernel
+      # classic python notebooks
+      - notebook
+      # latest jupyter notebooks
+      - jupyterlab
+      # notebook-driven development platform
+      - nbdev
+      # notebooks in the terminal 💚
+      - euporie
+      # Voilà turns Jupyter notebooks into standalone web apps
+      # - voila
+      # this is for markdown notebook docs and such
+      - quarto
