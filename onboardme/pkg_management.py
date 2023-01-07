@@ -94,7 +94,7 @@ def run_pkg_mngrs(pkg_mngrs: list, pkg_groups=[]) -> None:
                         pkg_groups = list(pkg_groups)
                     pkg_groups.append("macOS")
                     # this installs macOS brew taps
-                    install_brew_taps(pkg_mngr_dict['taps'])
+                    install_brew_taps(pkg_mngr_dict['taps']['macOS'])
 
         # make sure that the package manager has any groups that were passed in
         if any(check in pkg_groups for check in available_pkg_groups):

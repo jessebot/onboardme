@@ -15,13 +15,13 @@ from .console_logging import print_panel
 
 def load_cfg(config_file: str) -> dict:
     """
-    load yaml config files for onboardme.
-    return dict
+    load yaml config files for onboardme
     """
     # make sure the path is valid
     if path.exists(config_file):
         with open(config_file, 'r') as yaml_file:
             return yaml.safe_load(yaml_file)
+    # return empty dict if there was no file
     return {}
 
 
@@ -51,7 +51,7 @@ def check_os_support():
                     "[cornflower_blue]Compatibility Check")
 
 
-def process_steps(steps=[], firewall=False, browser=False):
+def process_steps(steps: list, firewall=False, browser=False):
     """
     process which steps to run for which OS, which steps the user passed in,
     and then make sure dependent steps are always run.
@@ -81,7 +81,7 @@ def process_steps(steps=[], firewall=False, browser=False):
     return result_steps
 
 
-def sort_pkgmngrs(package_managers_list=[]):
+def sort_pkgmngrs(package_managers_list: list) -> list:
     """
     make sure the package managers are in the right order 🤦
     e.g. apt installs snap and flatpak, so niether can be run until apt is run
@@ -100,7 +100,8 @@ def sort_pkgmngrs(package_managers_list=[]):
     return reordered_list
 
 
-def fill_in_defaults(defaults={}, user_config={}, always_prefer_default=False):
+def fill_in_defaults(defaults: dict, user_config: dict,
+                     always_prefer_default=False) -> dict:
     """
     Compares/Combines a default dict and another dict. Prefer default values
     only if the value is empty in the second dict. Then return new dict.

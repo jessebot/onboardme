@@ -15,7 +15,7 @@ from .subproc import subproc
 
 def setup_dot_files(OS='Linux', overwrite=False,
                     git_url="https://github.com/jessebot/dot_files.git",
-                    branch="main"):
+                    branch="main") -> None:
     """
     note on how we're doing things, seperate dot files repo:
     https://probablerobot.net/2021/05/keeping-'live'-dotfiles-in-a-git-repo/
@@ -65,11 +65,10 @@ def setup_dot_files(OS='Linux', overwrite=False,
                f"{HOME_DIR}/ with the file(s) listed in the above table, run:"
                "\n[green]onboardme [warn]--overwrite[/warn]")
         print_msg(msg)
-    return
 
 
 def print_git_file_table(remote_git_files=[], file_verb="", branch="",
-                         git_url=""):
+                         git_url="") -> None:
     """
     Takes a list of files and pretty prints them in a nice table in 2 columns:
         remote_git_files - [], list of files to print in 2 columns
@@ -114,4 +113,3 @@ def print_git_file_table(remote_git_files=[], file_verb="", branch="",
     msg = (f"{emote} The following file(s) {file_verb} [grn]"
            f"origin[/grn]/[grn]{branch}[/grn] in [grn]{git_repo}")
     print_panel(table, msg, "left")
-    return

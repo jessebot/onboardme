@@ -12,6 +12,7 @@ brew:
     macOS:
       - "wez/wezterm"
       - "zegervdv/zathura"
+      - "homebrew/cask-fonts"
   packages:
     # these are all for both macOS and Debian
     default:
@@ -115,6 +116,11 @@ brew:
       - cmake
       # so that bash completion stuff works
       - "bash-completion@2"
+      # zathura is a document viewer
+      - zathura
+      - zathura-pdf-mupdf
+      - "--cask font-mononoki"
+      - "--cask font-hack-nerd-font"
       # this lets us resize windows
       - "--cask rectangle"
       # productivity search and command bar: replacing with cerebro soon
@@ -125,8 +131,8 @@ brew:
       # - "--cask nextcloud"
       # Default terminal used by most macOS users, standard
       - "--cask iterm2"
-      # backup terminal written in javascript :shrug:
-      - "--cask hyper"
+      # wezterm: Rust based terminal the is cross-OS-compatible
+      - "--cask wez/wezterm/wezterm"
       # gives us the default gnu/linux sed we all know and love
       - "gnu-sed"
       # remap keys on macOS
@@ -145,19 +151,11 @@ brew:
       - "--cask protonvpn"
       # email
       - "--cask protonmail-bridge"
-      # zathura is a document viewer
-      - zathura
-      - zathura-pdf-mupdf
       # libreoffice is a FOSS office suite that replaces Google Docs/Office365
       - "--cask libreoffice"
-      # wezterm: Rust based terminal. I mostly use iterm2, but I use this on
-      # linux and sometimes need to test on macOS for whatever reason
-      - "--cask wez/wezterm/wezterm"
     devops:
       # terraform for building stuff
       - terraform
-      # manage multiple versions of terraform
-      - tfenv
       # cli for k8s (kubernetes)
       - kubectl
       # kubectl plugin manager
@@ -166,15 +164,18 @@ brew:
       - k9s
       # package manager for k8s
       - helm
-      # manages helm files
-      - helmfile
-      # Bitnami sealed-secrets cli: encrypt secrets in yaml files for gitops
-      - kubeseal
       # gitops continuous delivery for k8s configs
       - argocd
       # KinD (Kubernetes in Docker), for small k8s clusters for testing
       - kind
-      # aws work stuff
+      # other useful goodies
+      # manage multiple versions of terraform
+      # - tfenv
+      # Bitnami sealed-secrets cli: encrypt secrets in yaml files for gitops
+      # - kubeseal
+      # manages multiple helm files
+      # - helmfile
+      # AWS's CLI
       # "aws-cli"
       # aws credentials switcher
       # "--cask aws-vault"
