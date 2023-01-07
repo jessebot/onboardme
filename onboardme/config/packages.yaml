@@ -232,8 +232,6 @@ apt:
       - flatpak
       # needed for freetube
       - youtube-dl
-      # terminal emulator for linux
-      - terminator
       # this lets you install flatpak packages via the gui
       - gnome-software-plugin-flatpak
       # gui firewall
