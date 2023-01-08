@@ -154,6 +154,8 @@ brew:
       # libreoffice is a FOSS office suite that replaces Google Docs/Office365
       - "--cask libreoffice"
     devops:
+      # for backups
+      - restic
       # terraform for building stuff
       - terraform
       # cli for k8s (kubernetes)
