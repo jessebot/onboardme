@@ -189,11 +189,18 @@ def install_pkg_group(install_cmd: str, pkgs_to_install: list,
 
 def install_brew_taps(taps: list) -> None:
     """
-    installs brew taps from packages.yaml
+    Checks current brew taps, and then runs brew tap {tap} on any taps that are
+    in a list of git repos from packages.yaml, and aren't already tapped
     """
+    current_taps = subproc(["brew tap"])
+
     # for each tap, complete cmd by prepending `brew tap`
     for index, tap in enumerate(taps):
-        taps[index] = "brew tap " + tap
+        # only brew tap if they don't already exist
+        if tap not in current_taps:
+            taps[index] = "brew tap " + tap
+        else:
+            taps.remove(tap)
 
     # run all brew taps
     subproc(taps)
