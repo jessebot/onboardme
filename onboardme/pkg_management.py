@@ -135,8 +135,8 @@ def run_pkg_mngrs(pkg_mngrs: list, pkg_groups=[]) -> None:
             for pkg_group in pkg_groups:
                 # if package group is in the packages.yaml file
                 if pkg_group in available_pkg_groups:
-                    # for macOS, we sometimes have extra homebrew taps
                     if pkg_group == "macOS":
+                        # zathura needs some help on macOS
                         check_zathura()
 
                     install_pkg_group(pkg_cmds['install'],
