@@ -38,13 +38,12 @@ def vim_setup() -> None:
         init_ycm = True
 
     # this is for installing vim-plug
-    autoload_dir = path.join(xdg_config_home(), 'vim/autoload')
-    url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    autoload_dir = path.join(vim_dir, 'autoload')
     if not path.exists(autoload_dir):
-        print_msg('[i]Creating directory structure and downloading [b]' +
-                  'vim-plug[/b]...')
+        print_msg('[i]Creating directory structure & downloading [b]vim-plug[/b]...'
+        url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/'
         Path(autoload_dir).mkdir(parents=True, exist_ok=True)
-        wget.download(url, autoload_dir)
+        wget.download(url + 'plug.vim', autoload_dir)
 
     # installs the vim plugins if not installed, updates vim-plug, and then
     # updates all currently installed plugins
