@@ -93,8 +93,6 @@ def run_pkg_mngrs(pkg_mngrs: list, pkg_groups=[]) -> None:
                     if type(pkg_groups) is tuple:
                         pkg_groups = list(pkg_groups)
                     pkg_groups.append("macOS")
-                    # this installs macOS brew taps
-                    install_brew_taps(pkg_mngr_dict['taps']['macOS'])
 
         # make sure that the package manager has any groups that were passed in
         if any(check in pkg_groups for check in available_pkg_groups):
@@ -112,6 +110,10 @@ def run_pkg_mngrs(pkg_mngrs: list, pkg_groups=[]) -> None:
                          "https://snapcraft.io/docs/installing-snap-on-debian")
                 # continues onto the next package manager
                 continue
+
+            if pkg_mngr == 'brew':
+                # this installs macOS brew taps
+                install_brew_taps(pkg_mngr_dict['taps']['macOS'])
 
             # run package manager specific setup if needed: update/upgrade
             run_preinstall_cmds(pkg_cmds, pkg_groups)
@@ -192,18 +194,16 @@ def install_brew_taps(taps: list) -> None:
     Checks current brew taps, and then runs brew tap {tap} on any taps that are
     in a list of git repos from packages.yaml, and aren't already tapped
     """
-    current_taps = subproc(["brew tap"])
+    current_taps = subproc(["brew tap"]).split('\n')
+    log.debug(f"taps list is: {taps}")
+    log.debug(f"Current taps are: {current_taps}")
 
     # for each tap, complete cmd by prepending `brew tap`
     for index, tap in enumerate(taps):
+        log.debug(f"index: {index} tap: {tap}")
         # only brew tap if they don't already exist
         if tap not in current_taps:
-            taps[index] = "brew tap " + tap
-        else:
-            taps.remove(tap)
-
-    # run all brew taps
-    subproc(taps)
+            subproc(["brew tap " + tap])
 
 
 def check_zathura() -> None:
