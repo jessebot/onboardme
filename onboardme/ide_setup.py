@@ -21,7 +21,8 @@ from .subproc import subproc
 def vim_setup() -> None:
     """
     Installs vim-plug: does a wget on plug.vim
-    Installs vim plugins: calls vim with +PlugInstall/Upgrade/Upgrade
+    Installs vim plugins: calls vim with +Plug[Install,Upgrade,Upgrade]
+    Compiles youcompleteme if necessary
     """
     print_header('[b]vim-plug[/b] and [green][i]Vim[/i][/green] plugins '
                  'installation [dim]and[/dim] upgrades')
@@ -30,6 +31,9 @@ def vim_setup() -> None:
     vim_dir = path.join(xdg_config_home(), 'vim')
     if not path.exists(vim_dir):
         vim_dir = path.join(HOME_DIR, '.vim')
+        xdg = False
+    else:
+        xdg = True
 
     # trick to not run youcompleteme init every single time
     init_ycm = False
@@ -40,20 +44,25 @@ def vim_setup() -> None:
     # this is for installing vim-plug
     autoload_dir = path.join(vim_dir, 'autoload')
     if not path.exists(autoload_dir):
-        print_msg('[i]Creating directory structure & downloading [b]vim-plug[/b]...'
-        url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/'
+        print_msg('[i]Creating dir structure & downloading [b]vim-plug[/b]...')
         Path(autoload_dir).mkdir(parents=True, exist_ok=True)
+        url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/'
         wget.download(url + 'plug.vim', autoload_dir)
 
     # installs the vim plugins if not installed, updates vim-plug, and then
     # updates all currently installed plugins
-    subproc(['vim +PlugInstall +PlugUpgrade +PlugUpdate +qall!'],
-            quiet=True)
+    plug_cmds = "--not-a-term +PlugInstall +PlugUpgrade +PlugUpdate +qall!"
+    if xdg:
+        subproc([f'vim -u {vim_dir}/vimrc {plug_cmds}'], quiet=True)
+    else:
+        subproc([f'vim {plug_cmds}'], quiet=True)
+
     print_sub_header('Vim Plugins installed.')
 
-    # if we need to install youcompleteme, run the compile script
+    # if we need to install YouCompleteMe, run the compile script
     if init_ycm:
         if path.exists(ycm_dir):
+            print_sub_header("Compiling YouCompleteMe vim plugin.")
             # This is for you complete me, which is a python completion module
             subproc(["chmod +x install.py", "python3.11 install.py --all"],
                     cwd=ycm_dir)
