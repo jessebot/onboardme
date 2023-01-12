@@ -12,10 +12,14 @@ Everything we know about gaming on Debian (tested on Bookworm).
 On Debian, install lutris via flatpak:
 
 ```bash
+# installing lutris
+flatpak install net.lutris.Lutris
+
+# running lutris
+flatpak run net.lutris.Lutris
 ```
 
 The version of lutris in apt had issues.
-
 
 ## Playing an Epic Games Store game
 1. Install ESO (the Epic Games Store) via lutris.
@@ -33,17 +37,21 @@ Then you'll be guided through installing everything you need.
 
 ### Xbox controller for Debian drivers
 Debian says [most controllers *should* "just work"](https://wiki.debian.org/Gamepad) now.
+Still probably install the `steam-devices` package from apt though.
 
 We previously used [this](https://launchpad.net/~grumbel/+archive/ubuntu/ppa),
 but it's a bit out of date now, given that `apt-key` is deprecated.
 Will update this later with better instructions, if any.
-Still probably install the `steam-devices` package from apt though.
-
 
 ## Steam on Debian
 Install Steam via flatpak:
 
 ```bash
+# install steam
+flatpak install com.valvesoftware.Steam
+
+# run steam
+flatpak run com.valvesoftware.Steam
 ```
 
 Steam via snap on Debian had font issues. Steam on apt didn't work at all.
