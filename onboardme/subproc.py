@@ -9,7 +9,7 @@ from subprocess import PIPE, Popen
 from rich.console import Console
 
 
-def subproc(commands=[], **kwargs):
+def subproc(commands: list, **kwargs):
     """
     Takes a list of BASH commands to run in a subprocess sequentially.
     Optional keyword arguments:
@@ -51,7 +51,7 @@ def subproc(commands=[], **kwargs):
         return output
 
 
-def run_subprocess(command, **kwargs):
+def run_subprocess(command: str, **kwargs):
     """
     Takes a str commmand to run in BASH in a subprocess.
     Typically run from subproc, which handles output printing.
@@ -63,7 +63,6 @@ def run_subprocess(command, **kwargs):
         env       - environment variables you'd like to pass in
     """
     # subprocess expects a list if there are spaces in the command
-    log.debug(command)
     cmd = command.split()
     log.debug(cmd)
     log.debug(kwargs)

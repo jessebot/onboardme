@@ -11,13 +11,14 @@ from rich.text import Text
 from rich.theme import Theme
 
 # custom local module
-from .env_config import DEFAULTS, OS, VERSION
+from .constants import OS, VERSION
+from .env_config import DEFAULTS
 
 
 RECORD = False
 
 
-def pretty_choices(default_list):
+def pretty_choices(default_list: list) -> str:
     """
     Takes a list of default choices and surrounds them with a meta markup tag
     and join them with a comma for a pretty return "Choices" string.
@@ -28,10 +29,9 @@ def pretty_choices(default_list):
     return 'Choices: [meta]' + defaults + '[/meta]'
 
 
-def options_help():
+def options_help() -> dict:
     """
     Help text for all the options/switches for main()
-    Returns a dict.
     """
     dot_file_url = '[meta]https://github.com/jessebot/dot_files[/meta]'
     step_choices = pretty_choices(DEFAULTS['steps'][OS[0]])

@@ -10,26 +10,30 @@ from git import Repo, RemoteProgress
 from os import path
 from pathlib import Path
 import wget
+from xdg import xdg_config_home
 
 # custom libs
+from .constants import HOME_DIR, OS
 from .console_logging import print_header, print_sub_header, print_msg
 from .subproc import subproc
-from .env_config import HOME_DIR, OS, XDG_CONFIG_DIR
 
 
-def vim_setup():
+def vim_setup() -> None:
     """
     Installs vim-plug: does a wget on plug.vim
-    Installs vim plugins: calls vim with +PlugInstall/Upgrade/Upgrade
-    Returns True
+    Installs vim plugins: calls vim with +Plug[Install,Upgrade,Upgrade]
+    Compiles youcompleteme if necessary
     """
     print_header('[b]vim-plug[/b] and [green][i]Vim[/i][/green] plugins '
                  'installation [dim]and[/dim] upgrades')
 
     # this is to make sure we have the correct plugin directory
-    vim_dir = path.join(XDG_CONFIG_DIR, 'vim')
+    vim_dir = path.join(xdg_config_home(), 'vim')
     if not path.exists(vim_dir):
         vim_dir = path.join(HOME_DIR, '.vim')
+        xdg = False
+    else:
+        xdg = True
 
     # trick to not run youcompleteme init every single time
     init_ycm = False
@@ -38,31 +42,33 @@ def vim_setup():
         init_ycm = True
 
     # this is for installing vim-plug
-    autoload_dir = f'{HOME_DIR}/.vim/autoload'
-    url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    autoload_dir = path.join(vim_dir, 'autoload')
     if not path.exists(autoload_dir):
-        print_msg('[i]Creating directory structure and downloading [b]' +
-                  'vim-plug[/b]...')
+        print_msg('[i]Creating dir structure & downloading [b]vim-plug[/b]...')
         Path(autoload_dir).mkdir(parents=True, exist_ok=True)
-        wget.download(url, autoload_dir)
+        url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/'
+        wget.download(url + 'plug.vim', autoload_dir)
 
     # installs the vim plugins if not installed, updates vim-plug, and then
     # updates all currently installed plugins
-    subproc(['vim +PlugInstall +PlugUpgrade +PlugUpdate +qall!'],
-            quiet=True)
+    plug_cmds = "--not-a-term +PlugInstall +PlugUpgrade +PlugUpdate +qall!"
+    if xdg:
+        subproc([f'vim -u {vim_dir}/vimrc {plug_cmds}'], quiet=True)
+    else:
+        subproc([f'vim {plug_cmds}'], quiet=True)
+
     print_sub_header('Vim Plugins installed.')
 
-    # if we need to install youcompleteme, run the compile script
+    # if we need to install YouCompleteMe, run the compile script
     if init_ycm:
         if path.exists(ycm_dir):
+            print_sub_header("Compiling YouCompleteMe vim plugin.")
             # This is for you complete me, which is a python completion module
             subproc(["chmod +x install.py", "python3.11 install.py --all"],
                     cwd=ycm_dir)
 
-    return True
 
-
-def neovim_setup():
+def neovim_setup() -> None:
     """
     neovim plugins have a setup mostly already handled in your plugins.lua:
     https://github.com/wbthomason/packer.nvim#bootstrapping
@@ -83,29 +89,17 @@ def neovim_setup():
 
     print_sub_header('NeoVim Plugins installed.')
 
-    return True
 
-
-def font_setup():
+def font_setup() -> None:
     """
-    On macOS:
-      taps a brew cask and installs mononoki and hack fonts
     On Linux:
       Clones nerd-fonts repo and does a sparse checkout on only mononoki and
       hack fonts. Also removes 70-no-bitmaps.conf and links 70-yes-bitmaps.conf
 
       Then runs install.sh from nerd-fonts repo
     """
-    print_header('📝 [i]font[/i] installations')
-
-    if 'Darwin' in OS:
-        # tap special cask for various terminal fonts
-        subproc(["brew tap homebrew/cask-fonts",
-                 "brew install --cask font-mononoki",
-                 "brew install --cask font-hack-nerd-font"])
-        print_sub_header("Fonts installed/upgraded.")
-
     if 'Linux' in OS:
+        print_header('📝 [i]font[/i] installations')
         # not sure if needed anymore
         # mkdir -p ~/.local/share/fonts
 
@@ -148,4 +142,3 @@ def font_setup():
 
         print_msg('[i][dim]The fonts should be installed, however, you have ' +
                   'to set your terminal font to the new font. I rebooted too.')
-    return

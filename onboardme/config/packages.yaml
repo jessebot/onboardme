@@ -7,17 +7,24 @@ brew:
     upgrade: "brew upgrade --quiet"
     install: "brew install "
     cleanup: "brew cleanup"
+  # these are essentially just extra git repos to query for installs/updates
+  taps:
+    macOS:
+      - "wez/wezterm"
+      - "zegervdv/zathura"
+      - "homebrew/cask-fonts"
   packages:
     # these are all for both macOS and Debian
     default:
-      # for testing apis and downloading things
-      - curl
+      # TUI browser
+      - w3m
+      # this installs rustup which installs cargo and rust
+      - rustup
       - wget
       # terminal based web browser
       - lynx
-      # screen session + sharing/splitting
+      # screen session + sharing/splitting - replaces tmux :)
       - zellij
-      - tmux
       # recording a shell session to share with others
       - asciinema
       # main terminal based text editors
@@ -25,6 +32,8 @@ brew:
       - neovim
       # terminal based email client
       - neomutt
+      # fetch your mail locally
+      - offlineimap
       # fuzzy search, helps with completion and searching
       - fzf
       # ls replacement written in rust: https://github.com/Peltoche/lsd
@@ -35,8 +44,8 @@ brew:
       - rich-cli
       # file TUI: https://www.geeksforgeeks.org/ranger-a-cli-file-manager/
       - ranger
-      # preview videos in the terminal
-      - ffmpegthumbnailer
+      # preview videos in the terminal. commented by default because it is big
+      # - ffmpegthumbnailer
       # cat images in the terminal (e.g. img2sixel imagename.png)
       - libsixel
       # for working with images and making lsimg work
@@ -65,10 +74,6 @@ brew:
       - cowsay
       # revision control system
       - git
-      # github cli
-      - gh
-      # gitlab cli
-      - glab
       # programming languages and their package managers
       - python@3.11
       - go
@@ -84,7 +89,6 @@ brew:
       # search stackoverflow e.g. howdoi extend a dictionary in python
       - howdoi
       # get the quick, short text of how to use various commands
-      - tldr
       - tealdeer
       # generating SSL certs and random strings
       - openssl@3
@@ -92,22 +96,31 @@ brew:
       - bitwarden-cli
       # anti virus
       - clamav
-      # TUI browser
-      - w3m
       # TUI for gpg keys, for the lazy, like me
-      - "gpg-tui"
+      - gpg-tui
       # spotify daemon
       - spotifyd
       # spotify TUI
       - spotify-tui
+      # github cli
+      - gh
+      # gitlab cli
+      - glab
     # macOS specific stuff. Won't work with LinuxBrew
     macOS:
+      # for testing apis and downloading things
+      - curl
       # current version of bash :)
       - bash
       # for setup scripts and compiling things (e.g. YouCompleteMe)
       - cmake
       # so that bash completion stuff works
       - "bash-completion@2"
+      # zathura is a document viewer
+      - zathura
+      - zathura-pdf-mupdf
+      - "--cask font-mononoki"
+      - "--cask font-hack-nerd-font"
       # this lets us resize windows
       - "--cask rectangle"
       # productivity search and command bar: replacing with cerebro soon
@@ -118,8 +131,8 @@ brew:
       # - "--cask nextcloud"
       # Default terminal used by most macOS users, standard
       - "--cask iterm2"
-      # backup terminal written in javascript :shrug:
-      - "--cask hyper"
+      # wezterm: Rust based terminal the is cross-OS-compatible
+      - "--cask wez/wezterm/wezterm"
       # gives us the default gnu/linux sed we all know and love
       - "gnu-sed"
       # remap keys on macOS
@@ -138,16 +151,13 @@ brew:
       - "--cask protonvpn"
       # email
       - "--cask protonmail-bridge"
-      # zathura is a document viewer
-      - zathura
-      - zathura-pdf-mupdf
       # libreoffice is a FOSS office suite that replaces Google Docs/Office365
       - "--cask libreoffice"
     devops:
+      # for backups
+      - restic
       # terraform for building stuff
       - terraform
-      # manage multiple versions of terraform
-      # - tfenv
       # cli for k8s (kubernetes)
       - kubectl
       # kubectl plugin manager
@@ -156,15 +166,18 @@ brew:
       - k9s
       # package manager for k8s
       - helm
-      # manages helm files
-      # - helmfile
-      # cli for Bitnami sealed-secrets, encrypting secrets in yaml files for gitops
-      - kubeseal
       # gitops continuous delivery for k8s configs
       - argocd
       # KinD (Kubernetes in Docker), for small k8s clusters for testing
       - kind
-      # aws work stuff
+      # other useful goodies
+      # manage multiple versions of terraform
+      # - tfenv
+      # Bitnami sealed-secrets cli: encrypt secrets in yaml files for gitops
+      # - kubeseal
+      # manages multiple helm files
+      # - helmfile
+      # AWS's CLI
       # "aws-cli"
       # aws credentials switcher
       # "--cask aws-vault"
@@ -179,6 +192,10 @@ apt:
     cleanup: "sudo apt-get autoremove -y"
   packages:
     default:
+      - bash-completion
+      - curl
+      # needed for compiling things
+      - gcc
       # BEGIN: makes youcompleteme work
       - build-essential
       - cmake
@@ -187,50 +204,47 @@ apt:
       - mono-complete
       - openjdk-17-jdk
       - openjdk-17-jre
-      # END: youcompleteme
-      # troubleshooting
-      - sysstat
-      # better grep alternative
+      # END: makes youcompleteme work
+      # grep alternative
       - silversearcher-ag
       # this should let you use the a yubikey for auth
       - libpam-yubico
-      - bash-completion
+      # vpn
+      - wireguard
+      # troubleshooting
+      - sysstat
       # networking and firewall
       - iptables
       - net-tools
-      # package managers installing package managers... this is terrible.
+      # package manager
       - snapd
-      # cat images in the terminal :) works in tmux
-      - catimg
-      # this lets you ls images as thumbnails, which is helpful sometimes
-      - imagemagick
       # print a pretty pallete to see all colors the terminal can render
       - colortest
       # help fix locale issues
       - "locales-all"
-      - gcc
-      # vpn
-      - wireguard
 
     devops:
       - docker-ce
       - docker-ce-cli
+      - docker.io
       - containerd.io
+      # like top but for GPUs
+      - nvtop
     gui:
+      # package manager for gui apps
       - flatpak
+      # needed for freetube
       - youtube-dl
-      # terminal emulator for linux
-      - terminator
       # this lets you install flatpak packages via the gui
       - gnome-software-plugin-flatpak
       # gui firewall
       - gufw
+      # pdf viewer with themeing
       - zathura
       # commented out till nextcloud is working
       # - nextcloud-desktop
       # libreoffice is a FOSS office suite that replaces Google Docs/Office365
       - libreoffice
-      - nvtop
     gaming:
       # helpful for gaming on linux
       - "nvidia-driver-libs:i386"
@@ -252,6 +266,7 @@ flatpak:
       - com.bitwarden.desktop
       # youtube alternative
       - io.freetubeapp.FreeTube
+      - org.wezfurlong.wezterm
 
 snap:
   emoji: "🫰 "
@@ -281,32 +296,33 @@ pip3.11:
       - onboardme
       # powerline: (status line for tmux/BASH)
       - "git+ssh://git@github.com/powerline/powerline"
-      - "powerline-gitstatus"
-      - "powerline-kubernetes"
+      - powerline-gitstatus
+      - powerline-kubernetes
       # powerline: for the internal ip address prompt segment
       - netifaces
-      # powerline: supposed to work spotify info, not ready
-      # - dbus
+      # powerline: supposed to work spotify info
+      - dbus
       # neovim: needed for vim's python3 interface
       - pynvim
       # this is for git pre-commits
       - pre-commit
       # python development: linting/auto-linting
+      - ruff
       - flake8
       - pyflakes
-      - ruff
       - autoflake
+      # python: does some magic with imports when developing
+      # - autoimport
       # python: for building and installing packages
       - pip
+      - poetry
       - build
       - twine
-      - poetry
-      # python: does some magic with imports when developing
-      - autoimport
     macOS:
       # this is for hacking on the iterm2 python api
       - iterm2
     devops:
+      # this is a k8s tool to spin up clusters on your local machine
       - smol-k8s-lab
       # need this for python notebooks
       - ipykernel

@@ -8,33 +8,51 @@ permalink: /terminals
 
 # Terminal Emulators
 
-I use a few different terminal emulators across macOS, Debian, as well as
-Windows, and they all have their pros and cons. I'm often trying new ones right
-now, because nothing really fits all use cases yet.
+I use a couple different terminal emulators across macOS, Debian, as well as
+(rarely) Windows, and they all have their pros and cons. I was often trying new
+terminals for a while, because nothing really fit all my use cases.
 
-My main daily drivers are iTerm2 (macOS) and terminator (linux) right now,
-but I'm trying to phase out terminator since it feels old, and I want to find
-something cross platform.
+I was originally trying pretty hard to hit every feature I wanted:
+cross platform, splits, tabs, images, True color (meaning any HEX color),
+background transparency, two different fonts/sizes for ascii/nonascii characters,
+GPU accelleration, an API, and -of course- a nice community/maintainers.
 
-Update (2022-11-11 22:25:57.0 +0100): I have learned so much more about terminal
-emulators now, and I gotta say, iTerm2 really is a fantastic terminal, and I really
-wish it existed on Linux.
+Turns out that's a tall order. I had to make some compromises here and there.
 
-## Explanation of what, why, how when it comes to Terminals
+My ultimate choice was to use iTerm2 on macOS and Wezterm on Linux (and also on macOS sometimes).
 
-|      App      | Pros                       | Cons                        |
-|:-------------:|----------------------------|-----------------------------|
-| [hyper.js][0] | css?, crossplatform        | Slow on older machines with no GPU/in JS |
-| [kitty][1]    | cross platform             | non-ascii font size unajustable, community unwelcoming |
-| [tilix][2]    | :shrug:                    | linux only                   |
-| [cmder][3]    | on windows & scales/splits | kinda buggy                  |
-| [iTerm2][4]   | highly supported           | macOS only, but really good features like native image rendering and session recording |
-| [Terminator][5] | Old reliable, splits/scales/transparent | Not as customizable as I'd like |
-| [wezterm][7] | Rust?                       | I can't remember why I uninstalled it 🤔|
 
-You can find more Hyper.js docs [here](./hyper/README.md), thanks to @cloudymax :)
+## Explanation of what and why it comes to Terminals
 
-I'm still experimenting with tilix.
+This will just go over what terminals I tested and why I liked them :)
+
+#### Key:
+
+|   Symbol   | Description     |
+|:----------:|:----------------|
+|     🪟     | Windows         |
+|     🍎     | macOS           |
+|     🐧     | Linux           |
+|     🗂️     | Tabs            |
+|     ⿲     | Splits          |
+|     🖼️     | images          |
+|     🎥     | recording       |
+|     🫥     | Transparency    |
+|     🖥️     | GPU acellerated |
+| 🧑‍💻 | API             |
+
+
+|       App       | Platforms | Features         | Notable Downsides                                         |
+|:---------------:|:---------:|------------------|-----------------------------------------------------------|
+|   [wezterm][7]  |   🍎🐧🪟  | ⿲🗂️🫥 🖼️        | Honestly none to note so far                              |
+|   [iTerm2][4]   |    〿🍎〿   | ⿲🗂️🫥 🎥🖼️      | Only on macOS :(                                          |
+|  [hyper.js][0]  |   🍎🐧🪟  | ⿲🗂️🫥🧑‍💻 | Slow on older machines with no GPU, written in javascript |
+|    [cmder][3]   |    〿〿🪟   | ⿲🗂️🫥           | kinda buggy, random crashes                               |
+| [Terminator][5] |    〿🐧〿   | ⿲🗂️🫥           | community not as active anymore                           |
+|    [kitty][1]   |   🍎🐧?   | ⿲🗂️🫥  🖼️       | non-ascii font size unajustable, community unwelcoming    |
+|    [tilix][2]   |    〿🐧〿   | ?🗂️???           | small userbase                                            |
+
+I want to say I didn't give tilix a fair shot, because I ran out of funemployment funds, and had to get back to work, where I need my terminal to just work, and it needs to be able to work fast and effeciently.
 
 ## Tips and Tricks
 When you're using nerdfonts, you want to set the font in the terminal config itself,
@@ -43,7 +61,9 @@ and you want to set the encodeing to UTF-8.
 For getting your colors to match another terminal, try out [terminal.sexy][6].
 
 ### other cool stuff you do in a terminal that I wasn't sure where to put
+- You can find more Hyper.js docs [here](./hyper/README.md), thanks to @cloudymax :)
 - [additional hyper plugins](https://medium.com/cloud-native-the-gathering/hyper-terminal-plugins-that-will-make-your-life-easier-859897df79d6)
+
 
 [0]: https://hyper.is/ "hyper.is"
 [1]: https://sw.kovidgoyal.net/kitty/ "kitty"

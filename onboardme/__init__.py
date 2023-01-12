@@ -12,8 +12,8 @@ from importlib import import_module
 import logging
 from rich.logging import RichHandler
 from .help_text import RichCommand, options_help
-from .env_config import check_os_support, process_configs
-from .env_config import VERSION, OS, USR_CONFIG_FILE
+from .constants import VERSION, OS
+from .env_config import check_os_support, process_configs, USR_CONFIG_FILE
 from .env_config import DEFAULTS as OPTS
 from .console_logging import print_manual_steps
 from .dot_files import setup_dot_files
