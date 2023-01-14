@@ -2,14 +2,14 @@
 layout: default
 title: Gaming
 permalink: /gaming
-desciption: "Everything to do with gaming on Linux or MacOS"
+desciption: "Everything to do with gaming on Debian Bookworm."
 ---
 
-# Gaming Where You Weren't Meant To
-Everything we know about gaming on Debian (tested on Bookworm).
+# State of Gaming On Debian Bookworm
+This page was last updated on (2023-01-14 19:01:13.0 +0100).
 
 ## Lutris
-On Debian, install lutris via flatpak:
+On Debian, install [Lutris] via flatpak:
 
 ```bash
 # installing lutris
@@ -17,11 +17,19 @@ flatpak install net.lutris.Lutris
 
 # running lutris
 flatpak run net.lutris.Lutris
+
+# launch lutris through flatpak; this can also go in your .bashrc
+alias lutris="flatpak run net.lutris.Lutris"
 ```
 
-The version of lutris in apt had issues.
+The version of lutris in apt had issues, and we didn't try snap.
 
 ## Playing an Epic Games Store game
+This has been so difficult to do with my graphics card via lutris, that I
+actually rebought a game I originally bought via Epic Games, on steam instead.
+
+But if the game you're trying to play isn't vram intense, here's the process anyway:
+
 1. Install ESO (the Epic Games Store) via lutris.
 On debian, this has to be from flatpak installed lutris.
 
@@ -35,13 +43,13 @@ Then you'll be guided through installing everything you need.
 
 4. Launch the game from Epic Games Store. Don't launch the game from lutris directly!
 
-### Xbox controller for Debian drivers
-Debian says [most controllers *should* "just work"](https://wiki.debian.org/Gamepad) now.
-Still probably install the `steam-devices` package from apt though.
+### Saves
+Saves will default go into:
 
-We previously used [this](https://launchpad.net/~grumbel/+archive/ubuntu/ppa),
-but it's a bit out of date now, given that `apt-key` is deprecated.
-Will update this later with better instructions, if any.
+```
+# in this dir you'd have a gaming studio named dir, and in there, the games you own by them
+~/Games/epic-games-store/dosdevices/c:/users/$(whoami)/Saved\ Games/
+```
 
 ## Steam on Debian
 Install Steam via flatpak:
@@ -56,7 +64,14 @@ flatpak run com.valvesoftware.Steam
 
 Steam via snap on Debian had font issues. Steam on apt didn't work at all.
 
-### Wine
+Saves default go into:
+
+```bash
+# 1262340 is just the number I have locally, but the directory will have a different number for you
+~/.var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/compatdata/1262340/pfx/drive_c/users/steamuser/Saved\ Games
+```
+
+## Wine
 If you're on Debian, and you really have to install wine directly, you want the
 instructions on [winehq.com](https://wiki.winehq.org/Debian) which are basically:
 
@@ -71,16 +86,22 @@ sudo apt-key add winehq.key
 # create a *.list under /etc/apt/sources.list.d/ with the following content in this case for Debian bullseye
 sudo echo "deb https://dl.winehq.org/wine-builds/debian/ bullseye main" > /etc/apt/sources.list.d/wine.list
 
-# update packages
+# update packages first
 sudo apt update
 
-#Then, and ONLY THEN can you run
 sudo apt install winehq-staging
 ```
 
-## Misc
+## Xbox controller drivers
+Debian says [most controllers *should* "just work"](https://wiki.debian.org/Gamepad) now.
+Still probably install the `steam-devices` package from apt though.
+
+
+## Misc Useful
 ROMS megathread: [https://r-roms.github.io/](https://r-roms.github.io/)
 
 Also, in my travels I found these:
 - [PlayOnLinux](https://www.playonlinux.com/)
 - [u/Snoo-78612's guide to VivaPinata on Reddit](https://www.reddit.com/r/VivaPinata/comments/jke4er/viva_pinata_gnulinux_installation_guide/)
+
+[Lutris]:
