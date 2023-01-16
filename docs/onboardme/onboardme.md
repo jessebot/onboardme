@@ -149,3 +149,11 @@ It works great in combination with onboardme :)
 [Vim]: https://www.vim.org/ "vim home page"
 [w3m]: https://w3m.sourceforge.net/ "w3m home page"
 [WireGuard]: https://www.wireguard.com/ "wireguard home page"
+[documentation]: https://jessebot.github.io/onboardme/onboardme "onboardme documentation"
+[dot files]: https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments "wiki entry for dot file explanation"
+[our default dot files]: https://github.com/jessebot/dot_files "default dot files for onboardme"
+[help text]: https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/help_text.svg "an svg of the command: onboardme --help"
+[Getting Started Docs]: https://jessebot.github.io/onboardme/onboardme/getting-started "getting started documentation"
+[XDG Base Directory Spec]: https://specifications.freedesktop.org/basedir-spec/latest/ar01s03.html
+[vim-plug]: https://github.com/junegunn/vim-plug
+[packer]: https://github.com/wbthomason/packer.nvim
