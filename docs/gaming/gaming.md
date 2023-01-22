@@ -51,7 +51,61 @@ Saves will default go into:
 ~/Games/epic-games-store/dosdevices/c:/users/$(whoami)/Saved\ Games/
 ```
 
-## Steam on Debian
+## Steam on Debian - via apt - For VR
+
+First: If you have steam installed any other way, uninstall it as well as purge your nvidia drivers.
+
+Then start by updating your apt sources. Use the editor of your choice. I use vim below:
+
+```bash
+# update your sources to include non-free stuff
+sudo vim /etc/apt/sources.list
+```
+
+Then add the following line if it does not already exist:
+
+```bash
+deb http://deb.debian.org/debian/ bookworm main contrib non-free
+deb http://deb.debian.org/debian/ bullseye main contrib non-free
+```
+
+**NOTE: you need both the bookworm and bullseye lines because without it, you cannot find `steam:i386` in the future parts of this tutorial.**
+
+
+Now update to get the latest stuff:
+
+```bash
+sudo apt update
+sudo apt upgrade
+```
+
+Now you can install steam, steam-devices, and nvidia drivers:
+
+```bash
+sudo apt install steam:i386 steam-devices
+sudo apt install nvidia-driver firmware-misc-nonfree nvidia-xconfig
+
+# if this doesn't work, try a reboot :shrug:
+sudo nvidia-xconfig
+```
+
+YOU MUST NOW REBOOT. Then you can do:
+
+```bash
+sudo nvidia-xconfig
+```
+
+Now, if you're trying to do stuff with VR, you need to make sure your headset is plugged into the GPU and ON!
+
+Then you can list your devices, that hopefully shows your headset with:
+
+```bash
+nvidia-xconfig --query-gpu-info
+xrandr --verbose
+```
+
+
+## Steam on Debian - via flatpak
 Install Steam via flatpak:
 
 ```bash
@@ -62,7 +116,7 @@ flatpak install com.valvesoftware.Steam
 flatpak run com.valvesoftware.Steam
 ```
 
-Steam via snap on Debian had font issues. Steam on apt didn't work at all.
+Steam via snap on Debian had font issues. Steam on apt instructions are above.
 
 Saves default go into:
 
