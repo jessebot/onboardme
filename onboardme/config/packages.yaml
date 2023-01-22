@@ -194,9 +194,9 @@ apt:
     default:
       - bash-completion
       - curl
-      # needed for compiling things
-      - gcc
       # BEGIN: makes youcompleteme work
+      # needed for compiling things, currently specifically gcc-11
+      - gcc-11
       - build-essential
       - cmake
       - vim-nox
@@ -222,7 +222,6 @@ apt:
       - colortest
       # help fix locale issues
       - "locales-all"
-
     devops:
       - docker-ce
       - docker-ce-cli
@@ -248,7 +247,6 @@ apt:
     gaming:
       # helpful for gaming on linux
       - "nvidia-driver-libs:i386"
-      - lutris
       - "steam:i386"
       # to format disks to exFAT; FAT is too thin for modern windows 10 ISOs
       # - exfat-utils
@@ -267,6 +265,8 @@ flatpak:
       # youtube alternative
       - io.freetubeapp.FreeTube
       - org.wezfurlong.wezterm
+    gaming:
+      - lutris
 
 snap:
   emoji: "🫰 "
