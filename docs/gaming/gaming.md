@@ -95,6 +95,25 @@ YOU MUST NOW REBOOT. Then you can do:
 sudo nvidia-xconfig
 ```
 
+That should update your xorg.conf, but you'll also need to modify it anyway, and add the following line to your nvidia "Device" section:
+
+```bash
+Option "AllowHMD" "yes"
+```
+
+Example of our "Device" secion in our `/etc/X11/xorg.conf`:
+
+```
+Section "Device"
+    Identifier     "Device0"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+    Option         "AllowHMD" "yes"
+EndSection
+```
+
+You don't need to reboot again, but like, who knows, we did :shrug:
+
 Now, if you're trying to do stuff with VR, you need to make sure your headset is plugged into the GPU and ON!
 
 Then you can list your devices, that hopefully shows your headset with:
@@ -104,8 +123,19 @@ nvidia-xconfig --query-gpu-info
 xrandr --verbose
 ```
 
+Launch steam from the terminal by using the command: `steam`.
+
+Now, if you're trying to use a VR headset, you can install "Steam VR" from the steam steam store. You will need to connect your VR headset, any base stations you have, and of course, your controllers, and then Steam VR SHOULD work, but for good measure, we also installed the following:
+
+```bash
+sudo apt install libva-x11-2:i386 libva2:i386 libgdk-pixbuf2.0-0:i386 libxtst6:i386 libgtk2.0-0:i386 libbz2-1.0:i386 libvdpau1:i386
+```
+
+Then reboot again, and make sure again, that everything is connected. Steam VR should prompt you for your password and then guide you through the room setup. Remember, flatpak will not prompt for your password to sudo install anything, and so it may not work for VR, so we currently recommend you use apt, not flatpak, for installing steam on Debian Bookworm (last update: 22-01-2023).
 
 ## Steam on Debian - via flatpak
+(NOTE: getting steam VR to work via flatpak is pain, and we don't recommend it)
+
 Install Steam via flatpak:
 
 ```bash
