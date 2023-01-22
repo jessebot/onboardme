@@ -6,52 +6,9 @@ desciption: "Everything to do with gaming on Debian Bookworm."
 ---
 
 # State of Gaming On Debian Bookworm
-This page was last updated on (2023-01-14 19:01:13.0 +0100).
+This page was last updated on (2023-01-22 19:21:26.0 +0100).
 
-## Lutris
-On Debian, install [Lutris] via flatpak:
-
-```bash
-# installing lutris
-flatpak install net.lutris.Lutris
-
-# running lutris
-flatpak run net.lutris.Lutris
-
-# launch lutris through flatpak; this can also go in your .bashrc
-alias lutris="flatpak run net.lutris.Lutris"
-```
-
-The version of lutris in apt had issues, and we didn't try snap.
-
-## Playing an Epic Games Store game
-This has been so difficult to do with my graphics card via lutris, that I
-actually rebought a game I originally bought via Epic Games, on steam instead.
-
-But if the game you're trying to play isn't vram intense, here's the process anyway:
-
-1. Install ESO (the Epic Games Store) via lutris.
-On debian, this has to be from flatpak installed lutris.
-
-<img src="" width="800">
-
-Then you'll be guided through installing everything you need.
-
-2. On the left side menu for lutris, select Games. Select Epic Games Store.
-
-3. Select the game you want to play and install it from ESO.
-
-4. Launch the game from Epic Games Store. Don't launch the game from lutris directly!
-
-### Saves
-Saves will default go into:
-
-```
-# in this dir you'd have a gaming studio named dir, and in there, the games you own by them
-~/Games/epic-games-store/dosdevices/c:/users/$(whoami)/Saved\ Games/
-```
-
-## Steam on Debian - via apt - For VR
+## Steam on Debian - via apt - (Recommended For VR on Debian Bookworm)
 
 First: If you have steam installed any other way, uninstall it as well as purge your nvidia drivers.
 
@@ -62,17 +19,17 @@ Then start by updating your apt sources. Use the editor of your choice. I use vi
 sudo vim /etc/apt/sources.list
 ```
 
-Then add the following line if it does not already exist:
+Then add the following lines if they don't already exist:
 
 ```bash
 deb http://deb.debian.org/debian/ bookworm main contrib non-free
 deb http://deb.debian.org/debian/ bullseye main contrib non-free
 ```
 
-**NOTE: you need both the bookworm and bullseye lines because without it, you cannot find `steam:i386` in the future parts of this tutorial.**
+**NOTE: you need both the bookworm and bullseye lines because without it, you cannot find the `steam:i386` package in the future parts of this tutorial.**
 
 
-Now update to get the latest stuff:
+Now update to pull the latest sources and then upgrade, for good measure:
 
 ```bash
 sudo apt update
@@ -133,6 +90,12 @@ sudo apt install libva-x11-2:i386 libva2:i386 libgdk-pixbuf2.0-0:i386 libxtst6:i
 
 Then reboot again, and make sure again, that everything is connected. Steam VR should prompt you for your password and then guide you through the room setup. Remember, flatpak will not prompt for your password to sudo install anything, and so it may not work for VR, so we currently recommend you use apt, not flatpak, for installing steam on Debian Bookworm (last update: 22-01-2023).
 
+
+## Xbox controller drivers
+Debian says [most controllers *should* "just work"](https://wiki.debian.org/Gamepad) now.
+Still probably install the `steam-devices` package from apt though.
+
+
 ## Steam on Debian - via flatpak
 (NOTE: getting steam VR to work via flatpak is pain, and we don't recommend it)
 
@@ -176,9 +139,49 @@ sudo apt update
 sudo apt install winehq-staging
 ```
 
-## Xbox controller drivers
-Debian says [most controllers *should* "just work"](https://wiki.debian.org/Gamepad) now.
-Still probably install the `steam-devices` package from apt though.
+## Lutris
+On Debian, install [Lutris] via flatpak:
+
+```bash
+# installing lutris
+flatpak install net.lutris.Lutris
+
+# running lutris
+flatpak run net.lutris.Lutris
+
+# launch lutris through flatpak; this can also go in your .bashrc
+alias lutris="flatpak run net.lutris.Lutris"
+```
+
+The version of lutris in apt had issues, and we didn't try snap.
+
+## Playing an Epic Games Store game
+This has been so difficult to do with my graphics card via lutris, that I
+actually rebought a game I originally bought via Epic Games, on steam instead.
+
+But if the game you're trying to play isn't vram intense, here's the process anyway:
+
+1. Install ESO (the Epic Games Store) via lutris.
+On debian, this has to be from flatpak installed lutris.
+
+<img src="" width="800">
+
+Then you'll be guided through installing everything you need.
+
+2. On the left side menu for lutris, select Games. Select Epic Games Store.
+
+3. Select the game you want to play and install it from ESO.
+
+4. Launch the game from Epic Games Store. Don't launch the game from lutris directly!
+
+### Saves
+Saves will default go into:
+
+```
+# in this dir you'd have a gaming studio named dir, and in there, the games you own by them
+~/Games/epic-games-store/dosdevices/c:/users/$(whoami)/Saved\ Games/
+```
+
 
 
 ## Misc Useful
