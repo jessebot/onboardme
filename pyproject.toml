@@ -1,6 +1,6 @@
 [tool.poetry]
 name          = "onboardme"
-version       = "0.17.0"
+version       = "0.17.1"
 description   = "Install dot files and packages, including a base mode with sensible defaults to run on most computers running Debian based distros or macOS."
 authors       = ["Jesse Hitch <jessebot@linux.com>"]
 license       = "AGPL-3.0-or-later"

@@ -110,8 +110,8 @@ pavucontrol
 
 In the GUI at the top right side, click the "Configuration" tab and set all audio devices you don't want to use to "Off". This should include a device listed as "VIVE Pro Mutimedia Audio":
 
-<a href="./pavucontrol_audio.png">
-  <img src="screenshots/pavucontrol_audio.png" width="600">
+<a href="https://raw.githubusercontent.com/jessebot/onboardme/9b61d4a07ba2d99514dff1c368a804c92c9ea83e/docs/onboardme/screenshots/pavucontrol_vive_audio.png">
+  <img src="https://raw.githubusercontent.com/jessebot/onboardme/9b61d4a07ba2d99514dff1c368a804c92c9ea83e/docs/onboardme/screenshots/pavucontrol_vive_audio.png" width="600">
 </a>
 
 In our case, since we have a living room VR headset, we mirror the VR view to a projector, and then we use a bluetooth audio hub connected via an aux cable to our living room PC's headphone jack. Connected to the bluetooth audio hub are a set of small speakers as well as the aforementioned wireless earbuds, which is why in the above screenshot you see "Built in Audio".
