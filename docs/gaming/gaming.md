@@ -6,7 +6,9 @@ desciption: "Everything to do with gaming on Debian Bookworm."
 ---
 
 # State of Gaming On Debian Bookworm
-This page was last updated on (2023-01-22 19:21:26.0 +0100).
+This is a guide for gaming on Debian Bookworm. Below we mention several closed source applications and proprietary hardware. We are not affiliated with any of these applications or hardware companies and do not recieve any compensation for preparing this guide. This guide is just what worked for us and mentions the apps and hardware that we found the most success with.
+
+This page was last updated on (2023-01-29 10:56:52.0 +0100).
 
 ## Steam on Debian - via apt - (Recommended For VR on Debian Bookworm)
 
@@ -88,8 +90,39 @@ Now, if you're trying to use a VR headset, you can install "Steam VR" from the s
 sudo apt install libva-x11-2:i386 libva2:i386 libgdk-pixbuf2.0-0:i386 libxtst6:i386 libgtk2.0-0:i386 libbz2-1.0:i386 libvdpau1:i386
 ```
 
-Then reboot again, and make sure again, that everything is connected. Steam VR should prompt you for your password and then guide you through the room setup. Remember, flatpak will not prompt for your password to sudo install anything, and so it may not work for VR, so we currently recommend you use apt, not flatpak, for installing steam on Debian Bookworm (last update: 22-01-2023).
+Then reboot again, and make sure again, that everything is connected. Steam VR should prompt you for your password and then guide you through the room setup. Remember, flatpak will not prompt for your password to sudo install anything, and so it may not work for VR, so we currently recommend you use apt, not flatpak, for installing steam on Debian Bookworm (last update: 2023-01-29 10:57:12.0 +0100).
 
+### Audio Troubleshooting for Vive VR Headsets
+We recommend you install `pavucontrol`, which is a GUI for pulseaudio.
+
+```bash
+sudo apt install pavucontrol
+```
+
+This will allow you to disable an audio device. If you're having trouble with Vive Pro Headsets, there are many suggestions online, but personally, we chose to just use a third party set of wireless earbuds, as the sound is far more consistent.
+
+To use a different audio source, here's how to do it with pavucontrol:
+
+```bash
+# type this in the terminal and hit enter, it will launch the GUI
+pavucontrol
+```
+
+In the GUI at the top right side, click the "Configuration" tab and set all audio devices you don't want to use to "Off". This should include a device listed as "VIVE Pro Mutimedia Audio":
+
+<a href="./pavucontrol_audio.png">
+  <img src="screenshots/pavucontrol_audio.png" width="600">
+</a>
+
+In our case, since we have a living room VR headset, we mirror the VR view to a projector, and then we use a bluetooth audio hub connected via an aux cable to our living room PC's headphone jack. Connected to the bluetooth audio hub are a set of small speakers as well as the aforementioned wireless earbuds, which is why in the above screenshot you see "Built in Audio".
+
+We are not affiliated with any of these brands below and do not recieve any money for advertising them. These are all just the best mid-tier price and quality devices that suit our needs and seem to work with Debian:
+
+- [Avantree Orbit - Bluetooth 5 Audio Hub](https://avantree.com/eu/orbit-tc580-bluetooth-transmitter-for-tv)
+
+These are connected to the bluetooth hub:
+- [JLAB Epic Air Sport ANC True Wireless Earbuds - mid-tier wireless earbuds](https://www.jlab.com/products/epic-air-sport-anc-true-wireless-earbuds)
+- [Mackie CR3 Duo Pack - Okay studio monitors with bluetooth capability](https://www.coolblue.be/en/product/741786/mackie-cr3-duo-pack.html)
 
 ## Xbox controller drivers
 Debian says [most controllers *should* "just work"](https://wiki.debian.org/Gamepad) now.

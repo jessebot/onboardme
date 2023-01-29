@@ -244,6 +244,8 @@ apt:
       # - nextcloud-desktop
       # libreoffice is a FOSS office suite that replaces Google Docs/Office365
       - libreoffice
+      # GUI interface for pulseaudio, so you can disable audio devices
+      - pavucontrol
     gaming:
       # helpful for gaming on linux
       - "nvidia-driver-libs:i386"
