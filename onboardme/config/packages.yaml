@@ -181,6 +181,10 @@ brew:
       # "aws-cli"
       # aws credentials switcher
       # "--cask aws-vault"
+    work:
+      # for work chats
+      - "--cask slack"
+      - "--cask zoom"
 
 apt:
   emoji: "🙃"
