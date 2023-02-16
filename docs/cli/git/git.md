@@ -105,18 +105,34 @@ git update-index --no-skip-worktree fileyouwanttoignorefuturerevisionson
 git ls-files -v . | grep ^S
 ```
 
-## Clean up old remote origin branches
+### Clean up old remote origin branches
 
 ```bash
 git fetch --prune origin
 ```
 
-## Sign off on a previous commit (or range of previous commits)
+## Edit previous commits
+
+### Sign off on a previous commit (or range of previous commits)
 
 ```bash
 # sign off on the past three commits
 git rebase --signoff HEAD~3
 ```
+
+## Modify/Add/Remove file from previous commit
+
+Here's an example for adding a changed or new file to your previous commit
+
+```bash
+# add the file you forgot
+git add testfile
+
+# this amends the previous commit and does not edit the commit message
+git commit --amend --no-edit
+```
+
+If this isn't working, please ensure you spelled amend correctly. It only has one m. (I do this all the time)
 
 <!---------------------------- references ---------------------------->
 
