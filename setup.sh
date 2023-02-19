@@ -136,7 +136,19 @@ which python3.11 > /dev/null
 py_return_code=$?
 if [ $py_return_code -ne 0 ]; then
     echo "Installing Python3.11..."
-    brew install python@3.11
+    if [ "$OS" == "Darwin" ]; then
+        brew install python@3.11
+    else
+        os_version=$(grep VERSION_CODENAME /etc/os-release | awk -F '=' '{print $2}')
+        if [ $os_version == "bookworm" ]; then
+            sudo apt install python3 python3-dev python3-pip
+        else
+            sudo apt install software-properties-common -y
+            sudo add-apt-repository ppa:deadsnakes/ppa
+            sudo apt install python3.11
+            curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
+        fi
+    fi
     echo -e "\033[92mPython3.11 installed :3 \033[00m"
 else
     echo -e "\033[92mPython3.11 already installed :3 \033[00m"
