@@ -7,10 +7,14 @@ from pathlib import Path
 # this is for rich text, to pretty print things
 from rich import box
 from rich.table import Table
+from xdg import xdg_config_home
 # custom libs
 from .constants import HOME_DIR, PWD
 from .console_logging import print_panel, print_msg
 from .subproc import subproc
+
+
+XDG_CONFIG_GIT_PATH = path.join(xdg_config_home(), 'git/config')
 
 
 def setup_dot_files(OS='Linux', overwrite=False,
@@ -27,8 +31,9 @@ def setup_dot_files(OS='Linux', overwrite=False,
     opts = {'quiet': True, 'cwd': git_dir}
 
     # global: use main as default branch, always push up new remote branch
-    cmds = ['git config --global init.defaultBranch main',
-            'git config --global push.autoSetupRemote true',
+    git_raw = "https://raw.githubusercontent.com/jessebot/dot_files/main"
+
+    cmds = [f'curl {git_raw}/.config/git/config -o {XDG_CONFIG_GIT_PATH}',
             f'git --git-dir={git_dir} --work-tree={HOME_DIR} init',
             'git config status.showUntrackedFiles no']
     subproc(cmds, spinner=False, **opts)
