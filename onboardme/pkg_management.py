@@ -1,5 +1,6 @@
 import logging as log
 from os import path
+from pathlib import Path
 import shutil
 
 from .constants import OS, PWD, XDG_CONFIG_DIR, HOME_DIR
@@ -27,6 +28,17 @@ def rotate_github_ssh_keys() -> None:
     update SSH pub keys for github.com
     """
     log.info("Rotating github.com ssh keys, just in case...")
+
+    # create directory if it doesn't exist
+    ssh_dir = path.join(HOME_DIR, '.ssh')
+    if not path.exists(ssh_dir):
+        Path(ssh_dir).mkdir(exist_ok=True)
+
+    # create file if it doesn't exist
+    known_hosts_file = path.join(ssh_dir, 'known_hosts')
+    if not path.exists(ssh_dir):
+        subproc([f"touch {known_hosts_file}"])
+
     # deletes all keys starting with github.com from ~/.ssh/known_hosts
     subproc(["ssh-keygen -R github.com"])
 
@@ -34,7 +46,7 @@ def rotate_github_ssh_keys() -> None:
     github_keys = subproc(["ssh-keyscan github.com"])
 
     # the new github.com keys are not automatically added :( so we do it here
-    with open(path.join(HOME_DIR, '.ssh/known_hosts'), 'a') as known_hosts:
+    with open(known_hosts_file, 'a') as known_hosts:
         for line in github_keys.split('/n'):
             known_hosts.write(line)
 

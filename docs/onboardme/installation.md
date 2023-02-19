@@ -24,7 +24,7 @@ Make sure you have sudo access, otherwise we won't be able to install certain th
   sudo apt install -y curl
   ```
 
-  If it's not there on Linux, you can install it with `apt` or use any default package manager like yum, or whatever people who use gentoo use
+  If it's not there on Linux, you can install it with `apt` or use any default package manager like yum, or whatever people who use gentoo use.
 
 </details>
 
