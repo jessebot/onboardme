@@ -111,6 +111,16 @@ git ls-files -v . | grep ^S
 git fetch --prune origin
 ```
 
+### Clean up local tags no longer present in remote repo
+
+```bash
+# list all local tags and delete them locally
+git tag -l | xargs git tag -d
+
+# fetch all the remote tags
+git fetch --tags
+```
+
 ## Edit previous commits
 
 ### Sign off on a previous commit (or range of previous commits)
