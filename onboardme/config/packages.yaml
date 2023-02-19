@@ -158,6 +158,8 @@ brew:
       - restic
       # terraform for building stuff
       - terraform
+      - tflint
+      - terraform-docs
       # cli for k8s (kubernetes)
       - kubectl
       # kubectl plugin manager
