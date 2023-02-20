@@ -197,3 +197,12 @@ require('user.folding')
 ```
 
 _Note: make sure you source your lua script AFTER your plugins that you're referencing from your package manager (vim-plug, packer, etc)._
+
+# TreeSitter
+Treesitter is probably your best bet for syntax highlighting in neovim, and you'll use this plugin: [nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
+
+If you want extra neovim treesitter features for checking into things like highlighting, you can also install [nvim-treesitter/playground](https://github.com/nvim-treesitter/playground). For example, if you want to check syntax highlighting for a given word, you can do:
+
+```vim
+:TSHighlightCapturesUnderCursor
+```
