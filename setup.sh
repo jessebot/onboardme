@@ -134,24 +134,29 @@ echo -e "--------------------------\033[94m Checking for Python3 and pip3\033[00
 # check to make sure we have python3 and pip3 installed
 which python3.11 > /dev/null
 py_return_code=$?
+
 if [ $py_return_code -ne 0 ]; then
-    echo "Installing Python3.11..."
     if [ "$OS" == "Darwin" ]; then
+	echo "Installing Python3.11 via brew..."
         brew install python@3.11
+    	echo -e "\033[92mPython3.11 installed :3 \033[00m"
     else
-        os_version=$(grep VERSION_CODENAME /etc/os-release | awk -F '=' '{print $2}')
-        if [ $os_version == "bookworm" ]; then
-            sudo apt install python3 python3-dev python3-pip
-        else
-            sudo apt install software-properties-common -y
-            sudo add-apt-repository ppa:deadsnakes/ppa
-            sudo apt install python3.11
-            curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
-        fi
+	echo "Installing Python3.11 via apt..."
+        sudo apt install software-properties-common -y
+        sudo add-apt-repository ppa:deadsnakes/ppa
+        sudo apt install python3.11
+        curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
+	echo -e "\033[92mPython3.11 installed :3 \033[00m"
     fi
-    echo -e "\033[92mPython3.11 installed :3 \033[00m"
 else
     echo -e "\033[92mPython3.11 already installed :3 \033[00m"
+    which pip3.11 > /dev/null
+    pip_return_code=$?
+    if [ $pip_return_code -ne 0 ]; then
+        echo -e "\033[92mInstalling pip via apt... \033[00m"
+        sudo apt-get update && apt-get install -y python3-pip
+        echo -e "\033[92mPip3.11 installed :3 \033[00m"
+    fi
 fi
 
 echo -e "--------------------------\033[94m Installing OnBoardMe :D \033[00m -------------------------"
