@@ -154,7 +154,7 @@ else
     pip_return_code=$?
     if [ $pip_return_code -ne 0 ]; then
         echo -e "\033[92mInstalling pip via apt... \033[00m"
-        sudo apt-get update && apt-get install -y python3-pip
+        sudo apt-get update && sudo apt-get install -y python3-pip
         echo -e "\033[92mPip3.11 installed :3 \033[00m"
     fi
 fi
