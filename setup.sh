@@ -36,7 +36,7 @@ echo -e "\n-------------------------------- \033[94m 🎬 Beginning Setup \033[0
 echo ""
 if [[ "$OS" == *"Linux"* ]]; then
     echo -e "---------------------------- \033[94m Updating existing apt packages \033[00m --------------------"
-    sudo apt update && sudo apt upgrade
+    DEBIAN_FRONTEND=noninteractive sudo apt-get update; sudo apt-get -y upgrade
     echo -e "\033[92m apt updated/upgraded :3 \033[00m"
 fi
 
@@ -138,7 +138,8 @@ py_return_code=$?
 if [ $py_return_code -ne 0 ]; then
     if [ "$OS" == "Darwin" ]; then
 	echo "Installing Python3.11 via brew..."
-        brew install python@3.11
+        brew install python@3.11 pipx
+	pipx ensurepath
     	echo -e "\033[92mPython3.11 installed :3 \033[00m"
     else
 	echo "Installing Python3.11 via apt..."
@@ -154,14 +155,15 @@ else
     pip_return_code=$?
     if [ $pip_return_code -ne 0 ]; then
         echo -e "\033[92mInstalling pip via apt... \033[00m"
-        sudo apt-get update && sudo apt-get install -y python3-pip
-        echo -e "\033[92mPip3.11 installed :3 \033[00m"
+        sudo apt-get update && sudo apt-get install -y python3-pip pipx python3-venv
+        pipx ensurepath
+	echo -e "\033[92mPip3.11 installed :3 \033[00m"
     fi
 fi
 
 echo -e "--------------------------\033[94m Installing OnBoardMe :D \033[00m -------------------------"
 
-pip3.11 install onboardme
+pipx install onboardme
 pip_install_return_code=$?
 
 if [ $pip_install_return_code -ne 0 ]; then
