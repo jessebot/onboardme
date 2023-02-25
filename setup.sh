@@ -50,7 +50,7 @@ else
     echo "Git not installed or in path, attempting to install git..."
     # we use *"linux"* because linux2 is a possibility, and who knows what else
     if [[ "$OS" == "Linux"* ]]; then
-        sudo apt install git
+        DEBIAN_FRONTEND=noninteractive sudo apt-get install -y git
         git_return_code=$?
         if [ $git_return_code -ne 0 ]; then
             echo "Git didn't install. This may be because you don't have main branch"
@@ -123,7 +123,7 @@ which brew > /dev/null
 brew_return_code=$?
 if [ $brew_return_code -ne 0 ]; then
     echo "Installing brew really quick, this will require your credentials for sudo abilities..."
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     echo -e "\033[92mBrew installed :3 \033[00m"
 else
     echo -e "\033[92mBrew already installed :3 \033[00m"
@@ -143,7 +143,8 @@ if [ $py_return_code -ne 0 ]; then
     	echo -e "\033[92mPython3.11 installed :3 \033[00m"
     else
 	echo "Installing Python3.11 via apt..."
-        sudo apt install software-properties-common -y
+        DEBIAN_FRONTEND=noninteractive && \ 
+	sudo apt-get install software-properties-common -y && \
         sudo add-apt-repository ppa:deadsnakes/ppa
         sudo apt install python3.11
         curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
@@ -155,7 +156,9 @@ else
     pip_return_code=$?
     if [ $pip_return_code -ne 0 ]; then
         echo -e "\033[92mInstalling pip via apt... \033[00m"
-        sudo apt-get update && sudo apt-get install -y python3-pip pipx python3-venv
+        DEBIAN_FRONTEND=noninteractive && \
+	sudo apt-get update && \
+	sudo apt-get install -y python3-pip pipx python3-venv
         pipx ensurepath
 	echo -e "\033[92mPip3.11 installed :3 \033[00m"
     fi
