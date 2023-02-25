@@ -82,9 +82,9 @@ def neovim_setup() -> None:
     print_header('[b]packer[/b] and [green][i]NeoVim[/i][/green] plugins '
                  'installation [dim]and[/dim] upgrades')
 
-    # updates all currently installed plugins
-    commands = ["nvim --headless +PackerInstall",
-                "nvim --headless +PackerSync"]
+    # updates all currently installed plugins and compiles any that need it
+    commands = ["nvim --headless +PackerSync",
+                "nvim --headless +PackerCompile"]
     subproc(commands)
 
     print_sub_header('NeoVim Plugins installed.')
