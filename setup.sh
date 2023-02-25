@@ -146,6 +146,7 @@ if [ $py_return_code -ne 0 ]; then
         DEBIAN_FRONTEND=noninteractive && \ 
 	sudo apt-get install software-properties-common -y && \
         sudo add-apt-repository ppa:deadsnakes/ppa
+        sudo apt install python3.11
         curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
 	echo -e "\033[92mPython3.11 installed :3 \033[00m"
     fi
