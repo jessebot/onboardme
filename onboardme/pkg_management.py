@@ -206,6 +206,7 @@ def install_brew_taps(taps: list) -> None:
     Checks current brew taps, and then runs brew tap {tap} on any taps that are
     in a list of git repos from packages.yaml, and aren't already tapped
     """
+    log.info("Checking current taps.")
     current_taps = subproc(["brew tap"]).split('\n')
     log.debug(f"taps list is: {taps}")
     log.debug(f"Current taps are: {current_taps}")
@@ -216,6 +217,8 @@ def install_brew_taps(taps: list) -> None:
         # only brew tap if they don't already exist
         if tap not in current_taps:
             subproc(["brew tap " + tap])
+        else:
+            log.info(f"{tap} already installed. Moving on.")
 
 
 def check_zathura() -> None:

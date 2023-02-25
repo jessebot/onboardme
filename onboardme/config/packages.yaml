@@ -138,8 +138,6 @@ brew:
       - "gnu-sed"
       # remap keys on macOS
       - "--cask karabiner-elements"
-      # This should be docker desktop
-      - "--cask docker"
       # primary media player
       - "--cask vlc"
       # youtube replacement
@@ -155,6 +153,11 @@ brew:
       # libreoffice is a FOSS office suite that replaces Google Docs/Office365
       - "--cask libreoffice"
     devops:
+      - "docker"
+      # docker desktop
+      - "--cask docker"
+      # colima is a docker desktop replacement
+      - "colima"
       # for backups
       - restic
       # terraform for building stuff
