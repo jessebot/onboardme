@@ -9,7 +9,7 @@ description: "Plugins for neovim and how to install them"
 ---
 
 # Neovim plugins
-This got long enough it needed it's own page. If you just want to see what plugins we use here at onboardme, you can check them out [here](https://github.com/jessebot/dot_files).
+This got long enough it needed it's own page. If you just want to see what plugins we use here at onboardme, you can check them out [here](https://github.com/jessebot/dot_files/blob/main/.config/nvim/lua/plugins.lua).
 
 
 ## Know issues
