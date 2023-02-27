@@ -9,9 +9,11 @@ description: "Plugins for neovim and how to install them"
 ---
 
 # Neovim plugins
-This got long enough it needed it's own page
+This got long enough it needed it's own page. If you just want to see what plugins we use here at onboardme, you can check them out [here](https://github.com/jessebot/dot_files).
+
 
 ## Know issues
+
 <details>
   <summary>Python3 Plugins</summary>
 
@@ -117,12 +119,8 @@ return require('packer').startup(function(use)
     -- something like vim-plug, like: Plug 'junegunn/limelight.vim'
     use '~/.vim/plugged/limelight.vim'
 
-
-    -- Example plugin where we run :Updateremoteuseins after loadin the plugin
-    -- and only run it on python filetypes.
-    use {'numirias/semshi',  run = ':UpdateRemoteuseins', ft = 'py'}
-    -- this would be like running this for vim-plug:
-    -- Plug 'numirias/semshi', { 'do': ':UpdateRemoteuseins', 'filetype': 'py' }
+    -- Example github based plugin: https://github.com/mfussenegger/nvim-treehopper
+    use {'mfussenegger/nvim-treehopper'}
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
