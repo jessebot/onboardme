@@ -97,7 +97,7 @@ def run_pkg_mngrs(pkg_mngrs: list, pkg_groups=[]) -> None:
 
         available_pkg_groups = pkg_mngr_dict['packages']
         log.debug(f"pkg groups for {pkg_mngr} are {available_pkg_groups}")
-
+        
         # brew has a special flow because it works on both linux and mac
         if pkg_mngr == 'brew':
             if 'Darwin' in OS:
@@ -124,8 +124,9 @@ def run_pkg_mngrs(pkg_mngrs: list, pkg_groups=[]) -> None:
                 continue
 
             if pkg_mngr == 'brew':
-                # this installs macOS brew taps
-                install_brew_taps(pkg_mngr_dict['taps']['macOS'])
+                if 'Darwin' in OS:
+                    # this installs macOS brew taps
+                    install_brew_taps(pkg_mngr_dict['taps']['macOS'])
 
             # run package manager specific setup if needed: update/upgrade
             run_preinstall_cmds(pkg_cmds, pkg_groups)
