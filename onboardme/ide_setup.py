@@ -78,13 +78,14 @@ def neovim_setup() -> None:
     uses special command (with packer bootstrapped) to have packer setup your
     your configuration (or simply run updates) and close once all operations
     are completed
+
+    This may switch to lazy soon
     """
     print_header('[b]packer[/b] and [green][i]NeoVim[/i][/green] plugins '
                  'installation [dim]and[/dim] upgrades')
 
-    # updates all currently installed plugins and compiles any that need it
-    commands = ["nvim --headless +PackerSync",
-                "nvim --headless +PackerCompile"]
+    # updates all currently installed plugins (still need to do :PackerCompile)
+    commands = ["nvim --headless +PackerSync"]
     subproc(commands)
 
     print_sub_header('NeoVim Plugins installed.')

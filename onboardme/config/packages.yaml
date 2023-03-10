@@ -25,8 +25,7 @@ brew:
       - zellij
       # recording a shell session to share with others
       - asciinema
-      # main terminal based text editors
-      - vim
+      # main terminal based text editor is now neovim, but you can still install vim
       - neovim
       # terminal based email client
       - neomutt

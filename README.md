@@ -33,8 +33,8 @@ Get your daily driver just the way you like it, from dot files insta
 - Keep your [vim-plug] or [packer] plugins installed and up to date in both vim and neovim.
 
 #### Easy `yaml` config files
-- [config files](https://github.com/jessebot/onboardme#configuration) in your `$HOME/.config/onboardme/` directory
-  - we also support the [XDG Base Directory Spec] and will use `$XDG_CONFIG_HOME/onboardme/` if you have `XDG_CONFIG_HOME` configured
+- [XDG Base Directory Spec] use for [config files](#configuration)
+  - Uses `"$XDG_CONFIG_HOME/onboardme"`
 
 #### Other useful (but optional) configurations
 - Enable touchID for sudo on macOS
