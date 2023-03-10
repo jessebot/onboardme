@@ -19,8 +19,6 @@ brew:
       # TUI browser
       - w3m
       - wget
-      # terminal based web browser
-      - lynx
       # screen session + sharing/splitting - replaces tmux :)
       - zellij
       # recording a shell session to share with others
@@ -106,7 +104,7 @@ brew:
       - glab
     # macOS specific stuff. Won't work with LinuxBrew
     macOS:
-      # python 3.11 already ships with debian, only needed for macOS
+      # python 3.11 already ships with Debian bookworm, only needed for macOS
       - python@3.11
       # for testing apis and downloading things
       - curl
@@ -123,14 +121,12 @@ brew:
       - "--cask font-hack-nerd-font"
       # this lets us resize windows
       - "--cask rectangle"
-      # productivity search and command bar: replacing with cerebro soon
-      # - "--cask alfred"
       # Default browser
       - "--cask firefox"
       # File server cloud replacement, not ready yet
       # - "--cask nextcloud"
       # Default terminal used by most macOS users, standard
-      - "--cask iterm2"
+      # - "--cask iterm2"
       # wezterm: Rust based terminal the is cross-OS-compatible
       - "--cask wez/wezterm/wezterm"
       # gives us the default gnu/linux sed we all know and love
@@ -177,15 +173,9 @@ brew:
       - kind
       # other useful goodies
       # manage multiple versions of terraform
-      # - tfenv
+      - tfenv
       # Bitnami sealed-secrets cli: encrypt secrets in yaml files for gitops
       # - kubeseal
-      # manages multiple helm files
-      # - helmfile
-      # AWS's CLI
-      # "aws-cli"
-      # aws credentials switcher
-      # "--cask aws-vault"
     work:
       # for work chats
       - "--cask slack"
@@ -292,17 +282,14 @@ snap:
       - core
       # screen debugger/sharing tool for android
       - scrcpy
-      # rss feed reader
-      - "fluent-reader --candidate"
       # media player
       - vlc
 
-# most of this is actually for powerline, my shell prompt
-pip3.11:
-  emoji: "🐍"
+pipx:
+  emoji: "🐍🏠"
   commands:
-    list: "pip3.11 list"
-    install: "pip3.11 install --upgrade "
+    list: "pipx list"
+    install: "pipx install --upgrade "
   packages:
     default:
       # keep ourselves up to date
@@ -311,29 +298,6 @@ pip3.11:
       - "git+ssh://git@github.com/powerline/powerline"
       - powerline-gitstatus
       - powerline-kubernetes
-      # powerline: for the internal ip address prompt segment
-      - netifaces
-      # powerline: supposed to work spotify info
-      - dbus
-      # neovim: needed for vim's python3 interface
-      - pynvim
-      # this is for git pre-commits
-      - pre-commit
-      # python development: linting/auto-linting
-      - ruff
-      - flake8
-      - pyflakes
-      - autoflake
-      # python: does some magic with imports when developing
-      # - autoimport
-      # python: for building and installing packages
-      - pip
-      - poetry
-      - build
-      - twine
-    macOS:
-      # this is for hacking on the iterm2 python api
-      - iterm2
     devops:
       # this is a k8s tool to spin up clusters on your local machine
       - smol-k8s-lab
@@ -347,7 +311,33 @@ pip3.11:
       - nbdev
       # notebooks in the terminal 💚
       - euporie
-      # Voilà turns Jupyter notebooks into standalone web apps
-      # - voila
       # this is for markdown notebook docs and such
       - quarto
+
+# most of this is actually for powerline, my shell prompt
+pip3.11:
+  emoji: "🐍"
+  commands:
+    list: "pip3.11 list"
+    install: "pip3.11 install --upgrade --user "
+  packages:
+    default:
+      # powerline: for the internal ip address prompt segment
+      - netifaces
+      # powerline: supposed to work spotify info
+      - dbus
+      # neovim: needed for vim's python3 interface
+      - pynvim
+      # this is for git pre-commits
+      - pre-commit
+      # python development: linting/auto-linting
+      - ruff
+      - flake8
+      - pyflakes
+      - autoflake
+      - poetry
+      - build
+      - twine
+    macOS:
+      # this is for hacking on the iterm2 python api
+      - iterm2
