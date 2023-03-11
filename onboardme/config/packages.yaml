@@ -294,10 +294,6 @@ pipx:
     default:
       # keep ourselves up to date
       - onboardme
-      # powerline: (status line for tmux/BASH)
-      - "git+ssh://git@github.com/powerline/powerline"
-      - powerline-gitstatus
-      - powerline-kubernetes
     devops:
       # this is a k8s tool to spin up clusters on your local machine
       - smol-k8s-lab
@@ -330,6 +326,11 @@ pip3.11:
       - pynvim
       # this is for git pre-commits
       - pre-commit
+      # for git commits
+      # powerline: (status line for tmux/BASH)
+      - "git+ssh://git@github.com/powerline/powerline"
+      - powerline-kubernetes
+      - powerline-gitstatus
       # python development: linting/auto-linting
       - ruff
       - flake8
