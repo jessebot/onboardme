@@ -29,8 +29,11 @@ Get your daily driver just the way you like it, from dot files insta
   - use several package managers across Linux and macOS (you can even add your own!)
   - group together packages for different kinds of setups, e.g. gaming, devops, gui
 
-#### Vim/NeoVim Plugin Management
-- Keep your [vim-plug] or [packer] plugins installed and up to date in both vim and neovim.
+#### NeoVim Plugin Management
+- Keep your [packer] plugins installed and up to date in neovim.
+  (Lazy support rolling out soon)
+
+<small>Keep your [vim-plug] plugins installed and up to date in vim</small>
 
 #### Easy `yaml` config files
 - [XDG Base Directory Spec] use for [config files](#configuration)
@@ -39,8 +42,8 @@ Get your daily driver just the way you like it, from dot files insta
 #### Other useful (but optional) configurations
 - Enable touchID for sudo on macOS
 - Add your user to the docker group
-- Install nerdfonts (defaults to Hack and Mononoki)
-- Set capslock to control
+- Install nerdfonts (defaults to Hack and Symbols Only)
+- Set capslock to control (🚧 in the works)
 
 ### Screenshots
 
@@ -60,8 +63,8 @@ Get your daily driver just the way you like it, from dot files insta
 
 <p align="center" width="100%">
 
-### vim
-<img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/vim_example_1.png' alt='screenshot of vim with colors'>
+### neovim
+<img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/neovim_example_1.png' alt='screenshot of neovim with colors'>
 
 ### Powerline and ls
 <img width="80%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/ls_tree_examples.png' alt='screenshot of powerline and lsd'>
@@ -125,7 +128,7 @@ steps:
     - dot_files
     - packages
     - font_setup
-    - vim_setup
+    # - vim_setup -- this is optional
     - neovim_setup
     - sudo_setup
   # these are linux specific steps
@@ -133,7 +136,7 @@ steps:
     - dot_files
     - packages
     - font_setup
-    - vim_setup
+    # - vim_setup -- this is optional
     - neovim_setup
     - group_setup
 
@@ -183,6 +186,7 @@ package:
 
 #### Optimized for:
 
+[![made-with-neovim](https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white)](https://neovim.io/)
 [![made-with-for-vim](https://img.shields.io/badge/VIM-%2311AB00.svg?&style=for-the-badge&logo=vim&logoColor=white)](https://www.vim.org/)
 [![made-with-python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)](https://www.python.org/)
 [![made-with-bash](https://img.shields.io/badge/GNU%20Bash-4EAA25?style=for-the-badge&logo=GNU%20Bash&logoColor=white)](https://www.gnu.org/software/bash/)
@@ -195,18 +199,17 @@ package:
 
 ### License
 
-GNU AFFERO GENERAL PUBLIC LICENSE Version 3:
+GNU AFFERO GENERAL PUBLIC LICENSE Version 3
 
 TLDR;
-- You are free to use and distribute the software for free, but you cannot bundle it with software that you are charging money for.
-- You are free to bundle software with other FOSS projects if you just credit us and link back to this project.
-- All derivatives of this software must be licensed as GNU AFFERO GENERAL PUBLIC LICENSE Version 3 and must open source the source code as well as credit this project and the contibutors.
+- You are free to bundle this software with other FOSS projects if you just credit us and link back to this project.
+- All derivatives of this software must be licensed as GNU AFFERO GENERAL PUBLIC LICENSE Version 3 or later and must open source the source code as well as credit this project and the contibutors.
 
 ## Status
 Still not production ready, but reasonably stable :)
 
 Please report 🐛 in the GitHub issues, and we will collect them,
-and release them into the wild, because we are vegan and nice.
+and release them back into the wild, because we are vegan and nice.
 (Kidding, we will help! 😌)
 
 We love contributors! Feel free to open a pull request, and we will review it asap! :)

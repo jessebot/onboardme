@@ -12,7 +12,7 @@ permalink: /python/packaging
 # setup.py
 This method is largely deprecated, but you can read about it [here](https://jessebot.github.io/onboardme/python/packaging/setuppy).
 
-# myproject.toml
+# pyproject.toml
 I have only just begun to do [this](https://pip.pypa.io/en/stable/reference/build-system/pyproject-toml/), which is sad, because apparently this
 [became a standard](https://peps.python.org/pep-0518/) back in 2016 🤦
 
@@ -25,13 +25,11 @@ TLDR; basically the dict you passed into setuptools to specify everything from r
 Also, I like this weird duck thing:
 [![Purple Packaging Platypus](https://monotreme.club/img/sticker.png)](https://monotreme.club/#/)
 
-## Poetry
+### Poetry
 Poetry is
 > a tool for dependency management and packaging in Python. It allows you to declare the libraries your project depends on and it will manage (install/update) them for you. Poetry offers a lockfile to ensure repeatable installs, and can build your project for distribution.
 
 Poetry's [basic guide](https://python-poetry.org/docs/basic-usage/) is actually pretty good.
-
-### Poetry
 
 Here's some basics about poetry.
 ```bash

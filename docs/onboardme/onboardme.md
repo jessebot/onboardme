@@ -52,9 +52,6 @@ Get your daily driver just the way you like it, from textformatting,�
 
 <p align="center" width="100%">
 
-### vim
-<img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/vim_example_1.png' alt='screenshot of vim with colors'>
-
 ### Powerline and ls
 <img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/ls_tree_examples.png' alt='screenshot of powerline and lsd'>
 
@@ -79,10 +76,10 @@ Here's the steps we take depending on what OS we run on. Each step can also be c
 | Step                                 | Config Location in repo                  |       OS      |
 |:-------------------------------------|:-----------------------------------------|:-------------:|
 | Git fetch dot files                  | n/a: fetched from a configured git repo  | Debian, macOS |
-| Installs apps using package managers | `./onboardme/config/packages.yaml`       | Debian, macOS |
-| Installs OPTIONAL apps, if any       | `./onboardme/config/packages.yaml`       | Debian, macOS |
+| Installs default apps using package managers | `./onboardme/config/packages.yaml`       | Debian, macOS |
+| Installs OPTIONAL app , if any       | `./onboardme/config/packages.yaml`       | Debian, macOS |
 | Installs fonts                       | n/a                                      | Debian, macOS |
-| Installs vim-plug + vim plugins      | plugins fetched from configured git repo | Debian, macOS |
+| OPTIONAL: Installs vim-plug + vim plugins      | plugins fetched from configured git repo | Debian, macOS |
 | Installs packer.nvm + neovim plugins | plugins fetched from configured git repo | Debian, macOS |
 | Adds user to the docker group        | n/a                                      |     Debian    |
 | Set sudo to use touchID              | n/a                                      |     macOS    |
@@ -96,6 +93,7 @@ use on my phone, check out my [doc](/onboardme/os/android).
 
 | Category               | App                                | Replaces                          |
 |:-----------------------|:-----------------------------------|:----------------------------------|
+| Terminal               | [wezterm]                          | Apple terminal, powershell, etc   | 
 | Backups - local/remote | [Restic] to minio and b2           | GDrive, iCloud, S3                |
 | Web Browser            | [Firefox], [w3m] (terminal only)   | Chrome/Safari/Edge                |
 | Email Client           | [NeoMutt], Protonmail + Bridge     | Gmail                             |
@@ -133,8 +131,11 @@ Looking for a project to get a fresh OS entirely, on a machine that has no OS?
 Check out [pxeless](https://github.com/cloudymax/pxeless).
 It works great in combination with onboardme :)
 
-<!-- --------------- link references ---------------- -->
 
+<!-- --------------- internal link references ---------------- -->
+[documentation]: https://jessebot.github.io/onboardme/onboardme "onboardme documentation"
+[help text]: https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/help_text.svg "an svg of the command: onboardme --help"
+<!-- --------------- external link references ---------------- -->
 [Bitwarden]: https://bitwarden.com/ "bitwarden home page"
 [Cerebro]: https://cerebroapp.com/ "cerebro home page"
 [ClamAV]: https://www.clamav.net/ "clamav home page"
@@ -149,10 +150,8 @@ It works great in combination with onboardme :)
 [Vim]: https://www.vim.org/ "vim home page"
 [w3m]: https://w3m.sourceforge.net/ "w3m home page"
 [WireGuard]: https://www.wireguard.com/ "wireguard home page"
-[documentation]: https://jessebot.github.io/onboardme/onboardme "onboardme documentation"
 [dot files]: https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments "wiki entry for dot file explanation"
 [our default dot files]: https://github.com/jessebot/dot_files "default dot files for onboardme"
-[help text]: https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/help_text.svg "an svg of the command: onboardme --help"
 [Getting Started Docs]: https://jessebot.github.io/onboardme/onboardme/getting-started "getting started documentation"
 [XDG Base Directory Spec]: https://specifications.freedesktop.org/basedir-spec/latest/ar01s03.html
 [vim-plug]: https://github.com/junegunn/vim-plug

@@ -21,7 +21,8 @@ I should tell others about as well.
 
 [new in python3.11](https://12ft.io/proxy?q=https%3A%2F%2Frealpython.com%2Fpython311-new-features%2F)
 
-## Favorite packages
+## Packages
+### Favorite packages
 I really do love certain libraries for being really useful, and I made a table.
 I do love a good table.
 
@@ -31,6 +32,24 @@ I do love a good table.
 | [pyyaml] | process easy yaml config files                                                                        |
 |  [wget]  | consistently just download a file without bells and whistles                                          |
 |   [xdg]  | Grab the user's configured `XDG` env vars or use defaults for things such as caching and config files |
+
+### Installing Packages and Managing Environments
+
+#### pip
+pip is a package installer
+
+#### pipx
+[pipx] allows you to Install and Run Python Applications in Isolated Environments.
+
+> pip is a general-purpose package installer for both libraries and apps with no environment isolation. pipx is made specifically for application installation, as it adds isolation yet still makes the apps available in your shell: pipx creates an isolated environment for each application and its associated packages.
+
+> pipx does not ship with pip, but installing it is often an important part of bootstrapping your system.
+
+#### conda
+conda is a data science focused package installer that installs into managed environments.
+
+#### poetry
+poetry is a package installer.
 
 ## Linters forever
 Honestly... flake8 is still the most consistent but ruff is fastest. Here's a bunch:
@@ -42,7 +61,7 @@ Honestly... flake8 is still the most consistent but ruff is fastest. Here's a bu
 - autoimport
 
 ## Key-Value Store
-[TIL—Python has a built-in persistent key-value store](https://remusao.github.io/posts/python-dbm-module.html).
+[Python has a built-in persistent key-value store](https://remusao.github.io/posts/python-dbm-module.html).
 
 ## Notebooks
 Jupyter notebooks are web based program to interactively demo/test code. There's more info over on our [notebook page](/python/notebook)
@@ -53,6 +72,7 @@ Jetbrains and the Python org regularly survey their user base and then publish
 an [open report of the survey results.](https://lp.jetbrains.com/python-developers-survey-2021/)
 
 
+[pipx]: https://pypa.github.io/pipx/
 [rich]: https://github.com/Textualize/rich
 [pyyaml]: https://github.com/yaml/pyyaml
 [wget]: https://pypi.org/project/wget/
