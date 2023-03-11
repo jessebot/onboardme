@@ -147,6 +147,8 @@ brew:
       - "--cask protonmail-bridge"
       # libreoffice is a FOSS office suite that replaces Google Docs/Office365
       - "--cask libreoffice"
+      # it's like jq but for yaml
+      - "yq"
     devops:
       - "docker"
       # docker desktop
