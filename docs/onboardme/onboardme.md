@@ -73,31 +73,27 @@ Check out our [/onboardme/features](https://jessebot.github.io/onboardme/onboard
 
 Here's the steps we take depending on what OS we run on. Each step can also be configured to be skipped.
 
-| Step                                 | Config Location in repo                  |       OS      |
+|Step                                  |Config Location in repo                   |OS             |
 |:-------------------------------------|:-----------------------------------------|:-------------:|
 | Git fetch dot files                  | n/a: fetched from a configured git repo  | Debian, macOS |
-| Installs default apps using package managers | `./onboardme/config/packages.yaml`       | Debian, macOS |
-| Installs OPTIONAL app , if any       | `./onboardme/config/packages.yaml`       | Debian, macOS |
+| Installs apps using package managers | `./onboardme/config/packages.yaml`       | Debian, macOS |
 | Installs fonts                       | n/a                                      | Debian, macOS |
-| OPTIONAL: Installs vim-plug + vim plugins      | plugins fetched from configured git repo | Debian, macOS |
 | Installs packer.nvm + neovim plugins | plugins fetched from configured git repo | Debian, macOS |
 | Adds user to the docker group        | n/a                                      |     Debian    |
-| Set sudo to use touchID              | n/a                                      |     macOS    |
+| sudo using touchID                   | n/a                                      |     macOS     |
 
 
 ### Current Ecoscape of Personal Tech
 
-These are all Linux Desktop and macOS applications we use.
-OnBoardMe doesn't officially support phones yet, but for what I, Jesse,
-use on my phone, check out my [doc](/onboardme/os/android).
+These are all the Linux and macOS applications we use.
 
 | Category               | App                                | Replaces                          |
 |:-----------------------|:-----------------------------------|:----------------------------------|
 | Terminal               | [wezterm]                          | Apple terminal, powershell, etc   | 
 | Backups - local/remote | [Restic] to minio and b2           | GDrive, iCloud, S3                |
 | Web Browser            | [Firefox], [w3m] (terminal only)   | Chrome/Safari/Edge                |
-| Email Client           | [NeoMutt], Protonmail + Bridge     | Gmail                             |
-| IDE                    | [Vim]/[NeoVim] + Plugins           | Vscode/Pycharm etc                |
+| Email Client           | [NeoMutt], Protonmail Bridge       | Gmail                             |
+| IDE                    | [NeoVim] + Plugins                 | Vscode/Pycharm etc                |
 | Document Editor        | [LibreOffice]                      | Microsoft Word, Google Docs       |
 | Launcher               | [Cerebro]                          | Alfred                            |
 | Photo/file Storage     | [NextCloud] Files/Photos (testing) | Google Photos/Drive               |
@@ -107,6 +103,8 @@ use on my phone, check out my [doc](/onboardme/os/android).
 | Video                  | [FreeTube], VLC                    | YouTube/Quicktime                 |
 | Antivirus              | [ClamAV]                           | MalwareBytes                      |
 | Firewall               | [Lulu]/iptables                    | ???                               |
+
+<small>OnboardMe doesn't officially support phones yet, but some of the stuff we're using can be found in this [doc](/onboardme/os/android).</small>
 
 ## Important Notes on Ethics
 
@@ -134,7 +132,10 @@ It works great in combination with onboardme :)
 
 <!-- --------------- internal link references ---------------- -->
 [documentation]: https://jessebot.github.io/onboardme/onboardme "onboardme documentation"
+[dot files]: https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments "wiki entry for dot file explanation"
+[Getting Started Docs]: https://jessebot.github.io/onboardme/onboardme/getting-started "getting started documentation"
 [help text]: https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/help_text.svg "an svg of the command: onboardme --help"
+[our default dot files]: https://github.com/jessebot/dot_files "default dot files for onboardme"
 <!-- --------------- external link references ---------------- -->
 [Bitwarden]: https://bitwarden.com/ "bitwarden home page"
 [Cerebro]: https://cerebroapp.com/ "cerebro home page"
@@ -144,15 +145,11 @@ It works great in combination with onboardme :)
 [FreeTube]: https://freetubeapp.io "freetube home page"
 [LibreOffice]: https://www.libreoffice.org/ "libreoffice hom epage"
 [Lulu]: https://objective-see.org/products/lulu.html "lulu home page"
-[NeoVim]: https://neovim.org/ "neovim home page"
+[NeoVim]: https://neovim.org/ "Neovim home page"
 [NextCloud]: https://nextcloud.com/ "nextcloud home page"
 [Restic]: https://restic.net/ "restic home page"
-[Vim]: https://www.vim.org/ "vim home page"
 [w3m]: https://w3m.sourceforge.net/ "w3m home page"
 [WireGuard]: https://www.wireguard.com/ "wireguard home page"
-[dot files]: https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments "wiki entry for dot file explanation"
-[our default dot files]: https://github.com/jessebot/dot_files "default dot files for onboardme"
-[Getting Started Docs]: https://jessebot.github.io/onboardme/onboardme/getting-started "getting started documentation"
 [XDG Base Directory Spec]: https://specifications.freedesktop.org/basedir-spec/latest/ar01s03.html
 [vim-plug]: https://github.com/junegunn/vim-plug
 [packer]: https://github.com/wbthomason/packer.nvim

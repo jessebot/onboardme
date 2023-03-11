@@ -51,11 +51,8 @@ some dot files anyway, but we won't overwrite anything you have locally.
 
   TODO: fill this in, and make sure it doesn't conflict with other areas of the docs.
 
-  #### Vim
-  We use vim with these plugins you can learn more about [here](/vim).
-
   #### Neovim
-  We use neovim alongside vim with these plugins you can learn more about [here](/neovim).
+  We use neovim with these plugins you can learn more about [here](/neovim).
 
 </details>
 
