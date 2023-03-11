@@ -10,8 +10,8 @@ permalink: /onboardme/screenshots
 ### Help Text
 [<img src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/help_text.svg' alt='screenshot of full output of onboardme --help'>](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/help_text.svg)
 
-### vim
-[<img src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/vim_example_1.png' alt='screenshot of vim with colors'>](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/vim_example_1.png)
+### neovim
+[<img src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/neovim_example_1.png' alt='screenshot of neovim with colors'>](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/neovim_example_1.png)
 
 ### Powerline and ls
 [<img src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/ls_tree_examples.png' alt='screenshot of powerline and lsd'>](https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/ls_tree_examples.png)

@@ -151,5 +151,4 @@ It works great in combination with onboardme :)
 [w3m]: https://w3m.sourceforge.net/ "w3m home page"
 [WireGuard]: https://www.wireguard.com/ "wireguard home page"
 [XDG Base Directory Spec]: https://specifications.freedesktop.org/basedir-spec/latest/ar01s03.html
-[vim-plug]: https://github.com/junegunn/vim-plug
 [packer]: https://github.com/wbthomason/packer.nvim
