@@ -20,7 +20,7 @@ Make sure you have sudo access, otherwise we won't be able to install certain th
   # if this doesn't return anything, you need to install curl
   which curl
 
-  # Debian/Ubuntu
+  # Debian/Ubuntu may not have curl installed depending on where you are
   sudo apt install -y curl
   ```
 
@@ -82,13 +82,28 @@ Now you can run the `setup.sh` script, or manually install the remaining prereqs
 
 
 ## Actual installation
+You can install with `pip` still, but we plan on strongly suggesting `pipx` 
+going forward.
 
-Recently, I started moving to actually package this, so you should be able to
-do:
+<details>
+  <summary><code>pip</code></summary>
+
 ```bash
 # not really sure why it doesn't install without --user :shrug:
 pip3.11 install --user onboardme
 ```
+
+</details>
+
+<details>
+  <summary><code>pipx</code></summary>
+
+```bash
+# untested
+pipx install onboardme
+```
+
+</details>
 
 ## Quick test of `onboardme`
 Now you can run the actual script that does the heavy lifting. If you ran the

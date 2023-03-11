@@ -13,7 +13,7 @@ If you haven't already, please refer to the
 
 You can run `onboardme` with no options or further configuration, and it will
 not overwrite anything, but it will install packages and attempt to configure
-fonts, vim, and give you further instructions to setup your machine on your own.
+fonts, neovim, and give you further instructions to setup your machine on your own.
 
 See below for configuration with cli options or a config file :)
 
@@ -69,14 +69,12 @@ Those defaults can be altered per machine by creating a config file like:
       - dot_files
       - packages
       - font_setup
-      - vim_setup
       - neovim_setup
     # these are linux specific steps
     Linux:
       - dot_files
       - packages
       - font_setup
-      - vim_setup
       - neovim_setup
       - group_setup
 
@@ -140,10 +138,9 @@ Steps refer to a specific function in the list of functions we run and can be
 configured for both macOS and Linux seperately. These steps include:
 
 - setting up dot files in your home directory (.bashrc, .vimrc, etc)
-- setting up vim (installing vim-plug and vim plugins)
 - managing packages using package managers (brew, pip3.11, apt, snap, flatpak)
 - installing fonts
-- setting up basic TUI IDEs, vim/neovim
+- setting up basic TUI IDE, neovim (vim is optional)
 - setting up groups
 
 They can be configured via the `steps` parameter in the `config.yaml` above,
@@ -157,16 +154,16 @@ onboardme -s dot_files
 or for multiple steps:
 
 ```bash
-# this runs both the dot_file management step and the vim setup step
-onboardme -s dot_files -s vim_setup
+# this runs both the dot_file management step and the neovim setup step
+onboardme -s dot_files -s neovim_setup
 ```
 
 If you try to run a step that requires another step, we will automatically run
-that step so for instance, to set up vim, we need dot files. e.g.
+that step so for instance, to set up neovim, we need dot files. e.g.
 
-This command: `onboardme -s vim_setup`
+This command: `onboardme -s neovim_setup`
 
-In the background becomes: `onboardme -s dot_files -s vim_setup`
+In the background becomes: `onboardme -s dot_files -s neovim_setup`
 
 ### dot files
 The dot files for your home directory are installed from a git URL and branch

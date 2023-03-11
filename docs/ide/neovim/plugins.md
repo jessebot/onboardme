@@ -9,9 +9,11 @@ description: "Plugins for neovim and how to install them"
 ---
 
 # Neovim plugins
-This got long enough it needed it's own page
+This got long enough it needed it's own page. If you just want to see what plugins we use here at onboardme, you can check them out [here](https://github.com/jessebot/dot_files/blob/main/.config/nvim/lua/plugins.lua).
+
 
 ## Know issues
+
 <details>
   <summary>Python3 Plugins</summary>
 
@@ -20,12 +22,72 @@ This got long enough it needed it's own page
 
   ```bash
   # I use python3.11 everywhere right now, but you probably don't need to specify
-  python3.11 -m pip install --user --upgrade pynvim
+  python3 -m pip install --user --upgrade pynvim
   ```
 
   After that, all my plugins worked find as they do in vim.
 
 </details>
+
+## Lazy
+[lazy.nvim] is the new kid on the block for neovim package managers. I don't know much about it, but will report back soon.
+
+
+## Packer
+You'll start seeing a lot of people talking about [packer] as you go on your neovim
+journey. It's similar to vim-plug or vundle, but it's in pure lua. In your `init.lua`,
+put the following:
+
+```lua
+require('plugins')
+```
+
+and then create a file in `~/.config/nvim/lua` called `plugins.lua` with the following:
+
+```lua
+-- This file can be loaded by calling `lua require('plugins')` from your init.vim
+
+-- this function installs the packer plugin if it's not already installed
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
+end
+
+-- this calls the above function
+local packer_bootstrap = ensure_packer()
+
+-- this manages your actual plugins
+return require('packer').startup(function(use)
+
+    -- Packer can manage itself
+    use 'wbthomason/packer.nvim'
+
+    -- Example plugin for if you already have a plugin installed in vim with
+    -- something like vim-plug, like: Plug 'junegunn/limelight.vim'
+    use '~/.vim/plugged/limelight.vim'
+
+    -- Example github based plugin: https://github.com/mfussenegger/nvim-treehopper
+    use {'mfussenegger/nvim-treehopper'}
+
+    -- Automatically set up your configuration after cloning packer.nvim
+    -- Put this at the end after all plugins
+    if packer_bootstrap then
+        require('packer').sync()
+    end
+end)
+```
+
+_Note: You can checkout my actual `plugins.lua` file [here](https://github.com/jessebot/dot_files/blob/main/.config/nvim/lua/plugins.lua)_
+
+Finally, you can open up neovim and run: `:PackerCompile` and `:PackerInstall`
+and you should be on your way :)
+
 
 ## vim-plug
 I have a [whole section on vim-plug under vim](https://jessebot.github.io/onboardme/vim/vim-plugins), but we have a few caveats if we
@@ -77,65 +139,6 @@ want to use it in neovim.
   ```
 
 </details>
-
-## Introducing Packer
-You'll start seeing a lot of people talking about packer as you go on your neovim
-journey. It's similar to vim-plug or vundle, but it's in pure lua. In your `init.lua`,
-put the following:
-
-```lua
-require('plugins')
-```
-
-and then create a file in `~/.config/nvim/lua` called `plugins.lua` with the following:
-
-```lua
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
-
--- this function installs the packer plugin if it's not already installed
-local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    vim.cmd [[packadd packer.nvim]]
-    return true
-  end
-  return false
-end
-
--- this calls the above function
-local packer_bootstrap = ensure_packer()
-
--- this manages your actual plugins
-return require('packer').startup(function(use)
-
-    -- Packer can manage itself
-    use 'wbthomason/packer.nvim'
-
-    -- Example plugin for if you already have a plugin installed in vim with
-    -- something like vim-plug, like: Plug 'junegunn/limelight.vim'
-    use '~/.vim/plugged/limelight.vim'
-
-
-    -- Example plugin where we run :Updateremoteuseins after loadin the plugin
-    -- and only run it on python filetypes.
-    use {'numirias/semshi',  run = ':UpdateRemoteuseins', ft = 'py'}
-    -- this would be like running this for vim-plug:
-    -- Plug 'numirias/semshi', { 'do': ':UpdateRemoteuseins', 'filetype': 'py' }
-
-    -- Automatically set up your configuration after cloning packer.nvim
-    -- Put this at the end after all plugins
-    if packer_bootstrap then
-        require('packer').sync()
-    end
-end)
-```
-
-_Note: You can checkout my actual `plugins.lua` file [here](https://github.com/jessebot/dot_files/blob/main/.config/nvim/lua/plugins.lua)_
-
-Finally, you can open up neovim and run: `:PackerCompile` and `:PackerInstall`
-and you should be on your way :)
 
 ## writing little lua scripts
 
@@ -206,3 +209,6 @@ If you want extra neovim treesitter features for checking into things like highl
 ```vim
 :TSHighlightCapturesUnderCursor
 ```
+
+[packer]: https://github.com/wbthomason/packer.nvim "packer, plugin manager for neovim"
+[lazy.nvim]: https://github.com/folke/lazy.nvim "lazy, a newer pugin manager for neovim"

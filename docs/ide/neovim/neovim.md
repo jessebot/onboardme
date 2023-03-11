@@ -16,11 +16,13 @@ It's supposed to be faster than vim at a lot of things, and there's more
 extensible plugins and active communities, it would seem anyway, from my casual
 observation over the past year-ish (it's October 2022 at the time of writing).
 
-To be honest, I've been using vim since 2011, and even though neovim has been
+To be honest, I'd been using vim since 2011. Even though neovim had been
 around since 2015, since I was using vi before vim, I never really gave it a
-ton of thought. But recently there finally came [a plugin][0] that looked too
+ton of thought. But recently there finally came [a plugin] that looked too
 good not to try, but was only available for neovim, so I figured, at very least,
-I should give it a go. I'll document anything interesting I learn here.
+I should give it a go.
+
+Update: It's March 2023 and I'm now using neovim fully time :)
 
 # Getting Started with Neovim
 
@@ -34,9 +36,9 @@ The config file is located at:
 
 |        OS          |                   Location                     |
 |:-------------------|:-----------------------------------------------|
-| Unix               | ~/.config/nvim/init.vim		(or init.lua)     |
-| Windows            | ~/AppData/Local/nvim/init.vim	(or init.lua) |
-| `$XDG_CONFIG_HOME` | `$XDG_CONFIG_HOME`/nvim/init.vim	(or init.lua) |
+| `$XDG_CONFIG_HOME` | `$XDG_CONFIG_HOME`/nvim/init.lua (or init.vim) |
+| Unix               | ~/.config/nvim/init.lua		(or init.vim) |
+| Windows            | ~/AppData/Local/nvim/init.lua	(or init.vim) |
 
 And if you want to just get your vim stuff working, you want to these contents
 in your `~/.config/nvim/init.vim`:
@@ -113,7 +115,7 @@ nnoremap <space> za
 And here's what that translated to in my `init.lua`:
 
 ```lua
--- let spacebar allow me to fold the code
+-- let spacebar allow me to fold the code in normal mode
 -- in vimscript, this was: nnoremap <space> za
 vim.keymap.set('n', '<space>', 'za')
 ```
@@ -137,5 +139,5 @@ vim.cmd [[colorscheme spacechalk]]
 # Helpful links
 [Floating windows in neovim](http://www.statox.fr/posts/2021/03/breaking_habits_floating_window/)
 
-[0]: https://github.com/numirias/semshi#readme "semshi"
+[a plugin]: https://github.com/numirias/semshi#readme "semshi"
 [1]: https://github.com/jessebot/space-chalk "space-chalk"
