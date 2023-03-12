@@ -28,7 +28,7 @@ rich      = "^13.3.2"
 PyYAML    = "^6.0"
 GitPython = "^3.1.31"
 wget      = "^3.2"
-xdg       = "^5.1.1"
+xdg       = ">=5.1.1,<7.0.0"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.1.1"
