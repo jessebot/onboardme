@@ -30,10 +30,15 @@ Get your daily driver just the way you like it, from dot files insta
   - group together packages for different kinds of setups, e.g. gaming, devops, gui
 
 #### NeoVim Plugin Management
-- Keep your [packer] plugins installed and up to date in neovim.
+- Keep your neovim plugins installed and up to date with [packer]
   (Lazy support rolling out soon)
+  
+<details>
+  <summary>Why no vim though?</summary>
+  
+  If you haven't already made the switch from Vim to [NeoVim], you can try out NeoVim today with `onboardme` :D We used to support both neovim _and_ vim, but these days none of the primary developers of this repo use pure vim anymore, so we can't ensure it's up to standards. All of your knowledge from vim is still helpful in neovim though, and we highly recommend switching as neovim has a lot more features and a very active plugin community :) NeoVim maintains a guide on how to switch from vim [here](https://neovim.io/doc/user/nvim.html#nvim-from-vim).
 
-<small>Keep your [vim-plug] plugins installed and up to date in vim</small>
+</details>
 
 #### Easy `yaml` config files
 - [XDG Base Directory Spec] use for [config files](#configuration)
@@ -133,7 +138,6 @@ steps:
     - dot_files
     - packages
     - font_setup
-    # - vim_setup -- this is optional
     - neovim_setup
     - sudo_setup
   # these are linux specific steps
@@ -141,7 +145,6 @@ steps:
     - dot_files
     - packages
     - font_setup
-    # - vim_setup -- this is optional
     - neovim_setup
     - group_setup
 
@@ -192,7 +195,6 @@ package:
 #### Optimized for:
 
 [![made-with-neovim](https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white)](https://neovim.io/)
-[![made-with-for-vim](https://img.shields.io/badge/VIM-%2311AB00.svg?&style=for-the-badge&logo=vim&logoColor=white)](https://www.vim.org/)
 [![made-with-python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)](https://www.python.org/)
 [![made-with-bash](https://img.shields.io/badge/GNU%20Bash-4EAA25?style=for-the-badge&logo=GNU%20Bash&logoColor=white)](https://www.gnu.org/software/bash/)
 
@@ -252,10 +254,12 @@ Get started with testing kubernetes locally, even on metal with [smol k8s lab](h
 
 <!-- link references -->
 [documentation]: https://jessebot.github.io/onboardme/onboardme "onboardme documentation"
-[dot files]: https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments "wiki entry for dot file explanation"
 [our default dot files]: https://github.com/jessebot/dot_files "default dot files for onboardme"
 [help text]: https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/help_text.svg "an svg of the command: onboardme --help"
 [Getting Started Docs]: https://jessebot.github.io/onboardme/onboardme/getting-started "getting started documentation"
+
+<!-- external link references -->
+[dot files]: https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments "wiki entry for dot file explanation"
 [XDG Base Directory Spec]: https://specifications.freedesktop.org/basedir-spec/latest/ar01s03.html
-[vim-plug]: https://github.com/junegunn/vim-plug
+[NeoVim]: https://neovim.io/ "neovim, vim improved"
 [packer]: https://github.com/wbthomason/packer.nvim
