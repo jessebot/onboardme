@@ -94,7 +94,12 @@ The quickest way to get started on a fresh macOS or distrubtion of Debian (inclu
 onboardme --help
 ```
 
-If you've already got brew and Python3.11 on your machine, you can just do `pip` install onboardme.
+If you've already got brew and Python3.11 on your machine, you can just do:
+
+```bash
+# should also work with pipx, if you'd like to use that instead
+pip install --user onboardme
+```
 
 You can read more in depth at the [Getting Started Docs] 💙! There's also more [docs] on basically every program that onboardme touches.
 
