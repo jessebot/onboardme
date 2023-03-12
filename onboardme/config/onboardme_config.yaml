@@ -61,7 +61,6 @@ package:
     Linux:
       - brew
       - pip3.11
-      - pipx
       - apt
       - snap
       - flatpak

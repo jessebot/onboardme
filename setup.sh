@@ -158,15 +158,22 @@ else
         echo -e "\033[92mInstalling pip via apt... \033[00m"
         DEBIAN_FRONTEND=noninteractive && \
 	sudo apt-get update && \
-	sudo apt-get install -y python3-pip pipx python3-venv
-        pipx ensurepath
+	sudo apt-get install -y python3-pip python3-venv
 	echo -e "\033[92mPip3.11 installed :3 \033[00m"
     fi
+f
+
+if [[ "$OS" == *"Linux"* ]]; then
+    echo ""
+    echo "We will remove /usr/lib/python3.*/EXTERNALLY-MANAGED until Debian Bookworm decides on a better way forward with virtual envs."
+    echo "See: https://salsa.debian.org/cpython-team/python3/-/blob/master/debian/README.venv"
+    sudo rm /usr/lib/python3.*/EXTERNALLY-MANAGED
 fi
 
 echo -e "--------------------------\033[94m Installing OnBoardMe :D \033[00m -------------------------"
 
-pipx install onboardme
+
+pip3.11 install --upgrade --user onboardme
 pip_install_return_code=$?
 
 if [ $pip_install_return_code -ne 0 ]; then

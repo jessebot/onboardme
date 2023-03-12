@@ -287,39 +287,19 @@ snap:
       # media player
       - vlc
 
-pipx:
-  emoji: "🐍🏠"
-  commands:
-    list: "pipx list"
-    install: "pipx install --upgrade "
-  packages:
-    default:
-      # keep ourselves up to date
-      - onboardme
-    devops:
-      # this is a k8s tool to spin up clusters on your local machine
-      - smol-k8s-lab
-      # need this for python notebooks
-      - ipykernel
-      # classic python notebooks
-      - notebook
-      # latest jupyter notebooks
-      - jupyterlab
-      # notebook-driven development platform
-      - nbdev
-      # notebooks in the terminal 💚
-      - euporie
-      # this is for markdown notebook docs and such
-      - quarto
-
 # most of this is actually for powerline, my shell prompt
 pip3.11:
   emoji: "🐍"
   commands:
+    # this is just till there's a better solution than pipx for Debian Bookworm
+    # ref: https://salsa.debian.org/cpython-team/python3/-/blob/master/debian/README.venv
+    setup: "sudo rm /usr/lib/python3.*/EXTERNALLY-MANAGED"
     list: "pip3.11 list"
     install: "pip3.11 install --upgrade --user "
   packages:
     default:
+      # keep ourselves up to date
+      - onboardme
       # powerline: for the internal ip address prompt segment
       - netifaces
       # powerline: supposed to work spotify info
@@ -344,3 +324,18 @@ pip3.11:
     macOS:
       # this is for hacking on the iterm2 python api
       - iterm2
+    devops:
+      # this is a k8s tool to spin up clusters on your local machine
+      - smol-k8s-lab
+      # need this for python notebooks
+      - ipykernel
+      # classic python notebooks
+      - notebook
+      # latest jupyter notebooks
+      - jupyterlab
+      # notebook-driven development platform
+      - nbdev
+      # notebooks in the terminal 💚
+      - euporie
+      # this is for markdown notebook docs and such
+      - quarto
