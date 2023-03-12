@@ -82,8 +82,7 @@ Now you can run the `setup.sh` script, or manually install the remaining prereqs
 
 
 ## Actual installation
-You can install with `pip` still, but we plan on strongly suggesting `pipx` 
-going forward.
+You can install with `pip` still, but you can also use `pipx`.
 
 <details>
   <summary><code>pip</code></summary>
