@@ -17,34 +17,47 @@
   </a>
 </p>
 
-Get your daily driver just the way you like it, from dot files installation, to opensource package installation, to other little features you didn't know you needed, `onboardme` intends to save you time with initializing and upgrading your environment.
+Get your daily driver just the way you like it, from dot files installation, to package installation, to other little features you didn't know you needed, `onboardme` intends to save you time with initializing and upgrading your environment.
 
 ## Features
 
-#### Dot files
-- Manage your [dot files] using a git repo (or use [our default dot files] 😃)
+### Keep your Dot Files Up To Date Across multiple systems
+`onboardme` can manage your [dot files] using a git by turning your home directory into a repo.
 
-#### Package management
-- Install and upgrade libraries and apps
-  - use several package managers across Linux and macOS (you can even add your own!)
-  - group together packages for different kinds of setups, e.g. gaming, devops, gui
+We provide [default dot files], so you don't have to manage them. The onboardme maintainers use these themselves, so they:
+- cover a lot of common apps and tools you probably want anyway (BASH and `git`), and a few you didn't know were helpful (`powerline`, `bat`)
+- have consistent colorschemes accross different CLI/TUI programs 😃
+- set all the helpful BASH aliases you could need (zsh support coming soon)
 
-#### NeoVim Plugin Management
-- Keep your neovim plugins installed and up to date with [packer]
-  (Lazy support rolling out soon)
+### Package management
+We install and upgrade libraries and apps
+- onboardme provides a currated list of [default packages](./onboardme/config/packages.yaml)
+- supports `brew`, `apt`, `snap`, `flatpak`, and `pip` (and you can add your own 😄)
+- group together packages for different kinds of environments
+  - onboardme provides default package groups:
+    - default (no desktop GUI apps installed by default, always installed)
+    - macOS (default apps for _macOS only_ apps, always installed on macOS)
+    - gui (default GUI apps for Linux desktops, optionally installed)
+    - devops (devops related tooling, optionally installed)
+
+### NeoVim Plugin Installtion and Updates
+onboardme keeps your neovim plugins installed and up to date with [packer] under the hood.
+(Lazy support rolling out soon)
   
 <details>
   <summary>Why no vim though?</summary>
   
-  If you haven't already made the switch from Vim to [NeoVim], you can try out NeoVim today with `onboardme` :D We used to support both neovim _and_ vim, but these days none of the primary developers of this repo use pure vim anymore, so we can't ensure it's up to standards. All of your knowledge from vim is still helpful in neovim though, and we highly recommend switching as neovim has a lot more features and a very active plugin community :) NeoVim maintains a guide on how to switch from vim [here](https://neovim.io/doc/user/nvim.html#nvim-from-vim).
+  If you haven't already made the switch from Vim to [NeoVim], you can try out NeoVim today with `onboardme` :D We used to support both neovim _and_ vim, but these days none of the primary developers of this repo use pure vim anymore, so we can't ensure it's up to standards. All of your knowledge from vim is still helpful in neovim though, and we highly recommend switching as neovim has a lot more features and a very active plugin community :) NeoVim maintains a guide on how to switch from vim [here](https://neovim.io/doc/user/nvim.html#nvim-from-vim). 
+
+  We will deprecate support for official support for configuring vim outside of installing the package across Debian/MacOS in v1.0.0. This just means we won't be running anything to configure your vim plugins anymore, but you can still always add it to the package manager in [`packages.yaml`](#). 
 
 </details>
 
-#### Easy `yaml` config files
+### Easy `yaml` config files
 - [XDG Base Directory Spec] use for [config files](#configuration)
-  - Uses `"$XDG_CONFIG_HOME/onboardme"`
+  - Uses `$XDG_CONFIG_HOME/onboardme/onboardme_config.yml` and `$XDG_CONFIG_HOME/onboardme/packages.yml`
 
-#### Other useful (but optional) configurations
+### Other useful (but optional) configurations
 - Enable touchID for sudo on macOS
 - Add your user to the docker group
 - Install nerdfonts (defaults to Hack and Symbols Only)
@@ -135,10 +148,15 @@ log:
 steps:
   # these are mac specific steps
   Darwin:
+    # clones dot files into home dir/git fetches updates for dot files
     - dot_files
+    # install packages
     - packages
+    # adds nerdfonts
     - font_setup
+    # runs :PackerSync
     - neovim_setup
+    # sets up touchID for sudo
     - sudo_setup
   # these are linux specific steps
   Linux:
@@ -146,6 +164,7 @@ steps:
     - packages
     - font_setup
     - neovim_setup
+    # add your user to the docker group
     - group_setup
 
 dot_files:
@@ -185,24 +204,24 @@ package:
 </details>
 
 ## Under the Hood
+Made and tested for these operating systems:
 
-#### Made for the following OS:
+[![Tested on Ventura with an M1 and older generation](https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=apple&logoColor=white)](https://wikiless.org/wiki/MacOS?lang=en)
+[![Tested only on Debian Bookworm](https://img.shields.io/badge/Debian-A81D33?style=for-the-badge&logo=debian&logoColor=white)](https://www.debian.org/)
+[![Tested only on ubuntu servers](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)](https://ubuntu.com/)
 
-- [![made-for-macOS](https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=apple&logoColor=white)](https://wikiless.org/wiki/MacOS?lang=en) (Tested on Ventura with an M1 and apple silicon)
-- [![made-for-debian](https://img.shields.io/badge/Debian-A81D33?style=for-the-badge&logo=debian&logoColor=white)](https://www.debian.org/) (Tested only on Debian Bookworm)
-- [![made-for-ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)](https://ubuntu.com/)
+And optomized for the following programs:
 
-#### Optimized for:
-
-[![made-with-neovim](https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white)](https://neovim.io/)
+[![made-with-neovim](https://img.shields.io/badge/NeoVim-0f191f?style=for-the-badge&logo=neovim&logoColor=#5c983b)](https://neovim.io/)
 [![made-with-python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)](https://www.python.org/)
-[![made-with-bash](https://img.shields.io/badge/GNU%20Bash-4EAA25?style=for-the-badge&logo=GNU%20Bash&logoColor=white)](https://www.gnu.org/software/bash/)
+[![made-with-bash](https://img.shields.io/badge/GNU%20Bash-000000?style=for-the-badge&logo=GNU%20Bash&logoColor=#5c983b)](https://www.gnu.org/software/bash/)
+- [powerline](https://powerline.readthedocs.io/en/master/overview.html)
+
 
 #### Built using these great tools:
 
 [<img src="https://github.com/textualize/rich/raw/master/imgs/logo.svg" alt="rich python library logo with with yellow snake" width="200">](https://github.com/Textualize/rich/tree/master)
 [<img src="https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/images/nerd-fonts-logo.svg" width="120" alt="nerd-fonts: Iconic font aggregator, collection, and patcher">](https://www.nerdfonts.com/)
-- [powerline](https://powerline.readthedocs.io/en/master/overview.html)
 
 ### License
 
@@ -254,7 +273,7 @@ Get started with testing kubernetes locally, even on metal with [smol k8s lab](h
 
 <!-- link references -->
 [documentation]: https://jessebot.github.io/onboardme/onboardme "onboardme documentation"
-[our default dot files]: https://github.com/jessebot/dot_files "default dot files for onboardme"
+[default dot files]: https://github.com/jessebot/dot_files "default dot files for onboardme"
 [help text]: https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/help_text.svg "an svg of the command: onboardme --help"
 [Getting Started Docs]: https://jessebot.github.io/onboardme/onboardme/getting-started "getting started documentation"
 
