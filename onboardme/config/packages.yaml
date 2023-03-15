@@ -65,10 +65,14 @@ brew:
       - less
       # steam locamotive
       - sl
+      # The Matrix screensaver for the terminal
+      - cmatrix
       # a cow that says things
       - cowsay
       # revision control system
       - git
+      # terminal user interface for git
+      - gitui
       # programming languages and their package managers
       - go
       - node
