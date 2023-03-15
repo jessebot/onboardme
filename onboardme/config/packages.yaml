@@ -65,6 +65,8 @@ brew:
       - less
       # steam locamotive
       - sl
+      # The Matrix screensaver for the terminal
+      - cmatrix
       # a cow that says things
       - cowsay
       # revision control system
