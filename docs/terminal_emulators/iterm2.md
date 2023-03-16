@@ -23,6 +23,14 @@ You can configure your own, or download other color schemes here:
 
 [https://iterm2colorschemes.com/](https://iterm2colorschemes.com/)
 
+### DynamicProfiles
+These allow you to move your configuration from one mac to another :)
+
+```bash
+# the dynamic profiles are stored here on non-M1 macs
+ls ~/Library/Application Support/iTerm2/DynamicProfiles
+```
+
 
 ## How to use create a split and send a command to it in Python
 make sure you've already done a `pip install iterm2`

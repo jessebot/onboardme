@@ -13,7 +13,7 @@ description: "neomutt attachments, the rat hole it is"
 
 Check this out for more info: [neomutt mimesupport](https://neomutt.org/guide/mimesupport)
 
-On macOS, I'm using iterm2, so I use imgcat, but can't figure out why it
+On macOS, I'm using <strike>iterm2</strike> wezterm, so I use imgcat/sixel, but can't figure out why imgcat
 doesn't work in neomutt, so I'm instead just sixel there too:
 
 ```init

@@ -65,13 +65,6 @@ password   required       pam_deny.so
 session    required       pam_permit.so
 ```
 
-## iTerm2
-
-```bash
-# the dynamic profiles are stored here
-ls ~/Library/Application Support/iTerm2/DynamicProfiles
-```
-
 ## Awesome Lists
 - [Awesome Mac](https://wangchujiang.com/awesome-mac/) has a list of like every tool you care about for every category, and has a good system to determine which things are FOSS vs Free vs Paid.
 
