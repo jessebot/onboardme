@@ -12,15 +12,27 @@ I use a couple different terminal emulators across macOS, Debian, as well as
 (rarely) Windows, and they all have their pros and cons. I was often trying new
 terminals for a while, because nothing really fit all my use cases.
 
-I was originally trying pretty hard to hit every feature I wanted:
-cross platform, splits, tabs, images, True color (meaning any HEX color),
-background transparency, two different fonts/sizes for ascii/nonascii characters,
-GPU accelleration, an API, and -of course- a nice community/maintainers.
+<details>
+
+<summary>I was originally trying pretty hard to hit every feature I wanted</summary>
+
+- cross platform 
+- splits
+- tabs
+- images
+- True color (meaning any HEX color)
+- background transparency
+- two different fonts/sizes for ascii/nonascii characters
+- GPU accelleration
+- an API
+- a nice community/maintainers 💙
+
+</details>
 
 Turns out that's a tall order. I had to make some compromises here and there.
 
-My ultimate choice was to use iTerm2 on macOS and Wezterm on Linux (and also on macOS sometimes).
-
+March 2023:
+> My ultimate choice is to use Wezterm on Linux and macOS full time for consistency.
 
 ## Explanation of what and why it comes to Terminals
 
@@ -42,15 +54,15 @@ This will just go over what terminals I tested and why I liked them :)
 | 🧑‍💻 | API             |
 
 
-|       App       | Platforms | Features         | Notable Downsides                                         |
-|:---------------:|:---------:|------------------|-----------------------------------------------------------|
-|   [wezterm][7]  |   🍎🐧🪟  | ⿲🗂️🫥 🖼️        | Honestly none to note so far                              |
-|   [iTerm2][4]   |    〿🍎〿   | ⿲🗂️🫥 🎥🖼️      | Only on macOS :(                                          |
-|  [hyper.js][0]  |   🍎🐧🪟  | ⿲🗂️🫥🧑‍💻 | Slow on older machines with no GPU, written in javascript |
-|    [cmder][3]   |    〿〿🪟   | ⿲🗂️🫥           | kinda buggy, random crashes                               |
-| [Terminator][5] |    〿🐧〿   | ⿲🗂️🫥           | community not as active anymore                           |
-|    [kitty][1]   |   🍎🐧?   | ⿲🗂️🫥  🖼️       | non-ascii font size unajustable, community unwelcoming    |
-|    [tilix][2]   |    〿🐧〿   | ?🗂️???           | small userbase                                            |
+|       App       | Platforms | Features              | Notable Downsides                                                           |
+|:---------------:|:---------:|-----------------------|-----------------------------------------------------------------------------|
+|   [wezterm][7]  |   🍎🐧🪟  | ⿲🗂️🫥 🖼️             | Can't blur transparent backgrounds, can't make new window from doc in macOS |
+|   [iTerm2][4]   |    〿🍎〿   | ⿲🗂️🫥 🎥🖼️🧑‍💻 | Only on macOS :(                                                            |
+|    [kitty][1]   |   🍎🐧?   | ⿲🗂️🫥  🖼️            | non-ascii font size unajustable, community unwelcoming                      |
+| [Terminator][5] |    〿🐧〿   | ⿲🗂️🫥                | community not as active anymore                                             |
+|  [hyper.js][0]  |   🍎🐧🪟  | ⿲🗂️🫥🧑‍💻      | Slow on older machines with no GPU, written in javascript                   |
+|    [cmder][3]   |    〿〿🪟   | ⿲🗂️🫥                | kinda buggy, random crashes                                                 |
+|    [tilix][2]   |    〿🐧〿   | ?🗂️???                | small userbase                                                              |
 
 I want to say I didn't give tilix a fair shot, because I ran out of funemployment funds, and had to get back to work, where I need my terminal to just work, and it needs to be able to work fast and effeciently.
 
