@@ -7,7 +7,7 @@ description: "IDEs and what I think/know about them"
 ---
 
 # Quick intro
-I love vim and have been using it for ages, but recently started using neovim.
+I love vim and have been using it for ages, but recently started using neovim full time.
 I have both a vim section for general vim notes, and a neovim section which covers
 converting from vim to neovim and what's involved. This page is mostly for things
 that don't quite fit between the two.
