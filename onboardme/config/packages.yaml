@@ -110,6 +110,8 @@ brew:
     macOS:
       # python 3.11 already ships with Debian bookworm, only needed for macOS
       - python@3.11
+      # for hiding the top bar on an M1
+      - topnotch
       # for testing apis and downloading things
       - curl
       # current version of bash :)
