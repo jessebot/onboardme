@@ -143,7 +143,7 @@ def main(log_level: str = "WARN",
             pkg_groups = usr_pref['package']['groups']
             run_pkg_mngrs(pkg_mngrs, pkg_groups)
 
-        elif step in ['vim_setup', 'neovim_setup', 'font_setup']:
+        elif step in ['neovim_setup', 'font_setup']:
             # import step's function from ide_setup.py in same directory
             import_module('onboardme.ide_setup', package=f'.{step}')
             func = getattr(ide_setup, step)
