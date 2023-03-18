@@ -4,41 +4,12 @@ config variable processing library for onboardme
 
 import logging as log
 
-# for system data, environment data, and checking/joining paths
-from os import path
-from pathlib import Path
-
 # rich helps pretty print everything
 from rich.prompt import Confirm
-import yaml
 
 # custom libs
-from .constants import OS, ONBOARDME_CONFIG_DIR
+from .constants import OS, USR_CONFIG_FILE
 from .console_logging import print_panel
-
-import wget
-
-
-default_dotfiles = ("https://raw.githubusercontent.com/jessebot/dot_files/"
-                    "main/.config/onboardme/")
-
-
-def load_cfg(config_file: str) -> dict:
-    """
-    load yaml config files for onboardme
-    """
-    config_full_path = path.join(ONBOARDME_CONFIG_DIR, config_file)
-
-    # defaults
-    if not path.exists(config_full_path):
-        Path(ONBOARDME_CONFIG_DIR).mkdir(exist_ok=True)
-        wget.download(default_dotfiles + config_file, config_full_path)
-
-    with open(config_full_path, 'r') as yaml_file:
-        return yaml.safe_load(yaml_file)
-
-
-USR_CONFIG_FILE = load_cfg("config.yml")
 
 
 def check_os_support():

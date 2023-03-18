@@ -5,4 +5,4 @@ repos:
       # make sure the poetry config does not get committed in a broken state
       - id: poetry-check
       # make sure the lock file is up-to-date when committing changes
-      - id: poetry-lock
+      # - id: poetry-lock

@@ -91,17 +91,17 @@ def setup_logger(level="", log_file=""):
 @option('--remote_host', '-r', metavar="IP_ADDR", multiple=True,
         help=HELP['remote_host'])
 @option('--version', is_flag=True, help=HELP['version'])
-def main(log_level: str = "WARN",
-         log_file: str = "",
-         steps: str = STEPS.join(','),
-         git_url: str = "https://github.com/jessebot/dot_files.git",
-         git_branch: str = "main",
-         overwrite: bool = False,
-         pkg_managers: str = PKG_MNGRS.join(','),
-         pkg_groups: str = "default",
-         firewall: bool = False,
-         remote_host: str = "",
-         version: bool = False):
+def main(log_level: str = USR_CONFIG_FILE['log']['level'],
+         log_file: str = USR_CONFIG_FILE['log']['file'],
+         steps: str = USR_CONFIG_FILE['steps'][OS[0]], 
+         git_url: str = USR_CONFIG_FILE['dot_files']['git_url'],
+         git_branch: str = USR_CONFIG_FILE['dot_files']['git_branch'],
+         overwrite: bool = USR_CONFIG_FILE['dot_files']['overwrite'],
+         pkg_managers: str = USR_CONFIG_FILE['package']['managers'][OS[0]], 
+         pkg_groups: str = USR_CONFIG_FILE['package']['groups'],
+         firewall: bool = USR_CONFIG_FILE['firewall'],
+         remote_host=USR_CONFIG_FILE['remote_hosts'],
+         version=False) -> bool:
     """
     If present, config: XDG_CONFIG_HOME/onboardme/[packages.yml, config.yml]
     If run with no options on Linux, it will install brew, pip3.11, apt,
@@ -157,7 +157,7 @@ def main(log_level: str = "WARN",
         configure_firewall(remote_host)
 
     print_manual_steps()
-    return
+    return True
 
 
 if __name__ == '__main__':

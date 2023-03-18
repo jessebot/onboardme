@@ -54,10 +54,6 @@ coverage.xml
 # any locally generated log stuff:
 *.log
 
-# Flask stuff:
-instance/
-.webassets-cache
-
 # PyBuilder
 target/
 
