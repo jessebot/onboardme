@@ -60,8 +60,6 @@ onboardme keeps your neovim plugins installed and up to date with [packer] under
   
   If you haven't already made the switch from Vim to [NeoVim], you can try out NeoVim today with `onboardme` :D We used to support both neovim _and_ vim, but these days none of the primary developers of this repo use pure vim anymore, so we can't ensure it's up to standards. All of your knowledge from vim is still helpful in neovim though, and we highly recommend switching as neovim has a lot more features and a very active plugin community :) NeoVim maintains a guide on how to switch from vim [here](https://neovim.io/doc/user/nvim.html#nvim-from-vim). 
 
-  We will stop official support for configuring vim, outside of installing the package across Debian/MacOS, in v1.0.0. This just means we won't be running anything to configure your vim plugins anymore, but you can still always add it to a package manager in [`packages.yml`](#configuration). 
-
 </details>
 
 ### Easy `yaml` config files
