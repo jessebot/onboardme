@@ -138,8 +138,7 @@ py_return_code=$?
 if [ $py_return_code -ne 0 ]; then
     if [ "$OS" == "Darwin" ]; then
 	echo "Installing Python3.11 via brew..."
-        brew install python@3.11 pipx
-	pipx ensurepath
+        brew install python@3.11
     	echo -e "\033[92mPython3.11 installed :3 \033[00m"
     else
 	echo "Installing Python3.11 via apt..."
@@ -159,15 +158,21 @@ else
         DEBIAN_FRONTEND=noninteractive && \
 	sudo apt-get update && \
 	sudo apt-get install -y python3-pip python3-venv
+	curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
 	echo -e "\033[92mPip3.11 installed :3 \033[00m"
     fi
+
+    echo 'export PATH="$PATH:/home/friend/.local/bin/"' >> ~/.bashrc
+    . ~/.bashrc
 fi
 
 if [[ "$OS" == *"Linux"* ]]; then
     echo ""
     echo "We will remove /usr/lib/python3.*/EXTERNALLY-MANAGED until Debian Bookworm decides on a better way forward with virtual envs."
     echo "See: https://salsa.debian.org/cpython-team/python3/-/blob/master/debian/README.venv"
-    sudo rm /usr/lib/python3.*/EXTERNALLY-MANAGED
+    if [ -e /usr/lib/python3.*/EXTERNALLY-MANAGED ]; then
+         sudo rm /usr/lib/python3.*/EXTERNALLY-MANAGED
+    fi
 fi
 
 echo -e "--------------------------\033[94m Installing OnBoardMe :D \033[00m -------------------------"
