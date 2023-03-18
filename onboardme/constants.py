@@ -23,3 +23,13 @@ HOME_DIR = getenv("HOME")
 SYSINFO = uname()
 # this will be something like ('Darwin', 'x86_64')
 OS = (SYSINFO.sysname, SYSINFO.machine)
+
+# step config is different per OS
+STEPS = ['dot_files','packages','font_setup','neovim_setup','group_setup']
+if OS[0] == 'Darwin':
+    STEPS.append('sudo_setup')
+
+# package manager config is different per OS
+PKG_MNGRS = ['brew','pip3.11']
+if OS[0] == 'Linux':
+    PKG_MNGRS.extend(['apt','snap','flatpak'])

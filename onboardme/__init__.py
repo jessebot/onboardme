@@ -12,9 +12,8 @@ from importlib import import_module
 import logging
 from rich.logging import RichHandler
 from .help_text import RichCommand, options_help
-from .constants import VERSION, OS
+from .constants import VERSION, OS, STEPS, PKG_MNGRS
 from .env_config import check_os_support, process_configs, USR_CONFIG_FILE
-from .env_config import DEFAULTS as OPTS
 from .console_logging import print_manual_steps
 from .dot_files import setup_dot_files
 from .pkg_management import run_pkg_mngrs
@@ -42,7 +41,7 @@ def setup_logger(level="", log_file=""):
     # these are params to be passed into logging.basicConfig
     opts = {'level': log_level, 'format': "%(message)s", 'datefmt': "[%X]"}
 
-    # we only log to a file if one was passed into config.yaml or the cli
+    # we only log to a file if one was passed into config.yml or the cli
     if not log_file:
         if USR_CONFIG_FILE:
             log_file = USR_CONFIG_FILE['log'].get('file', None)
@@ -78,14 +77,13 @@ def setup_logger(level="", log_file=""):
 @option('--log_level', '-l', metavar='LOGLEVEL', help=HELP['log_level'],
         type=Choice(['debug', 'info', 'warn', 'error']))
 @option('--log_file', '-o', metavar='LOGFILE', help=HELP['log_file'])
-@option('--steps', '-s', metavar='STEP', multiple=True,
-        type=Choice(OPTS['steps'][OS[0]]), help=HELP['steps'])
+@option('--steps', '-s', metavar='STEP', multiple=True, type=Choice(STEPS),
+        help=HELP['steps'])
 @option('--git_url', '-u', metavar='URL', help=HELP['git_url'])
 @option('--git_branch', '-b', metavar='BRANCH', help=HELP['git_branch'])
 @option('--overwrite', '-O', is_flag=True, help=HELP['overwrite'])
 @option('--pkg_managers', '-p', metavar='PKG_MANAGER', multiple=True,
-        type=Choice(OPTS['package']['managers'][OS[0]]),
-        help=HELP['pkg_managers'])
+        type=Choice(PKG_MNGRS), help=HELP['pkg_managers'])
 @option('--pkg_groups', '-g', metavar='PKG_GROUP', multiple=True,
         type=Choice(['default', 'gaming', 'gui', 'devops']),
         help=HELP['pkg_groups'])
@@ -93,19 +91,19 @@ def setup_logger(level="", log_file=""):
 @option('--remote_host', '-r', metavar="IP_ADDR", multiple=True,
         help=HELP['remote_host'])
 @option('--version', is_flag=True, help=HELP['version'])
-def main(log_level: str = "",
+def main(log_level: str = "WARN",
          log_file: str = "",
-         steps: str = "",
-         git_url: str = "",
-         git_branch: str = "",
+         steps: str = STEPS.join(','),
+         git_url: str = "https://github.com/jessebot/dot_files.git",
+         git_branch: str = "main",
          overwrite: bool = False,
-         pkg_managers: str = "",
-         pkg_groups: str = "",
+         pkg_managers: str = PKG_MNGRS.join(','),
+         pkg_groups: str = "default",
          firewall: bool = False,
          remote_host: str = "",
          version: bool = False):
     """
-    If present, config: XDG_CONFIG_HOME/onboardme/[packages.yaml, config.yaml]
+    If present, config: XDG_CONFIG_HOME/onboardme/[packages.yml, config.yml]
     If run with no options on Linux, it will install brew, pip3.11, apt,
     flatpak, and snap packages. On mac, it only installs brew/pip3.11 packages.
     config loading tries to load: cli options and then .config/onboardme/*

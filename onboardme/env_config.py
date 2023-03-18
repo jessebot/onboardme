@@ -1,33 +1,44 @@
 """
-environment variable loading library for onboardme
+config variable processing library for onboardme
 """
+
 import logging as log
+
 # for system data, environment data, and checking/joining paths
 from os import path
+from pathlib import Path
+
 # rich helps pretty print everything
 from rich.prompt import Confirm
 import yaml
 
 # custom libs
-from .constants import OS, PWD, ONBOARDME_CONFIG_DIR
+from .constants import OS, ONBOARDME_CONFIG_DIR
 from .console_logging import print_panel
+
+import wget
+
+
+default_dotfiles = ("https://raw.githubusercontent.com/jessebot/dot_files/"
+                    "main/.config/onboardme/")
 
 
 def load_cfg(config_file: str) -> dict:
     """
     load yaml config files for onboardme
     """
-    # make sure the path is valid
-    if path.exists(config_file):
-        with open(config_file, 'r') as yaml_file:
-            return yaml.safe_load(yaml_file)
-    # return empty dict if there was no file
-    return {}
+    config_full_path = path.join(ONBOARDME_CONFIG_DIR, config_file)
+
+    # defaults
+    if not path.exists(config_full_path):
+        Path(ONBOARDME_CONFIG_DIR).mkdir(exist_ok=True)
+        wget.download(default_dotfiles + config_file, config_full_path)
+
+    with open(config_full_path, 'r') as yaml_file:
+        return yaml.safe_load(yaml_file)
 
 
-# defaults
-DEFAULTS = load_cfg(f"{PWD}/config/onboardme_config.yaml")
-USR_CONFIG_FILE = load_cfg(path.join(ONBOARDME_CONFIG_DIR, 'config.yaml'))
+USR_CONFIG_FILE = load_cfg("config.yml")
 
 
 def check_os_support():
@@ -51,7 +62,7 @@ def check_os_support():
                     "[cornflower_blue]Compatibility Check")
 
 
-def process_steps(steps: list, firewall=False, browser=False):
+def process_steps(steps: list, firewall=False, browser=False) -> list:
     """
     process which steps to run for which OS, which steps the user passed in,
     and then make sure dependent steps are always run.
@@ -62,23 +73,24 @@ def process_steps(steps: list, firewall=False, browser=False):
     """
     if steps:
         steps_list = list(steps)
-        # setting up vim is useless if we don't have a .vimrc
-        if 'vim_setup' in steps_list and 'dot_files' not in steps_list:
+        # setting up neovim is useless if we don't have an init.vim or init.lua
+        if 'neovim_setup' in steps_list and 'dot_files' not in steps_list:
             steps_list.append('dot_files')
-        if browser:
-            steps_list.append('browser_setup')
+
         if firewall and 'Linux' in OS:
             # currently don't have a great firewall on macOS, sans lulu
             steps_list.append('firewall_setup')
 
     removed_duplicates = set(steps_list)
     steps = list(removed_duplicates)
-    default_order = DEFAULTS['steps'][OS[0]]
+    default_order = ['dot_files', 'packages', 'font_setup', 'neovim_setup']
+    if OS[0] == 'Linux':
+        default_order.append('group_setup')
+    else:
+        default_order.append('sudo_setup')
 
     # Rearrange list by other list order Using list comprehension
-    result_steps = [ele for ele in default_order if ele in steps]
-
-    return result_steps
+    return [ele for ele in default_order if ele in steps]
 
 
 def sort_pkgmngrs(package_managers_list: list) -> list:
@@ -88,16 +100,11 @@ def sort_pkgmngrs(package_managers_list: list) -> list:
 
     Takes list of package manager str and reorders them be (if they exist):
        ['brew', 'pip3.11', 'apt', 'snap', 'flatpak']
-    Returns reordered_list
     """
-    reordered_list = []
-    package_managers = ['brew', 'pip3.11', 'apt', 'snap', 'flatpak']
+    pkg_mngr_default_order = ['brew', 'pip3.11', 'apt', 'snap', 'flatpak']
 
-    for mngr in package_managers:
-        if mngr in package_managers_list:
-            reordered_list.append(mngr)
-
-    return reordered_list
+    # Rearrange list by other list order Using list comprehension
+    return [ele for ele in pkg_mngr_default_order if ele in package_managers_list]
 
 
 def fill_in_defaults(defaults: dict, user_config: dict,
@@ -120,10 +127,12 @@ def fill_in_defaults(defaults: dict, user_config: dict,
     return user_config
 
 
-def process_configs(overwrite=False, repo="", git_branch="", pkg_mngrs=[],
-                    pkg_groups=[], firewall=False, remote_host="", steps=[]):
+def process_configs(overwrite: bool, repo: str, git_branch: str, 
+                    pkg_mngrs: list, pkg_groups: list, firewall: bool,
+                    remote_host: str, steps: list, log_file: str,
+                    log_level: str) -> dict:
     """
-    process the config in ~/.config/onboardme/config.yaml if it exists,
+    process the config in ~/.config/onboardme/config.yml if it exists,
     then process the cli dict, and fill in defaults for anything not explicitly
     defined. Returns full final config as dict for use in script.
     """
@@ -132,9 +141,10 @@ def process_configs(overwrite=False, repo="", git_branch="", pkg_mngrs=[],
         if type(remote_host) is str:
             remote_host = [remote_host]
 
+
     cli_dict = {'package': {'managers': {OS[0]: pkg_mngrs},
                             'groups': pkg_groups},
-                'log': {'file': None, 'level': ""},
+                'log': {'file': log_file, 'level': log_level},
                 'remote_hosts': remote_host,
                 'firewall': firewall,
                 'steps': {OS[0]: steps},
@@ -142,22 +152,18 @@ def process_configs(overwrite=False, repo="", git_branch="", pkg_mngrs=[],
                               'git_url': repo, 'git_branch': git_branch}}
 
     log.debug(f"cli_dict is:\n{cli_dict}\n")
-    if USR_CONFIG_FILE:
-        log.debug(f"🗂 ⚙️  user_config_file: \n{USR_CONFIG_FILE}\n")
-
-        usr_cfgs = fill_in_defaults(DEFAULTS, USR_CONFIG_FILE)
-        log.debug(f"after usr config file filled in with defaults: {usr_cfgs}")
-
-        final_defaults = fill_in_defaults(cli_dict, usr_cfgs, True)
-    else:
-        final_defaults = fill_in_defaults(DEFAULTS, cli_dict)
+    log.debug(f"🗂 ⚙️  user_config_file: \n{USR_CONFIG_FILE}\n")
+    final_defaults = fill_in_defaults(cli_dict, USR_CONFIG_FILE, True)
 
     log.debug(" final config after filling cli_dict in with defaults:\n"
               f"{final_defaults}\n")
 
+    # make sure the steps are in a valid order
     valid_steps = process_steps(final_defaults['steps'][OS[0]],
                                 final_defaults['remote_hosts'])
     final_defaults['steps'][OS[0]] = valid_steps
+
+    # make sure the package managers are in a valid order
     sorted_mngrs = sort_pkgmngrs(final_defaults['package']['managers'][OS[0]])
     final_defaults['package']['managers'][OS[0]] = sorted_mngrs
 
