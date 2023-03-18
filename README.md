@@ -52,8 +52,7 @@ We install and upgrade libraries and apps using common package managers.
 </details>
 
 ### NeoVim Plugin Installtion and Updates
-onboardme keeps your neovim plugins installed and up to date with [packer] under the hood.
-(Lazy support rolling out soon)
+onboardme keeps your neovim plugins installed and up to date with [lazy.nvim] under the hood.
   
 <details>
   <summary>Why no vim though?</summary>
@@ -163,7 +162,7 @@ steps:
     - packages
     # adds nerdfonts
     - font_setup
-    # runs :PackerSync
+    # runs :Lazy sync to install all your plugins
     - neovim_setup
     # sets up touchID for sudo
     - sudo_setup
@@ -290,4 +289,4 @@ Get started with testing kubernetes locally, even on metal with [smol k8s lab](h
 [dot files]: https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments "wiki entry for dot file explanation"
 [XDG Base Directory Spec]: https://specifications.freedesktop.org/basedir-spec/latest/ar01s03.html
 [NeoVim]: https://neovim.io/ "neovim, vim improved"
-[packer]: https://github.com/wbthomason/packer.nvim
+[lazy.nvim]: https://github.com/folke/lazy.nvim "lazy.nvim, a plugin manager for neovim"
