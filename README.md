@@ -284,6 +284,7 @@ Get started with testing kubernetes locally, even on metal with [smol k8s lab](h
 [default dot files]: https://github.com/jessebot/dot_files "default dot files for onboardme"
 [help text]: https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/help_text.svg "an svg of the command: onboardme --help"
 [Getting Started Docs]: https://jessebot.github.io/onboardme/onboardme/getting-started "getting started documentation"
+[default packages]: https://github.com/jessebot/dot_files/blob/main/.config/onboardme/packages.yml "default installed packages for onboardme"
 
 <!-- external link references -->
 [dot files]: https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments "wiki entry for dot file explanation"
