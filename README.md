@@ -24,14 +24,23 @@ Get your daily driver just the way you like it, from dot files insta
 ### Keep your Dot Files Up To Date Across multiple systems
 `onboardme` can manage your [dot files] using a git by turning your home directory into a repo.
 
-We provide [default dot files], so you don't have to manage them. The onboardme maintainers use these themselves, so they:
-- cover a lot of common apps and tools you probably want anyway (BASH and `git`), and a few you didn't know were helpful (`powerline`, `bat`)
-- have consistent colorschemes accross different CLI/TUI programs 😃
-- set all the helpful BASH aliases you could need (zsh support coming soon)
+<details>
+  <summary>We provide default dot files, so you don't have to manage them</summary>
+
+- The [default dot files] are open source, and the maintainers use these themselves
+- They cover a lot of common apps/tools you probably want anyway
+- They have consistent colorschemes accross different CLI/TUI programs 😃
+- They set all the helpful BASH aliases you could need (zsh support coming soon)
+
+</details>
 
 ### Package management
-We install and upgrade libraries and apps
-- onboardme provides a currated list of [default packages](./onboardme/config/packages.yaml)
+We install and upgrade libraries and apps using common package managers.
+
+<details>
+  <summary>onboardme provides a currated list of default packages</summary>
+  
+- checkout the [default packages](./onboardme/config/packages.yaml)
 - supports `brew`, `apt`, `snap`, `flatpak`, and `pip` (and you can add your own 😄)
 - group together packages for different kinds of environments
   - onboardme provides default package groups:
@@ -39,6 +48,8 @@ We install and upgrade libraries and apps
     - macOS (default apps for _macOS only_ apps, always installed on macOS)
     - gui (default GUI apps for Linux desktops, optionally installed)
     - devops (devops related tooling, optionally installed)
+
+</details>
 
 ### NeoVim Plugin Installtion and Updates
 onboardme keeps your neovim plugins installed and up to date with [packer] under the hood.
