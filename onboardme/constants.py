@@ -6,7 +6,7 @@ DESCRIPTION:
     LICENSE: GNU AFFERO GENERAL PUBLIC LICENSE Version 3
 """
 from importlib.metadata import version as get_version
-from xdg import xdg_config_home
+from xdg_base_dirs import xdg_config_home
 from os import getenv, path, uname
 
 
@@ -14,7 +14,8 @@ from os import getenv, path, uname
 VERSION = get_version('onboardme')
 
 # pathing
-XDG_CONFIG_DIR = path.join(xdg_config_home(), 'onboardme')
+XDG_CONFIG_DIR = xdg_config_home()
+ONBOARDME_CONFIG_DIR = path.join(xdg_config_home(), 'onboardme')
 PWD = path.dirname(__file__)
 HOME_DIR = getenv("HOME")
 

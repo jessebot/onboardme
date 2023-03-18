@@ -9,7 +9,7 @@ from rich.prompt import Confirm
 import yaml
 
 # custom libs
-from .constants import OS, PWD, XDG_CONFIG_DIR
+from .constants import OS, PWD, ONBOARDME_CONFIG_DIR
 from .console_logging import print_panel
 
 
@@ -27,7 +27,7 @@ def load_cfg(config_file: str) -> dict:
 
 # defaults
 DEFAULTS = load_cfg(f"{PWD}/config/onboardme_config.yaml")
-USR_CONFIG_FILE = load_cfg(path.join(XDG_CONFIG_DIR, 'config.yaml'))
+USR_CONFIG_FILE = load_cfg(path.join(ONBOARDME_CONFIG_DIR, 'config.yaml'))
 
 
 def check_os_support():

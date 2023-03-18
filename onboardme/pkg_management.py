@@ -3,7 +3,7 @@ from os import path
 from pathlib import Path
 import shutil
 
-from .constants import OS, PWD, XDG_CONFIG_DIR, HOME_DIR
+from .constants import OS, PWD, HOME_DIR, ONBOARDME_CONFIG_DIR
 from .console_logging import print_header
 from .console_logging import print_sub_header as sub_header
 from .env_config import load_cfg
@@ -15,7 +15,7 @@ def load_packages_config() -> dict:
     Checks if user has local config file before procceding with default config
     """
     # check to make sure the user didn't pass in their own packages.yaml
-    usr_pkg_config = path.join(XDG_CONFIG_DIR, 'packages.yaml')
+    usr_pkg_config = path.join(ONBOARDME_CONFIG_DIR, 'packages.yaml')
     if path.exists(usr_pkg_config):
         return load_cfg(usr_pkg_config)
     else:
