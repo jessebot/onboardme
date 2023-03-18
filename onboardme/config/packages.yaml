@@ -16,27 +16,22 @@ brew:
   packages:
     # these are all for both macOS and Debian
     default:
-      # TUI browser
-      - w3m
+      - w3m     # TUI browser
+      - pandoc  # mardown rendering
       - wget
-      # screen session + sharing/splitting - replaces tmux :)
-      - zellij
+      - zellij  # tmux replacement :)
       # recording a shell session to share with others
       - asciinema
-      # main terminal based text editor is now neovim, but you can still install vim
-      - neovim
-      # terminal based email client
-      - neomutt
-      # fetch your mail locally
-      - offlineimap
+      - neovim       # TUI IDE is neovim 
+      - neomutt      # TUI email client
+      - offlineimap  # fetch your mail locally for neomutt
       # fuzzy search, helps with completion and searching
       - fzf
       # ls replacement written in rust: https://github.com/Peltoche/lsd
       - lsd
       #  A cat(1) clone with syntax highlighting and Git integration.
       - bat
-      # pretty formatting and syntax highlighting
-      - rich-cli
+      - rich-cli  # pretty formatting and syntax highlighting
       # file TUI: https://www.geeksforgeeks.org/ranger-a-cli-file-manager/
       - ranger
       # preview videos in the terminal. commented by default because it is big
@@ -49,9 +44,9 @@ brew:
       - the_silver_searcher
       # diff, but with colors
       - colordiff
-      # prettier top
-      - htop
-      - gotop
+      # prettier top alternatives
+      - btop    # C++ top - bigger than bottom, still testing
+      - bottom  # rust top
       # quick system metrics, typically used as an MOTD
       - fastfetch
       # prettier du/df outputs: https://github.com/muesli/duf
@@ -69,23 +64,19 @@ brew:
       - cmatrix
       # a cow that says things
       - cowsay
-      # revision control system
+      # revision control system stuff
       - git
-      # terminal user interface for git
-      - gitui
+      - gitui # terminal user interface for git
+      - gh    # github cli
+      - glab  # gitlab cli
       # programming languages and their package managers
       - go
-      - node
-      # installs cargo and rust
-      - rustup
+      - node   # node.js
+      - rustup # installs cargo and rust
       # linter for YAML
       - yamllint
-      # linter for html5
-      - tidy-html5
-      # mardown rendering
-      - pandoc
-      # for parsing json via cli
-      - jq
+      - jq  # for parsing json via cli
+      - yq  # it's like jq but for yaml
       # search stackoverflow e.g. howdoi extend a dictionary in python
       - howdoi
       # get the quick, short text of how to use various commands
@@ -102,10 +93,6 @@ brew:
       - spotifyd
       # spotify TUI
       - spotify-tui
-      # github cli
-      - gh
-      # gitlab cli
-      - glab
     # macOS specific stuff. Won't work with LinuxBrew
     macOS:
       # python 3.11 already ships with Debian bookworm, only needed for macOS
@@ -116,8 +103,6 @@ brew:
       - curl
       # current version of bash :)
       - bash
-      # for setup scripts and compiling things (e.g. YouCompleteMe)
-      - cmake
       # so that bash completion stuff works
       - "bash-completion@2"
       # zathura is a document viewer
@@ -151,8 +136,6 @@ brew:
       - "--cask protonmail-bridge"
       # libreoffice is a FOSS office suite that replaces Google Docs/Office365
       - "--cask libreoffice"
-      # it's like jq but for yaml
-      - "yq"
     devops:
       - "docker"
       # docker desktop
@@ -199,21 +182,13 @@ apt:
     default:
       - bash-completion
       - curl
-      # BEGIN: makes youcompleteme work
-      # needed for compiling things, currently specifically gcc-11
-      # - cmake
-      # - openjdk-17-jdk
-      # - openjdk-17-jre
-      # - vim-nox
-      # END: makes youcompleteme work
       - gcc-11
       - build-essential
       - python3
       - python3-dev
       - python3-pip
       - mono-complete
-      # grep alternative
-      - silversearcher-ag
+      - silversearcher-ag   # grep alternative
       # this should let you use the a yubikey for auth
       - libpam-yubico
       # vpn
@@ -308,7 +283,7 @@ pip3.11:
       - netifaces
       # powerline: supposed to work spotify info
       - dbus
-      # neovim: needed for vim's python3 interface
+      # neovim: needed for neovim's python3 interface, I think
       - pynvim
       # this is for git pre-commits
       - pre-commit
