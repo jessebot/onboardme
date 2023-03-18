@@ -131,6 +131,16 @@ fi
 
 
 echo -e "--------------------------\033[94m Checking for Python3 and pip3\033[00m -------------------------"
+
+if [[ "$OS" == *"Linux"* ]]; then
+    echo ""
+    echo "We will remove /usr/lib/python3.*/EXTERNALLY-MANAGED until Debian Bookworm decides on a better way forward with virtual envs."
+    echo "See: https://salsa.debian.org/cpython-team/python3/-/blob/master/debian/README.venv"
+    if [ -e /usr/lib/python3.*/EXTERNALLY-MANAGED ]; then
+         sudo rm /usr/lib/python3.*/EXTERNALLY-MANAGED
+    fi
+fi
+
 # check to make sure we have python3 and pip3 installed
 which python3.11 > /dev/null
 py_return_code=$?
@@ -138,16 +148,17 @@ py_return_code=$?
 if [ $py_return_code -ne 0 ]; then
     if [ "$OS" == "Darwin" ]; then
 	echo "Installing Python3.11 via brew..."
-        brew install python@3.11 pipx
-	pipx ensurepath
+        brew install python@3.11
     	echo -e "\033[92mPython3.11 installed :3 \033[00m"
     else
 	echo "Installing Python3.11 via apt..."
         DEBIAN_FRONTEND=noninteractive && \ 
-	sudo apt-get install software-properties-common -y && \
-        sudo add-apt-repository ppa:deadsnakes/ppa
-        sudo apt install python3.11
+	sudo apt-get install -y software-properties-common && \
+        sudo add-apt-repository -y ppa:deadsnakes/ppa && \
+        sudo apt install -y python3.11 && \
         curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
+	echo 'export PATH="$PATH:/home/friend/.local/bin/"' >> ~/.bashrc
+    	. ~/.bashrc
 	echo -e "\033[92mPython3.11 installed :3 \033[00m"
     fi
 else
@@ -158,16 +169,12 @@ else
         echo -e "\033[92mInstalling pip via apt... \033[00m"
         DEBIAN_FRONTEND=noninteractive && \
 	sudo apt-get update && \
-	sudo apt-get install -y python3-pip python3-venv
+	sudo apt-get install -y python3-pip python3-venv && \
+	curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
+	echo 'export PATH="$PATH:/home/friend/.local/bin/"' >> ~/.bashrc
+    	. ~/.bashrc
 	echo -e "\033[92mPip3.11 installed :3 \033[00m"
     fi
-f
-
-if [[ "$OS" == *"Linux"* ]]; then
-    echo ""
-    echo "We will remove /usr/lib/python3.*/EXTERNALLY-MANAGED until Debian Bookworm decides on a better way forward with virtual envs."
-    echo "See: https://salsa.debian.org/cpython-team/python3/-/blob/master/debian/README.venv"
-    sudo rm /usr/lib/python3.*/EXTERNALLY-MANAGED
 fi
 
 echo -e "--------------------------\033[94m Installing OnBoardMe :D \033[00m -------------------------"
