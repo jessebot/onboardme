@@ -123,6 +123,14 @@ def process_configs(overwrite: bool, repo: str, git_branch: str,
                               'git_url': repo, 'git_branch': git_branch}}
 
     log.debug(f"cli_dict is:\n{cli_dict}\n")
+
+    if OS[0] == 'Darwin':
+        USR_CONFIG_FILE['package']['managers'].pop('Linux')
+        USR_CONFIG_FILE['steps'].pop('Linux')
+    else:
+        USR_CONFIG_FILE['package']['managers'].pop('Darwin')
+        USR_CONFIG_FILE['steps'].pop('Darwin')
+
     log.debug(f"🗂 ⚙️  user_config_file: \n{USR_CONFIG_FILE}\n")
     final_defaults = fill_in_defaults(cli_dict, USR_CONFIG_FILE, True)
 

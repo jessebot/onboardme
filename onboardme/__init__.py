@@ -12,8 +12,8 @@ from importlib import import_module
 import logging
 from rich.logging import RichHandler
 from .help_text import RichCommand, options_help
-from .constants import VERSION, OS, STEPS, PKG_MNGRS
-from .env_config import check_os_support, process_configs, USR_CONFIG_FILE
+from .constants import VERSION, OS, STEPS, PKG_MNGRS, USR_CONFIG_FILE
+from .env_config import check_os_support, process_configs
 from .console_logging import print_manual_steps
 from .dot_files import setup_dot_files
 from .pkg_management import run_pkg_mngrs
@@ -75,33 +75,40 @@ def setup_logger(level="", log_file=""):
 # each of these is an option in the cli and variable we use later on
 @command(cls=RichCommand)
 @option('--log_level', '-l', metavar='LOGLEVEL', help=HELP['log_level'],
-        type=Choice(['debug', 'info', 'warn', 'error']))
-@option('--log_file', '-o', metavar='LOGFILE', help=HELP['log_file'])
+        type=Choice(['debug', 'info', 'warn', 'error']),
+        default=USR_CONFIG_FILE['log']['level'])
+@option('--log_file', '-o', metavar='LOGFILE', help=HELP['log_file'],
+        default=USR_CONFIG_FILE['log']['file'])
 @option('--steps', '-s', metavar='STEP', multiple=True, type=Choice(STEPS),
-        help=HELP['steps'])
-@option('--git_url', '-u', metavar='URL', help=HELP['git_url'])
-@option('--git_branch', '-b', metavar='BRANCH', help=HELP['git_branch'])
-@option('--overwrite', '-O', is_flag=True, help=HELP['overwrite'])
+        help=HELP['steps'], default=USR_CONFIG_FILE['steps'][OS[0]])
+@option('--git_url', '-u', metavar='URL', help=HELP['git_url'],
+        default=USR_CONFIG_FILE['dot_files']['git_url'])
+@option('--git_branch', '-b', metavar='BRANCH', help=HELP['git_branch'],
+        default=USR_CONFIG_FILE['dot_files']['git_branch'])
+@option('--overwrite', '-O', is_flag=True, help=HELP['overwrite'],
+        default=USR_CONFIG_FILE['dot_files']['overwrite'])
 @option('--pkg_managers', '-p', metavar='PKG_MANAGER', multiple=True,
-        type=Choice(PKG_MNGRS), help=HELP['pkg_managers'])
+        type=Choice(PKG_MNGRS), help=HELP['pkg_managers'],
+        default=USR_CONFIG_FILE['package']['managers'][OS[0]])
 @option('--pkg_groups', '-g', metavar='PKG_GROUP', multiple=True,
         type=Choice(['default', 'gaming', 'gui', 'devops']),
-        help=HELP['pkg_groups'])
-@option('--firewall', '-f', is_flag=True, help=HELP['firewall'])
+        help=HELP['pkg_groups'], default=USR_CONFIG_FILE['package']['groups'])
+@option('--firewall', '-f', is_flag=True, help=HELP['firewall'],
+        default=USR_CONFIG_FILE['firewall'])
 @option('--remote_host', '-r', metavar="IP_ADDR", multiple=True,
-        help=HELP['remote_host'])
-@option('--version', is_flag=True, help=HELP['version'])
-def main(log_level: str = USR_CONFIG_FILE['log']['level'],
-         log_file: str = USR_CONFIG_FILE['log']['file'],
-         steps: str = USR_CONFIG_FILE['steps'][OS[0]], 
-         git_url: str = USR_CONFIG_FILE['dot_files']['git_url'],
-         git_branch: str = USR_CONFIG_FILE['dot_files']['git_branch'],
-         overwrite: bool = USR_CONFIG_FILE['dot_files']['overwrite'],
-         pkg_managers: str = USR_CONFIG_FILE['package']['managers'][OS[0]], 
-         pkg_groups: str = USR_CONFIG_FILE['package']['groups'],
-         firewall: bool = USR_CONFIG_FILE['firewall'],
-         remote_host=USR_CONFIG_FILE['remote_hosts'],
-         version=False) -> bool:
+        help=HELP['remote_host'], default=USR_CONFIG_FILE['remote_hosts'])
+@option('--version', is_flag=True, help=HELP['version'], default=False)
+def main(log_level,
+         log_file,
+         steps, 
+         git_url,
+         git_branch,
+         overwrite,
+         pkg_managers, 
+         pkg_groups,
+         firewall,
+         remote_host,
+         version) -> bool:
     """
     If present, config: XDG_CONFIG_HOME/onboardme/[packages.yml, config.yml]
     If run with no options on Linux, it will install brew, pip3.11, apt,
@@ -121,8 +128,12 @@ def main(log_level: str = USR_CONFIG_FILE['log']['level'],
     log = setup_logger(log_level, log_file)
 
     # then process any local user config files, cli opts, and defaults
+    log.debug(USR_CONFIG_FILE['steps'][OS[0]])
+    log.debug(steps)
+
     usr_pref = process_configs(overwrite, git_url, git_branch, pkg_managers,
-                               pkg_groups, firewall, remote_host, steps)
+                               pkg_groups, firewall, remote_host, steps,
+                               log_file, log_level)
 
     if log:
         log.debug(f"User passed in the following preferences:\n{usr_pref}\n")

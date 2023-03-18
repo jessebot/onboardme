@@ -3,10 +3,9 @@ from os import path
 from pathlib import Path
 import shutil
 
-from .constants import OS, PWD, HOME_DIR
+from .constants import OS, PWD, HOME_DIR, load_cfg
 from .console_logging import print_header
 from .console_logging import print_sub_header as sub_header
-from .env_config import load_cfg
 from .subproc import subproc
 
 
