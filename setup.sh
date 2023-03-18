@@ -131,6 +131,16 @@ fi
 
 
 echo -e "--------------------------\033[94m Checking for Python3 and pip3\033[00m -------------------------"
+
+if [[ "$OS" == *"Linux"* ]]; then
+    echo ""
+    echo "We will remove /usr/lib/python3.*/EXTERNALLY-MANAGED until Debian Bookworm decides on a better way forward with virtual envs."
+    echo "See: https://salsa.debian.org/cpython-team/python3/-/blob/master/debian/README.venv"
+    if [ -e /usr/lib/python3.*/EXTERNALLY-MANAGED ]; then
+         sudo rm /usr/lib/python3.*/EXTERNALLY-MANAGED
+    fi
+fi
+
 # check to make sure we have python3 and pip3 installed
 which python3.11 > /dev/null
 py_return_code=$?
@@ -164,16 +174,6 @@ else
 	echo 'export PATH="$PATH:/home/friend/.local/bin/"' >> ~/.bashrc
     	. ~/.bashrc
 	echo -e "\033[92mPip3.11 installed :3 \033[00m"
-    fi
-
-fi
-
-if [[ "$OS" == *"Linux"* ]]; then
-    echo ""
-    echo "We will remove /usr/lib/python3.*/EXTERNALLY-MANAGED until Debian Bookworm decides on a better way forward with virtual envs."
-    echo "See: https://salsa.debian.org/cpython-team/python3/-/blob/master/debian/README.venv"
-    if [ -e /usr/lib/python3.*/EXTERNALLY-MANAGED ]; then
-         sudo rm /usr/lib/python3.*/EXTERNALLY-MANAGED
     fi
 fi
 
