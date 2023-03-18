@@ -98,22 +98,17 @@ def setup_logger(level="", log_file=""):
 @option('--remote_host', '-r', metavar="IP_ADDR", multiple=True,
         help=HELP['remote_host'], default=USR_CONFIG_FILE['remote_hosts'])
 @option('--version', is_flag=True, help=HELP['version'], default=False)
-def main(log_level,
-         log_file,
+def main(log_level, log_file,
          steps, 
-         git_url,
-         git_branch,
-         overwrite,
-         pkg_managers, 
-         pkg_groups,
-         firewall,
-         remote_host,
+         git_url, git_branch, overwrite,
+         pkg_managers, pkg_groups,
+         firewall, remote_host,
          version) -> bool:
     """
-    If present, config: XDG_CONFIG_HOME/onboardme/[packages.yml, config.yml]
     If run with no options on Linux, it will install brew, pip3.11, apt,
     flatpak, and snap packages. On mac, it only installs brew/pip3.11 packages.
-    config loading tries to load: cli options and then .config/onboardme/*
+    config loading tries to load: cli options and then defaults back to:
+    $XDG_CONFIG_HOME/onboardme/config.yml
     """
 
     # only return the version if --version was passed in
@@ -127,10 +122,7 @@ def main(log_level,
     # setup logging immediately
     log = setup_logger(log_level, log_file)
 
-    # then process any local user config files, cli opts, and defaults
-    log.debug(USR_CONFIG_FILE['steps'][OS[0]])
-    log.debug(steps)
-
+    # makes sure we only overwrite config file prefs if cli opts are passed in
     usr_pref = process_configs(overwrite, git_url, git_branch, pkg_managers,
                                pkg_groups, firewall, remote_host, steps,
                                log_file, log_level)
