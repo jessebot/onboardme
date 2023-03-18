@@ -226,7 +226,7 @@ And optomized for the following programs:
 [![made-with-neovim](https://img.shields.io/badge/NeoVim-0f191f?style=for-the-badge&logo=neovim&logoColor=#5c983b)](https://neovim.io/)
 [![made-with-python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)](https://www.python.org/)
 [![made-with-bash](https://img.shields.io/badge/GNU%20Bash-000000?style=for-the-badge&logo=GNU%20Bash&logoColor=#5c983b)](https://www.gnu.org/software/bash/)
-- [powerline](https://powerline.readthedocs.io/en/master/overview.html)
+[![made-with-powerline](https://img.shields.io/badge/powerline-000000?style=for-the-badge&logo=powerline&logoColor=#5c983b)](https://powerline.readthedocs.io/en/master/overview.html)
 
 
 #### Built using these great tools:
@@ -234,13 +234,6 @@ And optomized for the following programs:
 [<img src="https://github.com/textualize/rich/raw/master/imgs/logo.svg" alt="rich python library logo with with yellow snake" width="200">](https://github.com/Textualize/rich/tree/master)
 [<img src="https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/images/nerd-fonts-logo.svg" width="120" alt="nerd-fonts: Iconic font aggregator, collection, and patcher">](https://www.nerdfonts.com/)
 
-### License
-
-GNU AFFERO GENERAL PUBLIC LICENSE Version 3
-
-TLDR;
-- You are free to bundle this software with other FOSS projects if you just credit us and link back to this project.
-- All derivatives of this software must be licensed as GNU AFFERO GENERAL PUBLIC LICENSE Version 3 or later and must open source the source code as well as credit this project and the contibutors.
 
 ## Status
 Still not production ready, but reasonably stable :)
