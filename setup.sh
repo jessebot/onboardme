@@ -144,8 +144,8 @@ if [ $py_return_code -ne 0 ]; then
 	echo "Installing Python3.11 via apt..."
         DEBIAN_FRONTEND=noninteractive && \ 
 	sudo apt-get install software-properties-common -y && \
-        sudo add-apt-repository ppa:deadsnakes/ppa
-        sudo apt install python3.11
+        sudo add-apt-repository ppa:deadsnakes/ppa && \
+        sudo apt install -y python3.11 && \
         curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
 	echo -e "\033[92mPython3.11 installed :3 \033[00m"
     fi
@@ -157,7 +157,7 @@ else
         echo -e "\033[92mInstalling pip via apt... \033[00m"
         DEBIAN_FRONTEND=noninteractive && \
 	sudo apt-get update && \
-	sudo apt-get install -y python3-pip python3-venv
+	sudo apt-get install -y python3-pip python3-venv && \
 	curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
 	echo -e "\033[92mPip3.11 installed :3 \033[00m"
     fi
