@@ -11,10 +11,10 @@ from rich.text import Text
 from rich.theme import Theme
 
 # custom local module
-from .constants import OS, VERSION
-from .env_config import DEFAULTS
+from .constants import VERSION, STEPS, PKG_MNGRS
 
 
+# this is for creating new help text svgs for the READMEs
 RECORD = False
 
 
@@ -34,8 +34,8 @@ def options_help() -> dict:
     Help text for all the options/switches for main()
     """
     dot_file_url = '[meta]https://github.com/jessebot/dot_files[/meta]'
-    step_choices = pretty_choices(DEFAULTS['steps'][OS[0]])
-    pkg_mngr_choices = pretty_choices(DEFAULTS['package']['managers'][OS[0]])
+    step_choices = pretty_choices(STEPS)
+    pkg_mngr_choices = pretty_choices(PKG_MNGRS)
     logging_choices = pretty_choices(['debug', 'info', 'warn', 'error'])
     pkg_group_choices = pretty_choices(['default', 'devops', 'gui', 'gaming'])
 

@@ -78,7 +78,7 @@ Here's the steps we take depending on what OS we run on. Each step can also be c
 | Git fetch dot files                  | n/a: fetched from a configured git repo  | Debian, macOS |
 | Installs apps using package managers | `./onboardme/config/packages.yaml`       | Debian, macOS |
 | Installs fonts                       | n/a                                      | Debian, macOS |
-| Installs packer.nvm + neovim plugins | plugins fetched from configured git repo | Debian, macOS |
+| Installs lazy.nvim + neovim plugins  | plugins fetched from configured git repo | Debian, macOS |
 | Adds user to the docker group        | n/a                                      |     Debian    |
 | sudo using touchID                   | n/a                                      |     macOS     |
 
@@ -151,4 +151,4 @@ It works great in combination with onboardme :)
 [w3m]: https://w3m.sourceforge.net/ "w3m home page"
 [WireGuard]: https://www.wireguard.com/ "wireguard home page"
 [XDG Base Directory Spec]: https://specifications.freedesktop.org/basedir-spec/latest/ar01s03.html
-[packer]: https://github.com/wbthomason/packer.nvim
+[lazy.nvim]: https://github.com/folke/lazy.nvim "lazy.nvim, a plugin manager for neovim"

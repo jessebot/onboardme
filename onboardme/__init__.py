@@ -12,9 +12,8 @@ from importlib import import_module
 import logging
 from rich.logging import RichHandler
 from .help_text import RichCommand, options_help
-from .constants import VERSION, OS
-from .env_config import check_os_support, process_configs, USR_CONFIG_FILE
-from .env_config import DEFAULTS as OPTS
+from .constants import VERSION, OS, STEPS, PKG_MNGRS, USR_CONFIG_FILE
+from .env_config import check_os_support, process_configs
 from .console_logging import print_manual_steps
 from .dot_files import setup_dot_files
 from .pkg_management import run_pkg_mngrs
@@ -42,7 +41,7 @@ def setup_logger(level="", log_file=""):
     # these are params to be passed into logging.basicConfig
     opts = {'level': log_level, 'format': "%(message)s", 'datefmt': "[%X]"}
 
-    # we only log to a file if one was passed into config.yaml or the cli
+    # we only log to a file if one was passed into config.yml or the cli
     if not log_file:
         if USR_CONFIG_FILE:
             log_file = USR_CONFIG_FILE['log'].get('file', None)
@@ -76,39 +75,40 @@ def setup_logger(level="", log_file=""):
 # each of these is an option in the cli and variable we use later on
 @command(cls=RichCommand)
 @option('--log_level', '-l', metavar='LOGLEVEL', help=HELP['log_level'],
-        type=Choice(['debug', 'info', 'warn', 'error']))
-@option('--log_file', '-o', metavar='LOGFILE', help=HELP['log_file'])
-@option('--steps', '-s', metavar='STEP', multiple=True,
-        type=Choice(OPTS['steps'][OS[0]]), help=HELP['steps'])
-@option('--git_url', '-u', metavar='URL', help=HELP['git_url'])
-@option('--git_branch', '-b', metavar='BRANCH', help=HELP['git_branch'])
-@option('--overwrite', '-O', is_flag=True, help=HELP['overwrite'])
+        type=Choice(['debug', 'info', 'warn', 'error']),
+        default=USR_CONFIG_FILE['log']['level'])
+@option('--log_file', '-o', metavar='LOGFILE', help=HELP['log_file'],
+        default=USR_CONFIG_FILE['log']['file'])
+@option('--steps', '-s', metavar='STEP', multiple=True, type=Choice(STEPS),
+        help=HELP['steps'], default=USR_CONFIG_FILE['steps'][OS[0]])
+@option('--git_url', '-u', metavar='URL', help=HELP['git_url'],
+        default=USR_CONFIG_FILE['dot_files']['git_url'])
+@option('--git_branch', '-b', metavar='BRANCH', help=HELP['git_branch'],
+        default=USR_CONFIG_FILE['dot_files']['git_branch'])
+@option('--overwrite', '-O', is_flag=True, help=HELP['overwrite'],
+        default=USR_CONFIG_FILE['dot_files']['overwrite'])
 @option('--pkg_managers', '-p', metavar='PKG_MANAGER', multiple=True,
-        type=Choice(OPTS['package']['managers'][OS[0]]),
-        help=HELP['pkg_managers'])
+        type=Choice(PKG_MNGRS), help=HELP['pkg_managers'],
+        default=USR_CONFIG_FILE['package']['managers'][OS[0]])
 @option('--pkg_groups', '-g', metavar='PKG_GROUP', multiple=True,
         type=Choice(['default', 'gaming', 'gui', 'devops']),
-        help=HELP['pkg_groups'])
-@option('--firewall', '-f', is_flag=True, help=HELP['firewall'])
+        help=HELP['pkg_groups'], default=USR_CONFIG_FILE['package']['groups'])
+@option('--firewall', '-f', is_flag=True, help=HELP['firewall'],
+        default=USR_CONFIG_FILE['firewall'])
 @option('--remote_host', '-r', metavar="IP_ADDR", multiple=True,
-        help=HELP['remote_host'])
-@option('--version', is_flag=True, help=HELP['version'])
-def main(log_level: str = "",
-         log_file: str = "",
-         steps: str = "",
-         git_url: str = "",
-         git_branch: str = "",
-         overwrite: bool = False,
-         pkg_managers: str = "",
-         pkg_groups: str = "",
-         firewall: bool = False,
-         remote_host: str = "",
-         version: bool = False):
+        help=HELP['remote_host'], default=USR_CONFIG_FILE['remote_hosts'])
+@option('--version', is_flag=True, help=HELP['version'], default=False)
+def main(log_level, log_file,
+         steps, 
+         git_url, git_branch, overwrite,
+         pkg_managers, pkg_groups,
+         firewall, remote_host,
+         version) -> bool:
     """
-    If present, config: XDG_CONFIG_HOME/onboardme/[packages.yaml, config.yaml]
     If run with no options on Linux, it will install brew, pip3.11, apt,
     flatpak, and snap packages. On mac, it only installs brew/pip3.11 packages.
-    config loading tries to load: cli options and then .config/onboardme/*
+    config loading tries to load: cli options and then defaults back to:
+    $XDG_CONFIG_HOME/onboardme/config.yml
     """
 
     # only return the version if --version was passed in
@@ -122,9 +122,10 @@ def main(log_level: str = "",
     # setup logging immediately
     log = setup_logger(log_level, log_file)
 
-    # then process any local user config files, cli opts, and defaults
+    # makes sure we only overwrite config file prefs if cli opts are passed in
     usr_pref = process_configs(overwrite, git_url, git_branch, pkg_managers,
-                               pkg_groups, firewall, remote_host, steps)
+                               pkg_groups, firewall, remote_host, steps,
+                               log_file, log_level)
 
     if log:
         log.debug(f"User passed in the following preferences:\n{usr_pref}\n")
@@ -145,7 +146,7 @@ def main(log_level: str = "",
             pkg_groups = usr_pref['package']['groups']
             run_pkg_mngrs(pkg_mngrs, pkg_groups)
 
-        elif step in ['vim_setup', 'neovim_setup', 'font_setup']:
+        elif step in ['neovim_setup', 'font_setup']:
             # import step's function from ide_setup.py in same directory
             import_module('onboardme.ide_setup', package=f'.{step}')
             func = getattr(ide_setup, step)
@@ -159,7 +160,7 @@ def main(log_level: str = "",
         configure_firewall(remote_host)
 
     print_manual_steps()
-    return
+    return True
 
 
 if __name__ == '__main__':

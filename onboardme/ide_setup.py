@@ -9,86 +9,11 @@ import logging as log
 from git import Repo, RemoteProgress
 from os import path
 from pathlib import Path
-import wget
-from xdg_base_dirs import xdg_config_home
 
 # custom libs
 from .constants import HOME_DIR, OS
 from .console_logging import print_header, print_sub_header, print_msg
 from .subproc import subproc
-
-
-def vim_setup() -> None:
-    """
-    Installs vim-plug: does a wget on plug.vim
-    Installs vim plugins: calls vim with +Plug[Install,Upgrade,Upgrade]
-    Compiles youcompleteme if necessary
-    """
-    print_header('[b]vim-plug[/b] and [green][i]Vim[/i][/green] plugins '
-                 'installation [dim]and[/dim] upgrades')
-
-    # this is to make sure we have the correct plugin directory
-    vim_dir = path.join(xdg_config_home(), 'vim')
-    if not path.exists(vim_dir):
-        vim_dir = path.join(HOME_DIR, '.vim')
-        xdg = False
-    else:
-        xdg = True
-
-    # trick to not run youcompleteme init every single time
-    init_ycm = False
-    ycm_dir = path.join(vim_dir, 'plugged/YouCompleteMe')
-    if not path.exists(ycm_dir):
-        init_ycm = True
-
-    # this is for installing vim-plug
-    autoload_dir = path.join(vim_dir, 'autoload')
-    if not path.exists(autoload_dir):
-        print_msg('[i]Creating dir structure & downloading [b]vim-plug[/b]...')
-        Path(autoload_dir).mkdir(parents=True, exist_ok=True)
-        url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/'
-        wget.download(url + 'plug.vim', autoload_dir)
-
-    # installs the vim plugins if not installed, updates vim-plug, and then
-    # updates all currently installed plugins
-    plug_cmds = "--not-a-term +PlugInstall +PlugUpgrade +PlugUpdate +qall!"
-    if xdg:
-        subproc([f'vim -u {vim_dir}/vimrc {plug_cmds}'], quiet=True)
-    else:
-        subproc([f'vim {plug_cmds}'], quiet=True)
-
-    print_sub_header('Vim Plugins installed.')
-
-    # if we need to install YouCompleteMe, run the compile script
-    if init_ycm:
-        if path.exists(ycm_dir):
-            print_sub_header("Compiling YouCompleteMe vim plugin.")
-            # This is for you complete me, which is a python completion module
-            subproc(["chmod +x install.py", "python3.11 install.py --all"],
-                    cwd=ycm_dir)
-
-
-def neovim_setup() -> None:
-    """
-    neovim plugins have a setup mostly already handled in your plugins.lua:
-    https://github.com/wbthomason/packer.nvim#bootstrapping
-    This is the command that works via the cli:
-    nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
-
-    uses special command (with packer bootstrapped) to have packer setup your
-    your configuration (or simply run updates) and close once all operations
-    are completed
-
-    This may switch to lazy soon
-    """
-    print_header('[b]packer[/b] and [green][i]NeoVim[/i][/green] plugins '
-                 'installation [dim]and[/dim] upgrades')
-
-    # updates all currently installed plugins (still need to do :PackerCompile)
-    commands = ["nvim --headless +PackerSync"]
-    subproc(commands)
-
-    print_sub_header('NeoVim Plugins installed.')
 
 
 def font_setup() -> None:
@@ -143,3 +68,18 @@ def font_setup() -> None:
 
         print_msg('[i][dim]The fonts should be installed, however, you have ' +
                   'to set your terminal font to the new font. I rebooted too.')
+
+
+def neovim_setup() -> None:
+    """
+    Installs all 
+    Runs this command that works via the cli:
+        nvim --headless "+Lazy! sync" +qa
+    """
+    print_header('[green][i]NeoVim[/i][/green] plugins installation '
+                 '[dim]and[/dim] upgrades via [green]lazy.nvim[/green]')
+
+    # updates all currently plugins
+    subproc(['nvim --headless "+Lazy! sync" +qa'])
+
+    print_sub_header('NeoVim Plugins installed.')

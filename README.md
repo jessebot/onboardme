@@ -40,7 +40,7 @@ We install and upgrade libraries and apps using common package managers.
 <details>
   <summary>onboardme provides a currated list of default packages</summary>
   
-- checkout the [default packages](./onboardme/config/packages.yaml)
+- checkout the [default packages]
 - supports `brew`, `apt`, `snap`, `flatpak`, and `pip` (and you can add your own 😄)
 - group together packages for different kinds of environments
   - onboardme provides default package groups:
@@ -52,21 +52,18 @@ We install and upgrade libraries and apps using common package managers.
 </details>
 
 ### NeoVim Plugin Installtion and Updates
-onboardme keeps your neovim plugins installed and up to date with [packer] under the hood.
-(Lazy support rolling out soon)
+onboardme keeps your neovim plugins installed and up to date with [lazy.nvim] under the hood.
   
 <details>
   <summary>Why no vim though?</summary>
   
   If you haven't already made the switch from Vim to [NeoVim], you can try out NeoVim today with `onboardme` :D We used to support both neovim _and_ vim, but these days none of the primary developers of this repo use pure vim anymore, so we can't ensure it's up to standards. All of your knowledge from vim is still helpful in neovim though, and we highly recommend switching as neovim has a lot more features and a very active plugin community :) NeoVim maintains a guide on how to switch from vim [here](https://neovim.io/doc/user/nvim.html#nvim-from-vim). 
 
-  We will stop official support for configuring vim, outside of installing the package across Debian/MacOS, in v1.0.0. This just means we won't be running anything to configure your vim plugins anymore, but you can still always add it to a package manager in [`packages.yaml`](#configuration). 
-
 </details>
 
 ### Easy `yaml` config files
 - [XDG Base Directory Spec] use for [config files](#configuration)
-  - Uses `$XDG_CONFIG_HOME/onboardme/onboardme_config.yml` and `$XDG_CONFIG_HOME/onboardme/packages.yml`
+  - Uses `$XDG_CONFIG_HOME/onboardme/config.yml` and `$XDG_CONFIG_HOME/onboardme/packages.yml`
 
 ### Other useful (but optional) configurations
 - Enable touchID for sudo on macOS
@@ -145,7 +142,7 @@ onboardme has lots of CLI options, but you can also use config files. You have t
 Config files are in `~/.config/onboardme/` (will use `$XDG_CONFIG_HOME`, if defined). Examples below:
 
 <details>
-<summary><code>config.yaml</code></summary>
+<summary><code>config.yml</code></summary>
 
 
 ```yaml
@@ -165,7 +162,7 @@ steps:
     - packages
     # adds nerdfonts
     - font_setup
-    # runs :PackerSync
+    # runs :Lazy sync to install all your plugins
     - neovim_setup
     # sets up touchID for sudo
     - sudo_setup
@@ -280,9 +277,10 @@ Get started with testing kubernetes locally, even on metal with [smol k8s lab](h
 [default dot files]: https://github.com/jessebot/dot_files "default dot files for onboardme"
 [help text]: https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/help_text.svg "an svg of the command: onboardme --help"
 [Getting Started Docs]: https://jessebot.github.io/onboardme/onboardme/getting-started "getting started documentation"
+[default packages]: https://github.com/jessebot/dot_files/blob/main/.config/onboardme/packages.yml "default installed packages for onboardme"
 
 <!-- external link references -->
 [dot files]: https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments "wiki entry for dot file explanation"
 [XDG Base Directory Spec]: https://specifications.freedesktop.org/basedir-spec/latest/ar01s03.html
 [NeoVim]: https://neovim.io/ "neovim, vim improved"
-[packer]: https://github.com/wbthomason/packer.nvim
+[lazy.nvim]: https://github.com/folke/lazy.nvim "lazy.nvim, a plugin manager for neovim"

@@ -3,24 +3,10 @@ from os import path
 from pathlib import Path
 import shutil
 
-from .constants import OS, PWD, HOME_DIR, ONBOARDME_CONFIG_DIR
+from .constants import OS, PWD, HOME_DIR, load_cfg
 from .console_logging import print_header
 from .console_logging import print_sub_header as sub_header
-from .env_config import load_cfg
 from .subproc import subproc
-
-
-def load_packages_config() -> dict:
-    """
-    Checks if user has local config file before procceding with default config
-    """
-    # check to make sure the user didn't pass in their own packages.yaml
-    usr_pkg_config = path.join(ONBOARDME_CONFIG_DIR, 'packages.yaml')
-    if path.exists(usr_pkg_config):
-        return load_cfg(usr_pkg_config)
-    else:
-        default_config = path.join(PWD, 'config/packages.yaml')
-        return load_cfg(default_config)
 
 
 def rotate_github_ssh_keys() -> None:
@@ -90,7 +76,7 @@ def run_pkg_mngrs(pkg_mngrs: list, pkg_groups=[]) -> None:
 
     rotate_github_ssh_keys()
 
-    pkg_mngrs_list_of_dicts = load_packages_config()
+    pkg_mngrs_list_of_dicts = load_cfg('packages.yml')
     # we iterate through pkg_mngrs which should already be sorted
     for pkg_mngr in pkg_mngrs:
         pkg_mngr_dict = pkg_mngrs_list_of_dicts[pkg_mngr]
