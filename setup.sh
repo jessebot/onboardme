@@ -161,7 +161,7 @@ else
 	sudo apt-get install -y python3-pip python3-venv
 	echo -e "\033[92mPip3.11 installed :3 \033[00m"
     fi
-f
+fi
 
 if [[ "$OS" == *"Linux"* ]]; then
     echo ""
