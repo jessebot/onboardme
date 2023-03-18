@@ -7,14 +7,13 @@ from pathlib import Path
 # this is for rich text, to pretty print things
 from rich import box
 from rich.table import Table
-from xdg import xdg_config_home
 # custom libs
-from .constants import HOME_DIR, PWD
+from .constants import HOME_DIR, PWD, XDG_CONFIG_DIR
 from .console_logging import print_panel, print_msg
 from .subproc import subproc
 
 
-XDG_CONFIG_GIT_PATH = path.join(xdg_config_home(), 'git/config')
+XDG_CONFIG_GIT_PATH = path.join(XDG_CONFIG_DIR, 'git/config')
 
 
 def setup_dot_files(OS='Linux', overwrite=False,

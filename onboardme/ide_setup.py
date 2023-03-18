@@ -10,7 +10,7 @@ from git import Repo, RemoteProgress
 from os import path
 from pathlib import Path
 import wget
-from xdg import xdg_config_home
+from xdg_base_dirs import xdg_config_home
 
 # custom libs
 from .constants import HOME_DIR, OS
