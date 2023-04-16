@@ -142,8 +142,7 @@ onboardme has lots of CLI options, but you can also use config files. You have t
 Config files are in `~/.config/onboardme/` (will use `$XDG_CONFIG_HOME`, if defined). Examples below:
 
 <details>
-<summary><code>config.yml</code></summary>
-
+<summary><code>~/.config/onboardme/config.yml</code></summary>
 
 ```yaml
 log:
