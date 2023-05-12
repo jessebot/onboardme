@@ -194,7 +194,12 @@ def install_brew_taps(taps: list) -> None:
     in a list of git repos from packages.yaml, and aren't already tapped
     """
     log.info("Checking current taps.")
-    current_taps = subproc(["brew tap"]).split('\n')
+    existing_taps = subproc(["brew tap"])
+    try:
+        current_taps = existing_taps.split('\n')
+    except:
+        current_taps = []
+    
     log.debug(f"taps list is: {taps}")
     log.debug(f"Current taps are: {current_taps}")
 
