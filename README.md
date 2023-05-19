@@ -68,18 +68,7 @@ onboardme keeps your neovim plugins installed and up to date with [lazy.nvim] un
 ### Docker image for an on-the-go dev workspace
 
 The docker image is built daily or on push to main. The base image is `debian:bookworm`, but we will rollout support for Ubuntu down the line :)
-
-To run the image locally with default settings with onboardme already run:
-```bash
-# this image is built daily and has already run onboardme with the default settings
-docker run jessebot/onboardme:latest /bin/bash
-```
-
-To run the image locally from scratch:
-```bash
-# onbaordme is installed but has not been run. this is best if you have your own dot files
-docker run jessebot/onboardme:no-install /bin/bash
-```
+See the [docker](#docker) section for more info!
 
 ### Other useful (but optional) configurations
 - Enable touchID for sudo on macOS
@@ -144,6 +133,20 @@ pip install --user onboardme
 ```
 
 You can read more in depth at the [Getting Started Docs] 💙! There's also more [docs] on basically every program that onboardme touches.
+
+#### Docker
+
+To run the image locally with onboardme already run using default settings:
+```bash
+# this image is built daily and has already run onboardme with the default settings
+docker run jessebot/onboardme:latest /bin/bash
+```
+
+To run the image locally from scratch:
+```bash
+# onbaordme is installed but has _not_ been run. this is best if you have your own dot files
+docker run jessebot/onboardme:no-install /bin/bash
+```
 
 ### Upgrades
 If you're on python 3.11, you should be able to do:
