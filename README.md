@@ -65,6 +65,19 @@ onboardme keeps your neovim plugins installed and up to date with [lazy.nvim] un
 - [XDG Base Directory Spec] use for [config files](#configuration)
   - Uses `$XDG_CONFIG_HOME/onboardme/config.yml` and `$XDG_CONFIG_HOME/onboardme/packages.yml`
 
+### 🐳 A docker image for an on-the-go dev workspace
+
+The docker image is built daily and pushed up as:
+```
+jessebot/onboardme:debian-12-latest
+```
+
+To run the docker image locally with default settings:
+
+```bash
+docker run jessebot/onboardme:latest /bin/bash
+```
+
 ### Other useful (but optional) configurations
 - Enable touchID for sudo on macOS
 - Add your user to the docker group

@@ -41,9 +41,6 @@ ENV XDG_STATE_HOME="$HOME/.local/state"
 # make sure we can install executables locally 
 ENV PATH="$PATH:$HOME/.local/bin"
 
-# makes sure our default branch is main
-RUN git config --global init.defaultBranch main
-
 # needed for Homebrew on Linux
 ENV HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
 ENV HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
@@ -53,11 +50,16 @@ ENV INFOPATH="$INFOPATH:/home/linuxbrew/.linuxbrew/share/info"
 ENV PATH="$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin"
 
 # installs brew
-RUN wget https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh && chmod +x ./install.sh
-RUN ./install.sh
+RUN wget https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh && \
+    chmod +x ./install.sh && \
+    ./install.sh && \
+    rm install.sh
+
+# makes sure our default branch is main
+RUN git config --global init.defaultBranch main
 
 # installs onboardme from pypi - using python 3.11, default for Debian bookworm
-RUN pip install --upgrade --user onboardme --break-system-packages
-
-# make sure onboardme works at the end
-RUN onboardme --help
+# and run onboardme at the end
+RUN pip install --user onboardme --break-system-packages && \
+    onboardme --version && \
+    onboardme -O
