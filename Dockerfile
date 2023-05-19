@@ -4,11 +4,12 @@
 # docker run -it onboardme:dev /bin/bash
 FROM debian:bookworm-slim
 
+# Options: ""     - will not install anything with onboardme
+#          "default" - default installation mode - only install cli packages
+ARG RUN_MODE=""
+
 # this makes debian not prompt for stuff
 ENV DEBIAN_FRONTEND=noninteractive
-
-# this is so that brew doesn't prompt for sudo access
-ENV NONINTERACTIVE=1
 
 # install pre-req apt packages
 RUN apt-get update && \
@@ -42,6 +43,8 @@ ENV XDG_STATE_HOME="$HOME/.local/state"
 # make sure we can install executables locally 
 ENV PATH="$PATH:$HOME/.local/bin"
 
+# this is so that brew doesn't prompt for sudo access
+ENV NONINTERACTIVE=1
 # needed for Homebrew on Linux
 ENV HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
 ENV HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
@@ -62,12 +65,8 @@ RUN git config --global init.defaultBranch main
 # installs onboardme from pypi - using python 3.11, default for Debian bookworm
 # and run onboardme at the end
 RUN pip install --user onboardme --break-system-packages && \
-    onboardme --version
-
-# Options: ""     - will not install anything with onboardme
-#          "default" - default installation mode - only install cli packages
-ARG RUN_MODE=""
-RUN if [ ! -z $RUN_MODE ]; then onboardme -O --no_upgrade; fi
+    onboardme --version && \
+    if [ ! -z $RUN_MODE ]; then onboardme -O --no_upgrade; fi
 
 RUN brew cleanup && \
     sudo apt-get clean && \
