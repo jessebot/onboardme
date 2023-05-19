@@ -12,8 +12,8 @@ ENV NONINTERACTIVE=1
 
 # install pre-req apt packages
 RUN apt-get update && \
-  apt-get upgrade -y && \
-  apt-get install -y \
+  apt list --upgradeable | grep security | cut -f1 -d '/' | xargs apt install --no-install-recommends -y && \
+  apt-get install -y --no-install-recommends \
   build-essential \
   curl \
   git \
