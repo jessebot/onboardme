@@ -1,7 +1,7 @@
 """
 NAME:    Onboardme.ide_setup
 DESC:    install vim, neovim, and fonts
-AUTHOR:  Jesse Hitch
+AUTHORS:  Jesse Hitch, Max Roby
 LICENSE: GNU AFFERO GENERAL PUBLIC LICENSE
 """
 
@@ -19,8 +19,8 @@ from .subproc import subproc
 def font_setup() -> None:
     """
     On Linux:
-      Clones nerd-fonts repo and does a sparse checkout on only mononoki and
-      hack fonts. Also removes 70-no-bitmaps.conf and links 70-yes-bitmaps.conf
+      Clones nerd-fonts repo and does a sparse checkout on only mononoki font.
+      Also removes 70-no-bitmaps.conf and links 70-yes-bitmaps.conf
 
       Then runs install.sh from nerd-fonts repo
     """
@@ -57,13 +57,12 @@ def font_setup() -> None:
 
             Repo.clone_from(fonts_repo, fonts_dir, progress=CloneProgress(),
                             multi_options=['--sparse', '--filter=blob:none'])
-            cmds = ["git sparse-checkout add patched-fonts/Mononoki",
-                    "git sparse-checkout add patched-fonts/Hack"]
+            cmds = ["git sparse-checkout add patched-fonts/Mononoki"]
             subproc(cmds, spinner=True, cwd=fonts_dir)
         else:
             subproc(["git pull"], spinner=True, cwd=fonts_dir)
 
-        subproc(['./install.sh Hack', './install.sh Mononoki'], quiet=True,
+        subproc(['./install.sh Mononoki'], quiet=True,
                 cwd=fonts_dir)
 
         print_msg('[i][dim]The fonts should be installed, however, you have ' +
@@ -72,14 +71,13 @@ def font_setup() -> None:
 
 def neovim_setup() -> None:
     """
-    Installs all 
+    Installs all plugins and syncs them if needed.
     Runs this command that works via the cli:
         nvim --headless "+Lazy! sync" +qa
     """
     print_header('[green][i]NeoVim[/i][/green] plugins installation '
                  '[dim]and[/dim] upgrades via [green]lazy.nvim[/green]')
 
-    # updates all currently plugins
     subproc(['nvim --headless "+Lazy! sync" +qa'])
 
     print_sub_header('NeoVim Plugins installed.')
