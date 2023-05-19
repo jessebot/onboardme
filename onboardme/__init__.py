@@ -97,6 +97,8 @@ def setup_logger(level="", log_file=""):
         default=USR_CONFIG_FILE['firewall'])
 @option('--remote_host', '-r', metavar="IP_ADDR", multiple=True,
         help=HELP['remote_host'], default=USR_CONFIG_FILE['remote_hosts'])
+@option('--no_upgrade', '-n', help=HELP['no_upgrade'], default=False, 
+        is_flag=True)
 @option('--version', is_flag=True, help=HELP['version'], default=False)
 def main(log_level, log_file,
          steps, 
@@ -144,7 +146,7 @@ def main(log_level, log_file,
         elif step == 'packages':
             pkg_mngrs = usr_pref['package']['managers'][OS[0]]
             pkg_groups = usr_pref['package']['groups']
-            run_pkg_mngrs(pkg_mngrs, pkg_groups)
+            run_pkg_mngrs(pkg_mngrs, pkg_groups, no_upgrade)
 
         elif step in ['neovim_setup', 'font_setup']:
             # import step's function from ide_setup.py in same directory

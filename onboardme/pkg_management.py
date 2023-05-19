@@ -37,7 +37,9 @@ def rotate_github_ssh_keys() -> None:
             known_hosts.write(line)
 
 
-def run_preinstall_cmds(cmd_list: list, pkg_groups: list) -> None:
+def run_preinstall_cmds(cmd_list: list, 
+                        pkg_groups: list, 
+                        no_upgrade: bool) -> None:
     """
     takes a list of package manager pre-install commands and runs them
     if second list of package groups contains gaming, runs additional commands
@@ -46,6 +48,10 @@ def run_preinstall_cmds(cmd_list: list, pkg_groups: list) -> None:
     run_gaming_setup = False
     if 'gaming' in pkg_groups:
         run_gaming_setup = True
+
+    pre_cmds = ['setup', 'update', 'upgrade']
+    if no_upgrade:
+        pre_cmds.pop(2)
 
     for pre_cmd in ['setup', 'update', 'upgrade']:
         if pre_cmd in cmd_list:
@@ -64,7 +70,7 @@ def run_preinstall_cmds(cmd_list: list, pkg_groups: list) -> None:
             sub_header(f"[b]{pre_cmd.title()}[/b] completed.")
 
 
-def run_pkg_mngrs(pkg_mngrs: list, pkg_groups=[]) -> None:
+def run_pkg_mngrs(pkg_mngrs: list, pkg_groups=[], no_upgrade=bool) -> None:
     """
     Installs brew and pip3.11 packages. Also apt, snap, and flatpak on Linux.
     Takes optional variables:
@@ -115,7 +121,7 @@ def run_pkg_mngrs(pkg_mngrs: list, pkg_groups=[]) -> None:
                     install_brew_taps(pkg_mngr_dict['taps']['macOS'])
 
             # run package manager specific setup if needed: update/upgrade
-            run_preinstall_cmds(pkg_cmds, pkg_groups)
+            run_preinstall_cmds(pkg_cmds, pkg_groups, no_upgrade)
 
             # run the list command for the given package manager
             list_cmd = pkg_cmds['list']

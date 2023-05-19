@@ -71,6 +71,9 @@ def options_help() -> dict:
         f"Package groups to install.\n{pkg_group_choices}\nExample:"
         " [switch]-g[/] [meta]devops[/] [switch]-g[/switch] [meta]gaming",
 
+        'no_upgrade':
+        "Do not upgrade the existing brew or apt packages.",
+
         'remote_host':
         'Setup SSH on a random port & add [meta]IP_ADDR[/] to firewall',
 
