@@ -61,5 +61,14 @@ RUN git config --global init.defaultBranch main
 # installs onboardme from pypi - using python 3.11, default for Debian bookworm
 # and run onboardme at the end
 RUN pip install --user onboardme --break-system-packages && \
-    onboardme --version && \
-    onboardme -O -l debug
+    onboardme --version
+
+# Options: ""     - will not install anything with onboardme
+#          "default" - default installation mode - only install cli packages
+ARG RUN_MODE=""
+RUN if [[ -n $RUN_MODE ]]; then onboardme -O; fi
+
+RUN brew cleanup && \
+    sudo apt-get clean && \
+    sudo rm -rf /var/lib/apt/lists/* && \
+    sudo rm -rf /tmp
