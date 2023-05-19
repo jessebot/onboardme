@@ -62,4 +62,4 @@ RUN git config --global init.defaultBranch main
 # and run onboardme at the end
 RUN pip install --user onboardme --break-system-packages && \
     onboardme --version && \
-    onboardme -O
+    onboardme -O -l debug
