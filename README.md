@@ -67,17 +67,18 @@ onboardme keeps your neovim plugins installed and up to date with [lazy.nvim] un
 
 ### Docker image for an on-the-go dev workspace
 
-The Docker image is built daily and pushed up as:
-```
-jessebot/onboardme:latest
-```
+The docker image is built daily or on push to main. The base image is `debian:bookworm`, but we will rollout support for Ubuntu down the line :)
 
-The image defaults to `debian:bookworm` as the image, but we will rollout support for Ubuntu down the line :)
-
-To run the image locally with default settings:
-
+To run the image locally with default settings with onboardme already run:
 ```bash
+# this image is built daily and has already run onboardme with the default settings
 docker run jessebot/onboardme:latest /bin/bash
+```
+
+To run the image locally from scratch:
+```bash
+# onbaordme is installed but has not been run. this is best if you have your own dot files
+docker run jessebot/onboardme:no-install /bin/bash
 ```
 
 ### Other useful (but optional) configurations
