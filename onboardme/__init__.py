@@ -104,7 +104,7 @@ def main(log_level, log_file,
          steps, 
          git_url, git_branch, overwrite,
          pkg_managers, pkg_groups,
-         firewall, remote_host,
+         firewall, remote_host, no_upgrade,
          version) -> bool:
     """
     If run with no options on Linux, it will install brew, pip3.11, apt,
