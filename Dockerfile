@@ -66,7 +66,7 @@ RUN pip install --user onboardme --break-system-packages && \
 # Options: ""     - will not install anything with onboardme
 #          "default" - default installation mode - only install cli packages
 ARG RUN_MODE=""
-RUN if [[ -n $RUN_MODE ]]; then onboardme -O; fi
+RUN if [ ! -z $RUN_MODE ]; then onboardme -O; fi
 
 RUN brew cleanup && \
     sudo apt-get clean && \
