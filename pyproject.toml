@@ -1,9 +1,11 @@
 [tool.poetry]
 name          = "onboardme"
-version       = "1.0.1"
+version       = "1.0.2"
 description   = "Install dot files and packages, including a base mode with sensible defaults to run on most computers running Debian based distros or macOS."
-authors       = ["Jesse Hitch <jessebot@linux.com>",
-                 "Max Roby <emax@cloudydev.net>"]
+authors       = [
+    "Jesse Hitch <jessebot@linux.com>",
+    "Max Roby <emax@cloudydev.net>"
+]
 license       = "AGPL-3.0-or-later"
 readme        = "README.md"
 documentation = "https://jessebot.github.io/onboardme/onboardme"
@@ -33,9 +35,9 @@ xdg-base-dirs       = "^6.0"
 pre-commit = "^3.1"
 
 [[tool.poetry.source]]
-name = "testpypi"
-url = "https://test.pypi.org/simple/"
-default = false
+name      = "testpypi"
+url       = "https://test.pypi.org/simple/"
+default   = false
 secondary = false
 
 [tool.poetry.plugins."onboardme.application.plugin"]

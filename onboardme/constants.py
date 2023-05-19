@@ -6,6 +6,7 @@ DESCRIPTION:
     LICENSE: GNU AFFERO GENERAL PUBLIC LICENSE Version 3
 """
 from importlib.metadata import version as get_version
+import logging as log
 from xdg_base_dirs import xdg_config_home
 from os import getenv, path, uname
 from pathlib import Path
@@ -38,7 +39,7 @@ if OS[0] == 'Linux':
 
 
 default_dotfiles = ("https://raw.githubusercontent.com/jessebot/dot_files/"
-                    "main/.config/onboardme/")
+                    "main/.config/onboardme/config.yml")
 
 
 def load_cfg(config_file='config.yml') -> dict:
@@ -48,10 +49,11 @@ def load_cfg(config_file='config.yml') -> dict:
     config_dir = path.join(xdg_config_home(), 'onboardme')
     config_full_path = path.join(config_dir, config_file)
 
-    # defaults
+    # create default pathing and config file if it doesn't exist
     if not path.exists(config_full_path):
-        Path(config_dir).mkdir(exist_ok=True)
-        wget.download(default_dotfiles + config_file, config_full_path)
+        Path(config_dir).mkdir(parents=True, exist_ok=True)
+        # downloads a default config file from default dot files
+        wget.download(default_dotfiles, config_full_path)
 
     with open(config_full_path, 'r') as yaml_file:
         return yaml.safe_load(yaml_file)
