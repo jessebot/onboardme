@@ -7,8 +7,8 @@ on:
 
   schedule:
     # * is a special character in YAML so you have to quote this string
-    # triggers every day at 13:00 UTC
-    - cron:  '0 13 * * *'
+    # triggers every day at 00:00 UTC (midnight)
+    - cron:  '0 0 * * *'
 
 jobs:
   docker:
@@ -30,11 +30,15 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: "jessebot/onboardme:latest"
+          tags: | 
+            jessebot/onboardme:debian12-no-install
+            jessebot/onboardme:no-install
 
       - name: Build and push - slim
         uses: docker/build-push-action@v4
         with:
           push: true
-          build-args: "RUN_MODE=${{ matrix.run_mode }}"
-          tags: "jessebot/onboardme:${{ matrix.run_mode }}"
+          build-args: "RUN_MODE=default"
+          tags: |
+            jessebot/onboardme:latest
+            jessebot/onboardme:debian12
