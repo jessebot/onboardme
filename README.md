@@ -65,14 +65,16 @@ onboardme keeps your neovim plugins installed and up to date with [lazy.nvim] un
 - [XDG Base Directory Spec] use for [config files](#configuration)
   - Uses `$XDG_CONFIG_HOME/onboardme/config.yml` and `$XDG_CONFIG_HOME/onboardme/packages.yml`
 
-### 🐳 A docker image for an on-the-go dev workspace
+### Docker image for an on-the-go dev workspace
 
-The docker image is built daily and pushed up as:
+The Docker image is built daily and pushed up as:
 ```
-jessebot/onboardme:debian-12-latest
+jessebot/onboardme:latest
 ```
 
-To run the docker image locally with default settings:
+The image defaults to `debian:bookworm` as the image, but we will rollout support for Ubuntu down the line :)
+
+To run the image locally with default settings:
 
 ```bash
 docker run jessebot/onboardme:latest /bin/bash
