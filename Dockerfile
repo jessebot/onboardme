@@ -62,9 +62,8 @@ RUN git config --global init.defaultBranch main
 # and run onboardme at the end
 RUN pip install --user onboardme --break-system-packages && \
     onboardme --version && \
-    if [ ! -z $RUN_MODE ]; then onboardme -O --no_upgrade; fi
-
-RUN brew cleanup && \
+    if [ ! -z $RUN_MODE ]; then onboardme -O --no_upgrade; fi && \
+    brew cleanup && \
     sudo apt-get clean && \
     sudo rm -rf /var/lib/apt/lists/* && \
     sudo rm -rf /tmp
