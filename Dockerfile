@@ -23,7 +23,7 @@ RUN apt-get update && \
   wget
 
 # create default user
-RUN useradd -ms /usr/sbin/nologin friend && \
+RUN useradd -m friend && \
     usermod -aG sudo friend && \
     echo 'friend ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
