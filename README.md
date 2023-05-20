@@ -123,6 +123,18 @@ The quickest way to get started on a fresh macOS or distro of Debian (including 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/jessebot/onboardme/main/setup.sh)"
 ```
 
+Linux: source your `.bashrc` like:
+```bash
+# for linux
+source ~/.bashrc
+```
+
+MacOS: source your `.bash_profile` like:
+```bash
+bash
+source ~/.bash_profile
+```
+
 Now you can run `onboardme` 🎉
 ```bash
 # this will display the help text for onboardme
@@ -133,7 +145,7 @@ If you've already got brew and Python3.11 on your machine, you can just do:
 
 ```bash
 # should also work with pipx, if you'd like to use that instead
-pip install --user onboardme
+pip install --user --upgrade onboardme
 ```
 
 You can read more in depth at the [Getting Started Docs] 💙! There's also more [docs] on basically every program that onboardme touches.

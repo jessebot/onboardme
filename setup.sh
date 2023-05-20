@@ -254,9 +254,9 @@ else
 
     # source the existing bashrc, just in case
     if [[ "$OS" == *"Linux"* ]]; then
-        echo -e "Please run:\033[92m source .bashrc \033[00m"
+        echo -e "Please run:\033[92m source ~/.bashrc \033[00m"
     else
-        echo -e "Please run:\033[00m source .bash_profile \033[00m"
+        echo -e "Please run:\033[92m source ~/.bash_profile \033[00m"
     fi
 
     echo ""
