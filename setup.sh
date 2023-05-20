@@ -238,12 +238,21 @@ else
     fi
 fi
 
-printf "\n"
-read -p "Would you like to change your default shell in macOS to BASH? [y/n]" answer
-if [ "$answer" == "y" ]; then
-    brew install bash
-    sudo echo "/usr/local/bin/bash" >> /etc/shells
-    chsh -s /usr/local/bin/bash $(whoami)
+if [ "$OS" == "Darwin" ]; then
+    printf "\n"
+    read -p "Would you like to change your default shell in macOS to BASH? [y/n]" answer
+    if [ "$answer" == "y" ]; then
+        # install bash with brew
+        brew install bash
+        # set default shell for macOS - different for M1 vs older macs
+        if [ $(uname -a | grep arm > /dev/null ; echo $?) -eq 0 ]; then
+            sudo echo "/opt/homebrew/bin/bash" >> /etc/shells
+            chsh -s /opt/homebrew/bin/bash $(whoami)
+        else
+            sudo echo "/usr/local/bin/bash" >> /etc/shells
+            chsh -s /usr/local/bin/bash $(whoami)
+        fi
+    fi
 fi
 
 echo -e "--------------------------\033[94m Installing OnBoardMe :D \033[00m -------------------------"
