@@ -239,7 +239,7 @@ else
 fi
 
 printf "\n"
-read -p "Would you like to change your default shell in macOS to BASH?" answer
+read -p "Would you like to change your default shell in macOS to BASH? [y/n]" answer
 if [ "$answer" == "y" ]; then
     brew install bash
     sudo echo "/usr/local/bin/bash" >> /etc/shells
