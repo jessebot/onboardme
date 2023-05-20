@@ -15,34 +15,40 @@ def print_manual_steps(OS):
     """
     Just prints out the final steps to be done manually, til we automate them
     """
+    rc_file = "~/.bashrc"
     # table to print the results of all the files
     table = Table(expand=True, box=None,
                   title=" ",
-                  row_styles=["", "dim"],
                   border_style="dim",
                   header_style="cornflower_blue",
                   title_style="light_steel_blue")
-    table.add_column("Don't forget these (currently) manual tasks",
+    table.add_column("[u]Don't forget these (currently) manual tasks[/u]",
                      justify="center")
 
     table.add_row(" ")
-    table.add_row("Import subscriptions into FreeTube")
+    table.add_row("📺 Import subscriptions into FreeTube")
+
+    table.add_row(" ")
     table.add_row("⌨️  Set CAPSLOCK to control")
 
     if "Darwin" in OS[0]:
+        table.add_row(" ")
         table.add_row("🐚 Set your default shell to BASH:")
-        table.add_row("  [green]sudo -i")
+        table.add_row("   [green]sudo -i")
         if "arm" in OS[1]:
-            table.add_row("  echo '/opt/homebrew/bin/bash' >> /etc/shells")
-            table.add_row("  exit")
-            table.add_row("  chsh -s /opt/homebrew/bin/bash $(whoami)")
+            shell = '/opt/homebrew/bin/bash'
         else:
-            table.add_row("  echo '/usr/local/bin/bash' >> /etc/shells")
-            table.add_row("  exit")
-            table.add_row("  chsh -s /usr/local/bin/bash $(whoami)")
+            shell = '/usr/local/bin/bash'
 
-    table.add_row("Load your BASH config: [green]source .bashrc[/]")
-    table.add_row("Reboot, as [turquoise2]docker[/] demands it")
+        table.add_row(f"   [green]echo {shell} >> /etc/shells && exit")
+        table.add_row(f"   [green]chsh -s {shell} $(whoami)")
+        table.add_row(" ")
+        rc_file = "~/.bash_profile"
+
+    table.add_row(f"🦪 Load your BASH config: [green]source {rc_file}[/]")
+    table.add_row(" ")
+
+    table.add_row("🐳 Reboot, as [turquoise2]docker[/] demands it")
     table.add_row(" ")
     table.add_row("If you need any help, check the docs:")
     table.add_row("[cyan][link=https://jessebot.github.io/onboardme]"
