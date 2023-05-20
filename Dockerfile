@@ -10,7 +10,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # install pre-req apt packages 
 # python3 defaults to python 3.11 in Debian Bookworm
-#  removing and seeing if anything breaks python3-venv
 RUN apt-get update && \
   apt list --upgradeable | grep security | cut -f1 -d '/' | xargs apt install --no-install-recommends -y && \
   apt-get install -y --no-install-recommends \
