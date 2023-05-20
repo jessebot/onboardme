@@ -78,6 +78,7 @@ def neovim_setup() -> None:
     print_header('[green][i]NeoVim[/i][/green] plugins installation '
                  '[dim]and[/dim] upgrades via [green]lazy.nvim[/green]')
 
-    subproc(['nvim --headless ":Lazy sync" +qa', 'nvim --headless ":TSUpdate" +qa'])
+    subproc(['nvim --headless ":Lazy sync" +qa',
+             'nvim --headless ":TSUpdate" +qa'])
 
     print_sub_header('NeoVim Plugins installed.')
