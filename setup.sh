@@ -250,12 +250,14 @@ else
     echo ""
     echo -e "------------------------------ \033[92mSuccess~! ^O^\033[00m -----------------------------------"
     echo ""
+
     # source the existing bashrc, just in case
     if [[ "$OS" == *"Linux"* ]]; then
         echo -e "\033[92mPlease run:\033[00m source .bashrc"
-    elif [ -f "~/.bash_profile" ]; then
+    else
         echo -e "\033[92mPlease run:\033[00m source .bash_profile"
     fi
+
     echo -e "✨ Then you can try running the following:"
     echo "onboardme --help"
     echo ""
