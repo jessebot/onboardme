@@ -140,11 +140,28 @@ bash
 source ~/.bash_profile
 ```
 
+You will still have to set your default shell to BASH to if you want to take advantage of the default dot files for onboardme. You can do that like this:
+
+```bash
+brew install bash
+sudo -i
+
+# if you're on an M1 or newer:
+echo "/opt/homebrew/bin/bash" >> /etc/shells && exit
+chsh -s /opt/homebrew/bin/bash $(whoami)
+
+# if you're on a mac earlier than the M1:
+echo "/usr/local/bin/bash" >> /etc/shells && exit
+chsh -s /usr/local/bin/bash $(whoami)
+```
+
+After that, you can also set the shell directly in your terminal app via the settings.
+
 </details>
 
 
 <details>
-  <summary>Using the `jessebot/onboardme` 🐳 image</summary>
+  <summary><code>jessebot/onboardme</code> docker image</summary>
 
 To run the image locally with onboardme installed and already run using default settings:
 
@@ -205,7 +222,7 @@ Config files are in `$XDG_CONFIG_HOME/onboardme/`, <sub>or `~/.config/onboardme/
 
 | Config File                               |        Description                                  |
 |:------------------------------------------|:----------------------------------------------------|
-| `$XDG_CONFIG_HOME/onboardme/config.yml`   | For step configuration to run either all steps, or just a subset, for instance only dot files and neovim | 
+| `$XDG_CONFIG_HOME/onboardme/config.yml`   | For step configuration to run either all steps, or just a subset. | 
 | `$XDG_CONFIG_HOME/onboardme/packages.yml` | For adding packages with different package managers |
 
 Examples:
