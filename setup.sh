@@ -35,6 +35,7 @@ if [[ $(uname) == *"Darwin"* ]]; then
     export PYTHONPYCACHEPREFIX=$XDG_CACHE_HOME/python
     # put python data into $HOME/.local/share/python
     export PYTHONUSERBASE=$XDG_DATA_HOME/python
+    echo 'export XDG_DATA_HOME="$HOME/.local/share"' >> ~/.bash_profile
     echo 'export PYTHONUSERBASE=$XDG_DATA_HOME/python' >> ~/.bash_profile
 
     pip_packages="$XDG_DATA_HOME/python/lib/python/site-packages"
