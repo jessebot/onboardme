@@ -69,7 +69,7 @@ onboardme keeps your neovim plugins installed and up to date with [lazy.nvim] un
 The docker image is built daily or on push to main. The base image is `debian:bookworm`, but we will rollout support for Ubuntu down the line :)
 See the [docker](#docker) section for more info!
 
-### Other useful (but optional) configurations
+### Other optional configurations
 - Enable touchID for sudo on macOS
 - Add your user to the docker group
 - Install nerdfonts (defaults to mononoki and Symbols Only)
