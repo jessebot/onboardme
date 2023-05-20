@@ -18,9 +18,6 @@ if [[ $(uname) == *"Linux"* ]]; then
     # iptables on debian is here
     export PATH=$PATH:/usr/sbin:/usr/share
 
-    # snap package manager installs commands here
-    export PATH=$PATH:/snap/bin
-
     # HomeBrew on Linux needs all of this to work
     export HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew
     export HOMEBREW_CELLAR=/home/linuxbrew/.linuxbrew/Cellar
@@ -45,13 +42,6 @@ fi
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ macOS PATH ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 # powerline - a fancy extensible prompt: https://powerline.readthedocs.io
 if [[ $(uname) == *"Darwin"* ]]; then
-
-    # iterm2 specific commands and functions
-    export PATH=$PATH:$HOME/.local/bin/iterm2
-
-    # don't warn me that BASH is deprecated, becasuse it is already upgraded
-    export BASH_SILENCE_DEPRECATION_WARNING=1
-
 
     if [ $(uname -a | grep arm > /dev/null ; echo $?) -eq 0 ]; then
         # On apple silicon: brew default installs here
