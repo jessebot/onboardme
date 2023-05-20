@@ -24,7 +24,8 @@ HOME_DIR = getenv("HOME")
 
 # env
 SYSINFO = uname()
-# this will be something like ('Darwin', 'x86_64')
+# this will be something like this for old macs: ('Darwin', 'x86_64')
+# this will be something like this for M1 and latest macs: ('Darwin', 'arm64')
 OS = (SYSINFO.sysname, SYSINFO.machine)
 
 # step config is different per OS

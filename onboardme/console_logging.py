@@ -11,7 +11,7 @@ CONSOLE = Console(theme=Theme({"warn": "bold yellow",
                                "header": "cornflower_blue"}))
 
 
-def print_manual_steps():
+def print_manual_steps(OS):
     """
     Just prints out the final steps to be done manually, til we automate them
     """
@@ -26,10 +26,21 @@ def print_manual_steps():
                      justify="center")
 
     table.add_row(" ")
-    table.add_row("Import RSS feeds config into FluentReader")
     table.add_row("Import subscriptions into FreeTube")
     table.add_row("⌨️  Set CAPSLOCK to control")
-    table.add_row("Install cronjobs you need from ~/.cron")
+
+    if "Darwin" in OS[0]:
+        table.add_row("🐚 Set your default shell to BASH:")
+        table.add_row("  [green]sudo -i")
+        if "arm" in OS[1]:
+            table.add_row("  echo '/opt/homebrew/bin/bash' >> /etc/shells")
+            table.add_row("  exit")
+            table.add_row("  chsh -s /opt/homebrew/bin/bash $(whoami)")
+        else:
+            table.add_row("  echo '/usr/local/bin/bash' >> /etc/shells")
+            table.add_row("  exit")
+            table.add_row("  chsh -s /usr/local/bin/bash $(whoami)")
+
     table.add_row("Load your BASH config: [green]source .bashrc[/]")
     table.add_row("Reboot, as [turquoise2]docker[/] demands it")
     table.add_row(" ")

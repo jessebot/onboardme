@@ -161,7 +161,7 @@ def main(log_level, log_file,
     if 'firewall_setup' in steps:
         configure_firewall(remote_host)
 
-    print_manual_steps()
+    print_manual_steps(OS)
     return True
 
 
