@@ -50,10 +50,11 @@ def run_preinstall_cmds(cmd_list: list,
         run_gaming_setup = True
 
     pre_cmds = ['setup', 'update', 'upgrade']
+
     if no_upgrade:
         pre_cmds.pop(2)
 
-    for pre_cmd in ['setup', 'update', 'upgrade']:
+    for pre_cmd in pre_cmds:
         if pre_cmd in cmd_list:
             if pre_cmd == 'update' and 'apt' in pre_cmd:
                 if run_gaming_setup:
