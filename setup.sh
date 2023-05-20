@@ -46,6 +46,7 @@ if [[ $(uname) == *"Darwin"* ]]; then
     if [ $(uname -a | grep arm > /dev/null ; echo $?) -eq 0 ]; then
         # On apple silicon: brew default installs here
         export PATH=/opt/homebrew/bin:$PATH
+        echo 'export PATH=/opt/homebrew/bin:$PATH' >> ~/.bash_profile
     fi
 fi
 
