@@ -8,29 +8,18 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
-# this relative is used for both macOS and Debian based distros
-pip_path_suffix="lib/python$PYTHON_VERSION/site-packages"
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~ LinuxBrew PATH ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 if [[ $(uname) == *"Linux"* ]]; then
-
     export XDG_DATA_HOME="$HOME/.local"
     # iptables on debian is here
     export PATH=$PATH:/usr/sbin:/usr/share
 
-    # HomeBrew on Linux needs all of this to work
-    export HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew
-    export HOMEBREW_CELLAR=/home/linuxbrew/.linuxbrew/Cellar
-    export HOMEBREW_REPOSITORY=/home/linuxbrew/.linuxbrew/Homebrew
-    export MANPATH=$MANPATH:/home/linuxbrew/.linuxbrew/share/man
-    export INFOPATH=$INFOPATH:/home/linuxbrew/.linuxbrew/share/info
-    export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin
-
-    # pip packages installed via linuxbrew will be here (if python is installed via linuxbrew)
-    # pip_packages="/home/linuxbrew/.linuxbrew/$pip_path_suffix"
-
     # pip packages with command line tools install here by default with apt installed python
     export PATH=$PATH:$XDG_DATA_HOME/bin
+
+    # this relative is used for both macOS and Debian based distros
+    pip_path_suffix="lib/python$PYTHON_VERSION/site-packages"
+
     # apt installed location of pip installed python3.x packages
     pip_packages="$XDG_DATA_HOME/$pip_path_suffix"
 
@@ -48,6 +37,7 @@ if [[ $(uname) == *"Darwin"* ]]; then
     export PYTHONUSERBASE=$XDG_DATA_HOME/python
 
     pip_packages="$XDG_DATA_HOME/python/lib/python/site-packages"
+
     if [ $(uname -a | grep arm > /dev/null ; echo $?) -eq 0 ]; then
         # this is for python XDG spec stuff
         export PATH="$PYTHONUSERBASE/bin:$PATH"
@@ -65,10 +55,6 @@ export PATH=$PATH:$HOME/.local/bin:/usr/local/bin
 
 # Run py cmds in this file b4 the 1st prompt is displayed in interactive mode
 export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/interactive_startup.py
-
-# this is for python virtualenvs
-export PYENV_ROOT=$XDG_DATA_HOME/pyenv
-
 
 # extremely simply loading bar
 function simple_loading_bar() {
@@ -163,6 +149,14 @@ brew_return_code=$?
 # if this still isn't in our path, export it and source this bashrc
 if [ $brew_return_code -ne 0 ]; then
     if [[ "$OS" == *"Linux"* ]]; then
+        # HomeBrew on Linux needs all of this to work
+        export HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew
+        export HOMEBREW_CELLAR=/home/linuxbrew/.linuxbrew/Cellar
+        export HOMEBREW_REPOSITORY=/home/linuxbrew/.linuxbrew/Homebrew
+        export MANPATH=$MANPATH:/home/linuxbrew/.linuxbrew/share/man
+        export INFOPATH=$INFOPATH:/home/linuxbrew/.linuxbrew/share/info
+        export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin
+
         echo "Linuxbrew isn't in your path. Let's get that installed :)"
         # make sure this is all in the bashrc for new shells
         echo "export HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew" >> ~/.bashrc
@@ -242,6 +236,14 @@ else
     	. ~/.bashrc
 	echo -e "\033[92mPip3.11 installed :3 \033[00m"
     fi
+fi
+
+printf "\n"
+read -p "Would you like to change your default shell in macOS to BASH?" answer
+if [ "$answer" == "y" ]; then
+    brew install bash
+    sudo echo "/usr/local/bin/bash" >> /etc/shells
+    chsh -s /usr/local/bin/bash $(whoami)
 fi
 
 echo -e "--------------------------\033[94m Installing OnBoardMe :D \033[00m -------------------------"
