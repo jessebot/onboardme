@@ -11,7 +11,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # install pre-req apt packages 
 # python3 defaults to python 3.11 in Debian Bookworm
 RUN apt-get update && \
-  apt list --upgradeable | grep security | cut -f1 -d '/' | xargs apt install --no-install-recommends -y && \
+  apt list --upgradeable | grep security | cut -f1 -d '/' | xargs apt-get install --no-install-recommends -y && \
   apt-get install -y --no-install-recommends \
   build-essential \
   curl \
@@ -23,7 +23,7 @@ RUN apt-get update && \
   wget
 
 # create default user
-RUN useradd -ms /home/friend friend && \
+RUN useradd -m friend && \
     usermod -aG sudo friend && \
     echo 'friend ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
@@ -51,15 +51,17 @@ ENV INFOPATH="$INFOPATH:/home/linuxbrew/.linuxbrew/share/info"
 ENV PATH="$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin"
 # installs brew and makes sure our default git branch is main
 RUN wget https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh && \
-    chmod +x ./install.sh && \
-    ./install.sh && rm ./install.sh && \
-    git config --global init.defaultBranch main
+  chmod +x install.sh && \
+  chmod 777 install.sh && \
+  /bin/bash install.sh && git config --global init.defaultBranch main && \
+  sudo apt-get install build-essential
 
 # install onboardme - using python 3.11, default for Debian bookworm
 # and run onboardme at the end
-RUN pip install --user onboardme --break-system-packages && \
+RUN sudo mkdir -p /tmp && \
+    pip install --user onboardme --break-system-packages && \
     onboardme --version && \
-    if [ ! -z $RUN_MODE ]; then onboardme -O --no_upgrade; fi && \
+    if [ ! -z $RUN_MODE ]; then onboardme -O --no_upgrade -l debug; fi && \
     brew cleanup && \
     sudo apt-get clean && \
     sudo rm -rf /var/lib/apt/lists/* && \
