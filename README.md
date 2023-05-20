@@ -17,7 +17,7 @@
   </a>
 </p>
 
-Get your daily driver just the way you like it, from dot files installation, to package installation, to other little features you didn't know you needed, `onboardme` intends to save you time with initializing and upgrading your environment.
+Get your daily driver just the way you like it, from dot files management, to package installation, to other little features you didn't know you needed, `onboardme` intends to save you time with initializing and maintaining your personal environments.
 
 ## Features
 
@@ -62,8 +62,7 @@ onboardme keeps your neovim plugins installed and up to date with [lazy.nvim] un
 </details>
 
 ### Easy `yaml` config files
-- [XDG Base Directory Spec] use for [config files](#configuration)
-  - Uses `$XDG_CONFIG_HOME/onboardme/config.yml` and `$XDG_CONFIG_HOME/onboardme/packages.yml`
+[XDG Base Directory Spec] use for [config files](#configuration)
 
 ### Docker image for an on-the-go dev workspace
 
@@ -73,8 +72,7 @@ See the [docker](#docker) section for more info!
 ### Other useful (but optional) configurations
 - Enable touchID for sudo on macOS
 - Add your user to the docker group
-- Install nerdfonts (defaults to Hack and Symbols Only)
-- Set capslock to control (🚧 in the works)
+- Install nerdfonts (defaults to mononoki and Symbols Only)
 
 ### Screenshots
 
@@ -114,9 +112,12 @@ See the [docker](#docker) section for more info!
 
 # Quick Start
 
-## Installation
+### Prereq Installs
+You'll need `brew`, `git`, and Python 3.11 to get started. We have a setup script to install those and help you get your environment to the XDG spec under <b>Locally</b> or you can just use our docker image, [jessebot/onboardme](https://hub.docker.com/r/jessebot/onboardme).
 
-### Locally
+<details>
+  <summary>Local prereq install script</summary>
+
 The quickest way to get started on a fresh macOS or distro of Debian (including Ubuntu) is:
 ```bash
 # this will download setup.sh to your current directory and run it
@@ -125,6 +126,7 @@ The quickest way to get started on a fresh macOS or distro of Debian (including 
 
 #### Linux
 Source your updated `.bashrc`:
+
 ```bash
 # for linux
 source ~/.bashrc
@@ -132,10 +134,44 @@ source ~/.bashrc
 
 #### MacOS
 source your updated `.bash_profile`:
+
 ```bash
 bash
 source ~/.bash_profile
 ```
+
+</details>
+
+
+<details>
+  <summary>Using the `jessebot/onboardme` 🐳 image</summary>
+
+To run the image locally with onboardme installed and already run using default settings:
+
+```bash
+# this image is built daily and has already run onboardme with the default settings
+docker run jessebot/onboardme:latest /bin/bash
+```
+
+To run the image locally with onbaordme installed but _not_ run:
+
+```bash
+# best if you have your own dot files, or need a smaller initial docker image to pull
+# no packages outside of the required pre-reqs for onboardme have been installed
+docker run jessebot/onboardme:no-install /bin/bash
+```
+
+</details>
+
+## Install
+
+If you've already got brew and Python3.11 on your machine, you can just do:
+```bash
+# should also work with pipx, if you'd like to use that instead
+pip install --user --upgrade onboardme
+```
+
+## Running commands
 
 _Now_ you can run `onboardme` 🎉 
 ```bash
@@ -153,29 +189,7 @@ From here, if you want to *completely wipe your existing dot files* for a fresh 
 onboardme --overwrite
 ```
 
-If you've already got brew and Python3.11 on your machine, you can just do:
-
-```bash
-# should also work with pipx, if you'd like to use that instead
-pip install --user --upgrade onboardme
-```
-
 You can read more in depth at the [Getting Started Docs] 💙! There's also more [docs] on basically every program that onboardme touches.
-
-#### Docker
-
-To run the image locally with onboardme installed and already run using default settings:
-```bash
-# this image is built daily and has already run onboardme with the default settings
-docker run jessebot/onboardme:latest /bin/bash
-```
-
-To run the image locally with onbaordme installed but _not_ run:
-```bash
-# best if you have your own dot files, or need a smaller initial docker image to pull
-# no packages outside of the required pre-reqs for onboardme have been installed
-docker run jessebot/onboardme:no-install /bin/bash
-```
 
 ### Upgrades
 If you're on python 3.11, you should be able to do:
@@ -187,8 +201,14 @@ pip3.11 install --upgrade onboardme
 ### Configuration
 onboardme has lots of CLI options, but you can also use config files. You have to create these files for the time being.
 
-Config files are in `~/.config/onboardme/` (will use `$XDG_CONFIG_HOME`, if defined). Examples below:
+Config files are in `$XDG_CONFIG_HOME/onboardme/`, <sub>or `~/.config/onboardme/` if `$XDG_CONFIG_HOME` is not defined</sub>.
 
+| Config File                               |        Description                                  |
+|:------------------------------------------|:----------------------------------------------------|
+| `$XDG_CONFIG_HOME/onboardme/config.yml`   | For step configuration to run either all steps, or just a subset, for instance only dot files and neovim | 
+| `$XDG_CONFIG_HOME/onboardme/packages.yml` | For adding packages with different package managers |
+
+Examples:
 <details>
 <summary><code>~/.config/onboardme/config.yml</code></summary>
 
@@ -321,6 +341,7 @@ Get started with testing kubernetes locally, even on metal with [smol k8s lab](h
 
 <!-- link references -->
 [documentation]: https://jessebot.github.io/onboardme/onboardme "onboardme documentation"
+[docs]: https://jessebot.github.io/onboardme/onboardme "onboardme documentation"
 [default dot files]: https://github.com/jessebot/dot_files "default dot files for onboardme"
 [help text]: https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/help_text.svg "an svg of the command: onboardme --help"
 [Getting Started Docs]: https://jessebot.github.io/onboardme/onboardme/getting-started "getting started documentation"
