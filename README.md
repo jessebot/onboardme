@@ -112,33 +112,45 @@ See the [docker](#docker) section for more info!
 
 </details>
 
-## Quick Start
+# Quick Start
 
-### Installation
+## Installation
 
-#### Locally
+### Locally
 The quickest way to get started on a fresh macOS or distro of Debian (including Ubuntu) is:
 ```bash
 # this will download setup.sh to your current directory and run it
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/jessebot/onboardme/main/setup.sh)"
 ```
 
-Linux: source your `.bashrc` like:
+#### Linux
+Source your updated `.bashrc`:
 ```bash
 # for linux
 source ~/.bashrc
 ```
 
-MacOS: source your `.bash_profile` like:
+#### MacOS
+source your updated `.bash_profile`:
 ```bash
 bash
 source ~/.bash_profile
 ```
 
-Now you can run `onboardme` 🎉
+_Now_ you can run `onboardme` 🎉 
 ```bash
 # this will display the help text for onboardme
 onboardme --help
+
+# Running this won't overwrite any existing dot files, but it may add new ones.
+onboardme
+```
+
+From here, if you want to *completely wipe your existing dot files* for a fresh start with with `onboardme`, you can run:
+```bash
+# WARNING: This will overwrite your local dotfiles, including your .bashrc and .bash_profile
+# can also be done with: onboardme -O
+onboardme --overwrite
 ```
 
 If you've already got brew and Python3.11 on your machine, you can just do:
