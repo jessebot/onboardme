@@ -253,11 +253,12 @@ else
 
     # source the existing bashrc, just in case
     if [[ "$OS" == *"Linux"* ]]; then
-        echo -e "\033[92mPlease run:\033[00m source .bashrc"
+        echo -e "Please run:\033[92m source .bashrc \033[00m"
     else
-        echo -e "\033[92mPlease run:\033[00m source .bash_profile"
+        echo -e "Please run:\033[00m source .bash_profile \033[00m"
     fi
 
+    echo ""
     echo -e "✨ Then you can try running the following:"
     echo "onboardme --help"
     echo ""
