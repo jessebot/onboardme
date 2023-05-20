@@ -37,15 +37,13 @@ if [[ $(uname) == *"Darwin"* ]]; then
     export PYTHONUSERBASE=$XDG_DATA_HOME/python
 
     pip_packages="$XDG_DATA_HOME/python/lib/python/site-packages"
+    # this is for python XDG spec stuff
+    export PATH="$PYTHONUSERBASE/bin:$PATH"
+    echo 'export PATH="$PYTHONUSERBASE/bin:$PATH"' >> ~/.bash_profile
 
     if [ $(uname -a | grep arm > /dev/null ; echo $?) -eq 0 ]; then
-        # this is for python XDG spec stuff
-        export PATH="$PYTHONUSERBASE/bin:$PATH"
         # On apple silicon: brew default installs here
         export PATH=/opt/homebrew/bin:$PATH
-    else
-        # For older macs before the M1, pre-2020, WITHOUT apple silicon
-        export PATH="$PYTHONUSERBASE/bin:$PATH"
     fi
 fi
 
@@ -235,23 +233,6 @@ else
 	echo 'export PATH="$PATH:/home/friend/.local/bin/"' >> ~/.bashrc
     	. ~/.bashrc
 	echo -e "\033[92mPip3.11 installed :3 \033[00m"
-    fi
-fi
-
-if [ "$OS" == "Darwin" ]; then
-    printf "\n"
-    read -p "Would you like to change your default shell in macOS to BASH? [y/n]" answer
-    if [ "$answer" == "y" ]; then
-        # install bash with brew
-        brew install bash
-        # set default shell for macOS - different for M1 vs older macs
-        if [ $(uname -a | grep arm > /dev/null ; echo $?) -eq 0 ]; then
-            sudo echo "/opt/homebrew/bin/bash" >> /etc/shells
-            chsh -s /opt/homebrew/bin/bash $(whoami)
-        else
-            sudo echo "/usr/local/bin/bash" >> /etc/shells
-            chsh -s /usr/local/bin/bash $(whoami)
-        fi
     fi
 fi
 
