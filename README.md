@@ -140,15 +140,16 @@ You can read more in depth at the [Getting Started Docs] 💙! There's also more
 
 #### Docker
 
-To run the image locally with onboardme already run using default settings:
+To run the image locally with onboardme installed and already run using default settings:
 ```bash
 # this image is built daily and has already run onboardme with the default settings
 docker run jessebot/onboardme:latest /bin/bash
 ```
 
-To run the image locally from scratch:
+To run the image locally with onbaordme installed but _not_ run:
 ```bash
-# onbaordme is installed but has _not_ been run. this is best if you have your own dot files
+# best if you have your own dot files, or need a smaller initial docker image to pull
+# no packages outside of the required pre-reqs for onboardme have been installed
 docker run jessebot/onboardme:no-install /bin/bash
 ```
 
