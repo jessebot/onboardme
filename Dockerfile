@@ -56,12 +56,13 @@ RUN wget https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh && \
   /bin/bash install.sh && git config --global init.defaultBranch main
 
 # install onboardme - using python 3.11, default for Debian bookworm
-# and run onboardme at the end
+# then run onboardme and clear apt/brew/pip cache when we're done
 RUN sudo mkdir -p /tmp && \
     pip install --user onboardme --break-system-packages && \
     onboardme --version && \
     if [ ! -z $RUN_MODE ]; then onboardme -O --no_upgrade -l debug; fi && \
     brew cleanup && \
+    pip cache purge && \
     sudo apt-get clean && \
     sudo rm -rf /var/lib/apt/lists/* && \
     sudo rm -rf /tmp/*
