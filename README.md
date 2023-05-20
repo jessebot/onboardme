@@ -115,13 +115,17 @@ See the [docker](#docker) section for more info!
 ## Quick Start
 
 ### Installation
-The quickest way to get started on a fresh macOS or distrubtion of Debian (including Ubuntu) is:
 
+#### Locally
+The quickest way to get started on a fresh macOS or distro of Debian (including Ubuntu) is:
 ```bash
 # this will download setup.sh to your current directory and run it
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/jessebot/onboardme/main/setup.sh)"
+```
 
-# this will display the help text for the onboardme cli
+Now you can run `onboardme` 🎉
+```bash
+# this will display the help text for onboardme
 onboardme --help
 ```
 
