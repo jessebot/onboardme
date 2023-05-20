@@ -46,6 +46,18 @@ repos:
   - id: nbdev_export
 ```
 
+## creating git aliases
+
+Thank you, [person on stackoverflow](https://stackoverflow.com/questions/957928/is-there-a-way-to-get-the-git-root-directory-in-one-command)
+
+```bash
+# shows the top level directory for the repo
+git rev-parse --show-toplevel
+
+# If you want to replicate the Mercurial command more directly, you can create an alias:
+git config --global alias.root 'rev-parse --show-toplevel'
+```
+
 
 ## Ignore everything except a few files
 Thanks to [this stackoverflow thread](https://stackoverflow.com/q/987142).
