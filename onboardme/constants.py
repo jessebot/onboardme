@@ -40,7 +40,7 @@ if OS[0] == 'Linux':
 
 
 default_dotfiles = ("https://raw.githubusercontent.com/jessebot/dot_files/"
-                    "main/.config/onboardme/config.yml")
+                    "main/.config/onboardme/")
 
 
 def load_cfg(config_file='config.yml') -> dict:
@@ -54,7 +54,7 @@ def load_cfg(config_file='config.yml') -> dict:
     if not path.exists(config_full_path):
         Path(config_dir).mkdir(parents=True, exist_ok=True)
         # downloads a default config file from default dot files
-        wget.download(default_dotfiles, config_full_path)
+        wget.download(default_dotfiles + config_file, config_full_path)
 
     with open(config_full_path, 'r') as yaml_file:
         return yaml.safe_load(yaml_file)
