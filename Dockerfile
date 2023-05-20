@@ -1,17 +1,16 @@
-# onbaordme testing Debian Bookworm image
-# -- usage --
-# docker build . -t onboardme:dev
-# docker run -it onboardme:dev /bin/bash
+# onbaordme Debian Bookworm image
 FROM debian:bookworm-slim
 
-# Options: ""     - will not install anything with onboardme
-#          "default" - default installation mode - only install cli packages
+# ""        - will install onboardme, but won't run onboardme
+# "default" - installs onboardme, and runs: onboardme --no_upgrade --overwrite
 ARG RUN_MODE=""
 
 # this makes debian not prompt for stuff
 ENV DEBIAN_FRONTEND=noninteractive
 
-# install pre-req apt packages
+# install pre-req apt packages 
+# python3 defaults to python 3.11 in Debian Bookworm
+#  removing and seeing if anything breaks python3-venv
 RUN apt-get update && \
   apt list --upgradeable | grep security | cut -f1 -d '/' | xargs apt install --no-install-recommends -y && \
   apt-get install -y --no-install-recommends \
@@ -20,13 +19,12 @@ RUN apt-get update && \
   git \
   python3-pip \
   python3-dev \
-  python3-venv \
   openssh-client \
   sudo \
   wget
 
 # create default user
-RUN useradd -ms /usr/sbin/nologin friend && \
+RUN useradd -ms /home/friend friend && \
     usermod -aG sudo friend && \
     echo 'friend ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
@@ -45,24 +43,22 @@ ENV PATH="$PATH:$HOME/.local/bin"
 
 # this is so that brew doesn't prompt for sudo access
 ENV NONINTERACTIVE=1
-# needed for Homebrew on Linux
+# needed for linuxbrew, homebrew on Linux
 ENV HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
 ENV HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
 ENV HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
 ENV MANPATH="$MANPATH:/home/linuxbrew/.linuxbrew/share/man"
 ENV INFOPATH="$INFOPATH:/home/linuxbrew/.linuxbrew/share/info"
 ENV PATH="$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin"
-
 # installs brew
 RUN wget https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh && \
     chmod +x ./install.sh && \
-    ./install.sh && \
-    rm install.sh
+    ./install.sh && rm ./install.sh
 
 # makes sure our default branch is main
 RUN git config --global init.defaultBranch main
 
-# installs onboardme from pypi - using python 3.11, default for Debian bookworm
+# install onboardme - using python 3.11, default for Debian bookworm
 # and run onboardme at the end
 RUN pip install --user onboardme --break-system-packages && \
     onboardme --version && \
