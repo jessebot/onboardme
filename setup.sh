@@ -21,11 +21,13 @@ if [[ $(uname) == *"Linux"* ]]; then
     pip_path_suffix="lib/python$PYTHON_VERSION/site-packages"
 
     # apt installed location of pip installed python3.x packages
-    pip_packages="$XDG_DATA_HOME/$pip_path_suffix"
+    pip_packages="$HOME/.local/$pip_path_suffix"
+
+    # not working in debian via onboardme :( not sure why
+    # export PYTHONUSERBASE=$XDG_DATA_HOME
 
     # make python do it's cache in ~/.cache/python
     export PYTHONPYCACHEPREFIX=$XDG_CACHE_HOME
-    export PYTHONUSERBASE=$XDG_DATA_HOME
 fi
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ macOS PATH ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
