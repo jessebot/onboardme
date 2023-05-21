@@ -64,7 +64,7 @@ RUN pip install --user onboardme --break-system-packages && \
     sudo apt-get clean && \
     sudo rm -rf /var/lib/apt/lists/*
 
-# not sure if this is breaking neovim from starting
+# not sure if this is breaking neovim from starting, might add back after testing
 # pip cache purge && \
 # sudo rm -rf /tmp/*
 
