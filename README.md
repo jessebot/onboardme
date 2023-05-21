@@ -66,13 +66,13 @@ onboardme keeps your neovim plugins installed and up to date with [lazy.nvim] un
 
 ### Docker image for an on-the-go dev workspace
 
-The docker image is built daily or on push to main. The base image is `debian:bookworm`, but we will rollout support for Ubuntu down the line :)
+The docker image is built nightly, and on push to `main` via GHA. The base image is `debian:bookworm`, but we will rollout support for Ubuntu down the line :)
 See the [docker](#docker) section for more info!
 
 ### Other optional configurations
 - Enable touchID for sudo on macOS
 - Add your user to the docker group
-- Install nerdfonts (defaults to mononoki and Symbols Only)
+- Install [nerdfonts](https://www.nerdfonts.com) (defaults to mononoki and Symbols Only)
 
 ### Screenshots
 
@@ -185,6 +185,8 @@ pip install --user --upgrade onboardme
 ```
 
 ### Using the Docker image
+
+_Note: For fonts and images to work properly, you should use a modern terminal like [wezterm](https://wezfurlong.org/wezterm/), iterm2, or konsole as well as you need to make sure you [install](https://github.com/ryanoasis/nerd-fonts/tree/master#font-installation) a [nerdfont](https://www.nerdfonts.com) and_ `libsixel` + `imagemagick`.
 
 To run the image locally with onboardme installed and already run using default settings:
 
