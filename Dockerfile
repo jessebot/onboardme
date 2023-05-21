@@ -55,13 +55,13 @@ ENV INFOPATH="$INFOPATH:/home/linuxbrew/.linuxbrew/share/info"
 ENV PATH="$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin"
 
 # installs brew, sets default git branch to main, and moves gitconfig to /home/.config/git/config
-RUN wget https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh && \
-   chmod +x install.sh && \
-   chmod 777 install.sh && \
-   /bin/bash install.sh && rm install.sh && \
-   git config --global init.defaultBranch main && \
-   mkdir -p $XDG_CONFIG_HOME/git && \
-   mv $HOME/.gitconfig $XDG_CONFIG_HOME/git/config
+RUN wget --hsts-file="$XDG_DATA_HOME/wget/wget-hsts" https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh && \
+    chmod +x install.sh && \
+    chmod 777 install.sh && \
+    /bin/bash install.sh && rm install.sh && \
+    git config --global init.defaultBranch main && \
+    mkdir -p $XDG_CONFIG_HOME/git && \
+    mv $HOME/.gitconfig $XDG_CONFIG_HOME/git/config
 
 # install onboardme - using python 3.11, default for Debian bookworm
 # then run onboardme and clear apt/brew/pip cache when we're done
