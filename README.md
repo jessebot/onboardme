@@ -112,7 +112,8 @@ See the [docker](#docker) section for more info!
 
 # Quick Start
 
-### Prereq Installs
+### Install Locally
+
 You'll need `curl`, `brew`, `git`, and Python 3.11 to get started. We have a setup script to install those (except `curl`) and help you get your environment to the XDG spec under <b>Locally</b> or you can just use our docker image, [jessebot/onboardme](https://hub.docker.com/r/jessebot/onboardme).
 
 <details>
@@ -177,9 +178,7 @@ After that, you can also set the shell directly in your terminal app via the set
 
 </details>
 
-#### Install
-
-If you've already got brew and Python3.11 on your machine, you can just do:
+If you've already got all the above prereq on your machine, you can just do:
 ```bash
 # should also work with pipx, if you'd like to use that instead
 pip install --user --upgrade onboardme
