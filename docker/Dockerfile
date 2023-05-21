@@ -65,17 +65,19 @@ RUN wget --hsts-file="$XDG_DATA_HOME/wget/wget-hsts" https://raw.githubuserconte
     mkdir -p $XDG_CONFIG_HOME/git && \
     mv $HOME/.gitconfig $XDG_CONFIG_HOME/git/config
 
+# this is for a cute fastfetch
+COPY docker_space_chalk /tmp/ff_config
+
 # install onboardme - using python 3.11, default for Debian bookworm
 # then run onboardme and clear apt/brew/pip cache when we're done
 RUN pip install --user onboardme --break-system-packages && \
     onboardme --version && \
-    if [ ! -z $RUN_MODE ]; then onboardme -O --no_upgrade -l debug; fi && \
+    if [ ! -z $RUN_MODE ]; then onboardme -O --no_upgrade -l debug && mv /tmp/ff_config ${XDG_CONFIG_HOME}/fastfetch/config.conf; fi && \
     brew cleanup && \
     sudo apt-get clean && \
-    sudo rm -rf /var/lib/apt/lists/*
+    sudo pip cache purge && \
+    sudo rm -rf /var/lib/apt/lists/* && \
+    sudo rm -rf /tmp/*
 
-# not sure if this is breaking neovim from starting, might add back after testing
-# pip cache purge && \
-# sudo rm -rf /tmp/*
 
 ENTRYPOINT ["/bin/bash"]

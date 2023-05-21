@@ -34,6 +34,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
+          # build from docker/ directory
+          context: docker
           tags: | 
             jessebot/onboardme:debian12-no-install
             jessebot/onboardme:no-install
@@ -42,6 +44,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
+          # build from docker/ directory
+          context: docker
           build-args: "RUN_MODE=default"
           tags: |
             jessebot/onboardme:latest
