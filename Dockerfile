@@ -11,16 +11,16 @@ ENV DEBIAN_FRONTEND=noninteractive
 # install pre-req apt packages 
 # python3 defaults to python 3.11 in Debian Bookworm
 RUN apt-get update && \
-  apt list --upgradeable | grep security | cut -f1 -d '/' | xargs apt-get install --no-install-recommends -y && \
-  apt-get install -y --no-install-recommends \
-  build-essential \
-  curl \
-  git \
-  python3-pip \
-  python3-dev \
-  openssh-client \
-  sudo \
-  wget
+    apt list --upgradeable | grep security | cut -f1 -d '/' | xargs apt-get install --no-install-recommends -y && \
+    apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    git \
+    python3-pip \
+    python3-dev \
+    openssh-client \
+    sudo \
+    wget
 
 # create default user
 RUN useradd -m friend && \
@@ -51,9 +51,9 @@ ENV INFOPATH="$INFOPATH:/home/linuxbrew/.linuxbrew/share/info"
 ENV PATH="$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin"
 # installs brew and makes sure our default git branch is main
 RUN wget https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh && \
-  chmod +x install.sh && \
-  chmod 777 install.sh && \
-  /bin/bash install.sh && git config --global init.defaultBranch main
+   chmod +x install.sh && \
+   chmod 777 install.sh && \
+   /bin/bash install.sh && git config --global init.defaultBranch main
 
 # install onboardme - using python 3.11, default for Debian bookworm
 # then run onboardme and clear apt/brew/pip cache when we're done
