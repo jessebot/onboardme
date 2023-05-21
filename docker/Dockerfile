@@ -9,6 +9,9 @@ ARG XDG="True"
 # this makes debian not prompt for stuff
 ENV DEBIAN_FRONTEND=noninteractive
 
+# attempt to set hostname
+RUN hostname cool-container-for-whales
+
 # install pre-req apt packages 
 # python3 defaults to python 3.11 in Debian Bookworm
 RUN apt-get update && \
@@ -78,6 +81,5 @@ RUN pip install --user onboardme --break-system-packages && \
     sudo pip cache purge && \
     sudo rm -rf /var/lib/apt/lists/* && \
     sudo rm -rf /tmp/*
-
 
 ENTRYPOINT ["/bin/bash"]
