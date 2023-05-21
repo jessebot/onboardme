@@ -113,11 +113,29 @@ See the [docker](#docker) section for more info!
 # Quick Start
 
 ### Prereq Installs
-You'll need `brew`, `git`, and Python 3.11 to get started. We have a setup script to install those and help you get your environment to the XDG spec under <b>Locally</b> or you can just use our docker image, [jessebot/onboardme](https://hub.docker.com/r/jessebot/onboardme).
+You'll need `curl`, `brew`, `git`, and Python 3.11 to get started. We have a setup script to install those (except `curl`) and help you get your environment to the XDG spec under <b>Locally</b> or you can just use our docker image, [jessebot/onboardme](https://hub.docker.com/r/jessebot/onboardme).
 
 <details>
   <summary>Local prereq install script</summary>
 
+
+<details>
+  <summary><code>curl</code>, a pre-prereq</summary>
+
+  ```bash
+  # First, make sure you have curl, but it *should* be there already be on macOS.
+  # if this doesn't return anything, you need to install curl
+  which curl
+
+  # Debian/Ubuntu may not have curl installed depending on where you are
+  sudo apt install -y curl
+  ```
+
+  If it's not there on Linux, you can install it with `apt` or use any default package manager like yum, or whatever people who use gentoo use.
+
+</details>
+
+Make sure you have sudo access, otherwise we won't be able to install certain things.
 The quickest way to get started on a fresh macOS or distro of Debian (including Ubuntu) is:
 ```bash
 # this will download setup.sh to your current directory and run it
@@ -159,9 +177,15 @@ After that, you can also set the shell directly in your terminal app via the set
 
 </details>
 
+#### Install
 
-<details>
-  <summary><code>jessebot/onboardme</code> docker image</summary>
+If you've already got brew and Python3.11 on your machine, you can just do:
+```bash
+# should also work with pipx, if you'd like to use that instead
+pip install --user --upgrade onboardme
+```
+
+### Using the Docker image
 
 To run the image locally with onboardme installed and already run using default settings:
 
@@ -176,16 +200,6 @@ To run the image locally with onbaordme installed but _not_ run:
 # best if you have your own dot files, or need a smaller initial docker image to pull
 # no packages outside of the required pre-reqs for onboardme have been installed
 docker run jessebot/onboardme:no-install /bin/bash
-```
-
-</details>
-
-## Install
-
-If you've already got brew and Python3.11 on your machine, you can just do:
-```bash
-# should also work with pipx, if you'd like to use that instead
-pip install --user --upgrade onboardme
 ```
 
 ## Running commands

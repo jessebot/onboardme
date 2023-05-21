@@ -42,7 +42,7 @@ onboardme --help
 Those defaults can be altered per machine by creating a config file like:
 
 <details>
-  <summary>`~/.config/onboardme/config.yml`</summary>
+  <summary><code>~/.config/onboardme/config.yml</code></summary>
 
   ```yaml
   ---

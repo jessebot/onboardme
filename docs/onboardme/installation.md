@@ -8,12 +8,15 @@ permalink: /onboardme/getting-started/installation
 
 # OnBoardMe Installation
 
-## Prerequisites
-
-Make sure you have sudo access, otherwise we won't be able to install certain things.
+### Prereq Installs
+You'll need `curl`, `brew`, `git`, and Python 3.11 to get started. We have a setup script to install those (except `curl`) and help you get your environment to the XDG spec under <b>Locally</b> or you can just use our docker image, [jessebot/onboardme](https://hub.docker.com/r/jessebot/onboardme).
 
 <details>
-  <summary>curl</summary>
+  <summary>Local prereq install script</summary>
+
+
+<details>
+  <summary><code>curl</code>, a pre-prereq</summary>
 
   ```bash
   # First, make sure you have curl, but it *should* be there already be on macOS.
@@ -28,55 +31,47 @@ Make sure you have sudo access, otherwise we won't be able to install certain th
 
 </details>
 
-Now you can run the `setup.sh` script, or manually install the remaining prereqs.
+Make sure you have sudo access, otherwise we won't be able to install certain things.
+The quickest way to get started on a fresh macOS or distro of Debian (including Ubuntu) is:
+```bash
+# this will download setup.sh to your current directory and run it
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/jessebot/onboardme/main/setup.sh)"
+```
 
-<details>
-  <summary>`setup.sh` script</summary>
+#### Linux
+Source your updated `.bashrc`:
 
-  Download and run the setup script to install git, brew, python, and python dependencies. The `setup.sh` will ask for your password to install things. Run the following from your home directory:
+```bash
+# for linux
+source ~/.bashrc
+```
 
-  ```bash
-  # macOS uses zsh as the default shell, type bash to get this ancient verison
-  # of bash to run the setup and and then onboardme, which will install a
-  # current version of bash. **The script will *not* run properly in zsh**.
-  chsh -s /bin/bash
-  bash
+#### MacOS
+source your updated `.bash_profile`:
 
-  # Download the setup.sh; you may have to install curl, see above codeblock
-  curl -O https://raw.githubusercontent.com/jessebot/onboardme/main/setup.sh
+```bash
+bash
+source ~/.bash_profile
+```
 
-  # give it execute permissions
-  chmod 0500 ./setup.sh
+You will still have to set your default shell to BASH to if you want to take advantage of the default dot files for onboardme. You can do that like this:
 
-  # NOTE THE . before the script! *Very* important!
-  . ./setup.sh
+```bash
+brew install bash
+sudo -i
 
-  # just in case you didn't run the above script with .
-  source ~/.bash_profile || source ~/.bashrc
-  ```
+# if you're on an M1 or newer:
+echo "/opt/homebrew/bin/bash" >> /etc/shells && exit
+chsh -s /opt/homebrew/bin/bash $(whoami)
 
-  If you finished the steps above, you can jump down to the [Actual installation](#actual-installation) section 😃
+# if you're on a mac earlier than the M1:
+echo "/usr/local/bin/bash" >> /etc/shells && exit
+chsh -s /usr/local/bin/bash $(whoami)
+```
 
-</details>
+After that, you can also set the shell directly in your terminal app via the settings.
 
-
-<details>
-  <summary>brew</summary>
-
-  As per the [brew](https://brew.sh) documentation:
-
-  ```bash
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  ```
-
-</details>
-
-<details>
-  <summary>Python3.11</summary>
-
-  ```bash
-    brew install python@3.11
-  ```
+If you finished the steps above, you can jump down to the [Actual installation](#actual-installation) section 😃
 
 </details>
 
@@ -88,8 +83,8 @@ You can install with `pip` still, but you can also use `pipx`.
   <summary><code>pip</code></summary>
 
 ```bash
-# not really sure why it doesn't install without --user :shrug:
-pip3.11 install --user onboardme
+# on Debian/Ubuntu you may have to also pass --break-system-packages
+pip3.11 install --user --upgrade onboardme
 ```
 
 </details>
@@ -103,6 +98,24 @@ pipx install onboardme
 ```
 
 </details>
+
+## Using the Docker image
+
+To run the image locally with onboardme installed and already run using default settings:
+
+```bash
+# this image is built daily and has already run onboardme with the default settings
+docker run jessebot/onboardme:latest /bin/bash
+```
+
+To run the image locally with onbaordme installed but _not_ run:
+
+```bash
+# best if you have your own dot files, or need a smaller initial docker image to pull
+# no packages outside of the required pre-reqs for onboardme have been installed
+docker run jessebot/onboardme:no-install /bin/bash
+```
+
 
 ## Quick test of `onboardme`
 Now you can run the actual script that does the heavy lifting. If you ran the
