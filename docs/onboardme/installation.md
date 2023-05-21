@@ -101,6 +101,8 @@ pipx install onboardme
 
 ## Using the Docker image
 
+_Note: For fonts and images to work properly, you should use a modern terminal like [wezterm](https://wezfurlong.org/wezterm/), iterm2, or konsole as well as you need to make sure you [install](https://github.com/ryanoasis/nerd-fonts/tree/master#font-installation) a [nerdfont](https://www.nerdfonts.com) and_ `libsixel` + `imagemagick`.
+
 To run the image locally with onboardme installed and already run using default settings:
 
 ```bash
