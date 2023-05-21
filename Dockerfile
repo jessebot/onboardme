@@ -61,7 +61,11 @@ RUN pip install --user onboardme --break-system-packages && \
     onboardme --version && \
     if [ ! -z $RUN_MODE ]; then onboardme -O --no_upgrade -l debug; fi && \
     brew cleanup && \
-    pip cache purge && \
     sudo apt-get clean && \
-    sudo rm -rf /var/lib/apt/lists/* && \
-    sudo rm -rf /tmp/*
+    sudo rm -rf /var/lib/apt/lists/*
+
+# not sure if this is breaking neovim from starting
+# pip cache purge && \
+# sudo rm -rf /tmp/*
+
+ENTRYPOINT ["/bin/bash"]
