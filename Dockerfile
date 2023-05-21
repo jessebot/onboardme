@@ -60,8 +60,8 @@ RUN wget https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh && \
    chmod 777 install.sh && \
    /bin/bash install.sh && rm install.sh && \
    git config --global init.defaultBranch main && \
-   mkdir -p ${XDG_CACHE_HOME}/git && \
-   mv $HOME/.gitconfig ${XDG_DATA_HOME}/git/config
+   mkdir -p $XDG_CONFIG_HOME/git && \
+   mv $HOME/.gitconfig $XDG_CONFIG_HOME/git/config
 
 # install onboardme - using python 3.11, default for Debian bookworm
 # then run onboardme and clear apt/brew/pip cache when we're done
