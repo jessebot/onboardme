@@ -109,6 +109,9 @@ def run_pkg_mngrs(pkg_mngrs: list, pkg_groups=[], no_upgrade=bool) -> None:
             # commands for listing, installing, updating, upgrading, & cleanup
             pkg_cmds = pkg_mngr_dict['commands']
 
+            # make sure we use any required env vars during installs
+            install_env_vars = pkg_mngr_dict.get('env_vars', None)
+
             if pkg_mngr == 'snap' and not shutil.which('snap'):
                 log.warn("snap is either not installed, or you need to log out"
                          "and back in (or reboot) for it to be available. "
@@ -141,13 +144,16 @@ def run_pkg_mngrs(pkg_mngrs: list, pkg_groups=[], no_upgrade=bool) -> None:
             for pkg_group in pkg_groups:
                 # if package group is in the packages.yaml file
                 if pkg_group in available_pkg_groups:
-                    if pkg_group == "macOS":
-                        # zathura needs some help on macOS
-                        check_zathura()
+                    # used to be for zathura, a document viewer, might delete
+                    # if pkg_group == "macOS":
+                    #     # zathura needs some help on macOS
+                    #     check_zathura()
 
                     install_pkg_group(pkg_cmds['install'],
                                       available_pkg_groups[pkg_group],
-                                      installed_pkgs)
+                                      installed_pkgs,
+                                      install_env_vars,
+                                      no_upgrade)
                     sub_header(f'{pkg_group.title()} packages installed.')
 
             # run final cleanup commands, if any
@@ -156,8 +162,12 @@ def run_pkg_mngrs(pkg_mngrs: list, pkg_groups=[], no_upgrade=bool) -> None:
                 sub_header("[b]Cleanup[/b] step Completed.")
 
 
-def install_pkg_group(install_cmd: str, pkgs_to_install: list,
-                      installed_pkgs: list) -> None:
+def install_pkg_group(install_cmd: str, 
+                      pkgs_to_install: list,
+                      installed_pkgs: list, 
+                      install_env_vars: dict,
+                      no_upgrade: bool
+                      ) -> None:
     """
     Installs packages if they are not already installed.
     provided install command string.
@@ -183,7 +193,7 @@ def install_pkg_group(install_cmd: str, pkgs_to_install: list,
 
             log.debug(f"Checking if {pkg_short_name} is installed...")
             if pkg_short_name in installed_pkgs:
-                if 'upgrade' not in install_cmd:
+                if no_upgrade or 'upgrade' not in install_cmd:
                     log.info(f"{pkg} already installed. Moving on.")
                     # continues to the next pkg in the pkgs_to_install list
                     continue
@@ -192,7 +202,7 @@ def install_pkg_group(install_cmd: str, pkgs_to_install: list,
                     log.info(f"Upgrading {pkg} now...")
 
         # Actual installation
-        subproc([install_cmd + pkg], quiet=True)
+        subproc([install_cmd + pkg], quiet=True, env=install_env_vars)
 
 
 def install_brew_taps(taps: list) -> None:
@@ -220,15 +230,16 @@ def install_brew_taps(taps: list) -> None:
             log.info(f"{tap} already installed. Moving on.")
 
 
-def check_zathura() -> None:
-    """
-    make sure zathura is installed on macos
-    installs via brew if it's not installed
-    always returns True if everything was successful
-    """
-    if not shutil.which("zathura"):
-        zathura_pdf = "$(brew --prefix zathura-pdf-mupdf)"
-        cmds = ["mkdir -p $(brew --prefix zathura)/lib/zathura",
-                f"ln -s {zathura_pdf}/libpdf-mupdf.dylib" +
-                f"{zathura_pdf}/lib/zathura/libpdf-mupdf.dylib"]
-        subproc(cmds, quiet=True)
+# not currently using zathura on macOS, so removing as it's untested
+# def check_zathura() -> None:
+#     """
+#     make sure zathura is installed on macos
+#     installs via brew if it's not installed
+#     always returns True if everything was successful
+#     """
+#     if not shutil.which("zathura"):
+#         zathura_pdf = "$(brew --prefix zathura-pdf-mupdf)"
+#         cmds = ["mkdir -p $(brew --prefix zathura)/lib/zathura",
+#                 f"ln -s {zathura_pdf}/libpdf-mupdf.dylib" +
+#                 f"{zathura_pdf}/lib/zathura/libpdf-mupdf.dylib"]
+#         subproc(cmds, quiet=True)
