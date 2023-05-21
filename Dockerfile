@@ -57,7 +57,8 @@ ENV PATH="$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin"
 RUN wget https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh && \
    chmod +x install.sh && \
    chmod 777 install.sh && \
-   /bin/bash install.sh && git config --global init.defaultBranch main
+   /bin/bash install.sh && rm install.sh && \
+   git config --global init.defaultBranch main
 
 # install onboardme - using python 3.11, default for Debian bookworm
 # then run onboardme and clear apt/brew/pip cache when we're done
