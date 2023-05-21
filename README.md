@@ -190,7 +190,7 @@ To run the image locally with onboardme installed and already run using default 
 
 ```bash
 # this image is built daily and has already run onboardme with the default settings
-docker run jessebot/onboardme:latest /bin/bash
+docker run jessebot/onboardme:latest
 ```
 
 To run the image locally with onbaordme installed but _not_ run:
@@ -198,7 +198,7 @@ To run the image locally with onbaordme installed but _not_ run:
 ```bash
 # best if you have your own dot files, or need a smaller initial docker image to pull
 # no packages outside of the required pre-reqs for onboardme have been installed
-docker run jessebot/onboardme:no-install /bin/bash
+docker run jessebot/onboardme:no-install
 ```
 
 ## Running commands
