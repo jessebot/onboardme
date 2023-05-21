@@ -18,6 +18,8 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
@@ -35,7 +37,7 @@ jobs:
         with:
           push: true
           # build from docker/ directory
-          context: docker/
+          context: docker
           tags: | 
             jessebot/onboardme:debian12-no-install
             jessebot/onboardme:no-install
@@ -45,7 +47,7 @@ jobs:
         with:
           push: true
           # build from docker/ directory
-          context: docker/
+          context: docker
           build-args: "RUN_MODE=default"
           tags: |
             jessebot/onboardme:latest
