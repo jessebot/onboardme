@@ -38,6 +38,7 @@ jobs:
           push: true
           # build from docker/ directory
           context: docker
+          platforms: linux/amd64,linux/arm64
           tags: | 
             jessebot/onboardme:debian12-no-install
             jessebot/onboardme:no-install
@@ -48,6 +49,7 @@ jobs:
           push: true
           # build from docker/ directory
           context: docker
+          platforms: linux/amd64,linux/arm64
           build-args: "RUN_MODE=default"
           tags: |
             jessebot/onboardme:latest
