@@ -49,7 +49,7 @@ jobs:
           push: true
           # build from docker/ directory
           context: docker
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           build-args: "RUN_MODE=default"
           tags: |
             jessebot/onboardme:latest
