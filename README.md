@@ -19,6 +19,10 @@
 
 Get your daily driver just the way you like it, from dot files management, to package installation, to other little features you didn't know you needed, `onboardme` intends to save you time with initializing and maintaining your personal environments.
 
+<p align="center">
+<img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/image_in_terminal.png' alt='screenshot of color samples and image of dog using a computer using sixel'>
+</p>
+
 ## Features
 
 ### Keep your Dot Files Up To Date Across multiple systems
@@ -102,7 +106,7 @@ See the [docker](#docker) section for more info!
 <img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/git_powerline_example.png' alt='screenshot of powerline and git colors'>
 
 ### Image and colors
-<img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/image_in_terminal.png' alt='screenshot of color samples and image of dog using a computer using sixel'>
+
 
 ### Python virtual env in powerline and cat
 <img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/python_virtual_env_example.png' alt='screenshot of using bat and python virtual env in powerline'>
