@@ -59,11 +59,15 @@ RUN curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-insta
     rbenv install 2.6.10 && \
     rbenv global 2.6.10
 
+RUN echo "hello"
+
 ENV HOMEBREW_DEVELOPER=1
 ENV HOMEBREW_USE_RUBY_FROM_PATH=1
-RUN git clone https://github.com/Homebrew/brew.git .linuxbrew && \
+
+RUN git clone https://github.com/Homebrew/brew.git ~/.linuxbrew && \
     eval "$(brew shellenv)" && \
     . /home/friend/.bashrc
-RUN brew update
+
+RUN /home/friend/.linuxbrew/bin/brew update
 
 ENTRYPOINT ["/bin/bash"]
