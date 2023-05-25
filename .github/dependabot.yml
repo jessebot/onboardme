@@ -8,4 +8,14 @@ updates:
   - package-ecosystem: "pip"
     directory: "/" # Location of package manifests
     schedule:
-      interval: "weekly"
+      interval: "daily"
+
+  - package-ecosystem: "docker"
+    directory: "/docker/" # Location of package manifests
+    schedule:
+      interval: "daily"
+
+  - package-ecosystem: "docker"
+    directory: "/docker/arm" # Location of package manifests
+    schedule:
+      interval: "daily"
