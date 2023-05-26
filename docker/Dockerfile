@@ -48,8 +48,9 @@ USER friend
 ENV HOME="/home/friend"
 
 # make sure we can run locally installed executables
-ENV PATH="$PATH:$HOME/.local/bin:$HOME/.rbenv/bin:$HOME/.linuxbrew/bin"
+ENV PATH="$HOME/.rbenv/bin:$HOME/.linuxbrew/bin:$PATH"
 
+# ref: https://github.com/rbenv/rbenv-installer
 # installs rbenv, ruby-build, followed by openssl 1.1 and finally ruby 2.6.10
 # takes 25-45 min to compile stuff unless docker has like 8 CPU/16G mem in resources
 RUN curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash && \
@@ -61,7 +62,9 @@ RUN curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-insta
 
 # this is so that brew doesn't prompt for sudo access
 ENV NONINTERACTIVE=1
-# this is a suggestion by a homebrew member
+
+# suggestion by homebrew member:
+# https://github.com/orgs/Homebrew/discussions/3612#discussioncomment-3572967
 ENV HOMEBREW_DEVELOPER=1
 ENV HOMEBREW_USE_RUBY_FROM_PATH=1
 
