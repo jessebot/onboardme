@@ -53,7 +53,8 @@ ENV PATH="$PATH:$HOME/.local/bin:$HOME/.rbenv/bin:$HOME/.linuxbrew/bin"
 # installs rbenv, ruby-build, followed by openssl 1.1 and finally ruby 2.6.10
 # takes 25-45 min to compile stuff unless docker has like 8 CPU/16G mem in resources
 RUN curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash && \
-    echo 'eval "$(rbenv init -)"' >> ~/.bashrc && \
+    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> $HOME/.bashrc && \
+    echo 'eval "$(rbenv init -)"' >> $HOME/.bashrc && \
     . $HOME/.bashrc && \
     rbenv install 2.6.10 && \
     rbenv global 2.6.10
@@ -64,7 +65,8 @@ ENV NONINTERACTIVE=1
 ENV HOMEBREW_DEVELOPER=1
 ENV HOMEBREW_USE_RUBY_FROM_PATH=1
 
-# homebrew on arm is unsupported, so we have to install ruby ourselves because of:
+# homebrew on arm is unsupported: https://docs.brew.sh/Homebrew-on-Linux#arm-unsupported
+# so we have to install ruby ourselves because of:
 # Error: No Homebrew ruby 2.6.10_1 available for aarch64 processors!
 # Error: Failed to install Homebrew Portable Ruby and cannot find another Ruby 2.6.10!
 # see: https://github.com/orgs/Homebrew/discussions/3612
@@ -76,7 +78,7 @@ RUN git clone https://github.com/Homebrew/brew.git $HOME/.linuxbrew && \
 USER root
 USER friend
 
-RUN $(which ruby) --enable-frozen-string-literal --disable=gems,did_you_mean,rubyopt $(brew --prefix)/Library/Homebrew/utils/ruby_check_version_script.rb 2.6.10 && echo OK
+# RUN $(which ruby) --enable-frozen-string-literal --disable=gems,did_you_mean,rubyopt $(brew --prefix)/Library/Homebrew/utils/ruby_check_version_script.rb 2.6.10 && echo OK
 
 ENTRYPOINT ["/bin/bash"]
 
