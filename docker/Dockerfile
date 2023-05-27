@@ -4,7 +4,6 @@ FROM debian:bookworm-slim
 # ""        - will install onboardme, but won't run onboardme
 # "default" - installs onboardme, and runs: onboardme --no_upgrade --overwrite
 ARG RUN_MODE=""
-ARG XDG="True"
 
 # this makes debian not prompt for stuff
 ENV DEBIAN_FRONTEND=noninteractive
@@ -39,9 +38,9 @@ ENV XDG_DATA_HOME="$HOME/.local/share"
 ENV XDG_STATE_HOME="$HOME/.local/state"
 
 # make python use our cache if the user wants to use XDG pathing
-RUN if [ "$XDG" == "True" ]; then export PYTHONPYCACHEPREFIX=$XDG_CACHE_HOME/python; fi
+RUN export PYTHONPYCACHEPREFIX=$XDG_CACHE_HOME/python
 # this isn't working via onboardme for some reason :(
-# RUN if [ "$XDG" == "True" ]; then export PYTHONUSERBASE=$XDG_DATA_HOME/python; fi
+# RUN export PYTHONUSERBASE=$XDG_DATA_HOME/python
 
 # make sure we can install executables locally 
 ENV PATH="$PATH:$HOME/.local/bin"
