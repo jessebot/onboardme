@@ -65,24 +65,25 @@ RUN git clone https://github.com/neovim/neovim /tmp/neovim && \
 
 # download bottom, a top replacement
 RUN curl -LO https://github.com/ClementTsang/bottom/releases/download/0.9.1/bottom_0.9.1_arm64.deb && \
-    sudo dpkg -i bottom_0.9.1_arm64.deb
+    sudo dpkg -i bottom_0.9.1_arm64.deb && rm bottom_0.9.1_arm64.deb
 
 # download gitui, a tui for git stuff
 RUN curl -LO https://github.com/extrawurst/gitui/releases/download/v0.22.1/gitui-linux-aarch64.tar.gz && \
-    tar xvf gitui-linux-aarch64.tar.gz && \
+    tar xvf gitui-linux-aarch64.tar.gz && rm gitui-linux-aarch64.tar.gz \
     mv gitui $HOME/.local/bin/gitui
 
 # download zellij, a tmux replacement
 RUN curl -LO https://github.com/zellij-org/zellij/releases/download/v0.36.0/zellij-aarch64-unknown-linux-musl.tar.gz && \
-    tar xvf zellij-aarch64-unknown-linux-musl.tar.gz && \
-    mv zellij $HOME/.local/bin/zellij
+    tar xvf zellij-aarch64-unknown-linux-musl.tar.gz && rm zellij-aarch64-unknown-linux-musl.tar.gz && \
+    mv zellij $HOME/.local/bin/zellij && 
 
 # this is for a cute fastfetch
 COPY --chown=friend:friend docker_space_chalk /tmp/ff_config
 
-# actual running of onboardme
+# use onboardme to get special git branch for dockerfiles locally
 RUN if [ ! -z $RUN_MODE ]; then onboardme --overwrite --no_upgrade --git_branch docker-arm64-only --steps dot_files; fi
 
+# actual running of onboardme
 RUN if [ ! -z $RUN_MODE ]; then onboardme --overwrite --no_upgrade --log_level debug --git_branch docker-arm64-only && mv /tmp/ff_config ${XDG_CONFIG_HOME}/fastfetch/config.conf; fi
 
 # compile fastfetch, for system facts, from source
@@ -95,9 +96,9 @@ RUN git clone https://github.com/LinusDierheimer/fastfetch.git /tmp/fastfetch &&
     cmake --build . --target fastfetch --target flashfetch && \
     cp fastfetch $HOME/.local/bin/fastfetch
 
-RUN sudo apt-get clean && \
-    sudo pip cache purge && \
-    sudo rm -rf /var/lib/apt/lists/* && \
-    sudo rm -rf /tmp/*
+# RUN sudo apt-get clean && \
+#     sudo pip cache purge && \
+#     sudo rm -rf /var/lib/apt/lists/* && \
+#     sudo rm -rf /tmp/*
 
 ENTRYPOINT ["/bin/bash"]
