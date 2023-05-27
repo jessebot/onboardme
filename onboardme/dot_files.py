@@ -2,7 +2,7 @@
 This just handles keeping your home directory as a live git directory
 """
 from itertools import zip_longest
-from os import chdir, path, mkdirs
+from os import chdir, path
 from pathlib import Path
 # this is for rich text, to pretty print things
 from rich import box
@@ -14,7 +14,7 @@ from .subproc import subproc
 
 
 XDG_GIT_CFG_DIR = path.join(XDG_CONFIG_DIR, 'git')
-mkdirs(XDG_GIT_CFG_DIR, exist_ok=True)
+Path(XDG_GIT_CFG_DIR).mkdir(exist_ok=True)
 XDG_GIT_PATH = path.join(XDG_GIT_CFG_DIR, 'config')
 
 
