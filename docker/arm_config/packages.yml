@@ -5,36 +5,6 @@ npm:
     default:
       # password management
       - bitwarden-cli
-brew:
-  packages:
-    # these are all for both macOS and Debian
-    default:
-      # TUI for gpg keys, for the lazy, like me: has to be compiled from source
-      - gpg-tui
-    devops:
-      # cli for k8s (kubernetes)
-      - kubectl
-      # kubectl plugin manager
-      - krew
-      # gitops continuous delivery for k8s configs
-      - argocd
-      # gitlab cli
-      - glab
-      # github cli
-      - gh
-      # terraform for building stuff
-      - tfenv
-      - tflint
-      - terraform-docs
-    extras:
-      # installs cargo and rust
-      - rustup
-      # spotify daemon
-      - spotifyd
-      # spotify TUI
-      - spotify-tui
-      # preview videos in the terminal. commented by default because it is big
-      - ffmpegthumbnailer
 
 apt:
   emoji: "🙃"
@@ -246,3 +216,30 @@ pip3.11:
       # - quarto
       # notebooks in the terminal 💚
       - euporie
+    default-from-brew:
+      # TUI for gpg keys, for the lazy, like me: has to be compiled from source
+      - gpg-tui
+    devops-from-brew:
+      # cli for k8s (kubernetes)
+      - kubectl
+      # kubectl plugin manager
+      - krew
+      # gitops continuous delivery for k8s configs
+      - argocd
+      # gitlab cli
+      - glab
+      # github cli
+      - gh
+      # terraform for building stuff
+      - tfenv
+      - tflint
+      - terraform-docs
+    extras-from-brew:
+      # installs cargo and rust
+      - rustup
+      # spotify daemon
+      - spotifyd
+      # spotify TUI
+      - spotify-tui
+      # preview videos in the terminal. commented by default because it is big
+      - ffmpegthumbnailer

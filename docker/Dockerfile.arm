@@ -81,7 +81,7 @@ RUN curl -LO https://github.com/zellij-org/zellij/releases/download/v0.36.0/zell
 # this is for a cute fastfetch and to set some default dot files, just in case
 COPY --chown=friend:friend ./config.conf ./arm_config/packages.yml ./arm_config/config.yml /tmp/
 
-RUN if [ $RUN_MODE == "default" ]; then mkdir -p ${XDG_CONFIG_HOME}/onboardme && mv /tmp/packages.yml ${XDG_CONFIG_HOME}/onboardme && mv /tmp/config.yml ${XDG_CONFIG_HOME}/onboardme &&; fi
+RUN if [ $RUN_MODE == "default" ]; then mkdir -p ${XDG_CONFIG_HOME}/onboardme && mv /tmp/packages.yml ${XDG_CONFIG_HOME}/onboardme && mv /tmp/config.yml ${XDG_CONFIG_HOME}/onboardme; fi
 
 # actual running of onboardme
 RUN if [ ! -z $RUN_MODE ]; then onboardme --overwrite --no_upgrade --log_level debug && mv /tmp/config.conf ${XDG_CONFIG_HOME}/fastfetch/config.conf; fi
