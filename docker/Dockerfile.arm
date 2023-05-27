@@ -9,7 +9,7 @@ ARG XDG="True"
 # this makes debian not prompt for stuff
 ENV DEBIAN_FRONTEND=noninteractive
 
-# install pre-req apt packages 
+# install pre-req apt packages. The weird ones are for compiling stuff
 # python3 defaults to python 3.11 in Debian Bookworm
 RUN apt-get update && \
     apt list --upgradeable | grep security | cut -f1 -d '/' | xargs apt-get install --no-install-recommends -y && \
@@ -21,7 +21,11 @@ RUN apt-get update && \
     python3-dev \
     openssh-client \
     sudo \
-    wget
+    wget \
+    unzip \
+    cmake \
+    ninja-build \
+    gettext
 
 # create default user
 RUN useradd -m friend && \
