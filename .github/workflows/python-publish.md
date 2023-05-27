@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Build and publish to pypi
-        uses: JRubics/poetry-publish@v1.16
+        uses: JRubics/poetry-publish@v1.17
         with:
           python_version: "3.11.2"
           pypi_token: ${{ secrets.DEPLOY_FROM_GITHUB_TO_PYPI_ONBOARDME }}
