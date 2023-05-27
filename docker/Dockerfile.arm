@@ -1,13 +1,12 @@
-# onbaordme Debian Bookworm image - linux/amd64 only
+# onbaordme Debian Bookworm image - linux/arm64 only
 FROM debian:bookworm-slim
 
-# ""        - will install onboardme, but won't run onboardme
+# ""        - will install onboardme, but won't *run* onboardme
 # "default" - installs onboardme, and runs: onboardme --no_upgrade --overwrite
 ARG RUN_MODE=""
-ARG XDG="True"
 
 # this makes debian not prompt for stuff
-ENV DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND="noninteractive"
 
 # install pre-req apt packages. The weird ones are for compiling stuff
 # python3 defaults to python 3.11 in Debian Bookworm
@@ -55,7 +54,7 @@ RUN if [ "$XDG" == "True" ]; then export PYTHONPYCACHEPREFIX=$XDG_CACHE_HOME/pyt
 # install onboardme - using python 3.11, default for Debian bookworm
 RUN pip install --user onboardme --break-system-packages && onboardme --version
 
-# compile neovim from source
+# compile neovim from source:
 # https://github.com/neovim/neovim/wiki/Building-Neovim#build-prerequisites
 RUN git clone https://github.com/neovim/neovim /tmp/neovim && \
     cd /tmp/neovim/ && \
@@ -63,19 +62,19 @@ RUN git clone https://github.com/neovim/neovim /tmp/neovim && \
     make CMAKE_BUILD_TYPE=RelWithDebInfo && \
     cd build && cpack -G DEB && sudo dpkg -i nvim-linux64.deb
 
-# download bottom, a top replacement
+# download bottom debian package. bottom is a top replacement and is aliased to btm, and sometimes top
 RUN curl -LO https://github.com/ClementTsang/bottom/releases/download/0.9.1/bottom_0.9.1_arm64.deb && \
     sudo dpkg -i bottom_0.9.1_arm64.deb && rm bottom_0.9.1_arm64.deb
 
-# download gitui, a tui for git stuff
+# download gitui arm binary. gitui is a tui for git
 RUN curl -LO https://github.com/extrawurst/gitui/releases/download/v0.22.1/gitui-linux-aarch64.tar.gz && \
-    tar xvf gitui-linux-aarch64.tar.gz && rm gitui-linux-aarch64.tar.gz \
+    tar xvf gitui-linux-aarch64.tar.gz && rm gitui-linux-aarch64.tar.gz && \
     mv gitui $HOME/.local/bin/gitui
 
-# download zellij, a tmux replacement
+# download zellij arm binary, a tmux replacement
 RUN curl -LO https://github.com/zellij-org/zellij/releases/download/v0.36.0/zellij-aarch64-unknown-linux-musl.tar.gz && \
     tar xvf zellij-aarch64-unknown-linux-musl.tar.gz && rm zellij-aarch64-unknown-linux-musl.tar.gz && \
-    mv zellij $HOME/.local/bin/zellij && 
+    mv zellij $HOME/.local/bin/zellij
 
 # this is for a cute fastfetch
 COPY --chown=friend:friend docker_space_chalk /tmp/ff_config
