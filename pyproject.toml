@@ -34,12 +34,6 @@ xdg-base-dirs       = "^6.0"
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.1"
 
-[[tool.poetry.source]]
-name      = "testpypi"
-url       = "https://test.pypi.org/simple/"
-default   = false
-secondary = false
-
 [tool.poetry.plugins."onboardme.application.plugin"]
 "onboardme" = "onboardme:main"
 
