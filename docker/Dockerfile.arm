@@ -25,7 +25,8 @@ RUN apt-get update && \
     unzip \
     cmake \
     ninja-build \
-    gettext
+    gettext \
+    pkg-config
 
 # create default user
 RUN useradd -m friend && \
@@ -85,7 +86,7 @@ RUN if [ ! -z $RUN_MODE ]; then onboardme --overwrite --no_upgrade --git_branch 
 # actual running of onboardme
 RUN if [ ! -z $RUN_MODE ]; then onboardme --overwrite --no_upgrade --log_level debug --git_branch docker-arm64-only && mv /tmp/ff_config ${XDG_CONFIG_HOME}/fastfetch/config.conf; fi
 
-# compile fastfetch, for system facts, from source
+# compile fastfetch, for system facts, from source, requires pkg-config
 # https://github.com/LinusDierheimer/fastfetch#building
 RUN git clone https://github.com/LinusDierheimer/fastfetch.git /tmp/fastfetch && \
     cd /tmp/fastfetch && \
