@@ -28,6 +28,10 @@ RUN apt-get update && \
         libgmp-dev \
         libncurses5-dev \
         libffi-dev \
+        ninja-build \
+        gettext \
+        cmake \
+        unzip \
         libgdbm6 \
         libgdbm-dev \
         libdb-dev \
@@ -97,7 +101,15 @@ RUN onboardme --version
 # this is for a cute fastfetch
 COPY --chown=friend:friend docker_space_chalk /tmp/ff_config
 
-RUN if [ ! -z $RUN_MODE ]; then onboardme -O --no_upgrade -l debug && mv /tmp/ff_config ${XDG_CONFIG_HOME}/fastfetch/config.conf; fi
+# compile neovim from source because it fails via brew for some reason
+# https://github.com/neovim/neovim/wiki/Building-Neovim#build-prerequisites
+RUN git clone https://github.com/neovim/neovim /tmp/neovim && \
+    cd /tmp/neovim/ && \
+    git checkout stable && \
+    make CMAKE_BUILD_TYPE=RelWithDebInfo && \
+    cd build && cpack -G DEB && sudo dpkg -i nvim-linux64.deb
+
+RUN if [ ! -z $RUN_MODE ]; then onboardme --overwrite --no_upgrade --log_level debug --git_branch docker-arm64-only && mv /tmp/ff_config ${XDG_CONFIG_HOME}/fastfetch/config.conf; fi
 
 RUN echo "Will now begin cache clean up to slim the docker image."
 
