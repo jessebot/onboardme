@@ -65,8 +65,8 @@ RUN git clone https://github.com/neovim/neovim /tmp/neovim && \
 
 # compile fastfetch, for system facts, from source
 # https://github.com/LinusDierheimer/fastfetch#building
-RUN git clone https://github.com/LinusDierheimer/fastfetch.git /tmp/fastfetch && \
-    cd /tmp/fastfetch/ && \
+RUN git clone https://github.com/LinusDierheimer/fastfetch.git $HOME/.local/bin/fastfetch && \
+    cd $HOME/.local/bin/fastfetch/ && \
     mkdir -p build && \
     cd build && \
     cmake .. && \
@@ -90,6 +90,8 @@ RUN curl -LO https://github.com/zellij-org/zellij/releases/download/v0.36.0/zell
 COPY --chown=friend:friend docker_space_chalk /tmp/ff_config
 
 # actual running of onboardme
+RUN if [ ! -z $RUN_MODE ]; then onboardme --overwrite --no_upgrade --git_branch docker-arm64-only --steps dot_files; fi
+
 RUN if [ ! -z $RUN_MODE ]; then onboardme --overwrite --no_upgrade --log_level debug --git_branch docker-arm64-only && mv /tmp/ff_config ${XDG_CONFIG_HOME}/fastfetch/config.conf; fi
 
 RUN sudo apt-get clean && \
