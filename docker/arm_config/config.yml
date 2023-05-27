@@ -1,0 +1,72 @@
+---
+# ______________________________________________________________ #
+#         Config file for the onboardme cli command.             #
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+#  - This is the default config file that pip will install into: #
+#    $PYTHON_PATH/lib/onboardme/config/onboardme_config.yaml      #
+#                                                                #
+#  - If this files exists as: ~/.config/onboardme/config.yaml    #
+#    then its loaded instead of the default config               #
+# -------------------------------------------------------------- #
+
+
+log:
+  # Full path to a file you'd like to log to. Creates file if it doesn't exist
+  file: ""
+  # what level of logs to output (debug, info, warn, error)
+  level: "warn"
+  # don't output anything to the console, if set and log file passed in, still
+  # creates a log file. unstable.
+  # quiet: false
+
+
+# steps refer to a specific function in the list of functions we run
+steps:
+  # these are linux specific steps
+  Linux:
+    - dot_files
+    - packages
+    - font_setup
+    - neovim_setup
+    # - group_setup
+
+dot_files:
+  # personal git repo URL for your dot files, defaults to jessebot/dot_files
+  git_url: "https://github.com/jessebot/dot_files.git"
+  # the branch to use for the git repo above, defaults to main
+  git_branch: "docker-arm64-only"
+  # !CAREFUL: runs a `git reset --hard`, which will overwite/delete files in ~
+  # that conflict with the above defined git repo url and branch.
+  # You should run the following to get the files that would be overwritten:
+  # onboardme -s dot_files
+  overwrite: true
+
+# This is the basic package config.
+package:
+  # Remove any of the below pkg managers to only run the remaining pkg managers
+  managers:
+    # these are linux specific steps
+    Linux:
+      - pip3.11
+      - apt
+      # - snap
+      # - flatpak
+  # list of extra existing packages groups to install
+  groups:
+    - default
+    # uncomment these to add them as default installed package groups
+    # - gaming
+    # - work
+
+# Coming soon: to edit the specific packages: ~/.config/onboardme/packages.yaml
+
+# known safe remote hosts that you expect to be able to ping and SSH into
+remote_hosts: []
+  # - 192.168.42.42
+
+# setup iptable on Linux only
+firewall: false
+
+### TODO: make this work, it's a nice dream though.
+# any URL we can curl to download a folder from
+# wallpapers_download_url: ""
