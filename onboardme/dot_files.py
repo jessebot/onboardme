@@ -13,7 +13,9 @@ from .console_logging import print_panel, print_msg
 from .subproc import subproc
 
 
-XDG_CONFIG_GIT_PATH = path.join(XDG_CONFIG_DIR, 'git/config')
+XDG_GIT_CFG_DIR = path.join(XDG_CONFIG_DIR, 'git')
+Path(XDG_GIT_CFG_DIR).mkdir(exist_ok=True)
+XDG_GIT_PATH = path.join(XDG_GIT_CFG_DIR, 'config')
 
 
 def setup_dot_files(OS='Linux', overwrite=False,
@@ -29,10 +31,14 @@ def setup_dot_files(OS='Linux', overwrite=False,
     chdir(git_dir)
     opts = {'quiet': True, 'cwd': git_dir}
 
-    # global: use main as default branch, always push up new remote branch
-    git_raw = f"https://raw.githubusercontent.com/jessebot/dot_files/{branch}"
+    if git_url:
+        if "github.com" in git_url:
+            user_repo = "/".join(git_url.split("/")[-2:]).replace(".git", "")
 
-    cmds = [f'curl {git_raw}/.config/git/config -o {XDG_CONFIG_GIT_PATH}',
+    # global: use main as default branch, always push up new remote branch
+    git_raw = f"https://raw.githubusercontent.com/{user_repo}/{branch}"
+
+    cmds = [f'curl {git_raw}/.config/git/config -o {XDG_GIT_PATH}',
             f'git --git-dir={git_dir} --work-tree={HOME_DIR} init',
             'git config status.showUntrackedFiles no']
     subproc(cmds, spinner=False, **opts)
