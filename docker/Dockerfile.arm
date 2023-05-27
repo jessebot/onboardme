@@ -63,15 +63,6 @@ RUN git clone https://github.com/neovim/neovim /tmp/neovim && \
     make CMAKE_BUILD_TYPE=RelWithDebInfo && \
     cd build && cpack -G DEB && sudo dpkg -i nvim-linux64.deb
 
-# compile fastfetch, for system facts, from source
-# https://github.com/LinusDierheimer/fastfetch#building
-RUN git clone https://github.com/LinusDierheimer/fastfetch.git $HOME/.local/bin/fastfetch && \
-    cd $HOME/.local/bin/fastfetch/ && \
-    mkdir -p build && \
-    cd build && \
-    cmake .. && \
-    cmake --build . --target fastfetch --target flashfetch
-
 # download bottom, a top replacement
 RUN curl -LO https://github.com/ClementTsang/bottom/releases/download/0.9.1/bottom_0.9.1_arm64.deb && \
     sudo dpkg -i bottom_0.9.1_arm64.deb
@@ -93,6 +84,16 @@ COPY --chown=friend:friend docker_space_chalk /tmp/ff_config
 RUN if [ ! -z $RUN_MODE ]; then onboardme --overwrite --no_upgrade --git_branch docker-arm64-only --steps dot_files; fi
 
 RUN if [ ! -z $RUN_MODE ]; then onboardme --overwrite --no_upgrade --log_level debug --git_branch docker-arm64-only && mv /tmp/ff_config ${XDG_CONFIG_HOME}/fastfetch/config.conf; fi
+
+# compile fastfetch, for system facts, from source
+# https://github.com/LinusDierheimer/fastfetch#building
+RUN git clone https://github.com/LinusDierheimer/fastfetch.git /tmp/fastfetch && \
+    cd /tmp/fastfetch && \
+    mkdir -p build && \
+    cd build && \
+    cmake .. && \
+    cmake --build . --target fastfetch --target flashfetch && \
+    cp fastfetch $HOME/.local/bin/fastfetch
 
 RUN sudo apt-get clean && \
     sudo pip cache purge && \
