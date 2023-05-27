@@ -94,9 +94,10 @@ def setup_logger(level="", log_file=""):
         type=Choice(['default', 'gaming', 'gui', 'devops']),
         help=HELP['pkg_groups'], default=USR_CONFIG_FILE['package']['groups'])
 @option('--firewall', '-f', is_flag=True, help=HELP['firewall'],
-        default=USR_CONFIG_FILE['firewall'])
+        default=USR_CONFIG_FILE.get('firewall', False))
 @option('--remote_host', '-r', metavar="IP_ADDR", multiple=True,
-        help=HELP['remote_host'], default=USR_CONFIG_FILE['remote_hosts'])
+        help=HELP['remote_host'],
+        default=USR_CONFIG_FILE.get('remote_hosts', None))
 @option('--no_upgrade', '-n', help=HELP['no_upgrade'], default=False, 
         is_flag=True)
 @option('--version', is_flag=True, help=HELP['version'], default=False)
@@ -104,7 +105,8 @@ def main(log_level, log_file,
          steps, 
          git_url, git_branch, overwrite,
          pkg_managers, pkg_groups,
-         firewall, remote_host, no_upgrade,
+         firewall, remote_host,
+         no_upgrade,
          version) -> bool:
     """
     If run with no options on Linux, it will install brew, pip3.11, apt,

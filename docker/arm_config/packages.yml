@@ -1,0 +1,245 @@
+---
+npm:
+  emoji: "?"
+  packages:
+    default:
+      # password management
+      - bitwarden-cli
+
+apt:
+  emoji: "🙃"
+  commands:
+    list: "scripts/get_apt_list.sh"
+    update: "sudo apt-get update -y"
+    upgrade: "sudo apt-get upgrade -y"
+    install: "sudo apt-get install -y --no-install-recommends "
+    cleanup: "sudo apt-get autoremove -y"
+  packages:
+    default:
+      # cat images in the terminal (e.g. img2sixel imagename.png)
+      - libsixel-bin
+      # ag command: like grep or ack, but more modern, for searching file text
+      - silversearcher-ag
+      # diff, but with colors
+      - colordiff
+      # can't be installed via brew because of compiling issues May 2023
+      # file TUI: https://www.geeksforgeeks.org/ranger-a-cli-file-manager/
+      - ranger
+      # can't be installed via brew because of compiling issues May 2023
+      # fuzzy search, helps with completion and searching
+      - fzf
+      # can't be installed via brew because of compiling issues May 2023
+      # The Matrix screensaver for the terminal
+      - cmatrix
+      # can't be installed via brew because of compiling issues May 2023
+      # get the quick, short text of how to use various commands
+      - tealdeer
+      # can't be installed via brew because of compiling issues May 2023
+      # linter for YAML
+      - yamllint
+      # can't be installed via brew because of compiling issues May 2023
+      # for parsing json via cli
+      - jq
+      # can't be installed via brew because of compiling issues May 2023
+      # it's like jq but for yaml
+      - yq
+      # can't be installed via brew because of compiling issues May 2023
+      # cool interactive python with colors + docs
+      - bpython
+      # can't be installed via brew because of compiling issues May 2023
+      # TUI browser
+      - w3m
+      # can't be installed via brew because of compiling issues May 2023
+      # less complicated curl
+      - wget
+      # can't be installed via brew because of compiling issues May 2023
+      # blocky fonts with the options for colors
+      - toilet
+      # for working w/ images and making lsimg work, is lorg
+      # can't be installed via brew because of compiling issues May 2023
+      - imagemagick
+      #  A cat(1) clone with syntax highlighting and Git integration.
+      # can't be installed via brew because of compiling issues May 2023
+      - bat
+      # prettier du/df outputs: https://github.com/muesli/duf
+      # can't be installed via brew because of compiling issues May 2023
+      - duf
+      # npm is used for a bunch of neovim stuff
+      # can't be installed via brew because of compiling issues May 2023
+      - npm
+      # ls replacement written in rust: https://github.com/Peltoche/lsd
+      # can't be installed via brew because of compiling issues May 2023
+      - lsd
+      - bash-completion
+      - build-essential
+      # this is just to keep us up to date
+      - git
+      - curl
+      - python3
+      - python3-dev
+      - python3-pip
+      # needed for python virtual environments, especially for jedi
+      - python3-venv
+      # grep alternative
+      - silversearcher-ag
+      # this should let you use the a yubikey for auth
+      - libpam-yubico
+      # troubleshooting
+      - sysstat
+      # networking and firewall
+      - iptables
+      - net-tools
+      # print a pretty pallete to see all colors the terminal can render
+      - colortest
+      # help fix locale issues
+      - "locales-all"
+      # for installing stuff through ssh - might not be needed with powerline anymore
+      - "openssh-client"
+    devops:
+      # programming languages and their package managers
+      - go
+      # for backups
+      - restic
+      - docker-ce
+      # vpn
+      - wireguard
+      # like top but for GPUs
+      - nvtop
+      # was for euporie - notebooks in terminals, but gcc is already installed 
+      # by brew so might be able to remove this
+      # - gcc-11
+    extra:
+      # a cow that says things
+      - cowsay
+      # steam locomotive
+      - sl
+      # search stackoverflow e.g. howdoi extend a dictionary in python
+      - howdoi
+      # rainbow text
+      - lolcat
+    gui:
+      # package manager
+      - snapd
+      # package manager for gui apps
+      - flatpak
+      # needed for freetube
+      - youtube-dl
+      # this lets you install flatpak packages via the gui
+      - gnome-software-plugin-flatpak
+      # gui firewall
+      - gufw
+      # pdf viewer with themeing
+      - zathura
+      # commented out till nextcloud is working
+      # - nextcloud-desktop
+      # libreoffice is a FOSS office suite that replaces Google Docs/Office365
+      - libreoffice
+      # GUI interface for pulseaudio, so you can disable audio devices
+      - pavucontrol
+    gaming:
+      # helpful for gaming on linux
+      - "nvidia-driver-libs:i386"
+      - "steam:i386"
+      # to format disks to exFAT; FAT is too thin for modern windows 10 ISOs
+      # - exfat-utils
+    mail:
+      # fetch your mail locally for neomutt
+      - offlineimap
+      # anti virus mostly for mail
+      - clamav
+      # TUI email client
+      - neomutt
+      # markdown rendering
+      - pandoc
+      # zathura is a document viewer, that is not working yet
+      - zathura
+      - zathura-pdf-mupdf
+      # proton bridge for getting mail locally
+      - "protonmail-bridge"
+
+
+# most of this is actually for powerline, my shell prompt
+pip3.11:
+  emoji: "🐍"
+  commands:
+    list: "pip3.11 list"
+    # this is just till there's a better solution than pipx for Debian Bookworm
+    # ref: https://salsa.debian.org/cpython-team/python3/-/blob/master/debian/README.venv
+    install: "pip3.11 install --upgrade --user --break-system-packages "
+  # env_vars:
+  #   PYTHONUSERBASE: ""
+  packages:
+    default:
+      # can't be installed via brew because of compiling issues May 2023
+      # pretty formatting and syntax highlighting
+      - rich-cli
+      # can't be installed via brew because of compiling issues May 2023
+      # recording a shell session to share with others
+      - asciinema
+      # keep ourselves up to date
+      - onboardme
+      # powerline: for the internal ip address prompt segment
+      - netifaces
+      # neovim: needed for neovim's python3 interface, I think
+      - pynvim
+      # this is for git pre-commits
+      - pre-commit
+      # powerline: (status line for tmux/BASH), this works on linux
+      - "git+https://github.com/jessebot/powerline@patch-2"
+      # these are powerline extensions
+      - powerline-kubernetes
+      - powerline-gitstatus
+      # python development: linting/auto-linting
+      - ruff
+      - flake8
+      - pyflakes
+      - autoflake
+      - poetry
+      # this is needed to make python respect XDG Base directory specific
+      - xdg_base_dirs
+    extra:
+      # powerline: supposed to work spotify info
+      - dbus
+    devops:
+      # might be needed for development and building
+      - build
+      - twine
+      # this is a k8s tool to spin up clusters on your local machine
+      - smol-k8s-lab
+      # need this for python notebooks
+      - ipykernel
+      # latest jupyter notebooks
+      - jupyterlab
+      # notebook-driven development platform
+      # - nbdev
+      # this is for markdown notebook docs and such
+      # - quarto
+      # notebooks in the terminal 💚
+      - euporie
+    default-from-brew:
+      # TUI for gpg keys, for the lazy, like me: has to be compiled from source
+      - gpg-tui
+    devops-from-brew:
+      # cli for k8s (kubernetes)
+      - kubectl
+      # kubectl plugin manager
+      - krew
+      # gitops continuous delivery for k8s configs
+      - argocd
+      # gitlab cli
+      - glab
+      # github cli
+      - gh
+      # terraform for building stuff
+      - tfenv
+      - tflint
+      - terraform-docs
+    extras-from-brew:
+      # installs cargo and rust
+      - rustup
+      # spotify daemon
+      - spotifyd
+      # spotify TUI
+      - spotify-tui
+      # preview videos in the terminal. commented by default because it is big
+      - ffmpegthumbnailer

@@ -30,7 +30,7 @@ def setup_dot_files(OS='Linux', overwrite=False,
     opts = {'quiet': True, 'cwd': git_dir}
 
     # global: use main as default branch, always push up new remote branch
-    git_raw = "https://raw.githubusercontent.com/jessebot/dot_files/main"
+    git_raw = f"https://raw.githubusercontent.com/jessebot/dot_files/{branch}"
 
     cmds = [f'curl {git_raw}/.config/git/config -o {XDG_CONFIG_GIT_PATH}',
             f'git --git-dir={git_dir} --work-tree={HOME_DIR} init',

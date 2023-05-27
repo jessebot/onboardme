@@ -4,7 +4,6 @@ FROM debian:bookworm-slim
 # ""        - will install onboardme, but won't run onboardme
 # "default" - installs onboardme, and runs: onboardme --no_upgrade --overwrite
 ARG RUN_MODE=""
-ARG XDG="True"
 
 # this makes debian not prompt for stuff
 ENV DEBIAN_FRONTEND=noninteractive
@@ -39,9 +38,9 @@ ENV XDG_DATA_HOME="$HOME/.local/share"
 ENV XDG_STATE_HOME="$HOME/.local/state"
 
 # make python use our cache if the user wants to use XDG pathing
-RUN if [ "$XDG" == "True" ]; then export PYTHONPYCACHEPREFIX=$XDG_CACHE_HOME/python; fi
+RUN export PYTHONPYCACHEPREFIX=$XDG_CACHE_HOME/python
 # this isn't working via onboardme for some reason :(
-# RUN if [ "$XDG" == "True" ]; then export PYTHONUSERBASE=$XDG_DATA_HOME/python; fi
+# RUN export PYTHONUSERBASE=$XDG_DATA_HOME/python
 
 # make sure we can install executables locally 
 ENV PATH="$PATH:$HOME/.local/bin"
@@ -66,13 +65,13 @@ RUN wget --hsts-file="$XDG_DATA_HOME/wget/wget-hsts" https://raw.githubuserconte
     mv $HOME/.gitconfig $XDG_CONFIG_HOME/git/config
 
 # this is for a cute fastfetch
-COPY --chown=friend:friend docker_space_chalk /tmp/ff_config
+COPY --chown=friend:friend config.conf /tmp/
 
 # install onboardme - using python 3.11, default for Debian bookworm
 # then run onboardme and clear apt/brew/pip cache when we're done
 RUN pip install --user onboardme --break-system-packages && \
     onboardme --version && \
-    if [ ! -z $RUN_MODE ]; then onboardme -O --no_upgrade -l debug && mv /tmp/ff_config ${XDG_CONFIG_HOME}/fastfetch/config.conf; fi && \
+    if [ ! -z $RUN_MODE ]; then onboardme -O --no_upgrade -l debug && mv /tmp/config.conf ${XDG_CONFIG_HOME}/fastfetch/config.conf; fi && \
     brew cleanup && \
     sudo apt-get clean && \
     sudo pip cache purge && \

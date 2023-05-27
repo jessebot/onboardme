@@ -2,7 +2,8 @@
 FROM debian:bookworm-slim
 
 # ""        - will install onboardme, but won't *run* onboardme
-# "default" - installs onboardme, and runs: onboardme --no_upgrade --overwrite
+# "default" - installs onboardme, and runs onboardme with default dotfiles:
+#             onboardme --no_upgrade --overwrite
 ARG RUN_MODE=""
 
 # this makes debian not prompt for stuff
@@ -11,7 +12,8 @@ ENV DEBIAN_FRONTEND="noninteractive"
 # install pre-req apt packages. The weird ones are for compiling stuff
 # python3 defaults to python 3.11 in Debian Bookworm
 RUN apt-get update && \
-    apt list --upgradeable | grep security | cut -f1 -d '/' | xargs apt-get install --no-install-recommends -y && \
+    apt list --upgradeable | grep security | cut -f1 -d '/' |\
+    xargs apt-get install --no-install-recommends -y && \
     apt-get install -y --no-install-recommends \
     build-essential \
     file \
@@ -48,12 +50,14 @@ ENV XDG_DATA_HOME="$HOME/.local/share"
 ENV XDG_STATE_HOME="$HOME/.local/state"
 
 # make python use our cache if the user wants to use XDG pathing
-RUN if [ "$XDG" == "True" ]; then export PYTHONPYCACHEPREFIX=$XDG_CACHE_HOME/python; fi
+RUN export PYTHONPYCACHEPREFIX=$XDG_CACHE_HOME/python
 # this isn't working via onboardme for some reason :(
 # RUN if [ "$XDG" == "True" ]; then export PYTHONUSERBASE=$XDG_DATA_HOME/python; fi
 
 # install onboardme - using python 3.11, default for Debian bookworm
-RUN pip install --user onboardme --break-system-packages && onboardme --version
+RUN git config --global init.defaultBranch main && \
+    pip install --user onboardme --break-system-packages && \
+    onboardme --version
 
 # compile neovim from source:
 # https://github.com/neovim/neovim/wiki/Building-Neovim#build-prerequisites
@@ -61,30 +65,41 @@ RUN git clone https://github.com/neovim/neovim /tmp/neovim && \
     cd /tmp/neovim/ && \
     git checkout stable && \
     make CMAKE_BUILD_TYPE=RelWithDebInfo && \
-    cd build && cpack -G DEB && sudo dpkg -i nvim-linux64.deb
+    cd build && \
+    cpack -G DEB && \
+    sudo dpkg -i nvim-linux64.deb
 
 # download bottom debian package. bottom is a top replacement and is aliased to btm, and sometimes top
 RUN curl -LO https://github.com/ClementTsang/bottom/releases/download/0.9.1/bottom_0.9.1_arm64.deb && \
-    sudo dpkg -i bottom_0.9.1_arm64.deb && rm bottom_0.9.1_arm64.deb
+    sudo dpkg -i bottom_0.9.1_arm64.deb && \
+    rm bottom_0.9.1_arm64.deb
 
 # download gitui arm binary. gitui is a tui for git
 RUN curl -LO https://github.com/extrawurst/gitui/releases/download/v0.22.1/gitui-linux-aarch64.tar.gz && \
-    tar xvf gitui-linux-aarch64.tar.gz && rm gitui-linux-aarch64.tar.gz && \
+    tar xvf gitui-linux-aarch64.tar.gz && \
+    rm gitui-linux-aarch64.tar.gz && \
     mv gitui $HOME/.local/bin/gitui
 
 # download zellij arm binary, a tmux replacement
 RUN curl -LO https://github.com/zellij-org/zellij/releases/download/v0.36.0/zellij-aarch64-unknown-linux-musl.tar.gz && \
-    tar xvf zellij-aarch64-unknown-linux-musl.tar.gz && rm zellij-aarch64-unknown-linux-musl.tar.gz && \
+    tar xvf zellij-aarch64-unknown-linux-musl.tar.gz && \
+    rm zellij-aarch64-unknown-linux-musl.tar.gz && \
     mv zellij $HOME/.local/bin/zellij
 
 # this is for a cute fastfetch
-COPY --chown=friend:friend docker_space_chalk /tmp/ff_config
+COPY --chown=friend:friend ./config.conf /tmp/config.conf
+# set some default dot files, just in case
+COPY --chown=friend:friend ./arm_config/packages.yml /tmp/packages.yml
+COPY --chown=friend:friend ./arm_config/config.yml /tmp/config.yml
 
-# use onboardme to get special git branch for dockerfiles locally
-RUN if [ ! -z $RUN_MODE ]; then onboardme --overwrite --no_upgrade --git_branch docker-arm64-only --steps dot_files; fi
+RUN if [ "$RUN_MODE" = "default" ]; then \
+    mkdir -p $XDG_CONFIG_HOME/onboardme && \
+    mv /tmp/packages.yml $XDG_CONFIG_HOME/onboardme/ && \
+    mv /tmp/config.yml $XDG_CONFIG_HOME/onboardme/; fi
 
-# actual running of onboardme
-RUN if [ ! -z $RUN_MODE ]; then onboardme --overwrite --no_upgrade --log_level debug --git_branch docker-arm64-only && mv /tmp/ff_config ${XDG_CONFIG_HOME}/fastfetch/config.conf; fi
+# actual running of onboardme only if RUN_MODE is not empty
+RUN if [ -n $RUN_MODE ]; then \
+    onboardme --overwrite --no_upgrade --log_level debug; fi
 
 # compile fastfetch, for system facts, from source, requires pkg-config
 # https://github.com/LinusDierheimer/fastfetch#building
@@ -94,7 +109,9 @@ RUN git clone https://github.com/LinusDierheimer/fastfetch.git /tmp/fastfetch &&
     cd build && \
     cmake .. && \
     cmake --build . --target fastfetch --target flashfetch && \
-    cp fastfetch $HOME/.local/bin/fastfetch
+    cp fastfetch $HOME/.local/bin/fastfetch && \
+    mkdir -p ${XDG_CONFIG_HOME}/fastfetch && \
+    mv /tmp/config.conf ${XDG_CONFIG_HOME}/fastfetch/config.conf
 
 # RUN sudo apt-get clean && \
 #     sudo pip cache purge && \
