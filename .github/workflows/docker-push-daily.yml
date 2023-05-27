@@ -15,7 +15,7 @@ on:
     - cron:  '0 0 * * *'
 
 jobs:
-  docker:
+  docker-amd64:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -32,24 +32,68 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push - no install
+      - name: Build/push - no install
         uses: docker/build-push-action@v4
         with:
           push: true
           # build from docker/ directory
           context: docker
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           tags: | 
             jessebot/onboardme:debian12-no-install
             jessebot/onboardme:no-install
 
-      - name: Build and push - slim
+      - name: Build/push - run onboardme - default pkgs
         uses: docker/build-push-action@v4
         with:
           push: true
           # build from docker/ directory
           context: docker
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
+          build-args: "RUN_MODE=default"
+          tags: |
+            jessebot/onboardme:latest
+            jessebot/onboardme:debian12
+
+  docker-arm64:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build/push - arm - no install
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          # build from docker/ directory
+          context: docker
+          # use special Dockerfile for arm builds
+          file: docker/Dockerfile.arm
+          platforms: linux/arm64
+          tags: | 
+            jessebot/onboardme:debian12-no-install
+            jessebot/onboardme:no-install
+
+      - name: Build/push - arm - run onboardme - default pkgs
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          # build from docker/ directory
+          context: docker
+          # use special Dockerfile for arm builds
+          file: docker/Dockerfile.arm
+          platforms: linux/arm64
           build-args: "RUN_MODE=default"
           tags: |
             jessebot/onboardme:latest
