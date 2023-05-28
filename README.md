@@ -15,14 +15,13 @@
   </a>
 </h2>
 
-
 Get your daily driver, or personalized 🐳 container, just the way you like it! From dot files management, to package installation, to setting up neovim, to other little features you didn't know you needed, `onboardme` intends to save you time with initializing and maintaining your personal evironments ✨
 
 <p align="center">
 <img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/image_in_terminal.png' alt='screenshot of color samples and image of dog using a computer using sixel'>
 </p>
 
-## Features
+# Features
 
 <details>
   <summary><h4>Keep your Dot Files Up To Date Across multiple systems</h4></summary>
@@ -88,7 +87,7 @@ See the [docker](#docker) section for more info!
 
 </details>
 
-### Screenshots
+## Screenshots
 
 <details>
   <summary>Example of <code>onboardme --help</code></summary>
