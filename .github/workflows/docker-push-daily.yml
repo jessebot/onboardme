@@ -32,7 +32,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build/push - no install
+      - name: Build/push - prereqs only
         uses: docker/build-push-action@v4
         with:
           push: true
@@ -40,8 +40,8 @@ jobs:
           context: docker
           platforms: linux/amd64
           tags: | 
-            jessebot/onboardme:debian12-no-install
-            jessebot/onboardme:no-install
+            jessebot/onboardme:debian12-prereqs
+            jessebot/onboardme:prereqs
 
       - name: Build/push - run onboardme - default pkgs
         uses: docker/build-push-action@v4
@@ -54,6 +54,7 @@ jobs:
           tags: |
             jessebot/onboardme:latest
             jessebot/onboardme:debian12
+            jessebot/onboardme:debian12-default-pkgs
 
   docker-arm64:
     runs-on: ubuntu-latest
@@ -72,7 +73,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build/push - arm - no install
+      - name: Build/push - arm - prereqs only
         uses: docker/build-push-action@v4
         with:
           push: true
@@ -82,8 +83,8 @@ jobs:
           file: docker/Dockerfile.arm
           platforms: linux/arm64
           tags: | 
-            jessebot/onboardme:debian12-no-install
-            jessebot/onboardme:no-install
+            jessebot/onboardme:debian12-arm-prereqs
+            jessebot/onboardme:arm-prereqs
 
       - name: Build/push - arm - run onboardme - default pkgs
         uses: docker/build-push-action@v4
@@ -96,5 +97,6 @@ jobs:
           platforms: linux/arm64
           build-args: "RUN_MODE=default"
           tags: |
-            jessebot/onboardme:latest
-            jessebot/onboardme:debian12
+            jessebot/onboardme:latest-arm
+            jessebot/onboardme:debian12-arm
+            jessebot/onboardme:debian12-arm-default-pkgs
