@@ -56,12 +56,16 @@ def run_preinstall_cmds(cmd_list: list,
 
     for pre_cmd in pre_cmds:
         if pre_cmd in cmd_list:
-            if pre_cmd == 'update' and 'apt' in pre_cmd:
+            if pre_cmd == 'update' and 'apt' in cmd_list[pre_cmd]:
                 if run_gaming_setup:
                     log.debug("Run gaming commands to update /etc/apt/sources")
                     cmds = ["sudo dpkg --add-architecture i386",
                             f"sudo {PWD}/scripts/update_apt_sources.sh"]
                     subproc(cmds, spinner=False)
+            if pre_cmd == 'upgrade' and 'brew' in cmd_list[pre_cmd]:
+                if OS[0] == 'Darwin':
+                    log.debug("we'll run upgrade --cask for macOS")
+                    subproc(["brew upgrade --cask"])
 
             SPINNER = True
             if 'sudo' in cmd_list[pre_cmd]:
@@ -214,7 +218,8 @@ def install_brew_taps(taps: list) -> None:
     existing_taps = subproc(["brew tap"])
     try:
         current_taps = existing_taps.split('\n')
-    except:
+    except Exception as e:
+        log.debug(e)
         current_taps = []
     
     log.debug(f"taps list is: {taps}")

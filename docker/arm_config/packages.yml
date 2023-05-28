@@ -4,7 +4,7 @@ npm:
   packages:
     default:
       # password management
-      - bitwarden-cli
+      - "@bitwarden/cli"
 
 apt:
   emoji: "🙃"
@@ -15,60 +15,47 @@ apt:
     install: "sudo apt-get install -y --no-install-recommends "
     cleanup: "sudo apt-get autoremove -y"
   packages:
+    # none can be installed via brew because of compiling issues on arm May 2023
     default:
+      # for working w/ images and making lsimg/fastfetch work, is lorg
+      # - imagemagick
+      # fastfetch needs the dev package
+      - libmagickcore-dev
       # cat images in the terminal (e.g. img2sixel imagename.png)
       - libsixel-bin
       # ag command: like grep or ack, but more modern, for searching file text
       - silversearcher-ag
       # diff, but with colors
       - colordiff
-      # can't be installed via brew because of compiling issues May 2023
       # file TUI: https://www.geeksforgeeks.org/ranger-a-cli-file-manager/
       - ranger
-      # can't be installed via brew because of compiling issues May 2023
       # fuzzy search, helps with completion and searching
       - fzf
-      # can't be installed via brew because of compiling issues May 2023
       # The Matrix screensaver for the terminal
       - cmatrix
-      # can't be installed via brew because of compiling issues May 2023
       # get the quick, short text of how to use various commands
       - tealdeer
-      # can't be installed via brew because of compiling issues May 2023
       # linter for YAML
       - yamllint
-      # can't be installed via brew because of compiling issues May 2023
       # for parsing json via cli
       - jq
-      # can't be installed via brew because of compiling issues May 2023
       # it's like jq but for yaml
       - yq
-      # can't be installed via brew because of compiling issues May 2023
       # cool interactive python with colors + docs
       - bpython
-      # can't be installed via brew because of compiling issues May 2023
       # TUI browser
       - w3m
-      # can't be installed via brew because of compiling issues May 2023
       # less complicated curl
       - wget
-      # can't be installed via brew because of compiling issues May 2023
       # blocky fonts with the options for colors
       - toilet
-      # for working w/ images and making lsimg work, is lorg
-      # can't be installed via brew because of compiling issues May 2023
-      - imagemagick
       #  A cat(1) clone with syntax highlighting and Git integration.
-      # can't be installed via brew because of compiling issues May 2023
       - bat
       # prettier du/df outputs: https://github.com/muesli/duf
-      # can't be installed via brew because of compiling issues May 2023
       - duf
       # npm is used for a bunch of neovim stuff
-      # can't be installed via brew because of compiling issues May 2023
       - npm
       # ls replacement written in rust: https://github.com/Peltoche/lsd
-      # can't be installed via brew because of compiling issues May 2023
       - lsd
       - bash-completion
       - build-essential
@@ -105,8 +92,7 @@ apt:
       - wireguard
       # like top but for GPUs
       - nvtop
-      # was for euporie - notebooks in terminals, but gcc is already installed 
-      # by brew so might be able to remove this
+      # was for euporie - notebooks in terminals, but gcc is maybe already installed?
       # - gcc-11
     extra:
       # a cow that says things
@@ -216,10 +202,11 @@ pip3.11:
       # - quarto
       # notebooks in the terminal 💚
       - euporie
-    default-from-brew:
-      # TUI for gpg keys, for the lazy, like me: has to be compiled from source
-      - gpg-tui
     devops-from-brew:
+      # TUI for gpg keys, for the lazy, like me: has to be compiled from source
+      # maybe switch to:
+      # https://github.com/orhun/gpg-tui/releases/download/v0.9.6/gpg-tui-0.9.6-x86_64-unknown-linux-gnu.tar.gz
+      - gpg-tui
       # cli for k8s (kubernetes)
       - kubectl
       # kubectl plugin manager
