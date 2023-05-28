@@ -10,12 +10,11 @@
     height="30"
     width="0px"
   />
-</h2>
-<p align="center">
   <a href="https://github.com/jessebot/onboardme/releases">
     <img src="https://img.shields.io/github/v/release/jessebot/onboardme?style=plastic&labelColor=484848&color=3CA324&logo=GitHub&logoColor=white">
   </a>
-</p>
+</h2>
+
 
 Get your daily driver, or personalized 🐳 container, just the way you like it! From dot files management, to package installation, to setting up neovim, to other little features you didn't know you needed, `onboardme` intends to save you time with initializing and maintaining your personal evironments ✨
 
@@ -25,12 +24,11 @@ Get your daily driver, or personalized 🐳 container, just the way you 
 
 ## Features
 
-### Keep your Dot Files Up To Date Across multiple systems
-`onboardme` can manage your [dot files] using a git by turning your home directory into a repo.
-
 <details>
-  <summary>We provide default dot files, so you don't have to manage them</summary>
-
+  <summary><h4>Keep your Dot Files Up To Date Across multiple systems</h4></summary>
+  
+`onboardme` can manage your [dot files] using a git by turning your home directory into a repo.
+We even provide default dot files, so you don't have to manage them
 - The [default dot files] are open source, and the maintainers use these themselves
 - They cover a lot of common apps/tools you probably want anyway
 - They have consistent colorschemes accross different CLI/TUI programs 😃
@@ -38,11 +36,10 @@ Get your daily driver, or personalized 🐳 container, just the way you 
 
 </details>
 
-### Package management
-We install and upgrade libraries and apps using common package managers.
-
 <details>
-  <summary>onboardme provides a currated list of default packages</summary>
+  <summary><h4>Package management accross multiple package managers<h4></summary>
+    
+We install and upgrade libraries and apps using common package managers. We also provide a currated list of default packages.
   
 - checkout the [default packages]
 - supports `brew`, `apt`, `snap`, `flatpak`, and `pip` (and you can add your own 😄)
@@ -55,28 +52,41 @@ We install and upgrade libraries and apps using common package managers.
 
 </details>
 
-### NeoVim Plugin Installtion and Updates
-onboardme keeps your neovim plugins installed and up to date with [lazy.nvim] under the hood.
-  
 <details>
-  <summary>Why no vim though?</summary>
+  <summary><h4>NeoVim Plugin Installtion and Updates<h4></summary>
+
+
+`onboardme` keeps your neovim plugins installed and up to date with [lazy.nvim] under the hood.
   
-  If you haven't already made the switch from Vim to [NeoVim], you can try out NeoVim today with `onboardme` :D We used to support both neovim _and_ vim, but these days none of the primary developers of this repo use pure vim anymore, so we can't ensure it's up to standards. All of your knowledge from vim is still helpful in neovim though, and we highly recommend switching as neovim has a lot more features and a very active plugin community :) NeoVim maintains a guide on how to switch from vim [here](https://neovim.io/doc/user/nvim.html#nvim-from-vim). 
+<h4>Why no vim though?</h4>
+  
+If you haven't already made the switch from Vim to [NeoVim], you can try out NeoVim today with `onboardme` :D We used to support both neovim _and_ vim, but these days none of the primary developers of this repo use pure vim anymore, so we can't ensure it's up to standards. All of your knowledge from vim is still helpful in neovim though, and we highly recommend switching as neovim has a lot more features and a very active plugin community :) NeoVim maintains a guide on how to switch from vim [here](https://neovim.io/doc/user/nvim.html#nvim-from-vim). 
 
 </details>
 
-### Easy `yaml` config files
-[XDG Base Directory Spec] use for [config files](#configuration)
+<details>
+  <summary><h4>Easy <code>yaml</code> config files using XDG Base Directory Spec<h4></summary>
 
-### Docker image for an on-the-go dev workspace
+We use use [XDG Base Directory Spec] for [config files](#configuration) so you always know where they are :)
+
+</details>
+
+<details>
+  <summary><h4>Docker image for an on-the-go dev workspace<h4></summary>
 
 The docker image is built nightly, and on push to `main` via GHA. The base image is `debian:bookworm`, but we will rollout support for Ubuntu down the line :)
 See the [docker](#docker) section for more info!
 
-### Other optional configurations
+</details>
+
+<details>
+  <summary><h4>Other optional configurations<h4></summary>
+    
 - Enable touchID for sudo on macOS
 - Add your user to the docker group
 - Install [nerdfonts](https://www.nerdfonts.com) (defaults to mononoki and Symbols Only)
+
+</details>
 
 ### Screenshots
 
