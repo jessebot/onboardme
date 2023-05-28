@@ -62,6 +62,10 @@ def run_preinstall_cmds(cmd_list: list,
                     cmds = ["sudo dpkg --add-architecture i386",
                             f"sudo {PWD}/scripts/update_apt_sources.sh"]
                     subproc(cmds, spinner=False)
+            if pre_cmd == 'upgrade' and 'brew' in pre_cmd:
+                if "Darwin" in OS:
+                    log.debug("we'll run upgrade --cask for macOS")
+                    subproc(["brew upgrade --cask"])
 
             SPINNER = True
             if 'sudo' in cmd_list[pre_cmd]:
