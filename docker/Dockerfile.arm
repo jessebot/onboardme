@@ -3,7 +3,7 @@ FROM debian:bookworm-slim
 
 # ""        - will install onboardme, but won't *run* onboardme
 # "default" - installs onboardme, and runs onboardme with default dotfiles:
-#             onboardme --no_upgrade --overwrite
+#             onboardme --no_upgrade
 ARG RUN_MODE=""
 
 # this makes debian not prompt for stuff
@@ -99,7 +99,7 @@ RUN if [ "$RUN_MODE" = "default" ]; then \
 
 # actual running of onboardme only if RUN_MODE is not empty
 RUN if [ -n $RUN_MODE ]; then \
-    onboardme --overwrite --no_upgrade --log_level debug; fi
+    onboardme --no_upgrade --log_level debug; fi
 
 # compile fastfetch, for system facts, from source, requires pkg-config
 # https://github.com/LinusDierheimer/fastfetch#building
