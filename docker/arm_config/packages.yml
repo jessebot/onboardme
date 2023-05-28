@@ -4,7 +4,7 @@ npm:
   packages:
     default:
       # password management
-      - bitwarden-cli
+      - "@bitwarden/cli"
 
 apt:
   emoji: "🙃"
