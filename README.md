@@ -17,7 +17,7 @@
   </a>
 </p>
 
-Get your daily driver just the way you like it, from dot files management, to package installation, to other little features you didn't know you needed, `onboardme` intends to save you time with initializing and maintaining your personal environments.
+Get your daily driver just the way you like it, from dot files management, to package installation, to other little features you didn't know you needed, `onboardme` intends to save you time with initializing and maintaining your personal environments.
 
 <p align="center">
 <img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/image_in_terminal.png' alt='screenshot of color samples and image of dog using a computer using sixel'>
