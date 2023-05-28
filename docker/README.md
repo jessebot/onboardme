@@ -6,14 +6,12 @@
 │   └──  packages.yml
 ├──  config.conf
 ├──  Dockerfile
-├──  Dockerfile.arm
-└──  Dockerfile.arm-full
+└──  Dockerfile.arm
 ```
 
-- Dockerfile is for x86_64
-- Dockerfile.arm is for arm64/aarch
-- Dockerfile.arm-full is for arm64/aarch with all the fixins
+- Dockerfile is for linux/amd64
 
+- Dockerfile.arm is for linux/arm64 and linux/aarch64
 - arm_config is a directory of files just for arm builds
 
-- config.conf is a special fastfetch config
+- config.conf is a special fastfetch config used for both images
