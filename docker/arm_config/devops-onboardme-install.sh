@@ -1,3 +1,7 @@
+# install gpg-tui, a TUI for gpg keys, for the lazy, like me: has to be compiled from source
+# maybe switch to:
+# https://github.com/orhun/gpg-tui/releases/download/v0.9.6/gpg-tui-0.9.6-x86_64-unknown-linux-gnu.tar.gz
+
 # install gh - github's CLI
 # https://github.com/cli/cli/blob/trunk/docs/install_linux.md
 type -p curl >/dev/null || (sudo apt update && sudo apt install curl -y)

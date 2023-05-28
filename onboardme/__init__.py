@@ -22,6 +22,14 @@ from .firewall import configure_firewall
 
 
 HELP = options_help()
+LOG_LEVEL = 'warn'
+LOG_DICT = USR_CONFIG_FILE.get('log', None)
+if LOG_DICT:
+    LOG_LEVEL = LOG_DICT.get('level', 'warn')
+try:
+    LOG_FILE = USR_CONFIG_FILE['log']['file']
+except KeyError:
+    LOG_FILE = None
 
 
 def setup_logger(level="", log_file=""):
@@ -31,10 +39,7 @@ def setup_logger(level="", log_file=""):
     """
     # determine logging level
     if not level:
-        if USR_CONFIG_FILE and 'log' in USR_CONFIG_FILE:
-            level = USR_CONFIG_FILE['log']['level']
-        else:
-            level = 'warn'
+        level = LOG_LEVEL
 
     log_level = getattr(logging, level.upper(), None)
 
@@ -43,8 +48,7 @@ def setup_logger(level="", log_file=""):
 
     # we only log to a file if one was passed into config.yml or the cli
     if not log_file:
-        if USR_CONFIG_FILE:
-            log_file = USR_CONFIG_FILE['log'].get('file', None)
+        log_file = LOG_FILE
 
     # rich typically handles much of this but we don't use rich with files
     if log_file:
@@ -76,9 +80,9 @@ def setup_logger(level="", log_file=""):
 @command(cls=RichCommand)
 @option('--log_level', '-l', metavar='LOGLEVEL', help=HELP['log_level'],
         type=Choice(['debug', 'info', 'warn', 'error']),
-        default=USR_CONFIG_FILE['log']['level'])
+        default=LOG_LEVEL)
 @option('--log_file', '-o', metavar='LOGFILE', help=HELP['log_file'],
-        default=USR_CONFIG_FILE['log']['file'])
+        default=LOG_FILE)
 @option('--steps', '-s', metavar='STEP', multiple=True, type=Choice(STEPS),
         help=HELP['steps'], default=USR_CONFIG_FILE['steps'][OS[0]])
 @option('--git_url', '-u', metavar='URL', help=HELP['git_url'],
