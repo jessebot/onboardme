@@ -140,15 +140,9 @@ You'll need `curl`, `brew`, `git`, and Python 3.11 to get started. We have a set
   <summary><code>curl</code>, a pre-prereq</summary>
 
   ```bash
-  # First, make sure you have curl, but it *should* be there already be on macOS.
-  # if this doesn't return anything, you need to install curl
-  which curl
-
-  # Debian/Ubuntu may not have curl installed depending on where you are
-  sudo apt install -y curl
+  # Debian/Ubuntu may not have curl installed depending on where you are, so this will install it for you
+  type -p curl >/dev/null || (sudo apt update && sudo apt install curl -y)
   ```
-
-  If curl's not there on Linux, you can install it with `apt` or use any default package manager like `yum`, or whatever people who use gentoo use :shrug:
 
 </details>
 
