@@ -16,7 +16,7 @@ on:
 
 jobs:
   docker-amd64:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
 
@@ -57,7 +57,7 @@ jobs:
             jessebot/onboardme:debian12-default-pkgs
 
   docker-arm64:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
 
