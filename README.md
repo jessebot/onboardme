@@ -334,6 +334,9 @@ package:
 
 </details>
 
+_**NOTE**: brew is currently [unsupported on linux/arm64](https://docs.brew.sh/Homebrew-on-Linux#arm-unsupported), and as we'd have to compile everything from source anyway, we don't support running the brew package manager via onboardme on linux/arm64 or (AArch64) at all right now._
+We do have a docker image ([jessebot/onboardme:latest-arm](https://hub.docker.com/r/jessebot/onboardme)) optimized for arm though that you can run on AArch64 and it's perfect for a dockerized dev environment on an M1 or later mac or any other ARM 64 device that runs docker :)
+
 ## Under the Hood
 Made and tested for these operating systems:
 
@@ -393,7 +396,7 @@ Get running on a machine using a bootable USB stick with [pxeless](https://githu
 
 Get started with virtual machines and QEMU with [scrap metal](https://github.com/cloudymax/Scrap-Metal).
 
-Get started with testing kubernetes locally, even on metal with [smol k8s lab](https://github.com/jessebot/smol_k8s_lab).
+Get started with testing kubernetes on metal with [smol k8s lab](https://github.com/jessebot/smol_k8s_lab).
 
 <!-- link references -->
 [documentation]: https://jessebot.github.io/onboardme/onboardme "onboardme documentation"
