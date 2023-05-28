@@ -48,6 +48,9 @@ We install and upgrade libraries and apps using common package managers. We also
     - macOS (default apps for _macOS only_ apps, always installed on macOS)
     - gui (default GUI apps for Linux desktops, optionally installed)
     - devops (devops related tooling, optionally installed)
+ 
+<sub>**Linux ARM Users NOTE**: `brew` is currently [unsupported on linux/arm64](https://docs.brew.sh/Homebrew-on-Linux#arm-unsupported), and as we'd have to compile everything from source anyway, we don't support running the brew package manager via onboardme on linux/arm64 or (AArch64) at all right now._
+We do have a docker image ([jessebot/onboardme:latest-arm](https://hub.docker.com/r/jessebot/onboardme)) optimized for arm though that you can run on AArch64 and it's perfect for a dockerized dev environment on an M1 or later mac or any other ARM 64 device that runs docker :)</sub>
 
 </details>
 
@@ -123,9 +126,9 @@ See the [docker](#docker) section for more info!
 
 </details>
 
-# Quick Start
+# Installation
 
-### Install Locally
+## Install Locally
 
 You'll need `curl`, `brew`, `git`, and Python 3.11 to get started. We have a setup script to install those (except `curl`) and help you get your environment to the XDG spec under <b>Locally</b> or you can just use our docker image, [jessebot/onboardme](https://hub.docker.com/r/jessebot/onboardme).
 
@@ -145,7 +148,7 @@ You'll need `curl`, `brew`, `git`, and Python 3.11 to get started. We have a set
   sudo apt install -y curl
   ```
 
-  If it's not there on Linux, you can install it with `apt` or use any default package manager like yum, or whatever people who use gentoo use.
+  If curl's not there on Linux, you can install it with `apt` or use any default package manager like `yum`, or whatever people who use gentoo use :shrug:
 
 </details>
 
@@ -197,9 +200,9 @@ If you've already got all the above prereq on your machine, you can just do:
 pip install --user --upgrade onboardme
 ```
 
-### Using the Docker image
+## Using the Docker image
 
-Currently we only build with debian:bookworm as the base image, but we're planning for ubuntu 22.04 soon too.
+Currently we only build with `debian:bookworm-slim` as the base image, but we're planning for ubuntu 22.04 soon too.
 
 _Note: For fonts and images to work properly, you should use a modern terminal like [wezterm](https://wezfurlong.org/wezterm/), iterm2, or konsole as well as you need to make sure you [install](https://github.com/ryanoasis/nerd-fonts/tree/master#font-installation) a [nerdfont](https://www.nerdfonts.com) and_ `libsixel` + `libmagickcore`.
 
@@ -218,17 +221,17 @@ To run the image locally with onbaordme installed but _not_ run:
 docker run jessebot/onboardme:prereqs
 ```
 
-#### For arm users
-We build special containers just for use on arm 64 Linux machines.
+### For ARM users
+We build special Debian containers just for use on ARM 64 (AArch64) mac M1s and Linux machines.
 
-To run the image locally with onboardme installed and already run using default settings:
+To run the ARM image locally with onboardme installed and already run using default settings:
 
 ```bash
 # this image is built daily and has already run onboardme with the default settings
 docker run jessebot/onboardme:latest-arm
 ```
 
-To run the image locally with onbaordme installed but _not_ run:
+To run the ARM image locally with onbaordme installed but _not_ run:
 
 ```bash
 # best if you have your own dot files, or need a smaller initial docker image to pull
@@ -236,7 +239,9 @@ To run the image locally with onbaordme installed but _not_ run:
 docker run jessebot/onboardme:arm-prereqs
 ```
 
-## Running commands
+Read more about our docker tags [here](https://hub.docker.com/repository/docker/jessebot/onboardme/general).
+
+# Usage
 
 _Now_ you can run `onboardme` 🎉 
 ```bash
@@ -342,9 +347,6 @@ package:
 ```
 
 </details>
-
-_**NOTE**: brew is currently [unsupported on linux/arm64](https://docs.brew.sh/Homebrew-on-Linux#arm-unsupported), and as we'd have to compile everything from source anyway, we don't support running the brew package manager via onboardme on linux/arm64 or (AArch64) at all right now._
-We do have a docker image ([jessebot/onboardme:latest-arm](https://hub.docker.com/r/jessebot/onboardme)) optimized for arm though that you can run on AArch64 and it's perfect for a dockerized dev environment on an M1 or later mac or any other ARM 64 device that runs docker :)
 
 ## Under the Hood
 Made and tested for these operating systems:
