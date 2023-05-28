@@ -145,7 +145,7 @@ def process_configs(overwrite: bool, repo: str, git_branch: str,
 
     # make sure the steps are in a valid order
     valid_steps = process_steps(final_defaults['steps'][OS[0]],
-                                final_defaults['remote_hosts'])
+                                final_defaults.get('remote_hosts', False))
     final_defaults['steps'][OS[0]] = valid_steps
 
     # make sure the package managers are in a valid order
