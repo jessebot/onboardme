@@ -4,11 +4,7 @@ mv /tmp/packages.yml $XDG_CONFIG_HOME/onboardme/
 mv /tmp/config.yml $XDG_CONFIG_HOME/onboardme/
 
 echo ""
-echo "running onboardme with default settings and packages"
-onboardme --no_upgrade --log_level debug
-
-echo ""
-echo "compiling neovim from source"
+echo "compiling neovim from source, before we run onboardme"
 echo "ref: https://github.com/neovim/neovim/wiki/Building-Neovim#build-prerequisites"
 git clone https://github.com/neovim/neovim /tmp/neovim
 cd /tmp/neovim/
@@ -17,6 +13,10 @@ make CMAKE_BUILD_TYPE=RelWithDebInfo
 cd build
 cpack -G DEB
 sudo dpkg -i nvim-linux64.deb
+
+echo ""
+echo "running onboardme with default settings and packages"
+onboardme --no_upgrade --log_level debug
 
 echo ""
 echo "downloading bottom debian package. bottom is a top replacement and is aliased to btm, and sometimes top"

@@ -66,9 +66,8 @@ COPY --chown=friend:friend ./arm_config/packages.yml /tmp/packages.yml
 COPY --chown=friend:friend ./arm_config/config.yml /tmp/config.yml
 COPY --chown=friend:friend ./arm_config/default-onboardme-install.sh /tmp/default-onboardme-install.sh
 
-RUN if [ "$RUN_MODE" = "default" ]; then bash /tmp/default-onboardme-install.sh; fi
-
-RUN sudo apt-get clean && \
+RUN if [ "$RUN_MODE" = "default" ]; then bash /tmp/default-onboardme-install.sh; fi && \
+    sudo apt-get clean && \
     sudo pip cache purge && \
     sudo rm -rf /var/lib/apt/lists/* && \
     sudo rm -rf /tmp/*

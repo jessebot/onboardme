@@ -61,7 +61,9 @@ def options_help() -> dict:
 
         'overwrite':
         '[b]Overwrites[/b] existing dot files with files from configured '
-        '[option]--git_url[/option] repo.',
+        "[option]--git_url[/option] repo. If you've set overwrite: true in "
+        'your config, then --overwrite on the command line will act as a '
+        'toggle, so it will NOT overwrite your dot files.',
 
         'pkg_managers':
         f'Specific [meta]PKG_MANAGER[/] to run. {pkg_mngr_choices}'
