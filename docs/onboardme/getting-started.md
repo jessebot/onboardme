@@ -44,78 +44,88 @@ Those defaults can be altered per machine by creating a config file like:
 <details>
   <summary><code>~/.config/onboardme/config.yml</code></summary>
 
-  ```yaml
-  ---
-  # ______________________________________________________________ #
-  #         Config file for the onboardme cli:                     #
-  #          ~/.config/onboardme/config.yml                        #
-  # -------------------------------------------------------------- #
+    ```yaml
+    ---
+    # ______________________________________________________________ #
+    #         Config file for the onboardme cli command.             #
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+    #  - If this files exists as: ~/.config/onboardme/config.yaml    #
+    #    then its loaded instead of the default config               #
+    # -------------------------------------------------------------- #
 
-  log:
-    # Full path to a file you'd like to log to. Creates file if it doesn't exist
-    file: ""
-    # what level of logs to output (DEBUG, INFO, WARN, ERROR)
-    level: "INFO"
 
-  # steps refer to a specific function in the list of functions we run
-  steps:
-    # these are mac specific steps
-    Darwin:
-      - dot_files
-      - packages
-      - font_setup
-      - neovim_setup
-    # these are linux specific steps
-    Linux:
-      - dot_files
-      - packages
-      - font_setup
-      - neovim_setup
-      - group_setup
+    log:
+      # Full path to a file you'd like to log to. Creates file if it doesn't exist
+      file: ""
+      # what level of logs to output (debug, info, warn, error)
+      level: "warn"
 
-  dot_files:
-    # personal git repo URL for your dot files, defaults to jessebot/dot_files
-    git_url: "https://github.com/jessebot/dot_files.git"
-
-    # the branch to use for the git repo above, defaults to main
-    git_branch: "main"
-
-    # !CAREFUL: runs a `git reset --hard`, which will overwite/delete files in ~
-    # that conflict with the above defined git repo url and branch.
-    # You should run the following to get the files that would be overwritten:
-    # onboardme -s dot_files
-    overwrite: false
-
-  # This is the basic package config.
-  package:
-    # Remove any of the below pkg managers to only run the remaining pkg managers
-    managers:
-      # these are macOS specific steps
+    # steps refer to a specific function in the list of functions we run
+    steps:
+      # these are mac specific steps
       Darwin:
-        - brew
-        - pip3.11
+        - dot_files
+        - packages
+        - font_setup
+        - neovim_setup
+        - sudo_setup
       # these are linux specific steps
       Linux:
-        - brew
-        - pip3.11
-        - apt
-        - snap
-        - flatpak
-    # list of extra existing packages groups to install
-    groups:
-      - default
-      # uncomment these to add them as default installed package groups
-      # - gaming
-      # - work
+        - dot_files
+        - packages
+        - font_setup
+        - neovim_setup
+        - group_setup
 
-  # known safe remote hosts that you expect to be able to ping and SSH into
-  remote_hosts: []
-    # has to be IP address or hostname like this example
-    # - 192.168.42.42
+    dot_files:
+      # personal git repo URL for your dot files, defaults to jessebot/dot_files
+      git_url: "https://github.com/jessebot/dot_files.git"
+      # the branch to use for the git repo above, defaults to main
+      git_branch: "main"
+      # !!CAREFUL: runs a `git reset --hard`, which will overwite/delete files in 
+      # $HOME that conflict with the above defined git repo url and branch.
+      # You should run the following to get the files that would be overwritten:
+      # onboardme -s dot_files
+      # if set to true, then using onboardme -O will toggle it back to false
+      overwrite: false
 
-  # setup iptable on Linux only
-  firewall: false
-  ```
+    # This is the basic package config.
+    package:
+      # Remove any of the below pkg managers to only run the remaining pkg managers
+      managers:
+        # macOS specific steps
+        Darwin:
+          - brew
+          - pip3.11
+        # Debian/Ubuntu specific steps
+        Linux:
+          - apt
+          - brew
+          - pip3.11
+          - flatpak
+          - snap
+      # list of extra existing packages groups to install
+      groups:
+        default:
+          # basic tui stuff to have a nice time in the terminal :)
+          - default
+        # move these package.groups.default to always install them
+        optional:
+          # setting up more python data science specific tooling
+          - data_science
+          # kubernetes and docker tools
+          - devops
+          # gaming always installs gui
+          - gaming
+          # freetube and other gui applications
+          - gui
+          # this configures neomutt and offlineimap
+          - mail
+          # sets up useful music tui stuff for spotify and youtube
+          - music
+          # things like zoom and slack
+          - work
+    ```
 
   If the comments in this configuration file are unclear, please feel free to
   open up [an issue](https://github.com/onboardme/issues) and we'll help! :)
@@ -135,7 +145,7 @@ configured for both macOS and Linux seperately. These steps include:
 - setting up dot files in your home directory (.bashrc, etc)
 - managing packages using package managers (brew, pip3.11, apt, snap, flatpak)
 - installing fonts
-- setting up basic TUI IDE, neovim (vim is optional)
+- setting up basic TUI IDE, neovim
 - setting up groups
 
 They can be configured via the `steps` parameter in the `config.yml` above,
@@ -213,8 +223,9 @@ onboardme --pkg_groups default --pkg_groups gui
 ```yaml
 package:
   groups:
-    - default
-    - gui
+    default:
+      - default
+      - gui
 ```
 
 #### _Only_ install the "devops" package group for _only_ the `brew` package manager
@@ -238,5 +249,6 @@ package:
       Linux:
         - brew
   groups:
-    - devops
+    default:
+      - devops
 ```

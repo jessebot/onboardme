@@ -236,25 +236,29 @@ Examples:
 <summary><code>~/.config/onboardme/config.yml</code></summary>
 
 ```yaml
+---
+# ______________________________________________________________ #
+#         Config file for the onboardme cli command.             #
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+#  - If this files exists as: ~/.config/onboardme/config.yaml    #
+#    then its loaded instead of the default config               #
+# -------------------------------------------------------------- #
+
+
 log:
   # Full path to a file you'd like to log to. Creates file if it doesn't exist
   file: ""
-  # what level of logs to output (DEBUG, INFO, WARN, ERROR)
-  level: "INFO"
+  # what level of logs to output (debug, info, warn, error)
+  level: "warn"
 
 # steps refer to a specific function in the list of functions we run
 steps:
   # these are mac specific steps
   Darwin:
-    # clones dot files into home dir/git fetches updates for dot files
     - dot_files
-    # install packages
     - packages
-    # adds nerdfonts
     - font_setup
-    # runs :Lazy sync to install all your plugins
     - neovim_setup
-    # sets up touchID for sudo
     - sudo_setup
   # these are linux specific steps
   Linux:
@@ -262,7 +266,6 @@ steps:
     - packages
     - font_setup
     - neovim_setup
-    # add your user to the docker group
     - group_setup
 
 dot_files:
@@ -270,33 +273,49 @@ dot_files:
   git_url: "https://github.com/jessebot/dot_files.git"
   # the branch to use for the git repo above, defaults to main
   git_branch: "main"
-  # !CAREFUL: runs a `git reset --hard`, which will overwite/delete local files in ~ that
-  # conflict with the above defined git repo url and branch. You should run
-  # `onboardme -s dot_files` to get the files that would be overwritten
+  # !!CAREFUL: runs a `git reset --hard`, which will overwite/delete files in 
+  # $HOME that conflict with the above defined git repo url and branch.
+  # You should run the following to get the files that would be overwritten:
+  # onboardme -s dot_files
+  # if set to true, then using onboardme -O will toggle it back to false
   overwrite: false
 
-# basic package config
+# This is the basic package config.
 package:
   # Remove any of the below pkg managers to only run the remaining pkg managers
   managers:
-    # these are macOS specific steps
+    # macOS specific steps
     Darwin:
       - brew
       - pip3.11
-    # these are linux specific steps
+    # Debian/Ubuntu specific steps
     Linux:
+      - apt
       - brew
       - pip3.11
-      - apt
-      - snap
       - flatpak
+      - snap
   # list of extra existing packages groups to install
   groups:
-    - default
-    # uncomment these to add them as default installed package groups
-    # - gui
-    # - gaming
-    # - devops
+    default:
+      # basic tui stuff to have a nice time in the terminal :)
+      - default
+    # move these package.groups.default to always install them
+    optional:
+      # setting up more python data science specific tooling
+      - data_science
+      # kubernetes and docker tools
+      - devops
+      # gaming always installs gui
+      - gaming
+      # freetube and other gui applications
+      - gui
+      # this configures neomutt and offlineimap
+      - mail
+      # sets up useful music tui stuff for spotify and youtube
+      - music
+      # things like zoom and slack
+      - work
 ```
 
 </details>
