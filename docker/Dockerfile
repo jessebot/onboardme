@@ -83,10 +83,10 @@ RUN pip install --user onboardme --break-system-packages && \
       onboardme -O --no_upgrade -l debug && \
       mv /tmp/config.conf ${XDG_CONFIG_HOME}/fastfetch/config.conf; fi
 
-RUN if [ -n $DEVOPS ]; then onboardme -O --no_upgrade -l debug -s packages -g devops && bash /tmp/devops-onboardme-install.sh; fi && \
-    if [ -n $MUSIC ]; then onboardme -O --no_upgrade -l debug -s packages -g music && bash /tmp/music-onboardme-install.sh; fi && \
-    if [ -n $MAIL ]; then  onboardme -O --no_upgrade -l debug -s packages -g mail; fi && \
-    if [ -n $DATA_SCIENCE ]; then onboardme -O --no_upgrade -l debug -s packages -g data_science; fi
+RUN if [ -n $DEVOPS ]; then onboardme -g devops -s packages; fi
+RUN if [ -n $DATA_SCIENCE ]; then onboardme -g data_science -s packages; fi
+RUN if [ -n $MUSIC ]; then onboardme -g music -s packages; fi
+RUN if [ -n $MAIL ]; then onboardme -g mail -s packages; fi
 
 RUN brew cleanup && \
     sudo apt-get clean && \
