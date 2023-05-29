@@ -14,4 +14,4 @@ npm install --global somafm
 
 ## music via free streaming sources
 ## https://github.com/nukeop/nuclear
-curl -LO https://github.com/nukeop/nuclear/releases/download/v0.6.21/nuclear-v0.6.21.deb
+# curl -LO https://github.com/nukeop/nuclear/releases/download/v0.6.21/nuclear-v0.6.21.deb

@@ -37,9 +37,6 @@ pip3.11:
       - poetry
       # this is needed to make python respect XDG Base directory specific
       - xdg_base_dirs
-    extra:
-      # powerline: supposed to work spotify info
-      - dbus
     devops:
       # might be needed for development and building
       - build
@@ -56,9 +53,14 @@ pip3.11:
       # - quarto
       # notebooks in the terminal 💚
       - euporie
-    data_science:
-      # conda still doesn't support python 3.11, May 2023
-      # - conda
+    music:
+      # terminal based youtube player
+      - yewtube
+      # powerline: supposed to work spotify info
+      - dbus
+    # data_science:
+    # # conda still doesn't support python 3.11, May 2023
+    # - conda
 
 apt:
   emoji: "🙃"
@@ -178,6 +180,8 @@ apt:
       - libreoffice
       # GUI interface for pulseaudio, so you can disable audio devices
       - pavucontrol
+    music:
+      - pulseaudio
     gaming:
       # helpful for gaming on linux
       - "nvidia-driver-libs:i386"
@@ -198,8 +202,6 @@ apt:
       - zathura-pdf-mupdf
       # proton bridge for getting mail locally, not sure if this works?
       - "protonmail-bridge"
-    music:
-      - yewtube
 
 npm:
   commands:

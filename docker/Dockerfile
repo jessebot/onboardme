@@ -3,14 +3,14 @@ FROM debian:bookworm-slim
 
 # ""           - will install onboardme, but won't run onboardme
 # "default"    - onboardme --no_upgrade
-# "devops"     - onboardme --no_upgrade -g default -g devops
-# "music"      - onboardme --no_upgrade -g default -g music
-# "mail"       - onboardme --no_upgrade -g default -g mail
-# "data_sciene" - onboardme --no_upgrade -g default -g data_science
 ARG RUN_MODE=""
+# onboardme --no_upgrade -s packages -g devops
 ARG DEVOPS=""
+# onboardme --no_upgrade -s packages -g music
 ARG MUSIC=""
+# onboardme --no_upgrade -s packages -g mail
 ARG MAIL=""
+# onboardme --no_upgrade -s packages -g data_science
 ARG DATA_SCIENCE=""
 
 # makes debian not prompt for stuff
@@ -79,12 +79,16 @@ COPY --chown=friend:friend config.conf /tmp/
 # then run onboardme and clear apt/brew/pip cache when we're done
 RUN pip install --user onboardme --break-system-packages && \
     onboardme --version && \
-    if [ ! -z $RUN_MODE ]; then onboardme -O --no_upgrade -l debug && mv /tmp/config.conf ${XDG_CONFIG_HOME}/fastfetch/config.conf; fi && \
-    if [ ! -z $DEVOPS ]; then onboardme -O --no_upgrade -l debug -s packages -g devops; fi && \
-    if [ ! -z $MUSIC ]; then onboardme -O --no_upgrade -l debug -s packages -g music; fi && \
-    if [ ! -z $MAIL ]; then onboardme -O --no_upgrade -l debug -s packages -g mail; fi && \
-    if [ ! -z $DATA_SCIENCE ]; then onboardme -O --no_upgrade -l debug -s packages -g data_science; fi && \
-    brew cleanup && \
+    if [ ! -z $RUN_MODE ]; then \
+      onboardme -O --no_upgrade -l debug && \
+      mv /tmp/config.conf ${XDG_CONFIG_HOME}/fastfetch/config.conf; fi
+
+RUN if [ -n $DEVOPS ]; then onboardme -O --no_upgrade -l debug -s packages -g devops && bash /tmp/devops-onboardme-install.sh; fi && \
+    if [ -n $MUSIC ]; then onboardme -O --no_upgrade -l debug -s packages -g music && bash /tmp/music-onboardme-install.sh; fi && \
+    if [ -n $MAIL ]; then  onboardme -O --no_upgrade -l debug -s packages -g mail; fi && \
+    if [ -n $DATA_SCIENCE ]; then onboardme -O --no_upgrade -l debug -s packages -g data_science; fi
+
+RUN brew cleanup && \
     sudo apt-get clean && \
     sudo pip cache purge && \
     sudo rm -rf /var/lib/apt/lists/* && \
