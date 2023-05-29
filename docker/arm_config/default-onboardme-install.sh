@@ -75,5 +75,5 @@ cp fastfetch $HOME/.local/bin/fastfetch
 mkdir -p ${XDG_CONFIG_HOME}/fastfetch
 mv /tmp/config.conf ${XDG_CONFIG_HOME}/fastfetch/config.conf
 
-if [ -n $DEVOPS ]; then bash /tmp/devops-onboardme-install.sh; fi
-if [ -n $MUSIC ]; then bash /tmp/music-onboardme-install.sh; fi
+if [ ! -z $DEVOPS ]; then bash /tmp/devops-onboardme-install.sh; fi
+if [ ! -z $MUSIC ]; then bash /tmp/music-onboardme-install.sh; fi

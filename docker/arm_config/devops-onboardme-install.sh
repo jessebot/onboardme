@@ -51,10 +51,10 @@ mv /tmp/k9s ~/.local/bin/k9s
 
 # for installing helm, a package manager for k8s
 curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
-sudo apt-get install apt-transport-https --yes
+sudo apt-get install -y apt-transport-https
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
 sudo apt-get update
-sudo apt-get install helm
+sudo apt-get install -y helm
 
 # installing argocd cli
 curl -sSL -o argocd-linux-arm64 https://github.com/argoproj/argo-cd/releases/download/latest/argocd-linux-arm64
