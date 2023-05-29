@@ -9,8 +9,7 @@
 # sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
 # echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 # sudo apt update
-# sudo apt install gh -y
-
+# sudo apt install -y gh
 
 ## install glab - gitlab's cli
 ## ref: https://gitlab.com/gitlab-org/cli/-/blob/main/docs/installation_options.md#mpr-debianubuntu
@@ -18,17 +17,16 @@
 # cd glab/
 # makedeb -si
 
-
 # install kubectl for arm64
 # ref: https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-kubectl-binary-with-curl-on-linux
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/arm64/kubectl" /tmp/
 # download the checksum for validation
-curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/arm64/kubectl.sha256"
+curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/arm64/kubectl.sha256" /tmp/
 # should return kubectl: OK and 0 return code
-echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
-chmod +x kubectl
+echo "$(cat /tmp/kubectl.sha256)  kubectl" | sha256sum --check
+chmod +x /tmp/kubectl
 mkdir -p ~/.local/bin
-mv ./kubectl ~/.local/bin/kubectl
+mv /tmp/kubectl ~/.local/bin/kubectl
 
 # krew, the kubectl plugin manager
 # ref: https://krew.sigs.k8s.io/docs/user-guide/setup/install/#bash
@@ -62,17 +60,18 @@ sudo install -m 555 argocd-linux-arm64 /usr/local/bin/argocd
 rm argocd-linux-arm64
 
 ## tfenv: https://github.com/tfutils/tfenv#manual
-# git clone --depth=1 https://github.com/tfutils/tfenv.git ~/.tfenv
-# echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bashrc
-#
+git clone --depth=1 https://github.com/tfutils/tfenv.git ~/.tfenv
+echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bashrc
+
 ## tflint: https://github.com/terraform-linters/tflint
-# curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
-#
+curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+
 ## terraform-docs: https://github.com/terraform-docs/terraform-docs/
-# curl -Lo ./terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
-# tar -xzf terraform-docs.tar.gz
-# chmod +x terraform-docs
-# mv terraform-docs /usr/local/terraform-docs
+curl -Lo /tmp/terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
+tar -xzf terraform-docs.tar.gz
+chmod +x terraform-docs
+mv terraform-docs /usr/local/terraform-docs
 
 ## rustup
-# curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+rustup update
