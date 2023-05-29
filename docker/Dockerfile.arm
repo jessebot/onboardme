@@ -4,14 +4,14 @@ FROM debian:bookworm-slim
 # ""           - will install onboardme, but won't run onboardme
 # "default"    - onboardme --no_upgrade
 ARG RUN_MODE=""
-# onboardme --no_upgrade -s packages -g devops
-ARG DEVOPS=""
-# onboardme --no_upgrade -s packages -g music
-ARG MUSIC=""
-# onboardme --no_upgrade -s packages -g mail
-ARG MAIL=""
 # onboardme --no_upgrade -s packages -g data_science
 ARG DATA_SCIENCE=""
+# onboardme --no_upgrade -s packages -g devops
+ARG DEVOPS=""
+# onboardme --no_upgrade -s packages -g mail
+ARG MAIL=""
+# onboardme --no_upgrade -s packages -g music
+ARG MUSIC=""
 
 # this makes debian not prompt for stuff
 ENV DEBIAN_FRONTEND="noninteractive"
@@ -75,12 +75,12 @@ COPY --chown=friend:friend ./arm_config/default-onboardme-install.sh /tmp/defaul
 COPY --chown=friend:friend ./arm_config/music-onboardme-install.sh /tmp/music-onboardme-install.sh
 COPY --chown=friend:friend ./arm_config/devops-onboardme-install.sh /tmp/devops-onboardme-install.sh
 
-RUN if [ "$RUN_MODE" = "default" ]; then bash /tmp/default-onboardme-install.sh; fi
+RUN if [ "$PACKAGE_GROUPS" = "default" ]; then bash /tmp/default-onboardme-install.sh; fi
 
-RUN if [ -n $DEVOPS ]; then onboardme -O --no_upgrade -l debug -s packages -g devops && bash /tmp/devops-onboardme-install.sh; fi && \
-    if [ -n $MUSIC ]; then onboardme -O --no_upgrade -l debug -s packages -g music && bash /tmp/music-onboardme-install.sh; fi && \
+RUN if [ -n $DATA_SCIENCE ]; then onboardme -O --no_upgrade -l debug -s packages -g data_science; fi && \
+    if [ -n $DEVOPS ]; then onboardme -O --no_upgrade -l debug -s packages -g devops && bash /tmp/devops-onboardme-install.sh; fi && \
     if [ -n $MAIL ]; then  onboardme -O --no_upgrade -l debug -s packages -g mail; fi && \
-    if [ -n $DATA_SCIENCE ]; then onboardme -O --no_upgrade -l debug -s packages -g data_science; fi
+    if [ -n $MUSIC ]; then onboardme -O --no_upgrade -l debug -s packages -g music && bash /tmp/music-onboardme-install.sh; fi
 
 RUN sudo apt-get clean && \
     sudo pip cache purge && \

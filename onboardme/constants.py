@@ -6,7 +6,6 @@ DESCRIPTION:
     LICENSE: GNU AFFERO GENERAL PUBLIC LICENSE Version 3
 """
 from importlib.metadata import version as get_version
-import logging as log
 from xdg_base_dirs import xdg_config_home
 from os import getenv, path, uname
 from pathlib import Path
@@ -42,6 +41,9 @@ if OS[0] == 'Linux':
 default_dotfiles = ("https://raw.githubusercontent.com/jessebot/dot_files/"
                     "main/.config/onboardme/")
 
+if OS[0] == 'Linux' and OS[1] == 'aarch64':
+    default_dotfiles = ("https://raw.githubusercontent.com/jessebot/dot_files/"
+                        "docker-arm64-only/.config/onboardme/")
 
 def load_cfg(config_file='config.yml') -> dict:
     """
@@ -61,3 +63,6 @@ def load_cfg(config_file='config.yml') -> dict:
 
 
 USR_CONFIG_FILE = load_cfg()
+
+DEFAULT_PKG_GROUPS = USR_CONFIG_FILE['package']['groups']['default']
+OPT_PKG_GROUPS = USR_CONFIG_FILE['package']['groups']['optional']

@@ -4,14 +4,14 @@ FROM debian:bookworm-slim
 # ""           - will install onboardme, but won't run onboardme
 # "default"    - onboardme --no_upgrade
 ARG RUN_MODE=""
+# onboardme --no_upgrade -s packages -g data_science
+# ARG DATA_SCIENCE=""
 # onboardme --no_upgrade -s packages -g devops
 ARG DEVOPS=""
-# onboardme --no_upgrade -s packages -g music
-ARG MUSIC=""
 # onboardme --no_upgrade -s packages -g mail
 ARG MAIL=""
-# onboardme --no_upgrade -s packages -g data_science
-ARG DATA_SCIENCE=""
+# onboardme --no_upgrade -s packages -g music
+ARG MUSIC=""
 
 # makes debian not prompt for stuff
 ENV DEBIAN_FRONTEND=noninteractive
@@ -83,10 +83,10 @@ RUN pip install --user onboardme --break-system-packages && \
       onboardme -O --no_upgrade -l debug && \
       mv /tmp/config.conf ${XDG_CONFIG_HOME}/fastfetch/config.conf; fi
 
-RUN if [ -n $DEVOPS ]; then onboardme -g devops -s packages; fi
-RUN if [ -n $DATA_SCIENCE ]; then onboardme -g data_science -s packages; fi
-RUN if [ -n $MUSIC ]; then onboardme -g music -s packages; fi
-RUN if [ -n $MAIL ]; then onboardme -g mail -s packages; fi
+# RUN if [ -n $DATA_SCIENCE ]; then onboardme -g data_science -s packages --no_upgrade; fi
+RUN if [ -n $DEVOPS ]; then onboardme -g devops -s packages --no_upgrade; fi
+RUN if [ -n $MAIL ]; then onboardme -g mail -s packages --no_upgrade; fi
+RUN if [ -n $MUSIC ]; then onboardme -g music -s packages --no_upgrade; fi
 
 RUN brew cleanup && \
     sudo apt-get clean && \

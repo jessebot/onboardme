@@ -12,7 +12,13 @@ from importlib import import_module
 import logging
 from rich.logging import RichHandler
 from .help_text import RichCommand, options_help
-from .constants import VERSION, OS, STEPS, PKG_MNGRS, USR_CONFIG_FILE
+from .constants import (DEFAULT_PKG_GROUPS,
+                        OPT_PKG_GROUPS,
+                        OS,
+                        PKG_MNGRS,
+                        STEPS,
+                        VERSION,
+                        USR_CONFIG_FILE)
 from .env_config import check_os_support, process_configs
 from .console_logging import print_manual_steps
 from .dot_files import setup_dot_files
@@ -78,33 +84,73 @@ def setup_logger(level="", log_file=""):
 # this allows us to use rich.click for pretty prettying the help interface
 # each of these is an option in the cli and variable we use later on
 @command(cls=RichCommand)
-@option('--log_level', '-l', metavar='LOGLEVEL', help=HELP['log_level'],
+@option('--log_level',
+        '-l',
+        metavar='LOGLEVEL',
+        help=HELP['log_level'],
         type=Choice(['debug', 'info', 'warn', 'error']),
         default=LOG_LEVEL)
-@option('--log_file', '-o', metavar='LOGFILE', help=HELP['log_file'],
+@option('--log_file',
+        '-o',
+        metavar='LOGFILE',
+        help=HELP['log_file'],
         default=LOG_FILE)
-@option('--steps', '-s', metavar='STEP', multiple=True, type=Choice(STEPS),
-        help=HELP['steps'], default=USR_CONFIG_FILE['steps'][OS[0]])
-@option('--git_url', '-u', metavar='URL', help=HELP['git_url'],
+@option('--steps',
+        '-s',
+        metavar='STEP',
+        multiple=True,
+        type=Choice(STEPS),
+        help=HELP['steps'],
+        default=USR_CONFIG_FILE['steps'][OS[0]])
+@option('--git_url',
+        '-u',
+        metavar='URL',
+        help=HELP['git_url'],
         default=USR_CONFIG_FILE['dot_files']['git_url'])
-@option('--git_branch', '-b', metavar='BRANCH', help=HELP['git_branch'],
+@option('--git_branch',
+        '-b',
+        metavar='BRANCH',
+        help=HELP['git_branch'],
         default=USR_CONFIG_FILE['dot_files']['git_branch'])
-@option('--overwrite', '-O', is_flag=True, help=HELP['overwrite'],
+@option('--overwrite',
+        '-O',
+        is_flag=True,
+        help=HELP['overwrite'],
         default=USR_CONFIG_FILE['dot_files']['overwrite'])
-@option('--pkg_managers', '-p', metavar='PKG_MANAGER', multiple=True,
-        type=Choice(PKG_MNGRS), help=HELP['pkg_managers'],
+@option('--pkg_managers',
+        '-p',
+        metavar='PKG_MANAGER',
+        multiple=True,
+        type=Choice(PKG_MNGRS),
+        help=HELP['pkg_managers'],
         default=USR_CONFIG_FILE['package']['managers'][OS[0]])
-@option('--pkg_groups', '-g', metavar='PKG_GROUP', multiple=True,
-        type=Choice(['default', 'gaming', 'gui', 'devops']),
-        help=HELP['pkg_groups'], default=USR_CONFIG_FILE['package']['groups'])
-@option('--firewall', '-f', is_flag=True, help=HELP['firewall'],
+@option('--pkg_groups',
+        '-g',
+        metavar='PKG_GROUP',
+        multiple=True,
+        type=Choice(DEFAULT_PKG_GROUPS + OPT_PKG_GROUPS),
+        help=HELP['pkg_groups'],
+        default=DEFAULT_PKG_GROUPS)
+@option('--firewall',
+        '-f',
+        is_flag=True,
+        help=HELP['firewall'],
         default=USR_CONFIG_FILE.get('firewall', False))
-@option('--remote_host', '-r', metavar="IP_ADDR", multiple=True,
+@option('--remote_host',
+        '-r',
+        metavar="IP_ADDR",
+        multiple=True,
         help=HELP['remote_host'],
         default=USR_CONFIG_FILE.get('remote_hosts', None))
-@option('--no_upgrade', '-n', help=HELP['no_upgrade'], default=False, 
+@option('--no_upgrade',
+        '-n',
+        help=HELP['no_upgrade'],
+        default=False,
         is_flag=True)
-@option('--version', is_flag=True, help=HELP['version'], default=False)
+@option('--version',
+        is_flag=True,
+        help=HELP['version'],
+        default=False)
 def main(log_level, log_file,
          steps, 
          git_url, git_branch, overwrite,
