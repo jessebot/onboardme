@@ -211,12 +211,6 @@ def install_pkg_group(install_cmd: str,
         subproc([install_cmd + pkg], quiet=True, env=install_env_vars)
 
 
-def install_all_apt_packages() -> None:
-    """
-    combine all package groups for apt and install all of them at once
-    """
-
-
 def install_brew_taps(taps: list) -> None:
     """
     Checks current brew taps, and then runs brew tap {tap} on any taps that are
