@@ -1,10 +1,17 @@
 # onbaordme Debian Bookworm image - linux/arm64 only
 FROM debian:bookworm-slim
 
-# ""        - will install onboardme, but won't *run* onboardme
-# "default" - installs onboardme, and runs onboardme with default dotfiles:
-#             onboardme --no_upgrade
+# ""           - will install onboardme, but won't run onboardme
+# "default"    - onboardme --no_upgrade
+# "devops"     - onboardme --no_upgrade -g default -g devops
+# "music"      - onboardme --no_upgrade -g default -g music
+# "mail"       - onboardme --no_upgrade -g default -g mail
+# "data_sciene" - onboardme --no_upgrade -g default -g data_science
 ARG RUN_MODE=""
+ARG DEVOPS=""
+ARG MUSIC=""
+ARG MAIL=""
+ARG DATA_SCIENCE=""
 
 # this makes debian not prompt for stuff
 ENV DEBIAN_FRONTEND="noninteractive"
@@ -65,8 +72,22 @@ COPY --chown=friend:friend ./config.conf /tmp/config.conf
 COPY --chown=friend:friend ./arm_config/packages.yml /tmp/packages.yml
 COPY --chown=friend:friend ./arm_config/config.yml /tmp/config.yml
 COPY --chown=friend:friend ./arm_config/default-onboardme-install.sh /tmp/default-onboardme-install.sh
+COPY --chown=friend:friend ./arm_config/music-onboardme-install.sh /tmp/music-onboardme-install.sh
+COPY --chown=friend:friend ./arm_config/devops-onboardme-install.sh /tmp/devops-onboardme-install.sh
 
-RUN if [ "$RUN_MODE" = "default" ]; then bash /tmp/default-onboardme-install.sh; fi && \
+RUN if [ "$RUN_MODE" = "default" ]; then \
+      bash /tmp/default-onboardme-install.sh; \
+    if [ ! -z $DEVOPS ]; then \
+      onboardme -O --no_upgrade -l debug -s packages -g devops && \
+      bash /tmp/devops-onboardme-install.sh; \
+    fi && \
+    if [ ! -z $MUSIC ]; then \
+      onboardme -O --no_upgrade -l debug -s packages -g music && \
+      bash /tmp/music-onboardme-install.sh; \
+    fi && \
+    if [ ! -z $MAIL ]; then  onboardme -O --no_upgrade -l debug -s packages -g music; fi && \
+    if [ ! -z $DATA_SCIENCE ]; then onboardme -O --no_upgrade -l debug -s packages -g data_science; fi && \
+    fi && \
     sudo apt-get clean && \
     sudo pip cache purge && \
     sudo rm -rf /var/lib/apt/lists/* && \

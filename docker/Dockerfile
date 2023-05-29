@@ -1,11 +1,19 @@
 # onbaordme Debian Bookworm image - linux/amd64 only
 FROM debian:bookworm-slim
 
-# ""        - will install onboardme, but won't run onboardme
-# "default" - installs onboardme, and runs: onboardme --no_upgrade --overwrite
+# ""           - will install onboardme, but won't run onboardme
+# "default"    - onboardme --no_upgrade
+# "devops"     - onboardme --no_upgrade -g default -g devops
+# "music"      - onboardme --no_upgrade -g default -g music
+# "mail"       - onboardme --no_upgrade -g default -g mail
+# "data_sciene" - onboardme --no_upgrade -g default -g data_science
 ARG RUN_MODE=""
+ARG DEVOPS=""
+ARG MUSIC=""
+ARG MAIL=""
+ARG DATA_SCIENCE=""
 
-# this makes debian not prompt for stuff
+# makes debian not prompt for stuff
 ENV DEBIAN_FRONTEND=noninteractive
 
 # install pre-req apt packages 
@@ -45,7 +53,7 @@ RUN export PYTHONPYCACHEPREFIX=$XDG_CACHE_HOME/python
 # make sure we can install executables locally 
 ENV PATH="$PATH:$HOME/.local/bin"
 
-# this is so that brew doesn't prompt for sudo access
+# so that brew doesn't prompt for sudo access
 ENV NONINTERACTIVE=1
 # needed for linuxbrew, homebrew on Linux
 ENV HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
@@ -72,6 +80,10 @@ COPY --chown=friend:friend config.conf /tmp/
 RUN pip install --user onboardme --break-system-packages && \
     onboardme --version && \
     if [ ! -z $RUN_MODE ]; then onboardme -O --no_upgrade -l debug && mv /tmp/config.conf ${XDG_CONFIG_HOME}/fastfetch/config.conf; fi && \
+    if [ ! -z $DEVOPS ]; then onboardme -O --no_upgrade -l debug -s packages -g devops; fi && \
+    if [ ! -z $MUSIC ]; then onboardme -O --no_upgrade -l debug -s packages -g music; fi && \
+    if [ ! -z $MAIL ]; then onboardme -O --no_upgrade -l debug -s packages -g mail; fi && \
+    if [ ! -z $DATA_SCIENCE ]; then onboardme -O --no_upgrade -l debug -s packages -g data_science; fi && \
     brew cleanup && \
     sudo apt-get clean && \
     sudo pip cache purge && \
