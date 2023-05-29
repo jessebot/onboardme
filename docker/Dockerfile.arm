@@ -1,10 +1,15 @@
 # onbaordme Debian Bookworm image - linux/arm64 only
 FROM debian:bookworm-slim
 
-# ""        - will install onboardme, but won't *run* onboardme
-# "default" - installs onboardme, and runs onboardme with default dotfiles:
-#             onboardme --no_upgrade
+# ""           - will install onboardme, but won't run onboardme
+# "true"    - runs: onboardme --no_upgrade
 ARG RUN_MODE=""
+# extra package groups you can enable
+ARG DEFAULT=""
+ARG DATA_SCIENCE=""
+ARG DEVOPS=""
+ARG MAIL=""
+ARG MUSIC=""
 
 # this makes debian not prompt for stuff
 ENV DEBIAN_FRONTEND="noninteractive"
@@ -59,15 +64,12 @@ RUN git config --global init.defaultBranch main && \
     pip install --user onboardme --break-system-packages && \
     onboardme --version
 
-# this is for a cute fastfetch
-COPY --chown=friend:friend ./config.conf /tmp/config.conf
-# set some default dot files, just in case
-COPY --chown=friend:friend ./arm_config/packages.yml /tmp/packages.yml
-COPY --chown=friend:friend ./arm_config/config.yml /tmp/config.yml
-COPY --chown=friend:friend ./arm_config/default-onboardme-install.sh /tmp/default-onboardme-install.sh
+# this is for a cute fastfetch and arm package install processes
+COPY --chown=friend:friend ./config.conf ./arm_config /tmp/
 
-RUN if [ "$RUN_MODE" = "default" ]; then bash /tmp/default-onboardme-install.sh; fi && \
-    sudo apt-get clean && \
+RUN if [ -n "$RUN_MODE" ]; then bash /tmp/arm_config/default-onboardme-install.sh; fi
+
+RUN sudo apt-get clean && \
     sudo pip cache purge && \
     sudo rm -rf /var/lib/apt/lists/* && \
     sudo rm -rf /tmp/*

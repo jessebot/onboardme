@@ -132,27 +132,22 @@ def run_pkg_mngrs(pkg_mngrs: list, pkg_groups=[], no_upgrade=bool) -> None:
             run_preinstall_cmds(pkg_cmds, pkg_groups, no_upgrade)
 
             # run the list command for the given package manager
-            list_cmd = pkg_cmds['list']
-            # TODO: figure out a way to make this less hacky
-            if pkg_mngr == 'apt':
-                list_cmd = path.join(PWD, list_cmd)
-            list_pkgs = subproc([list_cmd], quiet=True)
-
-            if list_pkgs:
-                # create list of installed packages to iterate on
-                installed_pkgs = list_pkgs.split()
-            else:
-                installed_pkgs = []
+            installed_pkgs = []
+            list_cmd = pkg_cmds.get('list', None)
+            if list_cmd:
+                list_pkgs = subproc([list_cmd], quiet=True)
+                if list_pkgs:
+                    # create list of installed packages to iterate on
+                    installed_pkgs = list_pkgs.split()
 
             # iterate through package groups for a given package manager
             for pkg_group in pkg_groups:
                 # if package group is in the packages.yaml file
                 if pkg_group in available_pkg_groups:
-                    # used to be for zathura, a document viewer, might delete
+                    # for zathura, a document viewer, might delete
                     # if pkg_group == "macOS":
                     #     # zathura needs some help on macOS
                     #     check_zathura()
-
                     install_pkg_group(pkg_cmds['install'],
                                       available_pkg_groups[pkg_group],
                                       installed_pkgs,
@@ -180,6 +175,13 @@ def install_pkg_group(install_cmd: str,
     log.debug(f"Currently installed packages: {installed_pkgs}")
     log.info(f"Packages to install are: {pkgs_to_install}")
 
+    # apt is smart enough to install everything at once correctly
+    if 'apt' in install_cmd:
+        all_packages = ' '.join(pkgs_to_install)
+        subproc([install_cmd + all_packages], quiet=True, env=install_env_vars)
+        return
+
+    # this installs packages one by one
     for pkg in pkgs_to_install:
         if not installed_pkgs:
             log.info(f"{pkg} isn't installed. Installing now...")

@@ -1,11 +1,17 @@
 # onbaordme Debian Bookworm image - linux/amd64 only
 FROM debian:bookworm-slim
 
-# ""        - will install onboardme, but won't run onboardme
-# "default" - installs onboardme, and runs: onboardme --no_upgrade --overwrite
+# ""           - will install onboardme, but won't run onboardme
+# "true"    - runs: onboardme --no_upgrade
 ARG RUN_MODE=""
+# extra package groups you can enable
+ARG DEFAULT=""
+ARG DATA_SCIENCE=""
+ARG DEVOPS=""
+ARG MAIL=""
+ARG MUSIC=""
 
-# this makes debian not prompt for stuff
+# makes debian not prompt for stuff
 ENV DEBIAN_FRONTEND=noninteractive
 
 # install pre-req apt packages 
@@ -45,7 +51,7 @@ RUN export PYTHONPYCACHEPREFIX=$XDG_CACHE_HOME/python
 # make sure we can install executables locally 
 ENV PATH="$PATH:$HOME/.local/bin"
 
-# this is so that brew doesn't prompt for sudo access
+# so that brew doesn't prompt for sudo access
 ENV NONINTERACTIVE=1
 # needed for linuxbrew, homebrew on Linux
 ENV HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
@@ -65,14 +71,16 @@ RUN wget --hsts-file="$XDG_DATA_HOME/wget/wget-hsts" https://raw.githubuserconte
     mv $HOME/.gitconfig $XDG_CONFIG_HOME/git/config
 
 # this is for a cute fastfetch
-COPY --chown=friend:friend config.conf /tmp/
+COPY --chown=friend:friend config.conf run_onboardme.sh /tmp/
 
 # install onboardme - using python 3.11, default for Debian bookworm
 # then run onboardme and clear apt/brew/pip cache when we're done
 RUN pip install --user onboardme --break-system-packages && \
-    onboardme --version && \
-    if [ ! -z $RUN_MODE ]; then onboardme -O --no_upgrade -l debug && mv /tmp/config.conf ${XDG_CONFIG_HOME}/fastfetch/config.conf; fi && \
-    brew cleanup && \
+    onboardme --version
+
+RUN if [ -n "$RUN_MODE" ]; then bash /tmp/run_onboardme.sh; fi
+
+RUN brew cleanup && \
     sudo apt-get clean && \
     sudo pip cache purge && \
     sudo rm -rf /var/lib/apt/lists/* && \

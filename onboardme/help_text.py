@@ -11,7 +11,8 @@ from rich.text import Text
 from rich.theme import Theme
 
 # custom local module
-from .constants import VERSION, STEPS, PKG_MNGRS
+from .constants import (DEFAULT_PKG_GROUPS, OPT_PKG_GROUPS, PKG_MNGRS, STEPS,
+                        VERSION)
 
 
 # this is for creating new help text svgs for the READMEs
@@ -37,7 +38,7 @@ def options_help() -> dict:
     step_choices = pretty_choices(STEPS)
     pkg_mngr_choices = pretty_choices(PKG_MNGRS)
     logging_choices = pretty_choices(['debug', 'info', 'warn', 'error'])
-    pkg_group_choices = pretty_choices(['default', 'devops', 'gui', 'gaming'])
+    pkg_group_choices = pretty_choices(DEFAULT_PKG_GROUPS + OPT_PKG_GROUPS)
 
     return {
         'log_level':
