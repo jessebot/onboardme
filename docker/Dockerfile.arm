@@ -1,8 +1,8 @@
 # onbaordme Debian Bookworm image - linux/arm64 only
 FROM debian:bookworm-slim
 
-# ""           - will install onboardme, but won't run onboardme
 # "true"    - runs: onboardme --no_upgrade
+# ""        - will install onboardme, but won't run onboardme
 ARG RUN_MODE=""
 # extra package groups you can enable
 ARG DEFAULT=""
