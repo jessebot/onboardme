@@ -15,8 +15,16 @@ cpack -G DEB
 sudo dpkg -i nvim-linux64.deb
 
 echo ""
-echo "running onboardme with default settings and packages"
-onboardme --no_upgrade --log_level debug
+EXTRA_GROUPS=""
+if [ -n $DEFAULT ]; then EXTRA_GROUPS+=" -g default"; fi
+if [ -n $DATA_SCIENCE ]; then EXTRA_GROUPS+=" -g data_science"; fi
+if [ -n $DEVOPS ]; then EXTRA_GROUPS+=" -g devops"; fi
+if [ -n $MAIL ]; then EXTRA_GROUPS+=" -g mail"; fi
+if [ -n $MUSIC ]; then EXTRA_GROUPS+=" -g music"; fi
+
+obm_cmd = "onboardme --no_upgrade --log_level debug" + $EXTRA_GROUPS
+echo "running onboardme command now: $obm_cmd"
+$(obm_cmd)
 
 echo ""
 echo "downloading bottom debian package. bottom is a top replacement and is aliased to btm, and sometimes top"
@@ -38,7 +46,6 @@ tar xvf zellij-aarch64-unknown-linux-musl.tar.gz
 rm zellij-aarch64-unknown-linux-musl.tar.gz
 mv zellij $HOME/.local/bin/zellij
 
-
 echo ""
 echo "compile fastfetch, for system facts, from source, requires pkg-config"
 echo "ref: https://github.com/LinusDierheimer/fastfetch#building"
@@ -51,3 +58,6 @@ cmake --build . --target fastfetch --target flashfetch
 cp fastfetch $HOME/.local/bin/fastfetch
 mkdir -p ${XDG_CONFIG_HOME}/fastfetch
 mv /tmp/config.conf ${XDG_CONFIG_HOME}/fastfetch/config.conf
+
+if [ -n $DEVOPS ]; then bash /tmp/arm_config/devops-onboardme-install.sh; fi
+if [ -n $MUSIC ]; then bash /tmp/arm_config/music-onboardme-install.sh; fi

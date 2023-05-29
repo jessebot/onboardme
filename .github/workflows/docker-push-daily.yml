@@ -54,7 +54,39 @@ jobs:
           tags: |
             jessebot/onboardme:latest
             jessebot/onboardme:debian12
-            jessebot/onboardme:debian12-default-pkgs
+
+      - name: Build/push - default + devops pkgs
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          # build from docker/ directory
+          context: docker
+          platforms: linux/amd64
+          build-args: |
+            "RUN_MODE=true"
+            "DEFAULT=true"
+            "DEVOPS=true"
+          tags: |
+            jessebot/onboardme:devops
+            jessebot/onboardme:debian12-devops
+
+      - name: Build/push - full tui pkgs
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          # build from docker/ directory
+          context: docker
+          platforms: linux/amd64
+          build-args: |
+            "RUN_MODE=true"
+            "DEFAULT=true"
+            "DEVOPS=true"
+            "MAIL=true"
+            "MUSIC=true"
+          tags: |
+            jessebot/onboardme:full-tui
+            jessebot/onboardme:debian12-full-tui
+
 
   docker-arm64:
     runs-on: self-hosted
@@ -86,7 +118,7 @@ jobs:
             jessebot/onboardme:debian12-arm-prereqs
             jessebot/onboardme:arm-prereqs
 
-      - name: Build/push - arm - run onboardme - default pkgs
+      - name: Build/push - arm - default pkgs
         uses: docker/build-push-action@v4
         with:
           push: true
@@ -100,3 +132,35 @@ jobs:
             jessebot/onboardme:latest-arm
             jessebot/onboardme:debian12-arm
             jessebot/onboardme:debian12-arm-default-pkgs
+
+      - name: Build/push arm - default + devops pkgs
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          # build from docker/ directory
+          context: docker
+          platforms: linux/amd64
+          build-args: |
+            "RUN_MODE=true"
+            "DEFAULT=true"
+            "DEVOPS=true"
+          tags: |
+            jessebot/onboardme:arm-devops
+            jessebot/onboardme:debian12-arm-devops
+
+      - name: Build/push arm - full tui pkgs
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          # build from docker/ directory
+          context: docker
+          platforms: linux/amd64
+          build-args: |
+            "RUN_MODE=true"
+            "DEFAULT=true"
+            "DEVOPS=true"
+            "MAIL=true"
+            "MUSIC=true"
+          tags: |
+            jessebot/onboardme:arm-full-tui
+            jessebot/onboardme:debian12-arm-full-tui
