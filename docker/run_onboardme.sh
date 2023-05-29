@@ -12,4 +12,5 @@ $($obm_cmd)
 echo "finished running onboardme"
 
 echo "moving fastfetch config into place"
+mkdir ${XDG_CONFIG_HOME}/fastfetch
 mv /tmp/config.conf ${XDG_CONFIG_HOME}/fastfetch/config.conf

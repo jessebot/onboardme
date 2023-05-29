@@ -71,7 +71,7 @@ RUN wget --hsts-file="$XDG_DATA_HOME/wget/wget-hsts" https://raw.githubuserconte
     mv $HOME/.gitconfig $XDG_CONFIG_HOME/git/config
 
 # this is for a cute fastfetch
-COPY --chown=friend:friend config.conf run_onboardme.sh /tmp/
+COPY --chown=friend:friend ./config.conf ./run_onboardme.sh /tmp/
 
 # install onboardme - using python 3.11, default for Debian bookworm
 # then run onboardme and clear apt/brew/pip cache when we're done
