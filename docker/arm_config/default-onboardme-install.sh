@@ -16,15 +16,31 @@ sudo dpkg -i nvim-linux64.deb
 
 echo ""
 EXTRA_GROUPS=""
-if [ ! -z $DEFAULT ]; then EXTRA_GROUPS+=" -g default"; fi
-if [ ! -z $DATA_SCIENCE ]; then EXTRA_GROUPS+=" -g data_science"; fi
-if [ ! -z $DEVOPS ]; then EXTRA_GROUPS+=" -g devops"; fi
-if [ ! -z $MAIL ]; then EXTRA_GROUPS+=" -g mail"; fi
-if [ ! -z $MUSIC ]; then EXTRA_GROUPS+=" -g music"; fi
+if [ ! -z $DEFAULT ]; then
+    EXTRA_GROUPS+=" -g default"
+fi
+
+if [ ! -z $DATA_SCIENCE ]; then
+    EXTRA_GROUPS+=" -g data_science"
+fi
+
+if [ ! -z $DEVOPS ]; then
+    EXTRA_GROUPS+=" -g devops"
+fi
+
+if [ ! -z $MAIL ]; then
+    EXTRA_GROUPS+=" -g mail"
+fi
+
+if [ ! -z $MUSIC ]; then
+    EXTRA_GROUPS+=" -g music"
+fi
 
 obm_cmd="onboardme --no_upgrade --log_level debug$EXTRA_GROUPS"
-echo "running onboardme command now: $obm_cmd"
+echo "running: $obm_cmd"
 eval $obm_cmd
+
+echo "🏁 Finished running onboardme!"
 
 echo ""
 echo "downloading bottom debian package. bottom is a top replacement and is aliased to btm, and sometimes top"
