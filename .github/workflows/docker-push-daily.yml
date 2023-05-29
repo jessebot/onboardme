@@ -50,7 +50,7 @@ jobs:
           # build from docker/ directory
           context: docker
           platforms: linux/amd64
-          build-args: "RUN_MODE=default"
+          build-args: "RUN_MODE=true"
           tags: |
             jessebot/onboardme:latest
             jessebot/onboardme:debian12
@@ -131,7 +131,6 @@ jobs:
           tags: |
             jessebot/onboardme:latest-arm
             jessebot/onboardme:debian12-arm
-            jessebot/onboardme:debian12-arm-default-pkgs
 
       - name: Build/push arm - default + devops pkgs
         uses: docker/build-push-action@v4

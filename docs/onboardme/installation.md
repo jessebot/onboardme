@@ -99,25 +99,6 @@ pipx install onboardme
 
 </details>
 
-## Using the Docker image
-
-_Note: For fonts and images to work properly, you should use a modern terminal like [wezterm](https://wezfurlong.org/wezterm/), iterm2, or konsole as well as you need to make sure you [install](https://github.com/ryanoasis/nerd-fonts/tree/master#font-installation) a [nerdfont](https://www.nerdfonts.com) and_ `libsixel` + `imagemagick`.
-
-To run the image locally with onboardme installed and already run using default settings:
-
-```bash
-# this image is built daily and has already run onboardme with the default settings
-docker run jessebot/onboardme:latest
-```
-
-To run the image locally with onbaordme installed but _not_ run:
-
-```bash
-# best if you have your own dot files, or need a smaller initial docker image to pull
-# no packages outside of the required pre-reqs for onboardme have been installed
-docker run jessebot/onboardme:no-install
-```
-
 
 ## Quick test of `onboardme`
 Now you can run the actual script that does the heavy lifting. If you ran the
