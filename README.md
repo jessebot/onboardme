@@ -1,4 +1,4 @@
-<h2 align="center">
+<h1 align="center">
   <img
     src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/misc/transparent.png"
     height="30"
@@ -10,10 +10,7 @@
     height="30"
     width="0px"
   />
-  <a href="https://github.com/jessebot/onboardme/releases">
-    <img src="https://img.shields.io/github/v/release/jessebot/onboardme?style=plastic&labelColor=484848&color=3CA324&logo=GitHub&logoColor=white">
-  </a>
-</h2>
+</h1>
 
 Get your daily driver, or personalized 🐳 container, just the way you like it! From dot files management, to package installation, to setting up neovim, to other little features you didn't know you needed, `onboardme` intends to save you time with initializing and maintaining your personal evironments ✨
 
@@ -21,7 +18,7 @@ Get your daily driver, or personalized 🐳 container, just the way you 
 <img width="90%" src='https://raw.githubusercontent.com/jessebot/onboardme/main/docs/onboardme/screenshots/image_in_terminal.png' alt='screenshot of color samples and image of dog using a computer using sixel'>
 </p>
 
-# Features
+## Features
 
 <details>
   <summary><h4>Keep your Dot Files Up To Date Across multiple systems</h4></summary>
@@ -77,7 +74,7 @@ We use use [XDG Base Directory Spec] for [config files](#configuration) so you a
   <summary><h4>Docker image for an on-the-go dev workspace<h4></summary>
 
 The docker image is built nightly, and on push to `main` via GHA. The base image is `debian:bookworm`, but we will rollout support for Ubuntu down the line :)
-See the [docker](#docker) section for more info!
+See the [dockerhub page](https://hub.docker.com/r/jessebot/onboardme) for more info!
 
 </details>
 
@@ -90,7 +87,7 @@ See the [docker](#docker) section for more info!
 
 </details>
 
-## Screenshots
+### Screenshots
 
 <details>
   <summary>Example of <code>onboardme --help</code></summary>
@@ -130,12 +127,11 @@ See the [docker](#docker) section for more info!
 
 ## Install Locally
 
-You'll need `curl`, `brew`, `git`, and Python 3.11 to get started. We have a setup script to install those (except `curl`) and help you get your environment to the XDG spec under <b>Locally</b> or you can just use our docker image, [jessebot/onboardme](https://hub.docker.com/r/jessebot/onboardme).
+You'll need `curl`, `brew`, `git`, and Python 3.11 to get started. We have a setup script to install those (except `curl`) and help you get your environment to the XDG spec under <b>Locally</b>. For docker, see the section below.
 
 <details>
   <summary>Local prereq install script</summary>
-
-
+.
 <details>
   <summary><code>curl</code>, a pre-prereq</summary>
 
@@ -196,44 +192,7 @@ pip install --user --upgrade onboardme
 
 ## Using the Docker image
 
-Currently we only build with `debian:bookworm-slim` as the base image, but we're planning for ubuntu 22.04 soon too.
-
-_Note: For fonts and images to work properly, you should use a modern terminal like [wezterm](https://wezfurlong.org/wezterm/), iterm2, or konsole as well as you need to make sure you [install](https://github.com/ryanoasis/nerd-fonts/tree/master#font-installation) a [nerdfont](https://www.nerdfonts.com) and_ `libsixel` + `libmagickcore`.
-
-To run the image locally with onboardme installed and already run using default settings:
-
-```bash
-# this image is built daily and has already run onboardme with the default settings
-docker run jessebot/onboardme:latest
-```
-
-To run the image locally with onbaordme installed but _not_ run:
-
-```bash
-# best if you have your own dot files, or need a smaller initial docker image to pull
-# no packages outside of the required pre-reqs for onboardme have been installed
-docker run jessebot/onboardme:prereqs
-```
-
-### For ARM users
-We build special Debian containers just for use on ARM 64 (AArch64) mac M1s and Linux machines.
-
-To run the ARM image locally with onboardme installed and already run using default settings:
-
-```bash
-# this image is built daily and has already run onboardme with the default settings
-docker run jessebot/onboardme:latest-arm
-```
-
-To run the ARM image locally with onbaordme installed but _not_ run:
-
-```bash
-# best if you have your own dot files, or need a smaller initial docker image to pull
-# no packages outside of the required pre-reqs for onboardme have been installed
-docker run jessebot/onboardme:arm-prereqs
-```
-
-Read more about our docker tags [here](https://hub.docker.com/repository/docker/jessebot/onboardme/general).
+Read more about our docker tags and how to use them at [jessebot/onboardme](https://hub.docker.com/r/jessebot/onboardme) on DockerHub.
 
 # Usage
 
@@ -364,17 +323,17 @@ And optomized for the following programs:
 
 
 ## Status
-Still not production ready, but reasonably stable :)
+  <a href="https://github.com/jessebot/onboardme/releases">
+    <img src="https://img.shields.io/github/v/release/jessebot/onboardme?style=plastic&labelColor=484848&color=3CA324&logo=GitHub&logoColor=white">
+    </a> <br></br>
 
-Please report 🐛 in the GitHub issues, and we will collect them,
-and release them back into the wild, because we are vegan and nice.
-(Kidding, we will help! 😌)
 
-We love contributors! Feel free to open a pull request, and we will review it asap! :)
+Actively used by the maintainers daily, but software is always changing, so please report 🐛 in the GitHub issues, and we will collect them, and release them back into the wild, because we are vegan and nice. (Kidding, we will help! 😌)
 
 :star: If you like this project, please star it to help us keep motivated :3
 
 ### Contributors
+We love contributors! Feel free to open a pull request, and we will review it asap! :)
 
 <!-- readme: contributors -start -->
 <table>
