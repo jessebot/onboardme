@@ -65,7 +65,10 @@ RUN git config --global init.defaultBranch main && \
     onboardme --version
 
 # this is for a cute fastfetch and arm package install processes
-COPY --chown=friend:friend ./config.conf ./arm_config/ /tmp/
+COPY --chown=friend:friend ./config.conf /tmp/
+COPY --chown=friend:friend ./arm_config/default-onboardme-install.sh /tmp/
+COPY --chown=friend:friend ./arm_config/devops-onboardme-install.sh /tmp/
+COPY --chown=friend:friend ./arm_config/music-onboardme-install.sh /tmp/
 
 RUN if [ -n "$RUN_MODE" ]; then bash /tmp/arm_config/default-onboardme-install.sh; fi
 
