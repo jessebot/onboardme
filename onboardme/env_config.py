@@ -8,7 +8,7 @@ import logging as log
 from rich.prompt import Confirm
 
 # custom libs
-from .constants import OS, USR_CONFIG_FILE
+from .constants import OS, USR_CONFIG_FILE, DEFAULT_PKG_GROUPS
 from .console_logging import print_panel
 
 
@@ -137,6 +137,7 @@ def process_configs(overwrite: bool, repo: str, git_branch: str,
         except KeyError:
             pass
 
+    USR_CONFIG_FILE['package']['groups'] = DEFAULT_PKG_GROUPS
     log.debug(f"🗂 ⚙️  user_config_file: \n{USR_CONFIG_FILE}\n")
     final_defaults = fill_in_defaults(cli_dict, USR_CONFIG_FILE, True)
 
