@@ -87,7 +87,6 @@ jobs:
             jessebot/onboardme:full-tui
             jessebot/onboardme:debian12-full-tui
 
-
   docker-arm64:
     runs-on: self-hosted
     steps:
@@ -138,7 +137,9 @@ jobs:
           push: true
           # build from docker/ directory
           context: docker
-          platforms: linux/amd64
+          # use special Dockerfile for arm builds
+          file: docker/Dockerfile.arm
+          platforms: linux/arm64
           build-args: |
             "RUN_MODE=true"
             "DEFAULT=true"
@@ -153,7 +154,9 @@ jobs:
           push: true
           # build from docker/ directory
           context: docker
-          platforms: linux/amd64
+          # use special Dockerfile for arm builds
+          file: docker/Dockerfile.arm
+          platforms: linux/arm64
           build-args: |
             "RUN_MODE=true"
             "DEFAULT=true"
