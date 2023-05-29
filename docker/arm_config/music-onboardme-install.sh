@@ -1,6 +1,6 @@
 ## install spotifyd
 # for this we need cargo already via rustup, which is in the devops file
-sudo apt install libasound2-dev libssl-dev pkg-config
+sudo apt install -y libasound2-dev libssl-dev
 git clone https://github.com/Spotifyd/spotifyd.git
 cd spotifyd
 cargo build --release
