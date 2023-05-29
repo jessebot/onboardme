@@ -24,7 +24,7 @@ if [ ! -z $MUSIC ]; then EXTRA_GROUPS+=" -g music"; fi
 
 obm_cmd="onboardme --no_upgrade --log_level debug$EXTRA_GROUPS"
 echo "running onboardme command now: $obm_cmd"
-$($obm_cmd)
+eval $obm_cmd
 
 echo ""
 echo "downloading bottom debian package. bottom is a top replacement and is aliased to btm, and sometimes top"
