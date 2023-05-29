@@ -4,19 +4,37 @@ on:
   push:
     branches:
       - 'main'
-    paths-ignore:
-      - docs/**
-      - README.md 
-      - setup.sh
+    paths:
+      - docker/*
+      - "!docker/README.md"
+    tags:
+      - "v*.*.*"
 
   schedule:
     # * is a special character in YAML so you have to quote this string
     # triggers every day at 00:00 UTC (midnight)
     - cron:  '0 0 * * *'
 
+
 jobs:
-  docker-amd64:
+  build_and_publish_to_pypi:
     runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build and publish to pypi
+        uses: JRubics/poetry-publish@v1.17
+        with:
+          python_version: "3.11.2"
+          pypi_token: ${{ secrets.DEPLOY_FROM_GITHUB_TO_PYPI_ONBOARDME }}
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+
+  docker-amd64:
+    needs: build_and_publish_to_pypi
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
@@ -88,6 +106,7 @@ jobs:
             jessebot/onboardme:debian12-full-tui
 
   docker-arm64:
+    needs: build_and_publish_to_pypi
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
