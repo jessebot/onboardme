@@ -1,6 +1,9 @@
 name: nightly and on.push docker builds
 
 on:
+  # to trigger manually if we really need it
+  workflow_dispatch:
+
   push:
     branches:
       - 'main'
