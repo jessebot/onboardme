@@ -72,6 +72,7 @@ tar -xzf terraform-docs.tar.gz
 chmod +x terraform-docs
 mv terraform-docs /usr/local/terraform-docs
 
-## rustup
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+## rustup: https://forge.rust-lang.org/infra/other-installation-methods.html
+curl -LO /tmp/ https://static.rust-lang.org/dist/rust-1.69.0-aarch64-unknown-linux-gnu.tar.gz
+tar xvf /tmp/rust-1.69.0-aarch64-unknown-linux-gnu.tar.gz
 rustup update

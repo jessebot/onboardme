@@ -55,6 +55,9 @@ def options_help() -> dict:
         'Directory to store the git configuration for your dot files. '
         'Default: ~/.config/dot_files',
 
+        'generate_screenshot':
+        'Generate a few SVGs for use in the docs and README. Undocumented.',
+
         'overwrite':
         '[b]Overwrites[/b] existing dot files with files from configured '
         "[option]--git_url[/option] repo. If you've set overwrite: true in "
@@ -133,7 +136,7 @@ class RichCommand(click.Command):
                               padding=(1, 1, 0, 0))
 
         # this used to be self.get_params(ctx)[1:] to have only one hidden option
-        for param in self.get_params(ctx)[2:]:
+        for param in self.get_params(ctx):
 
             if len(param.opts) == 2:
                 opt1 = highlighter(param.opts[1])

@@ -54,7 +54,7 @@ def setup_dot_files(OS='Linux',
 
     # create ~/.config/.git to get git status while editing config files
     if not path.isfile(f"{XDG_CONFIG_DIR}/.git"):
-        with open(f"{XDG_CONFIG_DIR}/.git") as config_git_config:
+        with open(f"{XDG_CONFIG_DIR}/.git", "w") as config_git_config:
             config_git_config.write(f"gitdir: {dot_files_cfg_dir}")
 
     if overwrite:
