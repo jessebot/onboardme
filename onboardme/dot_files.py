@@ -52,6 +52,11 @@ def setup_dot_files(OS='Linux',
     cmds = [f"git remote add origin {git_url}"]
     subproc(cmds, error_ok=True, spinner=False, **opts)
 
+    # create ~/.config/.git to get git status while editing config files
+    if not path.isfile(f"{XDG_CONFIG_DIR}/.git"):
+        with open(f"{XDG_CONFIG_DIR}/.git") as config_git_config:
+            config_git_config.write(f"gitdir: {dot_files_cfg_dir}")
+
     if overwrite:
         # WARN: this command will overwrite local files with remote files
         reset_cmd = f"git reset --hard origin/{branch}"
