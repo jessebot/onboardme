@@ -8,7 +8,7 @@ import logging as log
 from rich.prompt import Confirm
 
 # custom libs
-from .constants import OS, USR_CONFIG_FILE, DEFAULT_PKG_GROUPS
+from .constants import OS, USR_CONFIG_FILE, DEFAULT_PKG_GROUPS, HOME_DIR
 from .console_logging import print_panel
 
 
@@ -98,9 +98,16 @@ def fill_in_defaults(defaults: dict, user_config: dict,
     return user_config
 
 
-def process_configs(overwrite: bool, repo: str, git_branch: str, 
-                    pkg_mngrs: list, pkg_groups: list, firewall: bool,
-                    remote_host: str, steps: list, log_file: str,
+def process_configs(overwrite: bool,
+                    repo: str,
+                    git_branch: str,
+                    git_config_dir: str,
+                    pkg_mngrs: list,
+                    pkg_groups: list,
+                    firewall: bool,
+                    remote_host: str,
+                    steps: list,
+                    log_file: str,
                     log_level: str) -> dict:
     """
     process the config in ~/.config/onboardme/config.yml if it exists,
@@ -112,6 +119,8 @@ def process_configs(overwrite: bool, repo: str, git_branch: str,
         if type(remote_host) is str:
             remote_host = [remote_host]
 
+    if "~" in git_config_dir:
+        git_config_dir = git_config_dir.replace("~", HOME_DIR)
 
     cli_dict = {'package': {'managers': {OS[0]: pkg_mngrs},
                             'groups': pkg_groups},
@@ -120,7 +129,9 @@ def process_configs(overwrite: bool, repo: str, git_branch: str,
                 'firewall': firewall,
                 'steps': {OS[0]: steps},
                 'dot_files': {'overwrite': overwrite,
-                              'git_url': repo, 'git_branch': git_branch}}
+                              'git_url': repo,
+                              'git_branch': git_branch,
+                              'git_config_dir': git_config_dir}}
 
     log.debug(f"cli_dict is:\n{cli_dict}\n")
 
