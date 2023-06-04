@@ -66,7 +66,11 @@ If you haven't already made the switch from Vim to [NeoVim], you can try out Neo
 <details>
   <summary><h4>Easy <code>yaml</code> config files using XDG Base Directory Spec<h4></summary>
 
-We use use [XDG Base Directory Spec] for [config files](#configuration) so you always know where they are :)
+We use use [XDG Base Directory Spec] for config files, so you always know where they are :)
+
+Config files are in `$XDG_CONFIG_HOME/onboardme/`, <sub>or `~/.config/onboardme/` if `$XDG_CONFIG_HOME` is not defined</sub>.
+
+Learn more about configuration in the [config docs](https://jessebot.github.io/onboardme/onboardme/getting-started).
 
 </details>
 
@@ -195,13 +199,15 @@ pip install --user --upgrade onboardme
 Read more about our docker tags and how to use them at [jessebot/onboardme](https://hub.docker.com/r/jessebot/onboardme) on DockerHub.
 
 # Usage
+Learn more about configuration in the [config docs](https://jessebot.github.io/onboardme/onboardme/getting-started), but by default you can get started with:
 
-_Now_ you can run `onboardme` 🎉 
 ```bash
 # this will display the help text for onboardme
 onboardme --help
 
-# Running this won't overwrite any existing dot files, but it may add new ones.
+# Running this won't overwrite any existing dot files, but it may add new ones
+# and it may install new packages. Don't run this till you've looked at the files
+# in ~/.config/onboardme/
 onboardme
 ```
 
@@ -220,105 +226,6 @@ If you're on python 3.11, you should be able to do:
 ```bash
 pip3.11 install --upgrade onboardme
 ```
-
-### Configuration
-onboardme has lots of CLI options, but you can also use config files. You have to create these files for the time being.
-
-Config files are in `$XDG_CONFIG_HOME/onboardme/`, <sub>or `~/.config/onboardme/` if `$XDG_CONFIG_HOME` is not defined</sub>.
-
-| Config File                               |        Description                                  |
-|:------------------------------------------|:----------------------------------------------------|
-| `$XDG_CONFIG_HOME/onboardme/config.yml`   | For step configuration to run either all steps, or just a subset. | 
-| `$XDG_CONFIG_HOME/onboardme/packages.yml` | For adding packages with different package managers |
-
-Examples:
-<details>
-<summary><code>~/.config/onboardme/config.yml</code></summary>
-
-```yaml
----
-# ______________________________________________________________ #
-#         Config file for the onboardme cli command.             #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-#  - If this files exists as: ~/.config/onboardme/config.yaml    #
-#    then its loaded instead of the default config               #
-# -------------------------------------------------------------- #
-
-
-log:
-  # Full path to a file you'd like to log to. Creates file if it doesn't exist
-  file: ""
-  # what level of logs to output (debug, info, warn, error)
-  level: "warn"
-
-# steps refer to a specific function in the list of functions we run
-steps:
-  # these are mac specific steps
-  Darwin:
-    - dot_files
-    - packages
-    - font_setup
-    - neovim_setup
-    - sudo_setup
-  # these are linux specific steps
-  Linux:
-    - dot_files
-    - packages
-    - font_setup
-    - neovim_setup
-    - group_setup
-
-dot_files:
-  # personal git repo URL for your dot files, defaults to jessebot/dot_files
-  git_url: "https://github.com/jessebot/dot_files.git"
-  # the branch to use for the git repo above, defaults to main
-  git_branch: "main"
-  # !!CAREFUL: runs a `git reset --hard`, which will overwite/delete files in 
-  # $HOME that conflict with the above defined git repo url and branch.
-  # You should run the following to get the files that would be overwritten:
-  # onboardme -s dot_files
-  # if set to true, then using onboardme -O will toggle it back to false
-  overwrite: false
-
-# This is the basic package config.
-package:
-  # Remove any of the below pkg managers to only run the remaining pkg managers
-  managers:
-    # macOS specific steps
-    Darwin:
-      - brew
-      - pip3.11
-    # Debian/Ubuntu specific steps
-    Linux:
-      - apt
-      - brew
-      - pip3.11
-      - flatpak
-      - snap
-  # list of extra existing packages groups to install
-  groups:
-    default:
-      # basic tui stuff to have a nice time in the terminal :)
-      - default
-    # move these package.groups.default to always install them
-    optional:
-      # setting up more python data science specific tooling
-      - data_science
-      # kubernetes and docker tools
-      - devops
-      # gaming always installs gui
-      - gaming
-      # freetube and other gui applications
-      - gui
-      # this configures neomutt and offlineimap
-      - mail
-      # sets up useful music tui stuff for spotify and youtube
-      - music
-      # things like zoom and slack
-      - work
-```
-
-</details>
 
 ## Under the Hood
 Made and tested for these operating systems:

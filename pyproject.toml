@@ -1,6 +1,6 @@
 [tool.poetry]
 name          = "onboardme"
-version       = "1.4.1"
+version       = "1.5.0"
 description   = "Install dot files and packages, including a base mode with sensible defaults to run on most computers running Debian based distros or macOS."
 authors       = [
     "Jesse Hitch <jessebot@linux.com>",
@@ -19,8 +19,7 @@ classifiers   = ["Development Status :: 3 - Alpha",
                  "Topic :: System :: Installation/Setup",
                  "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)"]
 packages      = [{include = "onboardme"}]
-include       = ["onboardme/scripts/update_apt_sources.sh",
-                 "onboardme/scripts/get_apt_list.sh"]
+include       = ["onboardme/scripts/update_apt_sources.sh"]
 
 [tool.poetry.dependencies]
 python              = "^3.11"
