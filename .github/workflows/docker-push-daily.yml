@@ -18,9 +18,9 @@ on:
     # triggers every day at 00:00 UTC (midnight)
     - cron:  '0 0 * * *'
 
-
 jobs:
   build_and_publish_to_pypi:
+    environment: 'pypi'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -34,6 +34,7 @@ jobs:
           pypi_token: ${{ secrets.DEPLOY_FROM_GITHUB_TO_PYPI_ONBOARDME }}
 
   docker-amd64:
+    environment: 'docker-amd64'
     needs: build_and_publish_to_pypi
     runs-on: ubuntu-latest
     steps:
@@ -107,6 +108,7 @@ jobs:
             jessebot/onboardme:debian12-full-tui
 
   docker-arm64:
+    environment: 'docker-arm64'
     needs: build_and_publish_to_pypi
     runs-on: self-hosted
     steps:
