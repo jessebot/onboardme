@@ -13,33 +13,38 @@ from .console_logging import print_panel, print_msg
 from .subproc import subproc
 
 
-XDG_GIT_CFG_DIR = path.join(XDG_CONFIG_DIR, 'git')
-Path(XDG_GIT_CFG_DIR).mkdir(exist_ok=True)
-XDG_GIT_PATH = path.join(XDG_GIT_CFG_DIR, 'config')
+xdg_git_config_dir = path.join(XDG_CONFIG_DIR, 'git')
+Path(xdg_git_config_dir).mkdir(exist_ok=True)
+XDG_GIT_CONFIG = path.join(xdg_git_config_dir, 'config')
 
 
-def setup_dot_files(OS='Linux', overwrite=False,
+def setup_dot_files(OS='Linux',
+                    overwrite=False,
                     git_url="https://github.com/jessebot/dot_files.git",
-                    branch="main") -> None:
+                    branch="main",
+                    dot_files_cfg_dir=f"{XDG_CONFIG_DIR}/dot_files") -> None:
     """
     note on how we're doing things, seperate dot files repo:
     https://probablerobot.net/2021/05/keeping-'live'-dotfiles-in-a-git-repo/
+
+
     """
-    git_dir = path.join(HOME_DIR, '.git_dot_files')
-    # create ~/.git_dot_files if it does not exist
-    Path(git_dir).mkdir(exist_ok=True)
-    chdir(git_dir)
-    opts = {'quiet': True, 'cwd': git_dir}
+    # create dot_files_cfg_dir if it doesn't exist/don't complain if it does
+    # defaults to ~/.config/dot_files
+    Path(dot_files_cfg_dir).mkdir(parents=True, exist_ok=True)
+    chdir(dot_files_cfg_dir)
+    opts = {'quiet': True, 'cwd': dot_files_cfg_dir}
 
     if git_url:
         if "github.com" in git_url:
+            # get just the owner/repo_name like jessebot/dot_files
             user_repo = "/".join(git_url.split("/")[-2:]).replace(".git", "")
 
     # global: use main as default branch, always push up new remote branch
     git_raw = f"https://raw.githubusercontent.com/{user_repo}/{branch}"
 
-    cmds = [f'curl {git_raw}/.config/git/config -o {XDG_GIT_PATH}',
-            f'git --git-dir={git_dir} --work-tree={HOME_DIR} init',
+    cmds = [f'curl {git_raw}/.config/git/config -o {XDG_GIT_CONFIG}',
+            f'git --git-dir={dot_files_cfg_dir} --work-tree={HOME_DIR} init',
             'git config status.showUntrackedFiles no']
     subproc(cmds, spinner=False, **opts)
 

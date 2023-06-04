@@ -112,6 +112,11 @@ def setup_logger(level="", log_file=""):
         metavar='BRANCH',
         help=HELP['git_branch'],
         default=USR_CONFIG_FILE['dot_files']['git_branch'])
+@option('--git_config_dir',
+        '-b',
+        metavar='PATH',
+        help=HELP['git_config_dir'],
+        default=USR_CONFIG_FILE['dot_files']['git_config_dir'])
 @option('--overwrite',
         '-O',
         is_flag=True,
@@ -153,7 +158,7 @@ def setup_logger(level="", log_file=""):
         default=False)
 def main(log_level, log_file,
          steps, 
-         git_url, git_branch, overwrite,
+         git_url, git_branch, git_config_dir, overwrite,
          pkg_managers, pkg_groups,
          firewall, remote_host,
          no_upgrade,
@@ -177,8 +182,10 @@ def main(log_level, log_file,
     log = setup_logger(log_level, log_file)
 
     # makes sure we only overwrite config file prefs if cli opts are passed in
-    usr_pref = process_configs(overwrite, git_url, git_branch, pkg_managers,
-                               pkg_groups, firewall, remote_host, steps,
+    usr_pref = process_configs(overwrite, git_url, git_branch, git_config_dir,
+                               pkg_managers, pkg_groups, 
+                               firewall, remote_host,
+                               steps,
                                log_file, log_level)
 
     if log:
@@ -193,7 +200,8 @@ def main(log_level, log_file,
             # this creates a live git repo out of your home directory
             df_prefs = usr_pref['dot_files']
             setup_dot_files(OS, df_prefs['overwrite'],
-                            df_prefs['git_url'], df_prefs['git_branch'])
+                            df_prefs['git_url'], df_prefs['git_branch'],
+                            df_prefs['git_config_dir'])
 
         elif step == 'packages':
             pkg_mngrs = usr_pref['package']['managers'][OS[0]]

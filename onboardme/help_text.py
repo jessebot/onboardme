@@ -41,15 +41,6 @@ def options_help() -> dict:
     pkg_group_choices = pretty_choices(DEFAULT_PKG_GROUPS + OPT_PKG_GROUPS)
 
     return {
-        'log_level':
-        f'Logging level. {logging_choices}\nDefault: [meta]warn[/meta]',
-
-        'log_file':
-        'Full path to file to log to, if set.',
-
-        'quiet':
-        "unstable. Don't output to stdout. ",
-
         'steps':
         f'[b]Only[/b] run [meta]STEP[/] in the script.\n{step_choices}\nExampl'
         'e: [switch]-s[/] [meta]dot_files[/] [switch]-s[/] [meta]packages',
@@ -85,6 +76,16 @@ def options_help() -> dict:
 
         'version':
         f'Print the version of onboardme ({VERSION})'
+
+        'log_level':
+        f'Logging level. {logging_choices}\nDefault: [meta]warn[/meta]',
+
+        'log_file':
+        'Full path to file to log to, if set.',
+
+        'quiet':
+        "unstable. Don't output to stdout. ",
+
     }
 
 
@@ -127,8 +128,8 @@ class RichCommand(click.Command):
                               row_styles=["", "dim"],
                               padding=(1, 1, 0, 0))
 
-        # this used to be self.get_params(ctx)[1:] and I don't know why
-        for param in self.get_params(ctx):
+        # this used to be self.get_params(ctx)[1:] to have only one hidden option
+        for param in self.get_params(ctx)[2:]:
 
             if len(param.opts) == 2:
                 opt1 = highlighter(param.opts[1])
