@@ -51,6 +51,10 @@ def options_help() -> dict:
         'git_branch':
         'Branch to use for the git repo url. Default: main',
 
+        'git_config_dir':
+        'Directory to store the git configuration for your dot files. '
+        'Default: ~/.config/dot_files',
+
         'overwrite':
         '[b]Overwrites[/b] existing dot files with files from configured '
         "[option]--git_url[/option] repo. If you've set overwrite: true in "
@@ -75,7 +79,7 @@ def options_help() -> dict:
         'Setup iptables (on [i]linux[/] only).',
 
         'version':
-        f'Print the version of onboardme ({VERSION})'
+        f'Print the version of onboardme ({VERSION})',
 
         'log_level':
         f'Logging level. {logging_choices}\nDefault: [meta]warn[/meta]',
@@ -84,7 +88,7 @@ def options_help() -> dict:
         'Full path to file to log to, if set.',
 
         'quiet':
-        "unstable. Don't output to stdout. ",
+        "unstable. Don't output to stdout. "
 
     }
 

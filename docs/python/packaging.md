@@ -51,6 +51,8 @@ poetry publish --username __token__ --password $PYPI_TOKEN
 
 Here's a github action that does it for you: [JRubics/poetry-publish][3]
 
+Check out more poetry docs at [here](https://jessebot.github.io/onboardme/python/poetry).
+
 ## What about brew?
 Well, that's a rabbit hole that I haven't had a chance to go down yet, but you
 probably want to start here:

@@ -113,7 +113,7 @@ def setup_logger(level="", log_file=""):
         help=HELP['git_branch'],
         default=USR_CONFIG_FILE['dot_files']['git_branch'])
 @option('--git_config_dir',
-        '-b',
+        '-d',
         metavar='PATH',
         help=HELP['git_config_dir'],
         default=USR_CONFIG_FILE['dot_files']['git_config_dir'])
