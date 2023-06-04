@@ -1,6 +1,6 @@
 [tool.poetry]
 name          = "onboardme"
-version       = "1.4.0"
+version       = "1.4.1"
 description   = "Install dot files and packages, including a base mode with sensible defaults to run on most computers running Debian based distros or macOS."
 authors       = [
     "Jesse Hitch <jessebot@linux.com>",
@@ -25,7 +25,7 @@ include       = ["onboardme/scripts/update_apt_sources.sh",
 [tool.poetry.dependencies]
 python              = "^3.11"
 click               = "^8.1"
-rich                = "^13.3"
+rich                = "^13.4"
 PyYAML              = "^6.0"
 GitPython           = "^3.1"
 wget                = "^3.2"
