@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Getting Started
-parent: getting-started
+title: Configuration
+parent: onboardme
 permalink: /onboardme/config
 ---
 

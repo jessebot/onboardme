@@ -1,9 +1,8 @@
 ---
 layout: default
 title: Installation
-grand_parent: onboardme
-parent: Getting Started
-permalink: /onboardme/getting-started/installation
+parent: onboardme
+permalink: /onboardme/install
 ---
 
 # OnBoardMe Installation
