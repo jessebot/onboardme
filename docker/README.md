@@ -1,14 +1,15 @@
 # Files for building onboardme docker containers
 
-```
+```bash
 ├──  arm_config
-│   ├──  DEFAULT-onboardme-install.sh
-│   ├──  devops-onboardme-install.sh
-│   └──  music-onboardme-install.sh
+│   ├──   default-onboardme-install.sh
+│   ├──   devops-onboardme-install.sh
+│   └──   music-onboardme-install.sh
 ├── ⚙️ config.conf
 ├── 🐳 Dockerfile
 ├── 🐳 Dockerfile.arm
-└──  run_onboardme.sh
+├── 🐳 Dockerfile.rust-builder
+└──   run_onboardme.sh
 ```
 
 ## Only x86_64 (amd64)
@@ -46,3 +47,13 @@ docker build --platform=linux/arm64 --build-arg='DEFAULT=True' --build-arg='DEVO
 
 ## Used in arm64 (aarch64) _and_ amd64
 `config.conf` is a special fastfetch config used for both docker images
+
+## Building rust packages
+Several apps written in rust don't have Debian packages, so we create them using `Dockerfile.rust-builder`:
+```bash
+# build the docker image, but you could also grab the code from this file and do a multistage build
+docker buildx build --platform=linux/arm64 -t rustbuilder:spotifyd-dev -f Dockerfile.rust-builder .
+
+# this creates the image and copies the deb to your current directory
+docker cp $(docker create --name rustemp rustbuilder:spotifyd-dev):/spotifyd_0.3.5_arm64.deb . && docker rm rustemp
+```

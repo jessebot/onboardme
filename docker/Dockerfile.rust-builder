@@ -1,0 +1,24 @@
+# this file is just a rust builder for ARM
+# note the platform is arm64
+FROM --platform=linux/arm64/v8 rust:slim-bookworm
+
+# this could be any rust repo
+ENV RUST_REPO="https://github.com/Spotifyd/spotifyd.git"
+# all the prereq packages you need to install, separated by spaces
+ENV APT_PKGS="libasound2-dev libssl-dev libpulse-dev libdbus-1-dev"
+
+# install prereqs for spotifyd and install cargo-deb for making debian packages
+RUN apt update && \
+    apt install -y --no-install-recommends git $APT_PKGS && \
+    cargo install cargo-deb
+
+RUN echo "made it here"
+
+# # clone the rust repo
+RUN git clone $RUST_REPO /app
+
+WORKDIR /app
+
+# build the rust package and copy it to /
+RUN cargo deb && \
+    cp ./target/debian/*.deb /
