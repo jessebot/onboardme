@@ -1,15 +1,17 @@
+# install gpg so that we can verify gpg keys of external apt repos
+sudo apt install --no-install-recommends -y gpg
+
 # install gpg-tui, a TUI for gpg keys, for the lazy, like me: has to be compiled from source
 # maybe use 🤷:
 # https://github.com/orhun/gpg-tui/releases/download/v0.9.6/gpg-tui-0.9.6-x86_64-unknown-linux-gnu.tar.gz
 
 ## install gh - github's CLI
 ## ref: https://github.com/cli/cli/blob/trunk/docs/install_linux.md
-# type -p curl >/dev/null || (sudo apt update && sudo apt install curl -y)
-# curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-# sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
-# echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-# sudo apt update
-# sudo apt install -y gh
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+sudo apt update
+sudo apt install -y gh
 
 ## install glab - gitlab's cli
 ## ref: https://gitlab.com/gitlab-org/cli/-/blob/main/docs/installation_options.md#mpr-debianubuntu
@@ -67,8 +69,8 @@ echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bashrc
 curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
 
 ## terraform-docs: https://github.com/terraform-docs/terraform-docs/
-curl -Lo /tmp/terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
-tar -xzf terraform-docs.tar.gz
+curl -LO https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz /tmp/
+tar -xzf terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
 chmod +x terraform-docs
 mv terraform-docs /usr/local/terraform-docs
 
