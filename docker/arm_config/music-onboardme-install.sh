@@ -12,9 +12,6 @@ git clone https://github.com/Spotifyd/spotifyd.git
 cd spotifyd
 cargo build --release
 
-## install spotify-tui, for controlling spotify
-cargo install --git https://github.com/spotify-tui/spotify-tui
-
 ## add somafm for free internet radio out of SF
 # ref: https://github.com/cuschk/somafm
 npm install --global somafm
