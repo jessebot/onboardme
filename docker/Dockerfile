@@ -1,10 +1,7 @@
 # onbaordme Debian Bookworm image - linux/amd64 only
 FROM debian:bookworm-slim
 
-# "true"    - runs: onboardme --no_upgrade
-# ""        - will install onboardme, but won't run onboardme
-ARG RUN_MODE=""
-# extra package groups you can enable
+# package groups you can enable
 ARG DEFAULT=""
 ARG DATA_SCIENCE=""
 ARG DEVOPS=""
@@ -78,7 +75,7 @@ COPY --chown=friend:friend ./config.conf ./run_onboardme.sh /tmp/
 RUN pip install --user onboardme --break-system-packages && \
     onboardme --version
 
-RUN if [ -n "$RUN_MODE" ]; then bash /tmp/run_onboardme.sh; fi
+RUN if [ -n "$DEFAULT" ]; then bash /tmp/run_onboardme.sh; fi
 
 RUN brew cleanup && \
     sudo apt-get clean && \

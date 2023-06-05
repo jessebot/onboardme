@@ -70,7 +70,7 @@ jobs:
           # build from docker/ directory
           context: docker
           platforms: linux/amd64
-          build-args: "RUN_MODE=true"
+          build-args: "DEFAULT=true"
           tags: |
             jessebot/onboardme:latest
             jessebot/onboardme:debian12
@@ -83,7 +83,6 @@ jobs:
           context: docker
           platforms: linux/amd64
           build-args: |
-            "RUN_MODE=true"
             "DEFAULT=true"
             "DEVOPS=true"
           tags: |
@@ -98,7 +97,6 @@ jobs:
           context: docker
           platforms: linux/amd64
           build-args: |
-            "RUN_MODE=true"
             "DEFAULT=true"
             "DEVOPS=true"
             "MAIL=true"
@@ -148,7 +146,7 @@ jobs:
           # use special Dockerfile for arm builds
           file: docker/Dockerfile.arm
           platforms: linux/arm64
-          build-args: "RUN_MODE=default"
+          build-args: "DEFAULT=true"
           tags: |
             jessebot/onboardme:latest-arm
             jessebot/onboardme:debian12-arm
@@ -163,7 +161,6 @@ jobs:
           file: docker/Dockerfile.arm
           platforms: linux/arm64
           build-args: |
-            "RUN_MODE=true"
             "DEFAULT=true"
             "DEVOPS=true"
           tags: |
@@ -180,7 +177,6 @@ jobs:
           file: docker/Dockerfile.arm
           platforms: linux/arm64
           build-args: |
-            "RUN_MODE=true"
             "DEFAULT=true"
             "DEVOPS=true"
             "MAIL=true"

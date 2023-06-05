@@ -1,10 +1,7 @@
 # onbaordme Debian Bookworm image - linux/arm64 only
 FROM debian:bookworm-slim
 
-# "true"    - runs: onboardme --no_upgrade
-# ""        - will install onboardme, but won't run onboardme
-ARG RUN_MODE=""
-# extra package groups you can enable
+# package groups you can enable
 ARG DEFAULT=""
 ARG DATA_SCIENCE=""
 ARG DEVOPS=""
@@ -70,7 +67,7 @@ COPY --chown=friend:friend ./arm_config/default-onboardme-install.sh /tmp/
 COPY --chown=friend:friend ./arm_config/devops-onboardme-install.sh /tmp/
 COPY --chown=friend:friend ./arm_config/music-onboardme-install.sh /tmp/
 
-RUN if [ -n "$RUN_MODE" ]; then bash /tmp/default-onboardme-install.sh; fi
+RUN if [ -n "$DEFAULT" ]; then bash /tmp/default-onboardme-install.sh; fi
 
 RUN sudo apt-get clean && \
     sudo pip cache purge && \
