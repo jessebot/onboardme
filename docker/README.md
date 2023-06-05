@@ -2,7 +2,7 @@
 
 ```
 ├──  arm_config
-│   ├──  default-onboardme-install.sh
+│   ├──  DEFAULT-onboardme-install.sh
 │   ├──  devops-onboardme-install.sh
 │   └──  music-onboardme-install.sh
 ├── ⚙️ config.conf
@@ -16,7 +16,8 @@
 - `run_onboardme.sh` is for running onboardme with package groups based on docker env vars
 
 ```bash
-docker build --platform=linux/arm64 -t onboardme:dev .
+# this builds the DEFAULT onboardme image with onboardme and prereqs but doesn't run onboardme
+docker build --platform=linux/amd64 -t onboardme:dev-prereqs .
 ```
 
 ## Only ARM 64 (aarch64)
@@ -27,7 +28,17 @@ Homebrew on Linux [does not support ARM64 (aarch64)](https://docs.brew.sh/Homebr
 To build this image run:
 
 ```bash
-docker build --platform=linux/arm64 -t onboardme:dev-arm -f Dockerfile.arm .
+# this builds the DEFAULT onboardme image with onboardme and prereqs but doesn't run onboardme
+docker build --platform=linux/arm64 -t onboardme:dev-prereqs-arm -f Dockerfile.arm .
+
+# this builds the onboardme image with the DEFAULT install for onboardme
+docker build --platform=linux/arm64 --build-arg='DEFAULT=True' -t onboardme:dev-arm -f Dockerfile.arm .
+
+# this builds the onboardme image with the devops install for onboardme
+docker build --platform=linux/arm64 --build-arg='DEFAULT=True' --build-arg='DEVOPS=True' -t onboardme:dev-devops-arm -f Dockerfile.arm .
+
+# this builds the onboardme image with the full-tui install for onboardme
+docker build --platform=linux/arm64 --build-arg='DEFAULT=True' --build-arg='DEVOPS=True' --build-arg='MUSIC=True' -t onboardme:dev-full-tui-arm -f Dockerfile.arm .
 ```
 
 ## Used in arm64 (aarch64) _and_ amd64
