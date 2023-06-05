@@ -1,8 +1,3 @@
-echo "setting up default onbaordme config"
-mkdir -p $XDG_CONFIG_HOME/onboardme
-mv /tmp/packages.yml $XDG_CONFIG_HOME/onboardme/
-mv /tmp/config.yml $XDG_CONFIG_HOME/onboardme/
-
 echo ""
 echo "compiling neovim from source, before we run onboardme"
 echo "ref: https://github.com/neovim/neovim/wiki/Building-Neovim#build-prerequisites"

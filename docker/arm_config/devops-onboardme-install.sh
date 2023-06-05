@@ -4,12 +4,11 @@
 
 ## install gh - github's CLI
 ## ref: https://github.com/cli/cli/blob/trunk/docs/install_linux.md
-# type -p curl >/dev/null || (sudo apt update && sudo apt install curl -y)
-# curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-# sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
-# echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-# sudo apt update
-# sudo apt install -y gh
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+sudo apt update
+sudo apt install -y gh
 
 ## install glab - gitlab's cli
 ## ref: https://gitlab.com/gitlab-org/cli/-/blob/main/docs/installation_options.md#mpr-debianubuntu
@@ -60,6 +59,8 @@ sudo install -m 555 argocd-linux-arm64 /usr/local/bin/argocd
 rm argocd-linux-arm64
 
 ## tfenv: https://github.com/tfutils/tfenv#manual
+# TODO: maybe move this $XDG_DATA_HOME/tfenv and
+#       add $XDG_DATA_HOME/tfenv to the path?
 git clone --depth=1 https://github.com/tfutils/tfenv.git ~/.tfenv
 echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bashrc
 
@@ -67,12 +68,7 @@ echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bashrc
 curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
 
 ## terraform-docs: https://github.com/terraform-docs/terraform-docs/
-curl -Lo /tmp/terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
-tar -xzf terraform-docs.tar.gz
+curl -LO https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz /tmp/
+tar -xzf terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
 chmod +x terraform-docs
-mv terraform-docs /usr/local/terraform-docs
-
-## rustup: https://forge.rust-lang.org/infra/other-installation-methods.html
-curl -LO /tmp/ https://static.rust-lang.org/dist/rust-1.69.0-aarch64-unknown-linux-gnu.tar.gz
-tar xvf /tmp/rust-1.69.0-aarch64-unknown-linux-gnu.tar.gz
-rustup update
+mv terraform-docs ~/.local/bin/terraform-docs
