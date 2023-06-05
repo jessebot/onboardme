@@ -1,6 +1,3 @@
-# install gpg so that we can verify gpg keys of external apt repos
-sudo apt install --no-install-recommends -y gpg
-
 # install gpg-tui, a TUI for gpg keys, for the lazy, like me: has to be compiled from source
 # maybe use 🤷:
 # https://github.com/orhun/gpg-tui/releases/download/v0.9.6/gpg-tui-0.9.6-x86_64-unknown-linux-gnu.tar.gz
@@ -62,6 +59,8 @@ sudo install -m 555 argocd-linux-arm64 /usr/local/bin/argocd
 rm argocd-linux-arm64
 
 ## tfenv: https://github.com/tfutils/tfenv#manual
+# TODO: maybe move this $XDG_DATA_HOME/tfenv and
+#       add $XDG_DATA_HOME/tfenv to the path?
 git clone --depth=1 https://github.com/tfutils/tfenv.git ~/.tfenv
 echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bashrc
 
@@ -72,9 +71,4 @@ curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/instal
 curl -LO https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz /tmp/
 tar -xzf terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
 chmod +x terraform-docs
-mv terraform-docs /usr/local/terraform-docs
-
-## rustup: https://forge.rust-lang.org/infra/other-installation-methods.html
-curl -LO /tmp/ https://static.rust-lang.org/dist/rust-1.69.0-aarch64-unknown-linux-gnu.tar.gz
-tar xvf /tmp/rust-1.69.0-aarch64-unknown-linux-gnu.tar.gz
-rustup update
+mv terraform-docs ~/.local/bin/terraform-docs
