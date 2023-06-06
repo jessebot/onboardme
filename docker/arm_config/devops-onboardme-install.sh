@@ -28,25 +28,20 @@ echo -e "\n\033[92mInstalling kubectl\033[00m"
 mkdir -p ~/.local/bin
 curl -Lo ~/.local/bin/kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/arm64/kubectl"
 chmod +x ~/.local/bin/kubectl
-# download the checksum for validation
-curl -Lo /tmp/kubectl.sha256 "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/arm64/kubectl.sha256"
-# should return kubectl: OK and 0 return code
-echo "$(cat /tmp/kubectl.sha256)  kubectl" | sha256sum --check
 
 # krew, the kubectl plugin manager
 # ref: https://krew.sigs.k8s.io/docs/user-guide/setup/install/#bash
 # export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 # TODO: is this path correct? can it be XDG spec?
 echo -e "\n\033[92mInstalling krew\033[00m"
-(
-  set -x; cd "$(mktemp -d)" &&
-  OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
-  ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
-  KREW="krew-${OS}_${ARCH}" &&
-  curl -fsSLo /tmp/krew.tar.gz "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
-  tar zxvf /tmp/krew.tar.gz -C /tmp &&
-  /tmp/"${KREW}" install krew
-)
+OS="$(uname | tr '[:upper:]' '[:lower:]')"
+ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')"
+KREW="krew-${OS}_${ARCH}"
+curl -fsSLo /tmp/krew.tar.gz "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz"
+tar zxvf /tmp/krew.tar.gz -C /tmp
+/tmp/"${KREW}" install krew
+kubectl krew install ctx
+kubectl krew install ns
 
 # k9s - k8s dashboard tui
 echo -e "\n\033[92mInstalling k9s\033[00m"
