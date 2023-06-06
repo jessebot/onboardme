@@ -44,14 +44,14 @@ echo -e "\n\033[92mInstalling krew\033[00m"
   ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
   KREW="krew-${OS}_${ARCH}" &&
   curl -fsSLo /tmp/krew.tar.gz "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
-  tar zxvf /tmp/krew.tar.gz &&
+  tar zxvf /tmp/krew.tar.gz -C /tmp &&
   /tmp/"${KREW}" install krew
 )
 
 # k9s - k8s dashboard tui
 echo -e "\n\033[92mInstalling k9s\033[00m"
 curl -Lo /tmp/k9s.tar.gz https://github.com/derailed/k9s/releases/download/v0.27.4/k9s_Linux_arm64.tar.gz
-tar xvf /tmp/k9s.tar.gz
+tar xvf /tmp/k9s.tar.gz -C /tmp
 mv /tmp/k9s ~/.local/bin/k9s
 
 # for installing helm, a package manager for k8s
@@ -82,6 +82,6 @@ curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/instal
 
 ## terraform-docs: https://github.com/terraform-docs/terraform-docs/
 echo -e "\n\033[92mInstalling terraform-docs\033[00m"
-curl -Lo /tmp/terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-linux-arm64.tar.gz /tmp/
-tar -xzf /tmp/terraform-docs.tar.gz
+curl -Lo /tmp/terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-linux-arm64.tar.gz
+tar -xzf /tmp/terraform-docs.tar.gz -C /tmp
 mv /tmp/terraform-docs ~/.local/bin/terraform-docs
