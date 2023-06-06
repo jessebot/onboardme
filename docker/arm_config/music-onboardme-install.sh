@@ -1,5 +1,6 @@
 ## add somafm for free internet radio out of SF
 # ref: https://github.com/cuschk/somafm
+echo -e "\n\033[92mInstalling somafm - for internet radio\033[00m"
 npm install --global somafm
 
 ## music via free streaming sources
