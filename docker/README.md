@@ -1,15 +1,15 @@
 # Files for building onboardme docker containers
 
 ```bash
-├──  arm_config
-│   ├──   default-onboardme-install.sh
-│   ├──   devops-onboardme-install.sh
-│   └──   music-onboardme-install.sh
+├── 📂 arm_config
+│   ├── 🐚 default-onboardme-install.sh
+│   ├── 🐚 devops-onboardme-install.sh
+│   └── 🐚 music-onboardme-install.sh
 ├── ⚙️ config.conf
 ├── 🐳 Dockerfile
 ├── 🐳 Dockerfile.arm
 ├── 🐳 Dockerfile.rust-builder
-└──   run_onboardme.sh
+└── 🐚 run_onboardme.sh
 ```
 
 ## Only x86_64 (amd64)
