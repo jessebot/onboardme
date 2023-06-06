@@ -25,34 +25,28 @@ sudo apt install -y gh
 # install kubectl for arm64
 # ref: https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-kubectl-binary-with-curl-on-linux
 echo -e "\n\033[92mInstalling kubectl\033[00m"
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/arm64/kubectl" /tmp/
-# download the checksum for validation
-curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/arm64/kubectl.sha256" /tmp/
-# should return kubectl: OK and 0 return code
-echo "$(cat /tmp/kubectl.sha256)  kubectl" | sha256sum --check
-chmod +x /tmp/kubectl
 mkdir -p ~/.local/bin
-mv /tmp/kubectl ~/.local/bin/kubectl
+curl -Lo ~/.local/bin/kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/arm64/kubectl"
+chmod +x ~/.local/bin/kubectl
 
 # krew, the kubectl plugin manager
 # ref: https://krew.sigs.k8s.io/docs/user-guide/setup/install/#bash
 # export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 # TODO: is this path correct? can it be XDG spec?
 echo -e "\n\033[92mInstalling krew\033[00m"
-(
-  set -x; cd "$(mktemp -d)" &&
-  OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
-  ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
-  KREW="krew-${OS}_${ARCH}" &&
-  curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" /tmp/ &&
-  tar zxvf "${KREW}.tar.gz" &&
-  ./"${KREW}" install krew
-)
+OS="$(uname | tr '[:upper:]' '[:lower:]')"
+ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')"
+KREW="krew-${OS}_${ARCH}"
+curl -fsSLo /tmp/krew.tar.gz "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz"
+tar zxvf /tmp/krew.tar.gz -C /tmp
+/tmp/"${KREW}" install krew
+kubectl krew install ctx
+kubectl krew install ns
 
 # k9s - k8s dashboard tui
 echo -e "\n\033[92mInstalling k9s\033[00m"
-curl -LO https://github.com/derailed/k9s/releases/download/v0.27.4/k9s_Linux_arm64.tar.gz /tmp/
-tar xvf /tmp/k9s_Linux_arm64.tar.gz
+curl -Lo /tmp/k9s.tar.gz https://github.com/derailed/k9s/releases/download/v0.27.4/k9s_Linux_arm64.tar.gz
+tar xvf /tmp/k9s.tar.gz -C /tmp
 mv /tmp/k9s ~/.local/bin/k9s
 
 # for installing helm, a package manager for k8s
@@ -83,7 +77,6 @@ curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/instal
 
 ## terraform-docs: https://github.com/terraform-docs/terraform-docs/
 echo -e "\n\033[92mInstalling terraform-docs\033[00m"
-curl -LO https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-linux-arm64.tar.gz /tmp/
-tar -xzf terraform-docs-v0.16.0-linux-arm64.tar.gz
-chmod +x terraform-docs
-mv terraform-docs ~/.local/bin/terraform-docs
+curl -Lo /tmp/terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-linux-arm64.tar.gz
+tar -xzf /tmp/terraform-docs.tar.gz -C /tmp
+mv /tmp/terraform-docs ~/.local/bin/terraform-docs
