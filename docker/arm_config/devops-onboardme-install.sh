@@ -44,7 +44,7 @@ echo -e "\n\033[92mInstalling krew\033[00m"
   OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
   ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
   KREW="krew-${OS}_${ARCH}" &&
-  curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
+  curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" /tmp/ &&
   tar zxvf "${KREW}.tar.gz" &&
   ./"${KREW}" install krew
 )
@@ -56,6 +56,7 @@ tar xvf /tmp/k9s_Linux_arm64.tar.gz
 mv /tmp/k9s ~/.local/bin/k9s
 
 # for installing helm, a package manager for k8s
+# ref: https://helm.sh/docs/intro/install/#from-apt-debianubuntu
 echo -e "\n\033[92mInstalling helm\033[00m"
 curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
 sudo apt-get install -y apt-transport-https
@@ -76,12 +77,12 @@ echo -e "\n\033[92mInstalling tfenv\033[00m"
 git clone --depth=1 https://github.com/tfutils/tfenv.git ~/.tfenv
 echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bashrc
 
-echo -e "\n\033[92mInstalling tflint\033[00m"
 ## tflint: https://github.com/terraform-linters/tflint
+echo -e "\n\033[92mInstalling tflint\033[00m"
 curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
 
-echo -e "\n\033[92mInstalling terraform-docs\033[00m"
 ## terraform-docs: https://github.com/terraform-docs/terraform-docs/
+echo -e "\n\033[92mInstalling terraform-docs\033[00m"
 curl -LO https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz /tmp/
 tar -xzf terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
 chmod +x terraform-docs
