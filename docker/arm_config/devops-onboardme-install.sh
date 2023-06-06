@@ -1,3 +1,7 @@
+# install pyenv, for managing multiple python versions
+# https://github.com/pyenv/pyenv#automatic-installer
+curl https://pyenv.run | bash
+
 # install gpg-tui, a TUI for gpg keys, for the lazy, like me: has to be compiled from source
 # maybe use 🤷:
 # https://github.com/orhun/gpg-tui/releases/download/v0.9.6/gpg-tui-0.9.6-x86_64-unknown-linux-gnu.tar.gz
