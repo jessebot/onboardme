@@ -83,7 +83,7 @@ curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/instal
 
 ## terraform-docs: https://github.com/terraform-docs/terraform-docs/
 echo -e "\n\033[92mInstalling terraform-docs\033[00m"
-curl -LO https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-$(uname)-arm64.tar.gz /tmp/
-tar -xzf terraform-docs-v0.16.0-$(uname)-arm64.tar.gz
+curl -LO https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-linux-arm64.tar.gz /tmp/
+tar -xzf terraform-docs-v0.16.0-linux-arm64.tar.gz
 chmod +x terraform-docs
 mv terraform-docs ~/.local/bin/terraform-docs
