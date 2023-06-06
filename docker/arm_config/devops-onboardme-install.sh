@@ -42,6 +42,7 @@ tar -C /tmp -xvf /tmp/krew.tar.gz
 KUBE_ROOT="$HOME/.krew"
 export PATH="$PATH:$KUBE_ROOT/bin"
 /tmp/"${KREW}" install krew
+kubectl krew init
 kubectl krew install ctx
 kubectl krew install ns
 
