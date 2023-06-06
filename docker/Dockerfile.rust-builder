@@ -12,8 +12,6 @@ RUN apt update && \
     apt install -y --no-install-recommends git $APT_PKGS && \
     cargo install cargo-deb
 
-RUN echo "made it here"
-
 # # clone the rust repo
 RUN git clone $RUST_REPO /app
 
