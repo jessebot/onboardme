@@ -10,6 +10,7 @@ from .console_logging import print_header
 
 def map_caps_to_control():
     """
+    NOT IN USE. NEEDS TLC.
     Maps capslock to control. This is ugly and awful and untested
     """
     print_header("⌨️  Mapping capslock to control...")
@@ -23,6 +24,3 @@ def setup_cronjobs():
     """
     print_header("⏰ Installing new cronjobs...")
     print("\n")
-    # TODO: is there a python cron library 🤔 install .cron dir? (is there a
-    # standard in where cronjobs live for users [preferably in the home dir?)
-    # that works on both macos and debian?

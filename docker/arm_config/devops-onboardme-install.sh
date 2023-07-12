@@ -22,6 +22,11 @@ sudo apt install -y gh
 # cd glab/
 # makedeb -si
 
+# install kubecolor - a colorized kubectl
+curl -Lo /tmp/kubecolor.tar.gz https://github.com/hidetatz/kubecolor/releases/download/v0.0.25/kubecolor_0.0.25_Linux_arm64.tar.gz
+tar xvf /tmp/kubecolor.tar.gz -C /tmp
+mv /tmp/kubecolor ~/.local/bin/kubecolor
+
 # install kubectl for arm64
 # ref: https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-kubectl-binary-with-curl-on-linux
 echo -e "\n\033[92mInstalling kubectl\033[00m"
