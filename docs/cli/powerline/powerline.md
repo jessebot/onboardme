@@ -21,8 +21,7 @@ Above you can see I use a multiline prompt in order to have space for a full com
 Before you do anything, you should [install a nerdfont](https://github.com/ryanoasis/nerd-fonts#font-installation), if you haven't already. This will really help you to customize the icons. It's easiest for macOS with:
 
 ```bash
-brew tap homebrew/cask-fonts
-brew install --cask font-hack-nerd-font
+brew install --cask homebrew/cask-fonts/font-hack-nerd-font
 ```
 
 Then install a modern version of python (like python3.11 at the time of writing this) using brew:

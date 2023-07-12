@@ -123,11 +123,6 @@ def run_pkg_mngrs(pkg_mngrs: list, pkg_groups=[], no_upgrade=bool) -> None:
                 # continues onto the next package manager
                 continue
 
-            if pkg_mngr == 'brew':
-                if 'Darwin' in OS:
-                    # this installs macOS brew taps
-                    install_brew_taps(pkg_mngr_dict['taps']['macOS'])
-
             # run package manager specific setup if needed: update/upgrade
             run_preinstall_cmds(pkg_cmds, pkg_groups, no_upgrade)
 
@@ -209,32 +204,6 @@ def install_pkg_group(install_cmd: str,
 
         # Actual installation
         subproc([install_cmd + pkg], quiet=True, env=install_env_vars)
-
-
-def install_brew_taps(taps: list) -> None:
-    """
-    Checks current brew taps, and then runs brew tap {tap} on any taps that are
-    in a list of git repos from packages.yaml, and aren't already tapped
-    """
-    log.info("Checking current taps.")
-    existing_taps = subproc(["brew tap"])
-    try:
-        current_taps = existing_taps.split('\n')
-    except Exception as e:
-        log.debug(e)
-        current_taps = []
-    
-    log.debug(f"taps list is: {taps}")
-    log.debug(f"Current taps are: {current_taps}")
-
-    # for each tap, complete cmd by prepending `brew tap`
-    for index, tap in enumerate(taps):
-        log.debug(f"index: {index} tap: {tap}")
-        # only brew tap if they don't already exist
-        if tap not in current_taps:
-            subproc(["brew tap " + tap])
-        else:
-            log.info(f"{tap} already installed. Moving on.")
 
 
 # not currently using zathura on macOS, so removing as it's untested
