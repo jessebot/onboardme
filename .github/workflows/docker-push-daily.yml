@@ -108,7 +108,6 @@ jobs:
   docker-arm64:
     environment: 'docker-arm64'
     needs: build_and_publish_to_pypi
-    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
 
