@@ -107,6 +107,7 @@ jobs:
 
   docker-arm64:
     environment: 'docker-arm64'
+    runs-on: ubuntu-latest
     needs: build_and_publish_to_pypi
     steps:
       - uses: actions/checkout@v3
