@@ -119,14 +119,46 @@ FINALLY, you can now run this to get your phone mirrored:
 ```bash
 scrcpy --select-tcpip
 ```
-:party:
+
+and if that fails, you can either upgrade your graphics card drivers, or try this command:
+
+```bash
+scrcpy --render-driver=software --select-tcpip
+```
+
+:tada:
 
 # Troubleshooting
-Is the device not showing up? Try disconnecting your phone and unmounting it via the file explorer.
-Then restart the server with:
+
+
+## device not showing up in adb?
+
+Try disconnecting your phone and unmounting it via the file explorer. Then restart the server with:
+
 ```bash
 adb kill-server
 adb start-server
 ```
 
 Then try connecting again and it _should_ work, but you may need to remove all allowed developer USB connections and restart the phone before trying. That's all I got.
+
+## `Error: Could not create renderer`
+
+If you're getting this error:
+
+```console
+$ scrcpy --select-tcpip
+scrcpy 2.1.1 <https://github.com/Genymobile/scrcpy>
+INFO: ADB device found:
+INFO:     --> (tcpip)  192.168.50.180:2233             device  SM_G998B
+/home/linuxbrew/.linuxbrew/Cellar/scrcpy/2.1.1/share/scrcpy/scrcpy-server: 1 file pushed, 0 skipped. 1.5 MB/s (56995 bytes in 0.036s)
+[server] INFO: Device: [samsung] samsung SM-G998B (Android 13)
+ERROR: Could not create renderer: Couldn't find matching render driver
+WARN: Killing the server...
+```
+
+This is probably due to your graphics card drivers, and according to [this issue comment](https://github.com/Genymobile/scrcpy/issues/58#issuecomment-747511886) you can solve this by running:
+
+```bash
+scrcpy --render-driver=software --select-tcpip
+```
