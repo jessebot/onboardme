@@ -26,9 +26,6 @@ def font_setup() -> None:
     """
     if 'Linux' in OS:
         print_header('📝 [i]font[/i] installations')
-        # not sure if needed anymore
-        # mkdir -p ~/.local/share/fonts
-
         fonts_dir = f'{HOME_DIR}/repos/nerd-fonts'
 
         # do a shallow clone of the repo
@@ -57,12 +54,18 @@ def font_setup() -> None:
 
             Repo.clone_from(fonts_repo, fonts_dir, progress=CloneProgress(),
                             multi_options=['--sparse', '--filter=blob:none'])
-            cmds = ["git sparse-checkout add patched-fonts/Mononoki"]
+            cmds = ["git sparse-checkout add patched-fonts/Mononoki",
+                    "git sparse-checkout add patched-fonts/VictorMono",
+                    "git sparse-checkout add patched-fonts/NerdFontsSymbolsOnly",
+                   ]
             subproc(cmds, spinner=True, cwd=fonts_dir)
         else:
             subproc(["git pull"], spinner=True, cwd=fonts_dir)
 
-        subproc(['./install.sh Mononoki'], quiet=True,
+        subproc(['./install.sh Mononoki',
+                 './install.sh VictorMono',
+                 './install.sh NerdFontsSymbolsOnly'],
+                quiet=True,
                 cwd=fonts_dir)
 
         print_msg('[i][dim]The fonts should be installed, however, you have ' +
