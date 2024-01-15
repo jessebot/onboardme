@@ -8,7 +8,7 @@ import logging as log
 from rich.prompt import Confirm
 
 # custom libs
-from .constants import OS, USR_CONFIG_FILE, DEFAULT_PKG_GROUPS, HOME_DIR
+from .constants import OS, INITIAL_USR_CONFIG, DEFAULT_PKG_GROUPS, HOME_DIR
 from .console_logging import print_panel
 
 
@@ -78,7 +78,8 @@ def sort_pkgmngrs(package_managers_list: list) -> list:
     return [ele for ele in pkg_mngr_default_order if ele in package_managers_list]
 
 
-def fill_in_defaults(defaults: dict, user_config: dict,
+def fill_in_defaults(defaults: dict,
+                     user_config: dict,
                      always_prefer_default=False) -> dict:
     """
     Compares/Combines a default dict and another dict. Prefer default values
@@ -87,8 +88,9 @@ def fill_in_defaults(defaults: dict, user_config: dict,
     for key, value in user_config.items():
         # we have to iterate through the entire config file, and who knows how
         # many levels there are, so we use recursion of this function
-        if type(value) is dict:
-            result_config = fill_in_defaults(defaults[key], user_config[key],
+        if isinstance(value, dict):
+            result_config = fill_in_defaults(defaults[key],
+                                             user_config[key],
                                              always_prefer_default)
             user_config[key] = result_config
 
@@ -116,7 +118,7 @@ def process_configs(overwrite: bool,
     """
     if remote_host:
         firewall = True
-        if type(remote_host) is str:
+        if isinstance(remote_host, str):
             remote_host = [remote_host]
 
     if "~" in git_config_dir:
@@ -124,9 +126,21 @@ def process_configs(overwrite: bool,
 
     cli_dict = {'package': {'managers': {OS[0]: pkg_mngrs},
                             'groups': pkg_groups},
-                'log': {'file': log_file, 'level': log_level},
-                'remote_hosts': remote_host,
-                'firewall': firewall,
+                'tui': {'enabled': True,
+                        'show_footer': False,
+                        'accessibility': {
+                            'bell': {'on_focus': True,
+                                     'on_error': True},
+                            'text_to_speech': {'speech_program': 'say',
+                                               'screen_titles': False,
+                                               'on_focus': False,
+                                               'on_key_press': True}
+                            }
+                        },
+                'log': {'file': log_file,
+                        'level': log_level},
+                'firewall': {'enabled': firewall,
+                             'remote_hosts': remote_host},
                 'steps': {OS[0]: steps},
                 'dot_files': {'overwrite': overwrite,
                               'git_url': repo,
@@ -137,20 +151,20 @@ def process_configs(overwrite: bool,
 
     if OS[0] == 'Darwin':
         try:
-            USR_CONFIG_FILE['package']['managers'].pop('Linux')
-            USR_CONFIG_FILE['steps'].pop('Linux')
+            INITIAL_USR_CONFIG['package']['managers'].pop('Linux')
+            INITIAL_USR_CONFIG['steps'].pop('Linux')
         except KeyError:
             pass
     else:
         try:
-            USR_CONFIG_FILE['package']['managers'].pop('Darwin')
-            USR_CONFIG_FILE['steps'].pop('Darwin')
+            INITIAL_USR_CONFIG['package']['managers'].pop('Darwin')
+            INITIAL_USR_CONFIG['steps'].pop('Darwin')
         except KeyError:
             pass
 
-    USR_CONFIG_FILE['package']['groups'] = DEFAULT_PKG_GROUPS
-    log.debug(f"🗂 ⚙️  user_config_file: \n{USR_CONFIG_FILE}\n")
-    final_defaults = fill_in_defaults(cli_dict, USR_CONFIG_FILE, True)
+    INITIAL_USR_CONFIG['package']['groups'] = DEFAULT_PKG_GROUPS
+    log.debug(f"🗂 ⚙️  user_config_file: \n{INITIAL_USR_CONFIG}\n")
+    final_defaults = fill_in_defaults(cli_dict, INITIAL_USR_CONFIG, True)
 
     log.debug(" final config after filling cli_dict in with defaults:\n"
               f"{final_defaults}\n")
