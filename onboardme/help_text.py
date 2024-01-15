@@ -92,10 +92,6 @@ def options_help() -> dict:
 
         'log_file':
         'Full path to file to log to, if set.',
-
-        'quiet':
-        "unstable. Don't output to stdout. "
-
     }
 
 
