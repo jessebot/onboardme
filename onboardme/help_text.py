@@ -58,6 +58,9 @@ def options_help() -> dict:
         'generate_screenshot':
         'Generate a few SVGs for use in the docs and README. Undocumented.',
 
+        'interactive':
+        'Interactive mode, also known as TUI (terminal user interface) mode.',
+
         'overwrite':
         '[b]Overwrites[/b] existing dot files with files from configured '
         "[option]--git_url[/option] repo. If you've set overwrite: true in "
