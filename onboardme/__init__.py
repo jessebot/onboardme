@@ -145,7 +145,7 @@ def setup_logger(level="", log_file=""):
         '-f',
         is_flag=True,
         help=HELP['firewall'],
-        default=INITIAL_USR_CONFIG.get('firewall', False))
+        default=INITIAL_USR_CONFIG['firewall'].get('enabled', False))
 @option('--remote_host',
         '-r',
         metavar="IP_ADDR",
