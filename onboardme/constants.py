@@ -1,8 +1,8 @@
 #!/usr/bin/env python3.11
 """
-       Name:
-DESCRIPTION:
-     AUTHOR:
+       Name: onboardme constants
+DESCRIPTION: constants for onboardme
+     AUTHOR: @jessebot
     LICENSE: GNU AFFERO GENERAL PUBLIC LICENSE Version 3
 """
 from importlib.metadata import version as get_version
@@ -18,6 +18,7 @@ VERSION = get_version('onboardme')
 
 # pathing
 XDG_CONFIG_DIR = xdg_config_home()
+XDG_CONFIG_FILE = path.join(XDG_CONFIG_DIR, "/onboardme/config.yml")
 PWD = path.dirname(__file__)
 HOME_DIR = getenv("HOME")
 
@@ -62,7 +63,7 @@ def load_cfg(config_file='config.yml') -> dict:
         return yaml.safe_load(yaml_file)
 
 
-USR_CONFIG_FILE = load_cfg()
+INITIAL_USR_CONFIG = load_cfg()
 
-DEFAULT_PKG_GROUPS = USR_CONFIG_FILE['package']['groups']['default']
-OPT_PKG_GROUPS = USR_CONFIG_FILE['package']['groups']['optional']
+DEFAULT_PKG_GROUPS = INITIAL_USR_CONFIG['package']['groups']['default']
+OPT_PKG_GROUPS = INITIAL_USR_CONFIG['package']['groups']['optional']
