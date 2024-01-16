@@ -1,0 +1,158 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+#  Config file for the onboardme cli and tui command          #
+# ----------------------------------------------------------- #
+#  This files should be in one of:                            #
+#    - $XDG_CONFIG_HOME/onboardme/config.yaml                 #
+#    - ~/onboardme/config.yaml                                #
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+---
+tui:
+  # enable tui, otherwise you need to use -i via the cli
+  enabled: true
+  # show bottom footer help bar
+  show_footer: false
+  # accessibility options for users that benefit from TTS and Bell sounds
+  accessibility:
+    bell:
+      # ring the built in terminal bell on focus to new elements on the screen
+      on_focus: true
+      # ring the built in terminal bell when something is wrong
+      on_error: true
+
+    text_to_speech:
+      # use a specific program for text to speech - needs to be a full path
+      # macOS default: say
+      speech_program: say
+      # read aloud the screen title and description
+      screen_titles: false
+      # read aloud the element id, value, and tooltip each time you switch focus
+      on_focus: false
+      # press f5 to read the element id and selected row of DataTables
+      on_key_press: true
+log:
+  # Full path to a file you'd like to log to. Creates file if it doesn't exist
+  # if empty, onboardme does not log to a file
+  file: ""
+  # what level of logs to output (debug, info, warn, error)
+  level: "warn"
+
+# This is the basic package config.
+package:
+  # Remove any of the below pkg managers to only run the remaining pkg managers
+  managers:
+    # macOS specific steps
+    Darwin:
+      - brew
+      - pip3.11
+    # Debian/Ubuntu specific steps
+    Linux:
+      - apt
+      - brew
+      - pip3.11
+      - flatpak
+      - snap
+  # list of extra existing packages groups to install
+  groups:
+    # any package groups in this default section are always installed
+    default:
+      # basic tui stuff to have a nice time in the terminal :)
+      - default
+    # move these package.groups.default to always install them
+    optional:
+      # setting up more python data science specific tooling
+      - data_science
+      # kubernetes and docker tools
+      - devops
+      # gaming always installs gui
+      - gaming
+      # freetube and other gui applications
+      - gui
+      # this configures neomutt and offlineimap
+      - mail
+      # sets up useful music tui stuff for spotify and youtube
+      - music
+      # things like zoom and slack
+      - work
+
+# steps refer to a specific function in the list of functions we run
+steps:
+  # macOS specific steps
+  Darwin:
+    - dot_files
+    - packages
+    - font_setup
+    - neovim_setup
+    - sudo_setup
+
+  # linux specific steps
+  Linux:
+    - dot_files
+    - packages
+    - font_setup
+    - neovim_setup
+    - group_setup
+
+dot_files:
+  # personal git repo URL for your dot files, defaults to jessebot/dot_files
+  git_url: "https://github.com/jessebot/dot_files.git"
+  # the branch to use for the git repo above, defaults to main
+  git_branch: "main"
+  # this is where the actual git config for your dot files lives
+  # it can't live in ~/.git because that will affect _everything_ under ~/
+  git_config_dir: "~/.config/dot_files"
+  # !!CAREFUL: runs a `git reset --hard`, which will overwite/delete files in 
+  # $HOME that conflict with the above defined git repo url and branch.
+  # You should run the following to get the files that would be overwritten:
+  # onboardme -s dot_files
+  # if set to true, then using onboardme -O will toggle it back to false
+  overwrite: false
+
+firewall:
+  # 🚧 this section is under construction but will setup iptables on Linux only
+  enabled: false
+  # known safe remote hosts that you expect to be able to ping and SSH into
+  remote_hosts: []
+
+# 🚧 this section is under construction
+# set wallpapers directory. MacOS: https://apple.stackexchange.com/a/348454
+# wallpapers_dir: ""
+
+# 🚧 this section is under construction
+# cron:
+#   reminders:
+#     lunch:
+#       enabled:
+#         Linux: true
+#         Darwin: true
+#       # daily at noon
+#       schedule: "0 12 * * *"
+#       # whether or not to use the macOS "say" program
+#       # not sure equivilent on linux 🤔
+#       text_to_speech: true
+#       blurb: "It is snack time!"
+# 
+#     take_breaks:
+#       enabled:
+#         Linux: true
+#         Darwin: true
+#       # hourly by default
+#       schedule: "0 * * * *"
+#       text_to_speech: true
+#       blurb: "Take a break from your screen! Consider a glass of water and a short walk to stretch your legs."
+# 
+#   backups:
+#     freetube:
+#       # defaults to daily at 6PM in your local timezone
+#       # you can use this site for schedules: https://crontab-generator.org/
+#       schedule: "0 18 * * *"
+#       from_dir:
+#         Linux: "~/.config/FreeTube"
+#         Darwin: "~/Library/Application\ Support/FreeTube"
+#       to_dir:
+#         Linux: "~/Nextcloud/freetube/linux"
+#         Darwin: "~/Nextcloud/freetube/macos"
+#       files:
+#         - history.db
+#         - playlists.db
+#         - profiles.db
+#         - settings.db
