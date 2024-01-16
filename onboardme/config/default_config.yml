@@ -1,3 +1,4 @@
+---
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 #  Config file for the onboardme cli and tui command          #
 # ----------------------------------------------------------- #
@@ -5,7 +6,6 @@
 #    - $XDG_CONFIG_HOME/onboardme/config.yaml                 #
 #    - ~/onboardme/config.yaml                                #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
----
 tui:
   # enable tui, otherwise you need to use -i via the cli
   enabled: true
@@ -94,12 +94,12 @@ steps:
 
 dot_files:
   # personal git repo URL for your dot files, defaults to jessebot/dot_files
-  git_url: "https://github.com/jessebot/dot_files.git"
+  git_url: https://github.com/jessebot/dot_files.git
   # the branch to use for the git repo above, defaults to main
-  git_branch: "main"
+  git_branch: main
   # this is where the actual git config for your dot files lives
   # it can't live in ~/.git because that will affect _everything_ under ~/
-  git_config_dir: "~/.config/dot_files"
+  git_config_dir: ~/.config/dot_files
   # !!CAREFUL: runs a `git reset --hard`, which will overwite/delete files in 
   # $HOME that conflict with the above defined git repo url and branch.
   # You should run the following to get the files that would be overwritten:
