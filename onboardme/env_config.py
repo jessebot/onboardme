@@ -8,7 +8,10 @@ import logging as log
 from rich.prompt import Confirm
 
 # custom libs
-from .constants import OS, INITIAL_USR_CONFIG, DEFAULT_PKG_GROUPS, HOME_DIR
+from .constants import (OS,
+                        INITIAL_USR_CONFIG,
+                        DEFAULT_PKG_GROUPS,
+                        HOME_DIR)
 from .console_logging import print_panel
 
 
@@ -116,6 +119,8 @@ def process_configs(overwrite: bool,
     then process the cli dict, and fill in defaults for anything not explicitly
     defined. Returns full final config as dict for use in script.
     """
+    cli_dict = INITIAL_USR_CONFIG.copy()
+
     if remote_host:
         firewall = True
         if isinstance(remote_host, str):
@@ -124,45 +129,21 @@ def process_configs(overwrite: bool,
     if "~" in git_config_dir:
         git_config_dir = git_config_dir.replace("~", HOME_DIR)
 
-    cli_dict = {'package': {'managers': {OS[0]: pkg_mngrs},
-                            'groups': pkg_groups},
-                'tui': {'enabled': True,
-                        'show_footer': False,
-                        'accessibility': {
-                            'bell': {'on_focus': True,
-                                     'on_error': True},
-                            'text_to_speech': {'speech_program': 'say',
-                                               'screen_titles': False,
-                                               'on_focus': False,
-                                               'on_key_press': True}
-                            }
-                        },
-                'log': {'file': log_file,
-                        'level': log_level},
-                'firewall': {'enabled': firewall,
-                             'remote_hosts': remote_host},
-                'steps': {OS[0]: steps},
-                'dot_files': {'overwrite': overwrite,
-                              'git_url': repo,
-                              'git_branch': git_branch,
-                              'git_config_dir': git_config_dir}}
+    cli_dict['package']['managers'][OS[0]] = pkg_mngrs
+    cli_dict['package']['groups']['default'] = pkg_groups
+    cli_dict['log']['file'] = log_file
+    cli_dict['log']['level'] = log_level
+    cli_dict['firewall']['enabled'] = firewall
+    cli_dict['firewall']['remote_hosts'] = remote_host
+    cli_dict['steps'][OS[0]] = steps
+    cli_dict['dot_files']['overwrite'] = overwrite
+    cli_dict['dot_files']['git_url'] = repo
+    cli_dict['dot_files']['git_branch'] = git_branch
+    cli_dict['dot_files']['git_config_dir'] = git_config_dir
 
     log.debug(f"cli_dict is:\n{cli_dict}\n")
 
-    if OS[0] == 'Darwin':
-        try:
-            INITIAL_USR_CONFIG['package']['managers'].pop('Linux')
-            INITIAL_USR_CONFIG['steps'].pop('Linux')
-        except KeyError:
-            pass
-    else:
-        try:
-            INITIAL_USR_CONFIG['package']['managers'].pop('Darwin')
-            INITIAL_USR_CONFIG['steps'].pop('Darwin')
-        except KeyError:
-            pass
-
-    INITIAL_USR_CONFIG['package']['groups'] = DEFAULT_PKG_GROUPS
+    INITIAL_USR_CONFIG['package']['groups']['default'] = DEFAULT_PKG_GROUPS
     log.debug(f"🗂 ⚙️  user_config_file: \n{INITIAL_USR_CONFIG}\n")
     final_defaults = fill_in_defaults(cli_dict, INITIAL_USR_CONFIG, True)
 
