@@ -1,11 +1,7 @@
 ---
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-#  Config file for the onboardme cli and tui command          #
-# ----------------------------------------------------------- #
-#  This files should be in one of:                            #
-#    - $XDG_CONFIG_HOME/onboardme/config.yaml                 #
-#    - ~/onboardme/config.yaml                                #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+# Config file for the onboardme cli. This files should be in one of:
+#  - $XDG_CONFIG_HOME/onboardme/config.yaml
+#  - ~/onboardme/config.yaml
 tui:
   # enable tui, otherwise you need to use -i via the cli
   enabled: true
