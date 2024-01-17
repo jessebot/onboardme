@@ -15,7 +15,7 @@ $dark_gray: rgb(58,58,58);
 $navy: rgb(35,35,54);
 
 /* Matches the WHOLE screen */
-#apps-config-container {
+#packages-config-container {
     layout: grid;
     grid-size: 2;
     grid-columns: 0.5fr 1fr;
@@ -29,7 +29,7 @@ $navy: rgb(35,35,54);
 /* --------- LEFT TOP HALF OF SCREEN ------------ */
 
 /* matches only the left hand side of top half of screen */
-#select-add-apps {
+#select-add-packages {
     border: round $cornflower;
     border-title-color: $sky_blue;
     border-subtitle-color: $sky_blue;
@@ -47,7 +47,7 @@ $navy: rgb(35,35,54);
 }
 
 /* matches the app selection list, the left button container */
-#left-apps-container {
+#left-packages-container {
     grid-rows: 1fr 0.2fr;
     align: center top;
     grid-gutter: 1;
@@ -208,7 +208,7 @@ CollapsibleTitle:focus {
    width: 100;
 }
 
-/* Matches App Description in Select k8s apps */
+/* Matches App Description in Select k8s packages */
 #package-notes-container {
    scrollbar-background: $dark_gray;
    scrollbar-background-active: $dark_gray;
