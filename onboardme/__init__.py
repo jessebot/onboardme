@@ -18,7 +18,8 @@ from .constants import (DEFAULT_PKG_GROUPS,
                         PKG_MNGRS,
                         STEPS,
                         VERSION,
-                        INITIAL_USR_CONFIG)
+                        INITIAL_USR_CONFIG,
+                        load_cfg)
 from .env_config import check_os_support, process_configs
 from .console_logging import print_manual_steps
 from .dot_files import setup_dot_files
@@ -206,8 +207,10 @@ def main(log_level: str,
                                log_file,
                                log_level)
 
+    pkg_mngrs_list_of_dicts = load_cfg('packages.yml')
+
     if interactive or usr_pref['tui']['enabled']:
-        launch_config_tui(usr_pref)
+        launch_config_tui(usr_pref, pkg_mngrs_list_of_dicts)
 
     if log:
         log.debug(f"User passed in the following preferences:\n{usr_pref}\n")

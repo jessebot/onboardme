@@ -26,9 +26,10 @@ def setup_dot_files(OS='Linux',
     """
     note on how we're doing things, seperate dot files repo:
     https://probablerobot.net/2021/05/keeping-'live'-dotfiles-in-a-git-repo/
-
-
     """
+    if "~" in dot_files_cfg_dir:
+        dot_files_cfg_dir = dot_files_cfg_dir.replace("~", HOME_DIR)
+
     # create dot_files_cfg_dir if it doesn't exist/don't complain if it does
     # defaults to ~/.config/dot_files
     Path(dot_files_cfg_dir).mkdir(parents=True, exist_ok=True)

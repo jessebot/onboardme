@@ -8,10 +8,7 @@ import logging as log
 from rich.prompt import Confirm
 
 # custom libs
-from .constants import (OS,
-                        INITIAL_USR_CONFIG,
-                        DEFAULT_PKG_GROUPS,
-                        HOME_DIR)
+from .constants import (OS, INITIAL_USR_CONFIG, DEFAULT_PKG_GROUPS)
 from .console_logging import print_panel
 
 
@@ -125,9 +122,6 @@ def process_configs(overwrite: bool,
         firewall = True
         if isinstance(remote_host, str):
             remote_host = [remote_host]
-
-    if "~" in git_config_dir:
-        git_config_dir = git_config_dir.replace("~", HOME_DIR)
 
     cli_dict['package']['managers'][OS[0]] = pkg_mngrs
     cli_dict['package']['groups']['default'] = pkg_groups
