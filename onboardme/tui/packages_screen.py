@@ -44,6 +44,9 @@ class PackagesConfig(Screen):
         # should be the packages section of onboardme config
         self.cfg = config
 
+        # this changes depending on the list selected
+        self.pkg_mnger = 'brew'
+
         # this is state storage
         self.previous_package = ''
 
@@ -65,22 +68,27 @@ class PackagesConfig(Screen):
             footer.display = False
         yield footer
 
-        full_list = []
-        for package in self.cfg['brew']['packages']['default']:
-            item = Selection(package.replace("_","-"), package, True)
-            full_list.append(item)
+        selection_lists = {}
+        for package_mngr in ['brew', 'pip3.11']:
+            full_list = []
+            for package in self.cfg[package_mngr]['packages']['default']:
+                item = Selection(package.replace("_","-"), package, True)
+                full_list.append(item)
 
-        selection_list = SelectionList[str](*full_list,
-                                            id='selection-list-of-packages')
+            selection_list = SelectionList[str](
+                    *full_list,
+                    classes='selection-list-of-packages',
+                    id=f'{package_mngr}-selection-list-of-packages'
+                    )
+            selection_lists[package_mngr] = selection_list
 
         with Container(id="packages-config-container"):
-            # top left: the SelectionList of k8s packagelications
-            with Grid(id="left-packages-container"):
-                with VerticalScroll(id="select-add-packages"):
-                    yield selection_list
-
-            # top right: vertically scrolling container for all inputs
-            yield VerticalScroll(id='package-inputs-pane')
+            # SelectionLists of k8s packagelications
+            for package_mngr, selection_list in selection_lists.items():
+                with Grid(classes="left-packages-container"):
+                    with VerticalScroll(classes="select-add-packages",
+                                        id=f"select-add-{package_mngr}-packages"):
+                        yield selection_list
 
             # Bottom half of the screen for select-packages
             with VerticalScroll(id="package-notes-container"):
@@ -94,34 +102,48 @@ class PackagesConfig(Screen):
         sub_title = "Packages Configuration"
         self.sub_title = sub_title
 
-        # select-packages styling - select packages container - top left 
-        select_packages_widget = self.get_widget_by_id("select-add-packages")
-        select_packages_widget.border_title = "[#ffaff9]♥[/] [i]select[/] [#C1FF87]packages"
-        select_packages_widget.border_subtitle = "[@click=screen.launch_new_package_modal]✨ [i]new[/] [#C1FF87]package[/][/]"
+        for package_mngr in ['brew', 'pip3.11']:
+            # select-packages styling - select packages container - top left 
+            select_packages_widget = self.get_widget_by_id(
+                    f"select-add-{package_mngr}-packages"
+                    )
+            select_packages_widget.border_title = (
+                    f"[#ffaff9]♥[/] [i]select[/] {package_mngr} [#C1FF87]packages"
+                    )
+            select_packages_widget.border_subtitle = (
+                    f"[@click=screen.launch_new_package_modal()]"
+                    f"✨ [i]new[/] {package_mngr} [#C1FF87]package[/][/]"
+                    )
 
         if self.app.speak_screen_titles:
             # if text to speech is on, read screen title
             self.app.action_say(
-                    "Screen title: Packages Configuration."
-                    "Here you can select which packages to install per package manager."
-                    " On the left is a list of packages for brew."
+                    "Screen title: Packages Configuration. Here you can select "
+                    "which packages to install per package manager. On the left"
+                    " is a list of packages for brew."
                     )
 
         # scroll down to specific app if requested
         if self.initial_package:
             self.scroll_to_package(self.initial_package)
 
-    def action_launch_new_package_modal(self) -> None:
+    def action_launch_new_package_modal(self,
+                                        package_manager: str) -> None:
         def get_new_package(package_response):
-            package_name = package_response[0]
-            package_description = package_response[1]
+            package_manager = package_response[0]
+            package_name = package_response[1]
+            package_description = package_response[2]
 
             if package_name and package_description:
-                self.create_new_package_in_yaml(package_name, package_description)
+                self.create_new_package_in_yaml(package_manager,
+                                                package_name,
+                                                package_description)
 
-        self.app.push_screen(NewPackageModalScreen(["argo-cd"]), get_new_package)
+        packages = self.cfg[package_manager]['packages']['default']
+        self.app.push_screen(NewPackageModalScreen(packages, package_manager),
+                             get_new_package)
 
-    def scroll_to_package(self, package_to_highlight: str) -> None:
+    def scroll_to_package(self, package_manager: str, package_to_highlight: str) -> None:
         """ 
         lets you scroll down to the exact package you need in the package selection list
         """
@@ -137,8 +159,9 @@ class PackagesConfig(Screen):
             highlight_package = packages.get_option_at_index(packages.highlighted).value
 
     @on(SelectionList.SelectionHighlighted)
-    def update_highlighted_package_view(self) -> None:
-        selection_list = self.query_one(SelectionList)
+    def update_highlighted_package_view(self,
+                                        event: SelectionList.SelectionHighlighted) -> None:
+        selection_list = self.get_widget_by_id(f"{self.pkg_mnger}-selection-list-of-packages")
 
         # only the highlighted index
         highlighted_idx = selection_list.highlighted
@@ -147,7 +170,7 @@ class PackagesConfig(Screen):
         highlighted_package = selection_list.get_option_at_index(highlighted_idx).value
 
         if self.app.speak_on_focus:
-            self.app.action_say(f"highlighted app is {highlighted_package}")
+            self.app.action_say(f"highlighted package is {highlighted_package}")
 
         # update the bottom app description to the highlighted_app's description
         blurb = format_description("test")
@@ -155,8 +178,6 @@ class PackagesConfig(Screen):
 
         # styling for the select-packages - configure packages container - right
         package_title = highlighted_package.replace("_", " ").title()
-        package_cfg_title = f"🔧 [i]configure[/] parameters for [#C1FF87]{package_title}"
-        self.get_widget_by_id("package-inputs-pane").border_title = package_cfg_title
 
         # select-packages styling - bottom
         package_desc = self.get_widget_by_id("package-notes-container")
@@ -165,11 +186,12 @@ class PackagesConfig(Screen):
         self.previous_package = highlighted_package
 
     @on(SelectionList.SelectionToggled)
-    def update_selected_packages(self, event: SelectionList.SelectionToggled) -> None:
+    def update_selected_packages(self,
+                                 event: SelectionList.SelectionToggled) -> None:
         """ 
         when a selection list item is checked or unchecked, update the base package yaml
         """
-        selection_list = self.query_one(SelectionList)
+        selection_list = event
         package = selection_list.get_option_at_index(event.selection_index).value
         if package in selection_list.selected:
             self.app.pkgs['brew']['packages']['default'][package]['enabled'] = True
@@ -178,7 +200,13 @@ class PackagesConfig(Screen):
 
         self.app.write_yaml()
 
-    def create_new_package_in_yaml(self, package_name: str, package_description: str = "") -> None:
+    def create_new_package_in_yaml(self,
+                                   package_manager: str,
+                                   package_name: str,
+                                   package_description: str = "") -> None:
+        """ 
+        add a new package to the packages yaml
+        """
         underscore_name = package_name.replace(" ", "_").replace("-", "_")
 
         # updates the base user yaml
@@ -188,7 +216,7 @@ class PackagesConfig(Screen):
             }
 
         # adds selection to the app selection list
-        packages = self.app.get_widget_by_id("selection-list-of-packages")
+        packages = self.app.query_one(".selection-list-of-packages")
         packages.add_option(Selection(underscore_name.replace("_", "-"),
                                   underscore_name, True))
 

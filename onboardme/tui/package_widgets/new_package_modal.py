@@ -18,8 +18,11 @@ class NewPackageModalScreen(ModalScreen):
                         description="Back")]
 
 
-    def __init__(self, current_apps: list = []) -> None:
-        self.current_apps = current_apps
+    def __init__(self,
+                 current_pkgs: list = [],
+                 package_manager: str = "") -> None:
+        self.current_pkgs = current_pkgs
+        self.pkg_mngr = package_manager
         super().__init__()
 
     def compose(self) -> ComposeResult:
@@ -33,7 +36,7 @@ class NewPackageModalScreen(ModalScreen):
                 yield Label(question, id="modal-text")
 
                 input = Input(validators=[Length(minimum=2),
-                                          CheckIfNameAlreadyInUse(self.current_apps)],
+                                          CheckIfNameAlreadyInUse(self.current_pkgs)],
                               placeholder="Name of your package",
                               id="package-name-input")
                 input.tooltip = "Name for your application in onboardme"
@@ -83,6 +86,6 @@ class NewPackageModalScreen(ModalScreen):
         if event.button.id == "package-submit":
             app_name = self.get_widget_by_id("package-name-input").value
             description = self.get_widget_by_id("description-input").value
-            self.dismiss([app_name, description])
+            self.dismiss([app_name, self.pkg_mngr, description])
         else:
-            self.dismiss([None, None])
+            self.dismiss([None, None, None])
