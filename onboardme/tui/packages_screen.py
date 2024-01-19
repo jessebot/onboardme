@@ -83,29 +83,36 @@ class PackagesConfig(Screen):
                         full_list.append(Option(package, id=option_str))
                         full_list.append(Separator())
 
-                        option_lists[package_mngr][package_group] = OptionList(
+                        option_list = OptionList(
                                 *full_list,
                                 id=f"{package_mngr}-{package_group}-list-of-packages",
-                                classes="list-of-packages"
+                                classes=f"list-of-packages {package_mngr} {package_group}"
                                 )
+                        option_list.highlighted = None
+                        option_lists[package_mngr][package_group] = option_list
 
-        with Grid(id="packages-config-container",
-                  classes="packages-large-grid"):
-            # k8s packagelications
-            for package_mngr, package_groups in option_lists.items():
-                with Grid(classes="left-packages-container"):
-                    package_managers = self.cfg.keys()
-                    yield Select.from_values(package_managers,
-                                             value=package_mngr)
-                    with VerticalScroll(classes="select-add-packages",
-                                        id=f"select-add-{package_mngr}-packages"):
-                        for package_group, packages_list in package_groups.items():
-                            with Collapsible(collapsed=False, title=package_group):
-                                yield packages_list
+        # full packages screen
+        with Grid(id="packages-screen"):
+            # all the package manager lists
+            with Grid(id="packages-config-container",
+                      classes="packages-large-grid"):
+                # each package manager and it's groups
+                for package_mngr, package_groups in option_lists.items():
+                    with Grid(classes="packages-column"):
+                        package_managers = self.cfg.keys()
+                        yield Select.from_values(package_managers,
+                                                 value=package_mngr,
+                                                 classes="select-dropdown")
+                        with VerticalScroll(classes="select-add-packages",
+                                            id=f"select-add-{package_mngr}-packages"):
+                            for package_group, packages_list in package_groups.items():
+                                with Collapsible(collapsed=False,
+                                                 title=package_group):
+                                    yield packages_list
 
-        # Bottom half of the screen for select-packages
-        with VerticalScroll(id="package-notes-container"):
-            yield Label("", id="package-description")
+            # Bottom half of the screen for notes on a given package
+            with VerticalScroll(id="package-notes-container"):
+                yield Label("", id="package-description")
 
     def on_mount(self) -> None:
         """
@@ -184,12 +191,17 @@ class PackagesConfig(Screen):
         if self.app.speak_on_focus:
             self.app.action_say(f"highlighted package is {highlighted_package}")
 
-        # update the bottom app description to the highlighted_app's description
-        blurb = format_description("test")
-        self.get_widget_by_id('package-description').update(blurb)
-
         # styling for the select-packages - configure packages container - right
-        package_title = highlighted_package
+        package_title = highlighted_package.prompt
+
+        # description
+        classes = event.option_list.id.split('-')
+        manager = classes[0]
+        group = classes[1]
+
+        # update the bottom app description to the highlighted_app's description
+        blurb = format_description(f"manager: {manager} group: {group}")
+        self.get_widget_by_id('package-description').update(blurb)
 
         # select-packages styling - bottom
         package_desc = self.get_widget_by_id("package-notes-container")

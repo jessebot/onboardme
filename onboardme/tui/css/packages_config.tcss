@@ -27,6 +27,8 @@ Collapsible.-collapsed > Contents {
 
 Collapsible > Contents {
     padding-left: 0;
+    padding-top: 0;
+    margin-top: 0;
 }
 
 CollapsibleTitle {
@@ -36,6 +38,7 @@ CollapsibleTitle {
     padding-left: 1;
     background: $blue_gray 20%;
     width: 100%;
+    margin-bottom: 0;
 }
 
 CollapsibleTitle:hover {
@@ -50,13 +53,9 @@ CollapsibleTitle:focus {
 
 /* Matches the WHOLE screen */
 #packages-config-container {
-    grid-rows: 1.55fr 0.35fr;
-    grid-gutter: 1;
+    grid-gutter: 2;
     height: 92%;
     align: center middle;
-    padding-top: 2;
-    padding-left: 3;
-    padding-right: 3;
 }
 
 .packages-small-grid {
@@ -88,16 +87,13 @@ CollapsibleTitle:focus {
 }
 
 /* matches the app selection list, the left button container */
-.left-packages-container {
+.packages-column {
     grid-rows: 0.1fr 1fr;
     align: center top;
 }
 
-.button-grid {
-    align: center middle;
-}
-
 /* Matches App Description in Select k8s packages 
+   column-span: 2;
 */
 #package-notes-container {
    scrollbar-background: $dark_gray;
@@ -105,12 +101,10 @@ CollapsibleTitle:focus {
    scrollbar-background-hover: $dark_gray;
    scrollbar-color-hover: $light_cornflower;
    scrollbar-color: $cornflower;
-   column-span: 2;
    background: $navy 30%;
    border: round $light_cornflower;
    border-title-color: $sky_blue;
    align: center middle;
-   margin-bottom: 1;
 }
 
 #package-description {
@@ -120,4 +114,20 @@ CollapsibleTitle:focus {
    padding-right: 1;
    padding-top: 1;
    color: $bluish_white 60%;
+}
+
+.list-of-packages {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#packages-screen {
+    margin-top: 3;
+    margin-left: 3;
+    margin-right: 3;
+    grid-rows: 1.1fr 0.1fr;
+}
+
+.select-dropdown {
+    background: $navy;
 }

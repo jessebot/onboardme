@@ -18,8 +18,8 @@ from ruamel.yaml import YAML
 VERSION = get_version('onboardme')
 
 # pathing
-XDG_CONFIG_DIR = xdg_config_home()
-XDG_CONFIG_FILE = path.join(XDG_CONFIG_DIR, "/onboardme/config.yml")
+XDG_CONFIG_DIR =  path.join(xdg_config_home(), "onboardme")
+XDG_CONFIG_FILE = path.join(XDG_CONFIG_DIR, "/config.yml")
 PWD = path.dirname(__file__)
 HOME_DIR = getenv("HOME")
 
