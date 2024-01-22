@@ -88,7 +88,6 @@ class PackagesConfig(Screen):
                                 id=f"{package_mngr}-{package_group}-list-of-packages",
                                 classes=f"list-of-packages {package_mngr} {package_group}"
                                 )
-                        option_list.highlighted = None
                         option_lists[package_mngr][package_group] = option_list
 
         # full packages screen
@@ -122,18 +121,20 @@ class PackagesConfig(Screen):
         sub_title = "Packages Configuration"
         self.sub_title = sub_title
 
-        # for package_mngr in ['brew', 'pip3.11']:
-        #     # select-packages styling - select packages container - top left 
-        #     select_packages_widget = self.get_widget_by_id(
-        #             f"select-add-{package_mngr}-packages"
-        #             )
-        #     # select_packages_widget.border_title = (
-        #     #         f"[#ffaff9]♥[/] [i]{package_mngr}[/] [#C1FF87]packages"
-        #     #         )
-        #     select_packages_widget.border_subtitle = (
-        #             f"[@click=screen.launch_new_package_modal()]"
-        #             f"✨ [i]new[/] {package_mngr} [#C1FF87]package[/][/]"
-        #             )
+        for package_mngr in self.cfg.keys():
+            # select-packages styling - select packages container - top left 
+            select_packages_widget = self.get_widget_by_id(
+                    f"select-add-{package_mngr}-packages"
+                    )
+            select_packages_widget.border_title = (
+                    f"[#ffaff9]♥[/] [i][#C1FF87]{package_mngr}[/]"
+                    )
+            select_packages_widget.border_subtitle = (
+                    "[@click=screen.launch_new_package_modal()]➕ 📦[/]"
+                    )
+
+        for option_list in self.query(".list-of-packages"):
+            option_list.highlighted = None
 
         if self.app.speak_screen_titles:
             # if text to speech is on, read screen title
@@ -147,8 +148,7 @@ class PackagesConfig(Screen):
         if self.initial_package:
             self.scroll_to_package(self.initial_package)
 
-    def action_launch_new_package_modal(self,
-                                        package_manager: str) -> None:
+    def action_launch_new_package_modal(self) -> None:
         def get_new_package(package_response):
             package_manager = package_response[0]
             package_name = package_response[1]
@@ -159,9 +159,7 @@ class PackagesConfig(Screen):
                                                 package_name,
                                                 package_description)
 
-        packages = self.cfg[package_manager]['packages']['default']
-        self.app.push_screen(NewPackageModalScreen(packages, package_manager),
-                             get_new_package)
+        self.app.push_screen(NewPackageModalScreen(), get_new_package)
 
     def scroll_to_package(self,
                           package_manager: str, 
@@ -184,30 +182,30 @@ class PackagesConfig(Screen):
     @on(OptionList.OptionHighlighted)
     def update_highlighted_package_view(self,
                                         event: OptionList.OptionHighlighted) -> None:
+        if isinstance(event.option_list, OptionList):
+            # the actual highlighted package
+            highlighted_package = event.option
 
-        # the actual highlighted package
-        highlighted_package = event.option
+            if self.app.speak_on_focus:
+                self.app.action_say(f"highlighted package is {highlighted_package}")
 
-        if self.app.speak_on_focus:
-            self.app.action_say(f"highlighted package is {highlighted_package}")
+            # styling for the select-packages - configure packages container - right
+            package_title = highlighted_package.prompt
 
-        # styling for the select-packages - configure packages container - right
-        package_title = highlighted_package.prompt
+            # description
+            classes = event.option_list.id.split('-')
+            manager = classes[0]
+            group = classes[1]
 
-        # description
-        classes = event.option_list.id.split('-')
-        manager = classes[0]
-        group = classes[1]
+            # update the bottom app description to the highlighted_app's description
+            blurb = format_description(f"manager: {manager} group: {group}")
+            self.get_widget_by_id('package-description').update(blurb)
 
-        # update the bottom app description to the highlighted_app's description
-        blurb = format_description(f"manager: {manager} group: {group}")
-        self.get_widget_by_id('package-description').update(blurb)
+            # select-packages styling - bottom
+            package_desc = self.get_widget_by_id("package-notes-container")
+            package_desc.border_title = f"📓 {package_title} [i]notes[/i]"
 
-        # select-packages styling - bottom
-        package_desc = self.get_widget_by_id("package-notes-container")
-        package_desc.border_title = f"📓 {package_title} [i]notes[/i]"
-
-        self.previous_package = highlighted_package
+            self.previous_package = highlighted_package
 
     def create_new_package_in_yaml(self,
                                    package_manager: str,

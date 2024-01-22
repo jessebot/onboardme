@@ -23,7 +23,7 @@ from .constants import (DEFAULT_PKG_GROUPS,
 from .env_config import check_os_support, process_configs
 from .console_logging import print_manual_steps
 from .dot_files import setup_dot_files
-from .pkg_management import run_pkg_mngrs
+from .packages.pkg_management import run_pkg_mngrs
 from .sudo_setup import setup_sudo
 from .firewall import configure_firewall
 from .tui import launch_config_tui

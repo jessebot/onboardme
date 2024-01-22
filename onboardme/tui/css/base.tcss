@@ -79,8 +79,8 @@ OptionList {
 }
 
 OptionList .option-list--option-highlighted {
-    color: $soft_green;
-    background: $dark_gray;
+    color: $sky_blue;
+    background: $navy;
 }
 
 OptionList .option-list--option-hover-highlighted {
