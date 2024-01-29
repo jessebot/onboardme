@@ -2,7 +2,6 @@
 from onboardme.constants import (XDG_CONFIG_FILE, XDG_CONFIG_DIR, 
                                  INITIAL_USR_CONFIG, load_cfg)
 from onboardme.tui.packages_screen import PackagesConfig
-from onboardme.tui.confirm_screen import ConfirmConfig
 from onboardme.tui.help_screen import HelpScreen
 from onboardme.tui.tui_config_screen import TuiConfigScreen
 

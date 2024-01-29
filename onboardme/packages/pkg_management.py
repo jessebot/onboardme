@@ -3,10 +3,10 @@ from os import path
 from pathlib import Path
 import shutil
 
-from .constants import OS, PWD, HOME_DIR, load_cfg
-from .console_logging import print_header
-from .console_logging import print_sub_header as sub_header
-from .subproc import subproc
+from onboardme.constants import OS, PWD, HOME_DIR, load_cfg
+from onboardme.console_logging import print_header
+from onboardme.console_logging import print_sub_header as sub_header
+from onboardme.subproc import subproc
 
 
 def rotate_github_ssh_keys() -> None:
@@ -204,6 +204,11 @@ def install_pkg_group(install_cmd: str,
 
         # Actual installation
         subproc([install_cmd + pkg], quiet=True, env=install_env_vars)
+
+
+def add_apt_repos():
+    """ 
+    """
 
 
 # not currently using zathura on macOS, so removing as it's untested
