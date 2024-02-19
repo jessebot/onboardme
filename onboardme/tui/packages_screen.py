@@ -9,7 +9,7 @@ from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import VerticalScroll, Grid
 from textual.screen import Screen
-from textual.widgets import Footer, Header, Label, OptionList, Collapsible, Select
+from textual.widgets import Footer, Header, Label, OptionList, Collapsible
 from textual.widgets.option_list import Option, Separator
 from textual.widgets._toggle_button import ToggleButton
 
@@ -155,7 +155,8 @@ class PackagesConfig(Screen):
                                                 package_name,
                                                 package_description)
 
-        self.app.push_screen(NewPackageModalScreen(self.cfg), get_new_package)
+        self.app.push_screen(NewPackageModalScreen(self.cfg, self.pkg_mnger),
+                             get_new_package)
 
     def scroll_to_package(self,
                           package_manager: str, 
@@ -202,6 +203,7 @@ class PackagesConfig(Screen):
             package_desc.border_title = f"📓 {package_title} [i]notes[/i]"
 
             self.previous_package = highlighted_package
+            self.pkg_mnger = manager
 
     def create_new_package_in_yaml(self,
                                    package_manager: str,

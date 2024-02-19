@@ -24,7 +24,7 @@ class NewPackageModalScreen(ModalScreen):
                  package_manager: str|list = None) -> None:
         self.cfg = package_manager_configs
         if not package_manager:
-            self.pkg_mngr = self.cfg.keys()
+            self.pkg_mngr = None
         else:
             self.pkg_mngr = package_manager
         super().__init__()
@@ -46,6 +46,7 @@ class NewPackageModalScreen(ModalScreen):
                 with Grid(id="package-search-inputs"):
                     package_managers = self.cfg.keys()
                     yield Select.from_values(package_managers,
+                                             value=self.pkg_mngr,
                                              prompt="All Package Managers",
                                              allow_blank=True,
                                              classes="select-dropdown")
