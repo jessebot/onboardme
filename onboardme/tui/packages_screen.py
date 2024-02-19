@@ -126,7 +126,7 @@ class PackagesConfig(Screen):
                     f"[#ffaff9]♥[/] [i][#C1FF87]{package_mngr}[/]"
                     )
             select_packages_widget.border_subtitle = (
-                    "[@click=screen.launch_new_package_modal()]➕ 📦[/]"
+                    "[@click=screen.launch_new_package_modal()]➕[/]"
                     )
 
         for option_list in self.query(".list-of-packages"):
