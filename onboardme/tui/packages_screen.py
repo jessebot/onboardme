@@ -98,10 +98,6 @@ class PackagesConfig(Screen):
                 # each package manager and it's groups
                 for package_mngr, package_groups in option_lists.items():
                     with Grid(classes="packages-column"):
-                        package_managers = self.cfg.keys()
-                        yield Select.from_values(package_managers,
-                                                 value=package_mngr,
-                                                 classes="select-dropdown")
                         with VerticalScroll(classes="select-add-packages",
                                             id=f"select-add-{package_mngr}-packages"):
                             for package_group, packages_list in package_groups.items():
@@ -109,9 +105,9 @@ class PackagesConfig(Screen):
                                                  title=package_group):
                                     yield packages_list
 
-            # Bottom half of the screen for notes on a given package
-            with VerticalScroll(id="package-notes-container"):
-                yield Label("", id="package-description")
+                # Bottom half of the screen for notes on a given package
+                with VerticalScroll(id="package-notes-container"):
+                    yield Label("", id="package-description")
 
     def on_mount(self) -> None:
         """
