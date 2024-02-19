@@ -54,6 +54,7 @@ def load_cfg(config_file: str = 'config.yml') -> dict:
     load yaml config files for onboardme
     """
     config_full_path = path.join(XDG_CONFIG_DIR, config_file)
+    print(config_full_path)
 
     # create default pathing and config file if it doesn't exist
     if not path.exists(config_full_path):

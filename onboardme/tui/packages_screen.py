@@ -16,7 +16,7 @@ from textual.widgets._toggle_button import ToggleButton
 
 class PackagesConfig(Screen):
     """
-    Textual app to onboardme applications
+    Textual screen for onboardme packages
     """
     CSS_PATH = ["./css/packages_config.tcss"]
 
@@ -159,7 +159,7 @@ class PackagesConfig(Screen):
                                                 package_name,
                                                 package_description)
 
-        self.app.push_screen(NewPackageModalScreen(), get_new_package)
+        self.app.push_screen(NewPackageModalScreen(self.cfg), get_new_package)
 
     def scroll_to_package(self,
                           package_manager: str, 

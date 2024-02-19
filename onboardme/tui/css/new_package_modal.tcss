@@ -28,6 +28,11 @@ $navy: rgb(35,35,54);
     height: auto;
 }
 
+#package-search-inputs {
+    grid-size: 2;
+    grid-columns: 0.5fr 1fr;
+}
+
 #package-name-input {
     margin-bottom: 1;
     margin-top: 1;

@@ -1,7 +1,9 @@
 from ..subproc import subproc
 
 
-def search_for_package(cfg: dict, package_manager: str|list = None):
+def search_for_package(package: str,
+                       package_manager: str|list = None,
+                       cfg: dict = {}):
     """
     Search for package using package manager's search function.
     Takes packages config dict and optional package_manager (str or list) to search
@@ -13,10 +15,15 @@ def search_for_package(cfg: dict, package_manager: str|list = None):
 
     if package_manager:
         search_cmd = cfg[package_manager]['commands']['search']
-        return subproc([search_cmd])
+        cmd = " ".join([search_cmd, package])
+        res = subproc([cmd]).split('\n')
+        if package in res:
+            return True
     else:
         results = {}
         for package_manager, metadata in cfg.items():
             search_cmd = cfg[package_manager]['commands'].get('search', None)
             if search_cmd:
-                results[package_manager] = subproc([search_cmd])
+                cmd = " ".join([search_cmd, package])
+                results[package_manager] = subproc([cmd])
+        return results
