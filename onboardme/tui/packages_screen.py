@@ -197,7 +197,7 @@ class PackagesConfig(Screen):
 
             # update the bottom app description to the highlighted_app's description
             blurb = format_description(
-                    f"package: {package_title}\nmanager: {manager}\ngroup: {group}"
+                    f"package: [#ffaff9]{package_title}[/]\nmanager: [#ffaff9]{manager}[/]\ngroup: [#ffaff9]{group}[/]"
                     )
             self.get_widget_by_id('package-description').update(blurb)
 

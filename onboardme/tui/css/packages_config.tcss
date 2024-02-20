@@ -99,7 +99,7 @@ CollapsibleTitle:focus {
    scrollbar-color-hover: $light_cornflower;
    scrollbar-color: $cornflower;
    border: round $dark_gray;
-   border-title-color: $sky_blue;
+   border-title-color: $orange;
    align: center middle;
    height: 50%;
 }
