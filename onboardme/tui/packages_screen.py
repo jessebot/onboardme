@@ -126,7 +126,7 @@ class PackagesConfig(Screen):
                     f"[#ffaff9]♥[/] [i][#C1FF87]{package_mngr}[/]"
                     )
             select_packages_widget.border_subtitle = (
-                    "[@click=screen.launch_new_package_modal()]➕[/]"
+                    f'[@click=screen.launch_new_package_modal("{package_mngr}")]➕[/]'
                     )
 
         for option_list in self.query(".list-of-packages"):
@@ -144,7 +144,7 @@ class PackagesConfig(Screen):
         if self.initial_package:
             self.scroll_to_package(self.initial_package)
 
-    def action_launch_new_package_modal(self) -> None:
+    def action_launch_new_package_modal(self, package_manager: str) -> None:
         def get_new_package(package_response):
             package_manager = package_response[0]
             package_name = package_response[1]
@@ -155,7 +155,7 @@ class PackagesConfig(Screen):
                                                 package_name,
                                                 package_description)
 
-        self.app.push_screen(NewPackageModalScreen(self.cfg, self.pkg_mnger),
+        self.app.push_screen(NewPackageModalScreen(self.cfg, package_manager),
                              get_new_package)
 
     def scroll_to_package(self,
