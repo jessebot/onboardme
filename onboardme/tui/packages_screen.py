@@ -122,8 +122,9 @@ class PackagesConfig(Screen):
             select_packages_widget = self.get_widget_by_id(
                     f"select-add-{package_mngr}-packages"
                     )
+            emoji = self.cfg[package_mngr]['emoji']
             select_packages_widget.border_title = (
-                    f"[#ffaff9]♥[/] [i][#C1FF87]{package_mngr}[/]"
+                    f"[#ffaff9]{emoji}[/] [i][#C1FF87]{package_mngr}[/]"
                     )
             select_packages_widget.border_subtitle = (
                     f'[@click=screen.launch_new_package_modal("{package_mngr}")]➕[/]'
@@ -195,7 +196,7 @@ class PackagesConfig(Screen):
             group = classes[1]
 
             # update the bottom app description to the highlighted_app's description
-            blurb = format_description(f"manager: {manager} group: {group}")
+            blurb = format_description(f"manager: {manager}\ngroup: {group}")
             self.get_widget_by_id('package-description').update(blurb)
 
             # select-packages styling - bottom
