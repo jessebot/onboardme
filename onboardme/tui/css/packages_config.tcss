@@ -101,6 +101,7 @@ CollapsibleTitle:focus {
    border: round $dark_gray;
    border-title-color: $sky_blue;
    align: center middle;
+   height: 50%;
 }
 
 #package-description {

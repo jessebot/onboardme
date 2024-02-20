@@ -25,14 +25,14 @@ class PackagesConfig(Screen):
                     key_display="b",
                     action="app.pop_screen",
                     description="Back"),
-            Binding(key="a",
+            Binding(key="a,s",
                     key_display="a",
                     action="screen.launch_new_package_modal",
-                    description="New Package"),
+                    description="Search Packages/New Package"),
             Binding(key="n",
                     key_display="n",
                     action="app.request_onboardme_cfg",
-                    description="Next")
+                    description="Next"),
             ]
 
     ToggleButton.BUTTON_INNER = '♥'
@@ -196,12 +196,14 @@ class PackagesConfig(Screen):
             group = classes[1]
 
             # update the bottom app description to the highlighted_app's description
-            blurb = format_description(f"manager: {manager}\ngroup: {group}")
+            blurb = format_description(
+                    f"package: {package_title}\nmanager: {manager}\ngroup: {group}"
+                    )
             self.get_widget_by_id('package-description').update(blurb)
 
             # select-packages styling - bottom
             package_desc = self.get_widget_by_id("package-notes-container")
-            package_desc.border_title = f"📓 {package_title} [i]notes[/i]"
+            package_desc.border_title = "📦 Package [i]info[/i]"
 
             self.previous_package = highlighted_package
             self.pkg_mnger = manager
