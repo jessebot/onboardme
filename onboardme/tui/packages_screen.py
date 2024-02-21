@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.11
 # onboardme libraries
 from onboardme.tui.package_widgets.new_package_modal import NewPackageModalScreen
+from onboardme.tui.package_widgets.package_search_widget import PackageSearch
 from onboardme.tui.util import format_description
 
 # external libraries
@@ -18,7 +19,8 @@ class PackagesConfig(Screen):
     """
     Textual screen for onboardme packages
     """
-    CSS_PATH = ["./css/packages_config.tcss"]
+    CSS_PATH = ["./css/packages_config.tcss",
+                "./css/new_package_modal.tcss"]
 
     BINDINGS = [
             Binding(key="b,escape,q",
@@ -108,6 +110,7 @@ class PackagesConfig(Screen):
                 # Bottom half of the screen for notes on a given package
                 with VerticalScroll(id="package-notes-container"):
                     yield Label("", id="package-description")
+                    yield PackageSearch(self.cfg, self.pkg_mnger)
 
     def on_mount(self) -> None:
         """
@@ -167,7 +170,9 @@ class PackagesConfig(Screen):
         lets you scroll down to the exact package you need in the package selection list
         """
         # get the packages selection list
-        packages = self.get_widget_by_id(f"{package_manager}-{package_group}-list-of-packages")
+        packages = self.get_widget_by_id(
+                f"{package_manager}-{package_group}-list-of-packages"
+                )
 
         # get the package name for the highlighted index
         highlight_package = packages.highlighted_child
@@ -195,15 +200,18 @@ class PackagesConfig(Screen):
             manager = classes[0]
             group = classes[1]
 
+            blurb_txt = (f"\nmanager: [#ffaff9]{manager}[/] group: [#ffaff9]{group}[/]")
             # update the bottom app description to the highlighted_app's description
-            blurb = format_description(
-                    f"package: [#ffaff9]{package_title}[/]\nmanager: [#ffaff9]{manager}[/]\ngroup: [#ffaff9]{group}[/]"
-                    )
+            blurb = format_description(blurb_txt)
             self.get_widget_by_id('package-description').update(blurb)
 
             # select-packages styling - bottom
             package_desc = self.get_widget_by_id("package-notes-container")
-            package_desc.border_title = "📦 Package [i]info[/i]"
+            question = (
+                    "🔎 [magenta]search[/] for 📦 [#C1FF87]package[/]"
+                    )
+
+            package_desc.border_title = question
 
             self.previous_package = highlighted_package
             self.pkg_mnger = manager

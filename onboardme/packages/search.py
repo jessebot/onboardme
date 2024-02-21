@@ -15,10 +15,15 @@ def search_for_package(package: str,
 
     if package_manager:
         search_cmd = cfg[package_manager]['commands']['search']
+        info_cmd = cfg[package_manager]['commands'].get('info', False)
         cmd = " ".join([search_cmd, package])
         res = subproc([cmd]).split('\n')
         if package in res:
-            return True
+            if info_cmd:
+                full_info_cmd = " ".join([info_cmd, package])
+                return subproc([full_info_cmd])
+            else:
+                return package
     else:
         results = {}
         for package_manager, metadata in cfg.items():

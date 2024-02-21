@@ -29,16 +29,20 @@ $navy: rgb(35,35,54);
 }
 
 #package-search-inputs {
+    align: center middle;
     grid-size: 2;
     grid-columns: 0.5fr 1fr;
+    height: 5;
 }
 
 #package-name-input {
+    align: center middle;
     margin-bottom: 1;
     margin-top: 1;
     height: 3;
 }
 
 #description-input {
-    height: 5;
+    align: center middle;
+    height: 3;
 }

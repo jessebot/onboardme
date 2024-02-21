@@ -91,7 +91,7 @@ CollapsibleTitle:focus {
     align: center top;
 }
 
-/* Matches App Description in Select k8s packages */
+/* Matches packages Description */
 #package-notes-container {
    scrollbar-background: $dark_gray;
    scrollbar-background-active: $dark_gray;
@@ -101,7 +101,7 @@ CollapsibleTitle:focus {
    border: round $dark_gray;
    border-title-color: $orange;
    align: center middle;
-   height: 50%;
+   column-span: 2;
 }
 
 #package-description {
@@ -126,4 +126,5 @@ CollapsibleTitle:focus {
 
 .select-dropdown {
     background: $navy;
+    margin-top: 1;
 }
