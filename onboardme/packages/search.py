@@ -1,4 +1,5 @@
 from ..subproc import subproc
+from ..constants import OS
 
 
 def search_for_package(package: str,
@@ -12,8 +13,10 @@ def search_for_package(package: str,
     If no package_manager is passed in, we search every package_manager.commands.search
     returns outputs of search commands as dictionary like {'brew': output}
     """
-
     if package_manager:
+        if package_manager in ['apt', 'flatpak'] and OS[0] == "Darwin":
+            return f"{package_manager} is not supported on macOS 😔"
+
         search_cmd = cfg[package_manager]['commands']['search']
         info_cmd = cfg[package_manager]['commands'].get('info', False)
         cmd = " ".join([search_cmd, package])

@@ -129,7 +129,7 @@ class PackagesConfig(Screen):
                     )
             emoji = self.cfg[package_mngr]['emoji']
             select_packages_widget.border_title = (
-                    f"[#ffaff9]{emoji}[/] [i][#C1FF87]{package_mngr}[/]"
+                    f"{emoji} [i][#C1FF87]{package_mngr}[/]"
                     )
             select_packages_widget.border_subtitle = (
                     f'[@click=screen.launch_new_package_modal("{package_mngr}")]➕[/]'
@@ -149,9 +149,13 @@ class PackagesConfig(Screen):
         if self.initial_package:
             self.scroll_to_package(self.initial_package)
 
-    @on(OptionList.OptionHighlighted)
+        # select-packages styling - bottom
+        package_desc = self.get_widget_by_id("package-notes-container")
+        package_desc.border_title = "📦 [i]Package Info[/]"
+
+    @on(OptionList.OptionSelected)
     def update_highlighted_package_view(self,
-                                        event: OptionList.OptionHighlighted) -> None:
+                                        event: OptionList.OptionSelected) -> None:
         olist = event.option_list
         if isinstance(olist, OptionList):
             if "list-of-packages" in olist.classes:
@@ -170,14 +174,6 @@ class PackagesConfig(Screen):
                 # # update the bottom app description to the highlighted_app's description
                 # blurb = format_description(blurb_txt)
                 # self.get_widget_by_id('package-description').update(blurb)
-
-                # select-packages styling - bottom
-                package_desc = self.get_widget_by_id("package-notes-container")
-                question = (
-                        "🔎 [i][#ffaff9]search[/][/i] for 📦"
-                        )
-
-                package_desc.border_title = question
 
                 self.previous_package = highlighted_package.prompt
                 self.pkg_mnger = manager

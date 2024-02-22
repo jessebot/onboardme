@@ -40,7 +40,7 @@ $navy: rgb(35,35,54);
     scrollbar-color-hover: $light_cornflower;
     scrollbar-color: $cornflower;
     border: round $spacechalk_lime;
-    border-title-color: $orange;
+    border-title-color: $light_pink;
     align: center middle;
     column-span: 2;
 }

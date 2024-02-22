@@ -48,7 +48,8 @@ class PackageSearch(Widget):
             yield input
 
         # response from package search
-        yield Label("", id="package-res")
+        yield Label("🔎 [i]Search[/i] for a package for more info.",
+                    id="package-res")
 
     @on(Input.Submitted)
     def input_validation(self, event: Input.Submitted) -> None:
@@ -78,9 +79,12 @@ class PackageSearch(Widget):
         """ 
         validate input on text submitted and update res Label
         """
-        print(f"event.value for input submitted is {event.value}")
+        self.search_for_package(event.value)
+
+    def search_for_package(self, package: str) -> None:
+        print(f"value for input submitted is {package}")
         res = search_for_package(
-                package=event.value,
+                package=package,
                 package_manager=self.pkg_mngr,
                 cfg=self.cfg
                 )
@@ -115,4 +119,6 @@ class PackageSearch(Widget):
         package_input_box.clear()
         package_input_box.action_home()
         package_input_box.insert_text_at_cursor(package)
-        package_input_box.action_submit()
+
+        # submit the package for searching
+        self.search_for_package(package)
