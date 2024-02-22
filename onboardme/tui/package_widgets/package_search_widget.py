@@ -5,11 +5,14 @@ from textual import on
 from textual.app import ComposeResult
 from textual.containers import Grid
 from textual.validation import Length
-from textual.widgets import Button, Input, Label, Select, Pretty
+from textual.widgets import Button, Input, Label, Select
 from textual.widget import Widget
 
 
 class PackageSearch(Widget):
+    """ 
+    widget to search for packages for one or more package managers
+    """
     CSS_PATH = ["../css/base_modal.tcss",
                 "../css/package_info.tcss"]
 
@@ -24,11 +27,12 @@ class PackageSearch(Widget):
         super().__init__()
 
     def compose(self) -> ComposeResult:
-        # grid for pckage manager dropdown and package input
         input = Input(validators=[Length(minimum=2)],
                       placeholder="Name of your package",
                       id="package-name-input")
         input.tooltip = "Name for your package in onboardme"
+
+        # grid for pckage manager dropdown and package input
         with Grid(id="package-search-inputs"):
             yield Select.from_values(self.cfg.keys(),
                                      value=self.pkg_mngr,
@@ -37,13 +41,8 @@ class PackageSearch(Widget):
                                      classes="select-dropdown")
             yield input
 
-    def on_mount(self) -> None:
-        if self.app.speak_screen_titles:
-            # if text to speech is on, read screen title
-            self.app.action_say(
-                    "Screen title: Please enter a name for your package. "
-                    "You can press escape to close this modal screen"
-                    )
+        # response from package search
+        yield Label("", id="package-res")
 
     @on(Input.Changed)
     def input_validation(self, event: Input.Changed) -> None:
@@ -61,7 +60,7 @@ class PackageSearch(Widget):
     @on(Select.Changed)
     def dropdown_selected(self, event: Select.Changed) -> None:
         """ 
-        change the default package manager
+        change the default package manager based on dropdown option selected
         """
         if event.value:
             self.pkg_mngr = event.value
@@ -71,9 +70,8 @@ class PackageSearch(Widget):
     @on(Input.Submitted)
     def input_submitted(self, event: Input.Submitted) -> None:
         """ 
-        validate input on text submitted
+        validate input on text submitted and update res Label
         """
-        description_grid = self.get_widget_by_id("description-buttons")
         print(f"event.value for input submitted is {event.value}")
         res = search_for_package(
                 package=event.value,
@@ -82,10 +80,13 @@ class PackageSearch(Widget):
                 )
 
         # create buttons based on which package manager found the package
-        if isinstance(self.pkg_mngr, str):
+        if isinstance(res, str):
             submit = Button(self.pkg_mngr, id="package-submit")
             submit.tooltip = f"install with {self.pkg_mngr}"
-            description_grid.mount(Label(res.replace('\n','\n\n'),
-                                         id="package-res"))
-        else:
-            description_grid.mount(Pretty(res))
+            formatted_res = res.replace('\n','\n\n')
+        elif isinstance(res, list):
+            joined_res = "\n".join(res)
+            formatted_res = joined_res.replace('\n','\n\n')
+
+        res_label = self.get_widget_by_id("package-res")
+        res_label.update(formatted_res)
