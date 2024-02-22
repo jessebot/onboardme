@@ -65,7 +65,12 @@ CollapsibleTitle:focus {
     grid-size: 4;
 }
 
-/* --------- LEFT TOP HALF OF SCREEN ------------ */
+#packages-screen {
+    margin-top: 2;
+    margin-bottom: 2;
+    margin-left: 3;
+    margin-right: 3;
+}
 
 /* matches only the left hand side of top half of screen */
 .select-add-packages {
@@ -85,46 +90,12 @@ CollapsibleTitle:focus {
     scrollbar-color: $cornflower;
 }
 
-/* matches the app selection list, the left button container */
-.packages-column {
-    grid-rows: 0.1fr 1fr;
-    align: center top;
-}
-
-/* Matches packages Description */
-#package-notes-container {
-   scrollbar-background: $dark_gray;
-   scrollbar-background-active: $dark_gray;
-   scrollbar-background-hover: $dark_gray;
-   scrollbar-color-hover: $light_cornflower;
-   scrollbar-color: $cornflower;
-   border: round $dark_gray;
-   border-title-color: $orange;
-   align: center middle;
-   column-span: 2;
-}
-
-#package-description {
-   content-align: left middle;
-   width: 100%;
-   padding-left: 1;
-   padding-right: 1;
-   color: $bluish_white 60%;
-}
-
 .list-of-packages {
     margin-top: 0;
     margin-bottom: 0;
 }
 
-#packages-screen {
-    margin-top: 2;
-    margin-bottom: 2;
-    margin-left: 3;
-    margin-right: 3;
-}
-
-.select-dropdown {
-    background: $navy;
-    margin-top: 1;
+/* matches the package selection list */
+.packages-column {
+    align: center top;
 }

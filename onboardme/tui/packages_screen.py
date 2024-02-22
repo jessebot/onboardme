@@ -20,7 +20,7 @@ class PackagesConfig(Screen):
     Textual screen for onboardme packages
     """
     CSS_PATH = ["./css/packages_config.tcss",
-                "./css/new_package_modal.tcss"]
+                "./css/package_info.tcss"]
 
     BINDINGS = [
             Binding(key="b,escape,q",

@@ -12,7 +12,7 @@ from textual.widgets import Button, Input, Label, Select, Pretty
 
 class NewPackageModalScreen(ModalScreen):
     CSS_PATH = ["../css/base_modal.tcss",
-                "../css/new_package_modal.tcss"]
+                "../css/package_info.tcss"]
     BINDINGS = [Binding(key="b,escape,q",
                         key_display="b",
                         action="app.pop_screen",

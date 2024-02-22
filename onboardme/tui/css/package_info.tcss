@@ -14,6 +14,36 @@ $blue_gray: rgb(86,95,137);
 $dark_gray: rgb(58,58,58);
 $navy: rgb(35,35,54);
 
+/* Matches packages Description */
+#package-notes-container {
+    scrollbar-background: $dark_gray;
+    scrollbar-background-active: $dark_gray;
+    scrollbar-background-hover: $dark_gray;
+    scrollbar-color-hover: $light_cornflower;
+    scrollbar-color: $cornflower;
+    border: round $spacechalk_lime;
+    border-title-color: $orange;
+    align: center middle;
+    column-span: 2;
+}
+
+#package-description {
+    content-align: center middle;
+    width: 100%;
+    padding-left: 1;
+    padding-right: 1;
+    color: $bluish_white 60%;
+    border: round $orange;
+}
+
+.select-dropdown {
+    background: $navy;
+    margin-top: 1;
+}
+
+#package-res {
+   border: round $spacechalk_red;
+}
 
 /* whole modal screen */
 #new-package-modal-screen {
@@ -22,10 +52,10 @@ $navy: rgb(35,35,54);
     height: 25;
 }
 
+/* height: auto; */
 #modal-button-box {
     margin-top: 1;
     align: center middle;
-    height: auto;
 }
 
 #package-search-inputs {
@@ -33,11 +63,11 @@ $navy: rgb(35,35,54);
     grid-size: 2;
     grid-columns: 0.5fr 1fr;
     height: 5;
+    border: round $lavender;
 }
 
 #package-name-input {
     align: center middle;
-    margin-bottom: 1;
     margin-top: 1;
     height: 3;
 }

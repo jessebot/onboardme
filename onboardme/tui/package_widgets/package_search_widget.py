@@ -11,7 +11,7 @@ from textual.widget import Widget
 
 class PackageSearch(Widget):
     CSS_PATH = ["../css/base_modal.tcss",
-                "../css/new_package_modal.tcss"]
+                "../css/package_info.tcss"]
 
     def __init__(self,
                  package_manager_configs: dict = {},
@@ -24,30 +24,20 @@ class PackageSearch(Widget):
         super().__init__()
 
     def compose(self) -> ComposeResult:
-        # base screen grid
-        # grid for app question and buttons
-        with Grid(id="question-box"):
-            # grid for pckage manager dropdown and package input
-            input = Input(validators=[Length(minimum=2)],
-                          placeholder="Name of your package",
-                          id="package-name-input")
-            input.tooltip = "Name for your package in onboardme"
-            with Grid(id="package-search-inputs"):
-                yield Select.from_values(self.cfg.keys(),
-                                         value=self.pkg_mngr,
-                                         prompt="All Package Managers",
-                                         allow_blank=True,
-                                         classes="select-dropdown")
-                yield input
-
-            desc_input = Grid(id="description-buttons")
-            desc_input.tooltip = "To be displayed in the UI"
-            yield desc_input
+        # grid for pckage manager dropdown and package input
+        input = Input(validators=[Length(minimum=2)],
+                      placeholder="Name of your package",
+                      id="package-name-input")
+        input.tooltip = "Name for your package in onboardme"
+        with Grid(id="package-search-inputs"):
+            yield Select.from_values(self.cfg.keys(),
+                                     value=self.pkg_mngr,
+                                     prompt="All Package Managers",
+                                     allow_blank=True,
+                                     classes="select-dropdown")
+            yield input
 
     def on_mount(self) -> None:
-        box = self.get_widget_by_id("question-box")
-        box.border_subtitle = "[@click=app.pop_screen]cancel[/]"
-
         if self.app.speak_screen_titles:
             # if text to speech is on, read screen title
             self.app.action_say(
@@ -95,6 +85,7 @@ class PackageSearch(Widget):
         if isinstance(self.pkg_mngr, str):
             submit = Button(self.pkg_mngr, id="package-submit")
             submit.tooltip = f"install with {self.pkg_mngr}"
-            description_grid.mount(Label(res.replace('\n','\n\n')))
+            description_grid.mount(Label(res.replace('\n','\n\n'),
+                                         id="package-res"))
         else:
             description_grid.mount(Pretty(res))
