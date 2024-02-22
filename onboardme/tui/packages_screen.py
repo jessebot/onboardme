@@ -97,6 +97,13 @@ class PackagesConfig(Screen):
             # all the package manager lists
             with Grid(id="packages-config-container",
                       classes="packages-large-grid"):
+                # Bottom half of the screen for notes on a given package
+                with VerticalScroll(id="package-notes-container"):
+                    yield Label("", id="package-description")
+                    yield PackageSearch(self.cfg,
+                                        self.pkg_mnger,
+                                        id="package-search-widget")
+
                 # each package manager and it's groups
                 for package_mngr, package_groups in option_lists.items():
                     with Grid(classes="packages-column"):
@@ -106,11 +113,6 @@ class PackagesConfig(Screen):
                                 with Collapsible(collapsed=False,
                                                  title=package_group):
                                     yield packages_list
-
-                # Bottom half of the screen for notes on a given package
-                with VerticalScroll(id="package-notes-container"):
-                    yield Label("", id="package-description")
-                    yield PackageSearch(self.cfg, self.pkg_mnger)
 
     def on_mount(self) -> None:
         """
@@ -192,28 +194,25 @@ class PackagesConfig(Screen):
             if self.app.speak_on_focus:
                 self.app.action_say(f"highlighted package is {highlighted_package}")
 
-            # styling for the select-packages - configure packages container - right
-            package_title = highlighted_package.prompt
-
             # description
             classes = event.option_list.id.split('-')
             manager = classes[0]
-            group = classes[1]
+            # group = classes[1]
 
-            blurb_txt = (f"\nmanager: [#ffaff9]{manager}[/] group: [#ffaff9]{group}[/]")
-            # update the bottom app description to the highlighted_app's description
-            blurb = format_description(blurb_txt)
-            self.get_widget_by_id('package-description').update(blurb)
+            # blurb_txt = (f"group: [#ffaff9]{group}[/]")
+            # # update the bottom app description to the highlighted_app's description
+            # blurb = format_description(blurb_txt)
+            # self.get_widget_by_id('package-description').update(blurb)
 
             # select-packages styling - bottom
             package_desc = self.get_widget_by_id("package-notes-container")
             question = (
-                    "🔎 [magenta]search[/] for 📦 [#C1FF87]package[/]"
+                    "🔎 [i][#ffaff9]search[/][/i] for 📦"
                     )
 
             package_desc.border_title = question
 
-            self.previous_package = highlighted_package
+            self.previous_package = highlighted_package.prompt
             self.pkg_mnger = manager
 
     def create_new_package_in_yaml(self,

@@ -14,37 +14,6 @@ $blue_gray: rgb(86,95,137);
 $dark_gray: rgb(58,58,58);
 $navy: rgb(35,35,54);
 
-/* Matches packages Description */
-#package-notes-container {
-    scrollbar-background: $dark_gray;
-    scrollbar-background-active: $dark_gray;
-    scrollbar-background-hover: $dark_gray;
-    scrollbar-color-hover: $light_cornflower;
-    scrollbar-color: $cornflower;
-    border: round $spacechalk_lime;
-    border-title-color: $orange;
-    align: center middle;
-    column-span: 2;
-}
-
-#package-description {
-    content-align: center middle;
-    width: 100%;
-    padding-left: 1;
-    padding-right: 1;
-    color: $bluish_white 60%;
-    border: round $orange;
-}
-
-.select-dropdown {
-    background: $navy;
-    margin-top: 1;
-}
-
-#package-res {
-   border: round $spacechalk_red;
-}
-
 /* whole modal screen */
 #new-package-modal-screen {
     width: 80%;
@@ -58,21 +27,55 @@ $navy: rgb(35,35,54);
     align: center middle;
 }
 
+/* for just the package search widget, which is seperate from the modal screen */
+#package-search-widget {
+    height: auto;
+}
+
+/* Matches packages Description container */
+#package-notes-container {
+    scrollbar-background: $dark_gray;
+    scrollbar-background-active: $dark_gray;
+    scrollbar-background-hover: $dark_gray;
+    scrollbar-color-hover: $light_cornflower;
+    scrollbar-color: $cornflower;
+    border: round $spacechalk_lime;
+    border-title-color: $orange;
+    align: center middle;
+    column-span: 2;
+}
+
+/* Matches packages Description innards, specifically the manager and group */
+#package-description {
+    content-align: center middle;
+    width: 100%;
+    padding-left: 1;
+    padding-right: 1;
+    color: $bluish_white 60%;
+}
+
+/* box for drop down and input box */
 #package-search-inputs {
     align: center middle;
     grid-size: 2;
     grid-columns: 0.5fr 1fr;
     height: 5;
-    border: round $lavender;
 }
 
+/* package manager drop down */
+.select-dropdown {
+    background: $navy;
+    margin-top: 1;
+}
+
+/* package name input next to package manager drop down */
 #package-name-input {
     align: center middle;
     margin-top: 1;
     height: 3;
 }
 
-#description-input {
-    align: center middle;
-    height: 3;
+/* results from package search or info query */
+#package-res {
+   border: hkey $spacechalk_lime;
 }

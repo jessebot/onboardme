@@ -18,13 +18,19 @@ class PackageSearch(Widget):
 
     def __init__(self,
                  package_manager_configs: dict = {},
-                 package_manager: str|list = None) -> None:
+                 package_manager: str|list = None,
+                 id: str = None) -> None:
         self.cfg = package_manager_configs
         if not package_manager:
             self.pkg_mngr = None
         else:
             self.pkg_mngr = package_manager
-        super().__init__()
+
+        # if there's an id for this widget, respect it
+        if id:
+            super().__init__(id=id)
+        else:
+            super().__init__()
 
     def compose(self) -> ComposeResult:
         input = Input(validators=[Length(minimum=2)],
