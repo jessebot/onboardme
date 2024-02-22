@@ -142,13 +142,69 @@ class PackagesConfig(Screen):
             # if text to speech is on, read screen title
             self.app.action_say(
                     "Screen title: Packages Configuration. Here you can select "
-                    "which packages to install per package manager. On the left"
-                    " is a list of packages for brew."
+                    "which packages to install per package manager."
                     )
 
         # scroll down to specific app if requested
         if self.initial_package:
             self.scroll_to_package(self.initial_package)
+
+    @on(OptionList.OptionHighlighted)
+    def update_highlighted_package_view(self,
+                                        event: OptionList.OptionHighlighted) -> None:
+        olist = event.option_list
+        if isinstance(olist, OptionList):
+            if "list-of-packages" in olist.classes:
+                # the actual highlighted package
+                highlighted_package = event.option
+
+                if self.app.speak_on_focus:
+                    self.app.action_say(f"highlighted package is {highlighted_package}")
+
+                # description
+                classes = olist.id.split('-')
+                manager = classes[0]
+                # group = classes[1]
+
+                # blurb_txt = (f"group: [#ffaff9]{group}[/]")
+                # # update the bottom app description to the highlighted_app's description
+                # blurb = format_description(blurb_txt)
+                # self.get_widget_by_id('package-description').update(blurb)
+
+                # select-packages styling - bottom
+                package_desc = self.get_widget_by_id("package-notes-container")
+                question = (
+                        "🔎 [i][#ffaff9]search[/][/i] for 📦"
+                        )
+
+                package_desc.border_title = question
+
+                self.previous_package = highlighted_package.prompt
+                self.pkg_mnger = manager
+
+                # update the input for the package search
+                search_widget = self.get_widget_by_id("package-search-widget")
+                search_widget.action_update_package_and_manager(highlighted_package.prompt,
+                                                                manager)
+
+    def create_new_package_in_yaml(self,
+                                   package_manager: str,
+                                   package_group: str,
+                                   package_name: str,
+                                   package_description: str = "") -> None:
+        """ 
+        add a new package to the packages yaml
+        """
+        # updates the base user yaml
+        if package_name not in self.app.pkgs[package_manager]['packages']['default']:
+            self.app.pkgs[package_manager]['packages']['default'] = package_name
+
+
+        # adds selection to the app selection list
+        packages = self.get_widget_by_id(
+                f"{package_manager}-{package_group}-list-of-packages"
+                )
+        packages.add_option(package_name.replace("_","-"))
 
     def action_launch_new_package_modal(self, package_manager: str) -> None:
         def get_new_package(package_response):
@@ -183,53 +239,3 @@ class PackagesConfig(Screen):
         while highlight_package != package_to_highlight:
             packages.action_cursor_down()
             highlight_package = packages.highlighted
-
-    @on(OptionList.OptionHighlighted)
-    def update_highlighted_package_view(self,
-                                        event: OptionList.OptionHighlighted) -> None:
-        if isinstance(event.option_list, OptionList):
-            # the actual highlighted package
-            highlighted_package = event.option
-
-            if self.app.speak_on_focus:
-                self.app.action_say(f"highlighted package is {highlighted_package}")
-
-            # description
-            classes = event.option_list.id.split('-')
-            manager = classes[0]
-            # group = classes[1]
-
-            # blurb_txt = (f"group: [#ffaff9]{group}[/]")
-            # # update the bottom app description to the highlighted_app's description
-            # blurb = format_description(blurb_txt)
-            # self.get_widget_by_id('package-description').update(blurb)
-
-            # select-packages styling - bottom
-            package_desc = self.get_widget_by_id("package-notes-container")
-            question = (
-                    "🔎 [i][#ffaff9]search[/][/i] for 📦"
-                    )
-
-            package_desc.border_title = question
-
-            self.previous_package = highlighted_package.prompt
-            self.pkg_mnger = manager
-
-    def create_new_package_in_yaml(self,
-                                   package_manager: str,
-                                   package_group: str,
-                                   package_name: str,
-                                   package_description: str = "") -> None:
-        """ 
-        add a new package to the packages yaml
-        """
-        # updates the base user yaml
-        if package_name not in self.app.pkgs[package_manager]['packages']['default']:
-            self.app.pkgs[package_manager]['packages']['default'] = package_name
-
-
-        # adds selection to the app selection list
-        packages = self.get_widget_by_id(
-                f"{package_manager}-{package_group}-list-of-packages"
-                )
-        packages.add_option(package_name.replace("_","-"))

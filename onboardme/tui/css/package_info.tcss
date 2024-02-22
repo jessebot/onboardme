@@ -63,7 +63,7 @@ $navy: rgb(35,35,54);
 }
 
 /* package manager drop down */
-.select-dropdown {
+#select-dropdown {
     background: $navy;
     margin-top: 1;
 }
@@ -77,5 +77,6 @@ $navy: rgb(35,35,54);
 
 /* results from package search or info query */
 #package-res {
-   border: hkey $spacechalk_lime;
+    border: hkey $spacechalk_lime;
+    width: 100%;
 }

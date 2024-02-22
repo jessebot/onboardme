@@ -18,12 +18,17 @@ def search_for_package(package: str,
         info_cmd = cfg[package_manager]['commands'].get('info', False)
         cmd = " ".join([search_cmd, package])
         res = subproc([cmd]).split('\n')
+
+        # if res is multiple lines, join them with new lines
+        if isinstance(res, list):
+            res = "\n".join(res)
+
         if package in res:
             if info_cmd:
                 full_info_cmd = " ".join([info_cmd, package])
                 return subproc([full_info_cmd])
             else:
-                return package
+                return res
     else:
         results = {}
         for package_manager, metadata in cfg.items():

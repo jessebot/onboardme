@@ -44,14 +44,14 @@ class PackageSearch(Widget):
                                      value=self.pkg_mngr,
                                      prompt="All Package Managers",
                                      allow_blank=True,
-                                     classes="select-dropdown")
+                                     id="select-dropdown")
             yield input
 
         # response from package search
         yield Label("", id="package-res")
 
-    @on(Input.Changed)
-    def input_validation(self, event: Input.Changed) -> None:
+    @on(Input.Submitted)
+    def input_validation(self, event: Input.Submitted) -> None:
         """ 
         validate input on any text entered
         """
@@ -93,6 +93,26 @@ class PackageSearch(Widget):
         elif isinstance(res, list):
             joined_res = "\n".join(res)
             formatted_res = joined_res.replace('\n','\n\n')
+        elif not res:
+            formatted_res = "no result :("
 
         res_label = self.get_widget_by_id("package-res")
         res_label.update(formatted_res)
+
+    def action_update_package_and_manager(self,
+                                          package: str,
+                                          package_manager: str = "brew") -> None:
+        """
+        update the package input box with a specific package
+        """
+        # updates the dropdown
+        package_manager_dropdown = self.get_widget_by_id("select-dropdown")
+        package_manager_dropdown.value = package_manager
+        self.pkg_mngr = package_manager
+
+        # updates the input box
+        package_input_box = self.get_widget_by_id("package-name-input")
+        package_input_box.clear()
+        package_input_box.action_home()
+        package_input_box.insert_text_at_cursor(package)
+        package_input_box.action_submit()
