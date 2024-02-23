@@ -2,7 +2,6 @@
 # onboardme libraries
 from onboardme.tui.package_widgets.new_package_modal import NewPackageModalScreen
 from onboardme.tui.package_widgets.package_search_widget import PackageSearch
-from onboardme.tui.util import format_description
 
 # external libraries
 from textual import on
@@ -47,7 +46,7 @@ class PackagesConfig(Screen):
         self.cfg = config
 
         # this changes depending on the list selected
-        self.pkg_mnger = 'brew'
+        self.pkg_mnger = ''
 
         # this is state storage
         self.previous_package = ''
@@ -130,9 +129,6 @@ class PackagesConfig(Screen):
             emoji = self.cfg[package_mngr]['emoji']
             select_packages_widget.border_title = (
                     f"{emoji} [i][#C1FF87]{package_mngr}[/]"
-                    )
-            select_packages_widget.border_subtitle = (
-                    f'[@click=screen.launch_new_package_modal("{package_mngr}")]➕[/]'
                     )
 
         for option_list in self.query(".list-of-packages"):

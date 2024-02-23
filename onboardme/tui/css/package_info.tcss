@@ -34,49 +34,45 @@ $navy: rgb(35,35,54);
 
 /* Matches packages Description container */
 #package-notes-container {
-    scrollbar-background: $dark_gray;
-    scrollbar-background-active: $dark_gray;
+    scrollbar-background: $dark_gray 80%;
+    scrollbar-background-active: $dark_gray 80%;
     scrollbar-background-hover: $dark_gray;
     scrollbar-color-hover: $light_cornflower;
     scrollbar-color: $cornflower;
-    border: round $spacechalk_lime;
-    border-title-color: $light_pink;
-    align: center middle;
+    border: panel $dark_gray;
+    border-title-color: $orange;
+    background: $dark_gray 30%;
+    align: center top;
     column-span: 2;
 }
 
-/* Matches packages Description innards, specifically the manager and group */
-#package-description {
-    content-align: center middle;
-    width: 100%;
-    padding-left: 1;
-    padding-right: 1;
-    color: $bluish_white 60%;
-}
-
-/* box for drop down and input box */
+/* box for selection list and input box */
 #package-search-inputs {
-    align: center middle;
+    align: center top;
     grid-size: 2;
     grid-columns: 0.5fr 1fr;
-    height: 5;
+    grid-gutter: 1;
+    margin-left: 2;
+    margin-right: 1;
+    height: 11;
 }
 
-/* package manager drop down */
-#select-dropdown {
-    background: $navy;
-    margin-top: 1;
+#pkg-mngr-list {
+    background: $blue_gray 20%;
+    border: tall black 15%;
 }
 
-/* package name input next to package manager drop down */
+
+/* package name input to the left of the package manager list */
 #package-name-input {
-    align: center middle;
-    margin-top: 1;
+    align: center top;
+    margin-top: 3;
     height: 3;
 }
 
 /* results from package search or info query */
 #package-res {
-    border: hkey $spacechalk_lime;
+    border-top: hkey $blue_gray 70%;
+    border-title-color: $neon_magenta;
     width: 100%;
 }
