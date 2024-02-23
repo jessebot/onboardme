@@ -63,7 +63,9 @@ def search_pkg_manager(package: str, package_manager: str, commands: dict):
 
                 # highlight the name of the package anywhere we find it
                 for idx, item in enumerate(info_res):
-                    if "==>" in item or package in item:
+                    if "==>" in item:
+                        info_res[idx] = "[green]" + item + "[/green]"
+                    elif package_manager != "brew" and package in item:
                         info_res[idx] = "[green]" + item + "[/green]"
                 return "\n".join(info_res)
             else:
