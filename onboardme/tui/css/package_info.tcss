@@ -38,9 +38,10 @@ $navy: rgb(35,35,54);
     scrollbar-background-active: $dark_gray 80%;
     scrollbar-background-hover: $dark_gray;
     scrollbar-color-hover: $light_cornflower;
-    scrollbar-color: $cornflower;
+    scrollbar-color: $cornflower 50%;
+    scrollbar-color-active: $cornflower;
     border: panel $dark_gray;
-    border-title-color: $orange;
+    border-title-color: $bluish_white;
     background: $dark_gray 30%;
     align: center top;
     column-span: 2;
@@ -62,7 +63,6 @@ $navy: rgb(35,35,54);
     border: tall black 15%;
 }
 
-
 /* package name input to the left of the package manager list */
 #package-name-input {
     align: center top;
@@ -72,7 +72,10 @@ $navy: rgb(35,35,54);
 
 /* results from package search or info query */
 #package-res {
-    border-top: hkey $blue_gray 70%;
-    border-title-color: $neon_magenta;
+    border-top: panel $blue_gray 30%;
+    border-title-color: $orange;
     width: 100%;
+    padding-top: 1;
+    padding-left: 1;
+    padding-right: 1;
 }

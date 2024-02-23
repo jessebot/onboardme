@@ -63,8 +63,14 @@ class PackageSearch(Widget):
             yield input
 
         # response from package search
-        yield Label("🔎 [i]Search[/] for a package for more info.",
+        yield Label("[i]Search[/] for a package for more info.",
                     id="package-res")
+
+    def on_mount(self) -> None:
+        """
+        tidy the borders
+        """
+        self.get_widget_by_id("package-res").border_title = "📦 [i]Package Info[/i]"
 
     @on(Input.Submitted)
     def input_validation(self, event: Input.Submitted) -> None:
@@ -108,7 +114,7 @@ class PackageSearch(Widget):
             # create buttons based on which package manager found the package
             submit = Button(pkg_mngr, id="package-submit")
             submit.tooltip = f"install with {pkg_mngr}"
-            formatted_res = res.replace('\n','\n\n')
+            formatted_res = res.replace('\n','\n\n').lstrip()
 
         # for a result for a single package manager that includes multiple packages
         elif isinstance(res, list):

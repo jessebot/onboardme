@@ -147,7 +147,7 @@ class PackagesConfig(Screen):
 
         # select-packages styling - bottom
         package_desc = self.get_widget_by_id("package-notes-container")
-        package_desc.border_title = "📦 [i]Package Info[/]"
+        package_desc.border_title = "🔎 [i]Search for package[/i]"
 
     @on(OptionList.OptionSelected)
     def update_highlighted_package_view(self,

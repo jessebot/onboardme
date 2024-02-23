@@ -10,15 +10,44 @@ def search_for_package(package: str,
     Takes packages config dict and optional package_manager (str or list) to
     search returns output of search command
 
-    If no package_manager is passed in, we search every package_manager.commands.search
+    If no package_manager is passed in, we search every package_manager with 
+    a search command
     returns outputs of search commands as dictionary like {'brew': output}
     """
+    # search for a package for a SINGLE package manager
     if isinstance(package_manager, str):
-        if package_manager in ['apt', 'flatpak'] and OS[0] == "Darwin":
-            return f"{package_manager} is not supported on macOS 😔"
+        res = search_pkg_manager(package,
+                                 package_manager,
+                                 cfg[package_manager]['commands'])
 
-        search_cmd = cfg[package_manager]['commands']['search']
-        info_cmd = cfg[package_manager]['commands'].get('info', False)
+    # search a list of package managers
+    elif isinstance(package_manager, list):
+        res = {}
+        for pkg_mngr in package_manager:
+            res[pkg_mngr] = search_pkg_manager(package,
+                                               package_manager,
+                                               cfg[package_manager]['commands'])
+
+    # search all package managers
+    else:
+        res = {}
+        for pkg_mngr in cfg.keys():
+            res[pkg_mngr] = search_pkg_manager(package,
+                                               pkg_mngr,
+                                               cfg[package_manager]['commands'])
+    return res
+
+
+def search_pkg_manager(package: str, package_manager: str, commands: dict):
+    """ 
+    searches one package manager for a package
+    """
+    if package_manager in ['apt', 'flatpak'] and OS[0] == "Darwin":
+        return f"{package_manager} is not supported on macOS 😔"
+
+    search_cmd = commands['search']
+    if search_cmd:
+        info_cmd = commands.get('info', False)
         cmd = " ".join([search_cmd, package])
         res = subproc([cmd]).split('\n')
 
@@ -27,34 +56,23 @@ def search_for_package(package: str,
             res = "\n".join(res)
 
         if package in res:
+            # if there's a pkg info command for this package manager, get info
             if info_cmd:
                 full_info_cmd = " ".join([info_cmd, package])
                 info_res = subproc([full_info_cmd]).split('\n')
+
+                # highlight the name of the package anywhere we find it
                 for idx, item in enumerate(info_res):
-                    if "==>" in item:
+                    if "==>" in item or package in item:
                         info_res[idx] = "[green]" + item + "[/green]"
                 return "\n".join(info_res)
             else:
-                return res
-    elif isinstance(package_manager, list):
-        results = {}
-        for pkg_mngr in package_manager:
-            if pkg_mngr in ['apt', 'flatpak'] and OS[0] == "Darwin":
-               results[pkg_mngr] = f"{pkg_mngr} is not supported on macOS 😔"
+                return res.replace(package, f"[green]{package}[/green]")
 
-            search_cmd = cfg[pkg_mngr]['commands'].get('search', None)
-            if search_cmd:
-                cmd = " ".join([search_cmd, pkg_mngr])
-                results[pkg_mngr] = subproc([cmd])
-        return results
+        # if no package was found
+        else:
+            return f"{package} was not found in {package_manager}."
+
+    # if there's no search command for this package
     else:
-        results = {}
-        for package_manager, metadata in cfg.items():
-            if package_manager in ['apt', 'flatpak'] and OS[0] == "Darwin":
-               results[package_manager] = f"{package_manager} is not supported on macOS 😔"
-
-            search_cmd = metadata['commands'].get('search', None)
-            if search_cmd:
-                cmd = " ".join([search_cmd, package])
-                results[package_manager] = subproc([cmd])
-        return results
+        return f"{package_manager} does not have a search command."
