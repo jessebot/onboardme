@@ -9,7 +9,7 @@ from textual.app import ComposeResult
 from textual.binding import Binding
 from textual.containers import VerticalScroll, Grid
 from textual.screen import Screen
-from textual.widgets import Footer, Header, Label, OptionList, Collapsible
+from textual.widgets import Footer, Header, OptionList, Collapsible
 from textual.widgets.option_list import Option, Separator
 from textual.widgets._toggle_button import ToggleButton
 
@@ -49,7 +49,7 @@ class PackagesConfig(Screen):
         self.pkg_mnger = ''
 
         # this is state storage
-        self.previous_package = ''
+        self.package = ''
 
         # inital highlight if we got here via a link
         self.initial_package = highlighted_package
@@ -98,7 +98,6 @@ class PackagesConfig(Screen):
                       classes="packages-large-grid"):
                 # Bottom half of the screen for notes on a given package
                 with VerticalScroll(id="package-notes-container"):
-                    yield Label("", id="package-description")
                     yield PackageSearch(self.cfg,
                                         self.pkg_mnger,
                                         id="package-search-widget")
@@ -171,7 +170,7 @@ class PackagesConfig(Screen):
                 # blurb = format_description(blurb_txt)
                 # self.get_widget_by_id('package-description').update(blurb)
 
-                self.previous_package = highlighted_package.prompt
+                self.package = highlighted_package.prompt
                 self.pkg_mnger = manager
 
                 # update the input for the package search

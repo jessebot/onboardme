@@ -42,6 +42,7 @@ $navy: rgb(35,35,54);
     scrollbar-color-active: $cornflower;
     border: panel $dark_gray;
     border-title-color: $bluish_white;
+    border-subtitle-color: $bluish_white;
     background: $dark_gray 30%;
     align: center top;
     column-span: 2;
@@ -51,16 +52,31 @@ $navy: rgb(35,35,54);
 #package-search-inputs {
     align: center top;
     grid-size: 2;
-    grid-columns: 0.5fr 1fr;
+    grid-columns: 0.6fr 1fr;
     grid-gutter: 1;
     margin-left: 2;
     margin-right: 1;
-    height: 11;
+    height: 10;
 }
 
 #pkg-mngr-list {
-    background: $blue_gray 20%;
     border: tall black 15%;
+    color: $lavender;
+    background: $dark_gray 60%;
+}
+
+#pkg-mngr-list .option-list--option-highlighted {
+    color: $soft_green;
+    background: black 30%;
+}
+
+#pkg-mngr-list OptionList .option-list--option-hover-highlighted {
+    color: $soft_green;
+    background: $dark_gray;
+}
+
+#pkg-mngr-list OptionList .option-list--option-hover {
+    color: $soft_green;
 }
 
 /* package name input to the left of the package manager list */

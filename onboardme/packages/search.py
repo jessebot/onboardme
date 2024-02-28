@@ -14,33 +14,84 @@ def search_for_package(package: str,
     a search command
     returns outputs of search commands as dictionary like {'brew': output}
     """
+    if not package_manager:
+        package_manager = cfg.keys()
+
+    res = {}
+
     # search for a package for a SINGLE package manager
     if isinstance(package_manager, str):
-        res = search_pkg_manager(package,
-                                 package_manager,
-                                 cfg[package_manager]['commands'])
+        res[package_manager] = {}
+        res[package_manager]["group"] = check_package_groups(
+                cfg[package_manager]["packages"],
+                package,
+                package_manager 
+                )
+        res[package_manager]["info"] = search_pkg_manager(
+                package,
+                package_manager,
+                cfg[package_manager]['commands']
+                )
+        res[package_manager]["installed"] = check_if_package_installed(
+                package_manager,
+                package,
+                res[package_manager]["info"]
+                )
+        return res
 
     # search a list of package managers
     elif isinstance(package_manager, list):
-        res = {}
         for pkg_mngr in package_manager:
-            res[pkg_mngr] = search_pkg_manager(package,
-                                               package_manager,
-                                               cfg[package_manager]['commands'])
+            res[pkg_mngr] = {}
 
-    # search all package managers
-    else:
-        res = {}
-        for pkg_mngr in cfg.keys():
-            res[pkg_mngr] = search_pkg_manager(package,
-                                               pkg_mngr,
-                                               cfg[package_manager]['commands'])
-    return res
+            res[pkg_mngr]["group"] = check_package_groups(
+                    cfg[pkg_mngr]["packages"],
+                    package,
+                    pkg_mngr
+                    )
+
+            res[pkg_mngr]["info"] = search_pkg_manager(
+                    package,
+                    pkg_mngr,
+                    cfg[pkg_mngr]['commands']
+                    )
+
+            res[pkg_mngr]["installed"] = check_if_package_installed(
+                    pkg_mngr,
+                    package,
+                    res[pkg_mngr]["info"]
+                    )
 
 
-def search_pkg_manager(package: str, package_manager: str, commands: dict):
+def check_if_package_installed(pkg_mngr: str,
+                               package: str,
+                               info_str: str = "") -> bool:
     """ 
-    searches one package manager for a package
+    checks if package is currently installed via a given package manager
+    takes info_str, which is parsed to see if the package is installed
+    """
+    if pkg_mngr == "brew":
+        if "Not installed" not in info_str:
+            return True
+
+    elif pkg_mngr == "pipx":
+        check_pip = subproc(["pipx list"])
+        if isinstance(check_pip, list):
+            for line in check_pip:
+                if package in line:
+                    return True
+
+    elif "pip3" in pkg_mngr:
+        if "WARNING: Package(s) not found" not in info_str:
+            return True
+
+    return False
+
+
+def search_pkg_manager(package: str, package_manager: str, commands: dict) -> str:
+    """ 
+    searches one package manager for a package.
+    returns a string with info about the package if found.
     """
     if package_manager in ['apt', 'flatpak'] and OS[0] == "Darwin":
         return f"{package_manager} is not supported on macOS 😔"
@@ -64,17 +115,31 @@ def search_pkg_manager(package: str, package_manager: str, commands: dict):
                 # highlight the name of the package anywhere we find it
                 for idx, item in enumerate(info_res):
                     if "==>" in item:
-                        info_res[idx] = "[green]" + item + "[/green]"
+                        info_res[idx] = "[#A8FD57]" + item + "[/]"
                     elif package_manager != "brew" and package in item:
-                        info_res[idx] = "[green]" + item + "[/green]"
+                        info_res[idx] = "[#A8FD57]" + item + "[/]"
+
                 return "\n".join(info_res)
             else:
-                return res.replace(package, f"[green]{package}[/green]")
+                return res.replace(package, f"[#A8FD57]{package}[/]")
 
         # if no package was found
         else:
-            return f"{package} was not found in {package_manager}."
+            return f"{package} was not found in {package_manager}"
 
     # if there's no search command for this package
     else:
         return f"{package_manager} does not have a search command."
+
+
+def check_package_groups(package_groups: dict,
+                         package: str,
+                         package_manager: str) -> str | None:
+    """
+    check a package manager's groups for package and if exists, returns name of
+    package group, else returns None
+    """
+    for pkg_group, pkg_group_list in package_groups.items():
+        if package in pkg_group_list:
+            return pkg_group
+    return None

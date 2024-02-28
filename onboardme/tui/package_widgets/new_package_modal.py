@@ -1,5 +1,4 @@
 # from onboardme.tui.validators.already_exists import CheckIfNameAlreadyInUse
-from onboardme.packages.search import search_for_package
 
 from textual import on
 from textual.binding import Binding
@@ -7,7 +6,7 @@ from textual.app import ComposeResult
 from textual.containers import Grid
 from textual.screen import ModalScreen
 from textual.validation import Length
-from textual.widgets import Button, Input, Label, Select, Pretty
+from textual.widgets import Button, Input, Label, Pretty
 
 
 class NewPackageModalScreen(ModalScreen):
@@ -20,18 +19,19 @@ class NewPackageModalScreen(ModalScreen):
 
 
     def __init__(self,
-                 package_manager_configs: dict = {},
-                 package_manager: str|list = None) -> None:
+                 package_manager_configs: dict,
+                 package_manager: str,
+                 package: str) -> None:
         self.cfg = package_manager_configs
-        if not package_manager:
-            self.pkg_mngr = None
-        else:
-            self.pkg_mngr = package_manager
+        self.pkg_mngr = package_manager
+        self.package = package
         super().__init__()
 
     def compose(self) -> ComposeResult:
         # base screen grid
-        question = ("🔎 Please enter a [#C1FF87]package[/] to [magenta]search[/] for.")
+        question = (
+                "🔎 Please enter a [#C1FF87]group[/] to [magenta]install[/] package in."
+                )
 
         with Grid(id="new-package-modal-screen"):
             # grid for app question and buttons
@@ -40,21 +40,10 @@ class NewPackageModalScreen(ModalScreen):
 
                 # grid for pckage manager dropdown and package input
                 input = Input(validators=[Length(minimum=2)],
-                              placeholder="Name of your package",
-                              id="package-name-input")
-                input.tooltip = "Name for your package in onboardme"
-                with Grid(id="package-search-inputs"):
-                    package_managers = self.cfg.keys()
-                    yield Select.from_values(package_managers,
-                                             value=self.pkg_mngr,
-                                             prompt="All Package Managers",
-                                             allow_blank=True,
-                                             classes="select-dropdown")
-                    yield input
-
-                desc_input = Grid(id="description-buttons")
-                desc_input.tooltip = "To be displayed in the UI"
-                yield desc_input
+                              suggestor=None,
+                              placeholder="Name package group",
+                              id="package-group-input")
+                input.tooltip = "Name of the group to install package in" 
 
                 with Grid(id="modal-button-box"):
                     cancel = Button("🤷 cancel", id="cancel-button")
@@ -85,16 +74,6 @@ class NewPackageModalScreen(ModalScreen):
                             title="⚠️ Input Validation Error\n")
                 self.app.bell()
 
-    @on(Select.Changed)
-    def dropdown_selected(self, event: Select.Changed) -> None:
-        """ 
-        change the default package manager
-        """
-        if event.value:
-            self.pkg_mngr = event.value
-        else:
-            self.pkg_mngr = self.cfg.keys()
-
     @on(Input.Submitted)
     def input_submitted(self, event: Input.Submitted) -> None:
         """ 
@@ -102,19 +81,11 @@ class NewPackageModalScreen(ModalScreen):
         """
         description_grid = self.get_widget_by_id("description-buttons")
         print(f"event.value for input submitted is {event.value}")
-        res = search_for_package(
-                package=event.value,
-                package_manager=self.pkg_mngr,
-                cfg=self.cfg
-                )
 
         # create buttons based on which package manager found the package
-        if isinstance(self.pkg_mngr, str):
-            submit = Button(self.pkg_mngr, id="package-submit")
-            submit.tooltip = f"install with {self.pkg_mngr}"
-            description_grid.mount(Pretty(res))
-        else:
-            description_grid.mount(Pretty(res))
+        submit = Button(self.pkg_mngr, id="package-submit")
+        submit.tooltip = f"install with {self.pkg_mngr}"
+        description_grid.mount(submit)
 
     @on(Button.Pressed)
     def button_pressed(self, event: Button.Pressed) -> None:

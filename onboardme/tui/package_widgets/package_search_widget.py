@@ -1,5 +1,5 @@
-# from onboardme.tui.validators.already_exists import CheckIfNameAlreadyInUse
 from onboardme.packages.search import search_for_package
+from onboardme.tui.package_widgets.new_package_modal import NewPackageModalScreen
 
 from textual import on
 from textual.app import ComposeResult
@@ -88,6 +88,9 @@ class PackageSearch(Widget):
     @on(Mount)
     @on(SelectionList.SelectedChanged)
     def update_selected_view(self) -> None:
+        """
+        update self.pkg_mngr with currently selected package manager
+        """
         self.pkg_mngr = self.get_widget_by_id("pkg-mngr-list").selected
 
     @on(Input.Submitted)
@@ -98,11 +101,17 @@ class PackageSearch(Widget):
         self.search_for_package(event.value)
 
     def search_for_package(self, package: str) -> None:
+        """
+        search self.pkg_mngr for a given package
+        """
         print(f"value for input submitted is {package}")
         pkg_mngr = self.pkg_mngr
         if isinstance(pkg_mngr, str):
             if pkg_mngr not in self.cfg.keys():
                 pkg_mngr = self.cfg.keys()
+
+        # label to update if we're just providing package info
+        res_label = self.get_widget_by_id("package-res")
 
         res = search_for_package(
                 package=package,
@@ -110,33 +119,51 @@ class PackageSearch(Widget):
                 cfg=self.cfg
                 )
 
-        if isinstance(res, str):
-            # create buttons based on which package manager found the package
-            submit = Button(pkg_mngr, id="package-submit")
-            submit.tooltip = f"install with {pkg_mngr}"
-            formatted_res = res.replace('\n','\n\n').lstrip()
-
-        # for a result for a single package manager that includes multiple packages
-        elif isinstance(res, list):
-            joined_res = "\n".join(res)
-            formatted_res = joined_res.replace('\n','\n\n')
-
         # for multiple package manger results
-        elif isinstance(res, dict):
+        if isinstance(res, dict):
             formatted_res = ""
 
             for package_manager, pkg_search_res in res.items():
 
                 # if the result for a package manger search includes multiple packages
                 if isinstance(pkg_search_res, list):
-                    joined_res = "\n".join(pkg_search_res)
-                    formatted_res += f"{package_manager}:\n{pkg_search_res}"
+                    joined_res = "\n".join(pkg_search_res['info']).replace('\n','\n\n')
+                    formatted_res += f"{package_manager}:\n{joined_res}"
+                else:
+                    formatted_res += (
+                            f"{pkg_search_res['info'].replace('\n','\n\n')}"
+                            )
 
-        elif not res:
-            formatted_res = "no result :("
+            res_label.update(formatted_res)
 
-        res_label = self.get_widget_by_id("package-res")
-        res_label.update(formatted_res)
+        # update package info
+        self.screen.get_widget_by_id("package-res").border_title = (
+                f"📦 [i]{package.title()} Info[/]"
+                )
+
+        # create install button
+        note_box = self.screen.get_widget_by_id("package-notes-container")
+        if len(res.keys()) == 1:
+            if res[pkg_mngr]['installed']:
+                subtitle = f"[@click='remove_package']🚮 [i]Remove[/i][/] {package}"
+            else:
+                subtitle = f"[@click='install_package'][i]Install[/i][/] {package}"
+
+        note_box.border_subtitle = subtitle
+        self.package = package
+
+
+    def check_if_installed(self,) -> str|bool:
+        """
+        checks if a package is already installed or within a package manager group
+        """
+        return False
+
+    def action_install_package(self, package) -> None:
+        """
+        install the package
+        """
+        NewPackageModalScreen(self.cfg, self.pkg_mngr, self.package)
 
     def action_update_package_and_manager(self,
                                           package: str,
