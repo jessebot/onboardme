@@ -4,7 +4,7 @@ from ..constants import OS
 
 def search_for_package(package: str,
                        package_manager: str|list = None,
-                       cfg: dict = {}):
+                       cfg: dict = {}) -> dict:
     """
     Search for package using package manager's search function.
     Takes packages config dict and optional package_manager (str or list) to
@@ -22,6 +22,7 @@ def search_for_package(package: str,
     # search for a package for a SINGLE package manager
     if isinstance(package_manager, str):
         res[package_manager] = {}
+
         res[package_manager]["group"] = check_package_groups(
                 cfg[package_manager]["packages"],
                 package,
@@ -37,7 +38,6 @@ def search_for_package(package: str,
                 package,
                 res[package_manager]["info"]
                 )
-        return res
 
     # search a list of package managers
     elif isinstance(package_manager, list):
@@ -61,6 +61,7 @@ def search_for_package(package: str,
                     package,
                     res[pkg_mngr]["info"]
                     )
+    return res
 
 
 def check_if_package_installed(pkg_mngr: str,

@@ -146,7 +146,7 @@ class PackagesConfig(Screen):
 
         # select-packages styling - bottom
         package_desc = self.get_widget_by_id("package-notes-container")
-        package_desc.border_title = "🔎 [i]Search for package[/i]"
+        package_desc.border_title = "[i]Search for package[/]"
 
     @on(OptionList.OptionSelected)
     def update_highlighted_package_view(self,
@@ -176,40 +176,42 @@ class PackagesConfig(Screen):
                 # update the input for the package search
                 search_widget = self.get_widget_by_id("package-search-widget")
                 search_widget.action_update_package_and_manager(highlighted_package.prompt,
-                                                                manager)
+                                                                [manager])
 
-    def create_new_package_in_yaml(self,
-                                   package_manager: str,
-                                   package_group: str,
-                                   package_name: str,
-                                   package_description: str = "") -> None:
+    def action_add_package_in_yaml(self,
+                            package_manager: str,
+                            package_group: str,
+                            package: str) -> None:
         """ 
         add a new package to the packages yaml
         """
         # updates the base user yaml
-        if package_name not in self.app.pkgs[package_manager]['packages']['default']:
-            self.app.pkgs[package_manager]['packages']['default'] = package_name
-
+        if package not in self.app.pkgs[package_manager]['packages'][package_group]:
+            self.app.pkgs[package_manager]['packages'][package_group].append(package)
 
         # adds selection to the app selection list
-        packages = self.get_widget_by_id(
+        packages_list = self.get_widget_by_id(
                 f"{package_manager}-{package_group}-list-of-packages"
                 )
-        packages.add_option(package_name.replace("_","-"))
+        packages_list.add_option(package.replace("_","-"))
 
-    def action_launch_new_package_modal(self, package_manager: str) -> None:
-        def get_new_package(package_response):
-            package_manager = package_response[0]
-            package_name = package_response[1]
-            package_description = package_response[2]
+    def action_remove_package(self,
+                              package_manager: str,
+                              package_group: str,
+                              package: str) -> None:
+        """
+        remove a package from config and uninstall it
+        """
+        # updates the base user yaml
+        if package in self.app.pkgs[package_manager]['packages'][package_group]:
+            idx = self.app.pkgs[package_manager]['packages'][package_group].index(package)
+            self.app.pkgs[package_manager]['packages'][package_group].pop(idx)
 
-            if package_name and package_description:
-                self.create_new_package_in_yaml(package_manager,
-                                                package_name,
-                                                package_description)
-
-        self.app.push_screen(NewPackageModalScreen(self.cfg, package_manager),
-                             get_new_package)
+        # adds selection to the app selection list
+        packages_list = self.get_widget_by_id(
+                f"{package_manager}-{package_group}-list-of-packages"
+                )
+        packages_list.remove_option(package.replace("_","-"))
 
     def scroll_to_package(self,
                           package_manager: str, 

@@ -20,7 +20,7 @@ class PackageSearch(Widget):
 
     def __init__(self,
                  package_manager_configs: dict = {},
-                 package_manager: str|list = None,
+                 package_manager: list = None,
                  id: str = None) -> None:
         self.cfg = package_manager_configs
         if not package_manager:
@@ -52,7 +52,7 @@ class PackageSearch(Widget):
 
         # create input for package to search for
         input = Input(validators=[Length(minimum=2)],
-                      placeholder="Name of your package",
+                      placeholder="🔎 Name of package",
                       id="package-name-input")
         input.tooltip = "Name for your package in onboardme"
 
@@ -119,22 +119,21 @@ class PackageSearch(Widget):
                 cfg=self.cfg
                 )
 
+        formatted_res = ""
+
         # for multiple package manger results
-        if isinstance(res, dict):
-            formatted_res = ""
+        for package_manager, pkg_search_res in res.items():
 
-            for package_manager, pkg_search_res in res.items():
+            # if the result for a package manger search includes multiple packages
+            if isinstance(pkg_search_res, list):
+                joined_res = "\n".join(pkg_search_res['info']).replace('\n','\n\n')
+                formatted_res += f"{package_manager}:\n{joined_res}"
+            else:
+                formatted_res += (
+                        f"{pkg_search_res['info'].replace('\n','\n\n')}"
+                        )
 
-                # if the result for a package manger search includes multiple packages
-                if isinstance(pkg_search_res, list):
-                    joined_res = "\n".join(pkg_search_res['info']).replace('\n','\n\n')
-                    formatted_res += f"{package_manager}:\n{joined_res}"
-                else:
-                    formatted_res += (
-                            f"{pkg_search_res['info'].replace('\n','\n\n')}"
-                            )
-
-            res_label.update(formatted_res)
+        res_label.update(formatted_res)
 
         # update package info
         self.screen.get_widget_by_id("package-res").border_title = (
@@ -143,15 +142,18 @@ class PackageSearch(Widget):
 
         # create install button
         note_box = self.screen.get_widget_by_id("package-notes-container")
-        if len(res.keys()) == 1:
-            if res[pkg_mngr]['installed']:
+        keys = res.keys()
+
+        # if there's only one package manager, this is a little easier
+        if len(keys) == 1:
+            self.pkg_group = res[pkg_mngr[0]]['group']
+            if res[pkg_mngr[0]]['installed']:
                 subtitle = f"[@click='remove_package']🚮 [i]Remove[/i][/] {package}"
             else:
-                subtitle = f"[@click='install_package'][i]Install[/i][/] {package}"
+                subtitle = f"[@click='install_package']➕ [i]Install[/i][/] {package}"
 
         note_box.border_subtitle = subtitle
         self.package = package
-
 
     def check_if_installed(self,) -> str|bool:
         """
@@ -159,11 +161,24 @@ class PackageSearch(Widget):
         """
         return False
 
-    def action_install_package(self, package) -> None:
+    def action_install_package(self) -> None:
         """
         install the package
         """
         NewPackageModalScreen(self.cfg, self.pkg_mngr, self.package)
+        self.screen.action_add_package_in_yaml(self.cfg,
+                                               self.pkg_mngr,
+                                               self.pkg_group,
+                                               self.package)
+
+    def action_remove_package(self) -> None:
+        """
+        remove the package
+        """
+        self.screen.action_remove_package(self.cfg,
+                                          self.pkg_mngr,
+                                          self.pkg_group,
+                                          self.package)
 
     def action_update_package_and_manager(self,
                                           package: str,
@@ -175,7 +190,7 @@ class PackageSearch(Widget):
         pkg_mngrs_list = self.get_widget_by_id("pkg-mngr-list")
         pkg_mngrs_list.deselect_all()
         pkg_mngrs_list.select(
-            pkg_mngrs_list.get_option(f"{package_manager}-selection")
+            pkg_mngrs_list.get_option(f"{package_manager[0]}-selection")
             )
         self.pkg_mngr = package_manager
 
