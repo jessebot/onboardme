@@ -14,16 +14,57 @@ $blue_gray: rgb(86,95,137);
 $dark_gray: rgb(58,58,58);
 $navy: rgb(35,35,54);
 
+/* each collapsible in the app config panel */
+Collapsible {
+    background: $navy 60%;
+    border-top: none;
+    padding-left: 0;
+}
+
+Collapsible.-collapsed > Contents {
+    padding-left: 0;
+}
+
+Collapsible > Contents {
+    padding-left: 0;
+}
+
+CollapsibleTitle {
+    color: $light_cornflower;
+    padding-top: 1;
+    padding-bottom: 1;
+    padding-left: 1;
+    background: $blue_gray 20%;
+    width: 100%;
+}
+
+CollapsibleTitle:hover {
+    color: $orange;
+    background: $blue_gray 20%;
+}
+
+CollapsibleTitle:focus {
+    color: $sky_blue;
+    background: $blue_gray 20%;
+}
+
 /* Matches the WHOLE screen */
 #packages-config-container {
-    layout: grid;
-    grid-size: 2;
-    grid-columns: 0.5fr 1fr;
     grid-rows: 1.55fr 0.35fr;
     grid-gutter: 1;
-    width: 90%;
     height: 92%;
     align: center middle;
+    padding-top: 2;
+    padding-left: 3;
+    padding-right: 3;
+}
+
+.packages-small-grid {
+    grid-size: 2;
+}
+
+.packages-large-grid {
+    grid-size: 4;
 }
 
 /* --------- LEFT TOP HALF OF SCREEN ------------ */
@@ -48,27 +89,16 @@ $navy: rgb(35,35,54);
 
 /* matches the app selection list, the left button container */
 .left-packages-container {
-    grid-rows: 1fr 0.2fr;
+    grid-rows: 0.1fr 1fr;
     align: center top;
-    grid-gutter: 1;
 }
 
 .button-grid {
     align: center middle;
 }
 
-/* each app input label and input field row */
-.package-input-row {
-   layout: grid;
-   height: auto;
-   grid-size: 2;
-   grid-columns: 0.5fr 1.5fr;
-   padding-bottom: 1;
-   padding-left: 2;
-   padding-right: 1;
-}
-
-/* Matches App Description in Select k8s packages */
+/* Matches App Description in Select k8s packages 
+*/
 #package-notes-container {
    scrollbar-background: $dark_gray;
    scrollbar-background-active: $dark_gray;
@@ -79,8 +109,8 @@ $navy: rgb(35,35,54);
    background: $navy 30%;
    border: round $light_cornflower;
    border-title-color: $sky_blue;
-   height: 100%;
-   align: left middle;
+   align: center middle;
+   margin-bottom: 1;
 }
 
 #package-description {

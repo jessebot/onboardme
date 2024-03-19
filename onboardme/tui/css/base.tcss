@@ -17,8 +17,6 @@ $navy: rgb(35,35,54);
 /* Matches the entire screen */
 Screen {
     align: center middle;
-    max-width: 90%;
-    min-width: 89;
 }
 
 Tooltip {
@@ -74,55 +72,24 @@ Footer .footer--highlight-key {
     background: $orange;
 }
 
-/* sets the init switch slider color only when it's on */
-Switch.-on > .switch--slider {
-    color: $spacechalk_lime 90%;
-}
-
-/* Matches the "Select apps to install on k8s" Selection List */
-SelectionList {
-    background: $navy 40%;
-    color: $bluish_white;
-    width: 100%;
-}
-
-/* Matches the "Select apps to install on k8s" Selection List highlighted option */
-SelectionList .option-list--option-highlighted {
-    background: $blue_gray 50%;
+OptionList {
     color: $sky_blue;
+    background: $navy;
+    margin-top: 1;
 }
 
-SelectionList .option-list--option-hover-highlighted {
-    background: $blue_gray 90%;
-    color: $sky_blue;
+OptionList .option-list--option-highlighted {
+    color: $soft_green;
+    background: $dark_gray;
 }
 
-SelectionList .option-list--option-hover {
-    background: $blue_gray 70%;
-    color: $sky_blue;
+OptionList .option-list--option-hover-highlighted {
+    color: $soft_green;
+    background: $dark_gray;
 }
 
-.selection-list--button {
-    background: $blue_gray 40%;
-    color: $navy;
-}
-
-/* changes color of filled in app selection button */
-.selection-list--button-selected {
-    color: $neon_magenta 90%;
-    background: $blue_gray 40%;
-}
-
-/* changes color of filled in app selection button */
-.selection-list--button-highlighted {
-    color: $neon_magenta 90%;
-    background: $blue_gray 40%;
-}
-
-/* changes color of filled in app selection button when highlighted */
-.selection-list--button-selected-highlighted {
-    color: $neon_magenta;
-    background: $blue_gray 40%;
+OptionList .option-list--option-hover {
+    color: $soft_green;
 }
 
 /* drop down menus */
@@ -167,7 +134,6 @@ Tab.header-tab.-focus {
    grid-size: 1;
    align: center middle;
    content-align: center middle;
-   width: 80%;
 }
 
 /* this is the title banner for onboardme start page */
@@ -177,45 +143,6 @@ Tab.header-tab.-focus {
     width: 100%;
     content-align: center middle;
     align: center middle;
-}
-
-/* both with-cluster-table and no-cluster-table are classes for #cluster-boxes */
-.with-cluster-table {
-    grid-rows: 0.3fr 0.9fr;
-    grid-gutter: 2;
-    height: 90%;
-}
-
-.no-cluster-table {
-    grid-rows: 0.5fr 0.6fr;
-    grid-gutter: 2;
-    height: 18;
-}
-
-#cluster-boxes {
-    grid-gutter: 2;
-}
-
-#base-cluster-table-box-grid {
-    padding-left: 1;
-    padding-right: 1;
-    background: $navy;
-    align: center middle;
-    content-align: center middle;
-    border: round $cornflower;
-    border-title-color: $sky_blue;
-    border-title-align: center;
-}
-
-#base-new-cluster-input-box-grid {
-    padding-top: 1;
-    height: 10;
-    background: $navy;
-    align: center middle;
-    content-align: center middle;
-    border: round $cornflower;
-    border-title-color: $sky_blue;
-    border-title-align: center;
 }
 
 /* grid around the clusters datatable */
@@ -269,20 +196,6 @@ DataTable {
 .datatable--odd-row {
     color: $cornflower;
     background: $blue_gray 20%;
-}
-
-/* the row containing the cluster input/button row */
-#cluster-input-row {
-   align: center middle;
-   content-align: center middle;
-}
-
-/* input and button widget container for new cluster */
-#new-cluster-button-container {
-   align: center middle;
-   content-align: center middle;
-   grid-size: 2;
-   grid-columns: 0.55fr 1fr;
 }
 
 .help-text {

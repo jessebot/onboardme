@@ -7,11 +7,11 @@ from onboardme.tui.util import format_description
 from textual import on
 from textual.app import ComposeResult
 from textual.binding import Binding
-from textual.containers import VerticalScroll, Container, Grid
+from textual.containers import VerticalScroll, Grid
 from textual.screen import Screen
-from textual.widgets import Footer, Header, Label, SelectionList
+from textual.widgets import Footer, Header, Label, OptionList, Collapsible, Select
+from textual.widgets.option_list import Option, Separator
 from textual.widgets._toggle_button import ToggleButton
-from textual.widgets.selection_list import Selection
 
 
 class PackagesConfig(Screen):
@@ -68,31 +68,44 @@ class PackagesConfig(Screen):
             footer.display = False
         yield footer
 
-        selection_lists = {}
-        for package_mngr in ['brew', 'pip3.11']:
-            full_list = []
-            for package in self.cfg[package_mngr]['packages']['default']:
-                item = Selection(package.replace("_","-"), package, True)
-                full_list.append(item)
+        option_lists = {}
+        # iterate through package managers
+        for package_mngr, metadata in self.cfg.items():
+            option_lists[package_mngr] = {}
+            package_groups = metadata['packages'].items()
+            # iterate through package groups
+            for package_group, group_list in package_groups:
+                full_list = []
+                # iterate through packages in package groups
+                if group_list:
+                    for package in group_list:
+                        option_str = package.replace("_","-")
+                        full_list.append(Option(package, id=option_str))
+                        full_list.append(Separator())
 
-            selection_list = SelectionList[str](
-                    *full_list,
-                    classes='selection-list-of-packages',
-                    id=f'{package_mngr}-selection-list-of-packages'
-                    )
-            selection_lists[package_mngr] = selection_list
+                        option_lists[package_mngr][package_group] = OptionList(
+                                *full_list,
+                                id=f"{package_mngr}-{package_group}-list-of-packages",
+                                classes="list-of-packages"
+                                )
 
-        with Container(id="packages-config-container"):
-            # SelectionLists of k8s packagelications
-            for package_mngr, selection_list in selection_lists.items():
+        with Grid(id="packages-config-container",
+                  classes="packages-large-grid"):
+            # k8s packagelications
+            for package_mngr, package_groups in option_lists.items():
                 with Grid(classes="left-packages-container"):
+                    package_managers = self.cfg.keys()
+                    yield Select.from_values(package_managers,
+                                             value=package_mngr)
                     with VerticalScroll(classes="select-add-packages",
                                         id=f"select-add-{package_mngr}-packages"):
-                        yield selection_list
+                        for package_group, packages_list in package_groups.items():
+                            with Collapsible(collapsed=False, title=package_group):
+                                yield packages_list
 
-            # Bottom half of the screen for select-packages
-            with VerticalScroll(id="package-notes-container"):
-                yield Label("", id="package-description")
+        # Bottom half of the screen for select-packages
+        with VerticalScroll(id="package-notes-container"):
+            yield Label("", id="package-description")
 
     def on_mount(self) -> None:
         """
@@ -102,18 +115,18 @@ class PackagesConfig(Screen):
         sub_title = "Packages Configuration"
         self.sub_title = sub_title
 
-        for package_mngr in ['brew', 'pip3.11']:
-            # select-packages styling - select packages container - top left 
-            select_packages_widget = self.get_widget_by_id(
-                    f"select-add-{package_mngr}-packages"
-                    )
-            select_packages_widget.border_title = (
-                    f"[#ffaff9]♥[/] [i]select[/] {package_mngr} [#C1FF87]packages"
-                    )
-            select_packages_widget.border_subtitle = (
-                    f"[@click=screen.launch_new_package_modal()]"
-                    f"✨ [i]new[/] {package_mngr} [#C1FF87]package[/][/]"
-                    )
+        # for package_mngr in ['brew', 'pip3.11']:
+        #     # select-packages styling - select packages container - top left 
+        #     select_packages_widget = self.get_widget_by_id(
+        #             f"select-add-{package_mngr}-packages"
+        #             )
+        #     # select_packages_widget.border_title = (
+        #     #         f"[#ffaff9]♥[/] [i]{package_mngr}[/] [#C1FF87]packages"
+        #     #         )
+        #     select_packages_widget.border_subtitle = (
+        #             f"[@click=screen.launch_new_package_modal()]"
+        #             f"✨ [i]new[/] {package_mngr} [#C1FF87]package[/][/]"
+        #             )
 
         if self.app.speak_screen_titles:
             # if text to speech is on, read screen title
@@ -143,31 +156,30 @@ class PackagesConfig(Screen):
         self.app.push_screen(NewPackageModalScreen(packages, package_manager),
                              get_new_package)
 
-    def scroll_to_package(self, package_manager: str, package_to_highlight: str) -> None:
+    def scroll_to_package(self,
+                          package_manager: str, 
+                          package_group: str,
+                          package_to_highlight: str) -> None:
         """ 
         lets you scroll down to the exact package you need in the package selection list
         """
         # get the packages selection list
-        packages = self.query_one(SelectionList)
+        packages = self.get_widget_by_id(f"{package_manager}-{package_group}-list-of-packages")
 
         # get the package name for the highlighted index
-        highlight_package = packages.get_option_at_index(packages.highlighted).value
+        highlight_package = packages.highlighted_child
 
         # while the highlighted package is not package_to_highlight, keep scrolling
         while highlight_package != package_to_highlight:
             packages.action_cursor_down()
-            highlight_package = packages.get_option_at_index(packages.highlighted).value
+            highlight_package = packages.highlighted
 
-    @on(SelectionList.SelectionHighlighted)
+    @on(OptionList.OptionHighlighted)
     def update_highlighted_package_view(self,
-                                        event: SelectionList.SelectionHighlighted) -> None:
-        selection_list = self.get_widget_by_id(f"{self.pkg_mnger}-selection-list-of-packages")
-
-        # only the highlighted index
-        highlighted_idx = selection_list.highlighted
+                                        event: OptionList.OptionHighlighted) -> None:
 
         # the actual highlighted package
-        highlighted_package = selection_list.get_option_at_index(highlighted_idx).value
+        highlighted_package = event.option
 
         if self.app.speak_on_focus:
             self.app.action_say(f"highlighted package is {highlighted_package}")
@@ -177,7 +189,7 @@ class PackagesConfig(Screen):
         self.get_widget_by_id('package-description').update(blurb)
 
         # styling for the select-packages - configure packages container - right
-        package_title = highlighted_package.replace("_", " ").title()
+        package_title = highlighted_package
 
         # select-packages styling - bottom
         package_desc = self.get_widget_by_id("package-notes-container")
@@ -185,40 +197,21 @@ class PackagesConfig(Screen):
 
         self.previous_package = highlighted_package
 
-    @on(SelectionList.SelectionToggled)
-    def update_selected_packages(self,
-                                 event: SelectionList.SelectionToggled) -> None:
-        """ 
-        when a selection list item is checked or unchecked, update the base package yaml
-        """
-        selection_list = event
-        package = selection_list.get_option_at_index(event.selection_index).value
-        if package in selection_list.selected:
-            self.app.pkgs['brew']['packages']['default'][package]['enabled'] = True
-        else:
-            self.app.pkgs['brew']['packages']['default'][package]['enabled'] = False
-
-        self.app.write_yaml()
-
     def create_new_package_in_yaml(self,
                                    package_manager: str,
+                                   package_group: str,
                                    package_name: str,
                                    package_description: str = "") -> None:
         """ 
         add a new package to the packages yaml
         """
-        underscore_name = package_name.replace(" ", "_").replace("-", "_")
-
         # updates the base user yaml
-        self.app.pkgs['brew']['packages']['default'] = {
-            "enabled": True,
-            "description": package_description,
-            }
+        if package_name not in self.app.pkgs[package_manager]['packages']['default']:
+            self.app.pkgs[package_manager]['packages']['default'] = package_name
+
 
         # adds selection to the app selection list
-        packages = self.app.query_one(".selection-list-of-packages")
-        packages.add_option(Selection(underscore_name.replace("_", "-"),
-                                  underscore_name, True))
-
-        # scroll down to the new app
-        packages.action_last()
+        packages = self.get_widget_by_id(
+                f"{package_manager}-{package_group}-list-of-packages"
+                )
+        packages.add_option(package_name.replace("_","-"))

@@ -1,5 +1,6 @@
 # onboardme libraries
-from onboardme.constants import XDG_CONFIG_FILE, XDG_CONFIG_DIR
+from onboardme.constants import (XDG_CONFIG_FILE, XDG_CONFIG_DIR, 
+                                 INITIAL_USR_CONFIG, load_cfg)
 from onboardme.tui.packages_screen import PackagesConfig
 from onboardme.tui.confirm_screen import ConfirmConfig
 from onboardme.tui.help_screen import HelpScreen
@@ -292,5 +293,6 @@ class BaseApp(App):
 
 
 if __name__ == "__main__":
-    app = BaseApp()
+    pkg_mngrs_list_of_dicts = load_cfg('packages.yml')
+    app = BaseApp(INITIAL_USR_CONFIG, pkg_mngrs_list_of_dicts)
     app.run()
