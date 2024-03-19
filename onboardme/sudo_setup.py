@@ -1,13 +1,12 @@
-#!/usr/bin/env python3.10
+#!/usr/bin/env python3.11
 """
        Name: onbaordme.sudo_setup
 DESCRIPTION: setup pam module for sudo and add user to sudo group
      AUTHOR: Jesse Hitch
     LICENSE: GNU AFFERO GENERAL PUBLIC LICENSE Version 3
 """
-
-import logging as log
 from os import geteuid
+from os.path import exists
 from os import system as check_response
 
 # custom libs
@@ -15,10 +14,9 @@ from .console_logging import print_header, print_sub_header
 from .subproc import subproc
 
 
-def setup_sudo():
+def setup_sudo() -> None:
     """
     make sure we're root on mac and kick off setting up sudo with touchid
-    Returns True
     """
     print_header("🔒 Setting up sudo")
 
@@ -28,31 +26,24 @@ def setup_sudo():
         print_sub_header("🧑‍💻 sudo using TouchId is enabled.")
     else:
         enable_sudo_with_touchid()
-    return True
 
 
-def enable_sudo_with_touchid():
+def enable_sudo_with_touchid() -> None:
     """
-    We look for this line in /etc/pam.d/sudo:
-        auth       sufficient     pam_tid.so
-    If not found, we add it.
-    return True
+    We look for this line in /etc/pam.d/sudo_local:
+    auth       sufficient     pam_tid.so
+
+    If file doesn't exiswt or line not found, we add it.
     """
-    pam_file = "/etc/pam.d/sudo"
-    if check_response(f'grep "pam_tid.so" {pam_file}') != 0:
-        log.info(f"TouchID not found in {pam_file}. Attempting to add it.")
-
-        # read in the file and modify the second line to have pam_tid.so
-        new_contents = []
-        with open(pam_file, 'r') as file_contents:
-            for index, line in enumerate(file_contents.readlines()):
-                new_contents.append(line)
-                if index == 1:
-                    touchid = "auth       sufficient     pam_tid.so\n"
-                    new_contents.append(touchid)
-
+    def write_touch_id_sudo(pam_file):
         # write back the altered file
         with open(pam_file, 'w') as new_file_contents:
-            for line in new_contents:
-                new_file_contents.write(line)
-    return True
+            new_file_contents.write("auth       sufficient     pam_tid.so\n")
+
+    pam_file = "/etc/pam.d/sudo_local"
+    touch_id_line = "^auth       sufficient     pam_tid.so"
+    if exists(pam_file):
+        if check_response(f'grep "{touch_id_line}" {pam_file}') != 0:
+            write_touch_id_sudo(pam_file)
+    else:
+        write_touch_id_sudo(pam_file)

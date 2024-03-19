@@ -45,7 +45,7 @@ user's `$PATH`. As an example, the command my users run for lsimg is `lsimg`,
 so I create a file called that which has something like:
 
 ```python
-#!/usr/bin/env python3.10
+#!/usr/bin/env python3.11
 import lsimg
 
 lsimg.main()
@@ -91,13 +91,13 @@ setup(name='onboardme',
       long_description=readme(),
       long_description_content_type='text/markdown',
       classifiers=['Development Status :: 3 - Alpha',
-                   'Programming Language :: Python :: 3.10',
+                   'Programming Language :: Python :: 3.11',
                    'Operating System :: MacOS :: MacOS X',
                    'Operating System :: POSIX :: Linux',
                    'Intended Audience :: End Users/Desktop',
                    'TOPIC :: SYSTEM :: INSTALLATION/SETUP',
                    lic_class],
-      python_requires='>3.10',
+      python_requires='>3.11',
       keywords='onboardme, onboarding, desktop-setup, setuptools, development',
       version='0.13.7',
       project_urls={
@@ -148,22 +148,22 @@ It translates to: Create a command called `onboardme` that calls the `main`
 function of the `onboardme` package.
 
 ## Testing the package
-__**Note**: I'm using python/pip version 3.10 explicitly here, but you could use any version you're testing/releasing.__
+__**Note**: I'm using python/pip version 3.11 explicitly here, but you could use any version you're testing/releasing.__
 
 Build locally first for general testing:
 ```bash
 # this will install locally and then you can test your package and cli tools
-pip3.10 install -e .
+pip3.11 install -e .
 ```
 
 Then do the more important build for files to uplaod to pypi:
 _Make sure you have the wheel, and twine module installed:_
-- `pip3.10 install wheel`
-- `pip3.10 install twine`
+- `pip3.11 install wheel`
+- `pip3.11 install twine`
 
 ```bash
 # this generates a wheel file, the thing you want to upload
-python3.10 -m build --wheel
+python3.11 -m build --wheel
 
 # this checks to make sure it's probably built correctly
 twine check dist/*
