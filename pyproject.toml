@@ -1,7 +1,7 @@
 [tool.poetry]
 name          = "onboardme"
-version       = "1.7.1"
-description   = "Install dot files and packages, including a base mode with sensible defaults to run on most computers running Debian based distros or macOS."
+version       = "2.0.0a1"
+description   = "Install dot files and packages, including a base mode with sensible defaults to run on most computers running Debian based distros or macOS. This is an alpha release"
 authors       = [
     "Jesse Hitch <jessebot@linux.com>",
     "Max Roby <emax@cloudydev.net>"
@@ -22,16 +22,26 @@ packages      = [{include = "onboardme"}]
 include       = ["onboardme/scripts/update_apt_sources.sh"]
 
 [tool.poetry.dependencies]
-python              = "^3.11"
-click               = "^8.1"
-rich                = "^13.6"
-PyYAML              = "^6.0"
-GitPython           = "^3.1"
-wget                = "^3.2"
-xdg-base-dirs       = "^6.0"
+textual            = "^0.44"
+ruamel-yaml        = "^0.18"
+ruamel-yaml-string = "^0.1.1"
+python             = ">=3.11,<4.0"
+click              = "^8.1"
+rich               = "^13.6"
+PyYAML             = "^6.0"
+GitPython          = "^3.1"
+wget               = "^3.2"
+xdg-base-dirs      = "^6.0"
+
+[tool.poetry.group.docs.dependencies]
+mkdocs-material = "^9.4.6"
+mkdocs-video    = "^1.5.0"
 
 [tool.poetry.group.dev.dependencies]
-pre-commit = "^3.5"
+pre-commit              = "^3.5"
+deptry                  = "^0.12.0"
+textual-dev             = "^1.1.0"
+pytest-textual-snapshot = "^0.4.0"
 
 [tool.poetry.plugins."onboardme.application.plugin"]
 "onboardme" = "onboardme:main"
