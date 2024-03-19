@@ -28,7 +28,7 @@ jobs:
 
       - name: Build and publish to pypi
         if: startsWith(github.ref, 'refs/tags/v')
-        uses: JRubics/poetry-publish@v1.17
+        uses: JRubics/poetry-publish@v2.0
         with:
           python_version: "3.11.2"
           pypi_token: ${{ secrets.DEPLOY_FROM_GITHUB_TO_PYPI_ONBOARDME }}
