@@ -33,12 +33,12 @@ commonmark:
 Then at last this worked in my markdown file:
 
 <details>
-  <summary>Python3.10</summary>
+  <summary>Python3.11</summary>
 
   Check out this bash syntax highlighted block:
 
   ```bash
-    brew install python@3.10
+    brew install python@3.11
   ```
 
 </details>
@@ -47,13 +47,13 @@ Markdown for the above example:
 
 ```markdown
   <details>
-    <summary>Python3.10</summary>
+    <summary>Python3.11</summary>
 
     Below, you can change the first ``` to ```bash for syntax highlighting :)
     Checkout this regular code block:
 
     ```
-    brew install python@3.10
+    brew install python@3.11
     ```
 
   </details>
