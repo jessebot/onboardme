@@ -6,7 +6,8 @@ from textual.app import ComposeResult
 from textual.containers import Grid
 from textual.screen import ModalScreen
 from textual.validation import Length
-from textual.widgets import Button, Input, Label, Pretty
+from textual.widgets import Button, Input, Label
+from textual.suggester import SuggestFromList
 
 
 class NewPackageModalScreen(ModalScreen):
@@ -21,16 +22,18 @@ class NewPackageModalScreen(ModalScreen):
     def __init__(self,
                  package_manager_configs: dict,
                  package_manager: str,
+                 package_group: str,
                  package: str) -> None:
         self.cfg = package_manager_configs
         self.pkg_mngr = package_manager
+        self.pkg_group = package_group
         self.package = package
         super().__init__()
 
     def compose(self) -> ComposeResult:
         # base screen grid
         question = (
-                "🔎 Please enter a [#C1FF87]group[/] to [magenta]install[/] package in."
+                f"Please confirm the group to [#ffaff9]install[/] [#C1FF87]{self.package}[/] into"
                 )
 
         with Grid(id="new-package-modal-screen"):
@@ -38,12 +41,20 @@ class NewPackageModalScreen(ModalScreen):
             with Grid(id="question-box"):
                 yield Label(question, id="modal-text")
 
+                package_groups = []
+                for package_mngr, metadata in self.cfg.items():
+                    package_groups.extend(metadata['packages'].keys())
+
+                print(package_groups)
+
                 # grid for pckage manager dropdown and package input
                 input = Input(validators=[Length(minimum=2)],
-                              suggestor=None,
+                              suggester=SuggestFromList(package_groups),
+                              value=self.pkg_group,
                               placeholder="Name package group",
                               id="package-group-input")
                 input.tooltip = "Name of the group to install package in" 
+                yield input
 
                 with Grid(id="modal-button-box"):
                     cancel = Button("🤷 cancel", id="cancel-button")

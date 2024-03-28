@@ -28,11 +28,13 @@ def search_for_package(package: str,
                 package,
                 package_manager 
                 )
+
         res[package_manager]["info"] = search_pkg_manager(
                 package,
                 package_manager,
                 cfg[package_manager]['commands']
                 )
+
         res[package_manager]["installed"] = check_if_package_installed(
                 package_manager,
                 package,
@@ -76,11 +78,14 @@ def check_if_package_installed(pkg_mngr: str,
             return True
 
     elif pkg_mngr == "pipx":
-        check_pip = subproc(["pipx list"])
-        if isinstance(check_pip, list):
-            for line in check_pip:
+        check_pipx_list = subproc(["pipx list"])
+        if isinstance(check_pipx_list, list):
+            for line in check_pipx_list:
                 if package in line:
                     return True
+        elif isinstance(check_pipx_list, str):
+            if package in check_pipx_list:
+                return True
 
     elif "pip3" in pkg_mngr:
         if "WARNING: Package(s) not found" not in info_str:
@@ -138,7 +143,7 @@ def search_pkg_manager(package: str, package_manager: str, commands: dict) -> st
 
 def check_package_groups(package_groups: dict,
                          package: str,
-                         package_manager: str) -> str | None:
+                         package_manager: str) -> str:
     """
     check a package manager's groups for package and if exists, returns name of
     package group, else returns None
@@ -146,4 +151,6 @@ def check_package_groups(package_groups: dict,
     for pkg_group, pkg_group_list in package_groups.items():
         if package in pkg_group_list:
             return pkg_group
-    return None
+
+    # if no package group was found, we just return default
+    return 'default'

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.11
 # onboardme libraries
+from onboardme.tui.package_widgets.new_package_modal import NewPackageModalScreen
 from onboardme.tui.package_widgets.package_search_widget import PackageSearch
 
 # external libraries
@@ -41,7 +42,10 @@ class PackagesConfig(Screen):
         self.cfg = config
 
         # this changes depending on the list selected
-        self.pkg_mnger = ''
+        self.pkg_mngr = ''
+
+        # this changes depending on the list selected
+        self.pkg_group = 'default'
 
         # this is state storage
         self.package = ''
@@ -94,7 +98,7 @@ class PackagesConfig(Screen):
                 # Bottom half of the screen for notes on a given package
                 with Grid(id="package-notes-container"):
                     yield PackageSearch(self.cfg,
-                                        self.pkg_mnger,
+                                        self.pkg_mngr,
                                         id="package-search-widget")
 
                 # each package manager and it's groups
@@ -141,7 +145,7 @@ class PackagesConfig(Screen):
 
         # select-packages styling - bottom
         package_desc = self.get_widget_by_id("package-notes-container")
-        package_desc.border_title = "[i]Search for package[/]"
+        package_desc.border_title = "🔎 [i]Search for package[/]"
 
     @on(OptionList.OptionSelected)
     def update_highlighted_package_view(self,
@@ -167,11 +171,29 @@ class PackagesConfig(Screen):
             # self.get_widget_by_id('package-description').update(blurb)
 
             self.package = highlighted_package.prompt
-            self.pkg_mnger = manager
+            self.pkg_mngr = manager
 
             # update the input for the package search
             search_widget.action_update_package_and_manager(highlighted_package.prompt,
                                                             [manager])
+
+    def action_install_package(self) -> None:
+        """
+        install the package
+        """
+        def process_output(output):
+            print("made it output 💪")
+            # self.action_add_package_in_yaml(self.cfg,
+            #                                 self.pkg_mngr,
+            #                                 self.pkg_group,
+            #                                 self.package)
+
+        self.app.push_screen(NewPackageModalScreen(self.cfg,
+                                                   self.pkg_mngr,
+                                                   self.pkg_group,
+                                                   self.package),
+                             process_output)
+        
 
     def action_add_package_in_yaml(self,
                             package_manager: str,

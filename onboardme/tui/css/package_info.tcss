@@ -14,8 +14,13 @@ $blue_gray: rgb(86,95,137);
 $dark_gray: rgb(58,58,58);
 $navy: rgb(35,35,54);
 
+/* change the color used for showing focus on an element */
 SelectionList:focus {
-    border: outer $dark_gray;
+    border: round $light_cornflower
+}
+
+OptionList:focus {
+    border: round $light_cornflower
 }
 
 /* whole modal screen */
@@ -38,7 +43,7 @@ SelectionList:focus {
 
 /* Matches packages Description container */
 #package-notes-container {
-    border: outer $dark_gray;
+    border: round $cornflower 70%;
     border-title-color: $bluish_white;
     border-subtitle-color: $bluish_white;
     background: $dark_gray 30%;
@@ -50,7 +55,7 @@ SelectionList:focus {
     scrollbar-color-hover: $light_cornflower;
     scrollbar-color: $cornflower 90%;
     scrollbar-color-active: $cornflower;
-    link-background-hover: $navy;
+    link-background-hover: $dark_gray;
     link-color-hover: $orange;
 }
 
@@ -115,6 +120,13 @@ SelectionList:focus {
     scrollbar-color-hover: $light_cornflower;
     scrollbar-color: $cornflower 90%;
     scrollbar-color-active: $cornflower;
+}
+
+/* label with info about package or help blurb before initial search */
+#package-res {
+    width: 100%;
+    padding-right: 1;
+    color: $bluish_white 70%;
 }
 
 #pkg-info-loading {

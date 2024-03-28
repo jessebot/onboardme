@@ -1,5 +1,4 @@
 from onboardme.packages.search import search_for_package
-from onboardme.tui.package_widgets.new_package_modal import NewPackageModalScreen
 
 from textual import on
 from textual.app import ComposeResult
@@ -7,7 +6,7 @@ from textual.containers import Grid, VerticalScroll
 from textual.events import Mount
 from textual.validation import Length
 from textual.widget import Widget
-from textual.widgets import Button, Input, Label, SelectionList
+from textual.widgets import Input, Label, SelectionList
 from textual.widgets.selection_list import Selection
 
 
@@ -52,7 +51,7 @@ class PackageSearch(Widget):
 
         # create input for package to search for
         input = Input(validators=[Length(minimum=2)],
-                      placeholder="🔎 Name of package",
+                      placeholder="📦 Name of package",
                       id="package-name-input")
         input.tooltip = "Name for your package in onboardme"
 
@@ -63,8 +62,8 @@ class PackageSearch(Widget):
 
         with VerticalScroll(id="pkg-info"):
             # response from package search
-            yield Label("[i]Search[/] for a package for more info.",
-                        id="package-res")
+            help = "[i]Search[/] for a package to display any info we can find about it."
+            yield Label(help, id="package-res")
 
     def on_mount(self) -> None:
         """
@@ -121,8 +120,16 @@ class PackageSearch(Widget):
 
         formatted_res = ""
 
+        res_pkg_mngrs = list(res.keys())
+
         # for multiple package manger results
         for package_manager, pkg_search_res in res.items():
+            # if there's multiple package managers, draw a divider between them
+            if len(res) > 1:
+                if res_pkg_mngrs.index(package_manager) != 0:
+                    emoji = self.cfg[package_manager]['emoji']
+                    formatted_res += f"[plum1 on grey23]━━━━━━━━━━━━━ {emoji} "
+                    formatted_res += f"{package_manager} ━━━━━━━━━━━━ [/]"
 
             # if the result for a package manger search includes multiple packages
             if isinstance(pkg_search_res, list):
@@ -138,47 +145,36 @@ class PackageSearch(Widget):
         # create install button
         note_box = self.screen.get_widget_by_id("package-notes-container")
 
-        # if there's only one package manager, this is a little easier
-        if len(res.keys()) == 1:
+        # add all package mangers to the screen self cache
+        self.screen.pkg_mngr = pkg_mngr
+
+        installed = False
+        emoji = "📦"
+        # check if any of the package managers are used to install the package
+        for package_manager, pkg_search_res in res.items():
+            self.screen.pkg_group = res[pkg_mngr[0]]['group']
             self.pkg_group = res[pkg_mngr[0]]['group']
+            if pkg_search_res['installed']:
+                installed = True
+                # if package emoji is still 📦, change it to the package manager emoji
+                if emoji == "📦":
+                    emoji = self.cfg[package_manager]['emoji']
+                # if package emoji is already not 📦, append to the existing emojis
+                else:
+                    emoji += f" {self.cfg[package_manager]['emoji']}"
 
-            if res[pkg_mngr[0]]['installed']:
-                subtitle = f"[@click='remove_package']🚮 [i]Remove[/i][/] {package}"
-            else:
-                subtitle = f"[@click='install_package']➕ [i]Install[/i][/] {package}"
+        if installed:
+            subtitle = f"[@click='screen.remove_package']🚮 [i]Remove[/i] {package}[/]"
+        else:
+            subtitle = f"[@click='screen.install_package']➕ [i]Install[/i] {package}[/]"
 
-            # update package info
-            self.screen.get_widget_by_id("pkg-info").border_title = (
-                    f"{self.cfg[pkg_mngr[0]]['emoji']} [i]{package} info[/]"
-                    )
-
+        # update package info
+        self.screen.get_widget_by_id("pkg-info").border_title = (
+                f"{emoji} [i]{package} info[/]"
+                )
         note_box.border_subtitle = subtitle
         self.package = package
-
-    def check_if_installed(self,) -> str|bool:
-        """
-        checks if a package is already installed or within a package manager group
-        """
-        return False
-
-    def action_install_package(self) -> None:
-        """
-        install the package
-        """
-        NewPackageModalScreen(self.cfg, self.pkg_mngr, self.package)
-        self.screen.action_add_package_in_yaml(self.cfg,
-                                               self.pkg_mngr,
-                                               self.pkg_group,
-                                               self.package)
-
-    def action_remove_package(self) -> None:
-        """
-        remove the package
-        """
-        self.screen.action_remove_package(self.cfg,
-                                          self.pkg_mngr,
-                                          self.pkg_group,
-                                          self.package)
+        self.screen.package = package
 
     def action_update_package_and_manager(self,
                                           package: str,
