@@ -1,6 +1,5 @@
 #!/usr/bin/env python3.11
 # onboardme libraries
-from onboardme.tui.package_widgets.new_package_modal import NewPackageModalScreen
 from onboardme.tui.package_widgets.package_search_widget import PackageSearch
 
 # external libraries
@@ -26,10 +25,6 @@ class PackagesConfig(Screen):
                     key_display="b",
                     action="app.pop_screen",
                     description="Back"),
-            Binding(key="a,s",
-                    key_display="a",
-                    action="screen.launch_new_package_modal",
-                    description="Search Packages/New Package"),
             Binding(key="n",
                     key_display="n",
                     action="app.request_onboardme_cfg",
@@ -97,7 +92,7 @@ class PackagesConfig(Screen):
             with Grid(id="packages-config-container",
                       classes="packages-large-grid"):
                 # Bottom half of the screen for notes on a given package
-                with VerticalScroll(id="package-notes-container"):
+                with Grid(id="package-notes-container"):
                     yield PackageSearch(self.cfg,
                                         self.pkg_mnger,
                                         id="package-search-widget")
@@ -152,31 +147,31 @@ class PackagesConfig(Screen):
     def update_highlighted_package_view(self,
                                         event: OptionList.OptionSelected) -> None:
         olist = event.option_list
-        if isinstance(olist, OptionList):
-            if "list-of-packages" in olist.classes:
-                # the actual highlighted package
-                highlighted_package = event.option
+        if isinstance(olist, OptionList) and "list-of-packages" in olist.classes:
+            search_widget = self.get_widget_by_id("package-search-widget")
 
-                if self.app.speak_on_focus:
-                    self.app.action_say(f"highlighted package is {highlighted_package}")
+            # the actual highlighted package
+            highlighted_package = event.option
 
-                # description
-                classes = olist.id.split('-')
-                manager = classes[0]
-                # group = classes[1]
+            if self.app.speak_on_focus:
+                self.app.action_say(f"highlighted package is {highlighted_package}")
 
-                # blurb_txt = (f"group: [#ffaff9]{group}[/]")
-                # # update the bottom app description to the highlighted_app's description
-                # blurb = format_description(blurb_txt)
-                # self.get_widget_by_id('package-description').update(blurb)
+            # description
+            classes = olist.id.split('-')
+            manager = classes[0]
+            # group = classes[1]
 
-                self.package = highlighted_package.prompt
-                self.pkg_mnger = manager
+            # blurb_txt = (f"group: [#ffaff9]{group}[/]")
+            # # update the bottom app description to the highlighted_app's description
+            # blurb = format_description(blurb_txt)
+            # self.get_widget_by_id('package-description').update(blurb)
 
-                # update the input for the package search
-                search_widget = self.get_widget_by_id("package-search-widget")
-                search_widget.action_update_package_and_manager(highlighted_package.prompt,
-                                                                [manager])
+            self.package = highlighted_package.prompt
+            self.pkg_mnger = manager
+
+            # update the input for the package search
+            search_widget.action_update_package_and_manager(highlighted_package.prompt,
+                                                            [manager])
 
     def action_add_package_in_yaml(self,
                             package_manager: str,

@@ -97,6 +97,9 @@ def search_pkg_manager(package: str, package_manager: str, commands: dict) -> st
     if package_manager in ['apt', 'flatpak'] and OS[0] == "Darwin":
         return f"{package_manager} is not supported on macOS 😔"
 
+    if package_manager == 'cargo' and "--git" in package:
+        return "Search for --git packages not supported 😔"
+
     search_cmd = commands['search']
     if search_cmd:
         info_cmd = commands.get('info', False)
@@ -116,7 +119,7 @@ def search_pkg_manager(package: str, package_manager: str, commands: dict) -> st
                 # highlight the name of the package anywhere we find it
                 for idx, item in enumerate(info_res):
                     if "==>" in item:
-                        info_res[idx] = "[#A8FD57]" + item + "[/]"
+                        info_res[idx] = "[#A8FD57]" + item.replace(f"{package}: ", "") + "[/]"
                     elif package_manager != "brew" and package in item:
                         info_res[idx] = "[#A8FD57]" + item + "[/]"
 

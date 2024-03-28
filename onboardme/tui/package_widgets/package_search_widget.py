@@ -3,7 +3,7 @@ from onboardme.tui.package_widgets.new_package_modal import NewPackageModalScree
 
 from textual import on
 from textual.app import ComposeResult
-from textual.containers import Grid
+from textual.containers import Grid, VerticalScroll
 from textual.events import Mount
 from textual.validation import Length
 from textual.widget import Widget
@@ -24,7 +24,7 @@ class PackageSearch(Widget):
                  id: str = None) -> None:
         self.cfg = package_manager_configs
         if not package_manager:
-            self.pkg_mngr = None
+            self.pkg_mngr = ["brew"]
         else:
             self.pkg_mngr = package_manager
 
@@ -42,7 +42,7 @@ class PackageSearch(Widget):
                               "id": f"{pkg_mgr}-selection"}
 
             # if there's already a package selected
-            if self.pkg_mngr == pkg_mgr:
+            if pkg_mgr in self.pkg_mngr:
                 selection_dict["initial_state"] = True
 
             selections.append(Selection(**selection_dict))
@@ -56,21 +56,21 @@ class PackageSearch(Widget):
                       id="package-name-input")
         input.tooltip = "Name for your package in onboardme"
 
-
         # grid for pckage manager selection list and package search input
         with Grid(id="package-search-inputs"):
             yield selection_list
             yield input
 
-        # response from package search
-        yield Label("[i]Search[/] for a package for more info.",
-                    id="package-res")
+        with VerticalScroll(id="pkg-info"):
+            # response from package search
+            yield Label("[i]Search[/] for a package for more info.",
+                        id="package-res")
 
     def on_mount(self) -> None:
         """
         tidy the borders
         """
-        self.get_widget_by_id("package-res").border_title = "📦 [i]Package Info[/i]"
+        self.get_widget_by_id("pkg-info").border_title = "[i]Package Info[/i]"
 
     @on(Input.Submitted)
     def input_validation(self, event: Input.Submitted) -> None:
@@ -133,24 +133,24 @@ class PackageSearch(Widget):
                         f"{pkg_search_res['info'].replace('\n','\n\n')}"
                         )
 
-        res_label.update(formatted_res)
-
-        # update package info
-        self.screen.get_widget_by_id("package-res").border_title = (
-                f"📦 [i]{package.title()} Info[/]"
-                )
+        res_label.update(formatted_res.lstrip())
 
         # create install button
         note_box = self.screen.get_widget_by_id("package-notes-container")
-        keys = res.keys()
 
         # if there's only one package manager, this is a little easier
-        if len(keys) == 1:
+        if len(res.keys()) == 1:
             self.pkg_group = res[pkg_mngr[0]]['group']
+
             if res[pkg_mngr[0]]['installed']:
                 subtitle = f"[@click='remove_package']🚮 [i]Remove[/i][/] {package}"
             else:
                 subtitle = f"[@click='install_package']➕ [i]Install[/i][/] {package}"
+
+            # update package info
+            self.screen.get_widget_by_id("pkg-info").border_title = (
+                    f"{self.cfg[pkg_mngr[0]]['emoji']} [i]{package} info[/]"
+                    )
 
         note_box.border_subtitle = subtitle
         self.package = package

@@ -14,6 +14,10 @@ $blue_gray: rgb(86,95,137);
 $dark_gray: rgb(58,58,58);
 $navy: rgb(35,35,54);
 
+SelectionList:focus {
+    border: outer $dark_gray;
+}
+
 /* whole modal screen */
 #new-package-modal-screen {
     width: 80%;
@@ -34,18 +38,20 @@ $navy: rgb(35,35,54);
 
 /* Matches packages Description container */
 #package-notes-container {
-    scrollbar-background: $dark_gray 80%;
-    scrollbar-background-active: $dark_gray 80%;
-    scrollbar-background-hover: $dark_gray;
-    scrollbar-color-hover: $light_cornflower;
-    scrollbar-color: $cornflower 90%;
-    scrollbar-color-active: $cornflower;
     border: outer $dark_gray;
     border-title-color: $bluish_white;
     border-subtitle-color: $bluish_white;
     background: $dark_gray 30%;
     align: center top;
     column-span: 2;
+    scrollbar-background: $dark_gray 80%;
+    scrollbar-background-active: $dark_gray 80%;
+    scrollbar-background-hover: $dark_gray;
+    scrollbar-color-hover: $light_cornflower;
+    scrollbar-color: $cornflower 90%;
+    scrollbar-color-active: $cornflower;
+    link-background-hover: $navy;
+    link-color-hover: $orange;
 }
 
 /* box for selection list and input box */
@@ -57,12 +63,22 @@ $navy: rgb(35,35,54);
     margin-left: 2;
     margin-right: 1;
     height: 10;
+    scrollbar-background: $dark_gray 80%;
+    scrollbar-background-active: $dark_gray 80%;
+    scrollbar-background-hover: $dark_gray;
+    scrollbar-color-hover: $light_cornflower;
+    scrollbar-color: $cornflower 90%;
+    scrollbar-color-active: $cornflower;
 }
 
 #pkg-mngr-list {
     border: tall black 15%;
     color: $lavender;
     background: $dark_gray 60%;
+}
+
+#pkg-mngr-list:focus {
+    border: round $light_cornflower
 }
 
 #pkg-mngr-list .option-list--option-highlighted {
@@ -87,11 +103,29 @@ $navy: rgb(35,35,54);
 }
 
 /* results from package search or info query */
-#package-res {
+#pkg-info {
     border-top: panel $blue_gray 30%;
     border-title-color: $orange;
     width: 100%;
     padding-top: 1;
     padding-left: 1;
-    padding-right: 1;
+    scrollbar-background: $dark_gray 80%;
+    scrollbar-background-active: $dark_gray 80%;
+    scrollbar-background-hover: $dark_gray;
+    scrollbar-color-hover: $light_cornflower;
+    scrollbar-color: $cornflower 90%;
+    scrollbar-color-active: $cornflower;
+}
+
+#pkg-info-loading {
+    color: $cornflower;
+    height: 40%;
+}
+
+#pkg-info-loading.no-display {
+    display: none;
+}
+
+#pkg-info-loading.yes-display {
+    display: block;
 }
