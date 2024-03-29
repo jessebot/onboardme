@@ -26,22 +26,22 @@ include       = ["onboardme/scripts/update_apt_sources.sh",
 click              = "^8.1"
 GitPython          = "^3.1"
 python             = ">=3.11,<4.0"
-pyfiglet           = "^1.0.2"
+pyfiglet           = "^1.0"
 rich               = "^13.6"
 ruamel-yaml        = "^0.18"
-ruamel-yaml-string = "^0.1.1"
+ruamel-yaml-string = "^0.1"
 textual            = "^0.47"
 wget               = "^3.2"
 xdg-base-dirs      = "^6.0"
 
 [tool.poetry.group.docs.dependencies]
-mkdocs-material = "^9.4.6"
-mkdocs-video    = "^1.5.0"
+mkdocs-material = "^9.4"
+mkdocs-video    = "^1.5"
 
 [tool.poetry.group.dev.dependencies]
-deptry                  = "^0.12.0"
+deptry                  = "^0.12"
 pre-commit              = "^3.5"
-pytest-textual-snapshot = "^0.4.0"
+pytest-textual-snapshot = "^0.4"
 textual-dev             = "^1.4"
 
 [tool.poetry.plugins."onboardme.application.plugin"]
