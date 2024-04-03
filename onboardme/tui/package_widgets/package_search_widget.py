@@ -6,7 +6,7 @@ from textual.containers import Grid, VerticalScroll
 from textual.events import Mount
 from textual.validation import Length
 from textual.widget import Widget
-from textual.widgets import Input, Label, SelectionList
+from textual.widgets import Input, Label, SelectionList, TabbedContent, TabPane
 from textual.widgets.selection_list import Selection
 
 
@@ -61,15 +61,24 @@ class PackageSearch(Widget):
             yield input
 
         with VerticalScroll(id="pkg-info"):
-            # response from package search
+            # default help text
             help = "[i]Search[/] for a package to display any info we can find about it."
-            yield Label(help, id="package-res")
+            # Add the TabbedContent widget
+            with TabbedContent(initial="brew"):
+                for tab in self.screen.cfg.keys():
+                    # take care of package managers with dots
+                    clean_tab = tab.replace(".","-")
+                    emoji = self.cfg[tab]['emoji']
+                    emoji_tab = " ".join([emoji, tab])
+                    with TabPane(emoji_tab, id=clean_tab):
+                        # this gets updated based on user's search
+                        yield Label(help,
+                                    id=f"{clean_tab}-package-res",
+                                    classes="package-res")
 
-    def on_mount(self) -> None:
-        """
-        tidy the borders
-        """
-        self.get_widget_by_id("pkg-info").border_title = "[i]Package Info[/i]"
+    def action_show_tab(self, tab: str) -> None:
+        """Switch to a new tab."""
+        self.get_child_by_type(TabbedContent).active = tab
 
     @on(Input.Submitted)
     def input_validation(self, event: Input.Submitted) -> None:
@@ -79,9 +88,10 @@ class PackageSearch(Widget):
         if event.input.id == "package-name-input":
             if not event.validation_result.is_valid:
                 # if result is not valid, notify the user why
-                self.notify("\n".join(event.validation_result.failure_descriptions),
-                            severity="warning",
-                            title="⚠️ Input Validation Error\n")
+                self.notify(
+                        "\n".join(event.validation_result.failure_descriptions),
+                        severity="warning",
+                        title="⚠️ Input Validation Error\n")
                 self.app.bell()
 
     @on(Mount)
@@ -109,27 +119,15 @@ class PackageSearch(Widget):
             if pkg_mngr not in self.cfg.keys():
                 pkg_mngr = self.cfg.keys()
 
-        # label to update if we're just providing package info
-        res_label = self.get_widget_by_id("package-res")
-
         res = search_for_package(
                 package=package,
                 package_manager=self.pkg_mngr,
                 cfg=self.cfg
                 )
 
-        formatted_res = ""
-
-        res_pkg_mngrs = list(res.keys())
-
         # for multiple package manger results
         for package_manager, pkg_search_res in res.items():
-            # if there's multiple package managers, draw a divider between them
-            if len(res) > 1:
-                if res_pkg_mngrs.index(package_manager) != 0:
-                    emoji = self.cfg[package_manager]['emoji']
-                    formatted_res += f"[plum1 on grey23]━━━━━━━━━━━━━ {emoji} "
-                    formatted_res += f"{package_manager} ━━━━━━━━━━━━ [/]"
+            formatted_res = ""
 
             # if the result for a package manger search includes multiple packages
             if isinstance(pkg_search_res, list):
@@ -140,7 +138,10 @@ class PackageSearch(Widget):
                         f"{pkg_search_res['info'].replace('\n','\n\n')}"
                         )
 
-        res_label.update(formatted_res.lstrip())
+            # label to update for providing package info result
+            clean_tab = package_manager.replace(".", "-")
+            res_label = self.get_widget_by_id(f"{clean_tab}-package-res")
+            res_label.update(formatted_res.lstrip())
 
         # create install button
         note_box = self.screen.get_widget_by_id("package-notes-container")
@@ -157,11 +158,6 @@ class PackageSearch(Widget):
             if pkg_search_res['installed']:
                 installed = True
                 # if package emoji is still 📦, change it to the package manager emoji
-                if emoji == "📦":
-                    emoji = self.cfg[package_manager]['emoji']
-                # if package emoji is already not 📦, append to the existing emojis
-                else:
-                    emoji += f" {self.cfg[package_manager]['emoji']}"
 
         if installed:
             subtitle = f"[@click='screen.remove_package']🚮 [i]Remove[/i] {package}[/]"

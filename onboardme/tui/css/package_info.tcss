@@ -109,11 +109,7 @@ OptionList:focus {
 
 /* results from package search or info query */
 #pkg-info {
-    border-top: panel $blue_gray 30%;
-    border-title-color: $orange;
     width: 100%;
-    padding-top: 1;
-    padding-left: 1;
     scrollbar-background: $dark_gray 80%;
     scrollbar-background-active: $dark_gray 80%;
     scrollbar-background-hover: $dark_gray;
@@ -122,8 +118,26 @@ OptionList:focus {
     scrollbar-color-active: $cornflower;
 }
 
+/* for tabbed package info content */
+Underline > .underline--bar {
+    color: $soft_green;
+    background: $blue_gray;
+}
+
+Tab.header-tab {
+    color: $cornflower 50%;
+}
+
+Tab.header-tab.-active {
+    color: $cornflower;
+}
+
+Tab.header-tab.-focus {
+    color: $cornflower;
+}
+
 /* label with info about package or help blurb before initial search */
-#package-res {
+.package-res {
     width: 100%;
     padding-right: 1;
     color: $bluish_white 70%;

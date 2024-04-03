@@ -33,7 +33,7 @@ class NewPackageModalScreen(ModalScreen):
     def compose(self) -> ComposeResult:
         # base screen grid
         question = (
-                f"Please confirm the group to [#ffaff9]install[/] [#C1FF87]{self.package}[/] into"
+                f"Please confirm the package manager and group to [#ffaff9]install[/] [#C1FF87]{self.package}[/] into"
                 )
 
         with Grid(id="new-package-modal-screen"):
