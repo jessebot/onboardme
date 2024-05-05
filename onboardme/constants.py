@@ -32,7 +32,7 @@ if OS[0] == 'Darwin':
     STEPS.append('sudo_setup')
 
 # package manager config is different per OS
-PKG_MNGRS = ['brew','pip3.12']
+PKG_MNGRS = ['brew','pip3.12','pip3.11','pipx']
 if OS[0] == 'Linux':
     PKG_MNGRS.extend(['apt','snap','flatpak'])
 

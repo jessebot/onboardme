@@ -75,10 +75,10 @@ def run_preinstall_cmds(cmd_list: list,
             sub_header(f"[b]{pre_cmd.title()}[/b] completed.")
 
 
-def run_pkg_mngrs(pkg_mngrs: list, pkg_groups=[], no_upgrade=bool) -> None:
+def run_pkg_mngrs(pkg_mngrs: list, pkg_groups: list = [], no_upgrade: bool = False) -> None:
     """
-    Installs brew and pip3.12 packages. Also apt, snap, and flatpak on Linux.
-    Takes optional variables:
+    Installs brew, pip3.12/pip3.11, and pipx packages on both Debian/Ubuntu/macOS
+    Also apt, snap, and flatpak on Linux. Takes optional variables:
       - pkg_groups: list of optional package groups
       - pkg_mngrs: list of package managers to run
     Returns True
@@ -99,7 +99,7 @@ def run_pkg_mngrs(pkg_mngrs: list, pkg_groups=[], no_upgrade=bool) -> None:
         if pkg_mngr == 'brew':
             if 'Darwin' in OS:
                 if 'default' in pkg_groups:
-                    if type(pkg_groups) is tuple:
+                    if isinstance(pkg_groups, tuple):
                         pkg_groups = list(pkg_groups)
                     pkg_groups.append("macOS")
 
@@ -120,6 +120,19 @@ def run_pkg_mngrs(pkg_mngrs: list, pkg_groups=[], no_upgrade=bool) -> None:
                 log.warn("snap is either not installed, or you need to log out"
                          "and back in (or reboot) for it to be available. "
                          "https://snapcraft.io/docs/installing-snap-on-debian")
+                # continues onto the next package manager
+                continue
+
+            if pkg_mngr == 'flatpak' and not shutil.which('flatpak'):
+                log.warn("flatpak is either not installed, or you need to log out"
+                         "and back in (or reboot) for it to be available. "
+                         "https://flatpak.org/setup/")
+                # continues onto the next package manager
+                continue
+
+            if pkg_mngr == 'pip3.11' and not shutil.which('pip3.11'):
+                log.info("pip3.11 is either not installed, or you need to log out"
+                         "and back in for it to be available.")
                 # continues onto the next package manager
                 continue
 
