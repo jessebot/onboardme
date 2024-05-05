@@ -30,7 +30,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/v')
         uses: JRubics/poetry-publish@v2.0
         with:
-          python_version: "3.11.2"
+          python_version: "3.12.1"
           pypi_token: ${{ secrets.DEPLOY_FROM_GITHUB_TO_PYPI_ONBOARDME }}
 
   docker-amd64:
