@@ -70,9 +70,9 @@ def sort_pkgmngrs(package_managers_list: list) -> list:
     e.g. apt installs snap and flatpak, so niether can be run until apt is run
 
     Takes list of package manager str and reorders them be (if they exist):
-       ['brew', 'pip3.11', 'apt', 'snap', 'flatpak']
+       ['brew', 'pip3.12', 'pip3.11', 'apt', 'snap', 'flatpak']
     """
-    pkg_mngr_default_order = ['brew', 'pip3.11', 'apt', 'snap', 'flatpak']
+    pkg_mngr_default_order = ['brew', 'pip3.12', 'pip3.11', 'apt', 'snap', 'flatpak']
 
     # Rearrange list by other list order Using list comprehension
     return [ele for ele in pkg_mngr_default_order if ele in package_managers_list]

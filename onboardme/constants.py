@@ -1,4 +1,3 @@
-#!/usr/bin/env python3.11
 """
        Name:
 DESCRIPTION:
@@ -33,7 +32,7 @@ if OS[0] == 'Darwin':
     STEPS.append('sudo_setup')
 
 # package manager config is different per OS
-PKG_MNGRS = ['brew','pip3.11']
+PKG_MNGRS = ['brew','pip3.12']
 if OS[0] == 'Linux':
     PKG_MNGRS.extend(['apt','snap','flatpak'])
 

@@ -8,7 +8,7 @@ permalink: /onboardme/install
 # OnBoardMe Installation
 
 ### Prereq Installs
-You'll need `curl`, `brew`, `git`, and Python 3.11 to get started. We have a setup script to install those (except `curl`) and help you get your environment to the XDG spec under <b>Locally</b> or you can just use our docker image, [jessebot/onboardme](https://hub.docker.com/r/jessebot/onboardme).
+You'll need `curl`, `brew`, `git`, and Python 3.12 to get started. We have a setup script to install those (except `curl`) and help you get your environment to the XDG spec under <b>Locally</b> or you can just use our docker image, [jessebot/onboardme](https://hub.docker.com/r/jessebot/onboardme).
 
 <details>
   <summary>Local prereq install script</summary>
@@ -83,7 +83,7 @@ You can install with `pip` still, but you can also use `pipx`.
 
 ```bash
 # on Debian/Ubuntu you may have to also pass --break-system-packages
-pip3.11 install --user --upgrade onboardme
+pip3.12 install --user --upgrade onboardme
 ```
 
 </details>

@@ -157,15 +157,15 @@ def setup_logger(level="", log_file=""):
         help=HELP['version'],
         default=False)
 def main(log_level, log_file,
-         steps, 
+         steps,
          git_url, git_branch, git_config_dir, overwrite,
          pkg_managers, pkg_groups,
          firewall, remote_host,
          no_upgrade,
          version) -> bool:
     """
-    If run with no options on Linux, it will install brew, pip3.11, apt,
-    flatpak, and snap packages. On mac, it only installs brew/pip3.11 packages.
+    If run with no options on Linux, it will install brew, pip3.12, apt,
+    flatpak, and snap packages. On mac, it only installs brew/pip3.12 packages.
     config loading tries to load: cli options and then defaults back to:
     $XDG_CONFIG_HOME/onboardme/config.yml
     """
@@ -183,7 +183,7 @@ def main(log_level, log_file,
 
     # makes sure we only overwrite config file prefs if cli opts are passed in
     usr_pref = process_configs(overwrite, git_url, git_branch, git_config_dir,
-                               pkg_managers, pkg_groups, 
+                               pkg_managers, pkg_groups,
                                firewall, remote_host,
                                steps,
                                log_file, log_level)

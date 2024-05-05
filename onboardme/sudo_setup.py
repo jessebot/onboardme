@@ -1,4 +1,3 @@
-#!/usr/bin/env python3.11
 """
        Name: onbaordme.sudo_setup
 DESCRIPTION: setup pam module for sudo and add user to sudo group

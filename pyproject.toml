@@ -1,6 +1,6 @@
 [tool.poetry]
 name          = "onboardme"
-version       = "1.7.1"
+version       = "1.8.0"
 description   = "Install dot files and packages, including a base mode with sensible defaults to run on most computers running Debian based distros or macOS."
 authors       = [
     "Jesse Hitch <jessebot@linux.com>",
@@ -13,6 +13,7 @@ repository    = "http://github.com/jessebot/onboardme"
 keywords      = ["onboardme", "onboarding", "desktop-setup", "development-environment"]
 classifiers   = ["Development Status :: 3 - Alpha",
                  "Programming Language :: Python :: 3.11",
+                 "Programming Language :: Python :: 3.12",
                  "Operating System :: MacOS :: MacOS X",
                  "Operating System :: POSIX :: Linux",
                  "Intended Audience :: End Users/Desktop",
@@ -22,7 +23,7 @@ packages      = [{include = "onboardme"}]
 include       = ["onboardme/scripts/update_apt_sources.sh"]
 
 [tool.poetry.dependencies]
-python              = "^3.11"
+python             = ">=3.11,<3.13"
 click               = "^8.1"
 rich                = "^13.6"
 PyYAML              = "^6.0"
@@ -31,7 +32,7 @@ wget                = "^3.2"
 xdg-base-dirs       = "^6.0"
 
 [tool.poetry.group.dev.dependencies]
-pre-commit = "^3.5"
+pre-commit = "^3.7"
 
 [tool.poetry.plugins."onboardme.application.plugin"]
 "onboardme" = "onboardme:main"

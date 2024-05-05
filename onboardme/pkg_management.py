@@ -37,8 +37,8 @@ def rotate_github_ssh_keys() -> None:
             known_hosts.write(line)
 
 
-def run_preinstall_cmds(cmd_list: list, 
-                        pkg_groups: list, 
+def run_preinstall_cmds(cmd_list: list,
+                        pkg_groups: list,
                         no_upgrade: bool) -> None:
     """
     takes a list of package manager pre-install commands and runs them
@@ -77,7 +77,7 @@ def run_preinstall_cmds(cmd_list: list,
 
 def run_pkg_mngrs(pkg_mngrs: list, pkg_groups=[], no_upgrade=bool) -> None:
     """
-    Installs brew and pip3.11 packages. Also apt, snap, and flatpak on Linux.
+    Installs brew and pip3.12 packages. Also apt, snap, and flatpak on Linux.
     Takes optional variables:
       - pkg_groups: list of optional package groups
       - pkg_mngrs: list of package managers to run
@@ -94,7 +94,7 @@ def run_pkg_mngrs(pkg_mngrs: list, pkg_groups=[], no_upgrade=bool) -> None:
 
         available_pkg_groups = pkg_mngr_dict['packages']
         log.debug(f"pkg groups for {pkg_mngr} are {available_pkg_groups}")
-        
+
         # brew has a special flow because it works on both linux and mac
         if pkg_mngr == 'brew':
             if 'Darwin' in OS:
@@ -156,9 +156,9 @@ def run_pkg_mngrs(pkg_mngrs: list, pkg_groups=[], no_upgrade=bool) -> None:
                 sub_header("[b]Cleanup[/b] step Completed.")
 
 
-def install_pkg_group(install_cmd: str, 
+def install_pkg_group(install_cmd: str,
                       pkgs_to_install: list,
-                      installed_pkgs: list, 
+                      installed_pkgs: list,
                       install_env_vars: dict,
                       no_upgrade: bool
                       ) -> None:

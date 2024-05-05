@@ -22,7 +22,7 @@ Get your daily driver, or personalized 🐳 container, just the way you 
 
 <details>
   <summary><h4>Keep your Dot Files Up To Date Across multiple systems</h4></summary>
-  
+
 `onboardme` can manage your [dot files] using a git by turning your home directory into a repo.
 We even provide default dot files, so you don't have to manage them
 - The [default dot files] are open source, and the maintainers use these themselves
@@ -34,9 +34,9 @@ We even provide default dot files, so you don't have to manage them
 
 <details>
   <summary><h4>Package management accross multiple package managers<h4></summary>
-    
+
 We install and upgrade libraries and apps using common package managers. We also provide a currated list of default packages.
-  
+
 - checkout the [default packages]
 - supports `brew`, `apt`, `snap`, `flatpak`, and `pip` (and you can add your own 😄)
 - group together packages for different kinds of environments
@@ -45,7 +45,7 @@ We install and upgrade libraries and apps using common package managers. We also
     - macOS (default apps for _macOS only_ apps, always installed on macOS)
     - gui (default GUI apps for Linux desktops, optionally installed)
     - devops (devops related tooling, optionally installed)
- 
+
 <sub>**Linux ARM Users NOTE**: `brew` is currently [unsupported on linux/arm64](https://docs.brew.sh/Homebrew-on-Linux#arm-unsupported), and as we'd have to compile everything from source anyway, we don't support running the brew package manager via onboardme on linux/arm64 or (AArch64) at all right now._
 We do have a docker image ([jessebot/onboardme:latest-arm](https://hub.docker.com/r/jessebot/onboardme)) optimized for arm though that you can run on AArch64 and it's perfect for a dockerized dev environment on an M1 or later mac or any other ARM 64 device that runs docker :)</sub>
 
@@ -56,10 +56,10 @@ We do have a docker image ([jessebot/onboardme:latest-arm](https://hub.docker.co
 
 
 `onboardme` keeps your neovim plugins installed and up to date with [lazy.nvim] under the hood.
-  
+
 <h4>Why no vim though?</h4>
-  
-If you haven't already made the switch from Vim to [NeoVim], you can try out NeoVim today with `onboardme` :D We used to support both neovim _and_ vim, but these days none of the primary developers of this repo use pure vim anymore, so we can't ensure it's up to standards. All of your knowledge from vim is still helpful in neovim though, and we highly recommend switching as neovim has a lot more features and a very active plugin community :) NeoVim maintains a guide on how to switch from vim [here](https://neovim.io/doc/user/nvim.html#nvim-from-vim). 
+
+If you haven't already made the switch from Vim to [NeoVim], you can try out NeoVim today with `onboardme` :D We used to support both neovim _and_ vim, but these days none of the primary developers of this repo use pure vim anymore, so we can't ensure it's up to standards. All of your knowledge from vim is still helpful in neovim though, and we highly recommend switching as neovim has a lot more features and a very active plugin community :) NeoVim maintains a guide on how to switch from vim [here](https://neovim.io/doc/user/nvim.html#nvim-from-vim).
 
 </details>
 
@@ -84,7 +84,7 @@ See the [dockerhub page](https://hub.docker.com/r/jessebot/onboardme) for more i
 
 <details>
   <summary><h4>Other optional configurations<h4></summary>
-    
+
 - Enable touchID for sudo on macOS
 - Add your user to the docker group
 - Install [nerdfonts](https://www.nerdfonts.com) (defaults to mononoki and Symbols Only)
@@ -131,7 +131,7 @@ See the [dockerhub page](https://hub.docker.com/r/jessebot/onboardme) for more i
 
 ## Install Locally
 
-You'll need `curl`, `brew`, `git`, and Python 3.11 to get started. We have a setup script to install those (except `curl`) and help you get your environment to the XDG spec under <b>Locally</b>. For docker, see the section below.
+You'll need `curl`, `brew`, `git`, and Python 3.12 to get started. We have a setup script to install those (except `curl`) and help you get your environment to the XDG spec under <b>Locally</b>. For docker, see the section below.
 
 <details>
   <summary>Local prereq install script</summary>
@@ -221,10 +221,10 @@ onboardme --overwrite
 You can read more in depth at the [Getting Started Docs] 💙! There's also more [docs] on basically every program that onboardme touches.
 
 ### Upgrades
-If you're on python 3.11, you should be able to do:
+If you're on python 3.12, you should be able to do:
 
 ```bash
-pip3.11 install --upgrade onboardme
+pip3.12 install --upgrade onboardme
 ```
 
 ## Under the Hood

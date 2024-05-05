@@ -66,7 +66,7 @@ def options_help() -> dict:
 
         'pkg_managers':
         f'Specific [meta]PKG_MANAGER[/] to run. {pkg_mngr_choices}'
-        '\nExample: [switch]-p[/] [meta]brew[/] [switch]-p[/] [meta]pip3.11',
+        '\nExample: [switch]-p[/] [meta]brew[/] [switch]-p[/] [meta]pip3.12',
 
         'pkg_groups':
         f"Package groups to install.\n{pkg_group_choices}\nExample:"
