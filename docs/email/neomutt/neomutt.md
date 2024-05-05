@@ -31,7 +31,157 @@ Steps:
 
 This will be your password that you can source in your `neomuttrc` which should be located in `~/.config/neomutt/neomuttrc`.
 
-You can check out an [example neomuttrc file](https://github.com/jessebot/dot_files/blob/main/.config/neomutt/neomuttrc) if you'd like.
+
+<details>
+  <summary>Example <code>neomuttrc</code> working with protonmail</summary>
+
+```config
+# A first attempt at using neomutt as a primary desktop email client
+
+# ----------------------- general -------------------------------
+# bell on new mails - even though I normally hate bells
+set beep_new
+
+# -------------------------- Themeing ---------------------------
+# basic space_chalk color scheme
+source ~/.config/neomutt/themes/spacechalk/neomutt_spacechalk_colors.muttrc
+
+# powerline for status lines and pager lines
+source ~/.config/neomutt/themes/spacechalk/powerline.neomuttrc
+
+# ------------------------- Temp files ---------------------------
+set certificate_file=~/.local/state/neomutt/certificates
+
+
+# ------------- index settings, your list of emails -------------
+#
+# No help bar at the top of index
+unset help
+
+# sort the inbox by newest first
+set sort = reverse-threads
+
+
+# ----------------- viewing email attachments -------------------
+
+# handing MIME types (html, pdf, jpg, gif, etc)
+set mailcap_path = ~/.config/neomutt/mailcap
+
+# view other kinds of plain(ish) text before html
+alternative_order text/plain text/enriched text/html text/*
+
+# set   - will always ask for a key after an external command
+# unset - wait for key only if the external command returned a non-zero status
+unset wait_key
+
+
+# --------- composing email: new messages, replies, and forwards -------------
+# use neovim by default
+set editor = "nvim"
+
+# show headers when composing
+set edit_headers
+
+# format of subject when forwarding
+set forward_format = "Fwd: %s"
+
+# reply to Reply to: field
+set reply_to
+
+# reply to person's name
+set reverse_name
+
+# include message in replies
+set include
+
+# include message in forwards
+set forward_quote
+
+# signature, this gets appended to your emails, you have to create this file
+set signature= "~/.config/neomutt/signature"
+
+# Character set on sent messages:
+set send_charset = "utf-8"
+
+# If there is no charset given on incoming msg, its probably windows:
+# set assumed_charset = "iso-8859-1"
+
+# ----------------- Email address, Password, and Name ---------------------
+# sources secret variables from a file that looks like (without comments):
+# $my_name="Your Name"
+# $my_user="You@yourprovider.tld"
+## if protonmail, $my_pass should be the password from protonmail-bridge
+# $my_pass="Your Password"
+source ~/.config/neomutt/keys
+
+# --------------------- Key binding and remapping ---------------------------
+# In it's own file for organization sake
+source ~/.config/neomutt/key_bindings.neomuttrc
+
+# --------------------------- IMAP settings --------------------------- #
+# recieving mail
+# Local protonmail-bridge host server: 127.0.0.1
+# Protonmail-bridge imap port: 1143
+# --------------------------------------------------------------------- #
+set imap_user = $my_user
+set imap_pass = $my_pass
+
+# ("+" substitutes for `folder`)
+set mbox_type     = Maildir
+set folder        = imap://127.0.0.1:1143/
+set record        = +Sent
+set postponed     = +Drafts
+# Specify where to save and/or look for postponed messages.
+# set postponed = +[Protonmail]/Drafts
+set trash         = +Trash
+set spoolfile     = +INBOX
+mailboxes         = +INBOX +Drafts +Sent +Trash
+
+# ----------------------------- Caching ---------------------------------
+# Store message headers locally to speed things up. If header_cache is a folder,
+# Mutt will create sub cache folders for each account which speeds things up more
+# -----------------------------------------------------------------------
+# CREATE THIS FOLDER. REMOVE IT IF IT IS A FILE AND CREATE AS FOLDER
+set header_cache = ~/.local/state/neomutt
+
+# --------------------------- Caching 2 ---------------------------------
+# Store mail locally to speed things up, like searching message bodies. Can be
+# same folder as header_cache. Costs disk space if you have a lot of email
+# -----------------------------------------------------------------------
+# I'm using this folder because it's more XDG spec
+set message_cachedir = ~/.local/state/neomutt
+
+# Allow Mutt to open a new IMAP connection automatically.
+unset imap_passive
+
+# Keep the IMAP connection alive by polling intermittently (time in seconds)
+# this is 5 minutes
+set imap_keepalive = 300
+
+# How often to check for new mail (time in seconds).
+# this is six minutes
+set mail_check = 360
+
+# ------------ SMTP (Simple Mail Transfer Protocol) settings ----------
+# sending mail
+# Local protonmail-bridge host server: 127.0.0.1
+# Protonmail-bridge smtp port: 1025
+# ---------------------------------------------------------------------
+set smtp_pass = $my_pass
+set realname  = $my_name
+set from      = $my_user
+set use_from  = yes
+
+set smtp_url = smtp://$my_user:$smtp_pass@127.0.0.1:1025
+
+# ----------------------- security :shrug: ----------------------------
+set ssl_force_tls = yes
+set ssl_starttls = yes
+# When set , postponed messages that are marked for encryption will be self-encrypted. NeoMutt will first try to encrypt using the value specified in $pgp_default_key or $smime_default_key. If those are not set, it will try the deprecated $postpone_encrypt_as. (Crypto only) Default: no
+# set postpone_encrypt = yes
+```
+
+</details>
 
 ## Nesting virtual folders
 
