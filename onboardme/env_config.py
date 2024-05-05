@@ -12,7 +12,7 @@ from .constants import OS, USR_CONFIG_FILE, DEFAULT_PKG_GROUPS, HOME_DIR
 from .console_logging import print_panel
 
 
-def check_os_support():
+def check_os_support() -> None:
     """
     verify we're on a supported OS and ask to quit if not.
     """
@@ -33,7 +33,7 @@ def check_os_support():
                     "[cornflower_blue]Compatibility Check")
 
 
-def process_steps(steps: list, firewall=False, browser=False) -> list:
+def process_steps(steps: list, firewall: bool = False, browser: bool = False) -> list:
     """
     process which steps to run for which OS, which steps the user passed in,
     and then make sure dependent steps are always run.
@@ -70,9 +70,9 @@ def sort_pkgmngrs(package_managers_list: list) -> list:
     e.g. apt installs snap and flatpak, so niether can be run until apt is run
 
     Takes list of package manager str and reorders them be (if they exist):
-       ['brew', 'pip3.12', 'pip3.11', 'apt', 'snap', 'flatpak']
+       ['brew', 'pip3.12', 'pip3.11', 'pipx', 'apt', 'snap', 'flatpak']
     """
-    pkg_mngr_default_order = ['brew', 'pip3.12', 'pip3.11', 'apt', 'snap', 'flatpak']
+    pkg_mngr_default_order = ['brew', 'pip3.12', 'pip3.11', 'pipx', 'apt', 'snap', 'flatpak']
 
     # Rearrange list by other list order Using list comprehension
     return [ele for ele in pkg_mngr_default_order if ele in package_managers_list]
@@ -87,7 +87,7 @@ def fill_in_defaults(defaults: dict, user_config: dict,
     for key, value in user_config.items():
         # we have to iterate through the entire config file, and who knows how
         # many levels there are, so we use recursion of this function
-        if type(value) is dict:
+        if isinstance(value, dict):
             result_config = fill_in_defaults(defaults[key], user_config[key],
                                              always_prefer_default)
             user_config[key] = result_config
@@ -116,7 +116,7 @@ def process_configs(overwrite: bool,
     """
     if remote_host:
         firewall = True
-        if type(remote_host) is str:
+        if isinstance(remote_host, str):
             remote_host = [remote_host]
 
     if "~" in git_config_dir:
