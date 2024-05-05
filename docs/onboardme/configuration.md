@@ -73,7 +73,7 @@ Those defaults can be altered per machine by creating a config file like:
     # this is where the actual git config for your dot files lives
     # it can't live in ~/.git because that will affect _everything_ under ~/
     git_config_dir: "~/.config/dot_files"
-    # !!CAREFUL: runs a `git reset --hard`, which will overwite/delete files in 
+    # !!CAREFUL: runs a `git reset --hard`, which will overwite/delete files in
     # $HOME that conflict with the above defined git repo url and branch.
     # You should run the following to get the files that would be overwritten:
     # onboardme -s dot_files
@@ -87,12 +87,12 @@ Those defaults can be altered per machine by creating a config file like:
       # macOS specific steps
       Darwin:
         - brew
-        - pip3.11
+        - pip3.12
       # Debian/Ubuntu specific steps
       Linux:
         - apt
         - brew
-        - pip3.11
+        - pip3.12
         - flatpak
         - snap
     # list of extra existing packages groups to install
@@ -134,7 +134,7 @@ Steps refer to a specific function in the list of functions we run and can be
 configured for both macOS and Linux seperately. These steps include:
 
 - setting up dot files in your home directory (.bashrc, etc)
-- managing packages using package managers (brew, pip3.11, apt, snap, flatpak)
+- managing packages using package managers (brew, pip3.12, apt, snap, flatpak)
 - installing fonts
 - setting up basic TUI IDE, neovim
 - setting up groups
@@ -196,7 +196,7 @@ package _managers_ and package _groups_ via the `config.yml` file, or via the cl
 By default, we install the `default` package _groups_ for all package _managers_.
 This includes everything you need for a basic cli experience and a slim ide.
 
-The default package managers for macOS and Linux are: `brew` and `pip3.11`
+The default package managers for macOS and Linux are: `brew` and `pip3.12`
 
 For Linux, we also include: `apt`, `snap`, and `flatpak`
 

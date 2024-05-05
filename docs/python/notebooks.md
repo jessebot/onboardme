@@ -15,27 +15,27 @@ Before you get started, if you're on Linux, you might need to install gcc, the v
 Next you need the [ipykernel]:
 
 ```bash
-pip3.11 install ipykernel
+pip3.12 install ipykernel
 ```
 
 Finally you need notebooks. There's a couple of different ways to get and interact with notebooks.
 
 ```bash
 # will get you classic notebooks, lighter weight
-pip3.11 install notebook
+pip3.12 install notebook
 
 # for rendering as a web app
-pip3.11 install voila
+pip3.12 install voila
 
 # jupyter's current full IDE-esk offering
-pip3.11 install jupyterlab
+pip3.12 install jupyterlab
 ```
 
 ### Notebooks in the terminal
 There's no way I wouldn't talk about getting this done in a terminal. First, there's [euporie]
 
 ```bash
-pip3.11 install euporie
+pip3.12 install euporie
 ```
 
 There's also [nbterm] if you'd like to check it out.

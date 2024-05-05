@@ -36,7 +36,7 @@ ls ~/Library/Application Support/iTerm2/DynamicProfiles
 make sure you've already done a `pip install iterm2`
 
 ```
-#!/usr/bin/env python3.11
+#!/usr/bin/env python3.12
 """
        Name: Run a command in a split
      AUTHOR: https://github.com/jessebot
