@@ -156,11 +156,17 @@ def setup_logger(level="", log_file=""):
         is_flag=True,
         help=HELP['version'],
         default=False)
-def main(log_level, log_file,
+def main(log_level,
+         log_file,
          steps,
-         git_url, git_branch, git_config_dir, overwrite,
-         pkg_managers, pkg_groups,
-         firewall, remote_host,
+         git_url,
+         git_branch,
+         git_config_dir,
+         overwrite,
+         pkg_managers,
+         pkg_groups,
+         firewall,
+         remote_host,
          no_upgrade,
          version) -> bool:
     """
