@@ -53,7 +53,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build/push - prereqs only
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           push: true
           # build from docker/ directory
@@ -64,7 +64,7 @@ jobs:
             jessebot/onboardme:prereqs
 
       - name: Build/push - run onboardme - default pkgs
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           push: true
           # build from docker/ directory
@@ -76,7 +76,7 @@ jobs:
             jessebot/onboardme:debian12
 
       - name: Build/push - default + devops pkgs
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           push: true
           # build from docker/ directory
@@ -90,7 +90,7 @@ jobs:
             jessebot/onboardme:debian12-devops
 
       - name: Build/push - full tui pkgs
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           push: true
           # build from docker/ directory
@@ -125,7 +125,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build/push - arm - prereqs only
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           push: true
           # build from docker/ directory
@@ -138,7 +138,7 @@ jobs:
             jessebot/onboardme:arm-prereqs
 
       - name: Build/push - arm - default pkgs
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           push: true
           # build from docker/ directory
@@ -152,7 +152,7 @@ jobs:
             jessebot/onboardme:debian12-arm
 
       - name: Build/push arm - default + devops pkgs
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           push: true
           # build from docker/ directory
@@ -168,7 +168,7 @@ jobs:
             jessebot/onboardme:debian12-arm-devops
 
       - name: Build/push arm - full tui pkgs
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           push: true
           # build from docker/ directory
