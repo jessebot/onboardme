@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  onboardme:
+  - apiVersion: v2
+    appVersion: devops
+    created: "2024-07-10T16:55:34.733831207Z"
+    description: A Helm chart for deploying an onboardme docker container on Kubernetes.
+    digest: 32074d377abaa0a46b96955dbcdf2c79c65c60f57d519e306ed5f2f63c76d0a2
+    name: onboardme
+    type: application
+    urls:
+    - https://github.com/jessebot/onboardme/releases/download/onboardme-0.1.1/onboardme-0.1.1.tgz
+    version: 0.1.1
+generated: "2024-07-10T16:55:34.733863778Z"
