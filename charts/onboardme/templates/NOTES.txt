@@ -20,3 +20,7 @@
   echo "Visit http://127.0.0.1:8080 to use your application"
   kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8080:$CONTAINER_PORT
 {{- end }}
+
+You did it! You installed onboardme! You can access your container with:
+
+kubectl exec -it $POD_NAME -- /bin/bash

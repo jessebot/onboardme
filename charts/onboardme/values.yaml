@@ -39,7 +39,7 @@ podSecurityContext:
 securityContext:
   capabilities:
     drop:
-    - ALL
+      - ALL
   readOnlyRootFilesystem: true
   runAsNonRoot: true
   runAsUser: 1000
@@ -63,24 +63,24 @@ ingress:
   #      - chart-example.local
 
 resources: {}
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+#  limits:
+#    cpu: 100m
+#    memory: 128Mi
+#  requests:
+#    cpu: 100m
+#    memory: 128Mi
 
-livenessProbe:
-  enabled: false
-  httpGet:
-    path: /
-    port: http
+leadinessProbeEnabled: false
+livenessProbe: {}
+# httpGet:
+#   path: /
+#   port: http
 
-readinessProbe:
-  enabled: false
-  httpGet:
-    path: /
-    port: http
+readinessProbeEnabled: false
+readinessProbe: {}
+#  httpGet:
+#    path: /
+#    port: http
 
 autoscaling:
   enabled: false
