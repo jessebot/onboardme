@@ -12,6 +12,8 @@
   />
 </h1>
 
+<a href="https://github.com/jessebot/onboardme/releases"><img src="https://img.shields.io/github/v/release/jessebot/onboardme?style=plastic&labelColor=blue&color=green&logo=GitHub&logoColor=white"></a> [![](https://img.shields.io/docker/pulls/jessebot/onboardme.svg)](https://cloud.docker.com/u/jessebot/repository/docker/jessebot/onboardme)
+
 Get your daily driver, or personalized 🐳 container, just the way you like it! From dot files management, to package installation, to setting up neovim, to other little features you didn't know you needed, `onboardme` intends to save you time with initializing and maintaining your personal evironments ✨
 
 <p align="center">
