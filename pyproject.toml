@@ -32,7 +32,7 @@ wget                = "^3.2"
 xdg-base-dirs       = "^6.0"
 
 [tool.poetry.group.dev.dependencies]
-pre-commit = "^3.7"
+pre-commit = ">=3.7,<5.0"
 
 [tool.poetry.plugins."onboardme.application.plugin"]
 "onboardme" = "onboardme:main"
