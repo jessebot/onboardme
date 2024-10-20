@@ -24,25 +24,20 @@ def cron_setup() -> None:
     On Linux:
         installs crontab for root to run apt commands
     """
+    user_crontab = f'{HOME_DIR}/.config/cron/user/crontab'
+
     print_header('⏰ [i]crontab[/i] installations')
     if 'Linux' in OS:
-        cron_dir = "/etc/crontab.d"
-
-        # install root level cronjobs
         root_crontab = f'{HOME_DIR}/.config/cron/root/crontab'
-
-        # do a shallow clone of the repo
+        # install root level cronjobs
         if path.exists(root_crontab):
             log.info('Installing root crontab.')
-            subproc([f'sudo cp {root_crontab} {cron_dir}/root'])
-            print_msg('[i]root crontab installed.')
-    else:
-        cron_dir = "/var/at/tabs"
+            subproc([f'sudo crontab {root_crontab}'])
+            print_msg('\n[i]root crontab installed.')
 
     # install user level cronjobs
-    user_crontab = f'{HOME_DIR}/.config/cron/user/crontab'
     if path.exists(user_crontab):
         log.info('Installing user crontab.')
         username = getuser()
-        subproc([f'sudo cp {user_crontab} {cron_dir}/{username}'])
-        print_msg('[i]User crontab installed.')
+        subproc([f'crontab {HOME_DIR}/.config/cron/user/crontab'])
+        print_msg('\n[i]User crontab installed.')

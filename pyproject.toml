@@ -1,6 +1,6 @@
 [tool.poetry]
 name          = "onboardme"
-version       = "1.10.0"
+version       = "1.10.1"
 description   = "Install dot files and packages, including a base mode with sensible defaults to run on most computers running Debian based distros or macOS."
 authors       = [
     "Jesse Hitch <jessebot@linux.com>",
@@ -32,7 +32,7 @@ wget                = "^3.2"
 xdg-base-dirs       = "^6.0"
 
 [tool.poetry.group.dev.dependencies]
-pre-commit = "^3.7"
+pre-commit = "^4.0"
 
 [tool.poetry.plugins."onboardme.application.plugin"]
 "onboardme" = "onboardme:main"
