@@ -1,6 +1,6 @@
 [tool.poetry]
 name          = "onboardme"
-version       = "1.9.2"
+version       = "1.10.0"
 description   = "Install dot files and packages, including a base mode with sensible defaults to run on most computers running Debian based distros or macOS."
 authors       = [
     "Jesse Hitch <jessebot@linux.com>",

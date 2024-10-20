@@ -25,6 +25,7 @@ from .dot_files import setup_dot_files
 from .pkg_management import run_pkg_mngrs
 from .sudo_setup import setup_sudo
 from .firewall import configure_firewall
+from .cron import cron_setup
 
 
 HELP = options_help()
@@ -223,6 +224,10 @@ def main(log_level,
         elif step == 'sudo_setup':
             # if we're not running as root, kick off another process
             setup_sudo()
+
+        elif step == 'cron':
+            # if we're not running as root, kick off another process
+            cron_setup()
 
     if 'firewall_setup' in steps:
         configure_firewall(remote_host)
