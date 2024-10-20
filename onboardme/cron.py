@@ -34,7 +34,7 @@ def cron_setup() -> None:
         # do a shallow clone of the repo
         if path.exists(root_crontab):
             log.info('Installing root crontab.')
-            subproc(f'sudo cp {root_crontab} {cron_dir}/root')
+            subproc([f'sudo cp {root_crontab} {cron_dir}/root'])
             print_msg('[i]root crontab installed.')
     else:
         cron_dir = "/var/at/tabs"
@@ -44,5 +44,5 @@ def cron_setup() -> None:
     if path.exists(user_crontab):
         log.info('Installing user crontab.')
         username = getuser()
-        subproc(f'sudo cp {user_crontab} {cron_dir}/{username}')
+        subproc([f'sudo cp {user_crontab} {cron_dir}/{username}'])
         print_msg('[i]User crontab installed.')
