@@ -215,6 +215,10 @@ def main(log_level,
             pkg_groups = usr_pref['package']['groups']
             run_pkg_mngrs(pkg_mngrs, pkg_groups, no_upgrade)
 
+        elif step == 'cron':
+            # install cronjobs
+            cron_setup()
+
         elif step in ['neovim_setup', 'font_setup']:
             # import step's function from ide_setup.py in same directory
             import_module('onboardme.ide_setup', package=f'.{step}')
@@ -224,10 +228,6 @@ def main(log_level,
         elif step == 'sudo_setup':
             # if we're not running as root, kick off another process
             setup_sudo()
-
-        elif step == 'cron':
-            # if we're not running as root, kick off another process
-            cron_setup()
 
     if 'firewall_setup' in steps:
         configure_firewall(remote_host)

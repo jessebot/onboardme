@@ -54,6 +54,7 @@ Those defaults can be altered per machine by creating a config file like:
     Darwin:
       - dot_files
       - packages
+      - cron
       - font_setup
       - neovim_setup
       - sudo_setup
@@ -61,6 +62,7 @@ Those defaults can be altered per machine by creating a config file like:
     Linux:
       - dot_files
       - packages
+      - cron
       - font_setup
       - neovim_setup
       - group_setup
