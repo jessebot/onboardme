@@ -48,13 +48,17 @@ def process_steps(steps: list, firewall: bool = False, browser: bool = False) ->
         if 'neovim_setup' in steps_list and 'dot_files' not in steps_list:
             steps_list.append('dot_files')
 
+        # need cron files to setup crontabs
+        if 'cron' in steps_list and 'dot_files' not in steps_list:
+            steps_list.append('dot_files')
+
         if firewall and 'Linux' in OS:
             # currently don't have a great firewall on macOS, sans lulu
             steps_list.append('firewall_setup')
 
     removed_duplicates = set(steps_list)
     steps = list(removed_duplicates)
-    default_order = ['dot_files', 'packages', 'font_setup', 'neovim_setup']
+    default_order = ['dot_files', 'packages', 'cron', 'font_setup', 'neovim_setup']
     if OS[0] == 'Linux':
         default_order.append('group_setup')
     else:

@@ -90,6 +90,7 @@ See the [dockerhub page](https://hub.docker.com/r/jessebot/onboardme) for more i
 - Enable touchID for sudo on macOS
 - Add your user to the docker group
 - Install [nerdfonts](https://www.nerdfonts.com) (defaults to mononoki and Symbols Only)
+- Install [cronjobs](https://github.com/jessebot/onboardme/pull/276) to keep everything up to date everywhere, everyday :)
 
 </details>
 

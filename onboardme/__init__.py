@@ -25,6 +25,7 @@ from .dot_files import setup_dot_files
 from .pkg_management import run_pkg_mngrs
 from .sudo_setup import setup_sudo
 from .firewall import configure_firewall
+from .cron import cron_setup
 
 
 HELP = options_help()
@@ -213,6 +214,10 @@ def main(log_level,
             pkg_mngrs = usr_pref['package']['managers'][OS[0]]
             pkg_groups = usr_pref['package']['groups']
             run_pkg_mngrs(pkg_mngrs, pkg_groups, no_upgrade)
+
+        elif step == 'cron':
+            # install cronjobs
+            cron_setup()
 
         elif step in ['neovim_setup', 'font_setup']:
             # import step's function from ide_setup.py in same directory

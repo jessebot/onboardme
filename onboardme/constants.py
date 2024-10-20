@@ -27,7 +27,7 @@ SYSINFO = uname()
 OS = (SYSINFO.sysname, SYSINFO.machine)
 
 # step config is different per OS
-STEPS = ['dot_files','packages','font_setup','neovim_setup','group_setup']
+STEPS = ['dot_files','packages','cron','font_setup','neovim_setup','group_setup']
 if OS[0] == 'Darwin':
     STEPS.append('sudo_setup')
 
