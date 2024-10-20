@@ -33,11 +33,11 @@ def cron_setup() -> None:
         if path.exists(root_crontab):
             log.info('Installing root crontab.')
             subproc([f'sudo crontab {root_crontab}'])
-            print_msg('[i]root crontab installed.')
+            print_msg('\n[i]root crontab installed.')
 
     # install user level cronjobs
     if path.exists(user_crontab):
         log.info('Installing user crontab.')
         username = getuser()
-        subproc(['crontab .config/cron/user/crontab'])
-        print_msg('[i]User crontab installed.')
+        subproc([f'crontab {HOME_DIR}/.config/cron/user/crontab'])
+        print_msg('\n[i]User crontab installed.')
