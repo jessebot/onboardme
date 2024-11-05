@@ -93,8 +93,7 @@ echo ""
 if [[ "$OS" == *"Linux"* ]]; then
     echo -e "---------------------------- \033[94m Updating existing apt packages \033[00m --------------------"
 
-    DEBIAN_FRONTEND=noninteractive sudo cat << EOF > /etc/apt/sources.list
-    deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
+    DEBIAN_FRONTEND=noninteractive sudo echo "deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
     deb-src http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
 
     deb http://deb.debian.org/debian-security/ bookworm-security main contrib non-free
@@ -104,8 +103,8 @@ if [[ "$OS" == *"Linux"* ]]; then
     deb-src http://deb.debian.org/debian bookworm-updates main contrib non-free
 
     deb http://deb.debian.org/debian bookworm-backports main
-    deb http://deb.debian.org/debian bullseye-backports main
-    EOF; sudo apt-get update; sudo apt-get -y upgrade; sudo apt-get -y full-upgrade
+    deb http://deb.debian.org/debian bullseye-backports main" > /etc/apt/sources.list;
+    sudo apt-get update; sudo apt-get -y upgrade; sudo apt-get -y full-upgrade
     echo -e "\033[92m apt updated/upgraded :3 \033[00m"
 fi
 
@@ -257,7 +256,7 @@ fi
 echo -e "--------------------------\033[94m Installing OnBoardMe :D \033[00m -------------------------"
 
 
-pip3.12 install --upgrade --user pipx
+pip3.12 install --break-system-packages --upgrade --user pipx
 pipx install onboardme
 pipx_install_return_code=$?
 
