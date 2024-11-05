@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # just a quick script to install some reqs for onboardme
 # works on Debian (Bookworm) based distros and macOS (13.0.1 and later)
-# Checks for: brew, git, and python3.11
+# Checks for: brew, git, and python3.12
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -92,7 +92,20 @@ echo -e "\n-------------------------------- \033[94m 🎬 Beginning Setup \033[0
 echo ""
 if [[ "$OS" == *"Linux"* ]]; then
     echo -e "---------------------------- \033[94m Updating existing apt packages \033[00m --------------------"
-    DEBIAN_FRONTEND=noninteractive sudo apt-get update; sudo apt-get -y upgrade
+
+    DEBIAN_FRONTEND=noninteractive sudo cat << EOF > /etc/apt/sources.list
+    deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
+    deb-src http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
+
+    deb http://deb.debian.org/debian-security/ bookworm-security main contrib non-free
+    deb-src http://deb.debian.org/debian-security/ bookworm-security main contrib non-free
+
+    deb http://deb.debian.org/debian bookworm-updates main contrib non-free
+    deb-src http://deb.debian.org/debian bookworm-updates main contrib non-free
+
+    deb http://deb.debian.org/debian bookworm-backports main
+    deb http://deb.debian.org/debian bullseye-backports main
+    EOF; sudo apt-get update; sudo apt-get -y upgrade; sudo apt-get -y full-upgrade
     echo -e "\033[92m apt updated/upgraded :3 \033[00m"
 fi
 
@@ -206,48 +219,49 @@ if [[ "$OS" == *"Linux"* ]]; then
 fi
 
 # check to make sure we have python3 and pip3 installed
-which python3.11 > /dev/null
+which python3.12 > /dev/null
 py_return_code=$?
 
 if [ $py_return_code -ne 0 ]; then
     if [ "$OS" == "Darwin" ]; then
-	echo "Installing Python3.11 via brew..."
-        brew install python@3.11
-    	echo -e "\033[92mPython3.11 installed :3 \033[00m"
+	echo "Installing Python3.12 via brew..."
+        brew install python@3.12
+    	echo -e "\033[92mPython3.12 installed :3 \033[00m"
     else
-	echo "Installing Python3.11 via apt..."
-        DEBIAN_FRONTEND=noninteractive && \ 
+	echo "Installing Python3.12 via apt..."
+        DEBIAN_FRONTEND=noninteractive && \
 	sudo apt-get install -y software-properties-common && \
         sudo add-apt-repository -y ppa:deadsnakes/ppa && \
-        sudo apt install -y python3.11 && \
-        curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
-	echo 'export PATH="$PATH:/home/friend/.local/bin/"' >> ~/.bashrc
+        sudo apt install -y python3.12 && \
+        curl -sS https://bootstrap.pypa.io/get-pip.py | python3.12
+	echo 'export PATH="$PATH:$HOME/.local/bin/"' >> ~/.bashrc
     	. ~/.bashrc
-	echo -e "\033[92mPython3.11 installed :3 \033[00m"
+	echo -e "\033[92mPython3.12 installed :3 \033[00m"
     fi
 else
-    echo -e "\033[92mPython3.11 already installed :3 \033[00m"
-    which pip3.11 > /dev/null
+    echo -e "\033[92mPython3.12 already installed :3 \033[00m"
+    which pip3.12 > /dev/null
     pip_return_code=$?
     if [ $pip_return_code -ne 0 ]; then
         echo -e "\033[92mInstalling pip via apt... \033[00m"
         DEBIAN_FRONTEND=noninteractive && \
 	sudo apt-get update && \
 	sudo apt-get install -y python3-pip python3-venv && \
-	curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
-	echo 'export PATH="$PATH:/home/friend/.local/bin/"' >> ~/.bashrc
+	curl -sS https://bootstrap.pypa.io/get-pip.py | python3.12
+	echo 'export PATH="$PATH:$HOME/.local/bin/"' >> ~/.bashrc
     	. ~/.bashrc
-	echo -e "\033[92mPip3.11 installed :3 \033[00m"
+	echo -e "\033[92mPip3.12 installed :3 \033[00m"
     fi
 fi
 
 echo -e "--------------------------\033[94m Installing OnBoardMe :D \033[00m -------------------------"
 
 
-pip3.11 install --upgrade --user onboardme
-pip_install_return_code=$?
+pip3.12 install --upgrade --user pipx
+pipx install onboardme
+pipx_install_return_code=$?
 
-if [ $pip_install_return_code -ne 0 ]; then
+if [ $pipx_install_return_code -ne 0 ]; then
     echo "Something went wrong with the installation of onboardme. :("
 else
     echo ""

@@ -9,6 +9,7 @@ from rich.panel import Panel
 from rich.table import Table
 from rich.text import Text
 from rich.theme import Theme
+from os import environ
 
 # custom local module
 from .constants import (DEFAULT_PKG_GROUPS, OPT_PKG_GROUPS, PKG_MNGRS, STEPS,
@@ -16,7 +17,7 @@ from .constants import (DEFAULT_PKG_GROUPS, OPT_PKG_GROUPS, PKG_MNGRS, STEPS,
 
 
 # this is for creating new help text svgs for the READMEs
-RECORD = False
+RECORD = environ.get("OBM_SCREENSHOT", False)
 
 
 def pretty_choices(default_list: list) -> str:
