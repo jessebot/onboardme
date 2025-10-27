@@ -1,3 +1,6 @@
+> [!TIP]
+> This project has moved to [git.smallhack.org/jessebot/onboardme](https://git.smallhack.org/jessebot/onboardme) which is also mirrored to [codeberg.org/jessebot/onboardme](https://codeberg.org/jessebot/onboardme)
+
 <h1 align="center">
   <img
     src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/misc/transparent.png"
