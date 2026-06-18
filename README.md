@@ -1,5 +1,6 @@
-> [!TIP]
-> This project has moved to [git.smallhack.org/jessebot/onboardme](https://git.smallhack.org/jessebot/onboardme) which is also mirrored to [codeberg.org/jessebot/onboardme](https://codeberg.org/jessebot/onboardme)
+# ⚠️ Notice of Migration
+
+This project has moved to [codeberg.org/jessebot/onboardme](https://codeberg.org/jessebot/onboardme)
 
 <h1 align="center">
   <img
@@ -292,7 +293,7 @@ Get running on a machine using a bootable USB stick with [pxeless](https://githu
 
 Get started with virtual machines and QEMU with [scrap metal](https://github.com/cloudymax/Scrap-Metal).
 
-Get started with testing kubernetes on metal with [smol k8s lab](https://github.com/jessebot/smol_k8s_lab).
+Get started with testing kubernetes on metal with [smol k8s lab](https://codeberg.org/open-engineering/smol_k8s_lab).
 
 <!-- link references -->
 [documentation]: https://jessebot.github.io/onboardme/onboardme "onboardme documentation"
